@@ -893,7 +893,7 @@ h3 {
   /* line 16, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area {
     padding: 10px 0px;
-    background: #2C2C2C;
+   background-color: #024b8f;
   }
 }
 
@@ -901,7 +901,7 @@ h3 {
   /* line 16, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area {
     padding: 10px 15px;
-    background: #2C2C2C;
+    background-color: #024b8f;
   }
 }
 
@@ -1372,7 +1372,7 @@ h3 {
 
 /* line 8, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
 .slider_area .single_slider {
-  height: 650px;
+  height: 670px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -1404,6 +1404,7 @@ h3 {
   /* line 22, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .phone_thumb {
     top: 60px;
+    left: -30px;
   }
 }
 
@@ -1418,6 +1419,7 @@ h3 {
   /* line 28, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .phone_thumb img {
     width: 100%;
+    margin-left: 45px;
   }
 }
 
