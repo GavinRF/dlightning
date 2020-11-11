@@ -1360,7 +1360,7 @@ h3 {
 
 /* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
 .slider_bg_1 {
-  background-image: url(../img/banner/banner.png);
+  /* background-image: url(../img/banner/banner.png); */
   background-color: #0181F5;
 }
 
@@ -1371,7 +1371,7 @@ h3 {
 
 /* line 8, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
 .slider_area .single_slider {
-  height: 700px;
+  height: 650px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -3446,7 +3446,7 @@ h3 {
 
 /* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area {
-  padding: 68px 0 60px 0;
+  padding: 50px 0 50px 0;
 }
 
 @media (max-width: 767px) {
