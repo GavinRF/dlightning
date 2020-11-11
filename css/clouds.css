@@ -1,0 +1,416 @@
+.cloudCommon{
+  position: absolute;
+  transform: scale(.5);
+}
+
+.cloudCommon::before{
+  content:"";
+  position: absolute;
+}
+
+.cloudCommon::after{
+  content:"";
+  position: absolute;
+}
+
+.cloud1 {
+    width: 230px;
+    height: 90px;
+    border-radius: 50% 50% 25% 15%;
+    top: 15px;
+    left: 0;
+    animation: cloud 125s linear infinite, cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    -webkit-animation: cloud 125s linear infinite, cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    -moz-animation: cloud 125s linear infinite, cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    -o-animation: cloud 125s linear infinite, cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    box-shadow: -324px 111px 0px;
+  }
+  .cloud1::before{
+    width: 140px;
+    height: 70px;
+    border-radius: 50% 50% 35% 15%;
+    top: 30px;
+    left: -20px;
+    animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    box-shadow: -190px 67px 0px, -150px 98px 0px, -340px 100px 0px;
+  }
+  .cloud1::after{
+    width: 96px;
+    height: 50px;
+    border-radius: 50% 50% 10% 5%;
+    top: 35px;
+    left: 180px;
+    animation: cloudColor 160s infinite alternate;
+  }
+  
+  .cloud2{
+    width: 125px;
+    height: 65px;
+    border-radius: 50% 50% 15% 23%;
+    top: 190px;
+    left: 0;
+    animation: cloud 100s linear infinite, cloudColor 160s infinite alternate;
+    -webkit-animation: cloud 100s linear infinite, cloudColor 160s infinite alternate;
+    -moz-animation: cloud 100s linear infinite, cloudColor 160s infinite alternate;
+    -o-animation: cloud 100s linear infinite, cloudColor 160s infinite alternate;
+  }
+  .cloud2::before{
+    width: 130px;
+    height: 55px;
+    border-radius: 50% 50% 35% 15%;
+    top: 35px;
+    left: -38px;
+    animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    box-shadow: 378px -35px 0px, 68px 16px 0px;
+  }
+  .cloud2::after{
+    width: 81px;
+    height: 45px;
+    border-radius: 50% 50% 30% 25%;
+    top: 45px;
+    left: 180px;
+    box-shadow: 10px 25px 0px, 60px 35px 0px, -170px -225px 0px;
+    animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    box-shadow: 180px -59px 0px, 200px -50px 0px, 230px -38px 0px, -54px 15px 0px, -68px -17px 0px;
+  }
+  
+  .cloud3{
+    width: 270px;
+    height: 90px;
+    border-radius: 50% 50% 32% 30%;
+    top: 125px;
+    left: 0;
+    animation: cloud 110s linear infinite, cloudColor 160s infinite alternate;
+    -webkit-animation: cloud 110s linear infinite, cloudColor 160s infinite alternate;
+    -moz-animation: cloud 110s linear infinite, cloudColor 160s infinite alternate;
+    -o-animation: cloud 110s linear infinite, cloudColor 160s infinite alternate;
+  }
+  .cloud3::before{
+    width: 140px;
+    height: 65px;
+    border-radius: 50% 50% 35% 15%;
+    top: 18px;
+    left: -20px;
+    animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    box-shadow: 478px -345px 0px, 42px -40px 0px, 413px -65px 0px;
+  }
+  .cloud3::after{
+    width: 106px;
+    height: 65px;
+    border-radius: 50% 50% 30% 15%;
+    top: 35px;
+    left: 150px;
+    animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    box-shadow: 345px -89px 0px, 290px -79px 0px, 265px -110px 0px;
+  }
+
+@keyframes cloud{
+  0% {
+    left:105%;
+  }
+  100% {
+    left: -30%;
+  }
+}
+
+.cloud4{
+  width: 230px;
+  height: 90px;
+  border-radius: 50% 50% 25% 15%;
+  top: 122px;
+  left: 0;
+  animation: cloud2 90s linear infinite, cloudColor 160s infinite alternate;
+  -webkit-animation: cloud2 90s linear infinite, cloudColor 160s infinite alternate;
+  -moz-animation: cloud2 90s linear infinite, cloudColor 160s infinite alternate;
+  -o-animation: cloud2 90s linear infinite, cloudColor 160s infinite alternate;
+}
+.cloud4::before{
+  width: 96px;
+  height: 50px;
+  border-radius: 50% 50% 35% 25%;
+  top: 30px;
+  left: -80px;
+  animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+  box-shadow: 231px 32px 0px, -80px 134px 0px, 220px -231px 0px, 342px -134px 0px, 550px -145px 0px;
+}
+.cloud4::after{
+  width: 130px;
+  height: 70px;
+  border-radius: 50% 50% 10% 25%;
+  top: -15px;
+  left: 80px;
+  animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+  box-shadow: 234px -150px 0px, -181px 162px 0px, 202px -88px 0px, -131px 169px 0px, 300px -120px 0px; 
+}
+
+.cloud5{
+  width: 125px;
+  height: 65px;
+  border-radius: 50% 50% 15% 23%;
+  top: 45px;
+  left: 0;
+  animation: cloud 180s linear infinite, cloudColor 160s infinite alternate;
+  -webkit-animation: cloud2 180s linear infinite, cloudColor 160s infinite alternate;
+  -moz-animation: cloud2 180s linear infinite, cloudColor 160s infinite alternate;
+  -o-animation: cloud2 180s linear infinite, cloudColor 160s infinite alternate;
+}
+.cloud5::before{
+    width: 130px;
+    height: 55px;
+    border-radius: 50% 50% 35% 15%;
+    top: -15px;
+    left: 38px;
+    animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    box-shadow: 240px -120px 0px, 450px -19px 0px;
+  }
+  .cloud5::after{
+    width: 81px;
+    height: 45px;
+    border-radius: 50% 50% 30% 25%;
+    top: -45px;
+    left: 80px;
+    animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+    box-shadow: -230px 92px 0px, 434px 27px 0px, 423px -13px 0px, 380px 24px 0px;
+  }
+
+.cloud6{
+  width: 270px;
+  height: 90px;
+  border-radius: 50% 50% 32% 30%;
+  position: absolute;
+  top: 105px;
+  left: 0;
+  animation: cloud2 78s linear infinite, cloudColor 160s infinite alternate;
+  -webkit-animation: cloud2 78s linear infinite, cloudColor 160s infinite alternate;
+  -moz-animation: cloud2 78s linear infinite, cloudColor 160s infinite alternate;
+  -o-animation: cloud2 78s linear infinite, cloudColor 160s infinite alternate;
+}
+.cloud6::before{
+  width: 140px;
+  height: 65px;
+  border-radius: 50% 50% 35% 15%;
+  position: absolute;
+  top: -32px;
+  left: 20px;
+  animation: cloudColor 160s infinite alternate;
+}
+.cloud6::after{
+  width: 106px;
+  height: 65px;
+  border-radius: 50% 50% 10% 25%;
+  top: 35px;
+  left: 30px;
+  animation: cloudColor 160s infinite alternate;
+}
+
+@keyframes cloud2{
+  0% {
+    left: 103%;
+  }
+  100% {
+    left: -30%;
+  }
+}
+
+.cloud7{
+  width: 230px;
+  height: 90px;
+  border-radius: 50% 50% 25% 15%;
+  top: -12px;
+  left: 0;
+  animation: cloud3 155s linear infinite, cloudColor 160s infinite alternate;
+  -webkit-animation: cloud3 155s linear infinite, cloudColor 160s infinite alternate;
+  -moz-animation: cloud3 155s linear infinite, cloudColor 160s infinite alternate;
+  -o-animation: cloud3 155s linear infinite, cloudColor 160s infinite alternate;
+}
+.cloud7::before{
+  width: 91px;
+  height: 50px;
+  border-radius: 50% 50% 35% 25%;
+  top: 30px;
+  left: 180px;
+  animation: cloudColor 160s infinite alternate;
+}
+.cloud7::after{
+  width: 140px;
+  height: 70px;
+  border-radius: 50% 50% 10% 5%;
+  top: -15px;
+  left: 80px;
+  animation: cloudColor 160s infinite alternate;
+}
+
+.cloud8{
+  width: 105px;
+  height: 60px;
+  border-radius: 50% 50% 15% 23%;
+  top: 240px;
+  left: 0;
+  animation: cloud3 115s linear infinite, cloudColor 160s infinite alternate;
+  -webkit-animation: cloud3 115s linear infinite, cloudColor 160s infinite alternate;
+  -moz-animation: cloud3 115s linear infinite, cloudColor 160s infinite alternate;
+  -o-animation: cloud3 115s linear infinite, cloudColor 160s infinite alternate;
+}
+.cloud8::before{
+  width: 100px;
+  height: 55px;
+  border-radius: 50% 50% 35% 15%;
+  top: -15px;
+  left: -53px;
+  animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+  box-shadow: 315px -159px 0px, 20px -30px 0px, -130px -80px 0px;
+}
+.cloud8::after{
+  width: 51px;
+  height: 35px;
+  border-radius: 50% 50% 30% 25%;
+  position: absolute;
+  top: -45px;
+  left: -180px;
+  box-shadow: 284px 160px 0px;
+  animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+  box-shadow: 453px -145px 0px, 398px -123px 0px, 410px -145px 0px, 120px -60px 0px, -20px -11px 0px; 
+}
+
+.cloud9{
+  width: 260px;
+  height: 100px;
+  border-radius: 50% 50% 32% 25%;
+  top: 55px;
+  left: 0;
+  animation: cloud3 95s linear infinite, cloudColor 160s infinite alternate;
+  -webkit-animation: cloud3 95s linear infinite, cloudColor 160s infinite alternate;
+  -moz-animation: cloud3 95s linear infinite, cloudColor 160s infinite alternate;
+  -o-animation: cloud3 95s linear infinite, cloudColor 160s infinite alternate;
+}
+.cloud9::before{
+  width: 140px;
+  height: 65px;
+  border-radius: 50% 50% 35% 15%;
+  position: absolute;
+  top: -30px;
+  left: 10px;
+  animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+  box-shadow: -305px 120px 0px, -245px 108px 0px, -202px 90px 0px;
+}
+.cloud9::after{
+  width: 100px;
+  height: 65px;
+  border-radius: 50% 50% 20% 25%;
+  position: absolute;
+  top: -35px;
+  left: -30px;
+  box-shadow: -234px 190px 0px;
+  animation: cloudColor 160s infinite alternate, boxShadColor 160s infinite alternate;
+  box-shadow: -193px 135px 0px;
+}
+
+@keyframes cloud3{
+  0% {
+    left: 106%;
+  }
+  100% {
+    left: -30%;
+  }
+}
+
+@keyframes cloudColor {
+  0% {background-color: #2f9afa;}
+  30%{background-color: #3ca1fb;}
+  60%{background-color: #4daafd;}
+  90%{background-color: #2795f9;}
+  100%{background-color:#1f91fc;}
+}
+
+@keyframes boxShadColor {
+  0% {color: #2f9afa;}
+  30%{color: #3ca1fb;}
+  60%{color: #4daafd;}
+  90%{color: #2795f9;}
+  100%{color:#148bf7;}
+}
+
+.cloud1__lightning,
+.cloud2__lightning,
+.cloud3__lightning {
+  position: absolute;
+  left: 50px;
+  top: 85px;
+  height: 100%;
+  width: 100px;
+  opacity: 0;
+  z-index: -6;
+  animation: lightning 20s infinite, moveLightning 10s infinite alternate-reverse;
+/*   animation-delay: 20s; */
+}
+
+.cloud2__lightning{
+  animation: lightning 23.4s infinite, moveLightning 10s infinite alternate;
+}
+
+.cloud3__lightning{
+  animation: lightning 28.2s infinite, moveLightning 10s infinite alternate;
+}
+
+.cloud1__lightning div:first-child,
+.cloud2__lightning div:first-child,
+.cloud3__lightning div:first-child {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  transform: skew(-20deg, -10deg);
+  background-color: gold;
+}
+.cloud1__lightning div:nth-child(2),
+.cloud2__lightning div:nth-child(2),
+.cloud3__lightning div:nth-child(2) {
+  position: absolute;
+  top: 35px;
+  left: 3px;
+  width: 15px;
+  height: 50px;
+  transform: skew(-20deg, -10deg);
+  background-color: gold;
+}
+.cloud1__lightning div:last-child,
+.cloud2__lightning div:last-child,
+.cloud3__lightning div:last-child {
+  position: absolute;
+  top: 71px;
+  left:3px;
+  width: 10px;
+  height: 50px;
+  transform: skew(-20deg, -10deg);
+  background-color: gold;
+}
+
+.cloud1__lightning div:last-child::after,
+.cloud2__lightning div:last-child::after,
+.cloud3__lightning div:last-child::after {
+  content:"";
+  width: 5px;
+  height: 15px; 
+  position: absolute;
+  top:40px;
+  left: 9px;
+  border-right:4px solid transparent;
+  border-top:45px solid gold;
+}
+
+@keyframes lightning {
+  50% {
+    opacity: 0;
+  }
+  51% {
+    opacity: 1;
+  }
+  54%{
+    opacity: 0;
+  }
+}
+
+@keyframes moveLightning {
+  to {
+    transform: translateX(80px) rotate(32deg);
+  }
+}
