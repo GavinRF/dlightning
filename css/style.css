@@ -894,7 +894,7 @@ h3 {
   /* line 16, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area {
     padding: 10px 0px;
-   background-color: #024b8f;
+   background-color: #0181F5;
   }
 }
 
@@ -902,7 +902,7 @@ h3 {
   /* line 16, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area {
     padding: 10px 15px;
-    background-color: #024b8f;
+    background-color: #0181F5;
   }
 }
 
@@ -1061,30 +1061,30 @@ h3 {
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  /* line 124, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area .Appointment .book_btn a {
     padding: 12px 20px;
   }
 }
 
-/* line 135, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .main-header-area .Appointment .book_btn a:hover {
   background: #A1E5F8;
   color: #fff;
   border: 1px solid #4BA8FD;
 }
 
-/* line 143, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .main-header-area .main-menu {
   text-align: center;
   padding: 12px 0;
 }
 
-/* line 147, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .main-header-area .main-menu ul li {
   display: inline-block;
   position: relative;
   margin: 0 10px;
+}
+
+.submenu li{
+  margin: 0px !important;
 }
 
 /* line 157, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
@@ -1222,7 +1222,7 @@ h3 {
   -webkit-transition: transform 500ms ease, background 500ms ease;
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.1);
   /* background: #081c81; */
-  background-color: #024b8f;
+  background-color: #0155a4;
 }
 
 .talk{
@@ -3550,7 +3550,7 @@ h3 {
 
 /* line 84, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .service_content_wrap {
-  padding-top: 70px;
+  padding-top: 50px;
   padding-bottom: 60px;
   border-bottom: 1px solid #E8E8E8;
 }
@@ -7061,6 +7061,10 @@ h6 {
 .thisPage{
   color: gold !important;
   border-bottom: 2px solid gold !important;
+}
+
+#navigation .submenu li a:hover{
+  background-color: gold;
 }
 
 .testa-people{
