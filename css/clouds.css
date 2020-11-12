@@ -1,6 +1,6 @@
 .cloudCommon{
   position: absolute;
-  transform: scale(.5);
+  transform: scale(.6);
 }
 
 .cloudCommon::before{
