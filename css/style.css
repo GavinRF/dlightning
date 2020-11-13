@@ -3358,21 +3358,17 @@ h3 {
 }
 
 @media (max-width: 767px) {
-  /* line 33, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_tesmonial.scss */
   .testmonial_area p {
     margin-top: 30px;
   }
 }
 
 @media (max-width: 767px) {
-  /* line 44, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_tesmonial.scss */
   .testmonial_area p br {
     display: none;
   }
 }
 
-
-/* line 60, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_tesmonial.scss */
 .testmonial_area .rating_author {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3385,14 +3381,12 @@ h3 {
   justify-content: center;
 }
 
-/* line 70, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_tesmonial.scss */
 .testmonial_area .rating_author i {
   font-size: 24px;
   color: #FFD35A;
   margin: 0 2px;
 }
 
-/* line 75, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_tesmonial.scss */
 .testmonial_area .rating_author span {
   font-size: 14px;
   font-weight: 400;
