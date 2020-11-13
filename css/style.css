@@ -1379,7 +1379,7 @@ h3 {
 
 /* line 8, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
 .slider_area .single_slider {
-  height: 670px;
+  height: 620px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -1463,26 +1463,22 @@ h3 {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 52, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .slider_text h3 br {
     display: none;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  /* line 52, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .slider_text h3 br {
     display: none;
   }
 }
 
-/* line 63, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
 .slider_area .single_slider .slider_text h3 span {
   font-weight: 700;
 }
 
 @media (max-width: 767px) {
-  /* line 44, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .slider_text h3 {
     font-size: 30px;
     line-height: 35px;
@@ -1490,7 +1486,6 @@ h3 {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 44, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .slider_text h3 {
     font-size: 30px;
     line-height: 35px;
@@ -1498,7 +1493,6 @@ h3 {
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  /* line 44, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .slider_text h3 {
     font-size: 45px;
     letter-spacing: 3px;
@@ -1506,7 +1500,6 @@ h3 {
   }
 }
 
-/* line 83, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
 .slider_area .single_slider .slider_text p {
   font-size: 20px;
   font-weight: 300;
@@ -1516,26 +1509,22 @@ h3 {
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  /* line 83, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .slider_text p {
     font-size: 16px;
   }
 }
 
 @media (max-width: 767px) {
-  /* line 83, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .slider_text p {
     font-size: 16px;
   }
 }
 
-/* line 96, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
 .slider_area .single_slider .slider_text .video_service_btn > a {
   margin-right: 15px;
 }
 
 @media (max-width: 767px) {
-  /* line 96, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slider.scss */
   .slider_area .single_slider .slider_text .video_service_btn > a {
     margin-bottom: 20px;
   }
@@ -3318,7 +3307,7 @@ h3 {
 
 .testmonial_area {
   background-color: #2C2C2C !important;
-  padding: 13vh 0;
+  padding: 3vh 0;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -3362,8 +3351,8 @@ h3 {
   font-size: 20px;
   line-height: 34px;
   font-weight: 200;
-  margin-top: 40px;
-  margin-bottom: 46px;
+  margin-top: 10px;
+  margin-bottom: 30px;
   /* text-decoration: underline; */
   padding: 0 15%;
 }
@@ -3430,24 +3419,20 @@ h3 {
   right: 0;
 }
 
-/* line 97, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_tesmonial.scss */
 .testmonial_area .owl-carousel .owl-nav div:hover {
   background: #0181F5;
 }
 
-/* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area {
-  padding: 50px 0 50px 0;
+  padding: 75px 0 50px 0;
 }
 
 @media (max-width: 767px) {
-  /* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
   .service_area {
     padding: 90px 0 30px 0;
   }
 }
 
-/* line 6, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area .section_title {
   margin-bottom: 80px;
 }
@@ -3483,10 +3468,9 @@ h3 {
   line-height: 38px;
 }
 
-
-
 .service_area_2 {
   padding-top: 20px;
+  border-bottom: 1px solid #ebebeb;
 }
 
 .service_area_2.plus_margin {
