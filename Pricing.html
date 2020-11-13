@@ -219,8 +219,16 @@
 
             $(document).ready(function() {
             $('#footer').load("footer.html");
-            $('#header').load("header.html");
+            $('#header').load("header.html", function( response, status, xhr ) {
+            if ( status == "error" ) {
+                var msg = "Sorry but there was an error: ";
+                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+            } else {
+                $('.pricing').addClass('thisPage');
+            }
             });
+            });
+
 
             </script>
             <!--/ footer end  -->
@@ -254,6 +262,8 @@
     <script src="js/mail-script.js"></script>
 
     <script src="js/main.js"></script>
+
+
 </body>
 
 </html>

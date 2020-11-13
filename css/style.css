@@ -3394,7 +3394,6 @@ h3 {
   text-transform: uppercase;
 }
 
-/* line 83, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_tesmonial.scss */
 .testmonial_area .owl-carousel .owl-nav div {
   background: transparent;
   height: 40px;
@@ -3407,7 +3406,6 @@ h3 {
   line-height: 40px;
 }
 
-/* line 93, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_tesmonial.scss */
 .testmonial_area .owl-carousel .owl-nav div.owl-next {
   left: auto;
   right: 0;
@@ -3432,29 +3430,24 @@ h3 {
 }
 
 @media (max-width: 767px) {
-  /* line 6, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
   .service_area .section_title {
     margin-bottom: 30px;
   }
 }
 
-/* line 12, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area .single_service {
   margin-bottom: 30px;
 }
 
-/* line 14, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
-.service_area .single_service .thumb {
 
+.service_area .single_service .thumb {
   width: 210px;
   height: 210px;
   text-align: center;
   line-height: 110px;
-
   margin: 0 auto 40px auto;
 }
 
-/* line 30, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area .single_service h3 {
   font-size: 24px;
   font-weight: 300;
@@ -3464,7 +3457,6 @@ h3 {
 
 .service_area_2 {
   padding-top: 20px;
-  border-bottom: 1px solid #ebebeb;
 }
 
 .service_area_2.plus_margin {
@@ -3580,7 +3572,6 @@ h3 {
   }
 }
 
-/* line 12, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
 .expert_doctors_area .doctors_title h3 {
   font-size: 36px;
   font-weight: 500;
@@ -3588,20 +3579,17 @@ h3 {
 }
 
 @media (max-width: 767px) {
-  /* line 12, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
   .expert_doctors_area .doctors_title h3 {
     font-size: 24px;
   }
 }
 
-/* line 22, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
 .expert_doctors_area .single_expert .expert_thumb {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   overflow: hidden;
 }
 
-/* line 26, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
 .expert_doctors_area .single_expert .expert_thumb img {
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
@@ -3614,7 +3602,6 @@ h3 {
   width: 100%;
 }
 
-/* line 32, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
 .expert_doctors_area .single_expert .experts_name {
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
@@ -3625,7 +3612,6 @@ h3 {
   padding-bottom: 18px;
 }
 
-/* line 37, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
 .expert_doctors_area .single_expert .experts_name h3 {
   font-size: 20px;
   font-weight: 500;
@@ -3636,7 +3622,6 @@ h3 {
   transition: 0.3s;
 }
 
-/* line 43, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
 .expert_doctors_area .single_expert .experts_name span {
   color: #919191;
   font-size: 13px;
