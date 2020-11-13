@@ -3485,27 +3485,21 @@ h3 {
 
 
 
-
-
-/* line 58, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 {
   padding-top: 20px;
 }
 
-/* line 60, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2.plus_margin {
   margin-bottom: 180px;
 }
 
 @media (max-width: 767px) {
-  /* line 60, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
   .service_area_2.plus_margin {
     margin-bottom: 40px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 60, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
   .service_area_2.plus_margin {
     margin-bottom: 50px;
   }
@@ -3520,30 +3514,25 @@ h3 {
   left: 0px;
 }
 
-/* line 69, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .man_thumb {
   text-align: center;
 }
 
 @media (max-width: 767px) {
-  /* line 69, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
   .service_area_2 .man_thumb {
     margin-bottom: 30px;
   }
 }
 
-/* line 74, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .man_thumb img {
   width: 100%;
 }
 
-/* line 78, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .mobile_screen {
   text-align: center;
   perspective: 685px;
 }
 
-/* line 80, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .mobile_screen img {
   width: 100%;
   margin-left: 15px;
@@ -3554,41 +3543,34 @@ h3 {
   transform: rotate3d(23, 12, -3, 19deg) translateX(-15px);
 }
 
-/* line 84, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .service_content_wrap {
   padding-top: 50px;
   padding-bottom: 60px;
-  border-bottom: 1px solid #E8E8E8;
 }
 
-/* line 88, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .service_content_wrap .single_service {
   padding-right: 30px;
   margin-bottom: 30px;
 }
 
 @media (max-width: 767px) {
-  /* line 88, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
   .service_area_2 .service_content_wrap .single_service {
     padding-right: 0;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 88, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
   .service_area_2 .service_content_wrap .single_service {
     padding-right: 0;
   }
 }
 
-/* line 97, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .service_content_wrap .single_service span {
   font-size: 18px;
   font-weight: 300;
   color: #0181F5;
 }
 
-/* line 102, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .service_content_wrap .single_service h3 {
   font-size: 24px;
   font-weight: 400;
@@ -3597,7 +3579,6 @@ h3 {
   margin-top: 8px;
 }
 
-/* line 109, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_service.scss */
 .service_area_2 .service_content_wrap .single_service p {
   font-size: 16px;
   font-weight: 400;
@@ -3605,19 +3586,16 @@ h3 {
   color: #727272;
 }
 
-/* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
 .expert_doctors_area {
   padding-top: 120px;
   padding-bottom: 120px;
 }
 
-/* line 4, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
 .expert_doctors_area.doctor_page {
   padding-bottom: 80px;
 }
 
 @media (max-width: 767px) {
-  /* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_experts.scss */
   .expert_doctors_area {
     padding-top: 80px;
     padding-bottom: 80px;
@@ -7095,4 +7073,5 @@ h6 {
   height: 430px;
   background-image: url(../img/photo/process.jpg);
   background-size: cover;
+  background-position: center;
 }
