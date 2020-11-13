@@ -1232,6 +1232,12 @@ h3 {
   z-index: -2;
 }
 
+.peace{
+  width: 65%;
+  margin-left: 15%;
+
+}
+
 @media (max-width: 767px) {
   /* line 255, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area.sticky {
