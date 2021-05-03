@@ -1,9 +1,9 @@
-const stripe = require('stripe')('sk_test_51Img78K5ZALgdbfFEer7wdoS0HivaBsA3RIw3NOtnafTzGtC823a9Z1UvJgLLN2XlMDWIRZxSKEsFnFmWU9R4mFX00Cb9oPSTY');
+const stripe = require('stripe')('pk_live_51Img78K5ZALgdbfFCDxjFQ8p0ZdoaozqL4qKqkJYRir3pGzcrlRBGvdqoq8ERRLVhhK7Y78q3PDpLhsH7pNss30U00RkPCgolE');
 const express = require('express');
 const app = express();
 app.use(express.static('.'));
 
-const YOUR_DOMAIN = 'http://localhost:4242';
+const YOUR_DOMAIN = 'https://dlightning.io';
 
 app.post('/create-checkout-session', async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -13,7 +13,7 @@ app.post('/create-checkout-session', async (req, res) => {
         price_data: {
           currency: 'usd',
           product_data: {
-            name: 'Stubborn Attachments',
+            name: 'Your Cup of Tea',
             images: ['https://i.imgur.com/EHyR2nP.png'],
           },
           unit_amount: 2000,
