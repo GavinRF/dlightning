@@ -7,6 +7,8 @@
     <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body>
+    <!-- header-start -->
+    <header id='header'></header>
     <section>
       <div class="product">
         <img
@@ -14,14 +16,44 @@
           alt="The cover of Stubborn Attachments"
         />
         <div class="description">
-          <h3>Stubborn Attachments</h3>
+          <h3>Your Cup of Tea</h3>
           <h5>$20.00</h5>
         </div>
       </div>
       <button type="button" id="checkout-button">Checkout</button>
     </section>
   </body>
-  <script type="text/javascript">
+  <div id="footer"> </div>
+
+  <script type="text/javascript">	
+      $(document).ready(function(){
+         $('#footer').load("footer.html");
+         $('#header').load("header.html", function( response, status, xhr ) {
+         if ( status == "error" ) {
+             var msg = "Sorry but there was an error: ";
+             $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+         } else {
+             $('.home').addClass('thisPage');
+         }
+         });
+         });
+
+      var $backToTop = $(".back-to-top");
+          $backToTop.hide();
+
+          $(window).on('scroll', function() {
+          if ($(this).scrollTop() > 100) {
+              $backToTop.fadeIn();
+          } else {
+              $backToTop.fadeOut();
+          }
+          });
+
+          $backToTop.on('click', function(e) {
+          $("html, body").animate({scrollTop: 0}, 500);
+          });
+
+          ///STRIPE!!!
     // Create an instance of the Stripe object with your publishable API key
     var stripe = Stripe("pk_test_51Img78K5ZALgdbfF5CG0nIMm9s7DiWzCjrkY4FteVLGjxWSvwIPLJlDLawstnygt450ZB5UnABcRjdlRyeafyMPZ00KN3ZBzEd");
     var checkoutButton = document.getElementById("checkout-button");
