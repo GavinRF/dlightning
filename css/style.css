@@ -751,114 +751,6 @@ h3 {
   }
 }
 
-@media (max-width: 767px) {
-  /* line 4, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-  .mobile_menu {
-    position: absolute;
-    right: 0px;
-    width: 100%;
-    z-index: 9;
-  }
-}
-
-/* line 13, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-.slicknav_menu .slicknav_nav {
-  background: #fff;
-  float: right;
-  margin-top: 0;
-  padding: 0;
-  width: 95%;
-  padding: 0;
-  border-radius: 0px;
-  margin-top: 5px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  top: 11px;
-}
-
-/* line 28, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-.slicknav_menu .slicknav_nav a:hover {
-  background: transparent;
-  color: #5DB2FF;
-}
-
-/* line 32, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-.slicknav_menu .slicknav_nav a.active {
-  color: #5DB2FF;
-}
-
-@media (max-width: 767px) {
-  /* line 35, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-  .slicknav_menu .slicknav_nav a i {
-    display: none;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  /* line 35, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-  .slicknav_menu .slicknav_nav a i {
-    display: none;
-  }
-}
-
-/* line 44, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-.slicknav_menu .slicknav_nav .slicknav_btn {
-  background-color: transparent;
-  cursor: pointer;
-  margin-bottom: 10px;
-  margin-top: -40px;
-  position: relative;
-  z-index: 99;
-  border: 1px solid #ddd;
-  top: 3px;
-  right: 5px;
-  top: -36px;
-}
-
-/* line 55, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-.slicknav_menu .slicknav_nav .slicknav_btn .slicknav_icon {
-  margin-right: 6px;
-  margin-top: 3px;
-  position: relative;
-  padding-bottom: 3px;
-  top: -11px;
-  right: -5px;
-}
-
-@media (max-width: 767px) {
-  /* line 12, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-  .slicknav_menu {
-    margin-right: 0px;
-  }
-}
-
-/* line 72, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-.slicknav_nav .slicknav_arrow {
-  float: right;
-  font-size: 22px;
-  position: relative;
-  top: -9px;
-}
-
-/* line 78, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_slick-nav.scss */
-.slicknav_btn {
-  background-color: transparent;
-  cursor: pointer;
-  margin-bottom: 10px;
-  position: relative;
-  z-index: 99;
-  border: none;
-  border-radius: 3px;
-  top: 5px;
-  padding: 5px;
-  right: 0;
-  margin-top: -5px;
-  top: -29px;
-  right: 5px;
-}
-
 /* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area {
   left: 0;
@@ -894,7 +786,7 @@ h3 {
   /* line 16, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area {
     padding: 10px 0px;
-   background-color: #0181F5;
+    background-color: rgba(19, 68, 153, 0.5);
   }
 }
 
@@ -902,7 +794,7 @@ h3 {
   /* line 16, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area {
     padding: 10px 15px;
-    background-color: #0181F5;
+    background-color: rgba(19, 68, 153, 0.5);
   }
 }
 
@@ -1222,7 +1114,7 @@ h3 {
   -webkit-transition: transform 500ms ease, background 500ms ease;
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.1);
   /* background: #081c81; */
-  background-color: #134499;
+  background-color: rgb(9, 70, 175);;
 }
 
 .talk{
@@ -1249,6 +1141,7 @@ h3 {
   /* line 255, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .main-header-area.sticky {
     padding: 5px 0px;
+    background-color: #134499 !important;
   }
 }
 
@@ -2991,7 +2884,7 @@ h3 {
 @media (max-width: 767px) {
   /* line 13, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_bradcam.scss */
   .bradcam_area {
-    padding: 120px 0;
+    padding: 80px 0 40px 0;
   }
 }
 
@@ -7003,7 +6896,7 @@ h6 {
   font-size: 12px;
 }
 
-/*//////MY CODE///////////////////////*/
+/*////// MY CODE ///////////////////////*/
 
 .thisPage{
   color: gold !important;
@@ -7037,4 +6930,40 @@ h6 {
   background-image: url(../img/photo/process.jpg);
   background-size: cover;
   background-position: center;
+}
+
+.back-to-top{
+  color: #38a4ff;
+  border: 2px solid #38a4ff;
+  width: 35px;
+  height: 35px;
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 3px 0 0 8px;
+}
+
+.burger{
+  font-size: 2em;
+  color: #fff;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  z-index: 3;
+  cursor: pointer;
+}
+.menu-show{
+  display: block !important;
+}
+
+@media (max-width: 992px){
+  #menu{
+    margin: 25px;
+  }
+  #menu li{
+    display: block;
+    padding: 5px;
+  }
 }

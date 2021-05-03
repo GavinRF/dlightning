@@ -1,7 +1,6 @@
     <!-- header-start -->
     <header>
-        <div id="top"></div>
-        <div class="header-area ">
+        <div class="header-area">
             <div id="sticky-header" class="main-header-area">
                 <div class="container-fluid">
                     <div class="row align-items-center">
@@ -12,10 +11,11 @@
                                 </a>
                             </div>
                         </div>
+                        <i class="burger fa fa-bars d-lg-none"></i>
                         <div class="col-xl-6 col-lg-7">
-                            <div class="main-menu  d-none d-lg-block">
+                            <div class="navbar-nav main-menu d-none d-lg-block">
                                 <nav>
-                                    <ul id="navigation">
+                                    <ul id="menu">
                                         <li><a class="home" href="index.html">Home</a></li>
                                         <li><a class="process" href="Process.html">Process</a></li>
                                         <li><a class="caseStudies" href="casestudies.html">Case Studies <i class="ti-angle-down"></i></a>
@@ -23,7 +23,7 @@
                                                  <li><a href="TypeonPoint.html">Type on Point</a></li>
                                                  <li><a href="RisingSun.html">Rising Sun</a></li>
                                                  <li><a href="Nostalgia.html">Neon Dream</a></li>
-                                                 <li><a href="Punchline.html">Punch Line</a></li>
+                                                 <li><a href="Punchline.html">Punchline</a></li>
                                             </ul>
                                         </li>
                                         <li><a class="pricing" href="Pricing.html">Pricing</a></li>
@@ -33,15 +33,14 @@
                                                 <li><a href="single-blog.html">single-blog</a></li>
                                             </ul>
                                         </li>
-                                        <li><a class="contact" href="contact.html">Contact</a></li>
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div class="Appointment">
-                                <div class="book_btn d-none d-lg-block">
-                                    <a  href="#">Download</a>
+                                <div class="book_btn d-lg-block">
+                                    <a class="contact" href="contact.html">Contact Us</a>
                                 </div>
                             </div>
                         </div>
@@ -49,12 +48,13 @@
                             <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- <script>
-        $('.pricing').addClass('thisPage');
-    </script> -->
+<script>
+	$(".burger").on('click', function() {
+		$(".navbar-nav").toggleClass("menu-show");
+	});
+</script>

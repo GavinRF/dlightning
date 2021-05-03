@@ -375,6 +375,8 @@
             </div>
         </div>
     </section>
+
+    <!-- <div class="back-to-top" data-scroll-nav="0"></div> -->
     <!--================Blog Area =================-->
 
     <!-- footer start -->
@@ -391,6 +393,22 @@
                 $('.blog').addClass('thisPage');
             }
             });
+            });
+
+            var $backToTop = $(".back-to-top");
+            $backToTop.hide();
+
+
+            $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+            });
+
+            $backToTop.on('click', function(e) {
+            $("html, body").animate({scrollTop: 0}, 500);
             });
     </script>
     <!--/ footer end  -->
