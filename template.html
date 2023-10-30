@@ -1,0 +1,72 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>D⚡ | Home</title>
+    <meta name="description" content="UX design firm">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/clouds.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+</head>
+
+<body>
+
+    <!-- header-start -->
+    <header id='header'></header>
+
+
+
+    <!-- FOOTER  -->
+    <div class="footer" id="footer"></div>
+
+    <script>	
+    $(document).ready(function() {
+        $('#footer').load("footer.html");
+        $('#header').load("header.html", function( response, status, xhr ) {
+            if ( status == "error" ) {
+                var msg = "Sorry but there was an error: ";
+                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+            } else {
+                $('.contact').addClass('thisPage');
+            }
+            });
+            });
+    </script>
+    <!--/ footer + header add end  -->
+    
+        <!-- JS here -->
+        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+        <!-- popper - help text tooltip  -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <!-- waypoints - checks scroll position?-->
+        <script src="js/waypoints.min.js"></script> 
+        <script src="js/jquery.scrollUp.min.js"></script>
+        <!-- wow - reveal animations when in viewport  -->
+        <script src="js/wow.min.js"></script>
+        <!-- nice s - much better select box  -->
+        <script src="js/nice-select.min.js"></script>
+        <!-- nav - hamburger menu  -->
+        <script src="js/jquery.slicknav.min.js"></script>
+        <!-- helper  -->
+        <script src="js/plugins.js"></script>
+    
