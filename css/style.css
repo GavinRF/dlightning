@@ -939,12 +939,12 @@ h3 {
 
 /* line 124, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .main-header-area .Appointment .book_btn a {
-  background: #2795ED;
-  padding: 12px 26px;
+  background: gold;
+  padding: 8px 18px;
   font-size: 14px;
   font-weight: 500;
   border: 1px solid transparent;
-  color: #fff;
+  color: #131313;
   cursor: pointer;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -958,9 +958,9 @@ h3 {
 }
 
 .header-area .main-header-area .Appointment .book_btn a:hover {
-  background: #A1E5F8;
-  color: #fff;
-  border: 1px solid #4BA8FD;
+  background: goldenrod;
+  color: #020c26;
+  /* border: 1px solid #4BA8FD; */
 }
 
 .header-area .main-header-area .main-menu {
@@ -1119,7 +1119,7 @@ h3 {
 .talk{
   width: 65%;
   margin-left: 85%;
-  margin-top: -160px;
+  margin-top: -220px;
   z-index: -2;
 }
 
@@ -3237,7 +3237,7 @@ h3 {
 
 .testmonial_area p {
   color: #fff;
-  font-size: 18px;
+  font-size: 1rem;
   line-height: 24px;
   font-weight: 200;
   margin-top: 8px;
@@ -3271,7 +3271,7 @@ h3 {
 }
 
 .testmonial_area .rating_author i {
-  font-size: 24px;
+  font-size: 14px;
   color: #FFD35A;
   margin: 0 2px;
 }
@@ -3281,6 +3281,7 @@ h3 {
   font-weight: 400;
   color: #fff;
   text-transform: uppercase;
+  margin: 6px 0;
 }
 
 .testmonial_area .owl-carousel .owl-nav div {
@@ -3648,7 +3649,7 @@ h3 {
 /* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area {
   padding-top: 90px;
-  padding-bottom: 150px;
+  padding-bottom: 60px;
 }
 
 /* line 4, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
@@ -3665,7 +3666,7 @@ h3 {
 
 /* line 10, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .section_title {
-  padding-bottom: 90px;
+  padding-bottom: 60px;
 }
 
 @media (max-width: 767px) {
@@ -3743,12 +3744,12 @@ h3 {
   font-size: 16px;
   line-height: 30px;
   color: #727272;
-  margin-bottom: 30px;
+  margin-bottom: 14px;
 }
 
 /* line 65, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising ul li:last-child {
-  margin-bottom: 0;
+  margin-bottom: 42px;
 }
 
 /*=================== contact banner start ====================*/
@@ -6904,7 +6905,7 @@ h6 {
 }
 
 .testa-people{
-  width:20% !important; 
+  width:16% !important; 
   margin: 0 auto;
 }
 
