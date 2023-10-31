@@ -6902,6 +6902,11 @@ h6 {
   border-bottom: 2px solid gold !important;
 }
 
+.thisPage2{
+  /* color: rgb(11, 0, 54) !important; */
+  border: 2px solid #020c26 !important;
+}
+
 #navigation .submenu li a:hover{
   background-color: gold;
 }

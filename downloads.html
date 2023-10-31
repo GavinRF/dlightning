@@ -1,0 +1,119 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>D⚡ | Home</title>
+    <meta name="description" content="UX design firm">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/gijgo.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/clouds.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+</head>
+
+<body>
+
+    <!-- header-start -->
+    <header id='header'></header>
+    <!-- bradcam_area  -->
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>Downloads</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /bradcam_area  -->
+
+            <!-- about  -->
+            <div class="Process_area ">
+                <div class="container">
+                    <div class="Process_main_wrap">
+                        <div class="row  align-items-center">
+                            <div class="col-xl-5 col-lg-5 col-md-6">
+                                <div class="Process_info2">
+                                    <h3>things to download (coming soon)</h3>
+                                    <p>
+                                       assets, e-books, templates, and more! <br>When the users goals align with business goals we bring them together with design. People are at the center of our design process, we figure out who they are.
+                                    </p>
+                                    <div
+                                        class="about_btn"><!-- <a class="boxed-btn4" href="#">Download Now</a> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-5  col-md-6 ">
+                                <div class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".5s">
+                                    <img style="width: 85%" src="img/ilstrator/girl-with-glasses.jpg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ about  -->
+
+
+
+    <!-- FOOTER  -->
+    <div class="footer" id="footer"></div>
+
+    <script>	
+    $(document).ready(function() {
+        $('#footer').load("footer.html");
+        $('#header').load("header.html", function( response, status, xhr ) {
+            if ( status == "error" ) {
+                var msg = "Sorry but there was an error: ";
+                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+            } else {
+                $('.downloads').addClass('thisPage');
+            }
+            });
+            });
+    </script>
+    <!--/ footer + header add end  -->
+    
+        <!-- JS here -->
+        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+        <!-- popper - help text tooltip  -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/isotope.pkgd.min.js"></script>
+        <!-- waypoints - checks scroll position?-->
+        <script src="js/waypoints.min.js"></script> 
+        <script src="js/jquery.scrollUp.min.js"></script>
+        <script src="js/imagesloaded.pkgd.min.js"></script>
+        <!-- wow - reveal animations when in viewport  -->
+        <script src="js/wow.min.js"></script>
+        <!-- nice s - much better select box  -->
+        <!-- <script src="js/nice-select.min.js"></script> -->
+        <!-- nav - hamburger menu  -->
+        <script src="js/jquery.slicknav.min.js"></script>
+        <!-- helper  -->
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+
+    </html>
+    
