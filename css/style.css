@@ -437,9 +437,11 @@ h3 {
 /* line 29, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3 {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0181f5+0,5db2ff+100 */
-  background: rgb(255, 207, 16);
-  /* border: 3px solid #1a79b8; */
-  color: #020c26;
+  background: rgb(97, 178, 255); 
+  /* color: #fff !important; */
+  /* background: rgba(2, 106, 234, 0.5); rgba(255, 207, 16, 0.0) */
+  /* border: 2px solid rgb(255, 207, 16); */
+  color: #010a22;
   display: inline-block;
   padding: 14px 27px;
   font-family: 'Rubik', sans-serif;
@@ -456,14 +458,14 @@ h3 {
   transition: 0.5s;
   cursor: pointer;
   letter-spacing: 2px;
-  transition: border .3s ease-out;
+  /* transition: border .3s ease-out; */
 }
 
 /* line 48, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3:hover {
   background: #4BA8FD;
   color: #fff !important;
-  /* border: 3px solid transparent; */
+  /* border: 2px solid transparent; */
 }
 
 /* line 53, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
@@ -503,8 +505,8 @@ h3 {
 
 /* line 79, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn4:hover {
-  background: #0181F5;
-  color: #fff !important;
+  background: #65b4ff;
+  color: #010a22 !important;
 }
 
 /* line 84, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
