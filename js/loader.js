@@ -1,3 +1,8 @@
+// $(document).ready(function () {
+//     $('#loading').fadeOut(2200);
+// });
+
+
 $('.bolt').each(function(e) {
 
     var bolt = $(this),

@@ -68,7 +68,7 @@
   left: 50%;
   top: 44%;
 }
-.bolt div:before {
+/* .bolt div:before {
   width: 112px;
   height: 112px;
   margin: -56px 0 0 -56px;
@@ -84,7 +84,7 @@
   z-index: 1;
   -webkit-filter: blur(60px);
           filter: blur(60px);
-}
+} */
 .bolt div span {
   display: block;
   width: 126px;
@@ -94,8 +94,8 @@
           clip-path: polygon(40% 0%, 100% 0, 65% 40%, 88% 40%, 8% 100%, 36% 50%, 0 50%);
 }
 .bolt.animate div:before, .bolt.animate div:after {
-  -webkit-animation: shine 2s ease;
-          animation: shine 2s ease;
+  -webkit-animation: shine 1s ease;
+          animation: shine 1s ease;
 }
 .bolt.animate div span {
   -webkit-animation: morph 1s ease;
@@ -204,12 +204,16 @@
 } */
 
 #loading {
-  min-height: 100vh;
-  display: -webkit-box;
+  min-height: 45vh;
+  min-width: 100vw;
+  /* display: -webkit-box; */
   display: flex;
   -webkit-box-pack: center;
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
   background: #030c24;
+  /* position: sticky;
+  top: 0; */
+  z-index: 999;
 }
