@@ -1074,8 +1074,8 @@ h3 {
 
 @media (max-width: 567px) {
 .talk{
-  width: 100vw;
-  margin-left: 25%;
+  width: 95vw;
+  margin-left: 0%;
   margin-top: -60px;
   z-index: -2;
 }
@@ -3342,7 +3342,7 @@ h3 {
 }
 
 .service_area_2 .mobile_screen img {
-  width: 100%;
+  width: 95%;
   margin-left: 15px;
   transition: all .4s ease-in-out;
 }
@@ -3356,8 +3356,16 @@ h3 {
   padding-bottom: 60px;
 }
 
+@media (max-width: 767px) {
+  .service_area_2 .mobile_screen img {
+    width: 55%;
+    margin-left: 0px;
+    transition: all .4s ease-in-out;
+  }
+}
+
 .service_area_2 .service_content_wrap .single_service {
-  padding-right: 30px;
+  /* padding-right: 30px; */
   margin-bottom: 30px;
 }
 
