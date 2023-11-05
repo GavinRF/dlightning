@@ -1,6 +1,14 @@
-#cloudContainer{
-  max-width: 100vw;
-  overflow: hidden;
+.cloudParent{
+  position: absolute;
+  top:0px;
+  left:0px;
+}
+
+.cloudContainer{
+  overflow-x: hidden !important;
+  position: relative;
+  height: 500px;
+  width: 100vw;
 }
 
 .cloudCommon{
