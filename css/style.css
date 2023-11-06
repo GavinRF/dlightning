@@ -3886,7 +3886,9 @@ h1 {
 
 /* line 97, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 h2 {
-  font-size: 30px;
+  font-size: 36px;
+  font-weight: 300;
+  
 }
 
 /* line 101, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
