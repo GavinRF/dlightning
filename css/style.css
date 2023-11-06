@@ -333,40 +333,33 @@ h3 {
   top: 0px;
 }
 
-/* line 269, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/theme-default.scss */
 .owl-carousel:hover .owl-nav div {
   opacity: 1;
   visibility: visible;
 }
 
-/* line 272, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/theme-default.scss */
 .owl-carousel:hover .owl-nav div:hover {
   color: #fff;
   background: #28AE61;
   border: 1px solid transparent;
 }
 
-/* line 282, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/theme-default.scss */
 .mb-20px {
   margin-bottom: 20px;
 }
 
-/* line 286, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/theme-default.scss */
 .mb-55 {
   margin-bottom: 55px;
 }
 
-/* line 289, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/theme-default.scss */
 .mb-40 {
   margin-bottom: 40px;
 }
 
-/* line 292, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/theme-default.scss */
 .mb-20 {
   margin-bottom: 20px;
 }
 
-/* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn {
   background: #fff;
   color: #131313;
@@ -384,14 +377,12 @@ h3 {
   cursor: pointer;
 }
 
-/* line 17, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn:hover {
   background: #48B6FB;
   color: #fff !important;
   border: 1px solid #48B6FB;
 }
 
-/* line 22, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn:focus {
   outline: none;
 }
@@ -735,7 +726,7 @@ h3 {
 @media (max-width: 767px) {
   .header-area .main-header-area {
     padding: 10px 0px;
-    background-color: rgba(19, 68, 153, 0.5);
+    background-color: rgba(19, 68, 153, 0.9);
   }
 }
 
@@ -1405,13 +1396,13 @@ h3 {
 
 /* line 19, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .Process_area .Process_main_wrap {
-  padding: 90px 0;
+  padding: 40px 0 90px 0;
 }
 
 @media (max-width: 767px) {
   /* line 19, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_main_wrap {
-    padding: 30px 0;
+    padding: 0px 0 60px 0;
   }
 }
 
@@ -1591,7 +1582,7 @@ h3 {
 
 /* line 134, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .Process_area .Process_info ul {
-  margin-bottom: 56px;
+  margin-bottom: 36px;
 }
 
 @media (max-width: 767px) {
@@ -3656,7 +3647,7 @@ h3 {
   font-size: 20px;
   font-weight: 500;
   color: #0181F5;
-  line-height: 20px;
+  line-height: 40px;
 }
 
 /* line 44, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
@@ -6883,7 +6874,7 @@ h6 {
 }
 
 .produt-title{
-  margin-bottom: -52px;
+  margin: 46px 0 -52px 0;
 }
 
 .burger{
