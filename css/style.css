@@ -3622,11 +3622,11 @@ h3 {
 
 /* line 25, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  padding-bottom: 40px;
+  padding-bottom: 30px;
 }
 
 /* line 29, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
@@ -3888,7 +3888,7 @@ h1 {
 h2 {
   font-size: 36px;
   font-weight: 300;
-  
+
 }
 
 /* line 101, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
