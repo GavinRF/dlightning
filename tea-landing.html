@@ -31,11 +31,11 @@
 <body>
 
     <!-- header-start -->
-    <!-- <header id='header'></header> -->
-    <!-- bradcam_area  -->
-    <div class="bradcam_area bradcam_bg_1" style="background-color: #CCA684;">
+    <header id='header'></header>
+    <!-- bradcam_area  style="background-color: #CCA684;"-->
+    <div class="bradcam_area bradcam_bg_1" style="padding-bottom: 0px; padding-top: 95px; margin-bottom: 42px;">
 
-    <div style="height: 400px; z-index: 9; display: flex; justify-content: space-between;"> 
+    <div style="height: 300px; z-index: 9; display: flex; justify-content: space-between;"> 
         <!-- BOOK Mock -->
         <div>
             <ul class="shelf">
@@ -49,13 +49,13 @@
                      <span class="author">D l i g h t n i n g ⚡</span>
                      <!-- <h4>Contents:</h4> -->
                      <ul class="contents">
-                       <li><a href="#">Chapter 1<abbr>21/1/2014</abbr></a></li>
-                       <li><a href="#">Chapter 2<abbr>21/1/2014</abbr></a></li>
-                       <li><a href="#">Chapter 3<abbr>21/1/2014</abbr></a></li>
-                       <li><a href="#">Chapter 4<abbr>21/1/2014</abbr></a></li>
-                       <li><a href="#">Chapter 5<abbr>21/1/2014</abbr></a></li>
+                       <li><a href="#">Experience<abbr>1 - 40</abbr></a></li>
+                       <li><a href="#">Interaction<abbr>41 - 60</abbr></a></li>
+                       <li><a href="#">Chapter 3<abbr>70 - 90</abbr></a></li>
+                       <li><a href="#">Ethics<abbr>90 - 100</abbr></a></li>
+                       <li><a href="#">Validation<abbr>101 - 130</abbr></a></li>
                      </ul>
-                    <a href="#" class="button">Continue reading</a>
+                    <a href="#" class="button">Buy Now</a>
                   </li>
                   <li style="top:2px;left:2px;z-index:3;"></li>
                   <li style="top:4px;left:4px;z-index:2;"></li>
@@ -66,13 +66,13 @@
             </li>
           </ul>
         </div>
-        <img src="img/products/Chilling-Tea.png" style="width: auto; height: 140%;">
+        <!-- <img src="img/products/Chilling-Tea.png" style="width: auto; height: 145%;"> -->
     </div>
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
                     <div class="bradcam_text">
-                        <h3>Your Cup of Tea</h3>
+                        <!-- <h3>Roadmap to <br>idea validation</h3> -->
                     
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="col-xl-5 col-lg-5  col-md-6 ">
                                 <div class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".5s">
-                                    <img style="width: 85%" src="img/ilstrator/workers.png" alt="">
+                                    <img style="width: 45%; margin-bottom: -100px;" src="img/products/cute-tea.png" alt="">
                                 </div>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                 var msg = "Sorry but there was an error: ";
                 $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
             } else {
-                $('.downloads').addClass('thisPage');
+                // $('.downloads').addClass('thisPage');
             }
             });
             });

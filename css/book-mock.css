@@ -10,10 +10,10 @@
 }
 .shelf{
   padding:35px;
-  margin: -40px 0px 80px 280px;
+  margin: -20px 0px 80px 180px;
   line-height:0;
   text-align:center;
-  transform: rotate(0.95deg);
+  transform: rotate(0.55deg);
 }
 .shelf:after{content:'';display:block;clear:both;}
 
@@ -46,7 +46,7 @@
 .shelf>li.open:before{box-shadow:0 0 0 transparent inset;}
 
 .shelf>li>img{
-  width:240px;
+  width:220px;
   z-index:20;
   position:relative;
   border-radius:2px 3px 3px 2px;
