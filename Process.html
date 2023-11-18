@@ -229,7 +229,7 @@
 
                 <!--/ service_area_2  -->
                        <!-- about  -->
-        <div class="Process_area ">
+        <!-- <div class="Process_area ">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -245,7 +245,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -267,7 +267,7 @@
                         <div class="app_download wow fadeInDown" data-wow-duration="1s" data-wow-delay=".1s">
 
                             <div class="about_btn wow fadeInUp" data-wow-duration=".22s" data-wow-delay=".6s" >
-                                <a class="boxed-btn4" href="contact.html">Contact Us</a>
+                                <a class="boxed-btn4" href="contact.html">Bring It On</a>
                                 <br><br>
                             </div>
 
@@ -277,6 +277,9 @@
             </div>
         </div>
         <!--/ productivity_area  -->
+
+        <!--/ back to top  -->
+        <div class="back-to-top" data-scroll-nav="0"><i class="fa fa-arrow-up"></i></div>
 
         <!-- footer start -->
         <div class="footer" id="footer"></div>
@@ -292,6 +295,22 @@
                 $('.process').addClass('thisPage');
             }
             });
+            });
+
+            //Scroll to top
+            var $backToTop = $(".back-to-top");
+            $backToTop.hide();
+
+            $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+            });
+
+            $backToTop.on('click', function(e) {
+            $("html, body").animate({scrollTop: 0}, 500);
             });
         </script>
         <!--/ footer end  -->

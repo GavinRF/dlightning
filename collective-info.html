@@ -141,10 +141,14 @@
                 <img class="talk" src="img/ilstrator/think-green.png">
              </div>
 
+             <!-- Scroll to top button -->
+             <div class="back-to-top" data-scroll-nav="0"><i class="fa fa-arrow-up"></i></div>
+
     <!-- FOOTER  -->
     <div class="footer" id="footer"></div>
 
     <script>	
+    //Load header and footer
     $(document).ready(function() {
         $('#footer').load("footer.html");
         $('#header').load("header.html", function( response, status, xhr ) {
@@ -155,6 +159,22 @@
                 $('.downloads').addClass('thisPage');
             }
             });
+            });
+
+             //Scroll to top
+             var $backToTop = $(".back-to-top");
+            $backToTop.hide();
+
+            $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+            });
+
+            $backToTop.on('click', function(e) {
+            $("html, body").animate({scrollTop: 0}, 500);
             });
     </script>
     <!--/ footer + header add end  -->

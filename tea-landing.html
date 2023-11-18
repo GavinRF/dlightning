@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>D⚡ | Home</title>
+    <title>Your Cup of Tea | D⚡</title>
     <meta name="description" content="UX design firm">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/gijgo.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/clouds.css">
+    <link rel="stylesheet" href="css/book-mock.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
@@ -31,14 +31,49 @@
 <body>
 
     <!-- header-start -->
-    <header id='header'></header>
+    <!-- <header id='header'></header> -->
     <!-- bradcam_area  -->
-    <div class="bradcam_area bradcam_bg_1">
+    <div class="bradcam_area bradcam_bg_1" style="background-color: #CCA684;">
+
+    <div style="height: 400px; z-index: 9; display: flex; justify-content: space-between;"> 
+        <!-- BOOK Mock -->
+        <div>
+            <ul class="shelf">
+            <li>
+              <img class="cover" src="img/products/Authority.png"/>
+              <div class="backface"></div>
+              <div class="pagecontainer">
+                <ul class="pages">
+                  <li class="top" style="top:0;left:0;z-index:4;">
+                     <h1>Your Cup of Tea</h1>
+                     <span class="author">D l i g h t n i n g ⚡</span>
+                     <!-- <h4>Contents:</h4> -->
+                     <ul class="contents">
+                       <li><a href="#">Chapter 1<abbr>21/1/2014</abbr></a></li>
+                       <li><a href="#">Chapter 2<abbr>21/1/2014</abbr></a></li>
+                       <li><a href="#">Chapter 3<abbr>21/1/2014</abbr></a></li>
+                       <li><a href="#">Chapter 4<abbr>21/1/2014</abbr></a></li>
+                       <li><a href="#">Chapter 5<abbr>21/1/2014</abbr></a></li>
+                     </ul>
+                    <a href="#" class="button">Continue reading</a>
+                  </li>
+                  <li style="top:2px;left:2px;z-index:3;"></li>
+                  <li style="top:4px;left:4px;z-index:2;"></li>
+                  <li style="top:6px;left:6px;z-index:1;"></li>
+                </ul>
+              </div>
+              <div class="bottomcover"></div>
+            </li>
+          </ul>
+        </div>
+        <img src="img/products/Chilling-Tea.png" style="width: auto; height: 140%;">
+    </div>
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
                     <div class="bradcam_text">
-                        <h3>Downloads</h3>
+                        <h3>Your Cup of Tea</h3>
+                    
                     </div>
                 </div>
             </div>
@@ -53,9 +88,9 @@
                         <div class="row  align-items-center">
                             <div class="col-xl-5 col-lg-5 col-md-6">
                                 <div class="Process_info2">
-                                    <h3>Things to Download (coming soon)</h3>
+                                    <h3>Design for Experience</h3>
                                     <p>
-                                       assets, e-books, templates, and more!
+                                       e-books! do you want to be a change maker? do you want to design something that people want, and crave? Do you want to do it ethically?
                                     </p>
                                     <div
                                         class="about_btn"><!-- <a class="boxed-btn4" href="#">Download Now</a> -->
@@ -105,6 +140,10 @@
 
             $backToTop.on('click', function(e) {
             $("html, body").animate({scrollTop: 0}, 500);
+            });
+//Close book mock
+            $('.shelf>li>img,.shelf>li>.backface').click(function(){
+              $(this).closest('li').toggleClass('open');
             });
     </script>
     <!--/ footer + header add end  -->

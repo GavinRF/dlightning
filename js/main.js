@@ -12,7 +12,7 @@ $(window).on('scroll', function () {
 	}
 });
 
-
+//Tried to fix mobile overscroll, but CSS did the trick.
 // function disableScroll() {
 // // Get the current page scroll position in the horizontal direction 
 // scrollLeft = document.documentElement.scrollLeft;
@@ -233,7 +233,7 @@ $('.popup-video').magnificPopup({
 });
 
 
-  // scrollIt for smoth scroll
+  // scrollIt for smooth scroll
   $.scrollIt({
     upKey: 38,             // key code to navigate to the next section
     downKey: 40,           // key code to navigate to the previous section

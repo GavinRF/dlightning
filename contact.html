@@ -58,8 +58,8 @@
     
                 <div class="row">
                     <!-- <div class="col-2 col-sm-0"></div> -->
-                    <div class="col-12 align-items-center" style="margin-bottom: 62px; overflow-y: hidden;">
-                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfbHfY7Zr0-51-ZspAZm6KmREMIFdohdcXBNXjQqH5e7AkUFg/viewform?embedded=true" width="100%" style="min-width:350px" height="1022" style="margin: 0 auto;" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> 
+                    <div class="col-12 align-items-center" style="margin-bottom: 2px; overflow-y: hidden;">
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfbHfY7Zr0-51-ZspAZm6KmREMIFdohdcXBNXjQqH5e7AkUFg/viewform?embedded=true" width="100%" style="min-width: 345px" height="1022" style="margin: 0 auto;" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> 
                     </div>
                     <!-- <div class="col-2"></div> -->
                 </div>
@@ -79,7 +79,9 @@
            <img class="talk" src="img/ilstrator/talk.png">
         </div>
     <!-- ================ contact section end ================= -->
-    
+
+     <!-- Scroll to top button  -->
+     <div class="back-to-top" data-scroll-nav="0"><i class="fa fa-arrow-up"></i></div>
     <!-- footer start -->
     <div class="footer" id="footer"></div>
 
@@ -94,6 +96,21 @@
                 $('.contact').addClass('thisPage2');
             }
             });
+            });
+     //Scroll to top
+     var $backToTop = $(".back-to-top");
+            $backToTop.hide();
+
+            $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+            });
+
+            $backToTop.on('click', function(e) {
+            $("html, body").animate({scrollTop: 0}, 500);
             });
     </script>
     <!--/ footer end  -->

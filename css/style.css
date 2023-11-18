@@ -1127,29 +1127,24 @@ h3 {
   margin-right: 12px;
 }
 
-/* line 308, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .header-top_area .social_media_links a:hover {
   color: #28AE60;
 }
 
-/* line 313, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .header-top_area .short_contact_list {
   text-align: right;
 }
 
 @media (max-width: 767px) {
-  /* line 313, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .header-top_area .short_contact_list {
     text-align: center;
   }
 }
 
-/* line 319, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .header-top_area .short_contact_list ul li {
   display: inline-block;
 }
 
-/* line 321, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .header-top_area .short_contact_list ul li a {
   font-size: 13px;
   color: #fff;
@@ -1157,20 +1152,17 @@ h3 {
 }
 
 @media (max-width: 767px) {
-  /* line 321, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
   .header-area .header-top_area .short_contact_list ul li a {
     margin-left: 0;
     margin: 0 5px;
   }
 }
 
-/* line 330, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header-area .header-top_area .short_contact_list ul li a i {
   color: #28AE60;
   margin-right: 7px;
 }
 
-/* line 340, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
 .header_bottom_border {
   border-bottom: 1px solid #4B4E50;
   padding-bottom: 22px;
@@ -3544,7 +3536,6 @@ h3 {
   margin-right: 30px;
 }
 
-/* line 14, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_emergency_contact.scss */
 .Emergency_contact .single_emergency .info h3 {
   font-size: 26px;
   font-weight: 500;
@@ -3552,13 +3543,11 @@ h3 {
 }
 
 @media (min-width: 1200px) and (max-width: 1500px) {
-  /* line 14, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_emergency_contact.scss */
   .Emergency_contact .single_emergency .info h3 {
     font-size: 20px;
   }
 }
 
-/* line 22, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_emergency_contact.scss */
 .Emergency_contact .single_emergency .info p {
   color: #fff;
   font-size: 13px;
@@ -3566,61 +3555,51 @@ h3 {
   margin-bottom: 0;
 }
 
-/* line 30, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_emergency_contact.scss */
 .Emergency_contact .single_emergency .info_button a {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   border-radius: 30px;
 }
 
-/* line 36, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_emergency_contact.scss */
 .emergency_bg_1 {
   background-image: url(../img/banner/emergency-1.png);
 }
 
-/* line 39, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_emergency_contact.scss */
 .emergency_bg_2 {
   background-image: url(../img/banner/emergency-2.png);
 }
 
-/* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area {
   padding-top: 90px;
   padding-bottom: 60px;
 }
 
-/* line 4, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area.minus_padding {
   padding-bottom: 0;
 }
 
 @media (max-width: 767px) {
-  /* line 1, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
   .prising_area {
     padding: 50px 0 20px 0;
   }
 }
 
-/* line 10, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .section_title {
   padding-bottom: 60px;
 }
 
 @media (max-width: 767px) {
-  /* line 10, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
   .prising_area .section_title {
     padding-bottom: 30px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 10, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
   .prising_area .section_title {
     padding-bottom: 50px;
   }
 }
 
-/* line 25, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising {
   margin-bottom: 20px;
   -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
@@ -3629,20 +3608,17 @@ h3 {
   padding-bottom: 30px;
 }
 
-/* line 29, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising .prising_header {
   background: #E9F4FE;
   padding: 28px 35px;
 }
 
-/* line 32, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising .prising_header h3 {
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 0;
 }
 
-/* line 37, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising .prising_header span {
   font-size: 20px;
   font-weight: 500;
@@ -3650,33 +3626,27 @@ h3 {
   line-height: 40px;
 }
 
-/* line 44, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising .prising_header.green_header {
   background: #e8fcf9;
 }
 
-/* line 46, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising .prising_header.green_header span {
   color: #00d3b7;
 }
 
-/* line 50, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising .prising_header.pink_header {
   background: #eef9fe;
 }
 
-/* line 52, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising .prising_header.pink_header span {
   color: #5ca2fd;
 }
 
-/* line 57, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising ul {
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
-/* line 60, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising ul li {
   font-size: 16px;
   line-height: 30px;
@@ -3684,13 +3654,11 @@ h3 {
   margin-bottom: 14px;
 }
 
-/* line 65, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_prising.scss */
 .prising_area .single_prising ul li:last-child {
   margin-bottom: 42px;
 }
 
 /*=================== contact banner start ====================*/
-/* line 3, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .dropdown .dropdown-menu {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
@@ -3699,23 +3667,19 @@ h3 {
   transition: all 0.3s;
 }
 
-/* line 10, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .contact-info {
   margin-bottom: 25px;
 }
 
-/* line 13, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .contact-info__icon {
   margin-right: 20px;
 }
 
-/* line 16, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .contact-info__icon i, .contact-info__icon span {
   color: #8f9195;
   font-size: 27px;
 }
 
-/* line 24, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .contact-info .media-body h3 {
   font-size: 16px;
   margin-bottom: 0;
@@ -3723,31 +3687,26 @@ h3 {
   color: #2a2a2a;
 }
 
-/* line 30, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .contact-info .media-body h3 a:hover {
   color: #ff5e13;
 }
 
-/* line 36, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .contact-info .media-body p {
   color: #8a8a8a;
 }
 
 /*=================== contact banner end ====================*/
 /*=================== contact form start ====================*/
-/* line 45, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .contact-title {
   font-size: 27px;
   font-weight: 600;
   margin-bottom: 20px;
 }
 
-/* line 53, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .form-contact label {
   font-size: 14px;
 }
 
-/* line 57, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .form-contact .form-group {
   margin-bottom: 30px;
 }
@@ -3821,25 +3780,21 @@ h3 {
   padding-bottom: 10px;
 }
 
-/* line 126, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .modal-message .modal-dialog .modal-content .modal-header p {
   display: block;
 }
 
-/* line 133, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
 .contact-section {
-  padding: 90px 0 100px;
+  padding: 60px 0 0px 0;
 }
 
 @media (max-width: 991px) {
-  /* line 133, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
   .contact-section {
     padding: 70px 0 40px;
   }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
-  /* line 133, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_contact.scss */
   .contact-section {
     padding: 80px 0 50px;
   }
@@ -6899,5 +6854,16 @@ h6 {
   #menu li{
     display: block;
     padding: 5px;
+  }
+}
+
+.contactLink{
+  display: none !important;
+  font-size: 44px;
+}
+
+@media (max-width: 991px) {
+  .contactLink {
+    display: inline !important;
   }
 }
