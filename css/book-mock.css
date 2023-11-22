@@ -4,13 +4,13 @@
   line-height:normal;
   margin-top:40px;
   font-size:20px;
-  font-family:Georgia,Times,serif;
-  font-weight:normal;
+  font-family: Rubik;
+  font-weight:lighter;
   text-shadow:1px 1px 1px #000;
 }
 .shelf{
   padding:35px;
-  margin: -20px 0px 80px 180px;
+  margin: -20px 0px 80px 185px;
   line-height:0;
   text-align:center;
   transform: rotate(0.55deg);
@@ -174,16 +174,16 @@ h1{
   display:block;
   text-align:center;
   padding:8px 15px;
-  border:1px solid rgba(255,255,255,0.4);
+  /* border:1px solid rgba(255,255,255,0.4); */
   background-color:#282828;
   color:#fff;
   text-decoration:none;
-  font-family:Arial,sans-serif;
-  font-size:12px;
+  font-family: Rubik;
+  font-size: 14px;
   font-weight:normal;
   border-radius:8px;
-  box-shadow: 0 0 0 1px #333,
-              0 -10px 20px rgba(0,0,0,0.5) inset;
+  /* box-shadow: 0 0 0 1px #333,
+              0 -10px 20px rgba(0,0,0,0.5) inset; */
   text-shadow:1px 1px 0 #000;
   transition:all 0.35s;
 }
@@ -199,4 +199,9 @@ h1{
   background-color:rgb(30, 12, 2);
   border-radius:2px 3px 3px 2px;
   box-shadow:1px 1px 5px rgba(0,0,0,0.5);
+}
+
+.stickyBook{
+    position: sticky;
+    top: 166px;
 }
