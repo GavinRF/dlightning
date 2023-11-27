@@ -3135,16 +3135,19 @@ h3 {
   perspective: 1335px;
 }
 
+.service_area_2 .man_thumb img {
+  width: 75%;
+  margin-top: 45px;
+}
+
 @media (max-width: 767px) {
   .service_area_2 .man_thumb {
     margin-bottom: 30px;
   }
-}
 
-.service_area_2 .man_thumb img {
-  width: 75%;
-  margin-top: 45px;
-  /* transform: rotate3d(23, 12, -3, 19deg) translateX(-15px); */
+  .service_area_2 .man_thumb img {
+    width: 95%;
+  }
 }
 
 .service_area_2 .mobile_screen {
