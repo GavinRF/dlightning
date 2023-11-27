@@ -9,8 +9,8 @@
   text-shadow:1px 1px 1px #000;
 }
 .shelf{
-  padding:35px;
-  margin: -20px 0px 80px 185px;
+  /* padding:35px; */
+  margin: 70px 0px 80px 170px;
   line-height:0;
   text-align:center;
   transform: rotate(0.55deg);
@@ -19,7 +19,7 @@
 
 @media (max-width: 991px) {
     .shelf {
-        margin: -40px 0px 80px 12%;
+        margin: 20px 0px 80px 12%;
     }
   }
 
@@ -46,7 +46,7 @@
 .shelf>li.open:before{box-shadow:0 0 0 transparent inset;}
 
 .shelf>li>img{
-  width:220px;
+  width:240px;
   z-index:20;
   position:relative;
   border-radius:2px 3px 3px 2px;
