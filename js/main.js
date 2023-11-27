@@ -3,7 +3,7 @@
 // TOP Menu Sticky
 $(window).on('scroll', function () {
 	var scroll = $(window).scrollTop();
-	if (scroll < 400) {
+	if (scroll < 350) {
     $("#sticky-header").removeClass("sticky");
     $('#back-top').fadeIn(500);
 	} else {
@@ -12,20 +12,8 @@ $(window).on('scroll', function () {
 	}
 });
 
-//Tried to fix mobile overscroll, but CSS did the trick.
-// function disableScroll() {
-// // Get the current page scroll position in the horizontal direction 
-// scrollLeft = document.documentElement.scrollLeft;
-// // if any scroll is attempted, set this to the previous value
-// window.onscroll = function() {
-// window.scrollTo(scrollLeft);
-// };
-// }
-// disableScroll();
-
 
 $(document).ready(function(){
-
 // mobile_menu
 var menu = $('ul#navigation');
 if(menu.length){
@@ -111,38 +99,6 @@ autoplaySpeed: 800,
   }
 });
 
-// review-active
-$('.financial_active').owlCarousel({
-  loop:true,
-  margin:0,
-items:1,
-autoplay:true,
-navText:['<i class="ti-angle-left"></i>','<i class="ti-angle-right"></i>'],
-  nav:true,
-dots:false,
-autoplayHoverPause: true,
-autoplaySpeed: 800,
-
-  responsive:{
-      0:{
-          items:1,
-          nav:false
-      },
-      767:{
-          items:1,
-          nav:false
-      },
-      992:{
-          items:1
-      },
-      1200:{
-          items:1
-      },
-      1500:{
-          items:1
-      }
-  }
-});
 
 // review-active
 $('.testmonial_active2').owlCarousel({
@@ -178,23 +134,6 @@ center: true,
   }
 });
 
-// for filter
-  // init Isotope
-  var $grid = $('.grid').isotope({
-    itemSelector: '.grid-item',
-    percentPosition: true,
-    masonry: {
-      // use outer width of grid-sizer for columnWidth
-      columnWidth: 1
-    }
-  });
-
-  // filter items on button click
-  $('.portfolio-menu').on('click', 'button', function () {
-    var filterValue = $(this).attr('data-filter');
-    $grid.isotope({ filter: filterValue });
-  });
-
   //for menu active class
   $('.portfolio-menu button').on('click', function (event) {
     $(this).siblings('.active').removeClass('active');
@@ -202,22 +141,26 @@ center: true,
     event.preventDefault();
 	});
   
-  // wow js
-  new WOW().init();
-
-  // counter 
-  $('.counter').counterUp({
-    delay: 10,
-    time: 10000
+  $('#container').imagesLoaded().always( function( instance ) {
+    console.log('ALWAYS - all images have been loaded');
+    // wow js
+    new WOW().init();
   });
 
+
+  // counter 
+  // $('.counter').counterUp({
+  //   delay: 10,
+  //   time: 10000
+  // });
+
 /* magnificPopup img view */
-$('.popup-image').magnificPopup({
-	type: 'image',
-	gallery: {
-	  enabled: true
-	}
-});
+// $('.popup-image').magnificPopup({
+// 	type: 'image',
+// 	gallery: {
+// 	  enabled: true
+// 	}
+// });
 
 /* magnificPopup img view */
 $('.img-pop-up').magnificPopup({
@@ -393,16 +336,6 @@ $(document).ready(function() {
   );
   wow.init();
 });
-
-
-
-//------- Mailchimp js --------//  
-function mailChimp() {
-  $('#mc_embed_signup').find('form').ajaxChimp();
-}
-mailChimp();
-
-
 
         // Search Toggle
         $("#search_input_box").hide();
