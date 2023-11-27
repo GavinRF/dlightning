@@ -143,11 +143,11 @@ center: true,
   
   $('#container').imagesLoaded().always( function( instance ) {
     console.log('ALWAYS - all images have been loaded');
-    // wow js
-    new WOW().init();
   });
 
-
+    // wow js
+    new WOW().init();
+    
   // counter 
   // $('.counter').counterUp({
   //   delay: 10,
