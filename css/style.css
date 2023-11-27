@@ -1446,13 +1446,11 @@ h3 {
   }
 }
 
-/* line 69, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .Process_area .Process_info {
   padding-left: 68px;
 }
 
 @media (max-width: 767px) {
-  /* line 69, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -1462,7 +1460,6 @@ h3 {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 69, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info {
     padding-left: 30px;
     padding-top: 100px;
@@ -1471,7 +1468,6 @@ h3 {
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  /* line 69, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info {
     padding-left: 30px;
     padding-top: 0;
@@ -1480,14 +1476,12 @@ h3 {
 }
 
 @media (min-width: 1200px) and (max-width: 1500px) {
-  /* line 69, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info {
     padding-left: 30px;
     padding-top: 0;
   }
 }
 
-/* line 93, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .Process_area .Process_info h3 {
   font-size: 46px;
   line-height: 60px;
