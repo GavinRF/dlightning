@@ -1370,33 +1370,28 @@ h3 {
   width: 80%;
 }
 
-/* line 19, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .Process_area .Process_main_wrap {
   padding: 40px 0 40px 0;
 }
 
 @media (max-width: 767px) {
-  /* line 19, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_main_wrap {
-    padding: 0px 0 60px 0;
+    padding: 0px 0 20px 0;
   }
 }
 
 @media (max-width: 767px) {
-  /* line 25, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_main_wrap .about_image img {
     width: 80%;
   }
 }
 
 @media (max-width: 767px) {
-  /* line 32, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info2 {
     margin-bottom: 30px;
   }
 }
 
-/* line 36, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .Process_area .Process_info2 h3 {
   font-size: 46px;
   line-height: 60px;
@@ -1405,7 +1400,6 @@ h3 {
 }
 
 @media (max-width: 767px) {
-  /* line 36, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info2 h3 {
     font-size: 30px;
     line-height: 40px;
@@ -1413,7 +1407,6 @@ h3 {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 36, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info2 h3 {
     font-size: 35px;
     line-height: 45px;
@@ -1421,14 +1414,12 @@ h3 {
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  /* line 36, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info2 h3 {
     font-size: 30px;
     line-height: 40px;
   }
 }
 
-/* line 54, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .Process_area .Process_info2 p {
   font-size: 16px;
   line-height: 28px;
@@ -1440,7 +1431,6 @@ h3 {
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  /* line 62, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
   .Process_area .Process_info2 p br {
     display: none;
   }
@@ -4166,12 +4156,12 @@ h6 {
 .unordered-list li:before {
   content: "";
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border: 3px solid #065cad;
   background: #fff;
   top: 9px;
-  left: 0;
+  left: -1px;
   border-radius: 50%;
 }
 
@@ -6722,4 +6712,11 @@ details[open] summary ~ * {
 
 #contents span b{
   padding-left: 14px;
+}
+
+.gumroad .cart-button{
+  top: 0.15rem !important;
+  right: 3.85rem !important;
+  transform: scale(80%);
+  /* background-color: hotpink !important; */
 }
