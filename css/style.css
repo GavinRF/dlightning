@@ -381,6 +381,7 @@ h3 {
   background: #48B6FB;
   color: #fff !important;
   border: 1px solid #48B6FB;
+  cursor: pointer;
 }
 
 .boxed-btn:focus {
@@ -393,7 +394,7 @@ h3 {
 
 .boxed-btn3 {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0181f5+0,5db2ff+100 */
-  background: rgb(97, 178, 255); 
+  background: rgb(97, 179, 255); 
   /* color: #fff !important; */
   /* background: rgba(2, 106, 234, 0.5); rgba(255, 207, 16, 0.0) */
   /* border: 2px solid rgb(255, 207, 16); */
@@ -417,24 +418,21 @@ h3 {
   /* transition: border .3s ease-out; */
 }
 
-/* line 48, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3:hover {
-  background: #4BA8FD;
+  background: #4ba7fd;
   color: #fff !important;
+  cursor: pointer;
   /* border: 2px solid transparent; */
 }
 
-/* line 53, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3:focus {
   outline: none;
 }
 
-/* line 56, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3.large-width {
   width: 220px;
 }
 
-/* line 60, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn4 {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0181f5+0,5db2ff+100 */
   background: #0181F5;
@@ -459,23 +457,20 @@ h3 {
   letter-spacing: 2px;
 }
 
-/* line 79, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn4:hover {
   background: #65b4ff;
   color: #010a22 !important;
+  cursor: pointer;
 }
 
-/* line 84, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn4:focus {
   outline: none;
 }
 
-/* line 87, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn4.large-width {
   width: 220px;
 }
 
-/* line 92, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3-white {
   color: #fff;
   display: inline-block;
@@ -499,29 +494,24 @@ h3 {
   letter-spacing: 2px;
 }
 
-/* line 109, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3-white:hover {
   background: #28AE61;
   color: #fff !important;
   border: 1px solid transparent;
 }
 
-/* line 114, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3-white i {
   margin-right: 2px;
 }
 
-/* line 117, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3-white:focus {
   outline: none;
 }
 
-/* line 120, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3-white.large-width {
   width: 220px;
 }
 
-/* line 125, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
 .boxed-btn3-green-2 {
   color: #48B6FB !important;
   display: inline-block;
@@ -549,6 +539,7 @@ h3 {
   background: #48B6FB;
   color: #fff !important;
   border: 1px solid transparent;
+  cursor: pointer;
 }
 
 /* line 146, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_btn.scss */
@@ -579,6 +570,7 @@ h3 {
 .boxed-btn2:hover {
   background: #fff;
   color: #131313 !important;
+  cursor: pointer;
 }
 
 .boxed-btn2:focus {
