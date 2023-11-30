@@ -5010,11 +5010,35 @@ h6 {
     display: block;
     padding: 5px;
   }
+
+  .center-sm{
+    text-align: center;
+  }
 }
+
 
 .contactLink{
   display: none !important;
   font-size: 44px;
+}
+
+.gumroad .cart-button{
+  top: 0.15rem !important;
+  right: 3.85rem !important;
+  transform: scale(80%);
+  /* background-color: hotpink !important; */
+}
+
+.gumroad .logo-full, .gumroad-button .logo-full {
+  width: calc(1em/0.20) !important;
+  margin: 0 0 -4px -2px;
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .gumroad .cart-button{
+    top: 0.5rem !important;
+    right: 10.85rem !important;
+  }
 }
 
 @media (max-width: 991px) {
@@ -5048,16 +5072,4 @@ details[open] summary ~ * {
 
 #contents span b{
   padding-left: 14px;
-}
-
-.gumroad .cart-button{
-  top: 0.15rem !important;
-  right: 3.85rem !important;
-  transform: scale(80%);
-  /* background-color: hotpink !important; */
-}
-
-.gumroad .logo-full, .gumroad-button .logo-full {
-  width: calc(1em/0.20) !important;
-  margin: 0 0 -4px -2px;
 }
