@@ -1524,7 +1524,7 @@ h3 {
   line-height: 28px;
   color: #727272;
   margin-bottom: 22px;
-  margin-top: 28px;
+  margin-top: 12px;
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
@@ -1549,11 +1549,11 @@ h3 {
 /* line 139, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .Process_area .Process_info ul li {
   font-size: 16px;
-  line-height: 28px;
+  line-height: 24px;
   color: #727272;
   position: relative;
   padding-left: 28px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: 400;
   z-index: 1;
 }
@@ -1566,7 +1566,7 @@ h3 {
   width: 16px;
   height: 16px;
   content: '';
-  top: 14px;
+  top: 13px;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
