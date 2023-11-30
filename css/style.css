@@ -1564,7 +1564,7 @@ h3 {
   width: 16px;
   height: 16px;
   content: '';
-  top: 50%;
+  top: 14px;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
