@@ -23,8 +23,11 @@
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/clouds.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -52,7 +55,7 @@
                     <div class="Process_main_wrap">
                         <div class="row align-items-center">
                             <div class="col-xl-5 col-lg-5 col-md-6">
-                                <div class="Process_info2">
+                                <div class="Process_info2" data-aos="fade-right" data-aos-delay="400" data-aos-duration="650">
                                     <h3>Assets, e-books, &&nbsp;templates!</h3>
                                     <p>
                                        Build your own experience with a little help from our homegrown content.
@@ -72,7 +75,7 @@
                         <div class="row">
                             <div class="col-xl-5 col-lg-5 col-md-5">
                                 <div class="Process_info" style="padding-left: 0px;">
-                                    <h3 class="wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".3s">Your Cup of Tea</h3>
+                                    <h3 data-aos="fadeup" data-aos-duration="500" data-aos-delay="300">Your Cup of Tea</h3>
                                     <p class="wow fadeInUp" data-wow-duration=".6s" data-wow-delay=".4s">Our Design Manifesto.</p>
                                     <ul>
                                         <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".5s">
@@ -93,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
-                                <div class="wow fadeInLeft" data-wow-duration=".4s" data-wow-delay=".3s">
+                                <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
                                     <a href="tea-landing.html">
                                         <img style="width: 62%;" src="img/products/Book Cover.png" alt="cover for Your Cup of Tea book, a cast-iron kettle pouring hot water into a mug">
                                     </a>
@@ -195,6 +198,8 @@
     <div class="footer" id="footer"></div>
 
     <script>	
+        AOS.init();
+
     $(document).ready(function() {
         $('#footer').load("footer.html");
         $('#header').load("header.html", function( response, status, xhr ) {
