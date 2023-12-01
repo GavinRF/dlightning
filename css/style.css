@@ -1315,6 +1315,7 @@ h3 {
 @media (max-width: 767px) {
   .slider_area .single_slider .slider_text p {
     font-size: 16px;
+    margin-bottom: 32px;
   }
 }
 
