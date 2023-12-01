@@ -25,7 +25,9 @@
     <link rel="stylesheet" href="css/book-mock.css">
     <link rel="stylesheet" href="css/blog.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -53,7 +55,7 @@
                     <div class="Process_main_wrap" style="padding-bottom: 0px;">
                         <div class="row  align-items-center">
                             <div class="col-xl-6 col-lg-6 col-md-7">
-                                <div class="Process_info2">
+                                <div class="Process_info2" data-aos="fade-left" data-aos-delay="500" data-aos-duration="650">
                                     <h3>Design a Better Future</h3>
                                     <p class="excert">
                                     This is a book for those who want to gain confidence in creating products, digital or otherwise, that grab people’s attention and stand for social good. 
@@ -536,6 +538,8 @@
     <div class="footer" id="footer"></div>
 
     <script>	
+    AOS.init();
+
     $(document).ready(function() {
         $('#footer').load("footer.html");
         $('#header').load("header.html", function( response, status, xhr ) {
