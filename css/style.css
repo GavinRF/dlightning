@@ -4941,7 +4941,9 @@ h6 {
 
 .thisPage2{
   /* color: rgb(11, 0, 54) !important; */
-  border: 2px solid #020c26 !important;
+  /* border: 2px solid #020c26 !important; */
+  /* background-color: rgb(197, 146, 17) !important; */
+  display: none;
 }
 
 #navigation .submenu li a:hover{
@@ -4953,9 +4955,20 @@ h6 {
   margin: 0 auto;
 }
 
+.tBook{
+  width:18% !important;
+  min-width: 180px;
+}
+
 @media (max-width: 506px) {
   .testa-people{
     width:55% !important;
+  }
+
+  .tBook{
+    width:60% !important;
+    min-width: 110px;
+    margin-bottom: -40px !important;
   }
 
   .testmonial_area p {
