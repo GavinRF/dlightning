@@ -3872,91 +3872,78 @@ h6 {
   border: 1px solid transparent;
 }
 
-/* line 257, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.info {
   color: #fff;
   background: #38a4ff;
   border: 1px solid transparent;
 }
 
-/* line 261, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.info:hover {
   color: #38a4ff;
   border: 1px solid #38a4ff;
   background: #fff;
 }
 
-/* line 267, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.info-border {
   color: #38a4ff;
   border: 1px solid #38a4ff;
   background: #fff;
 }
 
-/* line 271, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.info-border:hover {
   color: #fff;
   background: #38a4ff;
   border: 1px solid transparent;
 }
 
-/* line 277, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.warning {
   color: #fff;
   background: #f4e700;
   border: 1px solid transparent;
 }
 
-/* line 281, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.warning:hover {
   color: #f4e700;
   border: 1px solid #f4e700;
   background: #fff;
 }
 
-/* line 287, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.warning-border {
   color: #f4e700;
   border: 1px solid #f4e700;
   background: #fff;
 }
 
-/* line 291, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.warning-border:hover {
   color: #fff;
   background: #f4e700;
   border: 1px solid transparent;
 }
 
-/* line 297, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.danger {
   color: #fff;
   background: #f44a40;
   border: 1px solid transparent;
 }
 
-/* line 301, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.danger:hover {
   color: #f44a40;
   border: 1px solid #f44a40;
   background: #fff;
 }
 
-/* line 307, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.danger-border {
   color: #f44a40;
   border: 1px solid #f44a40;
   background: #fff;
 }
 
-/* line 311, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.danger-border:hover {
   color: #fff;
   background: #f44a40;
   border: 1px solid transparent;
 }
 
-/* line 317, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.link {
   color: #415094;
   background: #f9f9ff;
@@ -3964,14 +3951,12 @@ h6 {
   border: 1px solid transparent;
 }
 
-/* line 322, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.link:hover {
   color: #415094;
   border: 1px solid #f9f9ff;
   background: #fff;
 }
 
-/* line 328, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.link-border {
   color: #415094;
   border: 1px solid #f9f9ff;
@@ -3979,14 +3964,12 @@ h6 {
   text-decoration: underline;
 }
 
-/* line 333, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.link-border:hover {
   color: #415094;
   background: #f9f9ff;
   border: 1px solid transparent;
 }
 
-/* line 339, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .genric-btn.disable {
   color: #222222, 0.3;
   background: #f9f9ff;
@@ -3994,19 +3977,16 @@ h6 {
   cursor: not-allowed;
 }
 
-/* line 347, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .generic-blockquote {
   padding: 30px 50px 30px 30px;
   background: #f9f9ff;
-  border-left: 2px solid #ff5e13;
+  border-left: 2px solid #00d3b7;
 }
 
-/* line 353, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table-wrap {
   overflow-x: scroll;
 }
 
-/* line 357, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table {
   background: #f9f9ff;
   padding: 15px 0px 30px 0px;
