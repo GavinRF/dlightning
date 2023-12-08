@@ -3005,7 +3005,7 @@ h3 {
 .testmonial_area .rating_author i {
   font-size: 14px;
   color: #FFD35A;
-  margin: 0 2px;
+  margin: 6px 2px;
 }
 
 .testmonial_area .rating_author span {
@@ -4930,7 +4930,7 @@ h6 {
 }
 
 .testa-people{
-  width:16% !important; 
+  width: 16% !important; 
   margin: 0 auto;
 }
 
@@ -5065,4 +5065,16 @@ details[open] summary ~ * {
 
 #contents span b{
   padding-left: 14px;
+}
+
+.review{
+  border-radius: 50%;
+  width: 10% !important;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 506px) {
+  .review{
+    width: 35% !important;
+  }
 }
