@@ -45,6 +45,6 @@ const run = await openai.beta.threads.runs.create(thread.id, {
   instructions: "address the user as Sir William Copperbottom"
 });
 
-const run = await openai.beta.threads.runs.retrieve()
+// const run = await openai.beta.threads.runs.retrieve()
 
 console.log(run);
