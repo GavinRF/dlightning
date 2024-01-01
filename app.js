@@ -15,7 +15,7 @@ async function main() {
   // Create Thread
   const thread = await openai.beta.threads.create();
   console.log('Thread:', thread);
-
+``
 // Add user message to the thread
 const userMessage = await openai.beta.threads.messages.create(thread.id, {
   role: 'user', // Make sure 'user' is lowercase here
