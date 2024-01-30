@@ -3993,34 +3993,28 @@ h6 {
   min-width: 800px;
 }
 
-/* line 361, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .serial {
   width: 11.83%;
   padding-left: 30px;
 }
 
-/* line 365, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .country {
   width: 28.07%;
 }
 
-/* line 368, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .visit {
   width: 19.74%;
 }
 
-/* line 371, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .percentage {
   width: 40.36%;
   padding-right: 50px;
 }
 
-/* line 375, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-head {
   display: flex;
 }
 
-/* line 377, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-head .serial,
 .progress-table .table-head .country,
 .progress-table .table-head .visit,
@@ -4031,14 +4025,12 @@ h6 {
   font-weight: 500;
 }
 
-/* line 387, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row {
   padding: 15px 0;
   border-top: 1px solid #edf3fd;
   display: flex;
 }
 
-/* line 391, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .serial,
 .progress-table .table-row .country,
 .progress-table .table-row .visit,
@@ -4047,65 +4039,53 @@ h6 {
   align-items: center;
 }
 
-/* line 399, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .country img {
   margin-right: 15px;
 }
 
-/* line 404, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress {
   width: 80%;
   border-radius: 0px;
   background: transparent;
 }
 
-/* line 408, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar {
   height: 5px;
   line-height: 5px;
 }
 
-/* line 411, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar.color-1 {
   background-color: #6382e6;
 }
 
-/* line 414, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar.color-2 {
   background-color: #e66686;
 }
 
-/* line 417, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar.color-3 {
   background-color: #f09359;
 }
 
-/* line 420, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar.color-4 {
   background-color: #73fbaf;
 }
 
-/* line 423, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar.color-5 {
   background-color: #73fbaf;
 }
 
-/* line 426, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar.color-6 {
   background-color: #6382e6;
 }
 
-/* line 429, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar.color-7 {
   background-color: #a367e7;
 }
 
-/* line 432, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .progress-table .table-row .percentage .progress .progress-bar.color-8 {
   background-color: #e66686;
 }
 
-/* line 441, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .single-gallery-image {
   margin-top: 30px;
   background-repeat: no-repeat !important;
@@ -4114,38 +4094,33 @@ h6 {
   height: 200px;
 }
 
-/* line 449, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .list-style {
   width: 14px;
   height: 14px;
 }
 
-/* line 455, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .unordered-list li {
   position: relative;
-  padding-left: 30px;
+  padding-left: 34px;
   line-height: 1.82em !important;
 }
 
-/* line 459, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .unordered-list li:before {
   content: "";
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border: 3px solid #065cad;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #065cad;
   background: #fff;
-  top: 9px;
-  left: -1px;
+  top: 11px;
+  left: 16px;
   border-radius: 50%;
 }
 
-/* line 473, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .ordered-list {
   margin-left: 30px;
 }
 
-/* line 475, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .ordered-list li {
   list-style-type: decimal-leading-zero;
   color: #065cad;
