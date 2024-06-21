@@ -1175,12 +1175,13 @@ h3 {
 }
 
 .slider_bg_1 {
-  /* background-image: url(../img/banner/banner.png); */
+  background-image: url(../img/banner/lightBGLines.png);
+  background-size: cover;
   background-color: #0181F5;
 }
 
 .slider_bg_2 {
-  background-image: url(../img/banner/banner2.png);
+  background-image: url(../img/banner/lightBGLines.png);
   background-color: #0181F5;
 }
 
@@ -1583,6 +1584,40 @@ h3 {
 .productivity_area {
   background-color: #2751AE ;
   padding: 64px 0;
+}
+
+.blueBG{
+  background-color: #3d9ef8;
+  width: 100%;
+  margin-bottom: 0px;
+  padding: 18px 0px 0px 0px;
+  border-radius: 36px 36px 0px 0px;
+}
+
+.blueBG::before{
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: -34px;
+  width: 36px;
+  height:36px;
+  background-color:#3d9ef8;
+  border-radius: 123px 0px 0px 0px;
+}
+
+.blueBG::after{
+  content: "";
+  position: absolute;
+  top: 25px;
+  right: -34px;
+  width: 36px;
+  height:36px;
+  background-color:#3d9ef8;
+  border-radius: 0px 123px 0px 0px;
+}
+
+.noPadding{
+  margin-bottom: -60px;
 }
 
 @media (max-width: 767px) {
