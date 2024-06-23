@@ -5087,4 +5087,22 @@ details[open] summary ~ * {
   .review{
     width: 35% !important;
   }
+
+  .blueBG::before{
+    top: 0px;
+    left: 0px;
+    width: 0px;
+    height: 0px;
+  }
+  
+  .blueBG::after{
+    top: 0px;
+    right: 0px;
+    width: 0px;
+    height:0px;
+  }
+
+  .noPadding{
+    padding: 0px;
+  }
 }
