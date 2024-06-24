@@ -1587,14 +1587,14 @@ h3 {
 }
 
 .blueBG{
-  background-color: #3d9ef8;
+  background-color: rgba(41,148,248,1);
   width: 100%;
   margin-bottom: 0px;
   padding: 18px 0px 0px 0px;
-  border-radius: 36px 36px 0px 0px;
+  /* border-radius: 36px 36px 0px 0px; */
 }
 
-.blueBG::before{
+/* .blueBG::before{
   content: "";
   position: absolute;
   top: 25px;
@@ -1614,7 +1614,7 @@ h3 {
   height:36px;
   background-color:#3d9ef8;
   border-radius: 0px 123px 0px 0px;
-}
+} */
 
 .noPadding{
   margin-bottom: -60px;
@@ -2670,7 +2670,7 @@ h3 {
 }
 
 .bradcam_bg_1 {
-  background-image: url(../img/banner/bradcam.png);
+  background-image: url(../img/banner/lightBGLines.png);
 }
 
 .bradcam_area {
@@ -2968,7 +2968,7 @@ h3 {
   padding: 4vh 0;
   position: relative;
   z-index: 0;
-  margin: 60px 0px 60px 0px;
+  margin: 60px 0px 90px 0px;
 }
 
 @media (max-width: 767px) {
@@ -2980,19 +2980,19 @@ h3 {
 @media (min-width: 768px) and (max-width: 991px) {
 
   .testmonial_area {
-    padding: 60px 0 80px 0;
+    padding: 70px 0 100px 0;
   }
 }
 
 .testmonial_area::before {
   position: absolute;
   content: "";
-  background: #2994f8;
+  background: linear-gradient(to bottom, rgba(41,148,248,1) 0%,rgb(13, 81, 218) 100%);
   width: 100%;
   height: 100%;
   left: 0;
   top: 0;
-  opacity: .9;
+  /* opacity: .9; */
   z-index: -1;
 }
 
@@ -5088,7 +5088,7 @@ details[open] summary ~ * {
     width: 35% !important;
   }
 
-  .blueBG::before{
+  /* .blueBG::before{
     top: 0px;
     left: 0px;
     width: 0px;
@@ -5100,7 +5100,7 @@ details[open] summary ~ * {
     right: 0px;
     width: 0px;
     height:0px;
-  }
+  } */
 
   .noPadding{
     padding: 0px;

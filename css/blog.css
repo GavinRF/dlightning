@@ -8,6 +8,23 @@
     -webkit-transition: 0.5s;
     transition: 0.5s;
   }
+
+  li {
+    font-size: smaller;
+  }
+
+  .privacy_policy li {
+    list-style: upper-roman;
+    padding-left: 14px;
+  }
+  
+  .privacy_policy ul{
+    padding-bottom: 24px;
+  }
+
+  .privacy_policy p{
+    margin-bottom: 6px !important;
+  }
   
   .blog_area a:hover, .blog_area a :hover {
     background: -webkit-linear-gradient(131deg, #48B6FB 0%, #48B6FB 99%);
