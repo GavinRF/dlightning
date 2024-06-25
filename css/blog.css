@@ -25,6 +25,10 @@
   .privacy_policy p{
     margin-bottom: 6px !important;
   }
+
+  .privacy_policy h4{
+    margin-top:28px;
+  }
   
   .blog_area a:hover, .blog_area a :hover {
     background: -webkit-linear-gradient(131deg, #48B6FB 0%, #48B6FB 99%);
