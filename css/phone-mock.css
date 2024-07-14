@@ -1,0 +1,253 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+
+html {
+  font-size: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /* -ms-overflow-style: scrollbar; */
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+.phone {
+  background: #000;
+  border-radius: 22px;
+  padding: 6px;
+  width: 246px;
+  min-height: 460px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  position: relative;
+  margin: 0 auto;
+  zoom: 1.1;
+  color: #000;
+  font-family: "Roboto", sans-serif;
+}
+
+.phone .screen .screen-top {
+  position: sticky;
+  top: 0px;
+  z-index: 3;
+  background-color:#073086;
+}
+
+.back {
+  margin-bottom: 12px;
+  color: #fff !important;
+  font-size: smaller;
+  display: flex;
+  justify-content: space-between;
+  height: 36px;
+  padding: 6px 10px 6px 8px;
+}
+
+.camera {
+  content: "";
+  position: absolute;
+  left: 50%;
+  background: #131313;
+  box-shadow: none;
+  z-index: 4;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  margin-left: -7px;
+  border-radius: 50%;
+}
+
+.camera:before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  background: #30386165;
+  box-shadow: none;
+  z-index: 4;
+  top: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.camera:after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  background: #68a1b3;
+  box-shadow: none;
+  z-index: 4;
+  top: 4px;
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.phone.android .screen {
+  background: #fff;
+  min-height: 480px;
+  border-radius: 18px;
+  background: #073086;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow:hidden;
+  overflow-y: scroll;
+}
+
+ /* Hide scrollbar for Chrome, Safari and Opera */
+ .phone.android .screen::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.phone.android .screen {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+} 
+
+.mainBgImg {
+  position: absolute;
+  top: 24px;
+  left: 0px;
+  width:100%;
+}
+
+.leftArrow img{
+  position: relative;
+  width: 22px !important;
+}
+
+.avatarSlot img{
+  position: relative;
+  width: 20px !important;
+}
+
+.bottomNav img{
+  width: 100%;
+  position: absolute;
+  bottom: -420px;
+  /* background-image: url("../img/exp-builder/bottom-menu-bar.png"); */
+}
+
+.phone.android .screen .screen-top .time {
+  font-size: 10px;
+  font-weight: 400;
+  width: 50px;
+  text-align: center;
+  color: #fff;
+  padding-top: 0.5rem;
+  padding-left: 0.75rem;
+}
+
+.phone.android .screen .screen-top .phone-status {
+  width: 62px;
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  /* background-image: url("img/exp-builder/android-phone-status.svg"); */
+  background-repeat: no-repeat;
+  background: url('../img/exp-builder/android-phone-status.svg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 14px;
+}
+
+/* .phone.android .screen .screen-menu {
+  background: transparent;
+  padding: 16px;
+  left: 20px;
+  min-height: 40px;
+  position: absolute;
+  width: calc(100% - 40px);
+  bottom: 40px;
+  display: flex;
+} */
+
+/* .phone.android .screen .screen-menu .icon-wrap .icon {
+  border-radius: 10px;
+} */
+
+/* .phone.android .screen .screen-menu .icon-wrap:nth-of-type(1) .icon {
+  background-image: url(https://assets.codepen.io/772926/icon-phone-android.svg);
+  background-repeat: no-repeat, repeat;
+  background-position: center center;
+  background-size: 30%;
+  background-color: #37ae6e;
+} */
+
+.phone.android:before {
+  content: " ";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border: 2px solid #4c4b4b;
+  border-radius: 22px;
+  z-index: 0;
+}
+
+.phone.android:after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 80px;
+  width: 2px;
+  height: 160px;
+  background: url(https://assets.codepen.io/772926/andoird-btns-right.png);
+  background: url('../img/exp-builder/andoird-btns-right.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+/*///// Scroll Indicator  */
+  .scroll-indicator{
+    position: absolute;
+    top: 24%;
+    left: 38px;
+    z-index: 10;
+  }
+
+  .scroll-indicator::after{
+    content: "scroll";
+    transform: rotateX(90deg);
+    transform-origin: bottom;
+    margin-top: 6px;
+    color: #636363;
+  }
+
+  .scroll-indicator .mouse {
+      width: 24px;
+      height: 44px;
+      border: 2px solid #636363;
+      border-radius: 12px;
+      position: relative;
+      margin-left: 8px;
+  }
+  .scroll-indicator .mouse .wheel {
+      width: 4px;
+      height: 8px;
+      background: #636363;
+      border-radius: 2px;
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: wheel-move 1s infinite;
+  }
+  @keyframes wheel-move {
+      0% { top: 8px; opacity: 1; }
+      100% { top: 24px; opacity: 0; }
+  }
+  .scroll-indicator.hide {
+    animation: fade-out 0.5s forwards;
+    animation-delay: 8s; /* 8 iterations at 1s each */
+}
+@keyframes fade-out {
+    to { opacity: 0; visibility: hidden; }
+}
