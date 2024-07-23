@@ -134,6 +134,33 @@ html {
   /* background-image: url("../img/exp-builder/bottom-menu-bar.png"); */
 }
 
+.main-img {
+  margin: 0 auto;
+  width: 78%;
+  box-shadow: -2px 2px 4px #dddddd8d;
+}
+
+.proto-img{
+  position: absolute;
+  right: 2%;
+  top: 20%;
+  width: 22.4%;
+}
+
+.hypo-img{
+  position: absolute;
+  width: 32%;
+  left: -.1%;
+  top:38%;
+}
+
+.anal-img{
+  position: absolute;
+  width: 32%;
+  top: 84%;
+  left: 4%;
+}
+
 .phone.android .screen .screen-top .time {
   font-size: 10px;
   font-weight: 400;
