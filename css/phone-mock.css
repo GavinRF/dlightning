@@ -6,6 +6,7 @@ html {
   box-sizing: border-box;
   /* -ms-overflow-style: scrollbar; */
   scroll-behavior: smooth;
+  max-width: 100% !important;
 }
 
 *,
@@ -27,6 +28,10 @@ html {
   zoom: 1.1;
   color: #000;
   font-family: "Roboto", sans-serif;
+}
+
+.BS{
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .phone .screen .screen-top {
@@ -136,7 +141,7 @@ html {
 
 .main-img {
   margin: 0 auto;
-  width: 72%;
+  width: 68%;
   box-shadow: -2px 2px 4px #dddddd8d;
 }
 
@@ -150,14 +155,14 @@ html {
 .hypo-img{
   position: absolute;
   width: 32%;
-  left: -1.2%;
-  top:34%;
+  left: 1.2%;
+  top:32%;
 }
 
 .anal-img{
   position: absolute;
   width: 32%;
-  top: 68%;
+  top: 72%;
   right: -1.8%;
 }
 
@@ -236,7 +241,7 @@ html {
   .scroll-indicator{
     position: absolute;
     top: 14%;
-    left: 38px;
+    left: 28px;
     z-index: 10;
   }
 
@@ -273,8 +278,37 @@ html {
   }
   .scroll-indicator.hide {
     animation: fade-out 0.5s forwards;
-    animation-delay: 8s; /* 8 iterations at 1s each */
+    animation-delay: 18s; /* 18 iterations at 1s each */
 }
 @keyframes fade-out {
     to { opacity: 0; visibility: hidden; }
+}
+
+@media (max-width: 767px) {
+  .main-img {
+    margin: 0px auto;
+    width: 98%;
+    box-shadow: -2px 2px 4px #dddddd8d;
+  }
+  
+  .proto-img{
+    margin: 0px auto;
+    position: relative;
+    width: 40%;
+    display: none;
+  }
+  
+  .hypo-img{
+    margin: 60px auto;
+    position: relative;
+    width: 80%;
+    height: 100%;
+  }
+  
+  .anal-img{
+    position: relative;
+    width: 80%;
+    margin: 0px auto;
+  }
+
 }
