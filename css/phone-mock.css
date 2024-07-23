@@ -136,29 +136,29 @@ html {
 
 .main-img {
   margin: 0 auto;
-  width: 78%;
+  width: 72%;
   box-shadow: -2px 2px 4px #dddddd8d;
 }
 
 .proto-img{
   position: absolute;
   right: 2%;
-  top: 20%;
+  top: 6%;
   width: 22.4%;
 }
 
 .hypo-img{
   position: absolute;
   width: 32%;
-  left: -.1%;
-  top:38%;
+  left: -1.2%;
+  top:34%;
 }
 
 .anal-img{
   position: absolute;
   width: 32%;
-  top: 84%;
-  left: 4%;
+  top: 68%;
+  right: -1.8%;
 }
 
 .phone.android .screen .screen-top .time {
