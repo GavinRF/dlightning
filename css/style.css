@@ -3067,7 +3067,7 @@ h3 {
 .testmonial_area .rating_author i {
   font-size: 14px;
   color: #FFD35A;
-  margin: 6px 2px;
+  margin: 0px 2px;
 }
 
 .testmonial_area .rating_author span {
@@ -4934,8 +4934,8 @@ h6 {
   }
 
   .testmonial_area p {
-    margin-top: 30px;
-    margin-bottom: 36px;
+    margin-top: 20px;
+    margin-bottom: 16px;
     /* text-decoration: underline; */
     padding: 0 2%;
   }
