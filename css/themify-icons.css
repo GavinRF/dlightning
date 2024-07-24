@@ -250,6 +250,7 @@
 }
 .ti-angle-down:before {
 	content: "\e64b";
+	font-weight: 800;
 }
 .ti-check:before {
 	content: "\e64c";
