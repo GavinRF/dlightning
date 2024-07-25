@@ -4998,6 +4998,20 @@ h6 {
   font-size: 44px;
 }
 
+.expBuilderLink a{
+  color: pink !important;
+  background-color: midnightblue;
+  padding: 6px 12px !important;
+  border-radius: 6px;
+}
+
+.contactLink a{
+  color: rgb(5, 5, 57) !important;
+  background-color: #009DFF;
+  padding: 6px 12px !important;
+  border-radius: 6px;
+}
+
 .gumroad .cart-button{
   top: 0.15rem !important;
   right: 3.85rem !important;
