@@ -880,7 +880,7 @@ h3 {
 }
 
 .header-area .main-header-area .expBuilderNavBtn .book_btn a{
-  background: linear-gradient(to top, rgb(83, 4, 195) 20%,rgb(75, 3, 175) 100%);
+  background: #300465;
   padding: 7px 14px;
   font-size: 14px;
   color: rgb(255, 213, 220);
@@ -907,8 +907,8 @@ h3 {
 }
 
 .header-area .main-header-area .expBuilderNavBtn .book_btn a{
-  background: linear-gradient(to top, rgb(75, 3, 175) 20%,rgb(75, 3, 175) 100%);
-  color: rgb(255, 213, 220);
+  background: #300465;
+  color: #fff1f3;
   display: inline;
 }
 
