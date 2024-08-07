@@ -15,12 +15,13 @@
 
   .privacy_policy li {
     list-style: upper-roman;
-    padding-left: 14px;
+    padding-left: 8px;
+    margin-bottom: 8px;
   }
   
   .privacy_policy ul{
-    padding-bottom: 24px;
-    margin-left: 34px;
+    padding-bottom: 8px;
+    margin-left: 28px;
   }
 
   .privacy_policy p{
@@ -29,6 +30,11 @@
 
   .privacy_policy h4{
     margin-top:28px;
+  }
+
+  .privacy_policy h5{
+    margin-top: 18px;
+    margin-bottom: 2px;
   }
   
   .blog_area a:hover, .blog_area a :hover {
