@@ -274,6 +274,7 @@ h3 {
 
 .fWghtLight{
   font-weight: lighter;
+  line-height: 1.48em !important;
 }
 
 /* line 210, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/theme-default.scss */
@@ -475,6 +476,11 @@ h3 {
   .boxed-btn4 {
     width: 100%;
   }
+}
+
+.expBldBtn{
+  background:#300465; 
+  color: #ffeaee !important;
 }
 
 .boxed-btn3-white {
@@ -892,6 +898,10 @@ h3 {
   white-space: nowrap;
 }
 
+.header-area .main-header-area .expBuilderNavBtn .book_btn a:hover{
+  background: #0946af;
+}
+
 @media (min-width: 992px) and (max-width: 1200px) {
   .header-area .main-header-area .Appointment .book_btn a {
     padding: 12px 20px;
@@ -1275,12 +1285,13 @@ h3 {
   }
 }
 
-.slider_area .single_slider .slider_text h3 {
+.slider_area .single_slider .slider_text h3,
+.slider_area .single_slider .slider_text h1 {
   color: #FFF;
   font-family: 'Rubik', sans-serif;
-  font-size: 50px;
+  font-size: 48px;
   text-transform: capitalize;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   font-weight: 600;
   line-height: 68px;
 }
@@ -1308,21 +1319,24 @@ h3 {
 }
 
 @media (max-width: 767px) {
-  .slider_area .single_slider .slider_text h3 {
+  .slider_area .single_slider .slider_text h3,
+  .slider_area .single_slider .slider_text h1 {
     font-size: 30px;
     line-height: 35px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  .slider_area .single_slider .slider_text h3 {
+  .slider_area .single_slider .slider_text h3,
+  .slider_area .single_slider .slider_text h1 {
     font-size: 30px;
     line-height: 35px;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  .slider_area .single_slider .slider_text h3 {
+  .slider_area .single_slider .slider_text h3,
+  .slider_area .single_slider .slider_text h1 {
     font-size: 45px;
     letter-spacing: 3px;
     line-height: 55px;
@@ -1418,7 +1432,8 @@ h3 {
   }
 }
 
-.Process_area .Process_info2 h3 {
+.Process_area .Process_info2 h3,
+.Process_area .Process_info2 h1 {
   font-size: 46px;
   line-height: 60px;
   font-weight: 300;
@@ -1426,21 +1441,24 @@ h3 {
 }
 
 @media (max-width: 767px) {
-  .Process_area .Process_info2 h3 {
+  .Process_area .Process_info2 h3,
+  .Process_area .Process_info2 h1 {
     font-size: 30px;
     line-height: 40px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  .Process_area .Process_info2 h3 {
+  .Process_area .Process_info2 h3,
+  .Process_area .Process_info2 h1 {
     font-size: 35px;
     line-height: 45px;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  .Process_area .Process_info2 h3 {
+  .Process_area .Process_info2 h3,
+  .Process_area .Process_info2 h1 {
     font-size: 30px;
     line-height: 40px;
   }
@@ -1498,7 +1516,8 @@ h3 {
   }
 }
 
-.Process_area .Process_info h3 {
+.Process_area .Process_info h3,
+.Process_area .Process_info h1 {
   font-size: 46px;
   line-height: 60px;
   font-weight: 300;
@@ -2719,7 +2738,8 @@ h3 {
   }
 }
 
-.bradcam_area h3 {
+.bradcam_area h3,
+.bradcam_area h1 {
   font-size: 60px;
   color: #fff;
   font-weight: 300;
@@ -2728,7 +2748,8 @@ h3 {
 }
 
 @media (max-width: 767px) {
-  .bradcam_area h3 {
+  .bradcam_area h3,
+  .bradcam_area h1 {
     font-size: 30px;
   }
 }
@@ -3404,8 +3425,8 @@ h3 {
 }
 
 .prising_area {
-  padding-top: 90px;
-  padding-bottom: 60px;
+  padding-top: 60px;
+  padding-bottom: 40px;
 }
 
 .prising_area.minus_padding {
@@ -5025,6 +5046,11 @@ h6 {
 .gumroad .logo-full, .gumroad-button .logo-full {
   width: calc(1em/0.20) !important;
   margin: 0 0 -4px -2px;
+  color: #010a22 !important;
+}
+
+.gumroad-button {
+  color: #010a22 !important;
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
