@@ -145,16 +145,19 @@
               7px 0 10px -5px rgba(0,0,0,0.15) inset,
               0 0 60px rgba(0,0,0,0.1) inset;
 }
-h1{
+
+.pagecontainer h2{
   margin-top:20px;
   text-align:center;
   font-size:22px;
 }
+
 .author{
   display:block;
   text-align:center;
   font-size:12px;
   margin-bottom:20px;
+  margin-left: 12px;
 }
 
 .contents{font-size:11px;margin-bottom:30px;}
