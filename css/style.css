@@ -3694,7 +3694,6 @@ h1 {
 h2 {
   font-size: 36px;
   font-weight: 300;
-
 }
 
 h3 {
@@ -3730,6 +3729,10 @@ h6 {
 .typography h5,
 .typography h6 {
   color: #828bb2;
+}
+
+.money {
+  color: #00d3b7 !important;
 }
 
 /* line 137, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
