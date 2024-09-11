@@ -73,103 +73,117 @@
     </div>
 
     <script>
-        // Initialize Firebase (replace with your config)
-        const firebaseConfig = {
-            apiKey: "AIzaSyB5KJ3Q8psMbG0wc6Dh9fF2-Wq7pt7sOa0",
-            authDomain: "experience-builder-m-v-wxacv7.firebaseapp.com",
-            projectId: "experience-builder-m-v-wxacv7",
-            storageBucket: "experience-builder-m-v-wxacv7.appspot.com",
-            messagingSenderId: "940965852397",
-            appId: "1:940965852397:web:06f19e756e7db4b7d748e4"
-        };
-        firebase.initializeApp(firebaseConfig);
-
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        function emailSignIn() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    user.getIdToken().then(token => {
-                        handleAuthComplete(token);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Firebase and setup event listeners
+            const firebaseConfig = {
+                apiKey: "AIzaSyB5KJ3Q8psMbG0wc6Dh9fF2-Wq7pt7sOa0",
+                authDomain: "experience-builder-m-v-wxacv7.firebaseapp.com",
+                projectId: "experience-builder-m-v-wxacv7",
+                storageBucket: "experience-builder-m-v-wxacv7.appspot.com",
+                messagingSenderId: "940965852397",
+                appId: "1:940965852397:web:06f19e756e7db4b7d748e4"
+            };
+            firebase.initializeApp(firebaseConfig);
+    
+            const auth = firebase.auth();
+            const db = firebase.firestore();
+    
+            function emailSignIn() {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        user.getIdToken().then(token => {
+                            handleAuthComplete(token);
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error signing in with email", error);
+                        alert(error.message);
                     });
-                })
-                .catch((error) => {
-                    console.error("Error signing in with email", error);
-                    alert(error.message);
-                });
-        }
-
-        function googleSignIn() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    // Signed in with Google
-                    const user = result.user;
-                    user.getIdToken().then(token => {
-                        handleAuthComplete(token);
-                    });
-                })
-                .catch((error) => {
-                    console.error("Error signing in with Google", error);
-                    alert(error.message);
-                });
-        }
-
-        function signOut() {
-            auth.signOut().then(() => {
-                document.getElementById('authContainer').style.display = 'block';
-                document.getElementById('userInfo').style.display = 'none';
-            }).catch((error) => {
-                console.error("Error signing out", error);
-            });
-        }
-
-        function updateUI(user) {
-            if (user) {
-                document.getElementById('userEmail').textContent = user.email;
-                document.getElementById('userName').textContent = user.displayName || '';
-                document.getElementById('phoneNum').textContent = user.phoneNumber || '';
-                document.getElementById('authContainer').style.display = 'none';
-                document.getElementById('userInfo').style.display = 'block';
-                fetchUserProjects(user.uid);
-            } else {
-                document.getElementById('authContainer').style.display = 'block';
-                document.getElementById('userInfo').style.display = 'none';
             }
-        }
-
-        function fetchUserProjects(userId) {
-            db.collection('projects').where("owner", "==", userId).get().then((querySnapshot) => {
-                const projectsList = document.getElementById('projects');
-                projectsList.innerHTML = '';
-                if (!querySnapshot.empty) {
-                    querySnapshot.forEach((doc) => {
-                        const project = doc.data();
-                        const li = document.createElement('li');
-                        li.textContent = project.title;
-                        projectsList.appendChild(li);
+    
+            function googleSignIn() {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider)
+                    .then((result) => {
+                        const user = result.user;
+                        user.getIdToken().then(token => {
+                            handleAuthComplete(token);
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error signing in with Google", error);
+                        alert(error.message);
                     });
+            }
+    
+            function signOut() {
+                auth.signOut().then(() => {
+                    document.getElementById('authContainer').style.display = 'block';
+                    document.getElementById('userInfo').style.display = 'none';
+                }).catch((error) => {
+                    console.error("Error signing out", error);
+                });
+            }
+    
+            function updateUI(user) {
+                if (user) {
+                    document.getElementById('userEmail').textContent = user.email;
+                    document.getElementById('userName').textContent = user.displayName || '';
+                    document.getElementById('phoneNum').textContent = user.phoneNumber || '';
+                    document.getElementById('authContainer').style.display = 'none';
+                    document.getElementById('userInfo').style.display = 'block';
+                    fetchUserProjects(user.uid);
                 } else {
-                    projectsList.innerHTML = '<li>No projects found</li>';
+                    document.getElementById('authContainer').style.display = 'block';
+                    document.getElementById('userInfo').style.display = 'none';
                 }
-            }).catch((error) => {
-                console.error("Error fetching user projects:", error);
+            }
+    
+            function fetchUserProjects(userId) {
+                db.collection('projects').where("owner", "==", userId).get().then((querySnapshot) => {
+                    const projectsList = document.getElementById('projects');
+                    projectsList.innerHTML = '';
+                    if (!querySnapshot.empty) {
+                        querySnapshot.forEach((doc) => {
+                            const project = doc.data();
+                            const li = document.createElement('li');
+                            li.textContent = project.title;
+                            projectsList.appendChild(li);
+                        });
+                    } else {
+                        projectsList.innerHTML = '<li>No projects found</li>';
+                    }
+                }).catch((error) => {
+                    console.error("Error fetching user projects:", error);
+                });
+            }
+    
+            // Listen for auth state changes
+            auth.onAuthStateChanged((user) => {
+                updateUI(user);
             });
-        }
-
-        // Listen for auth state changes
-        auth.onAuthStateChanged((user) => {
-            updateUI(user);
+    
+            function handleAuthComplete(token) {
+                window.parent.postMessage({ type: 'authComplete', token: token }, '*');
+            }
+    
+            // Ensure elements exist before adding event listeners
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const emailSignInBtn = document.querySelector('button[onclick="emailSignIn()"]');
+            const googleSignInBtn = document.querySelector('button[onclick="googleSignIn()"]');
+    
+            if (emailSignInBtn) {
+                emailSignInBtn.addEventListener('click', emailSignIn);
+            }
+            if (googleSignInBtn) {
+                googleSignInBtn.addEventListener('click', googleSignIn);
+            }
         });
-
-        function handleAuthComplete(token) {
-            window.parent.postMessage({ type: 'authComplete', token: token }, '*');
-        }
     </script>
+    
 </body>
 </html>
