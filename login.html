@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Auth Login Flow</title>
+    <title>D⚡ | Login</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.2/firebase-app-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.2/firebase-auth-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.2/firebase-firestore-compat.min.js"></script>
@@ -65,9 +65,10 @@
         <h2>Welcome, <span id="userEmail"></span>!</h2>
         <span id="userName"></span>
         <span id="phoneNum"></span>
-        <div id="projectList"></div>
+        <div id="projectList">
             <h3>Projects</h3>
             <ul id="projects"></ul>
+        </div>
         <button onclick="signOut()">Sign Out</button>
     </div>
 
@@ -93,7 +94,9 @@
                 .then((userCredential) => {
                     // Signed in
                     const user = userCredential.user;
-                    updateUI(user);
+                    user.getIdToken().then(token => {
+                        handleAuthComplete(token);
+                    });
                 })
                 .catch((error) => {
                     console.error("Error signing in with email", error);
@@ -107,7 +110,9 @@
                 .then((result) => {
                     // Signed in with Google
                     const user = result.user;
-                    updateUI(user);
+                    user.getIdToken().then(token => {
+                        handleAuthComplete(token);
+                    });
                 })
                 .catch((error) => {
                     console.error("Error signing in with Google", error);
@@ -163,7 +168,7 @@
         });
 
         function handleAuthComplete(token) {
-        window.parent.postMessage({ type: 'authComplete', token: token }, '*');
+            window.parent.postMessage({ type: 'authComplete', token: token }, '*');
         }
     </script>
 </body>
