@@ -3,4 +3,5 @@ ErrorDocument 404 /custom-404.html
 
 <IfModule mod_headers.c>
   Header set Content-Security-Policy "connect-src 'self' https://dlightning.org https://firestore.googleapis.com https://www.googleapis.com https://identitytoolkit.googleapis.com https://experience-builder-m-v-wxacv7.firebaseio.com https://experience-builder-m-v-wxacv7.firebaseapp.com https://www.gstatic.com;"
+  Content-Security-Policy: frame-src 'self' https://dlightning.org;
 </IfModule>
