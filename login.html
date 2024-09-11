@@ -155,6 +155,10 @@
         auth.onAuthStateChanged((user) => {
             updateUI(user);
         });
+
+        function handleAuthComplete(token) {
+        window.parent.postMessage({ type: 'authComplete', token: token }, '*');
+        }
     </script>
 </body>
 </html>
