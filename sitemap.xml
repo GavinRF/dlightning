@@ -1,47 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://dlightning.org/</loc>
+    <lastmod>2024-09-18</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.dlightning.org/</loc>
+    <lastmod>2024-09-08</lastmod>
+  </url>
+
   <url>
     <loc>https://www.dlightning.org/index.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 
   <url>
     <loc>https://dlightning.org/Process.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 
   <url>
     <loc>https://dlightning.org/Pricing.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 
   <url>
     <loc>https://dlightning.org/collective-info.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 
   <url>
     <loc>https://dlightning.org/downloads.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 
   <url>
     <loc>https://www.dlightning.org/experience-builder.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 
   <url>
     <loc>https://dlightning.org/tea-landing.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 
   <url>
     <loc>https://dlightning.org/gum-templates.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 
   <url>
     <loc>https://dlightning.org/contact.html</loc>
-    <lastmod>2024-08-28</lastmod>
+    <lastmod>2024-09-18</lastmod>
   </url>
 </urlset>
