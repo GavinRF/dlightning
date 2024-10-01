@@ -355,13 +355,13 @@
         //    $('#loading').load("loader.html");
            $('#footer').load("footer.html");
            $('#header').load("header.html", function( response, status, xhr ) {
-           if ( status == "error" ) {
-               var msg = "Sorry but there was an error: ";
-               $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
-           } else {
-               $('.home').addClass('thisPage');
-           }
-           });
+            if ( status == "error" ) {
+                var msg = "Sorry but there was an error: ";
+                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+            } else {
+                $('.home').addClass('thisPage');
+            }
+            });
            });
         //Scroll to top
         var $backToTop = $(".back-to-top");
@@ -393,7 +393,7 @@
     <script src="js/plugins.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineMax.min.js'></script>
-       <script src="js/loader.js"></script>
+    <script src="js/loader.js"></script>
 
     <script src="js/main.js"></script>
 </body>

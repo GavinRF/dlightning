@@ -1,0 +1,382 @@
+<html>
+<head>
+  <!-- <base href="https://" /> -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Unlock your entrepreneurial potential with Dlightning Business Idea Generator. Personalized business concepts based on your interests and personality. Start your journey today!">
+
+<title>D⚡ | Business Idea Generator</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+<meta property="og:image" content="https://dlightning.org/img/opengraph/business-gen-og.png"/>
+<meta property="og:title" content="Dlightning - Business Idea Generator"/>
+<meta property="og:description" content="Start your entrepreneurial journey."/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<style>
+  header{
+    z-index: 999;
+  }
+
+  .cap-first::first-letter {
+    text-transform: uppercase;
+  }
+  
+  .featureBgImg {
+  position: relative;
+  overflow: hidden;
+}
+
+.featureBgImg-bg {
+  object-position: center calc(50% + 42px);
+  transition: transform 0.42s ease-in-out;
+}
+
+.featureBgImg:hover .featureBgImg-bg {
+  transform: scale(1.1);
+}
+
+.featureBgImg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
+  z-index: -1;
+  transition: opacity 0.3s ease-in-out;
+  mix-blend-mode: soft-light;
+}
+
+.featureBgImg:hover::after {
+  opacity: 0.8;
+}
+
+.featureBgImg h4,
+.featureBgImg button {
+  transition: transform 0.3s ease-in-out;
+}
+
+.featureBgImg:hover h4 {
+  transform: translateY(-5px);
+}
+
+@media (max-width: 567px) {
+  .featureBgImg-bg {
+    object-position: center;
+  }
+}
+</style>
+</head>
+
+<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
+<header id='header'></header>
+<div class="h-14 bg-blue-800 w-full"> </div>
+<div class="container mt-20 p-8 bg-white rounded-xl shadow-2xl max-w-4xl">
+  <h1 class="text-4xl font-bold mb-6 text-center text-green-700">Business Idea Generator</h1>
+  
+  <div class="mb-6">
+    <label for="userInterests" class="block text-lg font-medium text-gray-700">What are your interests and hobbies?</label>
+    <input type="text" id="userInterests" class="mt-2 block w-full rounded-lg border-blue-600 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-lg p-3 bg-slate-100" placeholder="e.g., cooking, technology, fitness, art...">
+  </div>
+  
+  <div class="mb-6">
+    <label for="userPersonality" class="block text-lg font-medium text-gray-700">Describe your personality</label>
+    <input type="text" id="userPersonality" class="mt-2 block w-full rounded-lg border-blue-600 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-lg p-3 bg-slate-100" placeholder="e.g., creative, analytical, outgoing, detail-oriented...">
+  </div>
+
+  <button id="generateBtn" class="w-full bg-gradient-to-r from-green-600 to-blue-700 hover:from-green-500 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+    <i class="fas fa-lightbulb mr-2"></i> Generate Business Idea
+  </button>
+  
+  <div id="ideaResult" class="mt-8 p-6 bg-gray-50 rounded-lg shadow-inner hidden">
+    <h2 class="text-2xl font-semibold mb-2 text-green-700">Your Personalized Business Idea</h2>
+    <div id="ideaContent" class="text-lg leading-relaxed"></div>
+  </div>
+
+ <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
+  <img src="img/exp-builder/immersive-experience.jpeg" alt="Background shilouette of a woman in a pinnk and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
+  <div class="relative z-10">
+    <h4 class="text-2xl text-white mb-2 px-2 font-bold drop-shadow">Take your business<br>to the next level</h4>
+    <a href="experience-builder.html">
+      <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+        Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
+      </button>
+    </a>
+  </div>
+</div>
+  
+  <div id="questions" class="mt-8 p-6 hidden">
+    <h2 class="text-2xl font-semibold mb-2 text-green-700">Refine Your Idea:</h2>
+    <form id="questionForm"></form>
+  </div>
+
+  <div id="finalBusinessPlan" class="mt-8 p-6 bg-green-50 rounded-lg shadow-inner hidden">
+    <h2 class="text-2xl font-semibold mb-4 text-green-700">Your Final Business Plan</h2>
+    <div id="businessPlanContent" class="text-lg leading-relaxed"></div>
+  </div>
+</div>
+
+<div id="error"></div>
+
+<footer class="mt-24 w-full bg-blue-950 text-white py-8">
+  <div class="container mx-auto px-4">
+    <h3 class="text-2xl font-bold mb-4">How It Works</h3>
+    <ol class="list-decimal pl-6 space-y-2">
+      <li>1. Enter your interests, hobbies, and personality traits in the input fields.</li>
+      <li>2. Click "Generate Business Idea" to start the process.</li>
+      <li>3. Our system will analyze your input and generate a personalized business idea.</li>
+      <li>4. Answer follow-up questions to refine and expand on the idea.</li>
+      <li>5. The system will incorporate your answers to provide more detailed suggestions.</li>
+      <li>6. After two rounds of refinement, you'll see a comprehensive business plan.</li>
+    </ol>
+    <p class="mt-4 text-gray-400 max-w-screen-lg">The Business Idea Generator uses an advanced algorithm to create unique, personalized business concepts based on your individual interests and personality. It adapts to your responses, helping you explore and develop your entrepreneurial potential.</p>
+  </div>
+</footer>
+
+<!-- <div id="footer" class="w-full"></div> -->
+
+<script>
+  
+$(document).ready(function() {
+  $('#footer').load("footer.html");
+  $('#header').load("header.html", function( response, status, xhr ) {
+    if ( status == "error" ) {
+        var msg = "Sorry but there was an error: ";
+        $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+    } else {
+        $('.business-gen').addClass('thisPage');
+    }
+  });
+  
+  let currentIdea = {};
+  let round = 0;
+  let allAnswers = {};
+
+  function updateUI(data) {
+    $('#ideaResult').removeClass('hidden');
+    
+    // Keep the original idea visible and append refined concept
+    if (round === 0) {
+      $('#ideaContent').html(data.idea);
+      currentIdea = data;
+    } else if (round === 1) {
+      $('#ideaContent').html(currentIdea.idea + '<br><br><strong>Refined Concept:</strong><br>' + data.idea);
+    }
+    
+    if (round < 2) {
+      $('#questions').removeClass('hidden');
+      const $form = $('#questionForm').empty();
+      data.questions.forEach((question, index) => {
+        const $questionDiv = $('<div>').addClass('mb-6');
+        $questionDiv.append(`<label for="q${index}" class="block text-lg font-medium text-gray-700 mb-2">${question.text}</label>`);
+        
+        const $select = $('<select>')
+          .attr('id', `q${index}`)
+          .attr('name', `q${index}`)
+          .addClass('block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 py-2 px-3 text-base');
+        
+        $select.append('<option value="">Select an answer</option>');
+        question.options.forEach((option, optionIndex) => {
+          $select.append(`<option class="capitalize-first" value="${option}">${option}</option>`);
+        });
+        $questionDiv.append($select);
+        
+        const $customInput = $('<input>')
+          .attr('type', 'text')
+          .attr('id', `q${index}Custom`)
+          .addClass('mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 hidden')
+          .attr('placeholder', 'Your custom answer...');
+        $questionDiv.append($customInput);
+        
+        $form.append($questionDiv);
+        
+        $select.on('change', function() {
+          if ($(this).val() === "") {
+            $customInput.removeClass('hidden');
+          } else {
+            $customInput.addClass('hidden');
+          }
+        });
+      });
+      
+      $form.append(`
+        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+          <i class="fas fa-paper-plane mr-2"></i> Refine Idea
+        </button>
+      `);
+    } else {
+      $('#questions').addClass('hidden');
+      $('#finalBusinessPlan').removeClass('hidden');
+      $('#businessPlanContent').html(data.businessPlan);
+      $('#expBld').removeClass('hidden');
+      // Remove loading spinner and message
+      $('#ideaContent').find('.text-center').remove();
+    }
+    
+    round++;
+  }
+
+  function getRandomIdea(interests, personality) {
+    const mainInterest = interests[0] || 'your main interest';
+    const ideas = [
+      {
+        title: `${mainInterest} Fusion Experience`,
+        description: `Create an innovative business that combines your passion for ${mainInterest} with interactive experiences. 
+                      Leverage your ${personality} nature to design unique workshops, events, or products that allow customers to engage with ${mainInterest} in unexpected ways. 
+                      This could involve themed pop-up events, online courses, or even a subscription box service that brings the joy of ${mainInterest} to people's homes.`
+      },
+      {
+        title: `${mainInterest} Adventure Tours`,
+        description: `Develop an experiential tourism business centered around ${mainInterest}. 
+                      Use your ${personality} approach to craft immersive, educational, and entertaining tours or retreats. 
+                      These could range from local day trips to extended global expeditions, all focused on providing unique ${mainInterest}-related experiences.`
+      },
+      {
+        title: `Virtual ${mainInterest} Playground`,
+        description: `Launch an innovative online platform that offers interactive ${mainInterest} experiences. 
+                      Capitalize on your ${personality} traits to create engaging virtual workshops, challenges, or games. 
+                      This could include live-streamed events, VR experiences, or an expansive online community centered around ${mainInterest}.`
+      },
+      {
+        title: `${mainInterest} Transformation Studio`,
+        description: `Establish a unique personal development business that uses ${mainInterest} as a vehicle for growth and transformation. 
+                      Your ${personality} qualities will be key in designing programs that blend ${mainInterest}-based activities with coaching, mindfulness, or skill-building exercises. 
+                      Offer both in-person and online options to reach a diverse audience seeking personal growth through their passion for ${mainInterest}.`
+      }
+    ];
+    return ideas[Math.floor(Math.random() * ideas.length)];
+  }
+
+  function promptCompetitiveAdvantage() {
+  const prompts = [
+    "What unique skills or experiences do you have that could set your business apart?",
+    "How could you leverage technology to gain an edge in this market?",
+    "What underserved niche within this market could you focus on?",
+    "How could you provide exceptional customer service in this business?"
+  ];
+  return prompts[Math.floor(Math.random() * prompts.length)];
+  }
+
+
+  $('#generateBtn').click(function() {
+    const userInterests = $('#userInterests').val() || '';
+    const userPersonality = $('#userPersonality').val() || '';
+    if (!userInterests || !userPersonality) {
+      alert("Please fill in both your interests and personality before generating an idea.");
+      return;
+    }
+
+    round = 0;
+    
+    $('#ideaContent').html('<div class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">Generating your business idea...</p></div>');
+    $('#ideaResult').removeClass('hidden');
+    $('#questions').addClass('hidden');
+    $('#finalBusinessPlan').addClass('hidden');
+
+    setTimeout(function() {
+      const interests = userInterests.split(',').map(i => i.trim());
+      const mainInterest = interests[0] || 'your main interest';
+      const randomIdea = getRandomIdea(interests, userPersonality);
+      const competitiveAdvantagePrompt = promptCompetitiveAdvantage();
+      const mockData = {
+        idea: `Based on your interests in ${userInterests} and your ${userPersonality} personality, here's a business idea for you<br><br>
+               <div class="bg-white outline outline-8 outline-white rounded">
+               <strong>${randomIdea.title}</strong><br>
+               ${randomIdea.description}</div><br>
+               <strong class="text-gray-600">Food for thought:</strong> ${competitiveAdvantagePrompt}`,
+        questions: [
+          {
+            text: "What aspect of this idea excites you the most?",
+            options: ["creating unique experiences", "sharing my passion with others", "the potential for innovation", "building a community around my interests"]
+          },
+          {
+            text: "What challenges do you foresee in implementing this idea?",
+            options: ["finding the right audience", "balancing creativity with profitability", "scaling the business", "managing the operational aspects"]
+          },
+          {
+            text: "How would you like to start small and test this concept?",
+            options: ["hosting a local event", "creating an online course", "launching a pilot subscription service", "collaborating with existing businesses"]
+          }
+        ]
+      };
+      updateUI(mockData);
+    }, 1400);  
+  });
+
+  $('#questionForm').on('submit', function(e) {
+    e.preventDefault();
+    const answers = {};
+    $(this).find('select').each(function() {
+      const name = $(this).attr('name');
+      const value = $(this).val();
+      const customValue = $(`#${name}Custom`).val();
+      answers[name] = value === "" ? customValue : value;
+    });
+
+    Object.assign(allAnswers, answers);
+
+    $('#ideaContent').append('<div class="text-center mt-4"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">Refining your business idea...</p></div>');
+    $('#questions').addClass('hidden');
+
+    setTimeout(function() {
+      if (round === 1) {
+        const mockRefinedData = {
+          idea: `Based on your answers, let's focus on ${allAnswers.q0}. To address the challenge of ${allAnswers.q1}, 
+                 and starting by ${allAnswers.q2}. This approach will allow you to test your concept while 
+                 minimizing initial risks and investment.`,
+          questions: [
+            {
+              text: "What resources do you already have that could help with this refined concept?",
+              options: ["Existing network or community", "Relevant skills or expertise", "Physical space or equipment", "Online presence or following"]
+            },
+            {
+              text: "What's the first actionable step you could take in the next week to move this idea forward?",
+              options: ["Research potential competitors", "Create a basic business plan", "Reach out to potential collaborators or mentors", "Design a prototype or sample offering"]
+            }
+          ]
+        };
+        updateUI(mockRefinedData);
+      } else if (round === 2) {
+        const userInterests = $('#userInterests').val() || '';
+        const userPersonality = $('#userPersonality').val() || '';
+        const interests = userInterests.split(',').map(i => i.trim());
+        const mainInterest = interests[0] || 'your main interest';
+        const randomIdea = getRandomIdea(interests, userPersonality);
+        
+        const mockFinalData = {
+          businessPlan: `
+            <h3 class="text-xl font-semibold mb-3">${randomIdea.title}</h3>
+            <ol class="list-decimal pl-6 space-y-4">
+              <li><strong>Concept:</strong> An innovative business combining ${mainInterest} with interactive experiences, leveraging your ${userPersonality} personality.</li>
+              <li><strong>Unique Selling Proposition:</strong> ${allAnswers.q0 || 'Creating unique experiences'} through ${mainInterest}-themed events and products.</li>
+              <li><strong>Initial Challenge:</strong> ${allAnswers.q1 || 'Finding the right audience'}</li>
+              <li><strong>Starting Approach:</strong><span class="cap-first"> ${allAnswers.q2 || 'Host a local event'}</span></li>
+              <li><strong>Key Resources:</strong> Leverage your ${allAnswers.q3 || 'existing network or community'} to kickstart the business.</li>
+              <li><strong>First Action Step:</strong> ${allAnswers.q4 || 'Research potential competitors'} within the next week.</li>
+              <li><strong>Target Market:</strong> Enthusiasts of ${mainInterest} looking for unique, interactive experiences.</li>
+              <li><strong>Revenue Streams:</strong> Event tickets, online courses, subscription boxes, merchandise.</li>
+              <li><strong>Marketing Strategy:</strong> Utilize social media, content marketing, and partnerships to showcase your unique offerings.</li>
+              <li><strong>Growth Plan:</strong> Start locally, build a strong community, and gradually expand to new markets or online platforms.</li>
+            </ol>
+            <p class="mt-4">This plan combines your passion, personality, and insights from our refinement process. It provides a solid foundation for your "${randomIdea.title}" business. Remember to stay flexible, continually gather feedback, and adapt your approach as you bring this exciting concept to life!</p>
+          `
+        };
+        updateUI(mockFinalData);
+      }
+    }, 1600);  
+  });
+           
+});
+</script>
+
+<script src="js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
