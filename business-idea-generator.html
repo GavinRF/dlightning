@@ -299,8 +299,8 @@ $(document).ready(function() {
       const competitiveAdvantagePrompt = promptCompetitiveAdvantage();
       const mockData = {
         idea: `Based on your interests in ${userInterests} and your ${userPersonality} personality, here's a business idea for you<br><br>
-               <div class="bg-white outline outline-8 outline-white rounded capitalize">
-               <strong>${randomIdea.title}</strong><br>
+               <div class="bg-white outline outline-8 outline-white rounded">
+               <strong class="capitalize">${randomIdea.title}</strong><br>
                ${randomIdea.description}</div><br>
                <strong class="text-gray-600">Food for thought:</strong> ${competitiveAdvantagePrompt}`,
         questions: [
