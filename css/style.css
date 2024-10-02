@@ -4193,6 +4193,10 @@ h6 {
   line-height: 1.82em !important;
 }
 
+.instruct-list li{
+  list-style: decimal;
+}
+
 /* line 508, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_elements.scss */
 .ordered-list-roman li span {
   font-weight: 300;

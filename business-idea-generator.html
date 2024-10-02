@@ -6,9 +6,9 @@
 <meta name="description" content="Unlock your entrepreneurial potential with Dlightning Business Idea Generator. Personalized business concepts based on your interests and personality. Start your journey today!">
 
 <title>D⚡ | Business Idea Generator</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
 
 <meta property="og:image" content="https://dlightning.org/img/opengraph/business-gen-og.png"/>
 <meta property="og:title" content="Dlightning - Business Idea Generator"/>
@@ -17,7 +17,6 @@
 <meta property="og:image:height" content="630"/>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <style>
   header{
@@ -70,13 +69,15 @@
     object-position: center;
   }
 }
+
 </style>
 </head>
 
 <body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
 <header id='header'></header>
 <div class="h-14 bg-blue-800 w-full"> </div>
-<div class="container mt-20 sm:p-8 pt-8 pb-8 bg-white rounded-xl shadow-2xl max-w-4xl">
+<div class="mx-2 container">
+<div class="container mt-12 sm:p-8 pt-8 pb-8 bg-white rounded-xl shadow-2xl max-w-3xl">
   <h1 class="text-4xl font-bold mb-6 text-center text-green-700">Business Idea Generator</h1>
   
   <div class="mb-6">
@@ -133,19 +134,20 @@
   </div>
 </a>
 </div>
+</div>
 
 <div id="error"></div>
 
 <footer class="mt-24 w-full bg-blue-950 text-white py-8">
   <div class="container mx-auto px-4">
     <h3 class="text-2xl font-bold mb-4">How It Works</h3>
-    <ol class="list-decimal pl-6 space-y-2">
-      <li>1. Enter your interests, hobbies, and personality traits in the input fields.</li>
-      <li>2. Click "Generate Business Idea" to start the process.</li>
-      <li>3. Our system will analyze your input and generate a personalized business idea.</li>
-      <li>4. Answer follow-up questions to refine and expand on the idea.</li>
-      <li>5. The system will incorporate your answers to provide more detailed suggestions.</li>
-      <li>6. After two rounds of refinement, you'll see a comprehensive business plan.</li>
+    <ol class="list-decimal pl-6 space-y-2 instruct-list">
+      <li>Enter your interests, hobbies, and personality traits in the input fields.</li>
+      <li>Click "Generate Business Idea" to start the process.</li>
+      <li>Our system will analyze your input and generate a personalized business idea.</li>
+      <li>Answer follow-up questions to refine and expand on the idea.</li>
+      <li>The system will incorporate your answers to provide more detailed suggestions.</li>
+      <li>After two rounds of refinement, you'll see a comprehensive business plan.</li>
     </ol>
     <p class="mt-4 text-gray-400 max-w-screen-lg">The Business Idea Generator uses an advanced algorithm to create unique, personalized business concepts based on your individual interests and personality. It adapts to your responses, helping you explore and develop your entrepreneurial potential.</p>
   </div>
@@ -154,7 +156,7 @@
 <!-- <div id="footer" class="w-full"></div> -->
 
 <script>
-  
+
 $(document).ready(function() {
   $('#footer').load("footer.html");
   $('#header').load("header.html", function( response, status, xhr ) {
@@ -300,10 +302,13 @@ $(document).ready(function() {
       const competitiveAdvantagePrompt = promptCompetitiveAdvantage();
       const mockData = {
         idea: `Based on your interests in ${userInterests} and your ${userPersonality} personality, here's a business idea for you<br><br>
-               <div class="bg-white outline outline-8 outline-white rounded">
+            <div class="bg-white outline outline-2 outline-offset-8 outline-green-700 rounded">
+               <div class="my-2 bg-white outline outline-8 outline-white rounded">
                <strong class="capitalize">${randomIdea.title}</strong><br>
-               ${randomIdea.description}</div><br>
-               <strong class="text-gray-600">Food for thought:</strong> ${competitiveAdvantagePrompt}`,
+               ${randomIdea.description}</div>
+            </div>
+               <br>
+               <strong class="text-gray-600">Competitive Advantage:</strong> ${competitiveAdvantagePrompt}`,
         questions: [
           {
             text: "What aspect of this idea excites you the most?",
@@ -381,7 +386,7 @@ $(document).ready(function() {
               </div>
               <div class="rounded-lg ">
                 <h4 class="text-m font-semibold text-blue-950">Starting Approach</h4>
-                <p>${allAnswers.q2 || 'Host a local event.'}</p>
+                <p class="capitalize">${allAnswers.q2 || 'Host a local event.'}</p>
               </div>
               <div class="rounded-lg ">
                 <h4 class="text-m font-semibold text-blue-950">Key Resources</h4>
@@ -420,6 +425,7 @@ $(document).ready(function() {
            
 });
 </script>
+
 
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
