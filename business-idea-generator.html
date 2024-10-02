@@ -76,7 +76,7 @@
 <body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
 <header id='header'></header>
 <div class="h-14 bg-blue-800 w-full"> </div>
-<div class="container mt-20 p-8 bg-white rounded-xl shadow-2xl max-w-4xl">
+<div class="container mt-20 sm:p-8 pt-8 pb-8 bg-white rounded-xl shadow-2xl max-w-4xl">
   <h1 class="text-4xl font-bold mb-6 text-center text-green-700">Business Idea Generator</h1>
   
   <div class="mb-6">
@@ -90,7 +90,7 @@
   </div>
 
   <button id="generateBtn" class="w-full bg-gradient-to-r from-green-600 to-blue-700 hover:from-green-500 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-    <i class="fas fa-lightbulb mr-2"></i> Generate Business Idea
+    <i class="fas fa-lightbulb mr-2" aria-hidden="true"></i> Generate Business Idea
   </button>
   
   <div id="ideaResult" class="mt-8 p-6 bg-gray-50 rounded-lg shadow-inner hidden">
@@ -259,7 +259,7 @@ $(document).ready(function() {
       {
         title: `${mainInterest} Transformation Studio`,
         description: `Establish a unique personal development business that uses ${mainInterest} as a vehicle for growth and transformation. 
-                      Your ${personality} qualities will be key in designing programs that blend ${mainInterest}-based activities with coaching, mindfulness, or skill-building exercises. 
+                      Your ${personality} qualities will be key in designing programs that blend ${mainInterest}-based activities with coaching or skill-building exercises. 
                       Offer both in-person and online options to reach a diverse audience seeking personal growth through their passion for ${mainInterest}.`
       }
     ];
@@ -291,6 +291,7 @@ $(document).ready(function() {
     $('#ideaResult').removeClass('hidden');
     $('#questions').addClass('hidden');
     $('#finalBusinessPlan').addClass('hidden');
+    $('#expBld').addClass('hidden');
 
     setTimeout(function() {
       const interests = userInterests.split(',').map(i => i.trim());
@@ -340,8 +341,8 @@ $(document).ready(function() {
     setTimeout(function() {
       if (round === 1) {
         const mockRefinedData = {
-          idea: `Based on your answers, let's focus on ${allAnswers.q0}. To address the challenge of ${allAnswers.q1}, 
-                 and starting by ${allAnswers.q2}. This approach will allow you to test your concept while 
+          idea: `Based on your answers, let's focus on ${allAnswers.q0 || 'hosting a local event'}. To address the challenge of ${allAnswers.q1 || 'finding the right audience'}, 
+                 and starting by ${allAnswers.q2 || 'interviewing potential customers'}. This approach will allow you to test your concept while 
                  minimizing initial risks and investment.`,
           questions: [
             {
@@ -365,19 +366,51 @@ $(document).ready(function() {
         const mockFinalData = {
           businessPlan: `
             <h3 class="text-xl font-semibold mb-3 capitalize">${randomIdea.title}</h3>
-            <ol class="list-decimal pl-6 space-y-4">
-              <li><strong>Concept:</strong> An innovative business combining ${mainInterest} with interactive experiences, leveraging your ${userPersonality} personality.</li>
-              <li><strong>Unique Selling Proposition:</strong> ${allAnswers.q0 || 'Creating unique experiences'} through ${mainInterest}-themed events and products.</li>
-              <li><strong>Initial Challenge:</strong> ${allAnswers.q1 || 'Finding the right audience'}</li>
-              <li><strong>Starting Approach:</strong><span class="cap-first"> ${allAnswers.q2 || 'Host a local event'}</span></li>
-              <li><strong>Key Resources:</strong> Leverage your ${allAnswers.q3 || 'existing network or community'} to kickstart the business.</li>
-              <li><strong>First Action Step:</strong> ${allAnswers.q4 || 'Research potential competitors'} within the next week.</li>
-              <li><strong>Target Market:</strong> Enthusiasts of ${mainInterest} looking for unique, interactive experiences.</li>
-              <li><strong>Revenue Streams:</strong> Event tickets, online courses, subscription boxes, merchandise.</li>
-              <li><strong>Marketing Strategy:</strong> Utilize social media, content marketing, and partnerships to showcase your unique offerings.</li>
-              <li><strong>Growth Plan:</strong> Start locally, build a strong community, and gradually expand to new markets or online platforms.</li>
-            </ol>
-            <p class="mt-4">This plan combines your passion, personality, and insights from our refinement process. It provides a solid foundation for your "${randomIdea.title}" business. Remember to stay flexible, continually gather feedback, and adapt your approach as you bring this exciting concept to life!</p>
+              <div class="space-y-4">
+              <div class="rounded-lg">
+                <h4 class="text-m font-semibold text-blue-950">Concept</h4>
+                <p>An innovative business combining ${mainInterest} with interactive experiences, leveraging your ${userPersonality} personality.</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">Unique Selling Proposition</h4>
+                <p>${allAnswers.q0 || 'Creating unique experiences'} through ${mainInterest}-themed events and products.</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">Initial Challenge</h4>
+                <p>${allAnswers.q1 || 'Finding the right audience.'}</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">Starting Approach</h4>
+                <p>${allAnswers.q2 || 'Host a local event.'}</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">Key Resources</h4>
+                <p>Leverage your ${allAnswers.q3 || 'existing network or community'} to kickstart the business.</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">First Action Step</h4>
+                <p>${allAnswers.q4 || 'Research potential competitors'} within the next week.</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">Target Market</h4>
+                <p>Enthusiasts of ${mainInterest} looking for unique, interactive experiences.</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">Revenue Streams</h4>
+                <p>Event tickets, online courses, subscription boxes, merchandise.</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">Marketing Strategy</h4>
+                <p>Utilize social media, content marketing, and partnerships to showcase your unique offerings.</p>
+              </div>
+              <div class="rounded-lg ">
+                <h4 class="text-m font-semibold text-blue-950">Growth Plan</h4>
+                <p>Start locally, build a strong community, and gradually expand to new markets or online platforms.</p>
+              </div>
+            </div>
+            <div class="mt-4 p-4 bg-green-90 rounded-lg">
+              <p class="text-md text-green-900">This plan combines your passion, personality, and insights from our refinement process. It provides a solid foundation for your "${mainInterest} Fusion Experience" business. Remember to stay flexible, continually gather feedback, and adapt your approach as you bring this exciting concept to life!</p>
+            </div>
           `
         };
         updateUI(mockFinalData);
