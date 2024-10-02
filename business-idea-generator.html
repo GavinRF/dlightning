@@ -99,7 +99,7 @@
   </div>
 
  <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
-  <img src="img/exp-builder/immersive-experience.jpeg" alt="Background shilouette of a woman in a pinnk and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
+  <img src="img/exp-builder/immersive-experience.png" alt="Background shilouette of a woman in a pinnk and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
   <div class="relative z-10">
     <h4 class="text-2xl text-white mb-2 px-2 font-bold drop-shadow">Take your business<br>to the next level</h4>
     <a href="experience-builder.html">
@@ -119,6 +119,19 @@
     <h2 class="text-2xl font-semibold mb-4 text-green-700">Your Final Business Plan</h2>
     <div id="businessPlanContent" class="text-lg leading-relaxed"></div>
   </div>
+
+<a id="expBld2" class="hidden" href="experience-builder.html">
+  <div class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden w-full flex justify-around bg-gradient-to-r from-indigo-700 via-purple-500 to-pink-200">
+    <div class="relative z-10">
+      <h4 class="text-2xl text-white px-2 font-semibold drop-shadow">Unlock the full Power <br>of your Product</h4>
+    </div>
+      <div>
+          <button class="bg-gradient-to-r from-violet-700 to-purple-800 hover:from-violet-600 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+            Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
+          </button>
+      </div>
+  </div>
+</a>
 </div>
 
 <div id="error"></div>
@@ -213,7 +226,8 @@ $(document).ready(function() {
       $('#questions').addClass('hidden');
       $('#finalBusinessPlan').removeClass('hidden');
       $('#businessPlanContent').html(data.businessPlan);
-      $('#expBld').removeClass('hidden');
+      $('#expBld').fadeIn(1600);
+      $('#expBld2').fadeIn(1680);
       // Remove loading spinner and message
       $('#ideaContent').find('.text-center').remove();
     }
@@ -285,7 +299,7 @@ $(document).ready(function() {
       const competitiveAdvantagePrompt = promptCompetitiveAdvantage();
       const mockData = {
         idea: `Based on your interests in ${userInterests} and your ${userPersonality} personality, here's a business idea for you<br><br>
-               <div class="bg-white outline outline-8 outline-white rounded">
+               <div class="bg-white outline outline-8 outline-white rounded capitalize">
                <strong>${randomIdea.title}</strong><br>
                ${randomIdea.description}</div><br>
                <strong class="text-gray-600">Food for thought:</strong> ${competitiveAdvantagePrompt}`,
