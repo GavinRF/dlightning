@@ -1181,8 +1181,8 @@ h3 {
 }
 
 .header_bottom_border {
-  border-bottom: 1px solid #4B4E50;
-  padding-bottom: 22px;
+  /* border-bottom: 1px solid #4B4E50; */
+  padding-bottom: 16px;
 }
 
 /* line 343, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_header.scss */
@@ -1631,7 +1631,7 @@ h3 {
 
 /* line 168, ../../Arafath/CL/CL October/214. App Landing Page/HTML/scss/_Process.scss */
 .productivity_area {
-  background-color: #2751AE ;
+  background-color: #0b3daa ;
   padding: 64px 0;
 }
 
@@ -2535,7 +2535,7 @@ h3 {
 .footer .footer_top {
   padding-top: 117px;
   padding-bottom: 205px;
-  background: #103e8f;
+  background: #052e75;
 }
 
 @media (max-width: 767px) {

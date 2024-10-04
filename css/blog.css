@@ -526,9 +526,15 @@
     clear: both;
     display: table;
   }
+
+  .blog_item_img img{
+    width: 100%;
+  }
   
   .blog_item_img {
     position: relative;
+    overflow: hidden;
+    max-height: 215px;
   }
   
   .blog_item_img .blog_item_date {
@@ -578,7 +584,7 @@
   
   .blog_right_sidebar .widget_title {
     font-size: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
   }
   
   .blog_right_sidebar .widget_title::after {
@@ -589,9 +595,9 @@
   }
   
   .blog_right_sidebar .single_sidebar_widget {
-    background: #fbf9ff;
-    padding: 30px;
-    margin-bottom: 30px;
+    /* background: #fbf9ff; */
+    padding: 20px;
+    margin-bottom: 20px;
   }
   
   .blog_right_sidebar .single_sidebar_widget .btn_1 {
