@@ -5129,3 +5129,22 @@ details[open] summary ~ * {
     padding: 0px;
   }
 }
+
+.pDash{
+  width:76%;
+}
+
+@media (max-width: 990px) {
+  .learnMoreBig{
+    display: none;
+  }
+  .pDash{
+    width: 98% !important;
+  }
+}
+
+@media (min-width: 991px) {
+  .learnMoreSmall{
+    display: none !important;
+  }
+}
