@@ -81,8 +81,8 @@
             margin-bottom: 1rem;
         }
         .related-post h3{
-            font-size: 1rem;
-            margin-bottom: 0.15rem;
+            font-size: .84rem;
+            margin-bottom: 0.05rem;
         }
         .related-post img {
             max-width: 80px;
@@ -97,10 +97,31 @@
             max-width: 100%;
             background-position: 50%;
             box-sizing: border-box;
-            height: 10px;
-            background-image: linear-gradient(45deg, rgba(13, 13, 13, 0), rgba(13, 13, 13, 0) 33.33%, #0d0d0d 33.33%, #0d0d0d 66.67%, rgba(13, 13, 13, 0) 66.67%, rgba(13, 13, 13, 0) 100%);
+            height: 1px;
+            color: #333;
+            background: linear-gradient(.25deg, #3a177d, #006de1ee, #0e08b4ee, #06022d);
             background-size: 10px 100%;
             width: 150px;
+        }
+        .recent-post, .related-post {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        .recent-post h3, .related-post h3 {
+            font-size: 1rem;
+            margin-bottom: 0.15rem;
+        }
+        .recent-post img, .related-post img {
+            max-width: 80px;
+            height: 80px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 6px;
+        }
+        #moreRelatedPosts {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
         }
     </style>
 </head>
@@ -140,8 +161,7 @@
                     <img src="../blog/img/dog-cat.jpg" alt="Decision Theories & Models" class="featured-image img-fluid rounded">
                     
                     <div class="post-content mt-4">
-                        <p>
-    Decision making is a process influenced by the way our mind interacts with the problem, the emotions arising from the situation, and the multitude of potential outcomes. Taking action isn’t a simple reduction of the facts; it requires a quick way to filter the pertinent information so that a decision can be made.
+                        <p>Decision making is a process influenced by the way our mind interacts with the problem, the emotions arising from the situation, and the multitude of potential outcomes. Taking action isn’t a simple reduction of the facts; it requires a quick way to filter the pertinent information so that a decision can be made.
 
     As the number of choices increases so does the difficulty in determining the best course of action. By categorizing and ranking choices based on their most salient features, we can streamline decision-making to focus on a smaller, more manageable set of criteria.
 </p>
@@ -223,10 +243,60 @@ These topics, and more are tackled in my book <a href="../../tea-landing.html">Y
                 </section>
             </div>
 
+            <section id="recentPosts" class="mt-4 mt-lg-0">
+                <h3 class="mb-4">Recent Posts</h3>
+                <div class="recent-posts-container">
+                    
+        <div class="recent-post">
+            <div>
+                <a href="gumball-machine.html">
+                    <img src="../blog/img/autoshop.jpg" alt="The gumball machine">
+                </a>
+            </div>
+            <div>
+                <a href="gumball-machine.html">
+                    <h3>The gumball machine</h3>
+                    <p>Mar 4, 2024</p>
+                </a>
+            </div>
+        </div>
+        
+        <div class="recent-post">
+            <div>
+                <a href="cherry-tree-buck.html">
+                    <img src="../blog/img/cc-buck.jpg" alt="Cherry Tree Buck">
+                </a>
+            </div>
+            <div>
+                <a href="cherry-tree-buck.html">
+                    <h3>Cherry Tree Buck</h3>
+                    <p>Mar 16, 2024</p>
+                </a>
+            </div>
+        </div>
+        
+        <div class="recent-post">
+            <div>
+                <a href="missed-deadlines.html">
+                    <img src="../blog/img/contact-sheet.png" alt="Missed Deadlines">
+                </a>
+            </div>
+            <div>
+                <a href="missed-deadlines.html">
+                    <h3>Missed Deadlines</h3>
+                    <p>Feb 4, 2024</p>
+                </a>
+            </div>
+        </div>
+        
+                </div>
+            </section>
+
+
             <div class="col-lg-4">
-                <section id="relatedPosts" class="mt-4 mt-lg-0">
+                <section id="moreRelatedPosts" class="mt-5">
                     <h3 class="mb-4">Related Posts</h3>
-                    <div class="related-posts-container">
+                    <div class="row">
                         
                     </div>
                 </section>
