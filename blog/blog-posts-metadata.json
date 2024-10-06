@@ -1,0 +1,48 @@
+{
+    "posts": [
+      {
+        "id": "decision-theories-models",
+        "title": "Decision Theories & Models",
+        "date": "Mar 31, 2024",
+        "author": "Gavin F.",
+        "authorImage": "img/author.png",
+        "excerpt": "Design for the mental pathways used to make decisions.",
+        "image": "img/dog-cat.jpg",
+        "tags": ["Psychology", "Process", "Theory"],
+        "category": "Psychology"
+      },
+      {
+        "id": "cherry-tree-buck",
+        "title": "Cherry Tree Buck",
+        "date": "Mar 16, 2024",
+        "author": "Gavin F.",
+        "authorImage": "img/author.png",
+        "excerpt": "Learn the basics of web development and start your journey to becoming a web developer.",
+        "image": "img/cc-buck.jpg",
+        "tags": ["Storytelling", "Nature", "Community", "Experiential Design"],
+        "category": "Writing"
+      },
+      {
+        "id": "gumball-machine",
+        "title": "The gumball machine",
+        "date": "Mar 4, 2024",
+        "author": "Gavin F.",
+        "authorImage": "img/author.png",
+        "excerpt": "“Two sides of the same coin” - How the seamless integration of design and engineering shapes customer experiences and drives emotional engagement.",
+        "image": "img/autoshop.jpg",
+        "tags": ["Design", "Engineering", "Ethics in Tech", "Experiential Design"],
+        "category": "Design"
+      },
+      {
+        "id": "missed-deadlines",
+        "title": "Missed Deadlines",
+        "date": "Feb 4, 2024",
+        "author": "Gavin F.",
+        "authorImage": "img/author.png",
+        "excerpt": "How setting a due date and repeatedly missing it got me to the finish line.",
+        "image": "img/contact-sheet.png",
+        "tags": ["Writing", "Motivation", "Time Management", "Creative Journey", "Process", "Experience"],
+        "category": "Writing"
+      }
+    ]
+  }

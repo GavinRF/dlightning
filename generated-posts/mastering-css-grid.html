@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering CSS Grid | D⚡</title>
+    <meta name="description" content="Take your layout skills to the next level with CSS Grid, the most powerful layout system available in CSS.">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/magnific-popup.css"> 
+    <link rel="stylesheet" href="../../css/themify-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="Mastering CSS Grid">
+    <meta property="og:description" content="Take your layout skills to the next level with CSS Grid, the most powerful layout system available in CSS.">
+    <meta property="og:image" content="../blog/img/single_blog_5.png">
+    <meta property="og:url" content="https://dlightning.org/blog/post-content/mastering-css-grid.html">
+    <meta property="og:type" content="article">
+
+    <style>
+        .blog-header {
+            background-color: #f8f9fa;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .blog-title {
+            font-size: 2.5rem;
+            color: #333;
+        }
+        .post-meta {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        .author-image {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .featured-image {
+            width: 100%;
+            max-height: 280px;
+            height: auto;
+            margin-bottom: 2rem;
+            object-fit: cover;
+        }
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .post-content p{
+            white-space: pre; 
+            text-wrap: wrap;
+        }
+        .tags {
+            margin-top: 2rem;
+        }
+        .tag {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 0.3rem 0.6rem;
+            border-radius: 0.25rem;
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .social-sharing {
+            margin-top: 2rem;
+        }
+        .social-sharing button {
+            margin-right: 0.5rem;
+        }
+        #relatedPosts {
+            margin-top: 3rem;
+        }
+        .related-post {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        .related-post h3{
+            font-size: 1rem;
+            margin-bottom: 0.15rem;
+        }
+        .related-post img {
+            max-width: 80px;
+            height: 80px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header"></header>
+
+        <!-- hero_area  -->
+        <div class="bradcam_area bradcam_bg_1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="bradcam_text">
+                        <h1>Mastering CSS Grid</h1>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>    
+
+    <div class="blog-header">
+        <div class="container">
+            <h2 class="blog-title">Take your layout skills to the next level with CSS Grid, the most powerful layout system available in CSS.</h2>
+            <div class="post-meta">
+                <span class="author ms-3">
+                    <img src="../blog/img/author.png" alt="Gavin F." class="author-image">
+                     Gavin F. &emsp;
+                </span>
+                <span class="date"><i class="far fa-calendar-alt me-2"></i> 2024-03-20</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <article id="blogPost">
+                    <img src="../blog/img/single_blog_5.png" alt="Mastering CSS Grid" class="featured-image img-fluid rounded">
+                    
+                    <div class="post-content mt-4">
+                        <h1> This is about CSS!!!!M</h1>
+                    </div>
+
+                    <div class="tags">
+                        <span class="tag">CSS</span> <span class="tag">Layout</span> <span class="tag">Web Design</span>
+                    </div>
+
+                    <div class="social-sharing">
+                        <button class="btn btn-primary" onclick="shareOnFacebook()"><i class="fab fa-facebook-f me-2"></i> Share on Facebook</button>
+                        <button class="btn btn-info" onclick="shareOnTwitter()"><i class="fab fa-twitter me-2"></i> Share on Twitter</button>
+                        <button class="btn btn-secondary" onclick="shareOnLinkedIn()"><i class="fab fa-linkedin-in me-2"></i> Share on LinkedIn</button>
+                    </div>
+                </article>
+
+                <section id="comments" class="mt-5">
+                    <!-- Add your chosen commenting system here -->
+                </section>
+            </div>
+
+            <div class="col-lg-4">
+                <section id="relatedPosts" class="mt-4 mt-lg-0">
+                    <h3 class="mb-4">Related Posts</h3>
+                    <div class="related-posts-container">
+                        
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <a href="../blog/blog.html"><i class="fa fa-arrow-left"></i> back to blog list</a>
+        </div>
+    </main>
+
+
+    <footer id="footer" class="mt-5"></footer>
+    
+    <script>	
+        $(document).ready(function() {
+            $('#footer').load("../../footer.html");
+            $('#header').load("../../header.html", function(response, status, xhr) {
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    $("#error").html(msg + xhr.status + " " + xhr.statusText);
+                } else {
+                    $('.blog').addClass('thisPage');
+                }
+            });
+        });
+
+        var $backToTop = $(".back-to-top");
+        $backToTop.hide();
+
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+        });
+
+        $backToTop.on('click', function(e) {
+            $("html, body").animate({scrollTop: 0}, 500);
+        });
+    </script>
+
+    <script src="blog-post.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
+
+<!-- python3 blog/generate_posts.py  -->
