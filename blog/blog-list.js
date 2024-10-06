@@ -52,7 +52,7 @@ function loadMorePosts() {
                         <p class="date"><i class="far fa-calendar-alt me-2"></i> ${post.date}</p>
                         <p>${post.excerpt}</p>
                         <div class="tags">
-                            ${post.tags.map(tag => `<span class="tag"><i class="fas fa-tag me-1"></i> ${tag}</span>`).join('')}
+                            ${post.tags.map(tag => `<span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;${tag}</span>`).join('')}
                         </div>
                     </div>
                 </article>
