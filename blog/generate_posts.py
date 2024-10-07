@@ -73,7 +73,7 @@ def generate_posts(metadata, template):
         post_html = post_html.replace('{AUTHOR}', post['author'])
         post_html = post_html.replace('{AUTHOR_IMAGE}', post['authorImage'])
         post_html = post_html.replace('{CONTENT}', post_content)
-        post_html = post_html.replace('{TAGS}', ' '.join([f'<span class="tag">{tag}</span>' for tag in post['tags']]))
+        post_html = post_html.replace('{TAGS}', ' '.join([f'<span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;{tag}</span>' for tag in post['tags']]))
         recent_posts = generate_recent_posts(post, metadata['posts'])
         post_html = post_html.replace('{RECENT_POSTS}', recent_posts)
         related_posts = generate_related_posts(post, metadata['posts'])
