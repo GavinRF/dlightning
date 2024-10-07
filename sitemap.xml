@@ -60,5 +60,25 @@
     <loc>https://dlightning.org/blog/blog.html</loc>
     <lastmod>2024-10-06</lastmod>
   </url>
+<!-- // Blog Posts  ++++++++++++++++++++++++++++++++ -->
+  <url>
+    <loc>https://dlightning.org/generated-posts/decision-theories-models.html</loc>
+    <lastmod>2024-10-06</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/generated-posts/cherry-tree-buck.html</loc>
+    <lastmod>2024-10-06</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/generated-posts/gumball-machine.html</loc>
+    <lastmod>2024-10-06</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/generated-posts/missed-deadlines.html</loc>
+    <lastmod>2024-10-06</lastmod>
+  </url>
 
 </urlset>

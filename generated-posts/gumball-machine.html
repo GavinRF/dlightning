@@ -55,6 +55,7 @@
         .post-content p{
             white-space: pre; 
             text-wrap: wrap;
+            color: #030113;
         }
         .tags {
             margin-top: 2rem;
@@ -91,17 +92,37 @@
             object-fit: cover;
             margin-right: 6px;
         }
-        hr{
+        hr {
             border: 0;
-            margin: 0.35em auto;
+            margin: 0.85em auto 0.35em auto;
             max-width: 100%;
-            background-position: 50%;
             box-sizing: border-box;
             height: 1px;
-            color: #333;
-            background: linear-gradient(.25deg, #3a177d, #006de1ee, #0e08b4ee, #06022d);
+            background: linear-gradient(.25deg, #3a177d, #40015bee, #0e08b4ee, #06022d);
             background-size: 10px 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 150px;
+            position: relative;
+        }
+        hr::before {
+            content: "✳ ✴ ✳";
+            font-size: 1.2em; /* Adjust size as needed */
+            color: #06022d; /* Match color with the HR line */
+            position: absolute;
+            top: -18px; /* Adjust position vertically if necessary */
+            background-color: white; /* Use the background color to hide the HR line behind the symbols */
+            padding: 0 10px; /* Add padding to give space around the symbols */
+            font-family: Arial, 'Times New Roman', sans-serif; /* Force a non-emoji font */
+            font-weight: bold; /* Optional: make symbols bold for clarity */
+        }
+        #recentPosts{
+            margin-left: 24px;
+        }
+        #recentPosts h3{
+            font-size: 1.05 !important;
+            color: #333;
         }
         .recent-post, .related-post {
             display: flex;
@@ -112,8 +133,8 @@
             margin-bottom: 0.15rem;
         }
         .recent-post img, .related-post img {
-            max-width: 80px;
-            height: 80px;
+            max-width: 68px;
+            height: 68px;
             border-radius: 6px;
             object-fit: cover;
             margin-right: 6px;
@@ -146,8 +167,8 @@
             <h2 class="blog-title">“Two sides of the same coin” - How the seamless integration of design and engineering shapes customer experiences and drives emotional engagement.</h2>
             <div class="post-meta">
                 <span class="author ms-3">
-                    <img src="../blog/img/author.png" alt="Gavin F." class="author-image">
-                     Gavin F. &emsp;
+                    <img src="../blog/img/author.png" alt="Dlightning" class="author-image">
+                     Dlightning &emsp;
                 </span>
                 <span class="date"><i class="far fa-calendar-alt me-2"></i> Mar 4, 2024</span>
             </div>

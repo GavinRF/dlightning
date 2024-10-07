@@ -2879,7 +2879,14 @@ h3 {
     display: none;
   }
 }
-
+#dlRating{
+  margin-left: 104px;
+}
+@media (max-width: 987px) {
+  #dlRating{
+    margin-left: 12px;
+  }
+}
 .testmonial_area .rating_author {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2891,13 +2898,11 @@ h3 {
   -ms-flex-pack: center;
   justify-content: center;
 }
-
 .testmonial_area .rating_author i {
   font-size: 14px;
   color: #FFD35A;
   margin: 0px 2px;
 }
-
 .testmonial_area .rating_author span {
   font-size: 14px;
   font-weight: 400;
