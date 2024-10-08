@@ -68,7 +68,7 @@ def generate_posts(metadata, template):
         post_html = post_html.replace('{TITLE}', post['title'])
         post_html = post_html.replace('{EXCERPT}', post['excerpt'])
         post_html = post_html.replace('{IMAGE}', post['image'])
-        post_html = post_html.replace('{URL}', f"https://dlightning.org/blog/post-content/{post['id']}.html")
+        post_html = post_html.replace('{URL}', f"https://dlightning.org/generated-posts/{post['id']}.html")
         post_html = post_html.replace('{DATE}', post['date'])
         post_html = post_html.replace('{AUTHOR}', post['author'])
         post_html = post_html.replace('{AUTHOR_IMAGE}', post['authorImage'])

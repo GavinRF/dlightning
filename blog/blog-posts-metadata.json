@@ -1,5 +1,18 @@
 {
     "posts": [
+    {
+        "id": "ui-sailboat",
+        "title": "Sailing with the User Interface",
+        "date": "Sept 21, 2024",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "The surprising first moments of a new encounter with technology.",
+        "image": "img/sail-ui.jpg",
+        "img-credit": "Joseph Grev",
+        "credit-link": "https://unsplash.com/@lime517",
+        "tags": ["Psychology", "Process", "Theory"],
+        "category": "Design"
+      },
       {
         "id": "decision-theories-models",
         "title": "Decision Theories & Models",

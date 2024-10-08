@@ -72,8 +72,9 @@ body {
 }
 .search-icon{
 position: absolute;
-top: 38px;
-right: 56px;
+top: 8px;
+right: 26px;
+color: #767676;
 }
 #loadMoreBtn {
     display: none;

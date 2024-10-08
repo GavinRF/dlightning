@@ -21,13 +21,16 @@
     <meta property="og:type" content="article">
 
     <style>
+        body{
+            font-family: 'rubik';
+        }
         .blog-header {
             background-color: #f8f9fa;
             padding: 2rem 0 1.2rem 0;
             margin-bottom: 2.2rem;
         }
-        .blog-title {
-            font-size: 2.5rem;
+        .blog-title h2{
+            font-size: 2.2rem;
             color: #333;
         }
         .post-meta {
@@ -98,8 +101,7 @@
             max-width: 100%;
             box-sizing: border-box;
             height: 1px;
-            background: linear-gradient(.25deg, #3a177d, #40015bee, #0e08b4ee, #06022d);
-            background-size: 10px 100%;
+            background: linear-gradient(#3a177d, #40015bee, #0e08b4ee, #06022d);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -164,7 +166,9 @@
 
     <div class="blog-header">
         <div class="container">
+            <div style="max-width: 800px !important;">
             <h2 class="blog-title">{EXCERPT}</h2>
+            </div>
             <div class="post-meta">
                 <span class="author ms-3">
                     <img src="../blog/{AUTHOR_IMAGE}" alt="{AUTHOR}" class="author-image">
