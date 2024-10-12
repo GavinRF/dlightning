@@ -25,6 +25,7 @@ body {
 .blog-post h2 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
+    max-width: 650px;
 }
 .date {
     color: #6c757d;

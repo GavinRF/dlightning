@@ -1,6 +1,19 @@
 {
     "posts": [
     {
+        "id": "cup-of-tea-pod",
+        "title": "I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.",
+        "date": "Oct 10, 2024",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "When I let AI deep dive into <i>Your Cup of Tea</i>, the result wasn’t just insightful — it was surprisingly entertaining.",
+        "image": "img/notebook-ai.png",
+        "img-credit": "screenshot",
+        "credit-link": "https://dlightning.org",
+        "tags": ["AI", "Process", "Storytelling"],
+        "category": "Writing"
+    },
+    {
         "id": "ui-sailboat",
         "title": "Sailing with the User Interface",
         "date": "Sept 21, 2024",
@@ -37,7 +50,7 @@
       },
       {
         "id": "gumball-machine",
-        "title": "The gumball machine",
+        "title": "The Gumball Machine",
         "date": "Mar 4, 2024",
         "author": "Dlightning",
         "authorImage": "img/author.png",

@@ -1165,9 +1165,10 @@ h3 {
 }
 
 .slider_bg_1 {
-  background-image: url(../img/banner/lightBGLines.png);
+  /* background-image: url(../img/banner/lightBGLines.png); */
   background-size: cover;
-  background-color: #0181F5;
+  /* background-color:  #0181F5; */
+  background: linear-gradient(to top, #0181F5 74%, #045ff1 );
 }
 
 .slider_bg_2 {
