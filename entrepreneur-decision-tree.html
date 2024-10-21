@@ -92,7 +92,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-image: linear-gradient(to right, #131181, #331691, #7353ff);
+        background-image: linear-gradient(to right, #0b0a6c, #331691, #6744ff);
         border-radius: 8px;
         margin-top: 44px;
         padding: 16px;
@@ -284,7 +284,7 @@
                             "Consider targeting an underserved market segment",
                             "Develop innovative solutions to common pain points"
                           ],
-                          useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to analyze competition and develop your unique selling proposition."
+                          useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to analyze competition and develop your unique&nbsp;selling&nbsp;proposition."
                         }
                       }
                     ]
@@ -498,6 +498,8 @@ function resetTree() {
     document.getElementById('result').textContent = '';
     document.getElementById('reset').style.display = 'none';
     document.getElementById('expBld').style.display = 'none';
+
+   document.getElementById('header').scrollIntoView({ behavior: 'smooth' });
 }
 
 document.getElementById('reset').addEventListener('click', resetTree);
