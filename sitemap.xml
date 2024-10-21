@@ -50,9 +50,14 @@
     <loc>https://dlightning.org/contact.html</loc>
     <lastmod>2024-10-06</lastmod>
   </url>
-
+<!-- // Lead Magnet  ++++++++++++++++++++++++++++++++ -->
   <url>
     <loc>https://dlightning.org/business-idea-generator.html</loc>
+    <lastmod>2024-10-06</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/method-tree.html</loc>
     <lastmod>2024-10-06</lastmod>
   </url>
 
@@ -78,6 +83,11 @@
 
   <url>
     <loc>https://dlightning.org/generated-posts/missed-deadlines.html</loc>
+    <lastmod>2024-10-06</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/generated-posts/cup-of-tea-pod.html</loc>
     <lastmod>2024-10-06</lastmod>
   </url>
 

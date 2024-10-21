@@ -1,0 +1,665 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D⚡ | Advanced UX Methods</title>
+    <meta name="description" content="Interactive UX Design Decision Tree tool helps UX designers, researchers, and product managers make informed decisions about user research, interface design, and interaction design. Get personalized recommendations for your UX challenges.">
+    <meta name="keywords" content="UX design, user experience, decision tree, UX research, interface design, interaction design, UX tools, design system, user research, UX methodology, design thinking, UX strategy, usability testing, information architecture, visual design">
+    <meta name="author" content="Dlightning">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+    :root {
+        --primary-color: #0b3daa;
+        --secondary-color: #259928;
+        --accent-color: #b42525;
+        --text-color: #333;
+        --bg-color: #eaf8fd;
+        --hover-color: #10ac18;
+    }
+
+    body {
+        font-family: 'Rubik', sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        /* display: flex;
+        justify-content: center;
+        align-items: center;*/
+        min-height: 100vh; 
+    }
+
+    /* .container {
+        width: 1000px; 
+        margin: 80px auto;
+        padding: 20px;
+    } */
+
+    #DTC{
+        margin: 60px auto 190px auto;
+    }
+
+    .decision-tree {
+        background-color: #fff;
+        padding: 1.5rem; 
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .decision-tree h2 {
+        color: var(--primary-color);
+        margin-bottom: 2rem;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    #tree-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    #question-1, #question-2 {
+        font-size: 1.2rem;
+        margin-bottom: .5rem;
+    }
+
+    .decision-level {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .decision-level.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .decision-level-options {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: .6rem;
+    }
+
+    .option-btn {
+        background-color: var(--secondary-color);
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        flex: 1;
+        min-width: 120px;
+        flex-shrink: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .option-btn.selected {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+    }
+
+    .option-btn.unselected {
+        background-color: #a5d6a7;
+        opacity: 0.7;
+    }
+
+    .option-btn:hover {
+        background-color: var(--hover-color);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    #result {
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+        text-align: left;
+        padding: 1.5rem;
+        background-color: #f0f8ff;
+        border-radius: 5px;
+        margin-top: 2rem;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    #result.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    #restart-tree {
+        background-color: var(--accent-color);
+        color: #fff;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition-delay: 2.2s;
+        transition: all .8s ease;
+        display: block;
+        margin: 0 auto;
+        margin-top: 2rem;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    #restart-tree.show, #expBld2.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    #decision-path {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .path-step {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .path-step.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        cursor: help;
+        margin-left: 5px;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 250px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -125px;
+        opacity: 0;
+        transition: opacity 0.3s, visibility 0.3s;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    #result ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 12px 0 0 16px;
+    }
+
+    #result li {
+        position: relative;
+        padding-left: 1.5em;
+        margin-bottom: 0.5em;
+        color: #2e2e2e;
+        font-size: smaller;
+    }
+
+  #result li::before {
+        content: " ➔";
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+    }
+
+    @media (max-width: 1040px) { 
+        .container {
+            width: 95%;
+            max-width: 1000px; 
+        }
+    }
+
+    #expBld2{
+        background-image: linear-gradient(to right, navy, indigo 52%, violet 84%, pink 98%);
+        border-radius: 8px;
+        margin-top: 14px;
+        padding: 16px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.8s ease, transform 0.8s ease allow-discrete;
+    }
+
+    .text-yellow{
+        color: gold;
+    }
+
+    #colorBlock{
+        width: 100%;
+        height: 16px;
+        background-color: #0b3daa;
+    }
+
+    i, .fa, .fa-brands {
+  line-height: 2 !important;
+}
+</style>
+</head>
+<body>
+
+    <header id='header'></header>
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h1>Advanced UX Methods Decision Tree</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" id="DTC">
+        <div class="row">
+            <div class="col-xl-12">
+        <section id="decision-tree" class="decision-tree">
+            <h2>Discover UX Methods for Your Project</h2>
+            <div id="tree-container"></div>
+            <!-- <div id="decision-path"></div> -->
+            <div id="result" style="display: none;"></div>
+
+            <a href="experience-builder.html">
+                <div id="expBld2">
+                    <h4 class="text-white">Unlock the full Power of your Product</h4>
+                    <div>
+                        <button type="button" class="btn btn-primary">
+                          Experience Builder&emsp; <i class="fa fa-bolt text-yellow" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+              </a>
+            <button id="restart-tree" style="display: none;">Start Over</button>
+        </section>
+        </div>
+    </div>
+</div>
+
+<footer id="footer"></footer>
+
+    <script>
+//Header + Footer
+$(document).ready(function() {
+  $('#footer').load("footer.html");
+  $('#header').load("header.html", function( response, status, xhr ) {
+    if ( status == "error" ) {
+        var msg = "Sorry but there was an error: ";
+        $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+    } else {
+        $('.business-gen').addClass('thisPage');
+    }
+  })
+});
+  //START
+        const decisionTree = {
+            start: {
+                label: "Primary UX Focus",
+                question: "What's your primary UX focus?",
+                options: [
+                    { text: "User Research", next: "research" },
+                    { text: "Design & Prototyping", next: "design" },
+                    { text: "Usability & Testing", next: "usability" },
+                    { text: "Analytics & Optimization", next: "analytics" }
+                ]
+            },
+            research: {
+                label: "User Research Method",
+                question: "Which user research method do you want to prioritize?",
+                options: [
+                    { text: "Interviews", next: "interviews" },
+                    { text: "Surveys", next: "surveys" },
+                    { text: "Persona Creation", next: "personas" },
+                    { text: "Journey Mapping", next: "journeyMap" }
+                ]
+            },
+            design: {
+                label: "Design Approach",
+                question: "What design approach are you most interested in?",
+                options: [
+                    { text: "Mobile-First Design", next: "mobilefirst" },
+                    { text: "Responsive Web Design", next: "responsive" },
+                    { text: "Accessibility-Driven Design", next: "accessibility" },
+                    { text: "Motion Design", next: "motion" }
+                ]
+            },
+            usability: {
+                label: "Usability Testing Method",
+                question: "Which usability testing method do you prefer?",
+                options: [
+                    { text: "In-person Testing", next: "inperson" },
+                    { text: "Remote Testing", next: "remote" },
+                    { text: "A/B Testing", next: "ab" },
+                    { text: "Guerrilla Testing", next: "guerrilla" }
+                ]
+            },
+            analytics: {
+                label: "Analytics Focus",
+                question: "What's your main analytics focus?",
+                options: [
+                    { text: "Conversion Rate Optimization", next: "cro" },
+                    { text: "User Behavior Analysis", next: "behavior" },
+                    { text: "Performance Metrics", next: "performance" },
+                    { text: "Funnel Analysis", next: "funnel" }
+                ]
+            },
+            interviews: { 
+                result: "Focus on conducting in-depth user interviews to gain qualitative insights. Use open-ended questions and active listening techniques to uncover user needs, motivations, and pain points.",
+                expanded: [
+                    "Prepare a comprehensive interview guide with a mix of open-ended and probing questions.",
+                    "Consider using the 'Jobs to be Done' framework to understand user motivations.",
+                    "Conduct interviews in the user's natural environment when possible for contextual insights.",
+                    "Use affinity mapping to analyze and categorize interview data.",
+                    "Consider both one-on-one interviews and focus groups for diverse perspectives."
+                ]
+            },
+            surveys: { 
+                result: "Develop comprehensive online surveys to collect quantitative data from a large user base. Use a mix of multiple-choice, rating scales, and open-ended questions to gather diverse insights.",
+                expanded: [
+                    "Use tools like SurveyMonkey or Google Forms for easy distribution and data collection.",
+                    "Implement Likert scales for measuring attitudes and opinions.",
+                    "Include Net Promoter Score (NPS) questions to gauge user satisfaction and loyalty.",
+                    "Use branching logic to create personalized survey paths based on responses.",
+                    "Pilot test your survey with a small group to refine questions and identify potential issues."
+                ]
+            },
+            personas: { 
+                result: "Create detailed user personas based on research data. Include demographic information, goals, behaviors, and pain points to guide design decisions and feature prioritization.",
+                expanded: [
+                    "Conduct surveys and interviews to gather diverse data for personas.",
+                    "Regularly update personas as you gather new insights.",
+                    "Utilize persona templates to ensure consistency.",
+                    "Share personas with your team for collaborative design efforts.",
+                    "Consider creating scenario descriptions to support each persona."
+                ]
+            },
+            journeyMap: { 
+                result: "Develop customer journey maps to visualize the user's experience across different touchpoints. Identify pain points and opportunities for improvement in the user's journey.",
+                expanded: [
+                    "Involve cross-functional teams to enrich the mapping process.",
+                    "Use insights gained from user interviews to inform the journey map.",
+                    "Identify moments of truth – critical touchpoints that significantly impact the user experience.",
+                    "Consider both online and offline interactions in your mapping.",
+                    "Regularly revisit and update the journey map based on new findings."
+                ]
+            },
+            mobilefirst: { 
+                result: "Implement a mobile-first design approach, focusing on creating optimal experiences for small screens first, then scaling up for larger devices.",
+                expanded: [
+                    "Start with a mobile prototype to visualize the core functionality.",
+                    "Utilize responsive design frameworks to build your pages.",
+                    "Test designs on real devices to ensure usability.",
+                    "Prioritize fast loading times as mobile sites need to be optimized.",
+                    "Use mobile analytics to track user behavior and inform further optimizations."
+                ]
+            },
+            responsive: { 
+                result: "Design responsive layouts that adapt seamlessly to various screen sizes and devices, ensuring a consistent user experience across platforms.",
+                expanded: [
+                    "Utilize CSS Grid and Flexbox for effective layout management.",
+                    "Conduct thorough testing on multiple devices to ensure responsiveness.",
+                    "Optimize images and content delivery for different resolutions.",
+                    "Consider implementing media queries for enhanced control over layout.",
+                    "Embrace a mobile-first philosophy to guide your design process."
+                ]
+            },
+            accessibility: { 
+                result: "Prioritize accessibility in your design process, following WCAG guidelines to create inclusive experiences for users with diverse abilities.",
+                expanded: [
+                    "Incorporate accessible color contrasts to aid visibility.",
+                    "Ensure keyboard navigability for all interactive elements.",
+                    "Use ARIA landmarks to enhance screen reader support.",
+                    "Conduct regular accessibility audits and usability tests.",
+                    "Educate your team on accessibility best practices."
+                ]
+            },
+            motion: { 
+                result: "Incorporate motion design principles to enhance user engagement and provide visual feedback. Use animations to guide users through interactions and transitions.",
+                expanded: [
+                    "Utilize motion to convey information, like indicating loading status.",
+                    "Ensure that animations do not distract from the main content.",
+                    "Experiment with easing functions to create natural movements.",
+                    "Provide options to disable animations for users who prefer it.",
+                    "Test animations on various devices to ensure performance."
+                ]
+            },
+            inperson: { 
+                result: "Conduct in-person usability testing sessions to observe users interacting with your product in a controlled environment. Gather rich qualitative data through direct observation and think-aloud protocols.",
+                expanded: [
+                    "Prepare a testing environment that mimics real usage conditions.",
+                    "Encourage users to talk through their thoughts as they interact.",
+                    "Record sessions for later review and analysis.",
+                    "Gather follow-up feedback through interviews post-testing.",
+                    "Use findings to inform iterations and improve the product."
+                ]
+            },
+            remote: { 
+                result: "Implement remote usability testing to reach a geographically diverse user base. Use screen sharing and video conferencing tools to observe and interact with users in their natural environment.",
+                expanded: [
+                    "Select appropriate remote testing tools like Lookback or UserTesting.",
+                    "Establish clear protocols for conducting remote sessions.",
+                    "Use tasks that can be easily accomplished in a remote setting.",
+                    "Encourage users to share screens and narrate their thought processes.",
+                    "Analyze results collaboratively with your team to identify insights."
+                ]
+            },
+            ab: { 
+                result: "Set up A/B tests to compare different design variations and measure their impact on user behavior and conversions. Use statistical analysis to make data-driven design decisions.",
+                expanded: [
+                    "Clearly define success metrics before starting A/B tests.",
+                    "Ensure a large enough sample size to achieve statistical significance.",
+                    "Run tests for an adequate duration to gather reliable data.",
+                    "Analyze results and iterate on designs based on findings.",
+                    "Document tests to refine future A/B testing strategies."
+                ]
+            },
+            guerrilla: { 
+                result: "Conduct quick, informal usability tests in public spaces to gather rapid feedback on your designs. This method is cost-effective and can provide valuable insights early in the design process.",
+                expanded: [
+                    "Bring quick prototypes to test and get immediate reactions.",
+                    "Engage with a diverse range of users for broader insights.",
+                    "Be prepared to adapt and refine your approach as needed.",
+                    "Use the feedback to inform your design process before further validation.",
+                    "Aim for a blend of qualitative and quantitative feedback."
+                ]
+            },
+            cro: { 
+                result: "Focus on Conversion Rate Optimization (CRO) to improve the percentage of users who take desired actions. Analyze user flows, implement A/B tests, and optimize call-to-action elements.",
+                expanded: [
+                    "Conduct heuristic evaluations to identify potential issues in the user flow.",
+                    "Utilize analytics tools to track user behavior and conversion funnels.",
+                    "A/B test critical pages and calls to action for optimization.",
+                    "Iterate continuously based on user feedback and performance data.",
+                    "Incorporate qualitative insights from user testing into your CRO efforts."
+                ]
+            },
+            behavior: { 
+                result: "Use tools like heatmaps, session recordings, and event tracking to analyze user behavior on your site or app. Identify patterns and optimize the user experience based on actual usage data.",
+                expanded: [
+                    "Utilize tools such as Hotjar or Crazy Egg for heatmapping.",
+                    "Analyze session recordings to see how users navigate.",
+                    "Combine quantitative data with qualitative insights for a comprehensive view.",
+                    "Regularly review and adjust based on new user behavior patterns.",
+                    "Use user feedback to further clarify behavioral insights."
+                ]
+            },
+            performance: { 
+                result: "Monitor key performance metrics such as page load times, time to interactive, and core web vitals. Optimize your site's performance to improve user experience and search engine rankings.",
+                expanded: [
+                    "Leverage tools like Google Lighthouse for performance audits.",
+                    "Use lazy loading techniques to improve initial load times.",
+                    "Optimize images and scripts to ensure faster loading.",
+                    "Regularly test performance on mobile devices.",
+                    "Monitor performance metrics continuously for ongoing improvements."
+                ]
+            },
+            funnel: { 
+                result: "Implement funnel analysis to track user progression through key conversion paths. Identify drop-off points and optimize each stage of the funnel to improve overall conversion rates.",
+                expanded: [
+                    "Visualize your funnel to identify critical drop-off points.",
+                    "Use segmentation to understand different user behaviors at each stage.",
+                    "A/B test different strategies to retain users at each stage.",
+                    "Gather qualitative feedback on user motivations to inform funnel optimizations.",
+                    "Regularly revise funnels based on new insights and conversion patterns."
+                ]
+            }
+        };
+
+        let currentStep = 'start';
+        let currentPath = [];
+        let levels = [];
+
+        function renderDecisionTree() {
+            const treeContainer = document.getElementById('tree-container');
+            const resultElement = document.getElementById('result');
+            const restartButton = document.getElementById('restart-tree');
+            const experienceBld = document.getElementById('expBld2');
+            
+
+            const step = decisionTree[currentStep];
+
+            if (step.question) {
+                const levelDiv = document.createElement('div');
+                levelDiv.classList.add('decision-level');
+
+                const questionElement = document.createElement('div');
+                questionElement.id = `question-${currentPath.length + 1}`;
+                questionElement.innerHTML = `${step.question} <span class="tooltip">ⓘ<span class="tooltiptext">${step.helpText}</span></span>`;
+                levelDiv.appendChild(questionElement);
+
+                const optionsElement = document.createElement('div');
+                optionsElement.classList.add('decision-level-options');
+                optionsElement.id = `options-${currentPath.length + 1}`;
+
+                step.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option.text;
+                    button.classList.add('option-btn');
+                    button.addEventListener('click', () => {
+                        selectOption(button, option);
+                    });
+                    optionsElement.appendChild(button);
+                });
+
+                levelDiv.appendChild(optionsElement);
+                treeContainer.appendChild(levelDiv);
+                levels.push(levelDiv);
+
+                setTimeout(() => {
+                    levelDiv.classList.add('show');
+                }, 100);
+
+                currentPath.push({ label: step.label, choice: null });
+                resultElement.style.display = 'none';
+                restartButton.style.display = 'none';
+                experienceBld.style.display = 'none';
+            } else if (step.result) {
+                resultElement.innerHTML = `<strong>Approach:</strong><br> ${step.result}<br>`;
+                if (step.expanded) {
+                    resultElement.innerHTML += '<ul>';
+                    step.expanded.forEach(item => {
+                        resultElement.innerHTML += `<li>${item}</li>`;
+                    });
+                    resultElement.innerHTML += '</ul>';
+                }
+                resultElement.style.display = 'block';
+                restartButton.style.display = 'inline-block';
+                experienceBld.style.display = 'block';
+
+                setTimeout(() => {
+                    resultElement.classList.add('show');
+                    restartButton.classList.add('show');
+                    experienceBld.classList.add('show');
+                }, 100);
+            }
+
+            renderPath();
+        }
+
+        function selectOption(button, option) {
+            const currentLevelOptions = button.parentElement.children;
+            Array.from(currentLevelOptions).forEach(btn => {
+                btn.classList.remove('selected');
+                btn.classList.add('unselected');
+            });
+
+            button.classList.remove('unselected');
+            button.classList.add('selected');
+
+            const currentLevel = parseInt(button.parentElement.id.split('-')[1]);
+            currentPath = currentPath.slice(0, currentLevel);
+            currentPath[currentLevel - 1].choice = option.text;
+
+            currentStep = option.next;
+
+            while (levels.length > currentLevel) {
+                const lastLevel = levels.pop();
+                lastLevel.remove();
+            }
+
+            renderDecisionTree();
+        }
+
+        function renderPath() {
+            const pathElement = document.getElementById('decision-path');
+            pathElement.innerHTML = '';
+            currentPath.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.classList.add('path-step');
+                stepElement.textContent = `${index + 1}. ${step.label}${step.choice ? ': ' + step.choice : ''}`;
+                pathElement.appendChild(stepElement);
+
+                setTimeout(() => {
+                    stepElement.classList.add('show');
+                }, 100 * (index + 1));
+            });
+        }
+
+        document.getElementById('restart-tree').addEventListener('click', () => {
+            currentStep = 'start';
+            currentPath = [];
+            levels = [];
+            document.getElementById('tree-container').innerHTML = '';
+            document.getElementById('result').classList.remove('show');
+            document.getElementById('restart-tree').classList.remove('show');
+            document.getElementById('expBld2').classList.remove('show');
+
+            renderDecisionTree();
+        });
+
+        renderDecisionTree();
+    </script>
+</body></html>

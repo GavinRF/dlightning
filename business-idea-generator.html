@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 
-
 <meta property="og:image" content="https://dlightning.org/img/opengraph/business-gen-og.png"/>
 <meta property="og:title" content="Dlightning - Business Idea Generator"/>
 <meta property="og:description" content="Start your entrepreneurial journey."/>
@@ -103,7 +102,7 @@
   </div>
 
  <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
-  <img src="img/exp-builder/immersive-experience.png" alt="Background shilouette of a woman in a pinnk and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
+  <img src="img/exp-builder/immersive-experience.png" alt="Background shilouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
   <div class="relative z-10">
     <h4 class="text-2xl text-white mb-2 px-2 font-bold drop-shadow">Take your business<br>to the next level</h4>
     <a href="experience-builder.html">
@@ -141,7 +140,7 @@
 
 <div id="error"></div>
 
-<footer class="mt-24 w-full bg-blue-950 text-white py-8">
+<div class="mt-24 w-full bg-blue-950 text-white py-8">
   <div class="container mx-auto px-4">
     <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
     <ol class="list-decimal pl-6 space-y-2 instruct-list">
@@ -154,9 +153,9 @@
     </ol>
     <p class="mt-4 text-gray-400 max-w-screen-lg">The Business Idea Generator uses an advanced algorithm to create unique, personalized business concepts based on your individual interests and personality. It adapts to your responses, helping you explore and develop your entrepreneurial potential.</p>
   </div>
-</footer>
+</div>
 
-<!-- <div id="footer" class="w-full"></div> -->
+<!-- <footer id="footer" class="w-full"></footer> -->
 
 <script>
 
@@ -178,7 +177,6 @@ $(document).ready(function() {
   function updateUI(data) {
     $('#ideaResult').removeClass('hidden');
     
-    // Keep the original idea visible and append refined concept
     if (round === 0) {
       $('#ideaContent').html(data.idea);
       currentIdea = data;
