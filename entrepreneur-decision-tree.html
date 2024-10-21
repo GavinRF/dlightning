@@ -1,0 +1,507 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>D⚡ | Interactive Entrepreneur Decision Tree with History</title>
+        <meta name="description" content="Use the Entrepreneur's Decision Tree to guide your startup journey! Answer key questions to determine your readiness, validate ideas, explore funding options, and build a successful business." />
+        <meta name="keywords" content="entrepreneur decision tree, startup guidance, business idea validation, startup roadmap, business planning, funding options, entrepreneur resources, small business tools, startup success, business decision-making" />
+        <meta name="author" content="Dlightning">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+      body, html {
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #f6faff 0%, #c8d8f1 100%);
+      }
+      .container {
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+      }
+      #decision-tree {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .node {
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .question {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #34495e;
+      }
+      .options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .option {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .option:hover {
+        background-color: #2980b9;
+      }
+      .option.selected {
+        background-color: #0c9a47;
+      }
+      .option.selected.no {
+        background-color: #ce3221;
+      }
+      #result {
+        font-weight: 500;
+        /* text-align: center; */
+        color: #03441e;
+      }
+      #result:not(:empty) {
+        margin-top: 20px;
+        padding: 16px;
+        background-color: #eff3f9;
+        border-radius: 6px;
+      }
+      #reset {
+        display: block;
+        margin: 20px auto 0;
+        background-color: #ce3221;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      #reset:hover {
+        background-color: #b51f0f;
+      }
+      #expBld{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: linear-gradient(to right, #131181, #331691, #7353ff);
+        border-radius: 8px;
+        margin-top: 44px;
+        padding: 16px;
+        transform: translateY(-20px);
+        transition: opacity 0.8s ease, transform 0.8s ease allow-discrete;
+    }
+    .text-yellow{
+        color: gold;
+    }
+    i, .fa, .fa-brands {
+        line-height: 2 !important;
+    }
+    .action-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .action-list li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .action-list li i {
+    margin-right: 10px;
+    color: #3498db;
+  }
+  
+  .builder-prompt {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e8f4fd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .builder-prompt i {
+    font-size: 24px;
+    color: #3498db;
+    margin-right: 15px;
+  }
+  
+  .builder-prompt p {
+    margin: 0;
+    color: #2c3e50;
+  }
+  
+  #result h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+    </style>
+    </head>
+    <body>
+    <header id='header'></header>
+        <div class="bradcam_area bradcam_bg_1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="bradcam_text">
+                            <h1>Advanced Entrepreneur's Decision Tree</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="container" style="margin: 102px auto 222px auto; max-width: 800px;">
+        <h2>Evaluate Your Business Readiness</h2>
+        <div id="decision-tree">
+          <div id="history"></div>
+          <div id="current-node"></div>
+          <div id="result"></div>
+        </div>
+        <div id="expBld" style="display: none;" class="shadow-lg border-bottom">
+            <a href="experience-builder.html">
+                <div>
+                <h3 class="text-white">Discover the Full Power of&nbsp;Your&nbsp;Product</h3>
+                <button class="btn btn-primary">
+                    Experience Builder&emsp; <i class="fa fa-bolt text-yellow" aria-hidden="true"></i>
+                </button>
+                </div>
+            </a>
+        </div>
+        <button id="reset" style="display: none;">Start Over</button>        
+    </div>
+
+    <div id="footer"></div>
+
+    <script>
+    //Header + Footer
+    $(document).ready(function() {
+    $('#footer').load("footer.html");
+    $('#header').load("header.html", function( response, status, xhr ) {
+        if ( status == "error" ) {
+            var msg = "Sorry but there was an error: ";
+            $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+        } else {
+            $('.business-gen').addClass('thisPage');
+        }
+    })
+    });
+    // Decision Tree
+    const decisionTree = {
+        question: "Do you have a business idea?",
+  options: [
+    {
+      text: "Yes",
+      next: {
+        question: "Have you validated your idea with potential customers?",
+        options: [
+          {
+            text: "Yes",
+            next: {
+              question: "Is there significant competition in your market?",
+              options: [
+                {
+                  text: "Yes",
+                  next: {
+                    question: "Can you differentiate your product/service?",
+                    options: [
+                      {
+                        text: "Yes",
+                        next: {
+                          question: "Do you have the necessary skills or team to execute the idea?",
+                          options: [
+                            {
+                              text: "Yes",
+                              next: {
+                                question: "Do you have access to required funding?",
+                                options: [
+                                  {
+                                    text: "Yes",
+                                    result: {
+                                      message: "Great! You're ready to start your business. <br> Here's your next steps:",
+                                      actions: [
+                                        "Create a detailed business plan with financial projections",
+                                        "Develop a timeline for product development and launch",
+                                        "Set up legal entity and required licenses",
+                                        "Begin building your minimum viable product (MVP)"
+                                      ],
+                                      useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to refine your product vision and create detailed user&nbsp;personas."
+                                    }
+                                  },
+                                  {
+                                    text: "No",
+                                    result: {
+                                      message: "Consider exploring these funding options before proceeding:",
+                                      actions: [
+                                        "Research small business loans and credit options",
+                                        "Explore angel investors and venture capital",
+                                        "Consider crowdfunding platforms",
+                                        "Look into government grants and programs"
+                                      ],
+                                      useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to create a compelling pitch deck and financial projections."
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              text: "No",
+                              result: {
+                                message: "Focus on building your capabilities:",
+                                actions: [
+                                  "Identify key skill gaps in your team",
+                                  "Create a hiring plan for essential roles",
+                                  "Consider partnerships or co-founders",
+                                  "Invest in relevant training and education"
+                                ],
+                                useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to define your ideal team structure and required expertise."
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        text: "No",
+                        result: {
+                          message: "Your business needs a unique value proposition:",
+                          actions: [
+                            "Research competitor weaknesses and gaps",
+                            "Identify unique features or services you can offer",
+                            "Consider targeting an underserved market segment",
+                            "Develop innovative solutions to common pain points"
+                          ],
+                          useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to analyze competition and develop your unique selling proposition."
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  text: "No",
+                  next: {
+                    question: "Do you have the necessary skills or team to execute the idea?",
+                    options: [
+                      {
+                        text: "Yes",
+                        next: {
+                          question: "Do you have access to required funding?",
+                          options: [
+                            {
+                              text: "Yes",
+                              result: {
+                                message: "You're in a great position to be a first-mover! Next steps:",
+                                actions: [
+                                  "Develop a go-to-market strategy",
+                                  "Create intellectual property protection plan",
+                                  "Build a strong brand identity",
+                                  "Plan for rapid market expansion"
+                                ],
+                                useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to create a comprehensive market entry strategy."
+                              }
+                            },
+                            {
+                              text: "No",
+                              result: {
+                                message: "Secure funding to capitalize on your first-mover advantage:",
+                                actions: [
+                                  "Prepare a compelling pitch deck",
+                                  "Research investor networks in your industry",
+                                  "Consider accelerator programs",
+                                  "Explore strategic partnerships"
+                                ],
+                                useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to create financial models and funding presentations."
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        text: "No",
+                        result: {
+                          message: "Build your foundation first:",
+                          actions: [
+                            "Create a skill development roadmap",
+                            "Network with potential team members",
+                            "Join relevant industry associations",
+                            "Consider business education programs"
+                          ],
+                          useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to strengthen critical skills and build a team of experts."
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            text: "No",
+            result: {
+              message: "Validate your idea with these steps:",
+              actions: [
+                "Conduct customer interviews and surveys",
+                "Create and test a prototype or MVP",
+                "Analyze market size and trends",
+                "Study competitor offerings and pricing"
+              ],
+              useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to create customer personas and validation experiments."
+            }
+          }
+        ]
+      }
+    },
+    {
+      text: "No",
+      next: {
+        question: "Would you like to explore potential business ideas?",
+        options: [
+          {
+            text: "Yes",
+            result: {
+              message: "Let's help you discover your perfect business idea:",
+              actions: [
+                "List your skills, interests, and experiences",
+                "Research trending markets and opportunities",
+                "Identify problems you're passionate about solving",
+                "Connect with potential mentors and advisors"
+              ],
+              useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to explore market opportunities and generate business&nbsp;ideas."
+            }
+          },
+          {
+            text: "No",
+            result: {
+              message: "That's okay! Here are some alternatives to consider:",
+              actions: [
+                "Explore freelancing or consulting opportunities",
+                "Consider joining a startup as an employee",
+                "Look into franchise opportunities",
+                "Build your skills and network for future opportunities"
+              ],
+              useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to explore career paths and skill development&nbsp;opportunities."
+            }
+          }
+        ]
+      }
+    }
+  ]
+    };
+    
+    
+let currentNode = decisionTree;
+let history = [];
+
+function handleOption(option) {
+    // Add the current selection to history
+    history.push({ 
+        question: currentNode.question, 
+        answer: option.text
+    });
+    
+    if (option.result) {
+        showResult(option.result);
+    } else {
+        currentNode = option.next;
+        renderHistory();
+        renderNode(currentNode);
+    }
+}
+
+function renderNode(node) {
+    const currentNodeElement = document.getElementById('current-node');
+    currentNodeElement.innerHTML = '';
+
+    const questionElement = document.createElement('div');
+    questionElement.className = 'question';
+    questionElement.textContent = node.question;
+    currentNodeElement.appendChild(questionElement);
+
+    const optionsElement = document.createElement('div');
+    optionsElement.className = 'options';
+    
+    node.options.forEach(option => {
+        const button = document.createElement('button');
+        button.className = 'option';
+        const icon = option.text.toLowerCase() === 'no' ? 
+            'fa-circle-xmark' : 'fa-check-circle';
+        button.innerHTML = `<i class="fas ${icon}"></i>&nbsp; ${option.text}`;
+        button.addEventListener('click', () => handleOption(option));
+        optionsElement.appendChild(button);
+    });
+
+    currentNodeElement.appendChild(optionsElement);
+}
+
+function renderHistory() {
+    const historyElement = document.getElementById('history');
+    historyElement.innerHTML = '';
+
+    history.forEach((step) => {
+        const stepElement = document.createElement('div');
+        stepElement.className = 'node';
+        const icon = step.answer.toLowerCase() === 'no' ? 
+            'fa-circle-xmark' : 'fa-check-circle';
+        stepElement.innerHTML = `
+            <div class="question">${step.question}</div>
+            <div class="options">
+                <button class="option selected ${step.answer.toLowerCase() === 'no' ? 'no' : ''}">
+                    <i class="fas ${icon}"></i>&nbsp; ${step.answer}
+                </button>
+            </div>
+        `;
+
+        historyElement.appendChild(stepElement);
+    });
+}
+
+function showResult(result) {
+    const currentNodeElement = document.getElementById('current-node');
+    currentNodeElement.innerHTML = '';
+
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = `
+        <h3>${result.message}</h3>
+        <ul class="action-list">
+            ${result.actions.map(action => `<li><i class="fas fa-arrow-right"></i> ${action}</li>`).join('')}
+        </ul>
+        <div class="builder-prompt">
+            <i class="fas fa-bolt"></i>
+            <p>${result.useBuilder}</p>
+        </div>
+    `;
+
+    renderHistory();
+
+    document.getElementById('reset').style.display = 'block';
+    document.getElementById('expBld').style.display = 'block';
+}
+
+function resetTree() {
+    currentNode = decisionTree;
+    history = [];
+    renderNode(currentNode);
+    document.getElementById('history').innerHTML = '';
+    document.getElementById('result').textContent = '';
+    document.getElementById('reset').style.display = 'none';
+    document.getElementById('expBld').style.display = 'none';
+}
+
+document.getElementById('reset').addEventListener('click', resetTree);
+renderNode(currentNode);
+    </script>
+    
+    </body></html>
