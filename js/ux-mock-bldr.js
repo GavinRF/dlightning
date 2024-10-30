@@ -1865,6 +1865,7 @@ captureScreenshot() {
                 const avatar = document.createElement('div');
                 avatar.innerHTML = 'AV';
                 avatar.style.cssText = 'width: 40px; height: 40px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; flex-shrink: 0;';
+                this.makeTextEditable(avatar);
                 
                 const contentWrapper = document.createElement('div');
                 contentWrapper.style.cssText = 'flex-grow: 1;';
@@ -1930,6 +1931,7 @@ captureScreenshot() {
                 const avatar = document.createElement('div');
                 avatar.innerHTML = 'ME';
                 avatar.style.cssText = 'width: 40px; height: 40px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; flex-shrink: 0;';
+                this.makeTextEditable(avatar);
                 
                 const contentWrapper = document.createElement('div');
                 contentWrapper.style.cssText = 'flex-grow: 1; display: flex; flex-direction: column; align-items: flex-end;';
@@ -2061,7 +2063,7 @@ captureScreenshot() {
     // Progress Tracker  /////////
     progressTracker: () => {
         const container = document.createElement('div');
-        container.style.cssText = 'width: 100%; padding: 20px 0; display: flex; justify-content: space-around; align-items: center; gap: 4px; position: relative;';
+        container.style.cssText = 'width: 100%; padding: 16px 0; display: flex; justify-content: space-around; align-items: center; gap: 4px; position: relative;';
         
         // Control buttons container
         const controls = document.createElement('div');
@@ -2071,7 +2073,7 @@ captureScreenshot() {
             right: calc(50% - 28px);
             display: none;
             gap: 6px;
-            z-index: 223;
+            z-index: 2223;
         `;
         
         const addButton = document.createElement('button');
