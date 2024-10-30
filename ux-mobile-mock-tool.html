@@ -1,0 +1,292 @@
+<!-- ux-mobile-mock-tool.html  -->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D⚡ | Modern Mobile Wireframe Generator</title>
+<meta name="description" content="Interactive mobile device mockup with draggable interface and component library including buttons, inputs, checkboxes, radio buttons, dropdowns, cards, navigation bars, and modals. Features a realistic device frame with status bar.">
+<meta name="keywords" content="mobile mockup, UI components, device prototype, interactive interface, drag and drop, UI design, button component, input field, checkbox, radio button, dropdown menu, card component, navigation bar, modal window, mobile status bar, UX mockup tool">
+<meta name="author" content="Dlightning">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link id="google-fonts" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Condensed:ital,wght@0,600;1,600|Open+Sans:400,700|Lato:400,700|Montserrat:400,700|Poppins:400,700|Raleway:400,700|Nunito:400,700|Playfair+Display:ital,wght@400,700|Source+Sans+Pro:400,700|Ubuntu:400,700&display=swap">
+<link rel="stylesheet" href="css/ux-mock-bldr.css">
+
+<script src=" https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/dist/html2canvas-pro.min.js "></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Mobile Mock Generator</h1>
+        <!-- color and font PICKERs ///////////////// -->
+        <div class="font-picker-container">
+            <div style="display: flex; justify-content: space-between;">
+                <label for="color-picker">Color &emsp;&emsp;&emsp;&emsp;&nbsp;</label>
+                <input type="color" id="color-picker" value="#3498db">
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+            <label for="font-picker">Font &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; </label>
+                <select id="font-picker">
+                    <option value="Anek Telugu">Anek Telugu</option>
+                    <option value="Borel">Borel</option>
+                    <option value="Cambay">Cambay</option>
+                    <option value="Caveat">Caveat</option>
+                    <option value="DM Serif Text">DM Serif Text</option>
+                    <option value="EB Garamond">EB Garamond</option>
+                    <option value="Familjen Grotesk">Familjen Grotesk</option>
+                    <option value="Fjord One">Fjord One</option>
+                    <option value="IBM Plex Mono">IBM Plex Mono</option>
+                    <option value="Lato">Lato</option>
+                    <option value="Libre Baskerville">Libre Baskerville</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Nunito">Nunito</option>
+                    <option value="Open Sans">Open Sans</option>
+                    <option value="Oswald">Oswald</option>
+                    <option value="Playfair Display">Playfair Display</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Public Sans">Public Sans</option>
+                    <option value="Quicksand">Quicksand</option>
+                    <option value="Questrial">Questrial</option>
+                    <option value="Raleway">Raleway</option>
+                    <option value="Rambla">Rambla</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Roboto Condensed">Roboto Condensed</option>
+                    <option value="Rokkitt">Rokkitt</option>
+                    <option value="Source Sans Pro">Source Sans Pro</option>
+                    <!-- <option value="Ubuntu">Ubuntu</option> -->
+                    <option value="Vesper Libre">Vesper Libre</option>
+                </select>
+            </div>
+        </div>
+
+<!-- TABS  -->
+        <div class="sidebar-tabs">
+            <button class="sidebar-tab active" data-tab="basic">Basic Elements</button>
+            <button class="sidebar-tab" data-tab="components">Components</button>
+        </div>
+<!-- COMPONENTS  -->
+    <div class="sidebar-content active" data-tab="basic">
+        <button class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;"><i class="fas fa-bars"></i> Top Navigation Bar</button>
+        <button class="component-btn" data-component="adjustableSpace"><i class="fas fa-arrows-alt-v"></i> Adjustable Space</button>
+        <button class="component-btn" data-component="icon"><i class="fas fa-icons"></i> Icon</button>
+        <div class="alert-container">
+            <button class="component-btn" data-component="image"><i class="fas fa-image"></i> Image</button>
+            <select id="image-type">
+                <option value="single">Single Image</option>
+                <option value="double">Two Images</option>
+                <option value="triple">Three Images</option>
+            </select>
+        </div>
+        <div class="alert-container">
+            <button class="component-btn" data-component="button"><i class="fas fa-square"></i> Button</button>
+            <select id="button-type">
+                <option value="default">Default</option>
+                <option value="ghost">Ghost</option>
+                <option value="two-buttons">Two Buttons</option>
+                <option value="disabled">Disabled</option>
+            </select>
+        </div>
+        <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;"><i class="fa-solid fa-ellipsis"></i></i> Bottom Navigation Bar</button>
+        <!-- // TEXT ELEMENTS  -->
+        <div class="btn-class-group">
+            <label>Text Elements</label>
+            <div class="alert-container">
+                <button class="component-btn" data-component="heading"><i class="fas fa-heading"></i> Heading</button>
+                <select id="heading-type">
+                    <option value="h1">H1</option>
+                    <option value="h2">H2</option>
+                    <option value="h3">H3</option>
+                    <option value="h4">H4</option>
+                    <option value="h5">H5</option>
+                    <option value="h6">H6</option>
+                </select>
+            </div>
+            <button class="component-btn" data-component="paragraph"><i class="fas fa-paragraph"></i> Paragraph</button>
+            <button class="component-btn" data-component="blockquote"><i class="fas fa-quote-right"></i> Block Quote</button>
+            <button class="component-btn" data-component="label"><i class="fas fa-tag"></i> Field Label</button>
+        </div>
+        <!-- // FORM ELEMENTS  -->
+        <div class="btn-class-group">
+            <label>Form Inputs</label>
+            <div class="alert-container">
+                <button class="component-btn" data-component="input"><i class="fas fa-keyboard"></i> Input Field</button>
+                <select id="input-type">
+                    <option value="default">Default</option>
+                    <option value="focused">Focused</option>
+                    <option value="error">Error</option>
+                    <option value="disabled">Disabled</option>
+                    <option value="search">Search</option>
+                    <!-- <option value="password">Password</option> -->
+                </select>
+            </div>
+            <div class="alert-container">
+                <button class="component-btn" data-component="textarea"><i class="fas fa-paragraph"></i> Text Area</button>
+                <select id="textarea-type">
+                    <option value="default">Default</option>
+                    <option value="focused">Focused</option>
+                    <option value="error">Error</option>
+                    <option value="disabled">Disabled</option>
+                </select>
+            </div>
+            <button class="component-btn" data-component="checkbox"><i class="fas fa-check-square"></i> Checkbox</button>
+            <button class="component-btn" data-component="radio"><i class="fas fa-dot-circle"></i> Radio Button</button>
+            <button class="component-btn" data-component="dropdown"><i class="fas fa-caret-down"></i> Dropdown</button>
+            <button class="component-btn" data-component="toggleSwitch"><i class="fas fa-toggle-on"></i> Toggle Switch</button>
+            <button class="component-btn" data-component="slider"><i class="fas fa-sliders-h"></i>Range Slider</button>
+            <button class="component-btn" data-component="datePicker"><i class="fas fa-calendar-alt"></i> Date Picker</button>
+            <button class="component-btn" data-component="fileUpload"><i class="fas fa-file-upload"></i> File Upload</button>
+        </div>
+        <div style="height: 12px;"></div>
+        <div class="downLoadPair">
+            <!-- onclick="captureScreenshot()"  -->
+            <button class="component-btn" id="download-btn"><i class="fas fa-download"></i> Download PNG</button>
+        </div>
+        <button id="togetherJS" class="component-btn" onclick="TogetherJS(this); return false;"><i class="fa-solid fa-users"></i> Invite Friends to Collaborate</button>
+    </div>
+<!-- COMPONENETS TAB //////////////// -->
+    <div class="sidebar-content" data-tab="components">
+        <div class="alert-container">
+            <button class="component-btn" data-component="avatar"><i class="fas fa-user-circle"></i> Avatar</button>
+                <select id="avatar-type">
+                    <option value="default">Default</option>
+                    <option value="small-text">Small with Text</option>
+                    <option value="upload">Upload Image</option>
+                </select>
+        </div>
+        <div class="alert-container">
+            <button class="component-btn" data-component="alert"><i class="fas fa-exclamation-triangle"></i> Alert</button>
+            <select id="alert-type">
+                <option value="info">Info</option>
+                <option value="success">Success</option>
+                <option value="warning">Warning</option>
+                <option value="danger">Danger</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
+        <div class="alert-container">
+            <button class="component-btn" data-component="tabs"><i class="fas fa-folder"></i> Tabs</button>
+            <select id="tabs-type">
+                <option value="2">2 Tabs</option>
+                <option value="3" selected>3 Tabs</option>
+                <option value="4">4 Tabs</option>
+                <option value="5">5 Tabs</option>
+            </select>
+        </div>
+        <button class="component-btn" data-component="progressBar"><i class="fa-solid fa-bars-progress"></i> Progress Bar</button>
+        <button class="component-btn" data-component="accordion"><i class="fas fa-chevron-down"></i> Accordion</button>
+        <button class="component-btn" data-component="card"><i class="fas fa-window-maximize"></i> Card</button>
+        <button class="component-btn" data-component="modal"><i class="fas fa-square-up-right"></i> Modal Pop-up</button>
+        <button class="component-btn" data-component="notificationBanner"><i class="fas fa-bell"></i>  Notification</button>
+        <button class="component-btn" data-component="progressTracker"><i class="fas fa-timeline"></i>  Progress</button>
+        <button class="component-btn" data-component="featureComparisonCard"><i class="fa-solid fa-check-double"></i></i>  Comparison Card</button>
+        <div class="alert-container">
+            <button class="component-btn" data-component="graph"><i class="fas fa-chart-pie"></i> Graph</button>
+            <select id="graph-type">
+                <option value="bar">Bar</option>
+                <option value="area">Area</option>
+                <option value="pie">Pie</option>
+                <option value="doughnut">Semi-circle Doughnut</option>
+            </select>
+        </div>
+        <div class="btn-class-group">
+            <label>Chat</label>
+            <button class="component-btn" data-component="leftChat"><i class="fas fa-comment-alt"></i> Left Chat</button>
+            <button class="component-btn" data-component="rightChat"><i class="fa-solid fa-message" style=" -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);"></i> Right Chat</button>
+            <div class="alert-container">
+                <button class="component-btn" data-component="chatInput"><i class="fas fa-paper-plane"></i> Chat Input</button>
+                <select id="chatInput-type">
+                    <option value="basic">Basic</option>
+                    <option value="with-emoji">With Emoji</option>
+                    <option value="with-image">With Image</option>
+                    <option value="full">All Features</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- <div id="toggleCanvasBtnContainer" title="Toggle mock phone height"> -->
+        <button id="toggleCanvasBtn" class="toggle-btn"><i class="fa-solid fa-mobile-screen-button"></i> </button>
+    <!-- </div> -->
+
+<!-- PHONE MOCK AREA 📱 +++++++++++++ -->
+<div class="container" id="bounding">
+    <div class="content">
+        <div class="canvas-wrapper">
+            <div class="canvas-number-container">
+                <div class="canvas-number">Canvas 1 (Selected)</div>
+            </div>
+        <div class="canvas selected" data-canvas-number="1" style="margin-top: 11px;">
+            <div class="status-bar">
+                <span class="time">12:00</span>
+                <div class="camera"></div>
+                <div class="icons">
+                    <i class="fa-solid fa-signal"></i>
+                    <i class="fa-solid fa-wifi"></i>
+                    <i style="font-size: 14px;" class="fa-solid fa-battery-full"></i>
+                </div>
+                <div style="width: 100%; height: 28px; background-color: rgba(51, 51, 51, 0.48); z-index: -1; position: absolute; top: 0; left: 0;"></div>
+            </div>
+            <div class="phoneScrollCon">
+                <div class="canvas-content">
+                    <!-- <div class="component-container">
+                        <div class="component-handle">⋮</div>
+                        <div class="component-content">
+                            <div class="blankSpace" style="height: 50px;">
+                                <input value="50" type="number" class="height-display" style="font-size: 16px;">
+                                <input value="50" class="space-range" type="range" min="12" max="300" style="width: 100%;">
+                            </div>
+                        </div>
+                        <buton class="delete-btn">×</buton>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="addCanvasBtn" class="add-canvas-btn" title="Add new canvas">+</button>
+</div>
+</div>
+
+<!-- MAGNIFY! ////////////////// -->
+<div class="magnify-button-group">
+    <button id="zoom-in">
+        <i class="fa-solid fa-magnifying-glass-plus"></i>
+    </button>
+    <button id="zoom-out">
+        <i class="fa-solid fa-magnifying-glass-minus"></i>
+    </button>
+    <span id="zoom-level">100%</span>
+</div>
+
+<!-- ICON PICKER ////////////////// -->
+<div class="icon-picker-backdrop"></div>
+<div class="icon-picker-modal">
+    <input type="text" class="icon-picker-search" placeholder="Search icons...">
+    <div class="icon-picker-grid"></div>
+</div>
+<!-- CUSTOM CODE EDITOR ////////////////// -->
+<div class="code-editor-container">
+    <button class="code-editor-toggle">
+        <i class="fas fa-code"></i>
+    </button>
+    <h3>Custom Component Editor</h3>
+    <textarea class="code-editor" placeholder="Enter your HTML here... (styles must be inline)"></textarea>
+    <div class="code-controls">
+        <button class="add-btn">Add to Canvas</button>
+        <button class="preview-btn">Preview</button>
+    </div>
+</div>
+<!-- DLIGHTNING LOGO ////////////////// -->
+<a id="dlightning" href="index.html" target="blank">
+    <img src="img/small transparent.png" id="Dimg">
+</a>
+<!-- HTML END ////////////////// -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script src="js/extra-func.js"></script>
+<script src="js/ux-mock-bldr.js"></script>
+</body>
+</html>
