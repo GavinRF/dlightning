@@ -4,17 +4,6 @@
         document.documentElement.style.setProperty('--primary-color', e.target.value);
     });
 
-    var colorPicker =  getElementById('color-picker');
-    new iro.ColorPicker(colorPicker);
-    // var colorPicker = new iro.ColorPicker("#color-picker", {
-    //     // Set the size of the color picker
-    //     width: 320,
-    //     // Set the initial color to pure red
-    //     color: "#f00"
-    //   });
-      
-
-
     document.getElementById('font-picker').addEventListener('change', function(e) {
         const selectedFont = e.target.value;
         document.documentElement.style.setProperty('--primary-font', selectedFont);
@@ -30,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     toggleBtn.addEventListener('click', function() {
         isExpanded = !isExpanded;
+        //console.log('this was clicked');
         
         // Get all current canvas and related elements
         const canvases = document.querySelectorAll('.canvas');
