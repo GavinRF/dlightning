@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>D⚡ | Modern Mobile Wireframe Generator</title>
-<meta name="description" content="Interactive mobile device mockup with draggable interface and component library including buttons, inputs, checkboxes, radio buttons, dropdowns, cards, navigation bars, and modals. Features a realistic device frame with status bar.">
-<meta name="keywords" content="mobile mockup, UI components, device prototype, interactive interface, drag and drop, UI design, button component, input field, checkbox, radio button, dropdown menu, card component, navigation bar, modal window, mobile status bar, UX mockup tool">
+<meta name="description" content="Interactive mobile device mockup with draggable interface and component library including buttons, inputs, checkboxes, radio buttons, dropdowns, cards, navigation bars, and modals. Features a realistic device frame with status bar. Quickly prototype your design and export it as an image.">
+<meta name="keywords" content="mobile mockup, UI components, device prototype, interactive interface, drag and drop, UI design, button component, input field, checkbox, radio button, dropdown menu, card component, navigation bar, modal window, mobile status bar, UX mockup tool, faster than Figma, Figma killer">
 <meta name="author" content="Dlightning">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -13,13 +13,18 @@
 <link rel="stylesheet" href="css/ux-mock-bldr.css">
 
 <script src=" https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/dist/html2canvas-pro.min.js "></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
+<script src=" https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js "></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://togetherjs.com/togetherjs-min.js"></script>
 </head>
 
 <body>
     <div class="sidebar">
-        <h1>Mobile Mock Generator</h1>
+        <div id="titleBlock">
+            <a href="index.html"><img src="img/icon/logo-spelled-out-white.png" height="19px"></a> 
+            <h1>Mobile Mock Generator</h1>
+        </div>
         <!-- color and font PICKERs ///////////////// -->
         <div class="font-picker-container">
             <div style="display: flex; justify-content: space-between;">
@@ -83,12 +88,13 @@
         <div class="alert-container">
             <button class="component-btn" data-component="button"><i class="fas fa-square"></i> Button</button>
             <select id="button-type">
-                <option value="default">Default</option>
+                <option value="default">Basic</option>
                 <option value="ghost">Ghost</option>
                 <option value="two-buttons">Two Buttons</option>
                 <option value="disabled">Disabled</option>
             </select>
         </div>
+        <button class="component-btn" data-component="hzDivider"><i class="fa-solid fa-minus"></i> Horizontal Divider</button>
         <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;"><i class="fa-solid fa-ellipsis"></i></i> Bottom Navigation Bar</button>
         <!-- // TEXT ELEMENTS  -->
         <div class="btn-class-group">
@@ -140,10 +146,14 @@
             <button class="component-btn" data-component="fileUpload"><i class="fas fa-file-upload"></i> File Upload</button>
         </div>
         <div style="height: 12px;"></div>
-        <div class="downLoadPair">
-            <!-- onclick="captureScreenshot()"  -->
-            <button class="component-btn" id="download-btn"><i class="fas fa-download"></i> Download PNG</button>
-        </div>
+    <!-- <div id="downLoadPair">
+            <div>
+                <button class="component-btn" id="html-to-img"><i class="fas fa-download"></i> SVG</button>
+            </div> -->
+            <div>
+                <button class="component-btn" id="download-btn"><i class="fas fa-download"></i> Download PNG</button>
+            </div>
+        <!-- </div> -->
         <button id="togetherJS" class="component-btn" onclick="TogetherJS(this); return false;"><i class="fa-solid fa-users"></i> Invite Friends to Collaborate</button>
     </div>
 <!-- COMPONENETS TAB //////////////// -->
@@ -175,12 +185,13 @@
                 <option value="5">5 Tabs</option>
             </select>
         </div>
+        <button class="component-btn" data-component="chipGroup"><i class="fa-solid fa-capsules fa-rotate-90"></i> Pills</button>
         <button class="component-btn" data-component="progressBar"><i class="fa-solid fa-bars-progress"></i> Progress Bar</button>
         <button class="component-btn" data-component="accordion"><i class="fas fa-chevron-down"></i> Accordion</button>
         <button class="component-btn" data-component="card"><i class="fas fa-window-maximize"></i> Card</button>
         <button class="component-btn" data-component="modal"><i class="fas fa-square-up-right"></i> Modal Pop-up</button>
         <button class="component-btn" data-component="notificationBanner"><i class="fas fa-bell"></i>  Notification</button>
-        <button class="component-btn" data-component="progressTracker"><i class="fas fa-timeline"></i>  Progress</button>
+        <button class="component-btn" data-component="progressTracker"><i class="fas fa-timeline"></i>  Progress Tracker</button>
         <button class="component-btn" data-component="featureComparisonCard"><i class="fa-solid fa-check-double"></i></i>  Comparison Card</button>
         <div class="alert-container">
             <button class="component-btn" data-component="graph"><i class="fas fa-chart-pie"></i> Graph</button>
@@ -216,37 +227,7 @@
 <!-- PHONE MOCK AREA 📱 +++++++++++++ -->
 <div class="container" id="bounding">
     <div class="content">
-        <div class="canvas-wrapper">
-            <div class="canvas-number-container">
-                <div class="canvas-number">Canvas 1 (Selected)</div>
-            </div>
-        <div class="canvas selected" data-canvas-number="1" style="margin-top: 11px;">
-            <div class="status-bar">
-                <span class="time">12:00</span>
-                <div class="camera"></div>
-                <div class="icons">
-                    <i class="fa-solid fa-signal"></i>
-                    <i class="fa-solid fa-wifi"></i>
-                    <i style="font-size: 14px;" class="fa-solid fa-battery-full"></i>
-                </div>
-                <div style="width: 100%; height: 28px; background-color: rgba(51, 51, 51, 0.48); z-index: -1; position: absolute; top: 0; left: 0;"></div>
-            </div>
-            <div class="phoneScrollCon">
-                <div class="canvas-content">
-                    <!-- <div class="component-container">
-                        <div class="component-handle">⋮</div>
-                        <div class="component-content">
-                            <div class="blankSpace" style="height: 50px;">
-                                <input value="50" type="number" class="height-display" style="font-size: 16px;">
-                                <input value="50" class="space-range" type="range" min="12" max="300" style="width: 100%;">
-                            </div>
-                        </div>
-                        <buton class="delete-btn">×</buton>
-                    </div> -->
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- MOBILE MOCK INJECTED HERE  -->
     <button id="addCanvasBtn" class="add-canvas-btn" title="Add new canvas">+</button>
 </div>
 </div>

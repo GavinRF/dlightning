@@ -1,9 +1,9 @@
 // extra-func.js
-
+//Color Picker
     document.getElementById('color-picker').addEventListener('input', function(e) {
         document.documentElement.style.setProperty('--primary-color', e.target.value);
     });
-
+//Font Picker
     document.getElementById('font-picker').addEventListener('change', function(e) {
         const selectedFont = e.target.value;
         document.documentElement.style.setProperty('--primary-font', selectedFont);
@@ -282,7 +282,9 @@ class AlignmentController {
         'circle-user', 'film', 'book', 'key', 'lemon', 'thumbtack', 'folder-open', 'tree',
         'binoculars', 'sun', 'snowflake', 'palette', 'earth-americas', 'layer-group', 'link', 'fish',
         'bicycle','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
-        'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+        'circle', 'circle-play', 'circle-pause', 'circle-stop', 'circle-dot', 'circle-check', 
+        'circle-radiation', 'spinner', 'circle-down', 'bugs'
     ];
     //reder icons
     function renderIcons(filter = '') {
@@ -312,28 +314,6 @@ class AlignmentController {
         backdrop.style.display = 'none';
     };
 }
-
-// TIME  DISPLAY ON PHONE /////////
-function updateTime() {
-    const now = new Date();
-    const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
-                       now.getMinutes().toString().padStart(2, '0');
-    document.querySelector('.status-bar .time').textContent = timeString;
-}
-updateTime();
-setInterval(updateTime, 60000);
-
-//
-// DRAG VERT HANDLE "Sortable"
-    // Add initialization for the first canvas content
-    document.addEventListener('DOMContentLoaded', function() {
-        new Sortable(document.querySelector('.canvas-content'), {
-            animation: 150,
-            handle: '.component-handle',
-            ghostClass: 'sortable-ghost',
-            group: 'shared-components'
-        });
-    });
 
 // SHOW GRAPH EDITOR
 function showGraphDataEditor(graphContainer) {
@@ -393,17 +373,16 @@ function updateZoomLevel() {
     document.getElementById('zoom-level').textContent = `${zoomLevel}%`;
 }
 
-document.getElementById('zoom-in').addEventListener('click', () => {
-    scale += 0.05;
+function setZoomScale(newScale) {
+    scale = newScale;
     document.getElementById('bounding').style.transform = `scale(${scale})`;
     updateZoomLevel();
+}
+
+document.getElementById('zoom-in').addEventListener('click', () => {
+    setZoomScale(scale + 0.05);
 });
 
 document.getElementById('zoom-out').addEventListener('click', () => {
-    scale = Math.max(0.05, scale - 0.05);
-    document.getElementById('bounding').style.transform = `scale(${scale})`;
-    updateZoomLevel();
+    setZoomScale(Math.max(0.05, scale - 0.05));
 });
-
-// Initialize zoom level display
-updateZoomLevel();

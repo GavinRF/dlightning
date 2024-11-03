@@ -1,4 +1,3 @@
-
     :root {
         --primary-color: #3498db;
         --primary-font: Roboto;
@@ -28,6 +27,9 @@
         -ms-user-select: none;
         user-select: none;
       }
+      label{
+        margin-top: 0px;
+      }
     /* might be better to add this class (not added anywhere) */
     .unselectable {
         -webkit-touch-callout: none;
@@ -42,6 +44,10 @@
         outline-offset: 3px; */
         cursor: pointer;
       }
+    #bounding {
+        transform-origin: center top; 
+        position: relative;  /* Enables transform */
+    }
     .container {
         display: flex;
         height: 100vh;
@@ -57,10 +63,15 @@
         height: calc(100vh - 68px);
         box-shadow: 2px 0 10px rgba(0,0,0,0.2);
     }
+    #titleBlock{
+        display: inline-flex;
+    }
     .sidebar h1{
-        font-size: 1.4rem;
+        font-size: 1rem;
         font-family: 'Rubik';
-        text-align: center;
+        text-align: left;
+        font-weight: 500;
+        margin: -1px 0 12px 6px;
     }
     .sidebar-tabs {
         display: flex;
@@ -144,6 +155,10 @@
         transition: background-color 0.3s, transform 0.1s;
         font-weight: bold;
         text-align: left;
+    }
+    #downloadPair{
+        display: flex;
+        gap: 6px;
     }
     .component-btn#download-btn {
         background-color: #27ae60;
@@ -264,6 +279,9 @@
     .delete-canvas-btn:hover {
         background-color: #c0392b;
     }
+    .canvas-wrapper:first-of-type .delete-canvas-btn {
+        display: none;
+    }
     .canvas {
         width: 352px;
         /* height: 100%; */
@@ -312,7 +330,6 @@
         position: absolute;
         left: 50%;
         background: #131313;
-        box-shadow: none;
         z-index: 4;
         top: 5px;
         width: 15px;
@@ -326,7 +343,6 @@
         position: absolute;
         left: 2px;
         background: #37406c72;
-        box-shadow: none;
         z-index: 4;
         top: 2px;
         width: 6px;
@@ -338,7 +354,6 @@
         position: absolute;
         left: 3px;
         background: #68a2b3ee;
-        box-shadow: none;
         z-index: 4;
         top: 3px;
         width: 2px;
@@ -457,16 +472,15 @@
     .top-navbar {
         padding: 0 10px;
         position: absolute;
-        z-index: 1001;
+        z-index: 991;
         /* /// */
         display: flex; 
         justify-content: space-between; 
         align-items: center; 
         height: 52px; 
         background-color: var(--background-color); 
-        
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
         margin: 4px 0px 0px 0px !important; 
+        width: calc(100% - 20px);
     }
     .modal {
         width: calc(100% - 16px);
@@ -474,47 +488,7 @@
         border-radius: 10px;
         padding: 20px;
         background-color: #fff;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         margin: 0 8px;
-    }
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: .4s;
-        border-radius: 34px;
-    }
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
-    input:checked + .slider {
-        background-color: var(--primary-color);
-    }
-    input:checked + .slider:before {
-        transform: translateX(26px);
     }
     .checkbox, .radio {
         justify-content: flex-start !important;
@@ -535,6 +509,7 @@
         justify-content: center;
         align-items: center;
         animation: pulse 0.4s ease-in-out;
+        animation-delay: 0.25s;
     }
     @keyframes pulse {
         0% {
@@ -602,14 +577,14 @@
     }
     #dlightning{
         position: fixed;
-        bottom: 10px;
-        right: 10px;
+        bottom: 4px;
+        right: 4px;
         padding: 5px;
         background-color: var(--background-color);
-        border-radius: 50%;
+        border-radius: 50% 50% 0 0;
       }
       #Dimg{
-        width: 40px;
+        width: 36px;
       }
       .file-upload-label {
         display: inline-block;
@@ -624,16 +599,15 @@
         text-align: center;
         font-weight: bold;
     }
-
     .file-upload-label:hover {
         background-color: var(--primary-color);
         filter: brightness(1.1);
     }
-
     .file-upload-label i {
         margin-right: 8px;
     }
-    .custom-slider {
+/* Range Slider */
+    .custom-range-slider {
         -webkit-appearance: none;
         width: 100%;
         height: 8px;
@@ -642,7 +616,7 @@
         outline: none;
         padding: 0 4px;
     }
-    .custom-slider::-webkit-slider-thumb {
+    .custom-range-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
         width: 20px;
@@ -652,7 +626,7 @@
         cursor: pointer;
         transition: background .2s;
     }
-    .custom-slider::-moz-range-thumb {
+    .custom-range-slider::-moz-range-thumb {
         width: 20px;
         height: 20px;
         border-radius: 50%;
@@ -660,11 +634,11 @@
         cursor: pointer;
         transition: background .2s;
     }
-    .custom-slider::-webkit-slider-runnable-track {
+    .custom-range-slider::-webkit-slider-runnable-track {
         background: linear-gradient(to right, var(--primary-color) 0%, var(--primary-color) 50%, #ecf0f1 50%, #ecf0f1 100%);
         border-radius: 4px;
     }
-    .custom-slider::-moz-range-progress {
+    .custom-range-slider::-moz-range-progress {
         background-color: var(--primary-color);
         border-radius: 4px;
     }
@@ -722,7 +696,16 @@
     bottom: 0px;
 } */
  .bottom-navbar{
-    display: flex; flex-direction: row; justify-content: space-around; align-items: center; width: 100%; height: 60px; background-color: #ecf0f1; position: fixed; bottom: 0; left: 0; right: 0; box-shadow: 0 -2px 4px rgba(0,0,0,0.1); z-index: 1000;
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-around; 
+    align-items: center; 
+    width: 100%; 
+    height: 60px; 
+    background-color: #ecf0f1; 
+    position: fixed; 
+    bottom: 0; left: 0; right: 0;  
+    z-index: 1000;
  }
 .bottomNav .nav-item-container {
     flex: 1;
@@ -793,7 +776,7 @@ nav.max-items:hover .nav-add-btn {
     box-shadow: -2px 0 10px rgba(0,0,0,0.2);
     transition: right 0.3s ease;
     z-index: 10001;
-    display: flex;
+    display: none; /* flex */
     flex-direction: column;
     padding: 14px;
     color: white;
@@ -955,7 +938,7 @@ nav.max-items:hover .nav-add-btn {
     padding: 4px;
     display: none;
     /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.055); */
-    z-index: 101;
+    z-index: 1001;
 }
 .alignment-controls button {
     border: none;
@@ -978,13 +961,13 @@ nav.max-items:hover .nav-add-btn {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1898;
     position: fixed;
-    bottom: 14px;
-    left: 322px;
+    bottom: 16px;
+    left: 320px;
 }
 
 .magnify-button-group button {
     border: none;
-    padding: 8px 12px;
+    padding: 8px 10px;
     cursor: pointer;
     background-color: #f0f0f0;
     color: #333;
@@ -998,8 +981,32 @@ nav.max-items:hover .nav-add-btn {
 
 #zoom-level {
     display: inline-block;
-    padding: 12px 12px 12px 8px;
+    padding: 12px 10px 12px 6px;
     font-size: 12px;
     color: #333;
     background-color: #f0f0f0;
+}
+/* SAVE BUTTON + TIMESTAMP */
+.save-canvas-btn {
+    margin-left: 10px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    height: 24px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    padding: 0 6px 4px 6px;
+}
+.save-canvas-btn:hover {
+    background-color: #219a52;
+}
+.canvas-timestamp {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-bottom: 5px;
 }
