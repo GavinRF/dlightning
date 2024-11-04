@@ -117,7 +117,7 @@ handleComponentAddition(btn) {
         const hasComponent = Array.from(canvases).some(canvas => {
             return canvas.querySelector(
                 componentType === 'navbar' ? '.navbar' :
-                componentType === 'bottomNav' ? 'nav:not(.navbar)' :
+                componentType === 'bottomNav' ? 'nav' :
                 '.modal'
             );
         });
@@ -332,18 +332,18 @@ wrapComponentInContainer(component, componentType) {
         <div class="component-handle">⋮</div>
         <div class="component-content"></div>
         <button class="delete-btn">×</button>
-        <button class="duplicate-btn">+</button>
     `;
-    
+    // <button class="duplicate-btn">+</button>
+
     container.querySelector('.component-content').appendChild(component);
     
     // Setup event listeners
     container.querySelector('.delete-btn').addEventListener('click', () => container.remove());
-    container.querySelector('.duplicate-btn').addEventListener('click', () => {
-        const duplicate = component.cloneNode(true);
-        const wrappedDuplicate = this.wrapComponentInContainer(duplicate, componentType);
-        container.parentNode.insertBefore(wrappedDuplicate, container.nextSibling);
-    });
+    // container.querySelector('.duplicate-btn').addEventListener('click', () => {
+    //     const duplicate = component.cloneNode(true);
+    //     const wrappedDuplicate = this.wrapComponentInContainer(duplicate, componentType);
+    //     container.parentNode.insertBefore(wrappedDuplicate, container.nextSibling);
+    // });
     
     return container;
 }
@@ -402,7 +402,7 @@ wrapComponentInContainer(component, componentType) {
                     break;
                     
                 case 'bottomNav':
-                    const bottomNavbar = canvas.querySelector('nav');
+                    const bottomNavbar = canvas.querySelector('.bottomNavContain');
                     if (bottomNavbar) {
                         bottomNavbar.remove();
                     }
@@ -592,7 +592,6 @@ handleCanvasDelete(e) {
     }
 }
 
-
 // Make TEXT EDITABLE ////////////////////
     makeTextEditable(element) {
         element.addEventListener('click', function() {
@@ -642,7 +641,7 @@ handleCanvasDelete(e) {
                 }
                 navbar.style.cssText = 'position: absolute; left: 0; right: 0; top: 24px;';
             } else {
-                canvasContent.appendChild(navbar);
+                canvas.appendChild(navbar);
                 navbar.style.cssText = 'position: absolute; left: 0; right: 0; bottom: 0;';
             }
         }
@@ -902,149 +901,324 @@ async captureScreenshot() {
             return container;
         },
 // INPUT ////////////////////
-        input: (type = 'default') => {
-            const container = document.createElement('div');
-            container.style.cssText = 'width: 100%;';
-
-            const input = document.createElement('input');
-            input.placeholder = type === 'search' ? 'Search...' : 'Input Field';
-            input.style.cssText = `
-                width: 100%;
-                height: 42px;
-                border: none;
-                border-bottom: 2px solid var(--primary-color);
-                border-radius: ${type === 'search' ? '24px' : '0'};
-                padding: ${type === 'search' ? '0 45px' : '0 10px'};
-                font-size: 16px;
-                transition: border-color 0.3s, background-color 0.3s;
-                outline: none;
-                ${type === 'search' ? 'background: #f5f5f5;' : ''}
-            `;
-
-            container.appendChild(input);
-
-            if (type === 'search') {
-                const container = document.createElement('div');
-                container.style.cssText = 'position: relative; width: 100%;';
-                
-                const searchIcon = document.createElement('i');
-                searchIcon.className = 'fas fa-search';
-                searchIcon.style.cssText = `
-                    position: absolute;
-                    left: 15px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    color: #666;
-                `;
-                
-                container.appendChild(searchIcon);
-                container.appendChild(input);
-                return container;
-            }
-
-            switch (type) {
-                case 'focused':
-                    input.style.borderColor = 'var(--primary-color)';
-                    input.style.boxShadow = '0 1px 0 0 var(--primary-color)';
-                    break;
-                case 'password':
-                    input.style.borderColor = 'var(--secondary-color)';
-                    input.style.boxShadow = '0 1px 0 0 var(--primary-color)';
-                    checkbox.type = 'password';
-                    break;
-                case 'error':
-                    input.style.borderColor = 'var(--error-danger-delete)';
-                    input.style.color = 'var(--error-danger-delete)';
-                    
-                    const errorMsg = document.createElement('div');
-                    errorMsg.style.cssText = `
-                        color: #e74c3c;
-                        font-size: 12px;
-                        margin-top: 4px;
-                        padding-right: 2px;
-                        text-align: right;
-                        display: flex;
-                        align-items: center;
-                        justify-content: flex-end;
-                    `;
-
-                    const icon = document.createElement('i');
-                    icon.className = 'fas fa-exclamation-triangle';
-                    icon.style.marginRight = '4px';
-                    errorMsg.appendChild(icon);
-                    
-                    errorMsg.appendChild(document.createTextNode('Please enter a valid value'));
-                    errorMsg.setAttribute('contentEditable','true');
-                    //this.makeTextEditable(errorMsg);
-                    container.appendChild(errorMsg);
-                    break;
-                case 'disabled':
-                    input.disabled = true;
-                    input.style.backgroundColor = '#f0f0f0';
-                    input.style.color = '#999';
-                    break;
-            }
-            return container;
-        },
+input: (type = 'default') => {
+    const container = document.createElement('div');
+    container.style.cssText = 'width: 100%;';
+  
+    // Create base input div
+    const inputDiv = document.createElement('div');
+    inputDiv.setAttribute('contentEditable', 'true');
+    inputDiv.setAttribute('spellcheck', 'false');
+    
+    // Set placeholder
+    const placeholder = type === 'search' ? 'Search...' : 'Input Field';
+    inputDiv.setAttribute('data-placeholder', placeholder);
+    
+    // Base styles for all input types
+    inputDiv.style.cssText = `
+      width: 100%;
+      height: 42px;
+      border: ${type === 'focused' ? '2px solid var(--neutral-gray)' : 'none'};
+      border-bottom: 2px solid var(--primary-color);
+      border-radius: ${type === 'search' ? '24px' : '0'};
+      padding: ${type === 'search' ? '0 40px' : '0 8px'};
+      font-size: 16px;
+      transition: border-color 0.3s, background-color 0.3s;
+      line-height: 40px;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      background-color: ${type === 'error' ? 'rgba(255, 0, 0, 0.02)' : '#fff'};
+      ${type === 'search' ? 'background: #f9f9f9;' : ''}
+    `;
+  
+    // Add placeholder behavior
+    inputDiv.addEventListener('input', function() {
+      if (this.textContent.trim() === '') {
+        this.classList.add('empty');
+      } else {
+        this.classList.remove('empty');
+      }
+    });
+  
+    // Add placeholder styles
+    const style = document.createElement('style');
+    style.textContent = `
+      [contenteditable=true].empty:before {
+        content: attr(data-placeholder);
+        color: #999;
+        cursor: text;
+      }
+    `;
+    document.head.appendChild(style);
+    inputDiv.classList.add('empty');
+  
+    container.appendChild(inputDiv);
+  
+    if (type === 'search') {
+      const searchContainer = document.createElement('div');
+      searchContainer.style.cssText = 'position: relative; width: 100%;';
+      const searchIcon = document.createElement('i');
+      searchIcon.className = 'fas fa-search';
+      searchIcon.style.cssText = `
+        position: absolute;
+        left: 15px;
+        top: 46%;
+        transform: translateY(-50%);
+        color: #666;
+        pointer-events: none;
+      `;
+      searchContainer.appendChild(searchIcon);
+      searchContainer.appendChild(inputDiv);
+      return searchContainer;
+    }
+  
+    switch (type) {
+      case 'focused':
+        // Use an additional border element for focus state
+        const focusBorder = document.createElement('div');
+        focusBorder.style.cssText = `
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: var(--primary-color);
+        `;
+        container.style.position = 'relative';
+        container.appendChild(focusBorder);
+        break;
+  
+      case 'password':
+        inputDiv.style.borderColor = 'var(--secondary-color)';
+        // Add password masking behavior
+        let realValue = '';
+        inputDiv.addEventListener('input', (e) => {
+          const selection = window.getSelection();
+          const range = selection.getRangeAt(0);
+          const currentPos = range.startOffset;
+          
+          // Get the actual input value
+          realValue = e.target.textContent;
+          
+          // Replace with bullet points
+          const maskedValue = '•'.repeat(realValue.length);
+          e.target.textContent = maskedValue;
+          
+          // Restore cursor position
+          range.setStart(e.target.firstChild || e.target, currentPos);
+          range.setEnd(e.target.firstChild || e.target, currentPos);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        });
+        break;
+  
+      case 'error':
+        inputDiv.style.borderColor = 'var(--error-danger-delete)';
+        inputDiv.style.color = 'var(--error-danger-delete)';
+        const errorMsg = document.createElement('div');
+        errorMsg.style.cssText = `
+          color: #e74c3c;
+          font-size: 12px;
+          margin-top: 4px;
+          padding-right: 2px;
+          text-align: right;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+        `;
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-exclamation-triangle';
+        icon.style.marginRight = '4px';
+        errorMsg.appendChild(icon);
+        errorMsg.appendChild(document.createTextNode('Please enter a valid value'));
+        errorMsg.setAttribute('contentEditable', 'true');
+        container.appendChild(errorMsg);
+        break;
+  
+      case 'disabled':
+        // Style as disabled but keep editable
+        inputDiv.style.backgroundColor = '#f0f0f0';
+        inputDiv.style.color = '#999';
+        inputDiv.style.cursor = 'not-allowed';
+        break;
+    }
+  
+    // Prevent line breaks
+    inputDiv.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+      }
+    });
+  
+    // Handle paste to remove formatting
+    inputDiv.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+      document.execCommand('insertText', false, text);
+    });
+  
+    return container;
+  },
 // TEXT AREA ////////////////////
-        textarea: (type = 'default') => {
-            const container = document.createElement('div');
-            container.style.cssText = 'width: 100%;';
-
-            const textarea = document.createElement('textarea');
-            textarea.placeholder = 'Enter your text here...';
-            textarea.style.cssText = `
-                width: 100%;
-                min-height: 80px;
-                border: none;
-                border-bottom: 2px solid var(--primary-color);
-                border-radius: 0;
-                padding: 10px;
-                font-size: 16px;
-                font-family: var(--primary-font), sans-serif;
-                transition: border-color 0.3s, background-color 0.3s;
-                outline: none;
-                resize: vertical;
-            `;
-
-            container.appendChild(textarea);
-
-            switch (type) {
-                case 'focused':
-                    textarea.style.borderColor = 'var(--primary-color)';
-                    textarea.style.boxShadow = '0 1px 0 0 var(--primary-color)';
-                    break;
-                case 'error':
-                    textarea.style.borderColor = 'var(--error-danger-delete)';
-                    textarea.style.color = 'var(--error-danger-delete)';
-                    const errorMsg = document.createElement('div');
-                    errorMsg.style.cssText = `
-                        color: #e74c3c;
-                        font-size: 12px;
-                        margin-top: 4px;
-                        padding-right: 2px;
-                        text-align: right;
-                        display: flex;
-                        align-items: center;
-                        justify-content: flex-end;
-                    `;
-                    const icon = document.createElement('i');
-                    icon.className = 'fas fa-exclamation-triangle';
-                    icon.style.marginRight = '4px';
-                    
-                    errorMsg.appendChild(icon);
-                    errorMsg.appendChild(document.createTextNode('Please enter a valid value'));
-                    this.makeTextEditable(errorMsg);
-                    container.appendChild(errorMsg);
-                    break;
-                case 'disabled':
-                    textarea.disabled = true;
-                    textarea.style.backgroundColor = '#f0f0f0';
-                    textarea.style.color = '#999';
-                    break;
-            }
-            return container;
-        },
+textarea: (type = 'default') => {
+    const container = document.createElement('div');
+    container.style.cssText = 'width: 100%; position: relative;';
+  
+    // Create textarea div
+    const textareaDiv = document.createElement('div');
+    textareaDiv.setAttribute('contentEditable', 'true');
+    textareaDiv.setAttribute('spellcheck', 'false');
+    textareaDiv.setAttribute('data-placeholder', 'Enter your text here...');
+    
+    // Base styles for textarea
+    textareaDiv.style.cssText = `
+      width: 100%;
+      min-height: 80px;
+      border: ${type === 'focused' ? '2px solid var(--neutral-gray)' : 'none'};
+      border-bottom: 2px solid var(--primary-color);
+      border-radius: 0;
+      padding: 10px;
+      font-size: 16px;
+      font-family: var(--primary-font), sans-serif;
+      transition: border-color 0.3s, background-color 0.3s;
+      box-sizing: border-box;
+      overflow-y: auto;
+      word-wrap: break-word;
+      background-color: ${type === 'error' ? 'rgba(255, 0, 0, 0.02)' : '#fff'};
+    `;
+  
+    // Create resize handle
+    const resizeHandle = document.createElement('div');
+    resizeHandle.style.cssText = `
+      position: absolute;
+      right: 2;
+      bottom: 2;
+      bottom: ${type === 'error' ? '22' : '2'};
+      width: 26px;
+      height: 26px;
+      cursor: ns-resize;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      pointer-events: all;
+      padding: 2px;
+    `;
+  
+    // Create resize icon
+    const resizeIcon = document.createElement('div');
+    resizeIcon.style.cssText = `
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 10px 10px;
+      border-color: transparent transparent #888 transparent;
+    `;
+    resizeHandle.appendChild(resizeIcon);
+  
+    // Add placeholder behavior
+    const style = document.createElement('style');
+    style.textContent = `
+      [contenteditable=true].empty:before {
+        content: attr(data-placeholder);
+        color: #999;
+        cursor: text;
+      }
+    `;
+    document.head.appendChild(style);
+    textareaDiv.classList.add('empty');
+  
+    // Resize functionality
+    let startY, startHeight;
+    
+    resizeHandle.addEventListener('mousedown', (e) => {
+      startY = e.clientY;
+      startHeight = parseInt(window.getComputedStyle(textareaDiv).height);
+      document.addEventListener('mousemove', resize);
+      document.addEventListener('mouseup', stopResize);
+      e.preventDefault(); // Prevent text selection while resizing
+    });
+  
+    function resize(e) {
+      const newHeight = startHeight + (e.clientY - startY);
+      if (newHeight >= 80) { // Maintain minimum height
+        textareaDiv.style.height = `${newHeight}px`;
+      }
+    }
+  
+    function stopResize() {
+      document.removeEventListener('mousemove', resize);
+      document.removeEventListener('mouseup', stopResize);
+    }
+  
+    // Handle placeholder visibility
+    textareaDiv.addEventListener('input', function() {
+      if (this.textContent.trim() === '') {
+        this.classList.add('empty');
+      } else {
+        this.classList.remove('empty');
+      }
+    });
+  
+    // Handle paste to remove formatting
+    textareaDiv.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+      document.execCommand('insertText', false, text);
+    });
+  
+    container.appendChild(textareaDiv);
+    container.appendChild(resizeHandle);
+  
+    switch (type) {
+      case 'focused':
+        // Use additional border element for focus state
+        const focusBorder = document.createElement('div');
+        focusBorder.style.cssText = `
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: var(--primary-color);
+        `;
+        container.appendChild(focusBorder);
+        break;
+  
+      case 'error':
+        textareaDiv.style.borderColor = 'var(--error-danger-delete)';
+        textareaDiv.style.color = 'var(--error-danger-delete)';
+        const errorMsg = document.createElement('div');
+        errorMsg.style.cssText = `
+          color: #e74c3c;
+          font-size: 12px;
+          margin-top: 4px;
+          padding-right: 2px;
+          text-align: right;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+        `;
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-exclamation-triangle';
+        icon.style.marginRight = '4px';
+        errorMsg.appendChild(icon);
+        errorMsg.appendChild(document.createTextNode('Please enter a valid value'));
+        errorMsg.setAttribute('contentEditable', 'true');
+        container.appendChild(errorMsg);
+        break;
+  
+      case 'disabled':
+        // Style as disabled but keep editable
+        textareaDiv.style.backgroundColor = '#f0f0f0';
+        textareaDiv.style.color = '#999';
+        textareaDiv.style.cursor = 'not-allowed';
+        resizeHandle.style.display = 'none'; // Hide resize handle in disabled state
+        break;
+    }
+  
+    return container;
+  },
 // CHECKBOX ////////////////////
 checkbox: () => {
     // Wrapper for the checkbox component
@@ -2251,13 +2425,14 @@ dropdown: () => {
         },
         bottomNav: () => {
             const bottomNavContainer = document.createElement('nav');
-            bottomNavContainer.className = 'bNC';
+            bottomNavContainer.className = 'bottomNavContain max-items';
+            
             // Create the shadow div
             const shadowDiv = document.createElement('div');
-            shadowDiv.style.cssText = 'background-color: rgba(0,0,0,0.12); border: 20px solid red; width: 100%; height: 189px; position: absolute; top:-3px; left: 0; z-index: 6361;';
+            shadowDiv.style.cssText = 'background-color: rgba(0,0,0,0.12); width: 100%; height: 3px; position: absolute; top:-3px; left: 0;';
 
-            const bottomNav = document.createElement('nav');
-            bottomNav.className = 'bottomNav bottom-navbar max-items';
+            const bottomNav = document.createElement('div');
+            bottomNav.className = 'bottomNav bottom-navbar';
             bottomNav.innerHTML = `
                 <div class="nav-item-container">
                     <button class="nav-delete-btn">×</button>
@@ -2297,20 +2472,18 @@ dropdown: () => {
                 <button class="nav-add-btn"><i class="fas fa-plus"></i></button>
             `;
         
-            // Add event handlers for delete buttons
+            // Delete buttons
             bottomNav.querySelectorAll('.nav-delete-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     if (bottomNav.querySelectorAll('.nav-item-container').length > 1) {
                         this.closest('.nav-item-container').remove();
-                        updateAddButtonVisibility(bottomNav);
+                        updateAddButtonVisibility(bottomNavContainer);
                     }
                 });
             });
         
-            // First get the reference to addButton from bottomNav
             const addButton = bottomNav.querySelector('.nav-add-btn');
             
-            // Then add the event listener using arrow function
             addButton.addEventListener('click', () => {
                 if (bottomNav.querySelectorAll('.nav-item-container').length < 5) {
                     const newItem = document.createElement('div');
@@ -2327,7 +2500,7 @@ dropdown: () => {
                     newItem.querySelector('.nav-delete-btn').addEventListener('click', function() {
                         if (bottomNav.querySelectorAll('.nav-item-container').length > 1) {
                             this.closest('.nav-item-container').remove();
-                            updateAddButtonVisibility(bottomNav);
+                            updateAddButtonVisibility(bottomNavContainer);
                         }
                     });
         
@@ -2340,7 +2513,7 @@ dropdown: () => {
                     // Make label editable
                     this.makeTextEditable(newItem.querySelector('span'));
                     bottomNav.insertBefore(newItem, addButton);
-                    updateAddButtonVisibility(bottomNav);
+                    updateAddButtonVisibility(bottomNavContainer);
                 }
             });
         
@@ -2365,9 +2538,9 @@ dropdown: () => {
                 });
             });
         
-            bottomNavContainer.appendChild(bottomNav);
             bottomNavContainer.appendChild(shadowDiv);
-            return bottomNav;
+            bottomNavContainer.appendChild(bottomNav);
+            return bottomNavContainer;
         },
         heading: (level = 'h1') => {
             const wrapper = document.createElement('div');
@@ -2428,6 +2601,7 @@ dropdown: () => {
                 margin-top: 8px;
                 font-size: 14px;
                 width: 100%;
+                margin-bottom: -8px;
                 `
             ;
             label.setAttribute('contentEditable','true');
@@ -2497,73 +2671,103 @@ dropdown: () => {
             return container;
         },
         leftChat: () => {
+              // Create main container
             const container = document.createElement('div');
-            container.style.cssText = 'width: 100%; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px;';
-            
+            container.style.cssText = 'width: 100%; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px; position: relative;';
+
+            // Create avatar
             const avatar = document.createElement('div');
             avatar.innerHTML = 'AV';
-            avatar.style.cssText = 'width: 40px; height: 40px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; flex-shrink: 0;';
-            avatar.setAttribute('contentEditable','true');
-            // this.makeTextEditable(avatar);
-            
+            avatar.style.cssText = 'width: 40px; height: 40px; background-color: var(--primary-color); color: #ffffff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; flex-shrink: 0;';
+            avatar.setAttribute('contentEditable', 'true');
+
+            // Create content wrapper
             const contentWrapper = document.createElement('div');
-            contentWrapper.style.cssText = 'flex-grow: 1;';
-            
+            contentWrapper.style.cssText = 'flex-grow: 1; max-width: 80%;';
+
+            // Create chat bubble
             const bubble = document.createElement('div');
-            bubble.innerHTML = `
-                <div class="chat-content">Click to edit this message</div>
-                <div class="chat-image-container" style="display: none; cursor: pointer;">
-                    <img style="max-width: 200px; max-height: 200px; border-radius: 12px; display: none;" alt="Chat image">
-                    <div class="image-placeholder" style="display: none; align-items: center; justify-content: center; color: #666; padding: 8px;">
-                        <i class="fas fa-image" style="margin-right: 8px;"></i> Add Image
-                    </div>
-                </div>
-            `;
-            bubble.style.cssText = 'background-color: var(--neutral-gray); padding: 12px; border-radius: 18px; border-top-left-radius: 4px; max-width: 80%; display: inline-block; word-wrap: break-word;';
+            bubble.style.cssText = 'background-color: var(--neutral-gray); padding: 12px 16px; border-radius: 18px; border-top-left-radius: 4px; width: fit-content; word-wrap: break-word;';
             
+            // Create content div
+            const chatContent = document.createElement('div');
+            chatContent.className = 'chat-content';
+            chatContent.innerHTML = 'Click to edit this message';
+            chatContent.setAttribute('contentEditable', 'true');
+            
+            // Create image container
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'chat-image-container';
+            imageContainer.style.cssText = 'margin-top: 8px; cursor: pointer; display: none;';
+
+            // Add hover behavior to the content wrapper
+            contentWrapper.addEventListener('mouseenter', () => {
+                imageContainer.style.display = 'block';
+            });
+            
+            contentWrapper.addEventListener('mouseleave', () => {
+                // Only hide if no image is displayed
+                const img = imageContainer.querySelector('img');
+                if (!img || img.style.display === 'none') {
+                imageContainer.style.display = 'none';
+                }
+            });
+            
+            // Create image element
+            const img = document.createElement('img');
+            img.style.cssText = 'max-width: 200px; max-height: 200px; border-radius: 12px; display: none;';
+            img.alt = 'Chat image';
+            
+            // Create image placeholder
+            const placeholder = document.createElement('div');
+            placeholder.className = 'image-placeholder';
+            placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; color: #666; padding: 8px; border: 2px dashed #ccc; border-radius: 8px;';
+            
+            // Add icon and text to placeholder
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-image';
+            icon.style.marginRight = '8px';
+            placeholder.appendChild(icon);
+            placeholder.appendChild(document.createTextNode('Add Image'));
+            
+            // Create timestamp
             const timestamp = document.createElement('div');
             timestamp.textContent = '1 minute ago';
             timestamp.style.cssText = 'font-size: 12px; color: #666; margin-top: 4px;';
-            
-            const bubbleTxt = bubble.querySelector('.chat-content');
-            bubbleTxt.setAttribute('contentEditable','true');
-            timestamp.setAttribute('contentEditable','true');
-            // this.makeTextEditable(bubble.querySelector('.chat-content'));
-            // this.makeTextEditable(timestamp);
-            
-            const showImage = bubble.querySelector('.chat-image-container');
-            container.addEventListener('mouseenter', () => showImage.style.display = 'flex');
+            timestamp.setAttribute('contentEditable', 'true');
 
-            // Add click handler for image container
-            const imageContainer = bubble.querySelector('.chat-image-container');
-            const img = imageContainer.querySelector('img');
-            const placeholder = imageContainer.querySelector('.image-placeholder');
-            
-            imageContainer.style.display = 'block';
+            // Add image upload functionality
             imageContainer.addEventListener('click', () => {
                 const input = document.createElement('input');
                 input.type = 'file';
                 input.accept = 'image/*';
+                
                 input.onchange = (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                            img.src = event.target.result;
-                            img.style.display = 'block';
-                            placeholder.style.display = 'none';
-                        };
-                        reader.readAsDataURL(file);
-                    }
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                    img.src = event.target.result;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                }
                 };
+                
                 input.click();
             });
-            
+
+            // Assemble the components
+            imageContainer.appendChild(img);
+            imageContainer.appendChild(placeholder);
+            bubble.appendChild(chatContent);
+            bubble.appendChild(imageContainer);
             contentWrapper.appendChild(bubble);
             contentWrapper.appendChild(timestamp);
             container.appendChild(avatar);
             container.appendChild(contentWrapper);
-            
+
             return container;
         },
         rightChat: () => {
@@ -2588,7 +2792,7 @@ dropdown: () => {
                     </div>
                 </div>
             `;
-            bubble.style.cssText = 'background-color: var(--primary-color); color: white; padding: 12px; border-radius: 18px; border-top-right-radius: 4px; max-width: 80%; display: inline-block; word-wrap: break-word;';
+            bubble.style.cssText = 'background-color: var(--primary-color); color: white; padding: 12px 16px; border-radius: 18px; border-top-right-radius: 4px; max-width: 80%; display: inline-block; word-wrap: break-word;';
             
             const timestamp = document.createElement('div');
             timestamp.textContent = '1 minute ago';
@@ -2597,8 +2801,6 @@ dropdown: () => {
             const bubbleTxt = bubble.querySelector('.chat-content');
             bubbleTxt.setAttribute('contentEditable','true');
             timestamp.setAttribute('contentEditable','true');
-            // this.makeTextEditable(bubble.querySelector('.chat-content'));
-            // this.makeTextEditable(timestamp);
 
             // Add click handler for image container
             const imageContainer = bubble.querySelector('.chat-image-container');
