@@ -393,7 +393,9 @@ wrapComponentInContainer(component, componentType) {
                     const topNavbar = canvas.querySelector('.navContain');
                     if (topNavbar) {
                         topNavbar.remove();
+                        
                         let spacer = canvasContent.querySelector('.navbar-spacer');
+                        
                         if (spacer) {
                             spacer.remove();
                         }
@@ -476,7 +478,11 @@ createNewCanvas() {
             animation: 150,
             handle: '.component-handle',
             ghostClass: 'sortable-ghost',
-            group: 'shared-components'
+            group: 'shared-components',
+            filter: '.navbar-spacer',
+            onMove: function(evt) {
+                return !evt.related.classList.contains('navbar-spacer');
+            }
         });
     }
     this.updateCanvasNumbers();
@@ -565,7 +571,12 @@ loadSavedCanvases() {
                 new Sortable(canvasContent, {
                     animation: 150,
                     handle: '.component-handle',
-                    ghostClass: 'sortable-ghost'
+                    ghostClass: 'sortable-ghost',
+                    group: 'shared-components',
+                    filter: '.navbar-spacer',
+                    onMove: function(evt) {
+                        return !evt.related.classList.contains('navbar-spacer');
+                    }
                 });
             }
         }
@@ -632,11 +643,13 @@ handleCanvasDelete(e) {
             
             if (position === 'top') {
                 canvas.insertBefore(navbar, canvas.firstChild);
+                
                 let spacer = canvasContent.querySelector('.navbar-spacer');
                 if (!spacer) {
                     spacer = document.createElement('div');
                     spacer.className = 'navbar-spacer';
                     spacer.style.height = '54px';
+                    spacer.style.width = '100%';
                     canvasContent.insertBefore(spacer, canvasContent.firstChild);
                 }
                 navbar.style.cssText = 'position: absolute; left: 0; right: 0; top: 24px;';
@@ -2225,7 +2238,11 @@ dropdown: () => {
                 animation: 150,
                 handle: '.component-handle',
                 ghostClass: 'sortable-ghost',
-                group: 'shared-components'
+                group: 'shared-components',
+                filter: '.navbar-spacer',
+                onMove: function(evt) {
+                    return !evt.related.classList.contains('navbar-spacer');
+                }
             });
             
             button.addEventListener('click', () => {
