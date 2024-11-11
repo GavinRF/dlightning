@@ -262,7 +262,7 @@ class AlignmentController {
         'cloud', 'location-dot', 'gear', 'message', 'share', 'edit',
         'trash', 'download', 'upload', 'refresh', 'check', 'times',
         'info-circle', 'question-circle', 'exclamation-circle', 'flag',
-        'crown', 'gift', 'shield', 'globe', 'hashtag', 'film',
+        'crown', 'gift', 'shield', 'globe', 'hashtag', 'inbox',
         'microphone', 'headphones', 'wifi', 'signal', 'battery-full', 'cloud-arrow-up',
         'person-running', 'hand', 'fire', 'brush', 'gamepad', 'feather', 'landmark', 
         'mug-saucer', 'wrench', 'shirt', 'bag-shopping', 'car-side', 'hand-holding-heart',
@@ -275,7 +275,7 @@ class AlignmentController {
         'satellite', 'rainbow', 'sailboat', 'republican', 'democrat', 'piggy-bank', 'person-swimming',
         'pepper-hot', 'pen-clip', 'peace', 'paw', 'panorama', 'parachute-box', 'microscope', 'om',
         'mountain', 'mitten', 'mosque', 'mortar-pestle', 'monument', 'money-bill-wave', 'meteor',
-        'martini-glass', 'map', 'lungs', 'hat-cowboy', 'location-arrow', 'infinity', 'id-badge',
+        'martini-glass', 'map-pin', 'lungs', 'hat-cowboy', 'location-arrow', 'infinity', 'id-badge',
         'icicles', 'ice-cream', 'hourglass-half', 'hotdog', 'horse-head', 'horse', 'hat-wizard',
         'highlighter', 'helicopter', 'heart-pulse', 'hand-peace', 'hand-fist', 'guitar', 'bacterium',
         'asterisk', 'gem', 'frog', 'fill-drip', 'dice-two', 'dice-three', 'dice-four',
@@ -292,7 +292,19 @@ class AlignmentController {
         'bicycle','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
         'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         'circle', 'circle-play', 'circle-pause', 'circle-stop', 'circle-dot', 'circle-check', 
-        'circle-radiation', 'spinner', 'circle-down', 'bugs'
+        'circle-radiation', 'spinner', 'circle-down', 'moon', 'cloud-moon', 'ghost',
+        'anchor', 'dollar-sign', 'vihara', 'stamp', 'percent', 'diamond', 'euro-sign', 'yen-sign',
+        'lira-sign', 'cent-sign', 'file-invoice-dollar', 'sterling-sign', 'franc-sign', 'ruble-sign',
+        'indian-rupee-sign', 'pen-nib', 'scroll', 'dice-d20', 'futbol', 'ring', 'square', 'stop',
+        'square-plus', 'square-minus', 'square-poll-horizontal', 'square-check', 'square-xmark',
+        'square-up-right', 'comment', 'truck-fast', 'clipboard', 'cart-shopping', 'droplet',
+        'thumbs-up', 'handshake', 'address-book', 'pen-fancy', 'quote-left', 'quote-right', 'question', 
+        'sort', 'expand', 'seedling', 'arrow-left', 'arrow-right', 'arrow-up', 'arrow-down', 
+        'microchip', 'trophy', 'calculator', 'joint', 'yin-yang', 'glasses', 'stairs',
+        'vest-patches', 'utensils', 'user-lock', 'user-pen', 'user-xmark', 'user-check', 
+        'toggle-off', 'toggle-on', 'teeth', 'star-half', 'star-half-stroke', 'spa', 'shuffle',
+        'share-nodes', 'dog', 'photo-film', 'hand-point-up', 'hand-point-left', 'hand-point-down',
+        'maximize', 'handshake-angle', 'hand-point-right', 'hands-clapping', 'hands-asl-interpreting'
     ];
     //reder icons
     function renderIcons(filter = '') {
