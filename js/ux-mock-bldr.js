@@ -1,7 +1,5 @@
-//ux-mock-builder.js
-///COMPONENTS AND MAIN FUNCTIONALITY
-
-////// THE EDITOR  //////////////////////
+// ux-mock-builder.js
+//// COMPONENTS AND MAIN FUNCTIONALITY
 class MobileUIEditor {
     modalAdded = false;
 
@@ -11,6 +9,8 @@ class MobileUIEditor {
             selectedCanvases: new Set(),
             navbarStates: new Map()
         };
+
+        this.alignmentController = new AlignmentController('.canvas-content');
         
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
@@ -28,8 +28,7 @@ class MobileUIEditor {
         this.setupDownloadButton(); //html2canvas(pro)
         // this.loadSavedCanvases(); 
         this.updateTime();
-        setInterval(updateTime, 60000);
-        // this.updateZoomLevel();
+        setInterval(this.updateTime, 60000);
     }
 
     initializeFirstCanvas() {
@@ -324,28 +323,98 @@ handleComponentAddition(btn) {
 }
 
 wrapComponentInContainer(component, componentType) {
-        
     const container = document.createElement('div');
     container.className = 'component-container';
-    
     container.innerHTML = `
         <div class="component-handle">⋮</div>
         <div class="component-content"></div>
         <button class="delete-btn">×</button>
+        <button class="duplicate-btn"><i class="fa-solid fa-copy"></i></button>
     `;
-    // <button class="duplicate-btn">+</button>
-
-    container.querySelector('.component-content').appendChild(component);
     
-    // Setup event listeners
+    const content = container.querySelector('.component-content');
+    
+    // Handle both regular DOM elements and objects with setup functions
+    if (component.container && typeof component.setup === 'function') {
+        content.appendChild(component.container);
+        component.setup();
+    } else {
+        content.appendChild(component);
+    }
+    
+    // Store the component type data only if it includes a variant
+    if (componentType.includes('-')) {
+        container.setAttribute('data-component-variant', componentType);
+    }
+    
     container.querySelector('.delete-btn').addEventListener('click', () => container.remove());
-    // container.querySelector('.duplicate-btn').addEventListener('click', () => {
-    //     const duplicate = component.cloneNode(true);
-    //     const wrappedDuplicate = this.wrapComponentInContainer(duplicate, componentType);
-    //     container.parentNode.insertBefore(wrappedDuplicate, container.nextSibling);
-    // });
+    container.querySelector('.duplicate-btn').addEventListener('click', () => 
+        this.duplicateComponent(container, componentType));
     
     return container;
+}
+
+duplicateComponent(container, componentType) {
+    const originalComponent = container.querySelector('.component-content > *');
+    
+    // Check for stored variant data
+    const storedVariant = container.getAttribute('data-component-variant');
+    
+    if (storedVariant) {
+        // Handle components with variants
+        const [baseType, variant] = storedVariant.split('-');
+        if (this.components[baseType]) {
+            const duplicate = variant 
+                ? this.components[baseType](variant)
+                : this.components[baseType](originalComponent);
+            const wrappedDuplicate = this.wrapComponentInContainer(duplicate, storedVariant);
+            
+            // Copy any user modifications from the original component
+            const duplicateContent = wrappedDuplicate.querySelector('.component-content > *');
+            this.copyUserModifications(originalComponent, duplicateContent);
+            
+            container.parentNode.insertBefore(wrappedDuplicate, container.nextSibling);
+        }
+    } else {
+        // Handle components without variants
+        const [baseType] = componentType.split('-');
+        if (this.components[baseType]) {
+            const duplicate = this.components[baseType](originalComponent);
+            const wrappedDuplicate = this.wrapComponentInContainer(duplicate, baseType);
+            
+            // Copy any user modifications from the original component
+            const duplicateContent = wrappedDuplicate.querySelector('.component-content > *');
+            this.copyUserModifications(originalComponent, duplicateContent);
+            
+            container.parentNode.insertBefore(wrappedDuplicate, container.nextSibling);
+        }
+    }
+}
+
+// Helper function to copy user modifications
+copyUserModifications(original, duplicate) {
+    // Copy text content if it's editable
+    if (original.getAttribute('contentEditable') === 'true') {
+        duplicate.textContent = original.textContent;
+    }
+    
+    // Copy text content of all editable children
+    const originalEditables = original.querySelectorAll('[contenteditable="true"]');
+    const duplicateEditables = duplicate.querySelectorAll('[contenteditable="true"]');
+    originalEditables.forEach((orig, index) => {
+        if (duplicateEditables[index]) {
+            duplicateEditables[index].textContent = orig.textContent;
+        }
+    });
+    
+    // Copy any custom states (like checkbox states)
+    const originalChecks = original.querySelectorAll('.fa-square-check');
+    const duplicateChecks = duplicate.querySelectorAll('.fa-square-check');
+    originalChecks.forEach((orig, index) => {
+        if (duplicateChecks[index]) {
+            duplicateChecks[index].style.display = orig.style.display;
+        }
+    });
 }
 
 // CUSTOM CODE EDITOR ////////////////////
@@ -715,7 +784,7 @@ replaceRangeSliders(element) {
             width: 100%;
             height: 8px;
             border-radius: 4px;
-            background: #d5d9da;
+            background: var(--neutral-gray);
             position: relative;
             padding: 0 4px;
         `;
@@ -756,29 +825,45 @@ replaceRangeSliders(element) {
     });
 }
 
-// DOWNLOAD MULTIPLE SELECTED SCREENS
-setupDownloadButton() {
-    document.getElementById('download-btn').addEventListener('click', () => this.captureScreenshot());
-}
+// // DOWNLOAD MULTIPLE SELECTED SCREENS
+// Create/update the button download button state
+updateButtonState(isLoading) {
+    const button = document.getElementById('download-btn');
+    if (!button) return;
+  
+    if (isLoading) {
+      button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Generating...`;
+      button.disabled = true;
+      button.classList.add('loading');
+    } else {
+      button.innerHTML = `<i class="fas fa-download"></i> Download PNG`;
+      button.disabled = false;
+      button.classList.remove('loading');
+    }
+  }
 
-async captureScreenshot() {
+  async captureScreenshot() {
+    this.updateButtonState(true);
     const originalScale = scale;
     setZoomScale(1);
-    await new Promise(resolve => setTimeout(resolve, 100));
-    let counter = 1;
     
     try {
-      for (const canvas of this.state.selectedCanvases) {
-        const originalScrollTop = canvas.scrollTop;
-        const originalScrollLeft = canvas.scrollLeft;
-        // Reset scroll position before cloning
-        canvas.scrollTop = 0;
-        canvas.scrollLeft = 0;
+      // Process canvases in parallel instead of sequentially
+      const canvasPromises = Array.from(this.state.selectedCanvases).map(async (canvas, index) => {
+        const scrollContainer = canvas.querySelector('.phoneScrollCon');
+        if (!scrollContainer) {
+          console.error('Phone scroll container not found');
+          return;
+        }
+  
+        const currentScrollTop = scrollContainer.scrollTop;
+        const currentScrollLeft = scrollContainer.scrollLeft;
         
         const clone = canvas.cloneNode(true);
-        
-        // Add padding to prevent clipping
         const padding = 6;
+        
+        // Use document fragment for better performance
+        const fragment = document.createDocumentFragment();
         const tempContainer = document.createElement('div');
         tempContainer.style.cssText = `
           position: absolute;
@@ -789,75 +874,99 @@ async captureScreenshot() {
           overflow: hidden;
           padding: ${padding}px;
         `;
+        
         tempContainer.appendChild(clone);
-        document.body.appendChild(tempContainer);
+        fragment.appendChild(tempContainer);
+        document.body.appendChild(fragment);
   
-        // Adjust clone dimensions to account for padding
-        clone.style.height = `${canvas.clientHeight}px`;
-        clone.style.width = `${canvas.clientWidth}px`;
-        clone.style.overflow = 'hidden';
-        clone.style.margin = '0';
-        clone.scrollTop = 0;
-        clone.scrollLeft = 0;
+        const clonedScrollContainer = clone.querySelector('.phoneScrollCon');
+        if (clonedScrollContainer) {
+          clonedScrollContainer.scrollTop = 0;
+          clonedScrollContainer.scrollLeft = 0;
+          
+          const content = clonedScrollContainer.firstElementChild;
+          if (content) {
+            // Use transform instead of scroll for better performance
+            content.style.transform = `translate(${-currentScrollLeft}px, ${-currentScrollTop}px)`;
+          }
+        }
   
-        console.log('Canvas dimensions:', {
-          clientWidth: canvas.clientWidth,
-          clientHeight: canvas.clientHeight,
-          scrollWidth: canvas.scrollWidth,
-          scrollHeight: canvas.scrollHeight,
-          offsetWidth: canvas.offsetWidth,
-          offsetHeight: canvas.offsetHeight
+        // Batch style updates
+        Object.assign(clone.style, {
+          height: `${canvas.clientHeight}px`,
+          width: `${canvas.clientWidth}px`,
+          overflow: 'hidden',
+          margin: '0'
         });
   
         this.replaceRangeSliders(clone);
-        await new Promise(resolve => setTimeout(resolve, 200));
+        
+        // Use requestAnimationFrame for smoother rendering
+        await new Promise(resolve => requestAnimationFrame(resolve));
   
         const renderedCanvas = await html2canvas(clone, {
           backgroundColor: null,
-          logging: true,
+          logging: false, // Disable logging for performance
           useCORS: true,
-          scale: window.devicePixelRatio,
-          width: canvas.clientWidth + (padding * 2), // Include padding in capture width
-          height: canvas.clientHeight + (padding * 2), // Include padding in capture height
-          scrollX: -padding, // Offset scroll to capture padding area
+          scale: window.devicePixelRatio, // Keep your existing scale setting
+          width: canvas.clientWidth + (padding * 2),
+          height: canvas.clientHeight + (padding * 2),
+          scrollX: -padding,
           scrollY: -padding,
           windowWidth: canvas.clientWidth + (padding * 2),
           windowHeight: canvas.clientHeight + (padding * 2),
+          imageTimeout: 60000,
           onclone: (clonedDoc) => {
-            const clonedElement = clonedDoc.querySelector(clone.tagName);
-            if (clonedElement) {
-              clonedElement.style.transform = 'none';
-              clonedElement.style.height = `${canvas.clientHeight}px`;
-              clonedElement.style.width = `${canvas.clientWidth}px`;
-              clonedElement.style.overflow = 'hidden';
-            }
+            return new Promise(resolve => {
+              requestAnimationFrame(() => {
+                const clonedElement = clonedDoc.querySelector(clone.tagName);
+                if (clonedElement) {
+                  const phoneScroll = clonedElement.querySelector('.phoneScrollCon');
+                  if (phoneScroll) {
+                    phoneScroll.scrollTop = 0;
+                    phoneScroll.scrollLeft = 0;
+                    const content = phoneScroll.firstElementChild;
+                    if (content) {
+                      content.style.transform = `translate(${-currentScrollLeft}px, ${-currentScrollTop}px)`;
+                    }
+                  }
+                }
+                resolve();
+              });
+            });
           }
         });
   
         document.body.removeChild(tempContainer);
-        canvas.scrollTop = originalScrollTop;
-        canvas.scrollLeft = originalScrollLeft;
   
         if (renderedCanvas.width === 0 || renderedCanvas.height === 0) {
           console.error('Rendered canvas has zero dimensions');
-          continue;
+          return;
         }
   
         const link = document.createElement('a');
         const filename = this.state.selectedCanvases.size > 1
-          ? `Dlightning-mockup-${counter}.png`
+          ? `Dlightning-mockup-${index + 1}.png`
           : 'Dlightning-mockup.png';
         link.download = filename;
-        link.href = renderedCanvas.toDataURL('image/png');
+        link.href = renderedCanvas.toDataURL('image/png', 1.0);
         link.click();
-        counter++;
-      }
-    } catch (error) {
-      console.error('Screenshot error:', error);
-    } finally {
-      setZoomScale(originalScale);
+      });
+
+        // Wait for all canvases to process
+        await Promise.all(canvasPromises);
+        
+        } catch (error) {
+        console.error('Screenshot error:', error);
+        } finally {
+        setZoomScale(originalScale);
+        this.updateButtonState(false);
+        }
     }
-  }
+
+  setupDownloadButton() {
+    document.getElementById('download-btn').addEventListener('click', () => this.captureScreenshot());
+    }
 
 // ********
 /////////////////////////
@@ -874,7 +983,7 @@ async captureScreenshot() {
                 button.style.cssText = `
                     height: 48px;
                     background-color: ${isGhost ? 'transparent' : 'var(--primary-color)'};
-                    color: ${isGhost ? 'var(--primary-color)' : 'white'};
+                    color: ${isGhost ? 'var(--primary-color)' : 'var(--text-on-primary)'};
                     border: ${isGhost ? '2px solid var(--primary-color)' : 'none'};
                     border-radius: 24px;
                     font-weight: bold;
@@ -893,7 +1002,7 @@ async captureScreenshot() {
                 }
                 button.setAttribute('role', 'button');
                 button.setAttribute('contentEditable','true');
-                //this.makeTextEditable(button);
+                // button.setAttribute('data-button-type', type);
                 return button;
             };
             
@@ -901,7 +1010,7 @@ async captureScreenshot() {
                 case 'ghost':
                     container.appendChild(createButton('Ghost Button', true));
                     break;
-                case 'two-buttons':
+                case 'twobuttons':
                     container.appendChild(createButton('Button 1'));
                     container.appendChild(createButton('Button 2'));
                     break;
@@ -941,11 +1050,10 @@ input: (type = 'default') => {
       box-sizing: border-box;
       white-space: nowrap;
       overflow: hidden;
-      background-color: ${type === 'error' ? 'rgba(255, 0, 0, 0.02)' : '#fff'};
-      ${type === 'search' ? 'background: #f9f9f9;' : ''}
+      background-color: ${type === 'error' ? 'rgba(255, 0, 0, 0.02)' : 'var(--input-bg-color)'};
     `;
   
-    // Add placeholder behavior
+    // Placeholder behavior
     inputDiv.addEventListener('input', function() {
       if (this.textContent.trim() === '') {
         this.classList.add('empty');
@@ -954,7 +1062,7 @@ input: (type = 'default') => {
       }
     });
   
-    // Add placeholder styles
+    // Placeholder styles
     const style = document.createElement('style');
     style.textContent = `
       [contenteditable=true].empty:before {
@@ -978,7 +1086,7 @@ input: (type = 'default') => {
         left: 15px;
         top: 46%;
         transform: translateY(-50%);
-        color: #666;
+        color: var(--basic-txt-color);
         pointer-events: none;
       `;
       searchContainer.appendChild(searchIcon);
@@ -1051,7 +1159,7 @@ input: (type = 'default') => {
   
       case 'disabled':
         // Style as disabled but keep editable
-        inputDiv.style.backgroundColor = '#f0f0f0';
+        inputDiv.style.backgroundColor = 'var(--neutral-gray)';
         inputDiv.style.color = '#999';
         inputDiv.style.cursor = 'not-allowed';
         break;
@@ -1098,7 +1206,7 @@ textarea: (type = 'default') => {
       box-sizing: border-box;
       overflow-y: auto;
       word-wrap: break-word;
-      background-color: ${type === 'error' ? 'rgba(255, 0, 0, 0.02)' : '#fff'};
+      background-color: ${type === 'error' ? 'rgba(255, 0, 0, 0.02)' : 'var(--input-bg-color)'};
     `;
   
     // Create resize handle
@@ -1223,7 +1331,7 @@ textarea: (type = 'default') => {
   
       case 'disabled':
         // Style as disabled but keep editable
-        textareaDiv.style.backgroundColor = '#f0f0f0';
+        textareaDiv.style.backgroundColor = 'var(--neutral-gray)';
         textareaDiv.style.color = '#999';
         textareaDiv.style.cursor = 'not-allowed';
         resizeHandle.style.display = 'none'; // Hide resize handle in disabled state
@@ -1238,20 +1346,20 @@ checkbox: () => {
     const wrapper = document.createElement('div');
     wrapper.style.cssText = `
         display: flex; align-items: center;
-        font-size: 16px; color: #333; width: 100%;
+        font-size: 16px; color: var(--basic-txt-color); width: 100%;
         justify-content: flex-start;
+        margin: 4px 0 0 0;
     `;
 
-    // Simulated checkbox using a div
     const checkboxDiv = document.createElement('div');
     checkboxDiv.className = 'fa-regular fa-square';
     checkboxDiv.style.cssText = `
-        margin: -1px 10px 0 10px;
+        margin: -2px 10px 0 10px;
         border-radius: 4px;
         cursor: pointer;
         position: relative;
         font-size: 26px;
-        color: var(--neutral-gray);
+        color: #a0a0a0;
     `;
 
     // Checkmark icon
@@ -1262,23 +1370,21 @@ checkbox: () => {
         color: var(--primary-color);
         display: none; 
         position: absolute;
-        top: -1px;
+        top: 0px;
         left: 0px;
         border: none;
     `;
     checkboxDiv.appendChild(checkIcon);
-    // Toggle checkmark and border color on click
+
     checkboxDiv.addEventListener('click', () => {
         const isChecked = checkIcon.style.display === 'none';
         checkIcon.style.display = isChecked ? 'block' : 'none';
-        // checkboxDiv.style.borderColor = isChecked ? 'none' : '#e0e0e0';
-        // checkboxDiv.style.borderWidth = isChecked ? '0px' : '2px';
     });
 
     // Editable label text for the checkbox
     const chekLabl = document.createElement('span');
     chekLabl.textContent = "click to edit";
-    chekLabl.style.cssText = 'font-size: 16px; color: #333;';
+    chekLabl.style.cssText = 'font-size: 16px; color: var(--basic-txt-color)';
     this.makeTextEditable(chekLabl);
 
     // Append checkbox and label to the wrapper
@@ -1290,7 +1396,7 @@ checkbox: () => {
 // Radio ////////////////////
 radio: () => {
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = 'display: flex; align-items: center; width: 100%;';
+    wrapper.style.cssText = 'display: flex; align-items: center; width: 100%; margin: 4px 0 0 0;';
 
     const label = document.createElement('label');
     label.style.cssText = 'display: flex; align-items: center; font-size: 16px; color: #333; justify-content: flex-start;';
@@ -1300,7 +1406,7 @@ radio: () => {
     radioDiv.style.cssText = `
         width: 20px; height: 20px; 
         margin: 0 10px;
-        border: 2px solid #e0e0e0;
+        border: 2px solid #a0a0a0;
         border-radius: 50%;
         display: flex; align-items: center; justify-content: center;
         cursor: pointer;
@@ -1313,7 +1419,7 @@ radio: () => {
         width: 12px; height: 12px;
         background-color: var(--primary-color);
         border-radius: 50%;
-        display: none; /* Hidden by default */
+        display: none;
     `;
     radioDiv.appendChild(radioDot);
 
@@ -1411,7 +1517,7 @@ dropdown: () => {
         position: relative;
         width: 100%;
         font-size: 16px;
-        color: #333;
+        color: var(--basic-txt-color);
       }
       
       .dropdown-header {
@@ -1420,7 +1526,7 @@ dropdown: () => {
         justify-content: space-between;
         height: 42px;
         padding: 0 12px;
-        background-color: white;
+        background-color: var(--input-bg-color);
         border-bottom: 2px solid var(--primary-color);
         cursor: pointer;
       }
@@ -1435,12 +1541,13 @@ dropdown: () => {
         top: 100%;
         left: 0;
         right: 0;
-        background: white;
-        border: 1px solid #ddd;
+        background: var(--background-color);
+        border: 1px solid var(--neutral-gray);
         border-top: none;
         max-height: 300px;
         overflow-y: auto;
-        z-index: 1000;
+        z-index: 900;
+        opacity: 0.9;
       }
       
       .options-container.active {
@@ -1455,7 +1562,7 @@ dropdown: () => {
       }
       
       .option-wrapper:hover {
-        background-color: #f5f5f5;
+        background-color: var(--primary-color);
       }
       
       .option {
@@ -1499,7 +1606,7 @@ dropdown: () => {
         width: 100%;
         padding: 8px;
         background: none;
-        border: 2px dashed #ddd;
+        border: 0.12rem dashed #ddd;
         color: #666;
         cursor: pointer;
         border-radius: 4px;
@@ -1542,206 +1649,246 @@ dropdown: () => {
     
     return container;
   },
-// ICON ////////////////////
-        icon: () => {
-            const iconContainer = document.createElement('div');
-            iconContainer.style.cssText = 'width: 100%; text-align: center; padding: 10px; position: relative;';
-            
-            const iconElement = document.createElement('i');
-            iconElement.className = 'fas fa-star';
-            iconElement.style.cssText = 'font-size: 24px; color: var(--primary-color); cursor: pointer;';
-            
-            const sizeControl = document.createElement('input');
-            sizeControl.type = 'number';
-            sizeControl.min = '12';
-            sizeControl.max = '96';
-            sizeControl.value = '24';
-            sizeControl.style.cssText = `
-                position: absolute;
-                top: -16px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 60px;
-                padding: 3px 0 3px 0;
-                border: 1px solid #ddd;
-                border-radius: 2px;
-                display: none;
-                font-size: 12px;
-                text-align: center;
-                z-index: 2445;
-            `;
+  icon(originalComponent) {
+    let iconContainer;
+    
+    if (originalComponent) {
+        // Clone the existing component
+        iconContainer = originalComponent.cloneNode(true);
+    } else {
+        // Create a new icon container
+        iconContainer = document.createElement('div');
+        iconContainer.style.cssText = 'width: 100%; text-align: center; padding: 10px; position: relative;';
 
-            const leftArrow = document.createElement('i');
-            leftArrow.className = 'fas fa-arrow-left';
-            leftArrow.style.cssText = `
-                position: absolute;
-                left: 62px;
-                top: 50%;
-                transform: translateY(-50%);
-                cursor: pointer;
-                color: var(--secondary-color);
-                display: none;
-                font-size: 16px;
-            `;
+        // Add the icon element only when creating a new component
+        const iconElement = document.createElement('i');
+        iconElement.className = 'fas fa-star';
+        iconElement.style.cssText = 'font-size: 24px; color: var(--primary-color); cursor: pointer;';
+        iconContainer.appendChild(iconElement);
+    }
 
-            const rightArrow = document.createElement('i');
-            rightArrow.className = 'fas fa-arrow-right';
-            rightArrow.style.cssText = `
-                position: absolute;
-                right: 62px;
-                top: 50%;
-                transform: translateY(-50%);
-                cursor: pointer;
-                color: var(--secondary-color);
-                display: none;
-                font-size: 16px;
-            `;
+    // Common elements and event listeners for both new and cloned instances
 
-            leftArrow.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (iconContainer.style.textAlign === 'center' || !iconContainer.style.textAlign) {
-                    iconContainer.style.textAlign = 'left';
-                    leftArrow.style.display = 'none';
-                    rightArrow.style.display = 'block';
-                } else if (iconContainer.style.textAlign === 'right') {
-                    iconContainer.style.textAlign = 'center';
-                    leftArrow.style.display = 'block';
-                    rightArrow.style.display = 'block';
-                }
-            });
+    const iconElement = iconContainer.querySelector('i') || iconContainer.firstChild;
 
-            rightArrow.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (iconContainer.style.textAlign === 'center' || !iconContainer.style.textAlign) {
-                    iconContainer.style.textAlign = 'right';
-                    rightArrow.style.display = 'none';
-                    leftArrow.style.display = 'block';
-                } else if (iconContainer.style.textAlign === 'left') {
-                    iconContainer.style.textAlign = 'center';
-                    leftArrow.style.display = 'block';
-                    rightArrow.style.display = 'block';
-                }
-            });
+    const sizeControl = document.createElement('input');
+    sizeControl.type = 'number';
+    sizeControl.min = '12';
+    sizeControl.max = '96';
+    sizeControl.value = '24';
+    sizeControl.style.cssText = `
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        padding: 3px 0;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        display: none;
+        font-size: 12px;
+        text-align: center;
+        z-index: 2445;
+    `;
+    iconContainer.appendChild(sizeControl);
 
-            iconContainer.addEventListener('mouseenter', () => {
-                sizeControl.style.display = 'block';
-                if (iconContainer.style.textAlign === 'center' || !iconContainer.style.textAlign) {
-                    leftArrow.style.display = 'block';
-                    rightArrow.style.display = 'block';
-                } else if (iconContainer.style.textAlign === 'left') {
-                    rightArrow.style.display = 'block';
-                } else if (iconContainer.style.textAlign === 'right') {
-                    leftArrow.style.display = 'block';
-                }
-            });
-            
-            iconContainer.addEventListener('mouseleave', () => {
-                sizeControl.style.display = 'none';
-                leftArrow.style.display = 'none';
-                rightArrow.style.display = 'none';
-            });
-            
-            sizeControl.addEventListener('input', (e) => {
-                iconElement.style.fontSize = `${e.target.value}px`;
-            });
-            
-            iconElement.addEventListener('click', (e) => {
-                e.preventDefault();
-                showIconPicker(iconElement);
-            });
-            
-            iconContainer.appendChild(sizeControl);
-            iconContainer.appendChild(leftArrow);
-            iconContainer.appendChild(iconElement);
-            iconContainer.appendChild(rightArrow);
-            
-            return iconContainer;
-        },
-// CARD ////////////////////
-        card: () => {
-            const card = document.createElement('div');
-            card.innerHTML = `
-                <div class="card-image" style="width: 100%; height: 120px; background-color: var(--neutral-gray); border-radius: 10px 10px 0 0; display: flex; justify-content: center; align-items: center; cursor: pointer;">
-                    <span class="non-editable">Click to add image</span>
-                </div>
-                <div style="padding: 8px;">
-                    <div>
-                    <h3 style="margin: 8px 0; font-size: 18px; color: #2c3e50;">Card Title</h3>
-                    </div>
-                    <div>
-                    <p style="margin: 0 0 8px 0; color: #7f8c8d;">Card content goes here. This is a brief description.</p>
-                    </div>
-                </div>
-            `;
-            card.style.cssText = 'width: 100%; border-radius: 10px; padding: 0; background-color: #fff; border: 0.12rem solid var(--neutral-gray); border-bottom: 3px solid rgba(0,0,0,.12); overflow: hidden;';
-            this.makeTextEditable(card.querySelector('h3'));
-            this.makeTextEditable(card.querySelector('p'));
-            
-            const imageContainer = card.querySelector('.card-image');
-            imageContainer.addEventListener('click', () => {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                input.onchange = (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                            imageContainer.style.backgroundImage = `url(${event.target.result})`;
-                            imageContainer.style.backgroundSize = 'cover';
-                            imageContainer.style.backgroundPosition = 'center';
-                            imageContainer.innerHTML = '';
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                };
-                input.click();
-            });
-            
-            return card;
-        },
+    const leftArrow = document.createElement('i');
+    leftArrow.className = 'fas fa-arrow-left';
+    leftArrow.style.cssText = `
+        position: absolute;
+        left: 62px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: var(--secondary-color);
+        display: none;
+        font-size: 16px;
+    `;
+    iconContainer.appendChild(leftArrow);
+
+    const rightArrow = document.createElement('i');
+    rightArrow.className = 'fas fa-arrow-right';
+    rightArrow.style.cssText = `
+        position: absolute;
+        right: 62px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: var(--secondary-color);
+        display: none;
+        font-size: 16px;
+    `;
+    iconContainer.appendChild(rightArrow);
+
+    // Add event listeners
+    leftArrow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (iconContainer.style.textAlign === 'center' || !iconContainer.style.textAlign) {
+            iconContainer.style.textAlign = 'left';
+            leftArrow.style.display = 'none';
+            rightArrow.style.display = 'block';
+        } else if (iconContainer.style.textAlign === 'right') {
+            iconContainer.style.textAlign = 'center';
+            leftArrow.style.display = 'block';
+            rightArrow.style.display = 'block';
+        }
+    });
+
+    rightArrow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (iconContainer.style.textAlign === 'center' || !iconContainer.style.textAlign) {
+            iconContainer.style.textAlign = 'right';
+            rightArrow.style.display = 'none';
+            leftArrow.style.display = 'block';
+        } else if (iconContainer.style.textAlign === 'left') {
+            iconContainer.style.textAlign = 'center';
+            leftArrow.style.display = 'block';
+            rightArrow.style.display = 'block';
+        }
+    });
+
+    iconContainer.addEventListener('mouseenter', () => {
+        sizeControl.style.display = 'block';
+        if (iconContainer.style.textAlign === 'center' || !iconContainer.style.textAlign) {
+            leftArrow.style.display = 'block';
+            rightArrow.style.display = 'block';
+        } else if (iconContainer.style.textAlign === 'left') {
+            rightArrow.style.display = 'block';
+        } else if (iconContainer.style.textAlign === 'right') {
+            leftArrow.style.display = 'block';
+        }
+    });
+
+    iconContainer.addEventListener('mouseleave', () => {
+        sizeControl.style.display = 'none';
+        leftArrow.style.display = 'none';
+        rightArrow.style.display = 'none';
+    });
+
+    sizeControl.addEventListener('input', (e) => {
+        iconElement.style.fontSize = `${e.target.value}px`;
+    });
+
+    iconElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        showIconPicker(iconElement);
+    });
+
+    return iconContainer;
+},
+// CARD card:////////////////////
+card(originalComponent) {
+    let card;
+    if (originalComponent) {
+      card = originalComponent.cloneNode(true);
+    } else {
+      card = document.createElement('div');
+      card.innerHTML = `
+        <div class="card-image" style="width: 100%; height: 120px; background-color: var(--neutral-gray); border-radius: 10px 10px 0 0; display: flex; justify-content: center; align-items: center; cursor: pointer;">
+          <span class="non-editable">Click to add image</span>
+        </div>
+        <div style="padding: 8px; border: 0.12rem solid var(--neutral-gray); border-radius: 0 0 10px 10px;">
+          <div>
+            <h3 style="margin: 8px 0; font-size: 18px; color: #2c3e50;">Card Title</h3>
+          </div>
+          <div>
+            <p style="margin: 0 0 8px 0; color: #7f8c8d;">Card content goes here. This is a brief description.</p>
+          </div>
+        </div>
+      `;
+      card.style.cssText = 'width: 100%; border-radius: 10px; padding: 0; background-color: ${isDark ? "#1e1e1e" : "#ecf0f1"}; border-bottom: 3px solid rgba(0,0,0,.12); overflow: hidden;';
+      card.querySelector('h3').setAttribute('contentEditable', 'true');
+      card.querySelector('p').setAttribute('contentEditable', 'true');
+    }
+
+    const imageContainer = card.querySelector('.card-image');
+    imageContainer.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            imageContainer.style.backgroundImage = `url(${event.target.result})`;
+            imageContainer.style.backgroundSize = 'cover';
+            imageContainer.style.backgroundPosition = 'center';
+            imageContainer.innerHTML = '';
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
+    });
+
+    return card;
+  },
 // ADJUSTABLE SPACE ////////////////////
-        adjustableSpace: () => {
-        // Create the main space container
-        const spaceContainer = document.createElement('div');
+adjustableSpace: (originalComponent) => {
+    let spaceContainer;
+    let heightSlider;
+    let heightDisplay;
+
+    if (originalComponent) {
+        spaceContainer = originalComponent.cloneNode(true);
+        // Find the heightSlider and heightDisplay inside the cloned container
+        heightSlider = spaceContainer.querySelector('.space-range');
+        heightDisplay = spaceContainer.querySelector('.height-display');
+    } else {
+        spaceContainer = document.createElement('div');
         spaceContainer.className = 'blankSpace';
         spaceContainer.style.height = '50px'; // Initial height
 
         // Create a display to show the current height
-        const heightDisplay = document.createElement('input');
+        heightDisplay = document.createElement('input');
         heightDisplay.type = 'number';
         heightDisplay.className = 'height-display';
-        heightDisplay.value = '50'; // Default display
+        heightDisplay.value = '50';
         heightDisplay.style.fontSize = '16px';
         spaceContainer.appendChild(heightDisplay);
 
         // Create the slider input for height adjustment
-        const heightSlider = document.createElement('input');
+        heightSlider = document.createElement('input');
         heightSlider.className = 'space-range';
         heightSlider.type = 'range';
-        heightSlider.min = '12'; // Minimum height of 12px
-        heightSlider.max = '300'; // Maximum height of 300px
-        heightSlider.value = '50'; // Initial value
+        heightSlider.min = '12'; 
+        heightSlider.max = '300'; 
+        heightSlider.value = '50';
         heightSlider.style.width = '100%';
         spaceContainer.appendChild(heightSlider);
+    }
 
-        // Update the height of the space based on the slider value
-        heightSlider.addEventListener('input', () => {
-            const newHeight = heightSlider.value;
-            spaceContainer.style.height = `${newHeight}px`; // Update the height of the container
-            heightDisplay.value = `${newHeight}`; // Update the display text
-        });
+    heightSlider.addEventListener('input', () => {
+        const newHeight = heightSlider.value;
+        spaceContainer.style.height = `${newHeight}px`;
+        heightDisplay.value = `${newHeight}`; // Update the display text
+    });
 
-        // Update the height of the space based on the input text value
-        heightDisplay.addEventListener('change', () => {
-            const newHeight2 = heightDisplay.value;
-            console.log(newHeight2);
-            spaceContainer.style.height = `${newHeight2}px`; // Update the height of the container
-            heightSlider.value = `${newHeight2}`;
-        });
+    heightDisplay.addEventListener('change', () => {
+        const newHeight2 = heightDisplay.value;
+        console.log(newHeight2);
+        spaceContainer.style.height = `${newHeight2}px`; 
+        heightSlider.value = `${newHeight2}`; 
+    });
 
-        return spaceContainer; // Return the built component
-    },
+    //return spaceContainer;
+    return {
+        container: spaceContainer,
+        setup: () => {
+            const compContainer = spaceContainer.closest('.component-container');
+            if (compContainer) {
+                compContainer.addEventListener('mouseenter', () => {
+                    spaceContainer.style.outline = '1px dashed #808080';
+                });
+
+                compContainer.addEventListener('mouseleave', () => {
+                    spaceContainer.style.outline = 'none';
+                });
+            }
+        }
+    };
+},
 // IMAGE //////////////////////
     image: (layout = 'single') => {
             const container = document.createElement('div');
@@ -1874,9 +2021,9 @@ dropdown: () => {
             navbar.innerHTML = `
                 <span style="font-size: 20px; font-weight: bold; color: --primary;">Brand</span>
                 <div style="display: flex; align-items: center;">
-                    <a style="margin-left: 20px; color: #2c3e50; text-decoration: none;">Home</a>
-                    <a style="margin-left: 20px; color: #2c3e50; text-decoration: none;">About</a>
-                    <a style="margin-left: 20px; color: #2c3e50; text-decoration: none;">Contact</a>
+                    <a style="margin-left: 20px; color: var(--basic-txt-color); text-decoration: none;">Home</a>
+                    <a style="margin-left: 20px; color: var(--basic-txt-color); text-decoration: none;">About</a>
+                    <a style="margin-left: 20px; color: var(--basic-txt-color); text-decoration: none;">Contact</a>
                 </div>
             `;
             
@@ -1886,6 +2033,7 @@ dropdown: () => {
   
             return topNavbarContainer;
         },
+// // Modal
         modal: () => {
             const modalWrapper = document.createElement('div');
             modalWrapper.className = 'modal-wrapper';
@@ -1912,6 +2060,7 @@ dropdown: () => {
 
             return modalWrapper;
         },
+// // Toggle Switch
         toggleSwitch: () => {
             const container = document.createElement('div');
             container.style.cssText = 'display: flex; align-items: center; min-width: 120px; width: 100%; padding: 0 10px;';
@@ -1935,7 +2084,7 @@ dropdown: () => {
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background-color: #ccc;
+                background-color: var(--neutral-gray);
                 transition: .4s;
                 border-radius: 34px;
             `;
@@ -1967,7 +2116,7 @@ dropdown: () => {
                     slider.style.backgroundColor = 'var(--primary-color)';
                     thumb.style.left = '30px';
                 } else {
-                    slider.style.backgroundColor = '#ccc';
+                    slider.style.backgroundColor = 'var(--neutral-gray)';
                     thumb.style.left = '4px';
                 }
             };
@@ -1992,6 +2141,7 @@ dropdown: () => {
         
             return container;
         },
+// // PROGRESS BAR
         progressBar: () => {
             const container = document.createElement('div');
             container.style.cssText = 'width: 100%; text-align: center;';
@@ -2013,7 +2163,8 @@ dropdown: () => {
 
             return container;
         },
-        avatar: (type = 'default') => {
+// Avatar avatar:
+        avatar(originalComponent, type = 'default') {
             const avatarContainer = document.createElement('div');
                 avatarContainer.style.cssText = `
                     display: flex;
@@ -2102,8 +2253,12 @@ dropdown: () => {
             avatarContainer.appendChild(leftArrow);
             avatarContainer.appendChild(rightArrow);
 
+            if (typeof originalComponent === 'string') {
+                type = originalComponent;
+            }
+            
             switch(type) {
-                case 'small-text':
+                case 'smalltext':
                     const smallAvatar = document.createElement('div');
                     smallAvatar.innerHTML = 'A';
                     smallAvatar.style.cssText = 'width: 32px; height: 32px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px;';
@@ -2111,7 +2266,7 @@ dropdown: () => {
                     
                     const username = document.createElement('span');
                     username.textContent = 'Displayname';
-                    username.style.cssText = 'color: #333; font-weight: 500;';
+                    username.style.cssText = 'color: ${isDark ? "#ecf0f1" : "#333"}; font-weight: 500;';
                     makeTextEditable(username);
                     
                     avatarContainer.appendChild(smallAvatar);
@@ -2121,7 +2276,7 @@ dropdown: () => {
 
                 case 'upload':
                     const imageAvatar = document.createElement('div');
-                    imageAvatar.style.cssText = 'width: 50px; height: 50px; background-color: #ecf0f1; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; overflow: hidden; position: relative;';
+                    imageAvatar.style.cssText = 'width: 50px; height: 50px; background-color: var(--neutral-gray); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; overflow: hidden; position: relative;';
                     imageAvatar.innerHTML = '<i class="fas fa-camera"></i>';
                     
                     const uploadInput = document.createElement('input');
@@ -2131,7 +2286,7 @@ dropdown: () => {
                     
                     const uploadUsername = document.createElement('span');
                     uploadUsername.textContent = 'Displayname';
-                    uploadUsername.style.cssText = 'color: #333; font-weight: 500; margin-left: 10px;';
+                    uploadUsername.style.cssText = 'color: ${isDark ? "#ecf0f1" : "#333"}; font-weight: 500; margin-left: 10px;';
                     makeTextEditable(uploadUsername);
                     
                     imageAvatar.appendChild(uploadInput);
@@ -2173,28 +2328,50 @@ dropdown: () => {
 
             return avatarContainer;
         },
-        tabs: (count = 3) => {
-            const tabs = document.createElement('div');
-            tabs.style.cssText = 'display: flex; width: 100%;';
-            
-            for (let i = 1; i <= count; i++) {
-                const tab = document.createElement('button');
-                tab.textContent = `Tab ${i}`;
-                tab.style.cssText = `
-                    background-color: ${i === 1 ? 'var(--primary-color)' : '#ecf0f1'};
-                    color: ${i === 1 ? 'white' : 'black'};
-                    border: none;
-                    margin-right: 1px;
-                    padding: 10px 20px;
-                    cursor: pointer;
-                    flex: 1;
-                `;
-                this.makeTextEditable(tab);
-                tabs.appendChild(tab);
-            }
-            
-            return tabs;
-        },
+// // tabs TABS
+    tabs: (count = 3) => {
+        const tabs = document.createElement('div');
+        tabs.style.cssText = 'display: flex; width: 100%;';
+
+        const selectTab = (selectedTab) => {
+            Array.from(tabs.children).forEach(tab => {
+                tab.style.backgroundColor = 'var(--neutral-gray)';
+                tab.style.color = 'black';
+            });
+            selectedTab.style.backgroundColor = 'var(--primary-color)';
+            selectedTab.style.color = 'white';
+        };
+
+        for (let i = 1; i <= count; i++) {
+            const tab = document.createElement('button');
+            tab.textContent = `Tab ${i}`;
+            tab.style.cssText = `
+                background-color: ${i === 1 ? 'var(--primary-color)' : 'var(--neutral-gray)'};
+                color: ${i === 1 ? 'white' : 'black'};
+                border: none;
+                margin-right: 1px;
+                padding: 10px 20px;
+                cursor: pointer;
+                flex: 1;
+            `;
+
+            // Make text editable for the tab label without triggering selection change
+            this.makeTextEditable(tab);
+
+            // Event listener for selecting the tab
+            tab.addEventListener('click', (e) => {
+                // Only change selection if clicked directly, not when editing text
+                if (e.target !== document.activeElement) {
+                    selectTab(tab);
+                }
+            });
+
+            tabs.appendChild(tab);
+        }
+
+        return tabs;
+    },
+// accordion
         accordion: () => {
             const accordion = document.createElement('div');
             accordion.style.cssText = 'width: 100%; border-radius: 8px; overflow: hidden; border: .12rem solid var(--primary-color)';
@@ -2223,9 +2400,9 @@ dropdown: () => {
                     height: 0;
                     overflow: hidden;
                     transition: height 0.3s ease-out;
-                    background-color: white;">
+                    background-color: var(--neutral-gray);">
                     <div style="padding: 18px 0;">
-                        <p contenteditable style="margin: 0; color: #666;">Content for section 1</p>
+                        <p contenteditable style="margin: 0; color: #666;">Content for section</p>
                     </div>
                 </div>
             `;
@@ -2259,6 +2436,7 @@ dropdown: () => {
 
             return accordion;
         },
+// Alert + colors
         alert: (color = 'danger') => {
             const alertColors = {
                 info: '#3498db',
@@ -2281,6 +2459,7 @@ dropdown: () => {
             alert.style.cssText = `padding: 18px; background-color: ${alertColors[color]}; color: white; margin-bottom: 8px; width: 100%; display: flex; justify-content: space-between`;
             return alert;
         },
+// // range slider
         slider: () => {
             const container = document.createElement('div');
             container.style.cssText = 'width: 100%; padding: 10px 0; display: flex; align-items: center;';
@@ -2306,6 +2485,7 @@ dropdown: () => {
 
             return container;
         },
+// // Date Picker
         datePicker: () => {
             const datePickerWrapper = document.createElement('div');
             datePickerWrapper.style.cssText = `
@@ -2318,8 +2498,8 @@ dropdown: () => {
                 align-items: center;
                 font-family: Arial, sans-serif;
                 font-size: 14px;
-                color: #333;
-                background-color: #fff;
+                color: var(--basic-txt-color);
+                background-color: var(--input-bg-color);
                 position: relative;
             `;
 
@@ -2327,6 +2507,7 @@ dropdown: () => {
             dateText.textContent = 'DD/MM/YYYY'; 
             dateText.style.cssText = 'opacity: 0.7;';
             dateText.setAttribute('contenteditable', 'true');
+            dateText.setAttribute('spellcheck', 'false');
             
             dateText.addEventListener('input', () => {
                 dateText.style.opacity = '1';
@@ -2350,7 +2531,7 @@ dropdown: () => {
                 padding: 10px;
                 border: 1px solid #ddd;
                 border-radius: 5px;
-                background-color: #fff;
+                background-color: var(--input-bg-color);
                 display: none; /* Initially hidden */
                 box-shadow: 0 2px 8px rgba(0,0,0,0.15);
                 z-index: 9;
@@ -2394,7 +2575,7 @@ dropdown: () => {
             padding: 5px;
             border-radius: 3px;
             cursor: pointer;
-            background-color: #f3f3f3;
+            background-color: var(--neutral-gray);
         `;
         
         dayCell.addEventListener('click', () => {
@@ -2435,11 +2616,17 @@ dropdown: () => {
             label.className = 'file-upload-label';
             label.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Choose a file';
 
+            // iconElement.addEventListener('click', (e) => {
+            //     e.preventDefault();
+            //     showIconPicker(iconElement);
+            // });
+
             container.appendChild(fileInput);
             container.appendChild(label);
 
             return container;
         },
+// // BOTTOM NAVIGATION
         bottomNav: () => {
             const bottomNavContainer = document.createElement('nav');
             bottomNavContainer.className = 'bottomNavContain max-items';
@@ -2575,59 +2762,96 @@ dropdown: () => {
             
             return wrapper;
         },
-        paragraph: () => {
+        paragraph(originalComponent) {
             const wrapper = document.createElement('div');
             wrapper.className = 'component-wrapper';
             wrapper.style.cssText = 'width: 100%;';
-        
+          
             const alignCon = document.createElement('div');
-            const p = document.createElement('p');
-            p.textContent = 'This is a paragraph. Click to edit.';
-            p.style.cssText = 'color: #333; line-height: 1.6; margin-bottom: 15px;';
-            p.setAttribute('contentEditable','true');
-            // this.makeTextEditable(p);
-            alignCon.appendChild(p)
+          
+            let paragraphElement;
+            if (originalComponent) {
+              paragraphElement = originalComponent.cloneNode(true);
+            } else {
+              paragraphElement = document.createElement('p');
+              paragraphElement.textContent = 'This is a paragraph. Click to edit.';
+              paragraphElement.style.cssText = 'color: var(--basic-txt-color); line-height: 1.6; margin-bottom: 15px;';
+              paragraphElement.setAttribute('contentEditable', 'true');
+          
+              paragraphElement.addEventListener('input', () => {
+                // Store the edited text in the component's dataset
+                wrapper.dataset.paragraphText = paragraphElement.textContent;
+              });
+            }
+          
+            alignCon.appendChild(paragraphElement);
             wrapper.appendChild(alignCon);
-        
+          
             return wrapper;
-        },
-        
-        blockquote: () => {
+          },
+// // BLOCKQUOTE
+          blockquote(originalComponent) {
             const wrapper = document.createElement('div');
             wrapper.className = 'component-wrapper';
             wrapper.style.cssText = 'width: 100%;';
-        
+          
             const alignCon = document.createElement('div');
-            const blockquote = document.createElement('blockquote');
-            blockquote.textContent = 'This is a block-quote. Click to edit.';
-            blockquote.style.cssText = 'color: #555; font-style: italic; border-left: 5px solid var(--primary-color); padding-left: 18px; margin: 12px 0;';
-            blockquote.setAttribute('contentEditable','true');
-            // this.makeTextEditable(blockquote);
-            alignCon.appendChild(blockquote)
+          
+            let blockquoteElement;
+            if (originalComponent) {
+              // If an original component is provided, clone it
+              blockquoteElement = originalComponent.cloneNode(true);
+            } else {
+              // Create a new blockquote element
+              blockquoteElement = document.createElement('blockquote');
+              blockquoteElement.textContent = 'This is a block-quote. Click to edit.';
+              blockquoteElement.style.cssText = 'color: #555; font-style: italic; border-left: 5px solid var(--primary-color); padding-left: 18px; margin: 12px 0;';
+              blockquoteElement.setAttribute('contentEditable', 'true');
+          
+              // Add event listener to track edits
+              blockquoteElement.addEventListener('input', () => {
+                // Store the edited text in the component's dataset
+                wrapper.dataset.blockquoteText = blockquoteElement.textContent;
+              });
+            }
+          
+            alignCon.appendChild(blockquoteElement);
             wrapper.appendChild(alignCon);
-            
+          
             return wrapper;
-        },
-        label: () => {
-            const label = document.createElement('label');
-            label.textContent = 'Label Text';
-            label.style.cssText = `
+          },
+// // LABEL
+         label(originalComponent) {
+            let labelElement;
+            if (originalComponent) {
+              // If an original component is provided, clone it
+              labelElement = originalComponent.cloneNode(true);
+            } else {
+              // Create a new label element
+              labelElement = document.createElement('label');
+              labelElement.textContent = 'Label Text';
+              labelElement.style.cssText = `
                 display: block;
                 color: #2c3e50;
                 font-weight: 500;
-                margin-top: 8px;
+                margin: 8px 0 -8px 4px;
                 font-size: 14px;
                 width: 100%;
-                margin-bottom: -8px;
-                `
-            ;
-            label.setAttribute('contentEditable','true');
-            // this.makeTextEditable(label);
-            return label;
-        },
+              `;
+              labelElement.setAttribute('contentEditable', 'true');
+          
+              // Add event listener to track edits
+              labelElement.addEventListener('input', () => {
+                // Store the edited text in the component's dataset
+                labelElement.dataset.labelText = labelElement.textContent;
+              });
+            }
+          
+            return labelElement;
+          },
         graph: (type = 'bar') => {
             const container = document.createElement('div');
-            container.style.cssText = 'width: 100%; height: 300px; background: white; padding: 20px; border-radius: 8px; border: 0.12rem solid var(--neutral-gray); border-bottom: 3px solid rgba(0,0,0,.12); position: relative;';
+            container.style.cssText = 'width: 100%; height: 300px; background: var(--background-color); padding: 20px; border-radius: 8px; border: 0.12rem solid var(--neutral-gray); border-bottom: 3px solid rgba(0,0,0,.12); position: relative;';
             
             const canvas = document.createElement('canvas');
             container.appendChild(canvas);
@@ -2690,7 +2914,7 @@ dropdown: () => {
         leftChat: () => {
               // Create main container
             const container = document.createElement('div');
-            container.style.cssText = 'width: 100%; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px; position: relative;';
+            container.style.cssText = 'width: 100%; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; position: relative;';
 
             // Create avatar
             const avatar = document.createElement('div');
@@ -2709,7 +2933,7 @@ dropdown: () => {
             // Create content div
             const chatContent = document.createElement('div');
             chatContent.className = 'chat-content';
-            chatContent.innerHTML = 'Click to edit this message';
+            chatContent.innerHTML = 'Click to edit this message.';
             chatContent.setAttribute('contentEditable', 'true');
             
             // Create image container
@@ -2738,7 +2962,7 @@ dropdown: () => {
             // Create image placeholder
             const placeholder = document.createElement('div');
             placeholder.className = 'image-placeholder';
-            placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; color: #666; padding: 8px; border: 2px dashed #ccc; border-radius: 8px;';
+            placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; color: #666; padding: 8px; border: 0.12rem dashed #ccc; border-radius: 8px;';
             
             // Add icon and text to placeholder
             const icon = document.createElement('i');
@@ -2767,6 +2991,7 @@ dropdown: () => {
                     img.src = event.target.result;
                     img.style.display = 'block';
                     placeholder.style.display = 'none';
+                    imageContainer.style.display = 'block';
                     };
                     reader.readAsDataURL(file);
                 }
@@ -2789,42 +3014,77 @@ dropdown: () => {
         },
         rightChat: () => {
             const container = document.createElement('div');
-            container.style.cssText = 'width: 100%; display: flex; flex-direction: row-reverse; align-items: flex-start; gap: 10px; margin-bottom: 16px;';
+            container.style.cssText = 'width: 100%; display: flex; flex-direction: row-reverse; align-items: flex-start; gap: 10px; margin-bottom: 12px;';
             
             const avatar = document.createElement('div');
             avatar.innerHTML = 'ME';
             avatar.style.cssText = 'width: 40px; height: 40px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; flex-shrink: 0;';
-            this.makeTextEditable(avatar);
+            avatar.setAttribute('contentEditable', 'true');
             
             const contentWrapper = document.createElement('div');
             contentWrapper.style.cssText = 'flex-grow: 1; display: flex; flex-direction: column; align-items: flex-end;';
             
             const bubble = document.createElement('div');
-            bubble.innerHTML = `
-                <div class="chat-content">Click to edit this message</div>
-                <div class="chat-image-container" style="display: none; cursor: pointer;">
-                    <img style="max-width: 240px; max-height: 180px; border-radius: 12px; display: none;" alt="Chat image">
-                    <div class="image-placeholder" style="display: none; align-items: center; justify-content: center; color: #fff; padding: 8px;">
-                        <i class="fas fa-image" style="margin-right: 8px;"></i> Add Image
-                    </div>
-                </div>
-            `;
-            bubble.style.cssText = 'background-color: var(--primary-color); color: white; padding: 12px 16px; border-radius: 18px; border-top-right-radius: 4px; max-width: 80%; display: inline-block; word-wrap: break-word;';
+            
+            bubble.style.cssText = 'background-color: var(--primary-color); color: white; padding: 12px 16px; border-radius: 18px; border-top-right-radius: 4px; max-width: 82%; display: inline-block; word-wrap: break-word;';
+
+            // Create content div
+            const chatContent = document.createElement('div');
+            chatContent.className = 'chat-content';
+            chatContent.innerHTML = 'Click to edit this message.';
+            chatContent.setAttribute('contentEditable', 'true');
+            
+            // Create image container
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'chat-image-container';
+            imageContainer.style.cssText = 'margin-top: 8px; cursor: pointer; display: none;';
+
+            // Add hover behavior to the content wrapper
+            contentWrapper.addEventListener('mouseenter', () => {
+                imageContainer.style.display = 'block';
+            });
+            
+            contentWrapper.addEventListener('mouseleave', () => {
+                // Only hide if no image is displayed
+                const img = imageContainer.querySelector('img');
+                if (!img || img.style.display === 'none') {
+                imageContainer.style.display = 'none';
+                }
+            });
+            
+            // Create image element
+            const img = document.createElement('img');
+            img.style.cssText = 'max-width: 200px; max-height: 200px; border-radius: 12px; display: none;';
+            img.alt = 'Chat image';
+            
+            // Create image placeholder
+            const placeholder = document.createElement('div');
+            placeholder.className = 'image-placeholder';
+            placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; color: #eee; padding: 8px; border: 0.12rem dashed #ccc; border-radius: 8px;';
+            
+            // Add icon and text to placeholder
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-image';
+            icon.style.marginRight = '8px';
+            placeholder.appendChild(icon);
+            placeholder.appendChild(document.createTextNode('Add Image'));
+            
             
             const timestamp = document.createElement('div');
             timestamp.textContent = '1 minute ago';
             timestamp.style.cssText = 'font-size: 12px; color: #666; margin-top: 4px;';
             
             const bubbleTxt = bubble.querySelector('.chat-content');
-            bubbleTxt.setAttribute('contentEditable','true');
+            //bubbleTxt.setAttribute('contentEditable','true');
             timestamp.setAttribute('contentEditable','true');
 
+
             // Add click handler for image container
-            const imageContainer = bubble.querySelector('.chat-image-container');
-            const img = imageContainer.querySelector('img');
-            const placeholder = imageContainer.querySelector('.image-placeholder');
+            // const imageContainer = bubble.querySelector('.chat-image-container');
+            // const img = imageContainer.querySelector('img');
+            // const placeholder = imageContainer.querySelector('.image-placeholder');
             
-            imageContainer.style.display = 'block';
+            // imageContainer.style.display = 'block';
             imageContainer.addEventListener('click', () => {
                 const input = document.createElement('input');
                 input.type = 'file';
@@ -2837,6 +3097,7 @@ dropdown: () => {
                             img.src = event.target.result;
                             img.style.display = 'block';
                             placeholder.style.display = 'none';
+                            imageContainer.style.display = 'block';
                         };
                         reader.readAsDataURL(file);
                     }
@@ -2844,6 +3105,10 @@ dropdown: () => {
                 input.click();
             });
             
+            imageContainer.appendChild(img);
+            imageContainer.appendChild(placeholder);
+            bubble.appendChild(chatContent);
+            bubble.appendChild(imageContainer);
             contentWrapper.appendChild(bubble);
             contentWrapper.appendChild(timestamp);
             container.appendChild(avatar);
@@ -2855,17 +3120,17 @@ dropdown: () => {
             const container = document.createElement('div');
             container.style.cssText = 'width: 100%; display: flex; gap: 8px; padding: 8px; background-color: var(--neutral-gray); border-radius: 24px; align-items: center;';
             
-            if (type === 'with-emoji' || type === 'full') {
+            if (type === 'withemoji' || type === 'full') {
                 const emojiBtn = document.createElement('button');
                 emojiBtn.innerHTML = '<i class="far fa-smile"></i>';
-                emojiBtn.style.cssText = 'background: none; border: none; color: #666; padding: 8px 0 8px 8px; cursor: pointer; font-size: 20px;';
+                emojiBtn.style.cssText = 'background: none; border: none; color: #666; padding: 8px 0 8px 8px; cursor: pointer; font-size: 16px;';
                 container.appendChild(emojiBtn);
             }
             
-            if (type === 'with-image' || type === 'full') {
+            if (type === 'withimage' || type === 'full') {
                 const imageBtn = document.createElement('button');
                 imageBtn.innerHTML = '<i class="far fa-image"></i>';
-                imageBtn.style.cssText = 'background: none; border: none; color: #666; padding: 8px 0 8px 8px; cursor: pointer; font-size: 20px;';
+                imageBtn.style.cssText = 'background: none; border: none; color: #666; padding: 8px 0 8px 8px; cursor: pointer; font-size: 16px;';
                 container.appendChild(imageBtn);
             }
             
@@ -2877,57 +3142,160 @@ dropdown: () => {
             
             const sendBtn = document.createElement('button');
             sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
-            sendBtn.style.cssText = 'background-color: var(--primary-color); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;';
+            sendBtn.style.cssText = 'background-color: var(--primary-color); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: -2px;';
             container.appendChild(sendBtn);
+            const sendIcon = sendBtn.querySelector('.fas')
+            sendIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                showIconPicker(sendIcon);
+            });
             
             return container;
         },
 // Notification Banner with Icon and Action Button
-    notificationBanner: () => {
-        const container = document.createElement('div');
-        container.style.cssText = 'width: 100%; background-color: var(--neutral-gray); border-left: 4px solid var(--primary-color); padding: 12px 8px; margin: 16px 0; display: flex; align-items: center; gap: 12px; border-radius: 4px;';
-        
-        const icon = document.createElement('div');
-        icon.style.cssText = 'flex-shrink: 0;';
-        const iconElement = document.createElement('i');
-        iconElement.className = 'fas fa-bell';
-        iconElement.style.cssText = 'font-size: 20px; color: var(--primary-color); cursor: pointer;';
-        icon.appendChild(iconElement);
+notificationBanner: (originalComponent) => {
+    let container, icon, iconElement, content, message, subtext, actionButton, toggleButton;
     
-        iconElement.addEventListener('click', (e) => {
-            e.preventDefault();
-            showIconPicker(iconElement);
-        });
-        
-        const content = document.createElement('div');
-        content.style.cssText = 'flex-grow: 1;';
-        
-        const message = document.createElement('div');
-        message.textContent = 'Click to edit this important notification message';
-        message.style.cssText = 'margin-bottom: 4px; font-weight: 500;';
-        this.makeTextEditable(message);
-        
-        const subtext = document.createElement('div');
-        subtext.textContent = 'Additional details or instructions can go here';
-        subtext.style.cssText = 'font-size: 14px; color: #666;';
-        this.makeTextEditable(subtext);
-        
-        const button = document.createElement('button');
-        button.textContent = 'Action';
-        button.style.cssText = 'background-color: var(--primary-color); color: white; border: none; padding: 8px 8px; border-radius: 4px; cursor: pointer; flex-shrink: 0; font-weight: 500;';
-        this.makeTextEditable(button);
-        
-        content.appendChild(message);
-        content.appendChild(subtext);
-        container.appendChild(icon);
-        container.appendChild(content);
-        container.appendChild(button);
-        return container;
-    },
-    // Progress Tracker  /////////
+    if (originalComponent) {
+      // Clone the existing component
+      container = originalComponent.cloneNode(true);
+      
+      // Get references to the elements in the cloned component
+      icon = container.querySelector('div:first-child');
+      iconElement = icon.querySelector('i');
+      content = container.querySelector('div:nth-child(2)');
+      message = content.querySelector('div:nth-child(1)');
+      subtext = content.querySelector('div:nth-child(2)');
+      actionButton = content.querySelector('.notification-action');
+      toggleButton = container.querySelector('.visibility-toggle');
+      
+      // Reattach event listeners
+      iconElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        showIconPicker(iconElement);
+      });
+      
+      // Reattach hover events for toggle button
+      container.addEventListener('mouseenter', () => {
+        toggleButton.style.opacity = '1';
+      });
+      
+      container.addEventListener('mouseleave', () => {
+        toggleButton.style.opacity = '0';
+      });
+      
+      // Reattach toggle button click handler
+      toggleButton.addEventListener('click', () => {
+        const isVisible = actionButton.dataset.alwaysVisible === 'true';
+        actionButton.dataset.alwaysVisible = (!isVisible).toString();
+        actionButton.style.display = !isVisible ? 'block' : 'none';
+        toggleButton.innerHTML = !isVisible ? 
+          '<i class="fas fa-eye"></i>' : 
+          '<i class="fas fa-eye-slash"></i>';
+      });
+      
+    } else {
+      // Create new component
+      container = document.createElement('div');
+      container.style.cssText = 'width: 100%; background-color: var(--neutral-gray); border-left: 4px solid var(--primary-color); padding: 12px 8px; margin: 6px 0; display: flex; align-items: flex-start; gap: 12px; border-radius: 4px; position: relative;';
+      
+      icon = document.createElement('div');
+      icon.style.cssText = 'flex-shrink: 0;';
+      
+      iconElement = document.createElement('i');
+      iconElement.className = 'fas fa-bell';
+      iconElement.style.cssText = 'font-size: 20px; color: var(--primary-color); cursor: pointer;';
+      icon.appendChild(iconElement);
+      
+      iconElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        showIconPicker(iconElement);
+      });
+      
+      content = document.createElement('div');
+      content.style.cssText = 'flex-grow: 1; display: flex; flex-direction: column; gap: 4px;';
+      
+      message = document.createElement('div');
+      message.textContent = 'Click to edit this important notification message.';
+      message.style.cssText = 'font-weight: 500;';
+      message.setAttribute('contentEditable', 'true');
+      
+      subtext = document.createElement('div');
+      subtext.textContent = 'Additional details or instructions can go here';
+      subtext.style.cssText = 'font-size: 14px; color: #666;';
+      subtext.setAttribute('contentEditable', 'true');
+      
+      // Action button (visible by default)
+      actionButton = document.createElement('div');
+      actionButton.className = 'notification-action';
+      actionButton.textContent = 'Action';
+      actionButton.style.cssText = `
+        background-color: var(--primary-color);
+        color: white;
+        padding: 6px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        user-select: none;
+        display: block;
+        margin-top: 6px;
+        width: fit-content;
+        font-size: small;
+      `;
+      actionButton.setAttribute('contentEditable', 'true');
+      actionButton.dataset.alwaysVisible = 'true';
+      
+      // Toggle visibility button
+      toggleButton = document.createElement('div');
+      toggleButton.className = 'visibility-toggle';
+      toggleButton.innerHTML = '<i class="fas fa-eye"></i>';
+      toggleButton.style.cssText = `
+        position: absolute;
+        bottom: 16px;
+        left: 6px;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 4px;
+        border-radius: 4px;
+        font-size: 14px;
+      `;
+      
+      // Add hover functionality for toggle button
+      container.addEventListener('mouseenter', () => {
+        toggleButton.style.opacity = '1';
+      });
+      
+      container.addEventListener('mouseleave', () => {
+        toggleButton.style.opacity = '0';
+      });
+      
+    // Add toggle functionality
+    toggleButton.addEventListener('click', () => {
+        const isVisible = actionButton.dataset.alwaysVisible === 'true';
+        actionButton.dataset.alwaysVisible = (!isVisible).toString();
+        actionButton.style.display = !isVisible ? 'block' : 'none';
+        toggleButton.innerHTML = !isVisible ? 
+        '<i class="fas fa-eye"></i>' : 
+        '<i class="fas fa-eye-slash"></i>';
+        toggleButton.style.opacity = '0';
+    });
+      
+      content.appendChild(message);
+      content.appendChild(subtext);
+      content.appendChild(actionButton);
+      container.appendChild(icon);
+      container.appendChild(content);
+      container.appendChild(toggleButton);
+    }
+    
+    return container;
+  },
+// // Progress Tracker  /////////
     progressTracker: () => {
         const container = document.createElement('div');
-        container.style.cssText = 'width: 100%; padding: 16px 0; display: flex; justify-content: space-around; align-items: center; gap: 4px; position: relative;';
+        container.style.cssText = 'width: 100%; padding: 16px 0; display: flex; justify-content: space-around; align-items: center; position: relative;';
         
         // Control buttons container
         const controls = document.createElement('div');
@@ -2973,7 +3341,7 @@ dropdown: () => {
         
         function createConnectingLine() {
             const line = document.createElement('div');
-            line.style.cssText = 'height: 2px; background-color: #E0E0E0; flex: 1; margin: -22px 4px 0 4px; align-self: center; border-radius: 2px';
+            line.style.cssText = 'height: 2px; background-color: #E0E0E0; flex: 1; margin: -22px 0 0 0; align-self: center; border-radius: 2px';
             line.classList.add('connecting-line');
             return line;
         }
@@ -2989,6 +3357,19 @@ dropdown: () => {
                 }
             });
         }
+
+        function setSelectedStep(stepContainer) {
+            // Remove primary color from all circles
+            container.querySelectorAll('[data-step] div:first-child').forEach(circle => {
+                circle.style.backgroundColor = 'var(--neutral-gray)';
+                circle.style.color = '#666';
+            });
+            
+            // Add primary color to selected circle
+            const circle = stepContainer.querySelector('div:first-child');
+            circle.style.backgroundColor = 'var(--primary-color)';
+            circle.style.color = 'white';
+        }
         
         function createStep(index, total) {
             const stepContainer = document.createElement('div');
@@ -3003,7 +3384,8 @@ dropdown: () => {
                 justify-content: center;
                 align-items: center;
                 font-weight: bold;
-                ${index === 0 ? 'background-color: var(--primary-color); color: white;' : 'background-color: #E0E0E0; color: #666;'}
+                margin: 0 6px;
+                ${index === 0 ? 'background-color: var(--primary-color); color: white;' : 'background-color: var(--neutral-gray); color: #666;'}
             `;
             circle.textContent = (index + 1).toString();
             makeTextEditable(circle);
@@ -3012,7 +3394,13 @@ dropdown: () => {
             label.textContent = `Step ${index + 1}`;
             label.style.cssText = 'font-size: 14px; color: #666; font-weight: 500;';
             makeTextEditable(label);
-            
+
+            // Add click handler to the step container instead of the circle
+            stepContainer.style.cursor = 'pointer';
+            stepContainer.addEventListener('click', (e) => {
+                setSelectedStep(stepContainer);
+            });
+                
             stepContainer.appendChild(circle);
             stepContainer.appendChild(label);
             return stepContainer;
@@ -3071,10 +3459,10 @@ dropdown: () => {
         container.appendChild(controls);
         return container;
     },
-    // Feature Comparison Card
+// // Feature Comparison Card
     featureComparisonCard: () => {
         const container = document.createElement('div');
-        container.style.cssText = 'width: 100%; border: 1px solid #E0E0E0; border-radius: 8px; overflow: visible; position: relative;';
+        container.style.cssText = 'width: 100%; border: 1px solid var(--neutral-gray); border-radius: 8px; overflow: visible; position: relative;';
     
         const header = document.createElement('div');
         header.style.cssText = 'padding: 14px; background-color: var(--primary-color); color: white; border-radius: 8px 8px 0 0';
@@ -3082,7 +3470,7 @@ dropdown: () => {
         const titleWrapper = document.createElement('div');
         const title = document.createElement('h3');
         title.textContent = 'Feature Comparison';
-        title.style.cssText = 'margin: 0; font-size: 18px; font-weight: bold;';
+        title.style.cssText = 'margin: 0; font-size: 18px; font-weight: bold; color: var(--text-on-primary) !important';
         this.makeTextEditable(title);
         titleWrapper.appendChild(title);
     
@@ -3091,11 +3479,7 @@ dropdown: () => {
     
         const grid = document.createElement('div');
         grid.style.cssText = 'display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; align-items: center;';
-    
-        // Add row button (hidden by default)
-        const addRowContainer = document.createElement('div');
-        addRowContainer.style.cssText = 'padding: 12px 16px; border-top: 1px solid #E0E0E0; display: none;';
-    
+            
         const addRowBtn = document.createElement('button');
         addRowBtn.innerHTML = '<i class="fas fa-plus"></i> Add Feature';
         addRowBtn.style.cssText = `
@@ -3105,17 +3489,18 @@ dropdown: () => {
             border-radius: 4px;
             padding: 6px 12px;
             cursor: pointer;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 4px;
             font-size: 14px;
+            margin: 2px 0 12px 12px;
         `;
     
         // Headers
         const headers = ['Features', 'Basic', 'Pro'].map((text, index) => {
             const headerCell = document.createElement('div');
             headerCell.textContent = text;
-            headerCell.style.cssText = `font-weight: bold; color: #666; padding: 8px 0; ${index > 0 ? 'text-align: center;' : ''}`;
+            headerCell.style.cssText = `font-weight: bold; color: #777; padding: 8px 0; ${index > 0 ? 'text-align: center;' : ''}`;
             this.makeTextEditable(headerCell);
             return headerCell;
         });
@@ -3125,7 +3510,7 @@ dropdown: () => {
         // Convert createFeatureRow to an arrow function to keep 'this' context
         const createFeatureRow = (featureName = 'New Feature', isNew = false) => {
             const nameCell = document.createElement('div');
-            nameCell.style.cssText = 'color: #333; display: flex; align-items: center; gap: 8px;';
+            nameCell.style.cssText = 'color: var(--basic-txt-color); display: flex; align-items: center; gap: 8px;';
     
             // Delete button
             const deleteBtn = document.createElement('button');
@@ -3135,7 +3520,7 @@ dropdown: () => {
                 border: none;
                 color: #ff4444;
                 cursor: pointer;
-                padding: 4px;
+                padding: 0px 4px;
                 display: none;
                 font-size: 12px;
             `;
@@ -3150,7 +3535,7 @@ dropdown: () => {
             wrapper.appendChild(textSpan);
             wrapper.appendChild(deleteBtn);
             nameCell.appendChild(wrapper);
-    
+            
             nameCell.addEventListener('mouseenter', () => deleteBtn.style.display = 'block');
             nameCell.addEventListener('mouseleave', () => deleteBtn.style.display = 'none');
     
@@ -3191,179 +3576,193 @@ dropdown: () => {
             createFeatureRow('New Feature', true);
         };
     
-        // Show/hide add button on hover
-        container.addEventListener('mouseenter', () => addRowContainer.style.display = 'block');
-        container.addEventListener('mouseleave', () => addRowContainer.style.display = 'none');
-    
-        addRowContainer.appendChild(addRowBtn);
+        //addRowContainer.appendChild(addRowBtn);
         header.appendChild(titleWrapper);
         content.appendChild(grid);
         container.appendChild(header);
         container.appendChild(content);
-        container.appendChild(addRowContainer);
+        container.appendChild(addRowBtn);
     
-        return container;
+        return {
+            container: container,
+            setup: () => {
+                const compContainer = container.closest('.component-container');
+                if (compContainer) {
+                    compContainer.addEventListener('mouseenter', () => {
+                        addRowBtn.style.display = 'block';
+                    });
+    
+                    compContainer.addEventListener('mouseleave', () => {
+                        addRowBtn.style.display = 'none';
+                    });
+                }
+            }
+        };
     },
 // // Pills
-    chipGroup: () => {
-        // Create container for all chips
-        const chipGroupContainer = document.createElement('div');
-        chipGroupContainer.style.cssText = `
-            display: flex;
-            flex-flow: row wrap;
-            gap: 6px;
-            padding: 6px 0;
-            width: 100%;
-            min-height: 48px;
-            border-radius: 8px;
-        `;
-    
-        // Add chip function
-        const addChip = (text = 'New Chip') => {
-            const chip = document.createElement('div');
-            chip.style.cssText = `
-                display: inline-flex;
-                align-items: center;
-                height: 32px;
-                padding: 0 12px;
-                background-color: var(--neutral-gray);
-                border-radius: 16px;
-                cursor: pointer;
-                user-select: none;
-                transition: all 0.2s ease;
-            `;
-    
-            const chipText = document.createElement('span');
-            chipText.textContent = text;
-            chipText.style.cssText = `
-                font-size: 14px;
-                color: var(--text-color);
-            `;
-            chipText.setAttribute('contentEditable','true');
-            // this.makeTextEditable(chipText);
-    
-            const closeButton = document.createElement('i');
-            closeButton.className = 'fas fa-times';
-            closeButton.style.cssText = `
-                font-size: 12px;
-                color: var(--secondary-color);
-                margin-left: 8px;
-                padding: 2px;
-                cursor: pointer;
-                display: none;
-            `;
-    
-            chip.addEventListener('mouseenter', () => {
-                closeButton.style.display = 'inline-block';
-            });
-    
-            chip.addEventListener('mouseleave', () => {
-                closeButton.style.display = 'none';
-            });
-    
-            chip.addEventListener('click', (e) => {
-                if (e.target !== closeButton && e.target !== chipText) {
-                    const isSelected = chip.getAttribute('data-selected') === 'true';
-                    if (isSelected) {
-                        chip.style.backgroundColor = 'var(--neutral-gray)';
-                        chipText.style.color = '#333';
-                        closeButton.style.color = '#333';
-                        chip.setAttribute('data-selected', 'false');
-                    } else {
-                        chip.style.backgroundColor = 'var(--primary-color)';
-                        chipText.style.color = '#fff';
-                        closeButton.style.color = '#fff';
-                        chip.setAttribute('data-selected', 'true');
-                    }
-                }
-            });
-    
-            closeButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                chip.remove();
-                if (chipGroupContainer.children.length === 1) {
-                    addButton.style.display = 'flex';
-                }
-            });
-    
-            chip.appendChild(chipText);
-            chip.appendChild(closeButton);
-            chipGroupContainer.insertBefore(chip, addButton);
-        };
-    
-        // Add button
-        const addButton = document.createElement('div');
-        addButton.style.cssText = `
-            display: none;
+chipGroup: () => {
+    // Create container for all chips
+    const chipGroupContainer = document.createElement('div');
+    chipGroupContainer.style.cssText = `
+        display: flex;
+        flex-flow: row wrap;
+        gap: 6px;
+        padding: 6px 0;
+        width: 100%;
+        min-height: 48px;
+        border-radius: 8px;
+    `;
+
+    // Add chip function
+    const addChip = (text = 'New Chip') => {
+        const chip = document.createElement('div');
+        chip.style.cssText = `
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
             height: 32px;
             padding: 0 12px;
-            background-color: transparent;
-            border: 1px dashed var(--neutral-gray);
+            background-color: var(--neutral-gray);
             border-radius: 16px;
             cursor: pointer;
+            user-select: none;
             transition: all 0.2s ease;
         `;
 
-        chipGroupContainer.addEventListener('mouseenter', () => {
-            addButton.style.display = 'flex';
-            //chipGroupContainer.style.cssText = `border: 1px dashed var(--neutral-gray);`;
-        });
+        const chipText = document.createElement('span');
+        chipText.textContent = text;
+        chipText.style.cssText = `
+            font-size: 14px;
+            color: var(--text-color);
+        `;
+        chipText.setAttribute('contentEditable','true');
 
-        chipGroupContainer.addEventListener('mouseleave', () => {
-            addButton.style.display = 'none';
-            //chipGroupContainer.style.cssText = `border: none;`;
-        });
-    
-        const plusIcon = document.createElement('i');
-        plusIcon.className = 'fas fa-plus';
-        plusIcon.style.cssText = `
+        const closeButton = document.createElement('i');
+        closeButton.className = 'fas fa-times';
+        closeButton.style.cssText = `
             font-size: 12px;
             color: var(--secondary-color);
-            margin-right: 4px;
+            margin-left: 8px;
+            padding: 2px;
+            cursor: pointer;
+            display: none;
         `;
-    
-        const addText = document.createElement('span');
-        addText.textContent = 'Add Chip';
-        addText.style.cssText = `
-            font-size: 14px;
-            color: var(--secondary-color);
-        `;
-    
-        addButton.appendChild(plusIcon);
-        addButton.appendChild(addText);
-    
-        addButton.addEventListener('mouseenter', () => {
-            addButton.style.borderColor = 'var(--primary-color)';
-            plusIcon.style.color = 'var(--primary-color)';
-            addText.style.color = 'var(--primary-color)';
+
+        chip.addEventListener('mouseenter', () => {
+            closeButton.style.display = 'inline-block';
         });
-    
-        addButton.addEventListener('mouseleave', () => {
-            addButton.style.borderColor = 'var(--neutral-gray)';
-            plusIcon.style.color = 'var(--secondary-color)';
-            addText.style.color = 'var(--secondary-color)';
+
+        chip.addEventListener('mouseleave', () => {
+            closeButton.style.display = 'none';
         });
-    
-        addButton.addEventListener('click', () => {
-            addChip();
-            if (chipGroupContainer.children.length > 15) {
-                addButton.style.display = 'none';
+
+        chip.addEventListener('click', (e) => {
+            if (e.target !== closeButton && e.target !== chipText) {
+                const isSelected = chip.getAttribute('data-selected') === 'true';
+                if (isSelected) {
+                    chip.style.backgroundColor = 'var(--neutral-gray)';
+                    chipText.style.color = '#333';
+                    closeButton.style.color = '#333';
+                    chip.setAttribute('data-selected', 'false');
+                } else {
+                    chip.style.backgroundColor = 'var(--primary-color)';
+                    chipText.style.color = '#fff';
+                    closeButton.style.color = '#fff';
+                    chip.setAttribute('data-selected', 'true');
+                }
             }
         });
-    
-        // Add initial chips
-        chipGroupContainer.appendChild(addButton);
-        addChip('Design');
-        addChip('Development');
-        addChip('Marketing');
-    
-        return chipGroupContainer;
-    },
-// HZ Rule Divider line
+
+        closeButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            chip.remove();
+            if (chipGroupContainer.children.length === 1) {
+                addButton.style.display = 'flex';
+            }
+        });
+
+        chip.appendChild(chipText);
+        chip.appendChild(closeButton);
+        chipGroupContainer.insertBefore(chip, addButton);
+    };
+
+    // Add button
+    const addButton = document.createElement('div');
+    addButton.style.cssText = `
+        display: none;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        padding: 0 12px;
+        background-color: transparent;
+        border: 0.12rem dashed var(--neutral-gray);
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    `;
+
+    const plusIcon = document.createElement('i');
+    plusIcon.className = 'fas fa-plus';
+    plusIcon.style.cssText = `
+        font-size: 12px;
+        color: var(--secondary-color);
+        margin-right: 4px;
+    `;
+
+    const addText = document.createElement('span');
+    addText.textContent = 'Add Chip';
+    addText.style.cssText = `
+        font-size: 14px;
+        color: var(--secondary-color);
+    `;
+
+    addButton.appendChild(plusIcon);
+    addButton.appendChild(addText);
+
+    addButton.addEventListener('mouseenter', () => {
+        addButton.style.borderColor = 'var(--primary-color)';
+        plusIcon.style.color = 'var(--primary-color)';
+        addText.style.color = 'var(--primary-color)';
+    });
+
+    addButton.addEventListener('mouseleave', () => {
+        addButton.style.borderColor = 'var(--neutral-gray)';
+        plusIcon.style.color = 'var(--secondary-color)';
+        addText.style.color = 'var(--secondary-color)';
+    });
+
+    addButton.addEventListener('click', () => {
+        addChip();
+        if (chipGroupContainer.children.length > 15) {
+            addButton.style.display = 'none';
+        }
+    });
+
+    // Add initial chips
+    chipGroupContainer.appendChild(addButton);
+    addChip('Design');
+    addChip('Development');
+    addChip('Marketing');
+
+    // Return an object with the container and a setup function
+    return {
+        container: chipGroupContainer,
+        setup: () => {
+            const compContainer = chipGroupContainer.closest('.component-container');
+            if (compContainer) {
+                compContainer.addEventListener('mouseenter', () => {
+                    addButton.style.display = 'flex';
+                });
+
+                compContainer.addEventListener('mouseleave', () => {
+                    addButton.style.display = 'none';
+                });
+            }
+        }
+    };
+},
+// // HZ Rule Divider line horizontal
     hzDivider: () => {
-        const dividerWrapper = document.createElement('div');
+    const dividerWrapper = document.createElement('div');
     dividerWrapper.style.cssText = `
         width: 100%;
         padding: 6px 0;
@@ -3385,7 +3784,7 @@ dropdown: () => {
     line.style.cssText = `
         flex: 1;
         height: 2px;
-        background-color: var(--neutral-gray);
+        background-color: var(--transparent-blk);
         transition: all 0.3s ease;
     `;
 
@@ -3393,16 +3792,16 @@ dropdown: () => {
     const controls = document.createElement('div');
     controls.style.cssText = `
         position: absolute;
-        top: -26px;
+        top: -32px;
         left: 50%;
         transform: translateX(-50%);
         display: none;
         gap: 8px;
-        background: white;
-        padding: 4px;
+        background: #f0f0f0;
+        padding: 2px 4px;
         border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        z-index: 100;
+        border: 1px solid rgba(225,225,225,.6);
+        z-index: 56100;
     `;
 
     // Style buttons
@@ -3437,7 +3836,7 @@ dropdown: () => {
     thicknessControl.value = '2';
     thicknessControl.style.cssText = `
         width: 160px;
-        height: 6px;
+        height: 14px;
         margin-left: 8px;
     `;
 
@@ -3445,7 +3844,7 @@ dropdown: () => {
     styleButtons[0].addEventListener('click', () => { // Solid
         const currentThickness = thicknessControl.value;
         line.style.borderStyle = 'solid';
-        line.style.background = 'var(--neutral-gray)';
+        line.style.background = 'var(--transparent-blk)';
         line.style.height = `${currentThickness}px`;
         line.style.border = 'none';
         dividerContainer.style.flexDirection = 'row';
@@ -3457,7 +3856,7 @@ dropdown: () => {
         line.style.background = 'none';
         line.style.height = '0';
         line.style.borderWidth = `${currentThickness}px 0 0 0`;
-        line.style.borderColor = 'var(--neutral-gray)';
+        line.style.borderColor = 'var(--transparent-blk)';
         dividerContainer.style.flexDirection = 'row';
     });
 
@@ -3467,7 +3866,7 @@ dropdown: () => {
         line.style.background = 'none';
         line.style.height = '0';
         line.style.borderWidth = `${currentThickness}px 0 0 0`;
-        line.style.borderColor = 'var(--neutral-gray)';
+        line.style.borderColor = 'var(--transparent-blk)';
         dividerContainer.style.flexDirection = 'row';
     });
 
@@ -3525,7 +3924,7 @@ dropdown: () => {
         window.editor = new MobileUIEditor();
     });
 
-// Add to sidebar data
+// Add TAB to sidebar data
 document.querySelectorAll('.sidebar-tab').forEach(tab => {
     tab.addEventListener('click', () => {
         const targetTab = tab.getAttribute('data-tab');

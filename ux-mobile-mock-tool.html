@@ -41,7 +41,7 @@
 
             <div style="display: flex; justify-content: space-between;">
             <label for="font-picker">Font &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; </label>
-                <select id="font-picker">
+                <select id="font-picker" class="selectBoxStyles">
                     <option value="Anek Telugu">Anek Telugu</option>
                     <option value="Borel">Borel</option>
                     <option value="Cambay">Cambay</option>
@@ -86,7 +86,7 @@
         <button class="component-btn" data-component="icon"><i class="fas fa-icons"></i> Icon</button>
         <div class="alert-container">
             <button class="component-btn" data-component="image"><i class="fas fa-image"></i> Image</button>
-            <select id="image-type">
+            <select id="image-type" class="selectBoxStyles">
                 <option value="single">Single Image</option>
                 <option value="double">Two Images</option>
                 <option value="triple">Three Images</option>
@@ -94,10 +94,10 @@
         </div>
         <div class="alert-container">
             <button class="component-btn" data-component="button"><i class="fas fa-square"></i> Button</button>
-            <select id="button-type">
+            <select id="button-type" class="selectBoxStyles">
                 <option value="default">Basic</option>
                 <option value="ghost">Ghost</option>
-                <option value="two-buttons">Two Buttons</option>
+                <option value="twobuttons">Two Buttons</option>
                 <option value="disabled">Disabled</option>
             </select>
         </div>
@@ -108,7 +108,7 @@
             <label>Text Elements</label>
             <div class="alert-container">
                 <button class="component-btn" data-component="heading"><i class="fas fa-heading"></i> Heading</button>
-                <select id="heading-type">
+                <select id="heading-type" class="selectBoxStyles">
                     <option value="h1">H1</option>
                     <option value="h2">H2</option>
                     <option value="h3">H3</option>
@@ -126,7 +126,7 @@
             <label>Form Inputs</label>
             <div class="alert-container">
                 <button class="component-btn" data-component="input"><i class="fas fa-keyboard"></i> Input Field</button>
-                <select id="input-type">
+                <select id="input-type" class="selectBoxStyles">
                     <option value="default">Default</option>
                     <option value="focused">Focused</option>
                     <option value="error">Error</option>
@@ -137,7 +137,7 @@
             </div>
             <div class="alert-container">
                 <button class="component-btn" data-component="textarea"><i class="fas fa-paragraph"></i> Text Area</button>
-                <select id="textarea-type">
+                <select id="textarea-type" class="selectBoxStyles">
                     <option value="default">Default</option>
                     <option value="focused">Focused</option>
                     <option value="error">Error</option>
@@ -157,15 +157,15 @@
     <div class="sidebar-content" data-tab="components">
         <div class="alert-container">
             <button class="component-btn" data-component="avatar"><i class="fas fa-user-circle"></i> Avatar</button>
-                <select id="avatar-type">
+                <select id="avatar-type" class="selectBoxStyles">
                     <option value="default">Default</option>
-                    <option value="small-text">Small with Text</option>
+                    <option value="smalltext">Small with Text</option>
                     <option value="upload">Upload Image</option>
                 </select>
         </div>
         <div class="alert-container">
             <button class="component-btn" data-component="alert"><i class="fas fa-exclamation-triangle"></i> Alert</button>
-            <select id="alert-type">
+            <select id="alert-type" class="selectBoxStyles">
                 <option value="info">Info</option>
                 <option value="success">Success</option>
                 <option value="warning">Warning</option>
@@ -175,24 +175,24 @@
         </div>
         <div class="alert-container">
             <button class="component-btn" data-component="tabs"><i class="fas fa-folder"></i> Tabs</button>
-            <select id="tabs-type">
+            <select id="tabs-type" class="selectBoxStyles">
                 <option value="2">2 Tabs</option>
                 <option value="3" selected>3 Tabs</option>
                 <option value="4">4 Tabs</option>
                 <option value="5">5 Tabs</option>
             </select>
         </div>
-        <button class="component-btn" data-component="chipGroup"><i class="fa-solid fa-capsules fa-rotate-90"></i> Pills</button>
+        <button class="component-btn" data-component="notificationBanner"><i class="fas fa-bell"></i>  Notification</button>
         <button class="component-btn" data-component="progressBar"><i class="fa-solid fa-bars-progress"></i> Progress Bar</button>
         <button class="component-btn" data-component="accordion"><i class="fas fa-chevron-down"></i> Accordion</button>
         <button class="component-btn" data-component="card"><i class="fas fa-window-maximize"></i> Card</button>
+        <button class="component-btn" data-component="chipGroup"><i class="fa-solid fa-capsules fa-rotate-90"></i> Pills</button>
         <button class="component-btn" data-component="modal"><i class="fas fa-square-up-right"></i> Modal Pop-up</button>
-        <button class="component-btn" data-component="notificationBanner"><i class="fas fa-bell"></i>  Notification</button>
         <button class="component-btn" data-component="progressTracker"><i class="fas fa-timeline"></i>  Progress Tracker</button>
         <button class="component-btn" data-component="featureComparisonCard"><i class="fa-solid fa-check-double"></i></i>  Comparison Card</button>
         <!-- <div class="alert-container">
             <button class="component-btn" data-component="graph"><i class="fas fa-chart-pie"></i> Graph</button>
-            <select id="graph-type">
+            <select id="graph-type" class="selectBoxStyles">
                 <option value="bar">Bar</option>
                 <option value="area">Area</option>
                 <option value="pie">Pie</option>
@@ -206,10 +206,10 @@
   transform: scaleX(-1);"></i> Right Chat</button>
             <div class="alert-container">
                 <button class="component-btn" data-component="chatInput"><i class="fas fa-paper-plane"></i> Chat Input</button>
-                <select id="chatInput-type">
+                <select id="chatInput-type" class="selectBoxStyles">
                     <option value="basic">Basic</option>
-                    <option value="with-emoji">With Emoji</option>
-                    <option value="with-image">With Image</option>
+                    <option value="withemoji">With Emoji</option>
+                    <option value="withimage">With Image</option>
                     <option value="full">All Features</option>
                 </select>
             </div>
@@ -225,6 +225,14 @@
             </div>
         <!-- </div> -->
         <button id="togetherJS" class="component-btn" onclick="TogetherJS(this); return false;"><i class="fa-solid fa-users"></i> Invite Friends to Collaborate</button>
+        <!-- DARK MODE  -->
+        <div class="dark-mode-toggle">
+            <label class="switchDark">
+              <input type="checkbox" id="darkModeToggle">
+              <span class="sliderDark"></span>
+            </label>
+            <span class="dark-mode-label">Dark Mode</span>
+        </div>
     </div>
 
     <!-- <div id="toggleCanvasBtnContainer" title="Toggle mock phone height"> -->
@@ -271,6 +279,7 @@
 <!-- DLIGHTNING LOGO ////////////////// -->
 <a id="dlightning" href="index.html" target="blank">
     <img src="img/small transparent.png" id="Dimg">
+    <img src="img/transparent white D.png" id="Dimg2">
 </a>
 <!-- HTML END ////////////////// -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>

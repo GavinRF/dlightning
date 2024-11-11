@@ -1,4 +1,24 @@
 // extra-func.js
+//DARK MODE
+let darkMode = localStorage.getItem('darkMode') === 'true';
+
+let darkModeToggle = document.getElementById('darkModeToggle');
+darkModeToggle.checked = darkMode;
+if (darkMode) {
+    document.body.classList.add('dark-mode');
+}
+
+ // Handle dark mode toggle
+darkModeToggle.addEventListener('change', function() {
+    darkMode = this.checked;
+    localStorage.setItem('darkMode', darkMode);
+    if (darkMode) {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+});
+
 //Color Picker
     document.getElementById('color-picker').addEventListener('input', function(e) {
         document.documentElement.style.setProperty('--primary-color', e.target.value);
@@ -99,37 +119,24 @@ class AlignmentController {
             let hasNewCanvas = false;
             
             mutations.forEach(mutation => {
-                // Handle added nodes
-                mutation.addedNodes.forEach(node => {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        // Check if the added node is a canvas-content
-                        if (node.matches(this.containerSelector)) {
-                            hasNewCanvas = true;
-                            this.initContainer(node);
+                if (mutation.type === 'childList') {
+                    // Check for moved nodes within canvas-content
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === Node.ELEMENT_NODE && node.closest(this.containerSelector)) {
+                            // Node has been added (could be a sort-related addition)
+                            this.initContainer(node.closest(this.containerSelector)); // Reinitialize controls for the container
                         }
-                        // Check for canvas-content elements within added node
-                        node.querySelectorAll(this.containerSelector).forEach(container => {
-                            hasNewCanvas = true;
-                            this.initContainer(container);
-                        });
-                    }
-                });
-
-                // Handle removed nodes
-                mutation.removedNodes.forEach(node => {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        // Clean up controls and remove from containers Set
-                        if (node.matches(this.containerSelector)) {
-                            this.containers.delete(node);
+                    });
+    
+                    mutation.removedNodes.forEach(node => {
+                        if (node.nodeType === Node.ELEMENT_NODE && node.closest(this.containerSelector)) {
+                            // Node has been removed (could be a sort-related removal)
+                            this.containers.delete(node.closest(this.containerSelector));
                         }
-                        // Clean up controls within removed node
-                        node.querySelectorAll('.alignment-controls').forEach(controls => {
-                            controls.remove();
-                        });
-                    }
-                });
+                    });
+                }
             });
-
+    
             // Clean up orphaned controls
             if (hasNewCanvas) {
                 document.querySelectorAll('.alignment-controls').forEach(controls => {
@@ -139,13 +146,14 @@ class AlignmentController {
                 });
             }
         });
-
+    
         // Observe the entire document for maximum flexibility
         observer.observe(document.body, {
             childList: true,
             subtree: true
         });
     }
+    
 
     // ... rest of the methods remain the same ...
     createControls(element) {
