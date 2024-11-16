@@ -1986,3 +1986,6 @@ document.querySelectorAll('.component-btn').forEach(btn => {
         }
     });
 });
+
+
+///////

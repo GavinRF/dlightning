@@ -2,6 +2,7 @@
 //// COMPONENTS AND MAIN FUNCTIONALITY
 class MobileUIEditor {
     modalAdded = false;
+    fabAdded = false;
 
     constructor() {
         this.state = {
@@ -29,6 +30,7 @@ class MobileUIEditor {
         // this.loadSavedCanvases(); 
         this.updateTime();
         setInterval(this.updateTime, 60000);
+        this.initOnboarding();
     }
 
     initializeFirstCanvas() {
@@ -105,19 +107,20 @@ handleComponentAddition(btn) {
         return select ? select.value : null;
     };
 
-    const variation = getVariation(componentType);
+    //const variation = getVariation(componentType);
 
     const canvases = this.state.selectedCanvases.size > 0 ?
         Array.from(this.state.selectedCanvases) :
         document.querySelectorAll('.canvas');
 
     // Check if special components already exist
-    if (['navbar', 'bottomNav', 'modal'].includes(componentType)) {
+    if (['navbar', 'bottomNav', 'modal', 'floatingActionButton'].includes(componentType)) {
         const hasComponent = Array.from(canvases).some(canvas => {
             return canvas.querySelector(
                 componentType === 'navbar' ? '.navbar' :
                 componentType === 'bottomNav' ? 'nav' :
-                '.modal'
+                componentType === 'modal' ? '.modal':
+                '.fab'
             );
         });
 
@@ -152,15 +155,22 @@ handleComponentAddition(btn) {
                 if (!this.modalAdded) {
                     component = this.components.modal();
                     canvas.appendChild(component);
-                    this.modalAdded = true;
                 } else {
                     const existingModal = canvas.querySelector('.modal-wrapper');
                     if (existingModal) {
                         existingModal.remove();
-                        this.modalAdded = false;
                     }
                 }
                 break;
+
+            case 'floatingActionButton':
+                if (!this.fabAdded) {
+                    component = this.components.floatingActionButton();
+                    canvas.appendChild(component);
+                    //this.insertNavbar(canvas, component, 'fab');
+                } 
+                break;
+
 
             case 'avatar':
                 const avatarType = document.getElementById('avatar-type').value;
@@ -168,20 +178,19 @@ handleComponentAddition(btn) {
                 if (component) {
                     wrappedComponent = this.wrapComponentInContainer(component, `avatar-${avatarType}`);
                     canvasContent = canvas.querySelector('.canvas-content');
-                    if (canvasContent) canvasContent.appendChild(wrappedComponent);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 } else {
                     console.error(`Unsupported avatar type: ${avatarType}`);
                 }
                 break;
 
             case 'image':
- 
                 const layoutType = document.getElementById('image-type')?.value || 'single';
                 component = this.components.image?.(layoutType);
                 if (component) {
                     wrappedComponent = this.wrapComponentInContainer(component, `image-${layoutType}`);
                     canvasContent = canvas.querySelector('.canvas-content');
-                    if (canvasContent) canvasContent.appendChild(wrappedComponent);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 } else {
                     console.error(`Unsupported image layout type: ${layoutType}`);
                 }
@@ -190,136 +199,139 @@ handleComponentAddition(btn) {
             case 'button':
                 const buttonType = getVariation('button');
                 component = this.components.button?.(buttonType);
-                if (!component) {
-                    console.error(`Unsupported button type: ${buttonType}`);
-                    return;
-                }
-                wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${buttonType}`);
-                canvasContent = canvas.querySelector('.canvas-content');
-                if (canvasContent) {
-                    canvasContent.appendChild(wrappedComponent);
+                if (component) {
+                    wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${buttonType}`);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 }
                 break;
         
             case 'heading':
                 const headingLevel = getVariation('heading');
                 component = this.components.heading?.(headingLevel);
-                if (!component) {
-                    console.error(`Unsupported heading level: ${headingLevel}`);
-                    return;
-                }
-                wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${headingLevel}`);
-                canvasContent = canvas.querySelector('.canvas-content');
-                if (canvasContent) {
-                    canvasContent.appendChild(wrappedComponent);
+                if (component) {
+                    wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${headingLevel}`);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 }
                 break;
         
             case 'input':
                 const inputType = getVariation('input');
                 component = this.components.input?.(inputType);
-                if (!component) {
-                    console.error(`Unsupported input type: ${inputType}`);
-                    return;
-                }
-                wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${inputType}`);
-                canvasContent = canvas.querySelector('.canvas-content');
-                if (canvasContent) {
-                    canvasContent.appendChild(wrappedComponent);
+                if (component) {
+                    wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${inputType}`);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 }
                 break;
-        
+
+            case 'hero':
+                component = this.components.hero();
+                wrappedComponent = this.wrapComponentInContainer(component, 'hero');
+                canvasContent = canvas.querySelector('.canvas-content');
+
+                if (canvasContent) {
+                    const firstChild = canvasContent.firstChild;
+                    if (firstChild) {
+                        canvasContent.insertBefore(wrappedComponent, firstChild);
+                    } else {
+                        canvasContent.appendChild(wrappedComponent);
+                    }
+                }
+                break;
+
             case 'textarea':
                 const textareaType = getVariation('textarea');
                 component = this.components.textarea?.(textareaType);
-                if (!component) {
-                    console.error(`Unsupported textarea type: ${textareaType}`);
-                    return;
-                }
-                wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${textareaType}`);
-                canvasContent = canvas.querySelector('.canvas-content');
-                if (canvasContent) {
-                    canvasContent.appendChild(wrappedComponent);
+                if (component) {
+                    wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${textareaType}`);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 }
                 break;
         
             case 'tabs':
                 const tabsCount = getVariation('tabs');
                 component = this.components.tabs?.(parseInt(tabsCount, 10));
-                if (!component) {
-                    console.error(`Unsupported tabs count: ${tabsCount}`);
-                    return;
-                }
-                wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${tabsCount}`);
-                canvasContent = canvas.querySelector('.canvas-content');
-                if (canvasContent) {
-                    canvasContent.appendChild(wrappedComponent);
+                if (component) {
+                    wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${tabsCount}`);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 }
                 break;
         
             case 'alert':
                 const alertColor = getVariation('alert');
                 component = this.components.alert?.(alertColor);
-                if (!component) {
-                    console.error(`Unsupported alert color: ${alertColor}`);
-                    return;
-                }
-                wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${alertColor}`);
-                canvasContent = canvas.querySelector('.canvas-content');
-                if (canvasContent) {
-                    canvasContent.appendChild(wrappedComponent);
+                if (component) {
+                    wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${alertColor}`);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 }
                 break;
             
             case 'graph':
-                component = this.components.graph?.(variation);
-                if (!component) {
-                    console.error(`Unsupported graph type: ${variation}`);
-                    return;
-                }
-                const wrappedGraph = this.wrapComponentInContainer(component, `${componentType}-${variation}`);
-                const graphContent = canvas.querySelector('.canvas-content');
-                if (graphContent) {
-                    graphContent.appendChild(wrappedGraph);
+                const graph = getVariation('graph');
+                component = this.components.graph?.(graph);
+                if (component) {
+                    const wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${graph}`);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 }
                 break;
 
             case 'chatInput':
-                component = this.components.chatInput?.(variation);
-                if (!component) {
-                    console.error(`Unsupported chat input type: ${variation}`);
-                    return;
-                }
-                wrappedComponent = this.wrapComponentInContainer(component, `chatInput-${variation}`);
-                canvasContent = canvas.querySelector('.canvas-content');
-                if (canvasContent) {
-                    canvasContent.appendChild(wrappedComponent);
+                const chatInput = getVariation('chatInput');
+                component = this.components.chatInput?.(chatInput);
+                if (component) {
+                    wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${chatInput}`);
+                    this.insertComponentWithFooterCheck(canvas, wrappedComponent);
                 }
                 break;
-
 
             default:
-                component = this.components[componentType]?.();
-                if (!component) {
-                    console.error(`Unsupported component type: ${componentType}`);
-                    return;
-                }
-                wrappedComponent = this.wrapComponentInContainer(component, componentType); // Removed const here
-                canvasContent = canvas.querySelector('.canvas-content');
-                if (canvasContent) {
-                    canvasContent.appendChild(wrappedComponent);
-                }
-                break;
+                    // Get variation for the component type, if any
+                    const variation = getVariation(componentType);
+                    component = this.components[componentType]?.(variation);
+                    
+                    if (!component) {
+                        console.error(`Unsupported component type or variant: ${componentType} - ${variation}`);
+                        return;
+                    }
+                    
+                    wrappedComponent = this.wrapComponentInContainer(component, `${componentType}-${variation || ''}`);
+                    canvasContent = canvas.querySelector('.canvas-content');
+                
+                    if (canvasContent) {
+                        const footer = canvasContent.querySelector('footer')?.closest('.component-container');
+                        
+                        if (footer) {
+                            canvasContent.insertBefore(wrappedComponent, footer);
+                        } else {
+                            canvasContent.appendChild(wrappedComponent);
+                        }
+                    }
+                    break;
         }
         // scroll newly added component into view
         if (!['navbar', 'bottomNav', 'modal'].includes(componentType)) {
             const phoneScrollCon = canvas.querySelector('.phoneScrollCon');
             if (phoneScrollCon) {
-                phoneScrollCon.scrollTop = phoneScrollCon.scrollHeight;
+                if (componentType === 'hero') {
+                    phoneScrollCon.scrollTop = 0;
+                } else {
+                    phoneScrollCon.scrollTop = phoneScrollCon.scrollHeight;
+                }
             }
         }
 
     });
+}
+
+insertComponentWithFooterCheck(canvas, component) {
+    const canvasContent = canvas.querySelector('.canvas-content');
+    if (canvasContent) {
+        const footer = canvasContent.querySelector('footer')?.closest('.component-container');
+        if (footer) {
+            canvasContent.insertBefore(component, footer);
+        } else {
+            canvasContent.appendChild(component);
+        }
+    }
 }
 
 wrapComponentInContainer(component, componentType) {
@@ -343,7 +355,7 @@ wrapComponentInContainer(component, componentType) {
     }
     
     // Store the component type data only if it includes a variant
-    if (componentType.includes('-')) {
+    if (componentType && componentType.includes('-')) {
         container.setAttribute('data-component-variant', componentType);
     }
     
@@ -452,7 +464,7 @@ copyUserModifications(original, duplicate) {
     }
 
 
-/// Inserting and Removing Navbar
+/// Removing Special Items Navbar FAB Modal
     removeComponent(componentType, canvases) {
         canvases.forEach((canvas) => {
             const canvasContent = canvas.querySelector('.canvas-content');
@@ -486,6 +498,15 @@ copyUserModifications(original, duplicate) {
                         this.modalAdded = false; 
                     }
                     break;
+
+                case 'floatingActionButton':
+                    const FAB = canvas.querySelector('.fab');
+                    if (FAB) {
+                        FAB.remove();
+                        this.fabAdded = false; 
+                    }
+                    break;
+
             }
         });
     }
@@ -549,6 +570,11 @@ createNewCanvas() {
             ghostClass: 'sortable-ghost',
             group: 'shared-components',
             filter: '.navbar-spacer',
+            scroll: true,
+            scrollSensitivity: 30,
+            scrollSpeed: 10,
+            // scroll: document.querySelector('.phoneScrollCon'),
+            bubbleScroll: true,
             onMove: function(evt) {
                 return !evt.related.classList.contains('navbar-spacer');
             }
@@ -643,6 +669,11 @@ loadSavedCanvases() {
                     ghostClass: 'sortable-ghost',
                     group: 'shared-components',
                     filter: '.navbar-spacer',
+                    scroll: true,
+                    scrollSensitivity: 30,
+                    scrollSpeed: 10,
+                    // scroll: document.querySelector('.phoneScrollCon'),
+                    bubbleScroll: true,
                     onMove: function(evt) {
                         return !evt.related.classList.contains('navbar-spacer');
                     }
@@ -722,9 +753,12 @@ handleCanvasDelete(e) {
                     canvasContent.insertBefore(spacer, canvasContent.firstChild);
                 }
                 navbar.style.cssText = 'position: absolute; left: 0; right: 0; top: 24px;';
-            } else {
+            } else if (position === 'bottom'){
                 canvas.appendChild(navbar);
                 navbar.style.cssText = 'position: absolute; left: 0; right: 0; bottom: 0;';
+            } else {
+                canvas.appendChild(navbar);
+               // navbar.style.cssText = `this is useful if there is another navbar`;
             }
         }
 
@@ -968,16 +1002,358 @@ updateButtonState(isLoading) {
     document.getElementById('download-btn').addEventListener('click', () => this.captureScreenshot());
     }
 
+// INIT ONBOARDING
+initOnboarding() {
+    // if onboarding is complete don't show again
+    // if (localStorage.getItem('onboardingComplete')) {
+    //     return;
+    // }
+
+    const overlay = document.createElement('div');
+    overlay.className = 'onboarding-overlay';
+    
+    const modal = document.createElement('div');
+    modal.className = 'onboarding-modal';
+    
+    const steps = [
+        {
+            title: 'Welcome to the Mobile Screen Builder!',
+            content: 'Create beautiful wireframes in minutes',
+            highlight: null
+        },
+        {
+            title: 'Add Components',
+            content: 'Buttons in the menu-bar add components to the screen. <br><br>',
+            highlight: '.component-btn'
+        },
+        {
+            title: 'Versions',
+            content: 'Some components have alternat versions, select one before adding it to the mock screen.',
+            highlight: '#image-type'
+        },
+        {
+            title: 'Basic Elements VS Components',
+            content: 'Switch between common interface elements and more complex\&nbsp;components.',
+            highlight: '.sidebar-tabs'
+        },
+        {
+            title: 'View Content Full-Height',
+            content: 'Toggle the mock screen height to show all of your components.',
+            highlight: '#toggleCanvasBtn'
+        },
+        {
+            title: 'Add A New Screen',
+            content: 'Create multiple screens using the + button. <br> (Hold Shift to select multiple screens at once)',
+            highlight: '.add-canvas-btn'
+        },
+        {
+            title: 'Export Screens',
+            content: 'When you\'re ready to share your work, export an image. <br><br>',
+            highlight: '#download-btn'
+        },
+        {
+            title: 'Choose A Starting Template',
+            content: ' ',
+            highlight: null,
+            isTemplateStep: true
+        }
+    ];
+
+    let currentStep = localStorage.getItem('onboardingComplete') ? steps.length - 1 : 0;
+
+    function renderStep(step) {
+
+        if (steps[step].isTemplateStep) {
+            modal.innerHTML = `
+                <h2 style="color: #2c3e50; margin-top: 0;">${steps[step].title}</h2>
+                <p style="color: #475152; font-size: 16px;">${steps[step].content}</p>
+                <div class="templates" style="display: flex; gap: 16px; margin: 20px 0;">
+                    <button onclick="selectTemplate('template1')">
+                        <h3 style="margin-top: 0;">Profile Template</h3>
+                        <hr>
+                        <p style="color: var(--basic-txt-color)">Image, Avatar, Pills, and Paragraph <br><br></p>
+                    </button>
+                    <button onclick="selectTemplate('template2')">
+                        <h3 style="margin-top: 0;">Content Template</h3>
+                        <hr>
+                        <p style="color: var(--basic-txt-color)">Hero, Heading, Accordion, and Footer</p>
+                    </button>
+                    <button onclick="selectTemplate('template3')">
+                        <h3 style="margin-top: 0;">Form Template</h3>
+                        <hr>
+                        <p style="color: var(--basic-txt-color)">Heading, Form Elements, Submit Button</p>
+                    </button>
+                    <button onclick="selectTemplate('blank')">
+                        <h3 style="margin-top: 0;">Blank Canvas</h3>
+                        <br><br><br><br><br><br><br>
+                    </button>
+                </div>
+                <div class="onboarding-nav" >
+                    <button onclick="prevStep()" style="padding: 10px 14px; background: #ecf0f1; border: none; border-radius: 5px; cursor: pointer; margin-right: 45px;"><i class="fas fa-arrow-left"></i></button>
+                     <button onclick="${step === steps.length - 1 ? 'completeOnboarding()' : 'nextStep()'}" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            ${step === steps.length - 1 ? 'Skip' : 'Next'}
+                        </button>
+                </div>
+            `;
+        } else {
+            modal.innerHTML = `
+                <div style="display: flex; gap: 24px;">
+                    <div>
+                    <h2 style="color: #2c3e50; margin-top: 0;">${steps[step].title}</h2>
+                    <p style="color: #7f8c8d; font-size: 16px;">${steps[step].content}</p>
+                    </div>
+                    ${step > 0 ? '' : ` 
+                    <div>
+                        <img width="150px" src='img/products/BHandH.png'>
+                    </div>` }
+                </div>
+                <div class="onboarding-nav">
+                    ${step > 0 ? `
+                        <button onclick="prevStep()" style="padding: 10px 14px; background: #ecf0f1; border: none; border-radius: 5px; cursor: pointer;"><i class="fas fa-arrow-left"></i></button>
+                    ` : '<button onclick="prevStep()" style="padding: 10px 14px; background: var(--neutral-gray); border: none; opacity: 0.46; border-radius: 5px; cursor: not-allowed;" disabled><i class="fas fa-arrow-left"></i></button>'}
+                    <div style="display: flex; align-items: center;">
+                        ${steps.map((_, i) => `
+                            <div class="onboarding-dot ${i === step ? 'active' : ''}" onclick="goToStep(${i})"></div>
+                        `).join('')}
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="completeOnboarding()" style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            Skip Tutorial
+                        </button>
+                        <button onclick="${step === steps.length - 1 ? 'completeOnboarding()' : 'nextStep()'}" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            ${step === steps.length - 1 ? 'Get Started' : 'Next'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Remove previous highlights
+        document.querySelectorAll('.highlight-element').forEach(el => el.remove());
+
+        // Add highlight if specified
+        if (steps[step].highlight) {
+            const element = document.querySelector(steps[step].highlight);
+            if (element) {
+                // Scroll to the element to ensure it is visible in the viewport
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                setTimeout(() => {
+                    const rect = element.getBoundingClientRect();
+                    const highlight = document.createElement('div');
+                    highlight.className = 'highlight-element';
+                    highlight.style.cssText = `
+                        position: fixed;
+                        top: ${rect.top - 6}px;
+                        left: ${rect.left - 6}px;
+                        width: ${rect.width + 8}px;
+                        height: ${rect.height + 8}px;
+                        border: 2px solid #3498db;
+                        border-radius: 4px;
+                        pointer-events: none;
+                        z-index: 10000;
+                        animation: pulse .8s 2;
+                    `;
+                    document.body.appendChild(highlight);
+                }, 500); // Adjust the delay if needed
+            }
+        }}
+
+    window.nextStep = function() {
+        if (currentStep < steps.length - 1) {
+            currentStep++;
+            renderStep(currentStep);
+        }
+    };
+
+    window.prevStep = function() {
+        if (currentStep > 0) {
+            currentStep--;
+            renderStep(currentStep);
+        }
+    };
+
+    window.goToStep = function(step) {
+        currentStep = step;
+        renderStep(currentStep);
+    };
+
+    window.completeOnboarding = function() {
+        localStorage.setItem('onboardingComplete', 'true');
+        overlay.remove();
+        document.querySelectorAll('.highlight-element').forEach(el => el.remove());
+    };
+
+    const instructionalText = 'This is a paragraph, click to edit it directly. For quick deletion, triple-click to highlight all.'; 
+    const newInstruction = 'Hover over any element to reveal options for customization. Use the ⋮ handle on the left to drag elements into a new order or to another screen. The red \'x\' on the right deletes components, and the icon at the bottom duplicates them. Each element has unique features to explore!';
+
+
+    window.selectTemplate = (template) => {
+        const canvasContent = document.querySelector('.canvas-content');
+        
+        // Clear existing content
+        canvasContent.innerHTML = '';
+        
+        if (template === 'template1') {
+            [
+                { component: this.components.adjustableSpace(), type: 'adjustableSpace' },
+                { component: this.components.image(), type: 'image' },
+                { component: this.components.avatar(), type: 'avatar' },
+                { component: this.components.chipGroup(), type: 'chipGroup' },
+                { component: this.components.paragraph(null, instructionalText), type: 'paragraph' },
+                { component: this.components.paragraph(null, newInstruction), type: 'paragraph' },
+            ].forEach(({ component, type }) => {
+                canvasContent.appendChild(this.wrapComponentInContainer(component, type));
+            });
+        } else if (template === 'template2') {
+            [
+                // { component: this.components.navbar(), type: 'navbar' },
+                { component: this.components.hero(), type: 'hero' },
+                { component: this.components.heading('h2'), type: 'heading' },
+                { component: this.components.paragraph(null, instructionalText), type: 'paragraph' },
+                { component: this.components.paragraph(null, newInstruction), type: 'paragraph' },
+                { component: this.components.icon(), type: 'icon' },
+                { component: this.components.accordion(), type: 'accordion' },
+                { component: this.components.adjustableSpace(), type: 'adjustableSpace' },
+                { component: this.components.footer(), type: 'footer' }
+            ].forEach(({ component, type }) => {
+                canvasContent.appendChild(this.wrapComponentInContainer(component, type));
+            });
+        } else if (template === 'template3') {
+            [
+                { component: this.components.heading('h1'), type: 'heading' },
+                { component: this.components.paragraph(null, instructionalText), type: 'paragraph' },
+                { component: this.components.label(), type: 'label' },
+                { component: this.components.input(), type: 'input' },
+                { component: this.components.label(), type: 'label' },
+                { component: this.components.textarea(), type: 'textarea' },
+                { component: this.components.label(), type: 'label' },
+                { component: this.components.dropdown(), type: 'dropdown' },
+                { component: this.components.label(), type: 'label' },
+                { component: this.components.checkbox(), type: 'checkbox' },
+                { component: this.components.checkbox(), type: 'checkbox' },
+                { component: this.components.checkbox(), type: 'checkbox' },
+                { component: this.components.adjustableSpace(), type: 'adjustableSpace' },
+                { component: this.components.button(), type: 'button' },
+
+                // { component: this.components.paragraph(null, newInstruction), type: 'paragraph' },
+            ].forEach(({ component, type }) => {
+                canvasContent.appendChild(this.wrapComponentInContainer(component, type));
+            });
+        }
+        
+        // Complete onboarding
+        localStorage.setItem('onboardingComplete', 'true');
+        document.querySelector('.onboarding-overlay').remove();
+        // incase sidebar is scrolled down
+        const sideBar = document.querySelector('.sidebar');
+        if (sideBar) {
+            sideBar.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+    };
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    
+    // Show overlay with animation
+    setTimeout(() => {
+        overlay.classList.add('visible');
+        renderStep(currentStep);
+    }, 100);
+}
+
 // ********
 /////////////////////////
 // Component Definitions ////////////////////////////
 /////////////////////////
 // ********
     components = {
+// // HERO
+hero: () => {
+    const hero = document.createElement('div');
+    hero.style.cssText = 'width: 100%; position: relative; margin-top: -10px; margin-bottom: 8px; padding: 40px 10px 2px 10px;';
+
+    // Background image div with upload functionality
+    const bgImageDiv = document.createElement('div');
+    bgImageDiv.style.cssText = 'width: 100%; padding: 0 10px; position: absolute; top: -1; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; margin-left: -10px;';
+
+    // Gradient overlay
+    const gradientOverlay = document.createElement('div');
+    gradientOverlay.style.cssText = 'position: absolute; width: 100%; padding: 0 10px; top: 0; left: 0; right: 0; bottom: -1; background: linear-gradient(transparent 28%, var(--primary-color) 78%, var(--primary-color) 92%); opacity: 0.94; margin-left: -10px;';
+
+    // Main content wrapper
+    const contentWrapper = document.createElement('div');
+    contentWrapper.style.cssText = 'position: relative; padding: 64px 10px 10px 10px; text-align: center; width: 100%; color: white; margin-left: -10px;';
+
+    // Add Image button, hidden by default and shown on hover
+    const addImageButton = document.createElement('button');
+    addImageButton.textContent = 'Add Image';
+    addImageButton.style.cssText = `
+        position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+        padding: 5px 10px; font-size: 14px; background-color: #333; color: white; 
+        border: none; cursor: pointer; display: none; z-index: 9991;
+    `;
+    hero.appendChild(addImageButton);
+
+    // Editable h1 element
+    const h1Wrapper = document.createElement('div');
+    const h1 = document.createElement('h1');
+    h1.contentEditable = 'true';
+    h1.textContent = 'Welcome';
+    h1.style.cssText = 'margin: 0; font-size: 28px; margin-bottom: 10px; color: white !important;';
+    h1Wrapper.appendChild(h1);
+
+    // Editable p element
+    const pWrapper = document.createElement('div');
+    const p = document.createElement('p');
+    p.contentEditable = 'true';
+    p.textContent = 'This is a hero section with a beautiful gradient background';
+    p.style.cssText = 'margin: 0; font-size: 16px;';
+    pWrapper.appendChild(p);
+
+    // Append elements to content wrapper
+    contentWrapper.appendChild(h1Wrapper);
+    contentWrapper.appendChild(pWrapper);
+
+    // Append all parts to the hero container
+    hero.appendChild(bgImageDiv);
+    hero.appendChild(gradientOverlay);
+    hero.appendChild(contentWrapper);
+
+    // Show Add Image button on hover
+    hero.addEventListener('mouseenter', () => {
+        addImageButton.style.display = 'block';
+    });
+    hero.addEventListener('mouseleave', () => {
+        addImageButton.style.display = 'none';
+    });
+
+    // Image upload event for Add Image button
+    addImageButton.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    bgImageDiv.style.backgroundImage = `url(${event.target.result})`;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        input.click();
+    });
+
+    return hero;
+},
+// // BUTTON
         button: (type = 'default') => {
             const container = document.createElement('div');
-            container.style.cssText = 'width: 100%; display: flex; justify-content: space-between;';
-            const createButton = (text, isGhost = false, isDisabled = false) => {
+            container.style.cssText = 'width: 100%; display: flex; justify-content: space-between; gap: 14px;';
+            const createButton = (text, isGhost = false, isDisabled = false, isWithicon) => {
                 const button = document.createElement('div');
                 button.textContent = text;
                 button.style.cssText = `
@@ -1003,10 +1379,28 @@ updateButtonState(isLoading) {
                 button.setAttribute('role', 'button');
                 button.setAttribute('contentEditable','true');
                 // button.setAttribute('data-button-type', type);
+                
+                const icon = document.createElement('div');
+                icon.style.cssText = 'display: inline; margin-right 16px;';
+                icon.textContent = '';
+                const iconElement = document.createElement('i');
+                iconElement.className = 'fas fa-hand-point-right';
+                iconElement.style.cssText = 'font-size: 20px; color: var(--text-on-primary); cursor: pointer;';
+                icon.appendChild(iconElement);
+                
+                iconElement.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showIconPicker(iconElement);
+                });
+                if (isWithicon){button.prepend(icon);}
+
                 return button;
             };
-            
+
             switch (type) {
+                case 'withIcon':
+                    container.appendChild(createButton('Button', false, false, true));
+                    break;
                 case 'ghost':
                     container.appendChild(createButton('Ghost Button', true));
                     break;
@@ -1662,7 +2056,7 @@ dropdown: () => {
 
         // Add the icon element only when creating a new component
         const iconElement = document.createElement('i');
-        iconElement.className = 'fas fa-star';
+        iconElement.className = 'fa-solid fa-bolt-lightning';
         iconElement.style.cssText = 'font-size: 24px; color: var(--primary-color); cursor: pointer;';
         iconContainer.appendChild(iconElement);
     }
@@ -1832,7 +2226,6 @@ adjustableSpace: (originalComponent) => {
 
     if (originalComponent) {
         spaceContainer = originalComponent.cloneNode(true);
-        // Find the heightSlider and heightDisplay inside the cloned container
         heightSlider = spaceContainer.querySelector('.space-range');
         heightDisplay = spaceContainer.querySelector('.height-display');
     } else {
@@ -2013,10 +2406,23 @@ adjustableSpace: (originalComponent) => {
             
             // Create the shadow div
             const shadowDiv = document.createElement('div');
-            shadowDiv.style.cssText = 'background-color: rgba(0,0,0,0.12); width: 100%; height: 59px; position: absolute; top:0; left: 0; z-index: 1'
+            shadowDiv.style.cssText = 'background-color: rgba(0,0,0,0.12); width: 100%; height: 59px; position: absolute; top:0; left: 0; z-index: 1';
 
             const navbar = document.createElement('div');
             navbar.className = 'navbar top-navbar';
+
+            const icon = document.createElement('div');
+            icon.style.cssText = 'flex-shrink: 0;';
+            
+            const iconElement = document.createElement('i');
+            iconElement.className = 'fas fa-bars';
+            iconElement.style.cssText = 'font-size: 20px; color: var(--primary-color); cursor: pointer;';
+            icon.appendChild(iconElement);
+            
+            iconElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                showIconPicker(iconElement);
+            });
            
             navbar.innerHTML = `
                 <span style="font-size: 20px; font-weight: bold; color: --primary;">Brand</span>
@@ -2026,6 +2432,8 @@ adjustableSpace: (originalComponent) => {
                     <a style="margin-left: 20px; color: var(--basic-txt-color); text-decoration: none;">Contact</a>
                 </div>
             `;
+
+            navbar.appendChild(icon);
             
             navbar.querySelectorAll('span, a').forEach(el => this.makeTextEditable(el));
             topNavbarContainer.appendChild(navbar);
@@ -2155,7 +2563,7 @@ adjustableSpace: (originalComponent) => {
 
             const percentage = document.createElement('div');
             percentage.textContent = '76%';
-            percentage.style.cssText = 'margin-top: 5px; font-weight: bold; color: #2c3e50;';
+            percentage.style.cssText = 'margin-top: 5px; font-weight: bold; color: var(--basic-txt-color);';
 
             progress.appendChild(bar);
             container.appendChild(progress);
@@ -2354,13 +2762,11 @@ adjustableSpace: (originalComponent) => {
                 cursor: pointer;
                 flex: 1;
             `;
-
-            // Make text editable for the tab label without triggering selection change
+            //needs this version of texteditable
             this.makeTextEditable(tab);
 
             // Event listener for selecting the tab
             tab.addEventListener('click', (e) => {
-                // Only change selection if clicked directly, not when editing text
                 if (e.target !== document.activeElement) {
                     selectTab(tab);
                 }
@@ -2417,6 +2823,11 @@ adjustableSpace: (originalComponent) => {
                 ghostClass: 'sortable-ghost',
                 group: 'shared-components',
                 filter: '.navbar-spacer',
+                scroll: true,
+                scrollSensitivity: 30,
+                scrollSpeed: 10,
+                // scroll: document.querySelector('.phoneScrollCon'),
+                bubbleScroll: true,
                 onMove: function(evt) {
                     return !evt.related.classList.contains('navbar-spacer');
                 }
@@ -2695,7 +3106,7 @@ adjustableSpace: (originalComponent) => {
                     newItem.innerHTML = `
                         <button class="nav-delete-btn">×</button>
                         <a href="#" style="text-align: center; color: var(--primary-color); text-decoration: none; display: flex; flex-direction: column; align-items: center;">
-                            <i class="fas fa-star" style="font-size: 20px; margin-bottom: 4px;"></i>
+                            <i class="fa-solid fa-bolt-lightning" style="font-size: 20px; margin-bottom: 4px;"></i>
                             <span style="font-size: 12px;">New</span>
                         </a>
                     `;
@@ -2752,8 +3163,11 @@ adjustableSpace: (originalComponent) => {
             wrapper.style.cssText = 'width: 100%;';
             
             const alignCon = document.createElement('div');
-            const heading = document.createElement(level);
-            heading.textContent = `${level.toUpperCase()} Heading`;
+            // Ensure level is a valid heading tag
+            const validLevels = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+            const safeLevel = validLevels.includes(level) ? level : 'h1';
+            const heading = document.createElement(safeLevel);
+            heading.textContent = `${safeLevel.toUpperCase()} Heading`;
             heading.style.cssText = 'color: #2c3e50; margin: 10px 0;';
             heading.setAttribute('contentEditable','true');
             // this.makeTextEditable(heading);
@@ -2762,7 +3176,7 @@ adjustableSpace: (originalComponent) => {
             
             return wrapper;
         },
-        paragraph(originalComponent) {
+        paragraph(originalComponent, text = "This is a paragraph. Click to edit.") {
             const wrapper = document.createElement('div');
             wrapper.className = 'component-wrapper';
             wrapper.style.cssText = 'width: 100%;';
@@ -2774,7 +3188,7 @@ adjustableSpace: (originalComponent) => {
               paragraphElement = originalComponent.cloneNode(true);
             } else {
               paragraphElement = document.createElement('p');
-              paragraphElement.textContent = 'This is a paragraph. Click to edit.';
+              paragraphElement.textContent = text;
               paragraphElement.style.cssText = 'color: var(--basic-txt-color); line-height: 1.6; margin-bottom: 15px;';
               paragraphElement.setAttribute('contentEditable', 'true');
           
@@ -2820,7 +3234,7 @@ adjustableSpace: (originalComponent) => {
           
             return wrapper;
           },
-// // LABEL
+// // LABEL fieldlabel
          label(originalComponent) {
             let labelElement;
             if (originalComponent) {
@@ -2834,7 +3248,7 @@ adjustableSpace: (originalComponent) => {
                 display: block;
                 color: #2c3e50;
                 font-weight: 500;
-                margin: 8px 0 -8px 4px;
+                margin: 10px 0 -4px 4px;
                 font-size: 14px;
                 width: 100%;
               `;
@@ -3221,7 +3635,7 @@ notificationBanner: (originalComponent) => {
       message.setAttribute('contentEditable', 'true');
       
       subtext = document.createElement('div');
-      subtext.textContent = 'Additional details or instructions can go here';
+      subtext.textContent = 'Additional details or instructions can go here.';
       subtext.style.cssText = 'font-size: 14px; color: #666;';
       subtext.setAttribute('contentEditable', 'true');
       
@@ -3760,6 +4174,846 @@ chipGroup: () => {
         }
     };
 },
+// Floating Action Button
+floatingActionButton: () => {
+    const fab = document.createElement('div');
+    fab.classList.add('fab');
+    fab.style.cssText = `
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      bottom: 30px;
+      right: 20px;
+      z-index: 3847;
+    `;
+
+    const plusIcon = document.createElement('i');
+    plusIcon.className = 'fas fa-plus';
+    plusIcon.style.cssText = `
+      font-size: 18px;
+      color: #fff;
+    `;
+
+    fab.appendChild(plusIcon);
+    fab.addEventListener('click', (e) => {
+        e.preventDefault();
+        showIconPicker(plusIcon);
+    });
+
+    fab.addEventListener('mouseenter', () => {
+      fab.style.transform = 'scale(1.1)';
+      fab.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.2)';
+    });
+
+    fab.addEventListener('mouseleave', () => {
+      fab.style.transform = 'scale(1)';
+      fab.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)';
+    });
+
+    fab.addEventListener('click', () => {
+      // Add your desired functionality here
+      console.log('Floating action button clicked!');
+    });
+
+    return fab;
+  },
+// Bullet List
+bulletedList: () => {
+    // Create container for the list
+    const listContainer = document.createElement('div');
+    listContainer.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 12px;
+        width: 100%;
+        min-height: 48px;
+    `;
+
+    // Function to create a new list item
+    const createListItem = (text = 'New item') => {
+        const itemContainer = document.createElement('div');
+        itemContainer.style.cssText = `
+            display: flex;
+            align-items: flex-start;
+            margin-left: 0px;
+            transition: margin-left 0.2s ease;
+        `;
+
+        // Create icon container
+        const icon = document.createElement('div');
+        icon.style.cssText = `
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            cursor: pointer;
+        `;
+
+        const iconElement = document.createElement('i');
+        iconElement.className = 'fas fa-circle';
+        iconElement.style.cssText = `
+            font-size: 12px;
+            margin-top: 1px;
+            color: var(--text-color);
+        `;
+
+        icon.appendChild(iconElement);
+        icon.addEventListener('click', (e) => {
+            e.preventDefault();
+            showIconPicker(iconElement);
+        });
+
+        // Create text content
+        const content = document.createElement('div');
+        content.style.cssText = `
+            flex-grow: 1;
+            color: var(--text-color);
+            min-height: 24px;
+            padding: 2px 0;
+        `;
+        content.setAttribute('contenteditable', 'true');
+        content.textContent = text;
+
+        // Create controls container
+        const controls = document.createElement('div');
+        controls.style.cssText = `
+            display: none;
+            gap: 8px;
+            padding: 0 4px;
+        `;
+
+        // Indent button
+        const indentBtn = document.createElement('i');
+        indentBtn.className = 'fas fa-indent';
+        indentBtn.style.cssText = `
+            font-size: 14px;
+            color: var(--secondary-color);
+            cursor: pointer;
+            padding: 4px;
+        `;
+
+        // Unindent button
+        const unindentBtn = document.createElement('i');
+        unindentBtn.className = 'fas fa-outdent';
+        unindentBtn.style.cssText = `
+            font-size: 14px;
+            color: var(--secondary-color);
+            cursor: pointer;
+            padding: 4px;
+        `;
+
+        // Delete button
+        const deleteBtn = document.createElement('i');
+        deleteBtn.className = 'fas fa-times';
+        deleteBtn.style.cssText = `
+            font-size: 14px;
+            color: var(--secondary-color);
+            cursor: pointer;
+            padding: 4px;
+        `;
+
+        // Add controls
+        controls.appendChild(indentBtn);
+        controls.appendChild(unindentBtn);
+        controls.appendChild(deleteBtn);
+
+        // Add all elements to item container
+        itemContainer.appendChild(icon);
+        itemContainer.appendChild(content);
+        itemContainer.appendChild(controls);
+
+        // Event listeners
+        itemContainer.addEventListener('mouseenter', () => {
+            controls.style.display = 'flex';
+        });
+
+        itemContainer.addEventListener('mouseleave', () => {
+            controls.style.display = 'none';
+        });
+
+        // Indentation logic
+        indentBtn.addEventListener('click', () => {
+            const currentMargin = parseInt(itemContainer.style.marginLeft || '0');
+            if (currentMargin < 160) { // Max indent level
+                itemContainer.style.marginLeft = `${currentMargin + 40}px`;
+            }
+        });
+
+        unindentBtn.addEventListener('click', () => {
+            const currentMargin = parseInt(itemContainer.style.marginLeft || '0');
+            if (currentMargin >= 40) {
+                itemContainer.style.marginLeft = `${currentMargin - 40}px`;
+            }
+        });
+
+        // Delete item
+        deleteBtn.addEventListener('click', () => {
+            itemContainer.remove();
+            if (listContainer.children.length === 1) {
+                addButton.style.display = 'flex';
+            }
+        });
+
+        return itemContainer;
+    };
+
+    // Create add button
+    const addButton = document.createElement('div');
+    addButton.style.cssText = `
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    `;
+
+    const addIcon = document.createElement('i');
+    addIcon.className = 'fas fa-plus';
+    addIcon.style.cssText = `
+        font-size: 12px;
+        color: var(--secondary-color);
+        margin-right: 8px;
+    `;
+
+    const addText = document.createElement('span');
+    addText.textContent = 'Add item';
+    addText.style.cssText = `
+        font-size: 14px;
+        color: var(--secondary-color);
+    `;
+
+    addButton.appendChild(addIcon);
+    addButton.appendChild(addText);
+
+    // Add button event listeners
+    addButton.addEventListener('mouseenter', () => {
+        addButton.style.backgroundColor = 'var(--neutral-gray)';
+    });
+
+    addButton.addEventListener('mouseleave', () => {
+        addButton.style.backgroundColor = 'transparent';
+    });
+
+    addButton.addEventListener('click', () => {
+        const newItem = createListItem();
+        listContainer.insertBefore(newItem, addButton);
+        if (listContainer.children.length > 20) {
+            addButton.style.display = 'none';
+        }
+    });
+
+    // Add initial items
+    listContainer.appendChild(addButton);
+    listContainer.insertBefore(createListItem('First item'), addButton);
+    listContainer.insertBefore(createListItem('Second item'), addButton);
+
+    // Return container and setup function
+    return {
+        container: listContainer,
+        setup: () => {
+            const compContainer = listContainer.closest('.component-container');
+            if (compContainer) {
+                compContainer.addEventListener('mouseenter', () => {
+                    addButton.style.display = 'flex';
+                });
+
+                compContainer.addEventListener('mouseleave', () => {
+                    if (listContainer.children.length > 1) {
+                        addButton.style.display = 'none';
+                    }
+                });
+            }
+        }
+    };
+},
+// // Table /// / /// / /// /// // /
+table: () => {
+    // Create main container
+    const tableContainer = document.createElement('div');
+    tableContainer.style.cssText = `
+        width: 100%;
+        margin-top: 6px;
+        overflow-x: auto;
+    `;
+
+    // Create table element
+    const table = document.createElement('table');
+    table.style.cssText = `
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        table-layout: fixed;
+    `;
+
+    // Column types enum
+    const ColumnTypes = {
+        CHECKBOX: 'checkbox',
+        TEXT: 'text',
+        LINK: 'link',
+        ACTION: 'action'
+    };
+
+    // Track table state
+    const state = {
+        hasCheckboxColumn: false,
+        columns: [],
+        rows: [],
+        activeControls: null,
+        isResizing: false,
+        currentResizer: null,
+        startX: 0,
+        startWidth: 0,
+        initialRightEdge: 0
+    };
+
+    // Create header row
+    const createHeaderCell = (text = 'New Column', type = ColumnTypes.TEXT) => {
+        const th = document.createElement('th');
+        th.style.cssText = `
+            padding: 12px 0;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-on-primary);
+            border-bottom: 1px solid var(--neutral-gray);
+            background: var(--primary-color);
+            position: relative;
+            min-width: 36px;
+            width: 120px;
+            border-right: 1px solid var(--neutral-gray);
+        `;
+
+        // Header content wrapper
+        const headerContent = document.createElement('div');
+        headerContent.style.cssText = `
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+            margin-left: 16px;
+        `;
+
+        // Header text (editable)
+        const headerText = document.createElement('span');
+        headerText.textContent = text;
+        headerText.setAttribute('contenteditable', 'true');
+        headerText.style.pointerEvents = 'all';
+        headerContent.appendChild(headerText);
+
+        // Sort icon
+        const sortIcon = document.createElement('i');
+        sortIcon.className = 'fas fa-sort';
+        sortIcon.style.cssText = `
+            font-size: 12px;
+            color: var(--text-on-primary);
+            cursor: pointer;
+            pointer-events: all;
+            margin-right: 16px;
+        `;
+        sortIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            showIconPicker(sortIcon);
+        });
+        headerContent.appendChild(sortIcon);
+
+        // Column resizer
+        const resizer = document.createElement('div');
+        resizer.className = 'column-resizer';
+        resizer.style.cssText = `
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: transparent;
+            cursor: col-resize;
+            z-index: 550;
+            pointer-events: all;
+        `;
+    
+        const startResize = (e) => {
+            state.isResizing = true;
+            state.currentResizer = resizer;
+            state.startX = e.pageX;
+            state.startWidth = th.offsetWidth;
+            
+            // Store both the th and its current right edge position
+            const thRect = th.getBoundingClientRect();
+            state.initialRightEdge = thRect.right;
+            
+            // Add temporary overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1000;
+                cursor: col-resize;
+            `;
+            overlay.id = 'resize-overlay';
+            document.body.appendChild(overlay);
+            
+            // Position resize line at the th's right edge
+            const resizeLine = document.createElement('div');
+            resizeLine.style.cssText = `
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: var(--primary-color);
+                opacity: 0.5;
+                left: ${thRect.right}px;
+                pointer-events: none;
+                z-index: 1001;
+            `;
+            resizeLine.id = 'resize-line';
+            document.body.appendChild(resizeLine);
+        };       
+
+        resizer.addEventListener('mousedown', startResize);
+
+        // Add hover effect for resizer
+        resizer.addEventListener('mouseenter', () => {
+            if (!state.isResizing) {
+                resizer.style.background = 'var(--primary-color)';
+            }
+        });
+
+        resizer.addEventListener('mouseleave', () => {
+            if (!state.isResizing) {
+                resizer.style.background = 'transparent';
+            }
+        });
+
+        // Column controls
+        const controls = document.createElement('div');
+        controls.className = 'column-controls';
+        controls.style.cssText = `
+            display: none;
+            position: absolute;
+            left: -2px;
+            top: 136%;
+            border: 1px solid var(--neutral-gray);
+            transform: translateY(-50%);
+            background: var(--background-color);
+            color: var(--basic-txt-color);
+            padding: 4px;
+            border-radius: 4px;
+            gap: 4px;
+            z-index: 108;
+            pointer-events: all;
+        `;
+
+        // Column type selector
+        const typeSelector = document.createElement('select');
+        typeSelector.style.cssText = `
+            padding: 2px 4px;
+            border: 1px solid var(--neutral-gray);
+            border-radius: 4px;
+            background: var(--background-color);
+            color: var(--text-color);
+            font-size: 12px;
+        `;
+
+        Object.values(ColumnTypes).forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+            typeSelector.appendChild(option);
+        });
+        typeSelector.value = type;
+
+        typeSelector.addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+            controls.style.display = 'flex';
+            state.activeControls = controls;
+        });
+
+        typeSelector.addEventListener('change', (e) => {
+            e.stopPropagation();
+            updateColumnType(th, typeSelector.value);
+            setTimeout(() => {
+                if (state.activeControls === controls) {
+                    controls.style.display = 'none';
+                    state.activeControls = null;
+                }
+            }, 200);
+        });
+
+        typeSelector.addEventListener('blur', () => {
+            setTimeout(() => {
+                if (state.activeControls === controls) {
+                    controls.style.display = 'none';
+                    state.activeControls = null;
+                }
+            }, 200);
+        });
+
+        controls.appendChild(typeSelector);
+
+        // Delete column button
+        const deleteBtn = document.createElement('i');
+        deleteBtn.className = 'fas fa-times';
+        deleteBtn.style.cssText = `
+            font-size: 12px;
+            color: var(--error-danger-delete);
+            cursor: pointer;
+            padding: 4px;
+        `;
+        deleteBtn.addEventListener('click', () => {
+            const colIndex = Array.from(th.parentElement.children).indexOf(th);
+            deleteColumn(colIndex);
+        });
+        controls.appendChild(deleteBtn);
+
+        th.appendChild(headerContent);
+        th.appendChild(controls);
+        th.appendChild(resizer);
+
+        // Improved hover behavior
+        th.addEventListener('mouseenter', () => {
+            if (!state.activeControls && !state.isResizing) {
+                controls.style.display = 'flex';
+            }
+        });
+
+        th.addEventListener('mouseleave', (e) => {
+            if (!controls.contains(e.relatedTarget) && state.activeControls !== controls) {
+                controls.style.display = 'none';
+            }
+        });
+
+        return th;
+    };
+
+    // Create table cell based on column type
+    const createCell = (type = ColumnTypes.TEXT) => {
+        const td = document.createElement('td');
+        td.style.cssText = `
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--neutral-gray);
+            color: var(--basic-txt-color);
+        `;
+
+        switch (type) {
+            case ColumnTypes.CHECKBOX:
+                const checkboxDiv = document.createElement('div');
+                checkboxDiv.className = 'fa-regular fa-square';
+                checkboxDiv.style.cssText = `
+                    margin: -2px 10px 0 10px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    position: relative;
+                    font-size: 18px;
+                    color: #a0a0a0;
+                `;
+            
+                // Checkmark icon
+                const checkIcon = document.createElement('i');
+                checkIcon.className = 'fa-solid fa-square-check';
+                checkIcon.style.cssText = `
+                    font-size: 18px;
+                    color: var(--primary-color);
+                    display: none; 
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    border: none;
+                `;
+                checkboxDiv.appendChild(checkIcon);
+            
+                checkboxDiv.addEventListener('click', () => {
+                    const isChecked = checkIcon.style.display === 'none';
+                    checkIcon.style.display = isChecked ? 'block' : 'none';
+                });
+                
+                td.appendChild(checkboxDiv);
+                break;
+
+            case ColumnTypes.LINK:
+                const link = document.createElement('span');
+                link.textContent = 'Link Text';
+                link.style.cssText = `
+                    color: #0d87d8;
+                    cursor: pointer;
+                `;
+                link.setAttribute('contenteditable', 'true');
+                td.appendChild(link);
+                break;
+
+            case ColumnTypes.ACTION:
+                const actionIcon = document.createElement('i');
+                actionIcon.className = 'fas fa-bolt';
+                actionIcon.style.cssText = `
+                    font-size: 14px;
+                    color: var(--basic-txt-color);
+                    cursor: pointer;
+                `;
+                actionIcon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showIconPicker(actionIcon);
+                });
+                td.appendChild(actionIcon);
+                break;
+
+            default: // TEXT
+                td.setAttribute('contenteditable', 'true');
+                td.textContent = 'Cell Text';
+        }
+
+        return td;
+    };
+
+    // Create new row
+    const createRow = (headerRow) => {
+        const tr = document.createElement('tr');
+        tr.style.cssText = `
+            transition: background-color 0.2s ease;
+        `;
+
+        // Add hover effect
+        tr.addEventListener('mouseenter', () => {
+            tr.style.backgroundColor = 'var(--neutral-gray-light)';
+            tr.querySelector('.row-controls').style.display = 'flex';
+        });
+
+        tr.addEventListener('mouseleave', () => {
+            tr.style.backgroundColor = 'transparent';
+            tr.querySelector('.row-controls').style.display = 'none';
+        });
+
+        // Add cells based on header row
+        const headerCells = headerRow.children;
+        Array.from(headerCells).forEach(header => {
+            const type = header.querySelector('select').value;
+            tr.appendChild(createCell(type));
+        });
+
+        // Add row controls
+        const controlsCell = document.createElement('td');
+        controlsCell.style.cssText = `
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--neutral-gray);
+        `;
+
+        const controls = document.createElement('div');
+        controls.className = 'row-controls';
+        controls.style.cssText = `
+            display: none;
+            gap: 8px;
+            justify-content: flex-start;
+            margin-right: 44px;
+            width: 44px;
+        `;
+
+        const deleteBtn = document.createElement('i');
+        deleteBtn.className = 'fas fa-trash';
+        deleteBtn.style.cssText = `
+            font-size: 12px;
+            color: var(--error-danger-delete);
+            cursor: pointer;
+        `;
+        deleteBtn.addEventListener('click', () => {
+            tr.remove();
+            updateAddButtonVisibility();
+        });
+
+        controls.appendChild(deleteBtn);
+        controlsCell.appendChild(controls);
+        tr.appendChild(controlsCell);
+
+        return tr;
+    };
+
+    // Update column type
+    const updateColumnType = (headerCell, newType) => {
+        const colIndex = Array.from(headerCell.parentElement.children).indexOf(headerCell);
+        const rows = table.querySelectorAll('tbody tr');
+        
+        rows.forEach(row => {
+            const cell = row.children[colIndex];
+            const newCell = createCell(newType);
+            row.replaceChild(newCell, cell);
+        });
+    };
+
+    // Delete column
+    const deleteColumn = (colIndex) => {
+        const rows = table.querySelectorAll('tr');
+        rows.forEach(row => {
+            row.deleteCell(colIndex);
+        });
+    };
+
+    // Button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = `
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    `;
+
+    // Add column button
+    const addColumnBtn = document.createElement('button');
+    addColumnBtn.style.cssText = `
+        padding: 8px 16px;
+        margin: 8px 0;
+        background: transparent;
+        border: 1px solid var(--neutral-gray);
+        border-radius: 4px;
+        color: var(--secondary-color);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+    `;
+
+    const addColumnIcon = document.createElement('i');
+    addColumnIcon.className = 'fas fa-plus';
+    addColumnBtn.appendChild(addColumnIcon);
+
+    const addColumnText = document.createElement('span');
+    addColumnText.textContent = 'Add Column';
+    addColumnBtn.appendChild(addColumnText);
+
+    // Add row button
+    const addRowBtn = document.createElement('button');
+    addRowBtn.style.cssText = addColumnBtn.style.cssText;
+
+    const addRowIcon = document.createElement('i');
+    addRowIcon.className = 'fas fa-plus';
+    addRowBtn.appendChild(addRowIcon);
+
+    const addRowText = document.createElement('span');
+    addRowText.textContent = 'Add Row';
+    addRowBtn.appendChild(addRowText);
+
+    buttonContainer.appendChild(addColumnBtn);
+    buttonContainer.appendChild(addRowBtn);
+
+    // Create initial table structure
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    headerRow.appendChild(createHeaderCell('ID', ColumnTypes.TEXT));
+    headerRow.appendChild(createHeaderCell('Name', ColumnTypes.TEXT));
+    headerRow.appendChild(createHeaderCell('Action', ColumnTypes.ACTION));
+    thead.appendChild(headerRow);
+
+    const tbody = document.createElement('tbody');
+    // Now we can safely pass the headerRow when creating new rows
+    tbody.appendChild(createRow(headerRow));
+    tbody.appendChild(createRow(headerRow));
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    tableContainer.appendChild(table);
+    tableContainer.appendChild(buttonContainer);
+
+    // Add event listeners for buttons
+    addColumnBtn.addEventListener('click', () => {
+        const headerRow = table.querySelector('thead tr');
+        headerRow.insertBefore(createHeaderCell(), headerRow.lastElementChild);
+        
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            row.insertBefore(createCell(), row.lastElementChild);
+        });
+    });
+
+    addRowBtn.addEventListener('click', () => {
+        const headerRow = table.querySelector('thead tr');
+        tbody.appendChild(createRow(headerRow));
+        updateAddButtonVisibility();
+    });
+
+    // Update add button visibility
+    const updateAddButtonVisibility = () => {
+        const rowCount = tbody.children.length;
+        addRowBtn.style.display = rowCount >= 20 ? 'none' : 'flex';
+    };
+
+    // Hover effects for buttons
+    [addColumnBtn, addRowBtn].forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            btn.style.backgroundColor = 'var(--neutral-gray)';
+            btn.style.borderColor = 'var(--primary-color)';
+            btn.style.color = 'var(--primary-color)';
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.style.backgroundColor = 'transparent';
+            btn.style.borderColor = 'var(--neutral-gray)';
+            btn.style.color = 'var(--secondary-color)';
+        });
+    });
+
+    return {
+        container: tableContainer,
+        setup: () => {
+            const compContainer = tableContainer.closest('.component-container');
+            if (compContainer) {
+                compContainer.addEventListener('mouseenter', () => {
+                    buttonContainer.style.display = 'flex';
+                });
+
+                compContainer.addEventListener('mouseleave', () => {
+                    buttonContainer.style.display = 'none';
+                });
+            }
+
+            // Add global handlers for column resizing
+            document.addEventListener('mousemove', (e) => {
+                if (state.isResizing) {
+                    const delta = e.pageX - state.startX;
+                    const newWidth = Math.max(60, state.startWidth + delta);
+                    const th = state.currentResizer.parentElement;
+                    th.style.width = `${newWidth}px`;
+            
+                    // Update resize line position relative to the initial right edge
+                    const resizeLine = document.getElementById('resize-line');
+                    if (resizeLine) {
+                        const newPosition = state.initialRightEdge + delta;
+                        resizeLine.style.transform = `translateX(${delta}px)`;
+                    }
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (state.isResizing) {
+                    state.isResizing = false;
+                    state.currentResizer = null;
+                    state.startX = 0;
+                    state.startWidth = 0;
+
+                    // Remove overlay and resize line
+                    const overlay = document.getElementById('resize-overlay');
+                    const resizeLine = document.getElementById('resize-line');
+                    if (overlay) overlay.remove();
+                    if (resizeLine) resizeLine.remove();
+                }
+            });
+
+            // Add global click handler to close active controls
+            document.addEventListener('click', (e) => {
+                if (state.activeControls && !state.activeControls.contains(e.target)) {
+                    state.activeControls.style.display = 'none';
+                    state.activeControls = null;
+                }
+            });
+        }
+    };
+},
 // // HZ Rule Divider line horizontal
     hzDivider: () => {
     const dividerWrapper = document.createElement('div');
@@ -3913,11 +5167,88 @@ chipGroup: () => {
     dividerWrapper.appendChild(dividerContainer);
 
     return dividerWrapper;
-    }
+    },        
+// // FOOTER
+    footer: () => {
+        const footer = document.createElement('footer');
+        footer.innerHTML = `
+            <div style="width: 100%; background-color: var(--primary-color); position: absolute; top: 0; right: 0; left: -10; bottom: -10; z-index: 1; padding: 0 10px; "></div>
+            <div style="display: flex; justify-content: space-between; width: 100%; padding: 20px 0; z-index: 2; position: relative;">
+                <div style="text-align: left;">
+                    <div class="footer-image-container" style="margin-bottom: 10px;">
+                        <div onclick="this.querySelector('input').click()" 
+                            style="width: 60px; height: 60px; background: #f0f0f0; display: flex; justify-content: center; align-items: center; cursor: pointer; margin-bottom: 10px;">
+                            <span style="color: #333;">Logo</span>
+                            <input type="file" accept="image/*" onchange="handleFooterImageUpload(this)" style="display: none;">
+                            <img style="display: none; max-width: 60px; height: auto;" class="footer-logo">
+                        </div>
+                    </div>
+                    <div>
+                    <h3 contenteditable style="margin: 0;">Brand</h3>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 22px; font-size: 14px; padding: 2px 8px;">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li contenteditable style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">About Us</a></li>
+                        <li contenteditable style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">Contact</a></li>
+                        <li contenteditable style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">Careers</a></li>
+                    </ul>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li contenteditable style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">Support</a></li>
+                        <li contenteditable style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">Privacy Policy</a></li>
+                        <li contenteditable style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        const container = document.createElement('div');
+        container.classList.add('socialFooter')
+        container.style.cssText = 'display: flex; justify-content: center; gap: 40px; padding: 24px 0 68px 0; border-top: 1px solid var(--neutral-gray); z-index: 2; position: relative; z-index: 3; color: #333;';
+
+        const icons = ['fab fa-yelp', 'fab fa-patreon', 'fas fa-envelope']; // Customize classes as needed
+
+        icons.forEach(iconClass => {
+            const iconWrapper = document.createElement('div');
+            iconWrapper.style.cssText = 'flex-shrink: 0;';
+            
+            const iconElement = document.createElement('i');
+            iconElement.className = iconClass;
+            iconElement.style.cssText = 'font-size: 20px; cursor: pointer;';
+            iconWrapper.appendChild(iconElement);
+            
+            iconElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                showIconPicker(iconElement);
+            });
+            
+            container.appendChild(iconWrapper);
+        });
+        footer.append(container);
+        footer.style.cssText = 'width: 100%; color: var(--text-on-primary); padding: 20px 0; margin-bottom: -68px; position: relative;';
+        return footer;
+    },
         };    
     }
-// END COMPONENTS
-
+////////////////////////////////////////////
+// // END COMPONENTS
+//footer IMG
+function handleFooterImageUpload(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        const container = input.parentElement;
+        const imgElement = container.querySelector('.footer-logo');
+        const logoText = container.querySelector('span');
+        
+        reader.onload = function(e) {
+            imgElement.src = e.target.result;
+            imgElement.style.display = 'block';
+            logoText.style.display = 'none';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
     
 // Initialize the editor
     document.addEventListener('DOMContentLoaded', () => {

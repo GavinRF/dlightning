@@ -10,27 +10,29 @@
 
 <!-- opengraph  -->
 <meta property="og:image" content="https://dlightning.org/img/opengraph/mock-gen.png"/>
-<meta property="og:title" content="Dlightning - Mobile Mock Generator"/>
+<meta property="og:title" content="Dlightning - Mobile Screen Builder"/>
 <meta property="og:description" content="Dedicated to creating a better world through design."/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link id="google-fonts" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Condensed:ital,wght@0,600;1,600|Open+Sans:400,700|Lato:400,700|Montserrat:400,700|Poppins:400,700|Raleway:400,700|Nunito:400,700|Playfair+Display:ital,wght@400,700|Source+Sans+Pro:400,700|Ubuntu:400,700&display=swap">
 <link rel="stylesheet" href="css/ux-mock-bldr.css">
+<link rel="stylesheet" href="css/coloris.min.css"/>
 
 <script src=" https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/dist/html2canvas-pro.min.js "></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
-<script src=" https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js "></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://togetherjs.com/togetherjs-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
 </head>
 
 <body>
     <div class="sidebar">
         <div id="titleBlock">
             <a href="index.html"><img src="img/icon/logo-spelled-out-white.png" height="19px"></a> 
-            <h1>Mobile Mock Generator</h1>
+            <h1>Mobile Screen Builder</h1>
         </div>
         <!-- color and font PICKERs ///////////////// -->
         <div class="font-picker-container">
@@ -74,11 +76,20 @@
             </div>
         </div>
 
-<!-- TABS  -->
-        <div class="sidebar-tabs">
-            <button class="sidebar-tab active" data-tab="basic">Basic Elements</button>
-            <button class="sidebar-tab" data-tab="components">Components</button>
+        <div class="search-container">
+            <input type="text" id="componentSearch" placeholder="Search..." 
+                   style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #248cd2; margin: 10px 0;">
         </div>
+
+<!-- TABS  -->
+<div class="sidebar-tabs">
+    <button class="sidebar-tab active" data-tab="basic">
+        Basic Elements <span id="basic-count">0</span>
+    </button>
+    <button class="sidebar-tab" data-tab="components">
+        Components <span id="components-count">0</span>
+    </button>
+</div>
 <!-- COMPONENTS  -->
     <div class="sidebar-content active" data-tab="basic">
         <button class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;"><i class="fas fa-bars"></i> Top Navigation Bar</button>
@@ -96,6 +107,7 @@
             <button class="component-btn" data-component="button"><i class="fas fa-square"></i> Button</button>
             <select id="button-type" class="selectBoxStyles">
                 <option value="default">Basic</option>
+                <option value="withIcon">With Icon</option>
                 <option value="ghost">Ghost</option>
                 <option value="twobuttons">Two Buttons</option>
                 <option value="disabled">Disabled</option>
@@ -152,9 +164,15 @@
             <button class="component-btn" data-component="datePicker"><i class="fas fa-calendar-alt"></i> Date Picker</button>
             <button class="component-btn" data-component="fileUpload"><i class="fas fa-file-upload"></i> File Upload</button>
         </div>
+        <button class="component-btn" data-component="bulletedList"><i class="fas fa-list-ul"></i> Bullet List</button>
+        <button class="component-btn" data-component="table"><i class="fas fa-table"></i> Data Table</button>
+        <button class="component-btn" data-component="floatingActionButton"><i class="fas fa-circle-plus"></i> Floating Action Button</button>
     </div>
+
 <!-- COMPONENETS TAB //////////////// -->
+ <!-- COMPONENETS //////////////// -->
     <div class="sidebar-content" data-tab="components">
+        <button class="component-btn" data-component="hero"><i class="fa-solid fa-mattress-pillow fa-rotate-90"></i> Hero Section</button>
         <div class="alert-container">
             <button class="component-btn" data-component="avatar"><i class="fas fa-user-circle"></i> Avatar</button>
                 <select id="avatar-type" class="selectBoxStyles">
@@ -185,7 +203,7 @@
         <button class="component-btn" data-component="notificationBanner"><i class="fas fa-bell"></i>  Notification</button>
         <button class="component-btn" data-component="progressBar"><i class="fa-solid fa-bars-progress"></i> Progress Bar</button>
         <button class="component-btn" data-component="accordion"><i class="fas fa-chevron-down"></i> Accordion</button>
-        <button class="component-btn" data-component="card"><i class="fas fa-window-maximize"></i> Card</button>
+        <button class="component-btn" data-component="card"><i class="fa-regular fa-window-maximize"></i> Card</button>
         <button class="component-btn" data-component="chipGroup"><i class="fa-solid fa-capsules fa-rotate-90"></i> Pills</button>
         <button class="component-btn" data-component="modal"><i class="fas fa-square-up-right"></i> Modal Pop-up</button>
         <button class="component-btn" data-component="progressTracker"><i class="fas fa-timeline"></i>  Progress Tracker</button>
@@ -199,6 +217,7 @@
                 <option value="doughnut">Semi-circle Doughnut</option>
             </select>
         </div> -->
+        <button class="component-btn" data-component="footer"><i class="fa-solid fa-mattress-pillow fa-rotate-270"></i> Footer</button>
         <div class="btn-class-group">
             <label>Chat</label>
             <button class="component-btn" data-component="leftChat"><i class="fas fa-comment-alt"></i> Left Chat</button>
@@ -221,7 +240,7 @@
                 <button class="component-btn" id="html-to-img"><i class="fas fa-download"></i> SVG</button>
             </div> -->
             <div>
-                <button class="component-btn" id="download-btn"><i class="fas fa-download"></i> Download PNG</button>
+                <button class="component-btn" id="download-btn"><i class="fas fa-circle-down"></i> Download PNG Image</button>
             </div>
         <!-- </div> -->
         <button id="togetherJS" class="component-btn" onclick="TogetherJS(this); return false;"><i class="fa-solid fa-users"></i> Invite Friends to Collaborate</button>
@@ -236,7 +255,7 @@
     </div>
 
     <!-- <div id="toggleCanvasBtnContainer" title="Toggle mock phone height"> -->
-        <button id="toggleCanvasBtn" title="toggle the height of the mobile mock." class="toggle-btn"><i class="fa-solid fa-mobile-screen-button"></i> </button>
+        <button id="toggleCanvasBtn" title="toggle the height of the mobile screen." class="toggle-btn"><i class="fa-solid fa-mobile-screen-button"></i> </button>
     <!-- </div> -->
 
 <!-- PHONE MOCK AREA 📱 +++++++++++++ -->
@@ -285,5 +304,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 <script src="js/extra-func.js"></script>
 <script src="js/ux-mock-bldr.js"></script>
+<script src="coloris.min.js"></script>
 </body>
 </html>
