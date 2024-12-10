@@ -817,7 +817,7 @@
             <div>
                 <button class="component-btn" id="download-btn"><i class="fas fa-circle-down"></i> Download PNG Image</button>
             </div>
-            <button id="togetherJS" class="component-btn">
+            <button id="collaborateBtn" class="component-btn">
                 <i class="fa-solid fa-users"></i> Invite Friends to Collaborate
             </button>
         <!-- DARK MODE  -->
@@ -877,6 +877,10 @@
     <img src="img/transparent white D.png" id="Dimg2">
 </a>
 <!-- HTML END ////////////////// -->
+<script src="https://cdn.jsdelivr.net/npm/yjs@13.6.10/dist/yjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/y-websocket@1.5.1/dist/y-websocket.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/y-presence@0.2.3/dist/y-presence.min.js"></script>
+
  <script>
 var colorPicker = new iro.ColorPicker("#color-picker", {
     width: 190,
@@ -942,67 +946,138 @@ $(document).ready(function() {
         });
     });
 
-// //  TOGETHER.js
-// Configure TogetherJS before loading the script
-var TogetherJSConfig = {
-    // Hub configuration
-    hubBase: "https://hub.togetherjs.com",
-    
-    // Disable auto-refresh on configuration changes
-    disableWebRTC: true,
-    
-    // Suppress initial confirmation dialog
-    suppressJoinConfirmation: true,
-    
-    // Minimize UI elements
-    suppressInvite: true,
-    suppressJoinConfirmation: true,
-    
-    // Set up user identification
-    getUserName: function () {
-        return "User_" + Math.floor(Math.random() * 1000);
-    },
-    
-    // Session events
-    on: {
-        ready: function () {
-            const button = document.getElementById('togetherJS');
-            if (button) {
-                button.innerHTML = '<i class="fa-solid fa-users-slash"></i> End Collaboration Session';
-            }
-            console.log("TogetherJS session started");
-        },
-        close: function () {
-            const button = document.getElementById('togetherJS');
-            if (button) {
-                button.innerHTML = '<i class="fa-solid fa-users"></i> Invite Friends to Collaborate';
-            }
-            console.log("TogetherJS session closed");
+// //  Y.Doc();  // //
+function initCollaboration() {
+    // Create a Yjs document
+    const ydoc = new Y.Doc();
+
+    // Connect to a WebSocket server
+    const wsProvider = new WebsocketProvider(
+        'wss://demos.yjs.dev', // You can replace this with your own WebSocket server
+        'screen-builder-demo',
+        ydoc
+    );
+
+    // Initialize presence (for cursor tracking)
+    const awareness = wsProvider.awareness;
+
+    // Set up presence handling
+    awareness.setLocalState({
+        user: {
+            name: 'User_' + Math.floor(Math.random() * 1000),
+            color: '#' + Math.floor(Math.random()*16777215).toString(16),
+            cursor: null
         }
-    }
-};
+    });
 
-// Wait for DOM to be ready
-document.addEventListener('DOMContentLoaded', function() {
-    const button = document.getElementById('togetherJS');
-    if (button) {
-        // Remove any existing onclick handler
-        button.removeAttribute('onclick');
+    // Track cursor movement
+    document.addEventListener('mousemove', (e) => {
+        const bounds = document.querySelector('.canvas-content').getBoundingClientRect();
         
-        // Add single click handler
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (typeof TogetherJS === 'undefined') {
-                console.error('TogetherJS is not loaded');
-                return;
+        // Only track cursor if it's within the canvas
+        if (e.clientX >= bounds.left && e.clientX <= bounds.right &&
+            e.clientY >= bounds.top && e.clientY <= bounds.bottom) {
+            awareness.setLocalState({
+                user: {
+                    ...awareness.getLocalState().user,
+                    cursor: {
+                        x: e.clientX - bounds.left,
+                        y: e.clientY - bounds.top
+                    }
+                }
+            });
+        } else {
+            // Remove cursor when outside canvas
+            awareness.setLocalState({
+                user: {
+                    ...awareness.getLocalState().user,
+                    cursor: null
+                }
+            });
+        }
+    });
+
+    // Handle remote cursors
+    function updateRemoteCursors(changes) {
+        // Remove old cursor elements
+        document.querySelectorAll('.remote-cursor').forEach(el => el.remove());
+
+        // Add cursor for each remote user
+        awareness.getStates().forEach((state, clientId) => {
+            if (clientId !== ydoc.clientID && state.user.cursor) {
+                const cursor = document.createElement('div');
+                cursor.className = 'remote-cursor';
+                cursor.style.cssText = `
+                    position: absolute;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background-color: ${state.user.color};
+                    pointer-events: none;
+                    transform: translate(-50%, -50%);
+                    z-index: 1000;
+                `;
+                cursor.style.left = `${state.user.cursor.x}px`;
+                cursor.style.top = `${state.user.cursor.y}px`;
+
+                // Add user label
+                const label = document.createElement('div');
+                label.className = 'remote-cursor-label';
+                label.textContent = state.user.name;
+                label.style.cssText = `
+                    position: absolute;
+                    left: 15px;
+                    top: 0;
+                    background-color: ${state.user.color};
+                    color: white;
+                    padding: 2px 5px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    white-space: nowrap;
+                `;
+                cursor.appendChild(label);
+
+                document.querySelector('.canvas-content').appendChild(cursor);
             }
-            TogetherJS();
-        }, false);
+        });
     }
 
-    // Check for session URL
-    if (window.location.hash.includes("&togetherjs=")) {
-        TogetherJS();
+    // Listen for awareness changes
+    awareness.on('change', updateRemoteCursors);
+
+    // Connection status handling
+    const button = document.getElementById('collaborateBtn');
+    wsProvider.on('status', ({ status }) => {
+        if (status === 'connected') {
+            button.innerHTML = '<i class="fa-solid fa-users-slash"></i> End Collaboration Session';
+            button.classList.add('active');
+        } else {
+            button.innerHTML = '<i class="fa-solid fa-users"></i> Invite Friends to Collaborate';
+            button.classList.remove('active');
+        }
+    });
+
+    // Share URL functionality
+    const roomUrl = `${window.location.origin}${window.location.pathname}?room=${ydoc.guid}`;
+    console.log('Share this URL to collaborate:', roomUrl);
+
+    return {
+        disconnect: () => {
+            wsProvider.disconnect();
+            document.querySelectorAll('.remote-cursor').forEach(el => el.remove());
+        }
+    };
+}
+
+// Initialize collaboration when button is clicked
+let collaborationInstance = null;
+
+document.getElementById('collaborateBtn').addEventListener('click', () => {
+    if (!collaborationInstance) {
+        collaborationInstance = initCollaboration();
+    } else {
+        collaborationInstance.disconnect();
+        collaborationInstance = null;
     }
 });
 
@@ -1012,6 +1087,5 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="js/extra-func.js"></script>
 <script src="js/ux-mock-bldr.js"></script>
 <script src="js/variants.js"></script>
-<script src="https://togetherjs.com/togetherjs-min.js"></script>
 </body>
 </html>
