@@ -817,7 +817,9 @@
             <div>
                 <button class="component-btn" id="download-btn"><i class="fas fa-circle-down"></i> Download PNG Image</button>
             </div>
-        <button id="togetherJS" class="component-btn" return false;"><i class="fa-solid fa-users"></i> Invite Friends to Collaborate</button>
+            <button id="togetherJS" class="component-btn">
+                <i class="fa-solid fa-users"></i> Invite Friends to Collaborate
+            </button>
         <!-- DARK MODE  -->
         <div class="dark-mode-toggle">
             <label class="switchDark">
@@ -941,75 +943,75 @@ $(document).ready(function() {
     });
 
 // //  TOGETHER.js
-    // Configure TogetherJS
-    
-    var TogetherJSConfig = {
-    // The hub server URL - using Mozilla's default
+// Configure TogetherJS before loading the script
+var TogetherJSConfig = {
+    // Hub configuration
     hubBase: "https://hub.togetherjs.com",
-    // Suppress the initial popup
-    // suppressInvite: true,
-    // Suppress help message
-    suppressJoinConfirmation: true,
-    // Enable real-time cursor tracking
-    enableSharing: true,
-    // Customize the dock position (bottom-right)
-    dockStyle: {
-        background: "var(--interface-color)",
-        color: "#fff"
-    },
     
-    // Set up user identification (optional)
+    // Disable auto-refresh on configuration changes
+    disableWebRTC: true,
+    
+    // Suppress initial confirmation dialog
+    suppressJoinConfirmation: true,
+    
+    // Minimize UI elements
+    suppressInvite: true,
+    suppressJoinConfirmation: true,
+    
+    // Set up user identification
     getUserName: function () {
-        // You can integrate this with your user system
         return "User_" + Math.floor(Math.random() * 1000);
     },
-    // Hook into session events
+    
+    // Session events
     on: {
         ready: function () {
             const button = document.getElementById('togetherJS');
-            button.innerHTML = '<i class="fa-solid fa-users-slash"></i> End Collaboration Session';
-            console.log("TogetherJS session is ready");
+            if (button) {
+                button.innerHTML = '<i class="fa-solid fa-users-slash"></i> End Collaboration Session';
+            }
+            console.log("TogetherJS session started");
         },
         close: function () {
             const button = document.getElementById('togetherJS');
-            button.innerHTML = '<i class="fa-solid fa-users"></i> Invite Friends to Collaborate';
+            if (button) {
+                button.innerHTML = '<i class="fa-solid fa-users"></i> Invite Friends to Collaborate';
+            }
             console.log("TogetherJS session closed");
         }
     }
-    };
+};
 
-    // Function to handle session initialization
-    function initializeTogetherJS() {
-    if (typeof TogetherJS !== 'undefined') {
-        TogetherJS();
-    } else {
-        console.error('TogetherJS is not loaded');
-    }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', function() {
     const button = document.getElementById('togetherJS');
-    button.onclick = function() {
-        TogetherJS(this);
-        return false;
-    };
-    });
-
-    // Add event listener to your button
-    document.querySelector('#togetherJS').addEventListener('click', function() {
-    initializeTogetherJS();
-    });
-
-    // Handle session URLs
-    if (window.location.hash.includes("&togetherjs=")) {
-    initializeTogetherJS();
+    if (button) {
+        // Remove any existing onclick handler
+        button.removeAttribute('onclick');
+        
+        // Add single click handler
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (typeof TogetherJS === 'undefined') {
+                console.error('TogetherJS is not loaded');
+                return;
+            }
+            TogetherJS();
+        }, false);
     }
+
+    // Check for session URL
+    if (window.location.hash.includes("&togetherjs=")) {
+        TogetherJS();
+    }
+});
 
  </script>
-<script src="https://togetherjs.com/togetherjs-min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 <script src="js/extra-func.js"></script>
 <script src="js/ux-mock-bldr.js"></script>
 <script src="js/variants.js"></script>
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
 </body>
 </html>
