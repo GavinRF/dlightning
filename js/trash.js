@@ -1989,3 +1989,57 @@ document.querySelectorAll('.component-btn').forEach(btn => {
 
 
 ///////
+
+// // ROTATE COLOR
+function rotateColor(hexColor, degrees) {
+    // Convert hex color to RGB
+    let r = parseInt(hexColor.slice(1, 3), 16);
+    let g = parseInt(hexColor.slice(3, 5), 16);
+    let b = parseInt(hexColor.slice(5, 7), 16);
+  
+    // Convert RGB to HSL
+    r /= 255, g /= 255, b /= 255;
+    let max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+  
+    if (max == min) {
+      h = s = 0; // achromatic
+    } else {
+      let d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+  
+    // Apply hue rotation
+    h = (h + degrees / 360) % 1;
+  
+    // Convert HSL back to RGB
+    let r1 = 255 * (h < 1/6 ? 6*h : h < 1/2 ? 1 : h < 2/3 ? 6*(2/3-h) : 0);
+    let g1 = 255 * (h < 1/2 ? 2*h : h < 2/3 ? 1 : h < 5/6 ? 6*(5/6-h) : 0);
+    let b1 = 255 * (h >= 5/6 ? 6*(h-5/6) : h >= 1/2 ? 1 : h < 1/3 ? 6*h : 0);
+  
+    // Convert RGB back to hex
+    r1 = Math.round(r1).toString(16).padStart(2, '0');
+    g1 = Math.round(g1).toString(16).padStart(2, '0');
+    b1 = Math.round(b1).toString(16).padStart(2, '0');
+  
+    return `#${r1}${g1}${b1}`;
+  }
+  
+  Example usage:
+  const primaryColor = '#3498db';
+  const rotatedColor = rotateColor(primaryColor, 64);
+  console.log(rotatedColor); // Output: #0088ff
+  
+
+  const colorPickerInput = document.getElementById('color-picker');
+  colorPickerInput.addEventListener('input', () => {
+    const primaryColor = colorPickerInput.value;
+    const rotatedColor = rotateColor(primaryColor, 64);
+    document.documentElement.style.setProperty('--primary-color-rotated', rotatedColor);
+  });
