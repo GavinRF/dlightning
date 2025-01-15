@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <!-- ux-mobile-mock-tool.html  Dlightning.org 2024-->
 <head>
 <meta charset="UTF-8">
@@ -27,269 +27,505 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 <script src="js/fontselect.js"></script> 
+
+<!-- FIREBASE CONFIG  -->
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.js"></script>
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
+
 </head>
 
 <body>
+    <!-- Projects Modal -->
+    <div id="projects-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Projects</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+                
+            <br>
+            <div id="projects-container">
+                <!-- Projects will be loaded here -->
+            </div>
+            <button id="new-project-btn">
+                <i class="fas fa-plus"></i> New Project
+            </button>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div id="subscription-modal" class="modal">
+        <div class="modal-content">
+            <h2>Upgrade to Pro</h2>
+            <p>You've reached the limit of 2 free projects. Upgrade to create unlimited projects!</p>
+            <button onclick="initiateSubscription()">Upgrade Now</button>
+        </div>
+    </div>
+
+    <button id="toggleCanvasBtn" title="toggle the height of the screen." class="toggle-btn"><i class="fa-solid fa-mobile-screen-button"></i> </button>
+
+    <!-- SIDEBAR ////////////////// -->
     <div class="sidebar">
         <div id="titleBlock">
-            <a href="index.html"><img src="img/icon/logo-spelled-out-white.png" height="22px"></a> 
+            <a href="index.html"><img src="img/icon/logo-spelled-out-white.png" height="18px"></a> 
             <h1 id="mainH1">Screen Builder</h1>
         </div>
-
-<!-- TABS  -->
-<div class="sidebar-tabs">
-    <button class="sidebar-tab active" data-tab="basic">
-        Elements <br><span id="basic-count">0</span>
-    </button>
-    <button class="sidebar-tab" data-tab="components">
-        Components <span id="components-count">0</span>
-    </button>
-    <button class="sidebar-tab" data-tab="theme">
-        Theme <br>
-        <!-- <i class="fa-solid fa-cube"></i> -->
-        <i class="fa-solid fa-hexagon-nodes-bolt"></i>
-    </button>
-</div>
-<div id="search-container">
-    <div class="search-wrapper">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" id="componentSearch" placeholder="Search..." >
-        <i class="fas fa-times clear-icon" id="clearSearch"></i>
+    <!-- PROFILE DISPLAY //////////////////  -->
+    <div class="user-profile-section" style="display: none;">
+        <!-- Will be populated by JavaScript -->
     </div>
-</div>
+    <div class="project-controls">
+        <button id="open-projects-btn">
+            <i class="fas fa-folder-open"></i> My Projects
+        </button>
+        <!-- <button class="login-button" onclick="showAuthModal()">
+            Log In <i class="fas fa-sign-in-alt"></i>
+        </button> -->
+        <!-- <button class="login-button" onclick="showAuthModal()">
+            Sign Up <i class="fas fa-user-plus"></i>
+        </button> -->
+    </div>
+    
+
+<!-- Sidebar TABS  -->
+    <div class="sidebar-tabs">
+        <button class="sidebar-tab active" data-tab="basic">
+            Elements <br><span id="basic-count">0</span>
+        </button>
+        <button class="sidebar-tab" data-tab="components">
+            Components <span id="components-count">0</span>
+        </button>
+        <button class="sidebar-tab" data-tab="theme">
+            Theme <br>
+            <!-- <i class="fa-solid fa-cube"></i> -->
+            <i class="fa-solid fa-hexagon-nodes-bolt"></i>
+        </button>
+    </div>
+
+    <div id="search-container">
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="componentSearch" placeholder="Search..." >
+            <i class="fas fa-times clear-icon" id="clearSearch"></i>
+        </div>
+    </div>
 <!-- COMPONENTS  -->
     <div class="sidebar-content active" data-tab="basic">
-        <button class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;"><i class="fas fa-bars"></i> Top Navigation Bar</button>
-        <button class="component-btn" data-component="adjustableSpace">
-            <i title="adjustable space" class="fas fa-arrows-alt-v"></i> 
-            Adjustable Space 
-            <span>blank empty</span>
-        </button>
-        <button class="component-btn" data-component="icon">
-            <i title="icon" class="fas fa-icons"></i> 
-            Icon 
-            <span>svg </span>
-        </button>
-        <button class="component-btn" data-component="image">
-            <i title="image" class="fas fa-image"></i> 
-            Image
-            <span> picture photo</span>
-        </button>
-        <button class="component-btn" data-component="button">
-            <i title="button" class="fas fa-square"></i> 
-            Button
-            <span>ghost</span>
-        </button>
-        <button class="component-btn" data-component="hzDivider">
-            <i title="divider line" class="fa-solid fa-minus"></i> 
-            Horizontal Divider
-            <span>line break</span>
-        </button>
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;">
+                <i titl="top nav" class="fas fa-bars"></i> 
+                Top Navigation Bar
+            </button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="adjustableSpace">
+                <i title="adjustable space" class="fas fa-arrows-alt-v"></i> 
+                Adjustable Space 
+                <span>blank empty</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="icon">
+                <i title="icon" class="fas fa-icons"></i> 
+                Icon 
+                <span>svg </span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="image">
+                <i title="image" class="fas fa-image"></i> 
+                Image
+                <span> picture photo</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="button">
+                <i title="button" class="fas fa-square"></i> 
+                Button
+                <span>ghost</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="hzDivider">
+                <i title="divider line" class="fa-solid fa-minus"></i> 
+                Horizontal Divider
+                <span>line break</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
         <!-- <button class="component-btn" data-component="blankCard"><i class="fa-regular fa-square"></i> Blank Card <span>group</span></button> -->
-        <button class="component-btn" data-component="columns">
-            <i title="columns" class="fa-solid fa-table-columns"></i>
-            Columns 
-            <span>group</span>
-        </button>
-        <button class="component-btn" data-component="colorBlock">
-            <i title="color block" class="fa-solid fa-brush"></i> 
-            Color Block 
-            <span>group</span>
-        </button>
-        <button class="component-btn" data-component="floatingActionButton">
-            <i title="FAB" class="fas fa-circle-plus"></i> 
-            Floating Action Button
-            <span>FAB</span>
-        </button>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="colorBlock">
+                <i title="color block" class="fa-solid fa-brush"></i> 
+                Color Block 
+                <span>group</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="columns">
+                <i title="columns" class="fa-solid fa-table-columns"></i>
+                Columns 
+                <span>group</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="floatingActionButton">
+                <i title="FAB" class="fas fa-circle-plus"></i> 
+                Floating Action Button
+                <span>FAB</span>
+            </button>
+        </div>
+
         <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;">
             <div title="bottom nav bar" style="background-color: var(--text-on-primary); margin: 0 10px 0 0; border-radius: 0 0 4px 4px; width: 20px;display: inline-flex; justify-content: center; height: 10px !important; outline: 1px solid;"><i style="color: var(--color-primary); margin: -2px 0 4px 0" class="fa-solid fa-ellipsis"></i></div> 
             Bottom Navigation Bar
             <span>link buttons</span>
         </button>
+
         <!-- // TEXT ELEMENTS  -->
         <div class="btn-class-group">
-            <label>Text Elements</label>
-            <button class="component-btn" data-component="heading">
-                <i title="heading" class="fas fa-heading"></i> 
-                Heading
-                <span>title</span>
-            </button>
-            <button class="component-btn" data-component="paragraph">
-                <i title="paragraph" class="fas fa-paragraph"></i> 
-                Paragraph
-                <span>text</span>
-            </button>
-            <button class="component-btn" data-component="blockquote">
-                <i title="block-quote" class="fas fa-quote-right"></i> 
-                Block Quote
-                <span>text</span>
-            </button>
-            <button class="component-btn" data-component="bulletedList">
-                <i title="list" class="fas fa-list-ul"></i> 
-                Bullet List
-            </button>
-            <button class="component-btn" data-component="label">
-                <i title="field label" class="fas fa-tag"></i> 
-                Field Label
-                <span>text</span>
-            </button>
+            <label class="groupLabel">Text Elements</label>
+                <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="heading">
+                    <i title="heading" class="fas fa-heading"></i> 
+                    Heading
+                    <span>title</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="paragraph">
+                    <i title="paragraph" class="fas fa-paragraph"></i> 
+                    Paragraph
+                    <span>text</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="blockquote">
+                    <i title="block-quote" class="fas fa-quote-right"></i> 
+                    Block Quote
+                    <span>text</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="bulletedList">
+                    <i title="list" class="fas fa-list-ul"></i> 
+                    Bullet List
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="label">
+                    <i title="field label" class="fas fa-tag"></i> 
+                    Field Label
+                    <span>text</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
         </div>
         <!-- // FORM ELEMENTS  -->
         <div class="btn-class-group">
-            <label>Form Inputs</label>
-            <button class="component-btn" data-component="input">
-                <div style="width: 14px; height: 18px; display: inline; border: 2px solid; border-radius: 2px; margin-right: 6px;"><i title="text input" style="font-size: smaller; margin: -1 5px 0 -3px;" class="fa-solid fa-i-cursor"></i></div> 
-                Input Field
-                <span>text</span>
-            </button>
-            <button class="component-btn" data-component="textarea">
-                <div style="width: 18px; display: inline-flex; justify-content: end; align-items: flex-end; border: 2px solid; border-radius: 2px; margin-right: 8px;"><i title="textarea" style="transform: rotate(-45deg); margin: 4px -3px -2px 6px;" class="fa-solid fa-caret-down"></i></div> 
-                Text Area
-                <span>Input</span>
-            </button>
-            <button class="component-btn" data-component="checkbox">
-                <i title="checkbox" class="fas fa-check-square"></i> 
-                Checkbox
-            </button>
-            <button class="component-btn" data-component="radio">
-                <i title="radio button" class="fas fa-dot-circle"></i> 
-                Radio Button
-                <span>dial</span>
-            </button>
-            <button class="component-btn" data-component="dropdown">
-                <i title="dropdown" class="fa-solid fa-chevron-down"></i> 
-                Dropdown
-                <span>select picklist</span>
-            </button>
-            <button class="component-btn" data-component="toggleSwitch">
-                <i title="toggle" class="fas fa-toggle-on"></i> 
-                Toggle Switch
-            </button>
-            <button class="component-btn" data-component="slider">
-                <i title="slider" class="fas fa-sliders-h"></i>
-                Range Slider
-            </button>
-            <button class="component-btn" data-component="datePicker">
-                <i title="date picker" class="fas fa-calendar-alt"></i> 
-                Date Picker
-                <span>calendar</span>
-            </button>
-            <button class="component-btn" data-component="fileUpload">
-                <i title="file upload" class="fas fa-file-upload"></i> 
-                File Upload
-            </button>
+            <label class="groupLabel">Form Inputs</label>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="input">
+                    <div style="width: 14px; height: 18px; display: inline; border: 2px solid; border-radius: 2px; margin-right: 6px;"><i title="text input" style="font-size: smaller; margin: -1 5px 0 -3px;" class="fa-solid fa-i-cursor"></i></div> 
+                    Input Field
+                    <span>text</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="textarea">
+                    <div style="width: 18px; display: inline-flex; justify-content: end; align-items: flex-end; border: 2px solid; border-radius: 2px; margin-right: 8px;"><i title="textarea" style="transform: rotate(-45deg); margin: 4px -3px -2px 6px;" class="fa-solid fa-caret-down"></i></div> 
+                    Text Area
+                    <span>Input</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="checkbox">
+                    <i title="checkbox" class="fas fa-check-square"></i> 
+                    Checkbox
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="radio">
+                    <i title="radio button" class="fas fa-dot-circle"></i> 
+                    Radio Button
+                    <span>dial</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="dropdown">
+                    <i title="dropdown" class="fa-solid fa-chevron-down"></i> 
+                    Dropdown
+                    <span>select picklist</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="toggleSwitch">
+                    <i title="toggle" class="fas fa-toggle-on"></i> 
+                    Toggle Switch
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="slider">
+                    <i title="slider" class="fas fa-sliders-h"></i>
+                    Range Slider
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="datePicker">
+                    <i title="date picker" class="fas fa-calendar-alt"></i> 
+                    Date Picker
+                    <span>calendar</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="fileUpload">
+                    <i title="file upload" class="fas fa-file-upload"></i> 
+                    File Upload
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
         </div>
     </div>
 
 <!-- COMPONENETS TAB //////////////// -->
  <!-- COMPONENETS //////////////// -->
     <div class="sidebar-content" data-tab="components">
-        <button class="component-btn" data-component="hero">
-            <i title="hero" class="fa-solid fa-mattress-pillow fa-rotate-90"></i> 
-            Hero Section
-            <span>header jumbotron</span>
-        </button>
-        <button title="avatar" class="component-btn" data-component="avatar">
-            <i class="fas fa-user-circle"></i> 
-            Avatar
-            <span>profile image</span>
-        </button>
-        <button class="component-btn" data-component="alert">
-            <i title="alert" class="fas fa-exclamation-triangle"></i> 
-            Alert
-            <span>warning info error</span>
-        </button>
-        <button class="component-btn" data-component="notificationBanner">
-            <i title="notification" class="fas fa-bell"></i>  
-            Notification
-            <span></span>
-        </button>
-        <button class="component-btn" data-component="searchBar">
-            <i title="search" class="fas fa-search"></i> 
-            Search Bar
-        </button>
-        <button class="component-btn" data-component="tabs">
-            <i title="tabs" class="fas fa-folder"></i> 
-            Tabs
-        </button>
-        <button class="component-btn" data-component="accordion">
-            <i title="accordion" class="fas fa-chevron-down"></i> 
-            Accordion
-        </button>
-        <button class="component-btn" data-component="card">
-            <i title="img card" class="fa-regular fa-window-maximize"></i> 
-            Image Card
-        </button>
-        <button class="component-btn" data-component="card2">
-            <i title="text card" class="fa-solid fa-window-maximize"></i> 
-            Text Card
-        </button>
-        <button class="component-btn" data-component="table">
-            <i title="data table" class="fas fa-table"></i> 
-            Data Table
-        </button>
-        <button class="component-btn" data-component="imgGallery">
-            <i title="gallery" class="fas fa-images"></i> 
-            Image Gallery
-        </button>
-        <button class="component-btn" data-component="progressBar">
-            <i title="progress" class="fa-solid fa-bars-progress"></i> 
-            Progress Indicator
-        </button>
-        <button class="component-btn" data-component="modal">
-            <i title="modal" class="fas fa-square-up-right"></i> 
-            Modal Pop-up
-            <span>dialog</span>
-        </button>
-        <button class="component-btn" data-component="chipGroup">
-            <i title="pills" class="fa-solid fa-capsules fa-rotate-90"></i> 
-            Pills 
-            <span>chips tags hashtags cloud</span>
-        </button>
-        <button class="component-btn" data-component="progressTracker">
-            <i title="progress" class="fa-solid fa-code-commit"></i>  
-            Progress Tracker 
-            <span>steps timeline</span>
-        </button>
-        <button class="component-btn" data-component="featureComparisonCard">
-            <i title="comparison" class="fa-solid fa-check-double"></i></i>  
-            Comparison Card
-            <span>product</span>
-        </button>
-        <button class="component-btn" data-component="footer">
-            <i title="footer" class="fa-solid fa-mattress-pillow fa-rotate-270"></i> 
-            Footer
-        </button>
-        <div class="btn-class-group">
-            <label>Charts</label>
-            <button class="component-btn" data-component="graph">
-                <i title="bar graph" class="fas fa-chart-column"></i> 
-                Bar Graph 
-                <span>chart column line</span>
+        
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="hero">
+                <i title="hero" class="fa-solid fa-mattress-pillow fa-rotate-90"></i> 
+                Hero Section
+                <span>header jumbotron</span>
             </button>
-            <button class="component-btn" data-component="pieGraph">
-                <i title="pie graph" class="fas fa-chart-pie"></i> 
-                Pie Graph 
-                <span>chart</span>
-            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
+
+        <div class="comp-btn-wrap">
+            <button title="avatar" class="component-btn" data-component="avatar">
+                <i class="fas fa-user-circle"></i> 
+                Avatar
+                <span>profile image</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="alert">
+                <i title="alert" class="fas fa-exclamation-triangle"></i> 
+                Alert
+                <span>warning info error</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="notificationBanner">
+                <i title="notification" class="fas fa-bell"></i>  
+                Notification
+                <span></span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="searchBar">
+                <i title="search" class="fas fa-search"></i> 
+                Search Bar
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="tabs">
+                <i title="tabs" class="fas fa-folder"></i> 
+                Tabs
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="accordion">
+                <i title="accordion" class="fas fa-chevron-down"></i> 
+                Accordion
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="card">
+                <i title="img card" class="fa-regular fa-window-maximize"></i> 
+                Image Card
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="card2">
+                <i title="text card" class="fa-solid fa-window-maximize"></i> 
+                Text Card
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="table">
+                <i title="data table" class="fas fa-table"></i> 
+                Data Table
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="imgGallery">
+                <i title="gallery" class="fas fa-images"></i> 
+                Image Gallery
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="progressBar">
+                <i title="progress" class="fa-solid fa-bars-progress"></i> 
+                Progress Indicator
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="modal">
+                <i title="modal" class="fas fa-square-up-right"></i> 
+                Modal Pop-up
+                <span>dialog</span>
+            </button>
+            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="chipGroup">
+                <i title="pills" class="fa-solid fa-capsules fa-rotate-90"></i> 
+                Pills 
+                <span>chips tags hashtags cloud</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="progressTracker">
+                <i title="progress" class="fa-solid fa-code-commit"></i>  
+                Progress Tracker 
+                <span>steps timeline</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="featureComparisonCard">
+                <i title="comparison" class="fa-solid fa-check-double"></i></i>  
+                Comparison Card
+                <span>product</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="footer">
+                <i title="footer" class="fa-solid fa-mattress-pillow fa-rotate-270"></i> 
+                Footer
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+        
         <div class="btn-class-group">
-            <label>Chat</label>
-            <button class="component-btn" data-component="leftChat">
-                <i title="left chat" class="fas fa-comment-alt"></i> 
-                Left Chat Bubble
-            </button>
-            <button class="component-btn" data-component="rightChat">
-                <i title="right chat" class="fa-solid fa-message" style=" -webkit-transform: scaleX(-1); transform: scaleX(-1);"></i> 
-                Right Chat Bubble
-            </button>
-            <button class="component-btn" data-component="chatInput">
-                <i title="chat input" class="fas fa-paper-plane"></i> 
-                Chat Input
-            </button>
+            <label class="groupLabel">Charts</label>
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="graph">
+                    <i title="bar graph" class="fas fa-chart-column"></i> 
+                    Bar Graph 
+                    <span>chart column line</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="pieGraph">
+                    <i title="pie graph" class="fas fa-chart-pie"></i> 
+                    Pie Graph 
+                    <span>chart</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+        </div>
+
+        <div class="btn-class-group">
+            <label class="groupLabel">Chat</label>
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="leftChat">
+                    <i title="left chat" class="fas fa-comment-alt"></i> 
+                    Left Chat Bubble
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="rightChat">
+                    <i title="right chat" class="fa-solid fa-message" style=" -webkit-transform: scaleX(-1); transform: scaleX(-1);"></i> 
+                    Right Chat Bubble
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+            
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="chatInput">
+                    <i title="chat input" class="fas fa-paper-plane"></i> 
+                    Chat Input
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
         </div>
     </div>
-
     <!-- THEME  -->
     <div class="sidebar-content" data-tab="theme">
         <!-- color and font PICKERs ///////////////// -->
@@ -973,7 +1209,7 @@
                                min="12"
                                style="width: 56px">
                     </div>
-                    <p style="color: gray;">Applies to cards and images</p>
+                    <p style="color: gray;">(applies to cards and images)</p>
                 </div>
                 </div>
 
@@ -988,7 +1224,7 @@
             <!-- <button id="collaborateBtn" class="system-btn">
                 <i class="fa-solid fa-users"></i> Invite Friends to Collaborate
             </button> -->
-            
+
         <!-- DARK MODE  -->
         <div class="dark-mode-toggle">
             <label class="switchDark">
@@ -997,11 +1233,23 @@
             </label>
             <span class="dark-mode-label">Dark Mode</span>
         </div>
-</div>
 
-    <!-- <div id="toggleCanvasBtnContainer" title="Toggle mock phone height"> -->
-        <button id="toggleCanvasBtn" title="toggle the height of the screen." class="toggle-btn"><i class="fa-solid fa-mobile-screen-button"></i> </button>
-    <!-- </div> -->
+        <div style="margin: 86px 0 0 0; display: flex; justify-content: center; align-items: center;">
+            <!-- DLIGHTNING LOGO ////////////////// -->
+            <a id="dlightning" href="index.html" target="blank">
+                <img src="img/small transparent.png" id="Dimg">
+                <img src="img/transparent white D.png" id="Dimg2">
+            </a>
+        </div>
+
+        </div>
+        <!-- END SIDEBAR ////////////////// -->
+
+    <!-- Project Title  -->
+        <div id="project-title">
+            <h3>Project Title</h3>
+        </div>
+
 
 <!--+ ++ +++ ++++ +++ 📱 PHONE MOCK AREA 📱 +++ ++++ +++ ++ + -->
 <div class="container" id="bounding">
@@ -1042,15 +1290,11 @@
     </div>
 </div>
 
-<!-- DLIGHTNING LOGO ////////////////// -->
-<a id="dlightning" href="index.html" target="blank">
-    <img src="img/small transparent.png" id="Dimg">
-    <img src="img/transparent white D.png" id="Dimg2">
-</a>
 
-<!-- <div style="position: absolute; bottom: 12px; left: 50%;">
+<div style="position: absolute; bottom: 12px; left: 50%; display: flex; align-items: center; transform: translate(-50%, 0);">
     <div class="canvas-timestamp"></div>
-</div> -->
+    <!-- <button class="save-canvas-btn">Save</button> -->
+</div>
 
 <!-- HTML END ////////////////// -->
 
@@ -1109,6 +1353,7 @@ colorPicker.on('color:change', function(color) {
     document.documentElement.style.setProperty('--color-accent', color.hexString);
     // updateColorSwatches();
   }
+  TextContrastAdjuster.updateTextColors();
 });
 
 $(document).ready(function() {
@@ -1126,6 +1371,119 @@ $(document).ready(function() {
         });
     });
 
+    // 
+    // Text Contrast Color Adjuster
+    const TextContrastAdjuster = {
+        hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            if (hex.length === 3) {
+                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+            }
+            return {
+                r: parseInt(hex.substring(0, 2), 16),
+                g: parseInt(hex.substring(2, 4), 16),
+                b: parseInt(hex.substring(4, 6), 16)
+            };
+        },
+
+        rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const hex = Math.round(x).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        },
+
+        getLuminance(r, g, b) {
+            let [rs, gs, bs] = [r, g, b].map(c => {
+                c = c / 255;
+                return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+            });
+            return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+        },
+
+        getContrastRatio(l1, l2) {
+            const lighter = Math.max(l1, l2);
+            const darker = Math.min(l1, l2);
+            return (lighter + 0.05) / (darker + 0.05);
+        },
+
+        adjustTextColor(backgroundColor) {
+            const targetRatio = 7.0; // WCAG AAA requirement
+            const lightTextColor = '#e8e8e8';
+            const darkTextColor = '#272727';
+
+            const bgRgb = this.hexToRgb(backgroundColor);
+            const bgLuminance = this.getLuminance(bgRgb.r, bgRgb.g, bgRgb.b);
+            
+            const lightRgb = this.hexToRgb(lightTextColor);
+            const darkRgb = this.hexToRgb(darkTextColor);
+            
+            const lightLuminance = this.getLuminance(lightRgb.r, lightRgb.g, lightRgb.b);
+            const darkLuminance = this.getLuminance(darkRgb.r, darkRgb.g, darkRgb.b);
+            
+            const lightContrast = this.getContrastRatio(bgLuminance, lightLuminance);
+            const darkContrast = this.getContrastRatio(bgLuminance, darkLuminance);
+
+            // Return the color that provides better contrast
+            return lightContrast > darkContrast ? lightTextColor : darkTextColor;
+        },
+
+        // Method to update text color based on background
+        updateTextColors() {
+            // Get all elements with background colors
+            const elements = document.querySelectorAll('[style*="background-color"]');
+            
+            elements.forEach(element => {
+                const bgColor = window.getComputedStyle(element).backgroundColor;
+                
+                // Convert RGB to Hex
+                const rgb = bgColor.match(/\d+/g);
+                if (!rgb) return;
+                
+                const bgHex = this.rgbToHex(parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2]));
+                const textColor = this.adjustTextColor(bgHex);
+                
+                // Update text color
+                element.style.setProperty('--basic-txt-color', textColor);
+            });
+        },
+
+        // Initialize observer to watch for changes
+        init() {
+            // Initial update
+            this.updateTextColors();
+
+            // Create observer for dynamic changes
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                        this.updateTextColors();
+                    }
+                });
+            });
+
+            // Start observing
+            observer.observe(document.body, {
+                attributes: true,
+                subtree: true,
+                attributeFilter: ['style']
+            });
+
+            // Update on theme toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', () => {
+                    setTimeout(() => this.updateTextColors(), 0);
+                });
+            }
+        }
+    };
+
+    // Initialize the text contrast adjuster
+    document.addEventListener('DOMContentLoaded', () => {
+        TextContrastAdjuster.init();
+    });
+
  </script>
 <!-- lsof -i :1234
  Kill  'PID#'-->
@@ -1135,5 +1493,6 @@ $(document).ready(function() {
 <script src="js/extra-func.js"></script>
 <script src="js/ux-mock-bldr.js"></script>
 <script src="js/variants.js"></script>
+<script src="js/projectSys.js"></script>
 </body>
 </html>
