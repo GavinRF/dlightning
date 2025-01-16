@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- ux-mobile-mock-tool.html  Dlightning.org 2024-->
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
 <meta name="description" content="Interactive mobile device mockup with draggable interface and component library including buttons, inputs, checkboxes, radio buttons, dropdowns, cards, navigation bars, and modals. Features a realistic device frame with status bar. Quickly prototype your design and export it as an image.">
 <meta name="keywords" content="mobile mockup, UI components, device prototype, interactive interface, drag and drop, UI design, button component, input field, checkbox, radio button, dropdown menu, card component, navigation bar, modal window, mobile status bar, UX mockup tool, faster than Figma, Figma killer, wireframe builder, screen creator, Modern Wireframe Generator">
 <meta name="author" content="Dlightning">
-
+<!-- ux-mobile-mock-tool.html  Dlightning.org 2024-->
 <!-- opengraph  -->
 <meta property="og:image" content="https://dlightning.org/img/opengraph/mock-gen.png"/>
 <meta property="og:title" content="Dlightning - Screen Builder"/>
@@ -24,17 +24,17 @@
 <script src=" https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/dist/html2canvas-pro.min.js "></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 <script src="js/fontselect.js"></script> 
 
 <!-- FIREBASE CONFIG  -->
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.js"></script>
-<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" /> -->
 
 </head>
 
@@ -1298,12 +1298,12 @@
 
 <!-- HTML END ////////////////// -->
 
-<script>
+<!-- <script>
     // window.addEventListener('load', () => {
     //     console.log('Yjs loaded:', typeof Y !== 'undefined');
     //     console.log('WebsocketProvider loaded:', typeof WebsocketProvider !== 'undefined');
     // });
-</script>
+</script> -->
  <script>
 var colorPicker = new iro.ColorPicker("#color-picker", {
     width: 190,
@@ -1370,119 +1370,7 @@ $(document).ready(function() {
             document.documentElement.style.setProperty('--secondary-font', selectedFont);
         });
     });
-
-    // 
-    // Text Contrast Color Adjuster
-    const TextContrastAdjuster = {
-        hexToRgb(hex) {
-            hex = hex.replace('#', '');
-            if (hex.length === 3) {
-                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-            }
-            return {
-                r: parseInt(hex.substring(0, 2), 16),
-                g: parseInt(hex.substring(2, 4), 16),
-                b: parseInt(hex.substring(4, 6), 16)
-            };
-        },
-
-        rgbToHex(r, g, b) {
-            return '#' + [r, g, b].map(x => {
-                const hex = Math.round(x).toString(16);
-                return hex.length === 1 ? '0' + hex : hex;
-            }).join('');
-        },
-
-        getLuminance(r, g, b) {
-            let [rs, gs, bs] = [r, g, b].map(c => {
-                c = c / 255;
-                return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-            });
-            return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-        },
-
-        getContrastRatio(l1, l2) {
-            const lighter = Math.max(l1, l2);
-            const darker = Math.min(l1, l2);
-            return (lighter + 0.05) / (darker + 0.05);
-        },
-
-        adjustTextColor(backgroundColor) {
-            const targetRatio = 7.0; // WCAG AAA requirement
-            const lightTextColor = '#e8e8e8';
-            const darkTextColor = '#272727';
-
-            const bgRgb = this.hexToRgb(backgroundColor);
-            const bgLuminance = this.getLuminance(bgRgb.r, bgRgb.g, bgRgb.b);
-            
-            const lightRgb = this.hexToRgb(lightTextColor);
-            const darkRgb = this.hexToRgb(darkTextColor);
-            
-            const lightLuminance = this.getLuminance(lightRgb.r, lightRgb.g, lightRgb.b);
-            const darkLuminance = this.getLuminance(darkRgb.r, darkRgb.g, darkRgb.b);
-            
-            const lightContrast = this.getContrastRatio(bgLuminance, lightLuminance);
-            const darkContrast = this.getContrastRatio(bgLuminance, darkLuminance);
-
-            // Return the color that provides better contrast
-            return lightContrast > darkContrast ? lightTextColor : darkTextColor;
-        },
-
-        // Method to update text color based on background
-        updateTextColors() {
-            // Get all elements with background colors
-            const elements = document.querySelectorAll('[style*="background-color"]');
-            
-            elements.forEach(element => {
-                const bgColor = window.getComputedStyle(element).backgroundColor;
-                
-                // Convert RGB to Hex
-                const rgb = bgColor.match(/\d+/g);
-                if (!rgb) return;
-                
-                const bgHex = this.rgbToHex(parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2]));
-                const textColor = this.adjustTextColor(bgHex);
-                
-                // Update text color
-                element.style.setProperty('--basic-txt-color', textColor);
-            });
-        },
-
-        // Initialize observer to watch for changes
-        init() {
-            // Initial update
-            this.updateTextColors();
-
-            // Create observer for dynamic changes
-            const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                        this.updateTextColors();
-                    }
-                });
-            });
-
-            // Start observing
-            observer.observe(document.body, {
-                attributes: true,
-                subtree: true,
-                attributeFilter: ['style']
-            });
-
-            // Update on theme toggle
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('change', () => {
-                    setTimeout(() => this.updateTextColors(), 0);
-                });
-            }
-        }
-    };
-
-    // Initialize the text contrast adjuster
-    document.addEventListener('DOMContentLoaded', () => {
-        TextContrastAdjuster.init();
-    });
+    
 
  </script>
 <!-- lsof -i :1234
@@ -1493,6 +1381,6 @@ $(document).ready(function() {
 <script src="js/extra-func.js"></script>
 <script src="js/ux-mock-bldr.js"></script>
 <script src="js/variants.js"></script>
-<script src="js/projectSys.js"></script>
+<!-- <script src="js/projectSys.js"></script> -->
 </body>
 </html>
