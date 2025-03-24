@@ -7,7 +7,8 @@
 <meta name="description" content="Interactive mobile device mockup with draggable interface and component library including buttons, inputs, checkboxes, radio buttons, dropdowns, cards, navigation bars, and modals. Features a realistic device frame with status bar. Quickly prototype your design and export it as an image.">
 <meta name="keywords" content="mobile mockup, UI components, device prototype, interactive interface, drag and drop, UI design, button component, input field, checkbox, radio button, dropdown menu, card component, navigation bar, modal window, mobile status bar, UX mockup tool, faster than Figma, Figma killer, wireframe builder, screen creator, Modern Wireframe Generator">
 <meta name="author" content="Dlightning">
-<!-- ux-mobile-mock-tool.html  Dlightning.org 2024-->
+<!-- ux-mobile-mock-tool.html  Dlightning.org 2025-->
+<meta http-equiv="Content-Security-Policy-Report-Only" content="">
 <!-- opengraph  -->
 <meta property="og:image" content="https://dlightning.org/img/opengraph/mock-gen.png"/>
 <meta property="og:title" content="Dlightning - Screen Builder"/>
@@ -24,17 +25,22 @@
 <script src=" https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/dist/html2canvas-pro.min.js "></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
-<script src="js/fontselect.js"></script> 
+
+<!-- STRIPE CONFIG -->
+<script src="https://js.stripe.com/v3/"></script>
 
 <!-- FIREBASE CONFIG  -->
-
-<!-- <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.js"></script>
-<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" /> -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
+
 
 </head>
 
@@ -66,7 +72,7 @@
         </div>
     </div>
 
-    <button id="toggleCanvasBtn" title="toggle the height of the screen." class="toggle-btn"><i class="fa-solid fa-mobile-screen-button"></i> </button>
+    <button id="toggleCanvasBtn" title="toggle the height of the screen." class="toggle-btn"><i style="padding: 2px 0; border-top: 2px solid; border-bottom: 2px solid;" class="fa-solid fa-arrows-up-down"></i> </button>
 
     <!-- SIDEBAR ////////////////// -->
     <div class="sidebar">
@@ -82,16 +88,14 @@
         <button id="open-projects-btn">
             <i class="fas fa-folder-open"></i> My Projects
         </button>
-        <!-- <button class="login-button" onclick="showAuthModal()">
-            Log In <i class="fas fa-sign-in-alt"></i>
-        </button> -->
-        <!-- <button class="login-button" onclick="showAuthModal()">
-            Sign Up <i class="fas fa-user-plus"></i>
-        </button> -->
+        <button class="login-button" onclick="showAuthModal()">
+            <div>Log In <i class="fas fa-sign-in-alt"></i></div>or <div>Sign Up <i class="fas fa-user-plus"></i></div>
+        </button>
     </div>
     
 
 <!-- Sidebar TABS  -->
+ <div class="sidebar-tabs-container">
     <div class="sidebar-tabs">
         <button class="sidebar-tab active" data-tab="basic">
             Elements <br><span id="basic-count">0</span>
@@ -105,28 +109,24 @@
             <i class="fa-solid fa-hexagon-nodes-bolt"></i>
         </button>
     </div>
-
-    <div id="search-container">
-        <div class="search-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="componentSearch" placeholder="Search..." >
-            <i class="fas fa-times clear-icon" id="clearSearch"></i>
+        <div id="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="componentSearch" placeholder="Search..." >
+                <i class="fas fa-times clear-icon" id="clearSearch"></i>
+            </div>
         </div>
-    </div>
+</div>
+
+
 <!-- COMPONENTS  -->
     <div class="sidebar-content active" data-tab="basic">
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;">
-                <i titl="top nav" class="fas fa-bars"></i> 
-                Top Navigation Bar
-            </button>
-        </div>
 
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="adjustableSpace">
                 <i title="adjustable space" class="fas fa-arrows-alt-v"></i> 
                 Adjustable Space 
-                <span>blank empty</span>
+                <span>blank empty padding margin</span>
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
@@ -166,11 +166,20 @@
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
-        <!-- <button class="component-btn" data-component="blankCard"><i class="fa-regular fa-square"></i> Blank Card <span>group</span></button> -->
+        
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="blankCard">
+                <i style="font-size: 17px;" title="blank card" class="fa-regular fa-square"></i> 
+                <!-- <i class="fa-regular fa-rectangle-xmark"></i> -->
+                Blank Card
+                <span>group</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
 
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="colorBlock">
-                <i title="color block" class="fa-solid fa-brush"></i> 
+                <i style="font-size: 16px;" title="color block" class="fa-solid fa-fill-drip"></i> 
                 Color Block 
                 <span>group</span>
             </button>
@@ -185,20 +194,6 @@
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
-
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="floatingActionButton">
-                <i title="FAB" class="fas fa-circle-plus"></i> 
-                Floating Action Button
-                <span>FAB</span>
-            </button>
-        </div>
-
-        <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;">
-            <div title="bottom nav bar" style="background-color: var(--text-on-primary); margin: 0 10px 0 0; border-radius: 0 0 4px 4px; width: 20px;display: inline-flex; justify-content: center; height: 10px !important; outline: 1px solid;"><i style="color: var(--color-primary); margin: -2px 0 4px 0" class="fa-solid fa-ellipsis"></i></div> 
-            Bottom Navigation Bar
-            <span>link buttons</span>
-        </button>
 
         <!-- // TEXT ELEMENTS  -->
         <div class="btn-class-group">
@@ -286,6 +281,15 @@
                 <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
+            <!-- <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="formGroup">
+                    <i title="form group" class="fa-solid fa-object-group"></i> 
+                    Form Group
+                    <span></span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div> -->
+
             <div class="comp-btn-wrap">
                 <button class="component-btn" data-component="dropdown">
                     <i title="dropdown" class="fa-solid fa-chevron-down"></i> 
@@ -333,6 +337,21 @@
 <!-- COMPONENETS TAB //////////////// -->
  <!-- COMPONENETS //////////////// -->
     <div class="sidebar-content" data-tab="components">
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;">
+                <i titl="top nav" class="fas fa-bars"></i> 
+                Top Navigation Bar
+            </button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="sidebar">
+                <i title="sidebar" class="fa-solid fa-clapperboard fa-rotate-270"></i> 
+                Sidebar
+                <span>menu</span>
+            </button>
+        </div>
         
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="hero">
@@ -404,11 +423,23 @@
 
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="card2">
-                <i title="text card" class="fa-solid fa-window-maximize"></i> 
+                <!-- <i title="text card" class="fa-solid fa-window-maximize"></i>  -->
+                <i title="text card" class="fa-solid fa-money-check fa-flip-horizontal"></i>
                 Text Card
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="listItem">
+                <i title="text card" class="fa-solid fa-diagram-next"></i>
+                List Item
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <!-- next card  -->
+        <!-- <i class="fa-solid fa-pager"></i> -->
 
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="table">
@@ -422,6 +453,24 @@
             <button class="component-btn" data-component="imgGallery">
                 <i title="gallery" class="fas fa-images"></i> 
                 Image Gallery
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="video">
+                <i title="video" class="fas fa-video"></i> 
+                Video
+                <span>live stream photo </span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="musicPlayer">
+                <i title="video" class="fas fa-music"></i> 
+                Music Player
+                <span> audio player</span>
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
@@ -471,12 +520,35 @@
         </div>
 
         <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="pagination">
+                <i title="comparison" class="fa-solid fa-sort fa-rotate-90"></i></i>  
+                Pagination
+                <span>navigation</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="floatingActionButton">
+                <i title="FAB" class="fas fa-circle-plus"></i> 
+                Floating Action Button
+                <span>FAB</span>
+            </button>
+        </div>
+
+        <div class="comp-btn-wrap">
             <button class="component-btn" data-component="footer">
                 <i title="footer" class="fa-solid fa-mattress-pillow fa-rotate-270"></i> 
                 Footer
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
+
+        <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;">
+            <div title="bottom nav bar" style="background-color: var(--text-on-primary); margin: 0 10px 0 0; border-radius: 0 0 4px 4px; width: 20px;display: inline-flex; justify-content: center; height: 10px !important; outline: 1px solid;"><i style="color: var(--color-primary); margin: -2px 0 4px 0" class="fa-solid fa-ellipsis"></i></div> 
+            Bottom Navigation Bar
+            <span>link buttons</span>
+        </button>
         
         <div class="btn-class-group">
             <label class="groupLabel">Charts</label>
@@ -537,7 +609,7 @@
             <div style="display: flex; justify-content: space-between; margin-bottom: 26px;">
                 <!-- <p for="color-picker">Color &emsp;&emsp;&emsp;&emsp;&nbsp;</p>
                 <input type="color" id="color-picker" value="#3498db"> -->
-                <div id="color-picker"></div>
+                <div id="theme-color-picker"></div>
             </div>
         </div>
 <!-- FONT PICKERS / -->
@@ -547,7 +619,10 @@
                 <i class="fa-solid fa-1">&nbsp;&nbsp;</i>
                 <span style="color:darkgray;">Font 1</span>
             </div>
-            <div>
+            <div class="font-control-group">
+                <!-- <button title="upload font" id="uploadFontBtn" class="upload-font-btn">
+                    <i class="fas fa-file-arrow-up"></i>
+                  </button> -->
                 <input type="select" id="fontPicker1">
             </div>
             
@@ -556,7 +631,12 @@
                 <i class="fa-solid fa-2">&nbsp;&nbsp;</i>
                 <span style="color:darkgray;">Font 2</span>
             </div>
+            <div class="font-control-group">
+                <!-- <button title="upload font" id="uploadFontBtn2" class="upload-font-btn">
+                    <i class="fas fa-file-arrow-up"></i>
+                  </button> -->
                 <input type="select" id="fontPicker2">
+            </div>
             <br>
             <br>
 <!-- HEADINGS!!!  -->
@@ -580,8 +660,8 @@
                     <div>
                         <label>H1 Font</label><br>
                         <div class="font-level-btns">
-                        <button data-level="h1" class="selected"><i class="fas fa-F">&thinsp;</i><i class="fas fa-1"></i></button>
-                        <button data-level="h1"><i class="fas fa-F"></i>&hairsp;<i class="fas fa-2"></i></button>
+                        <button data-level="h1" class="selected"><i class="fas fa-f">&thinsp;</i><i class="fas fa-1"></i></button>
+                        <button data-level="h1"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
                         </div>
                     </div>
                     <div>
@@ -684,8 +764,8 @@
                     <div>
                         <label>H2 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h2" class="selected"><i class="fas fa-F">&thinsp;</i><i class="fas fa-1"></i></button>
-                            <button data-level="h2"><i class="fas fa-F"></i>&hairsp;<i class="fas fa-2"></i></button>
+                            <button data-level="h2" class="selected"><i class="fas fa-f">&thinsp;</i><i class="fas fa-1"></i></button>
+                            <button data-level="h2"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
                         </div>
                     </div>
                     <div>
@@ -788,8 +868,8 @@
                     <div>
                         <label>H3 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h3" class="selected"><i class="fas fa-F">&thinsp;</i><i class="fas fa-1"></i></button>
-                            <button data-level="h3"><i class="fas fa-F"></i>&hairsp;<i class="fas fa-2"></i></button>
+                            <button data-level="h3" class="selected"><i class="fas fa-f">&thinsp;</i><i class="fas fa-1"></i></button>
+                            <button data-level="h3"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
                         </div>
                     </div>
                     <div>
@@ -891,8 +971,8 @@
                     <div>
                         <label>H4 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h4"><i class="fas fa-F"></i>&thinsp;<i class="fas fa-1"></i></button>
-                            <button data-level="h4" class="selected"><i class="fas fa-F">&hairsp;</i><i class="fas fa-2"></i></button>
+                            <button data-level="h4"><i class="fas fa-f"></i>&thinsp;<i class="fas fa-1"></i></button>
+                            <button data-level="h4" class="selected"><i class="fas fa-f">&hairsp;</i><i class="fas fa-2"></i></button>
                         </div>
                     </div>
                     <div>
@@ -994,14 +1074,14 @@
                     <div>
                         <label>H5 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h5" class="selected"><i class="fas fa-F"></i>&thinsp;<i class="fas fa-1"></i></button>
-                            <button data-level="h5"><i class="fas fa-F"></i>&hairsp;<i class="fas fa-2"></i></button>
+                            <button data-level="h5" class="selected"><i class="fas fa-f"></i>&thinsp;<i class="fas fa-1"></i></button>
+                            <button data-level="h5"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
                         </div>
                     </div>
                     <div>
                         <label>Weight</label><br>
                         <div class="weight-level-btns">
-                            <button data-level="h5" class="selected"><i class="fas fa-r"></i></button>
+                            <button data-level="h5" class="selcted"><i class="fas fa-r"></i></button>
                             <button data-level="h5"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
@@ -1098,8 +1178,8 @@
                     <div>
                         <label>H6 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h6" class="selected"><i class="fas fa-F">&hairsp;</i><i class="fas fa-1"></i></button>
-                            <button data-level="h6"><i class="fas fa-F"></i>&hairsp;<i class="fas fa-2"></i></button>
+                            <button data-level="h6" class="selected"><i class="fas fa-f">&hairsp;</i><i class="fas fa-1"></i></button>
+                            <button data-level="h6"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1194,7 +1274,8 @@
 <!-- BORDER RADIUS  -->
             <div id="radius-preview">
                 <div style="width: 100%;">
-                    <label>Border Radius (px)</label>
+                    <label style="color: white;">Corner Radius (px)</label>
+                    <p style="color: gray; margin: 4px 0;">(applies to all cards and images)</p>
                     <div class="range-input-group">
                         <input type="range" 
                                class="border-radius-range custom-range-slider" 
@@ -1209,8 +1290,33 @@
                                min="12"
                                style="width: 56px">
                     </div>
-                    <p style="color: gray;">(applies to cards and images)</p>
+        
                 </div>
+            </div>
+    <!-- .canvas-content gap controls -->
+    <label style="color: white;">Component Gap (px)</label>
+    <p style="color: gray; margin: 4px 0;">(applies to selected screen)</p>
+                <div class="gap-controls">
+                    <div class="range-input-group">
+                        <input type="range" 
+                               class="gap-range custom-range-slider" 
+                               min="0" 
+                               max="80" 
+                               step="1" 
+                               value="6">
+                    <!-- </div>
+                    <div class="gap-number"> -->
+                        <input type="number" 
+                               class="gap-number gap-range" 
+                               value="6" 
+                               step="1" 
+                               min="0">
+                        <div id="gap-preview-outer">
+                            <div class="gap-preview-inner"></div>
+                            <div class="gap-preview-inner"></div>
+                        </div>
+                    </div>
+                    
                 </div>
 
     </div>
@@ -1233,13 +1339,19 @@
             </label>
             <span class="dark-mode-label">Dark Mode</span>
         </div>
-
+    <!-- <hr> -->
         <div style="margin: 86px 0 0 0; display: flex; justify-content: center; align-items: center;">
             <!-- DLIGHTNING LOGO ////////////////// -->
             <a id="dlightning" href="index.html" target="blank">
-                <img src="img/small transparent.png" id="Dimg">
-                <img src="img/transparent white D.png" id="Dimg2">
+                <!-- <img src="img/small transparent.png" id="Dimg"> -->
+                <img src="img/transparent white D.png" id="Dimg2" alt="Dlightning logo">
             </a>
+        </div>
+
+        <div style="margin: 26px 0 0 0; display: flex; justify-content: center; align-items: center; gap: 12px; font-size: smaller;">
+            <a style="color: gray;" target="_blank" href="tos">ToS</a>
+            <a style="color: gray;" target="_blank" href="privacy-policy">Privacy Policy</a>
+            <a style="color: gray;" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfgeMXBqAjawhdWZQKQxKcSPJLSeISE-wz7A9Nzk6jbmFIKhg/viewform?usp=dialog">Feedback</a>
         </div>
 
         </div>
@@ -1255,7 +1367,10 @@
 <div class="container" id="bounding">
     <div class="content" id="mockZone">
         <!-- MOBILE MOCK INJECTED HERE  -->
-    <button id="addCanvasBtn" class="add-canvas-btn" title="Add new canvas">+</button>
+    <div id="addScreenBtnCon" class="add-screen-btn-con">
+        <button id="addCanvasBtn" class="add-canvas-btn" title="Add new screen">+</button>
+        <button id="addTemplateBtn" class="add-template-btn" title="pre-built layouts">template</button>
+    </div>
 </div>
 </div>
 
@@ -1285,15 +1400,15 @@
     <h3>Custom Component Editor</h3>
     <textarea class="code-editor" placeholder="Enter your HTML here... (styles must be inline)"></textarea>
     <div class="code-controls">
-        <button class="add-btn">Add to Canvas</button>
+        <button class="add-btn">Add to Screen</button>
         <button class="preview-btn">Preview</button>
     </div>
 </div>
 
 
-<div style="position: absolute; bottom: 12px; left: 50%; display: flex; align-items: center; transform: translate(-50%, 0);">
-    <div class="canvas-timestamp"></div>
-    <!-- <button class="save-canvas-btn">Save</button> -->
+<div id="save-container">
+    <button class="save-canvas-btn">Save</button>
+    <div class="canvas-timestamp" title="last saved timestamp"></div>
 </div>
 
 <!-- HTML END ////////////////// -->
@@ -1305,72 +1420,205 @@
     // });
 </script> -->
  <script>
-var colorPicker = new iro.ColorPicker("#color-picker", {
-    width: 190,
-    colors: ["#3498db", "#5f615d", "#fbd513"],
-    textColors: ["#333", "#fff"],
-    handleRadius: 7,
-    borderWidth: 1,
-    activeHandleRadius: 11,
-    borderColor: "#fff",
-    wheelAngle: 90,
-    sliderSize: 22,
-});
+    var colorPicker = new iro.ColorPicker("#theme-color-picker", {
+        width: 190,
+        colors: ["#3498db", "#5f615d", "#fbd513"],
+        textColors: ["#333", "#fff"],
+        handleRadius: 7,
+        borderWidth: 1,
+        activeHandleRadius: 11,
+        borderColor: "#fff",
+        wheelAngle: 90,
+        sliderSize: 22,
+    });
 
-const colorList = document.getElementById("colorList");
-const activeColor = document.getElementById("activeColor");
+    const colorList = document.getElementById("colorList");
+    const activeColor = document.getElementById("activeColor");
 
-function setColor(colorIndex) {
-  // setActiveColor expects the color index
-  colorPicker.setActiveColor(colorIndex);
-}
+    function setColor(colorIndex) {
+    // setActiveColor expects the color index
+    colorPicker.setActiveColor(colorIndex);
+    }
 
-// https://iro.js.org/guide.html#color-picker-events
-colorPicker.on(["mount", "color:change"], function () {
-  colorList.innerHTML = '';
-  colorPicker.colors.forEach(color => {
-    const index = color.index;
-    const hexString = color.hexString;
-    colorList.innerHTML += `
-      <li onClick="setColor(${index})">
-        <div class="swatch" style="background: ${hexString}"></div>
-        <span style="color: gray; font-size: smaller; user-select:all;">${hexString}</span>
-      </li>
-    `;
-  });
-});
+    // https://iro.js.org/guide.html#color-picker-events
+    colorPicker.on(["mount", "color:change"], function () {
+    colorList.innerHTML = '';
+    colorPicker.colors.forEach(color => {
+        const index = color.index;
+        const hexString = color.hexString;
+        colorList.innerHTML += `
+        <li onClick="setColor(${index})">
+            <div class="swatch" style="background: ${hexString}"></div>
+            <span style="color: gray; font-size: smaller; user-select:all;">${hexString}</span>
+        </li>
+        `;
+    });
+    });
 
-colorPicker.on('color:change', function(color) {
-  // if the first color changed
-  if (color.index === 0) {
-    document.documentElement.style.setProperty('--color-primary', color.hexString);
-    document.documentElement.style.setProperty('--primary-color', color.hexString);
-    // updateColorSwatches();
-  } else   if (color.index === 1) {
-    document.documentElement.style.setProperty('--color-secondary', color.hexString);
-    // updateColorSwatches();
-  } else   if (color.index === 2) {
-    document.documentElement.style.setProperty('--color-accent', color.hexString);
-    // updateColorSwatches();
-  }
-  TextContrastAdjuster.updateTextColors();
-});
+    colorPicker.on('color:change', function(color) {
+    // if the first color changed
+    if (color.index === 0) {
+        document.documentElement.style.setProperty('--color-primary', color.hexString);
+        document.documentElement.style.setProperty('--primary-color', color.hexString);
+        // updateColorSwatches();
+    } else   if (color.index === 1) {
+        document.documentElement.style.setProperty('--color-secondary', color.hexString);
+        // updateColorSwatches();
+    } else   if (color.index === 2) {
+        document.documentElement.style.setProperty('--color-accent', color.hexString);
+        // updateColorSwatches();
+    }
+    TextContrastAdjuster.updateTextColors();
+    });
 
-$(document).ready(function() {
+    // FONT PICKERS //////////////////
+    $(document).ready(function() {
         $('#fontPicker1').fontselect();
         $('#fontPicker2').fontselect();
 
+        $('#fontPicker1').trigger('setFont','Open Sans');
+        $('#fontPicker2').trigger('setFont','Roboto');
+
+        // Connect upload buttons to their respective font pickers
+        $('#uploadFontBtn').click(function() {
+            $('.font-select:eq(0) .upload').click();
+        });
+
+        $('#uploadFontBtn2').click(function() {
+            $('.font-select:eq(1) .upload').click();
+        });
+        
         $('#fontPicker1').on('change', function() {
             const selectedFont = $(this).val().split(':')[0];
             document.documentElement.style.setProperty('--primary-font', selectedFont);
+            
+            // Save font to project if a project is active
+            if (projectManager && projectManager.currentProject) {
+            projectManager.saveFontSelection('primaryFont', selectedFont);
+            }
         });
-
+        
         $('#fontPicker2').on('change', function() {
             const selectedFont = $(this).val().split(':')[0];
             document.documentElement.style.setProperty('--secondary-font', selectedFont);
+            
+            // Save font to project if a project is active
+            if (projectManager && projectManager.currentProject) {
+            projectManager.saveFontSelection('secondaryFont', selectedFont);
+            }
         });
     });
     
+    /////////// text contrast adjuster 2 
+    // there is a reason there are two of these...
+    const TextContrastAdjuster2 = {
+    cache: {},
+    pendingElements: new Set(),
+    debounceTimer: null,
+    
+    hexToRgb(hex) {
+        if (this.cache[hex]) return this.cache[hex];
+        hex = hex.replace('#', '');
+        const rgb = {
+        r: parseInt(hex.slice(0, 2), 16),
+        g: parseInt(hex.slice(2, 4), 16),
+        b: parseInt(hex.slice(4, 6), 16)
+        };
+        this.cache[hex] = rgb;
+        return rgb;
+    },
+
+    getLuminance(r, g, b) {
+        const key = `lum_${r}_${g}_${b}`;
+        if (this.cache[key]) return this.cache[key];
+        
+        const [rs, gs, bs] = [r, g, b].map(c => {
+        c = c / 255;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        });
+        const luminance = 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+        
+        this.cache[key] = luminance;
+        return luminance;
+    },
+
+    getContrast(l1, l2) {
+        return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    },
+
+    getTextColor(bgColor) {
+        if (this.cache[bgColor]) return this.cache[bgColor];
+
+        const rgb = this.hexToRgb(bgColor);
+        const bgLum = this.getLuminance(rgb.r, rgb.g, rgb.b);
+        const lightLum = this.getLuminance(232, 232, 232);
+        const darkLum = this.getLuminance(39, 39, 39);
+
+        const textColor = this.getContrast(bgLum, lightLum) > 
+                        this.getContrast(bgLum, darkLum) ? 
+                        '#e8e8e8' : '#272727';
+                        
+        this.cache[bgColor] = textColor;
+        return textColor;
+    },
+
+    queueElement(element) {
+        this.pendingElements.add(element);
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = setTimeout(() => this.processBatch(), 100);
+    },
+
+    processBatch() {
+        this.pendingElements.forEach(element => {
+        const bg = window.getComputedStyle(element).backgroundColor.match(/\d+/g);
+        if (!bg) return;
+        
+        const hex = '#' + bg.map(c => (+c).toString(16).padStart(2, '0')).join('');
+        element.style.setProperty('--basic-txt-color', this.getTextColor(hex));
+        });
+        this.pendingElements.clear();
+    },
+
+    init() {
+        // Initial processing
+        document.querySelectorAll('[style*="background-color"]')
+        .forEach(el => this.queueElement(el));
+
+        // Watch for style changes with debouncing
+        const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            if (mutation.attributeName === 'style' && 
+                mutation.target.style.backgroundColor) {
+            this.queueElement(mutation.target);
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ['style']
+    });
+
+    // Clear cache periodically
+    setInterval(() => this.cache = {}, 300000);
+  }
+};
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => TextContrastAdjuster2.init());
+} else {
+  TextContrastAdjuster2.init();
+}
+
+document.addEventListener('input', function(e) {
+    // Check if the target element has the 'usa' class
+    if (e.target.classList.contains('usa')) {
+        e.target.classList.remove('usa');
+    }
+});
+
 
  </script>
 <!-- lsof -i :1234
@@ -1378,9 +1626,14 @@ $(document).ready(function() {
 <!-- <script src="lib/yjs-bundle.js"></script>
 <script src="lib/yjs-config.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script src="js/imgGallerySetup.js"></script>
 <script src="js/extra-func.js"></script>
 <script src="js/ux-mock-bldr.js"></script>
 <script src="js/variants.js"></script>
-<!-- <script src="js/projectSys.js"></script> -->
+<script src="js/projectSys.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/fontselect.js"></script> 
+<script type="module" src="functions/index.js"></script>
+<!-- <script src="js/collab-sys.js"></script> -->
 </body>
 </html>

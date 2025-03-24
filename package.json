@@ -1,22 +1,24 @@
 {
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource/rubik": "^5.0.18",
-    "@mui/icons-material": "^5.15.0",
-    "@mui/material": "^5.15.0",
-    "dotenv": "^16.3.1",
-    "openai": "^4.20.1"
+    "firebase": "^11.1.0"
   },
-  "name": "dlightning",
-  "description": "",
+  "name": "screen-builder---dev",
   "version": "1.0.0",
-  "main": "openai-test.js",
-  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.30.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:functions": "firebase deploy --only functions",
+    "serve:functions": "firebase emulators:start --only functions",
+    "dev": "firebase emulators:start"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Dlightning",
+  "license": "ISC",
+  "description": "stripe-firebase-functions"
 }
