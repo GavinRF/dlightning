@@ -1,216 +1,223 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const Stripe = require('stripe');
-const cors = require('cors')({ origin: true });
+const { onCall } = require("firebase-functions/v2/https");
+const { onRequest } = require("firebase-functions/v2/https");
+const logger = require("firebase-functions/logger");
+const admin = require("firebase-admin");
+const Stripe = require("stripe");
+const express = require("express");
+const cors = require("cors");
 
 admin.initializeApp();
 const db = admin.firestore();
 
-const stripe = new Stripe(functions.config().stripe.secret, {
-    apiVersion: '2023-10-16'
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2023-10-16",
 });
 
 // Create Stripe customer
-exports.createStripeCustomer = functions.https.onCall(async (data, context) => {
-    console.log('createStripeCustomer function called');
+exports.createStripeCustomer = onCall(
+    {
+        cpu: 1,
+        memory: "512MiB",
+        region: "us-central1",
+        cors: true, // Enable CORS for this function
+    },
+    async (data, context) => {
+        logger.info("createStripeCustomer function called");
 
-    if (!context.auth) {
-        console.error('Unauthenticated request');
-        throw new functions.https.HttpsError(
-            'unauthenticated',
-            'The function must be called while authenticated.'
-        );
+        if (!context.auth) {
+            logger.error("Unauthenticated request");
+            throw new Error("The function must be called while authenticated.");
+        }
+
+        if (!data.email) {
+            logger.error("Missing email in request");
+            throw new Error("The function must be called with email.");
+        }
+
+        try {
+            logger.info("Creating Stripe customer for email:", data.email);
+            const customer = await stripe.customers.create({ email: data.email });
+
+            logger.info("Customer created:", customer.id);
+
+            await db.collection("users").doc(context.auth.uid).update({
+                stripe_customer_key: customer.id,
+                updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+            });
+
+            logger.info("User document updated with customer key");
+            return { customerId: customer.id };
+        } catch (error) {
+            logger.error("Stripe customer creation error:", error);
+            throw new Error("An error occurred while creating the customer.");
+        }
     }
-
-    if (!data.email) {
-        console.error('Missing email in request');
-        throw new functions.https.HttpsError(
-            'invalid-argument',
-            'The function must be called with email.'
-        );
-    }
-
-    try {
-        console.log('Creating Stripe customer for email:', data.email);
-        const customer = await stripe.customers.create({
-            email: data.email
-        });
-
-        console.log('Customer created:', customer.id);
-        
-        await db.collection('users').doc(context.auth.uid).update({
-            stripe_customer_key: customer.id,
-            updatedAt: admin.firestore.FieldValue.serverTimestamp()
-        });
-
-        console.log('User document updated with customer key');
-        return { customerId: customer.id };
-    } catch (error) {
-        console.error('Stripe customer creation error:', error);
-        throw new functions.https.HttpsError(
-            'internal',
-            'An error occurred while creating the customer.'
-        );
-    }
-});
+);
 
 // Create checkout session
-exports.createCheckoutSession = functions.https.onCall(async (data, context) => {
-    console.log('createCheckoutSession function called');
+exports.createCheckoutSession = onCall(
+    {
+        cpu: 1,
+        memory: "512MiB",
+        region: "us-central1",
+        cors: true, // Enable CORS for this function
+    },
+    async (data, context) => {
+        logger.info("createCheckoutSession function called");
 
-    if (!context.auth) {
-        console.error('Unauthenticated request');
-        throw new functions.https.HttpsError(
-            'unauthenticated',
-            'The function must be called while authenticated.'
-        );
+        if (!context.auth) {
+            logger.error("Unauthenticated request");
+            throw new Error("The function must be called while authenticated.");
+        }
+
+        if (!data.customerId || !data.priceId) {
+            logger.error("Missing required data:", { data });
+            throw new Error("The function must be called with customerId and priceId.");
+        }
+
+        try {
+            logger.info("Creating checkout session for customer:", data.customerId);
+            const session = await stripe.checkout.sessions.create({
+                customer: data.customerId,
+                mode: "subscription",
+                line_items: [
+                    {
+                        price: data.priceId,
+                        quantity: 1,
+                    },
+                ],
+                success_url:
+                    data.successUrl ||
+                    "https://dlightning.org/ux-mobile-mock-tool.html?subscription=success",
+                cancel_url:
+                    data.cancelUrl ||
+                    "https://dlightning.org/ux-mobile-mock-tool.html?subscription=cancel",
+            });
+
+            logger.info("Checkout session created:", session.id);
+
+            await db.collection("checkout_sessions").doc(session.id).set({
+                userId: context.auth.uid,
+                sessionId: session.id,
+                customerId: data.customerId,
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                status: "created",
+            });
+
+            logger.info("Session stored in Firestore");
+            return { url: session.url };
+        } catch (error) {
+            logger.error("Stripe session creation error:", error);
+            throw new Error("An error occurred while creating the checkout session.");
+        }
     }
+);
 
-    if (!data.customerId || !data.priceId) {
-        console.error('Missing required data:', { data });
-        throw new functions.https.HttpsError(
-            'invalid-argument',
-            'The function must be called with customerId and priceId.'
-        );
-    }
+// Stripe Webhook (Gen 2 HTTP function)
+const app = express();
+app.use(express.json({ verify: (req, res, buf) => (req.rawBody = buf) }));
+app.use(cors({ origin: true }));
 
-    try {
-        console.log('Creating checkout session for customer:', data.customerId);
-        const session = await stripe.checkout.sessions.create({
-            customer: data.customerId,
-            mode: 'subscription',
-            line_items: [{
-                price: data.priceId,
-                quantity: 1
-            }],
-            success_url: data.successUrl || 'https://dlightning.org/ux-mobile-mock-tool.html?subscription=success',
-            cancel_url: data.cancelUrl || 'https://dlightning.org/ux-mobile-mock-tool.html?subscription=cancel'
-        });
+app.post("/webhook", async (req, res) => {
+    const signature = req.headers["stripe-signature"];
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-        console.log('Checkout session created:', session.id);
-
-        await db.collection('checkout_sessions').doc(session.id).set({
-            userId: context.auth.uid,
-            sessionId: session.id,
-            customerId: data.customerId,
-            createdAt: admin.firestore.FieldValue.serverTimestamp(),
-            status: 'created'
-        });
-
-        console.log('Session stored in Firestore');
-        return { url: session.url };
-    } catch (error) {
-        console.error('Stripe session creation error:', error);
-        throw new functions.https.HttpsError(
-            'internal',
-            'An error occurred while creating the checkout session.'
-        );
-    }
-});
-
-// Add a webhook handler for Stripe events
-exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
-    const signature = req.headers['stripe-signature'];
-    const webhookSecret = functions.config().stripe.webhook_secret;
-    
     let event;
-    
     try {
-        event = stripe.webhooks.constructEvent(
-            req.rawBody,
-            signature,
-            webhookSecret
-        );
+        event = stripe.webhooks.constructEvent(req.rawBody, signature, webhookSecret);
     } catch (err) {
-        console.error('Webhook signature verification failed:', err.message);
+        logger.error("Webhook signature verification failed:", err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
-    
-    console.log('Stripe webhook event received:', event.type);
-    
-    // Handle the event
+
+    logger.info("Stripe webhook event received:", event.type);
+
     switch (event.type) {
-        case 'checkout.session.completed': {
+        case "checkout.session.completed": {
             const session = event.data.object;
-            console.log('Checkout session completed:', session.id);
-            
-            // Update the checkout session status
-            await db.collection('checkout_sessions').doc(session.id).update({
-                status: 'completed',
-                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            logger.info("Checkout session completed:", session.id);
+
+            await db.collection("checkout_sessions").doc(session.id).update({
+                status: "completed",
+                updatedAt: admin.firestore.FieldValue.serverTimestamp(),
             });
-            
-            // Update the user's subscription status
-            const checkoutDoc = await db.collection('checkout_sessions')
-                .doc(session.id)
-                .get();
-                
+
+            const checkoutDoc = await db.collection("checkout_sessions").doc(session.id).get();
             if (checkoutDoc.exists) {
                 const userId = checkoutDoc.data().userId;
-                
-                await db.collection('users').doc(userId).update({
+
+                await db.collection("users").doc(userId).update({
                     pro_account: true,
                     subscription_id: session.subscription,
-                    subscription_status: 'active',
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                    subscription_status: "active",
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
                 });
-                
-                console.log(`User ${userId} updated with pro account status`);
+
+                logger.info(`User ${userId} updated with pro account status`);
             }
             break;
         }
-        
-        case 'customer.subscription.updated': {
+
+        case "customer.subscription.updated": {
             const subscription = event.data.object;
-            console.log('Subscription updated:', subscription.id);
-            
-            // Find the user with this subscription
-            const userSnapshot = await db.collection('users')
-                .where('subscription_id', '==', subscription.id)
+            logger.info("Subscription updated:", subscription.id);
+
+            const userSnapshot = await db
+                .collection("users")
+                .where("subscription_id", "==", subscription.id)
                 .limit(1)
                 .get();
-                
+
             if (!userSnapshot.empty) {
                 const userId = userSnapshot.docs[0].id;
-                
-                await db.collection('users').doc(userId).update({
+
+                await db.collection("users").doc(userId).update({
                     subscription_status: subscription.status,
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
                 });
-                
-                console.log(`User ${userId} subscription status updated to ${subscription.status}`);
+
+                logger.info(`User ${userId} subscription status updated to ${subscription.status}`);
             }
             break;
         }
-        
-        case 'customer.subscription.deleted': {
+
+        case "customer.subscription.deleted": {
             const subscription = event.data.object;
-            console.log('Subscription deleted:', subscription.id);
-            
-            // Find the user with this subscription
-            const userSnapshot = await db.collection('users')
-                .where('subscription_id', '==', subscription.id)
+            logger.info("Subscription deleted:", subscription.id);
+
+            const userSnapshot = await db
+                .collection("users")
+                .where("subscription_id", "==", subscription.id)
                 .limit(1)
                 .get();
-                
+
             if (!userSnapshot.empty) {
                 const userId = userSnapshot.docs[0].id;
-                
-                await db.collection('users').doc(userId).update({
+
+                await db.collection("users").doc(userId).update({
                     pro_account: false,
-                    subscription_status: 'cancelled',
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                    subscription_status: "cancelled",
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
                 });
-                
-                console.log(`User ${userId} subscription cancelled, pro account revoked`);
+
+                logger.info(`User ${userId} subscription cancelled, pro account revoked`);
             }
             break;
         }
     }
-    
-    // Return a 200 response to acknowledge receipt of the event
+
     res.status(200).send({ received: true });
 });
+
+exports.stripeWebhook = onRequest(
+    {
+        cpu: 1,
+        memory: "512MiB",
+        region: "us-central1",
+        cors: true,
+    },
+    app
+);
 
 // cd functions
 // firebase deploy --only functions  <--## only needs to be run when changes to functions are made
