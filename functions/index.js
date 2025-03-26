@@ -1,4 +1,5 @@
 const { onCall } = require("firebase-functions/v2/https");
+const { defineSecret } = require("firebase-functions/params");
 const { onRequest } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
@@ -9,9 +10,14 @@ const cors = require("cors");
 admin.initializeApp();
 const db = admin.firestore();
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2023-10-16",
-});
+const webhookSecret = defineSecret("STRIPE_WEBHOOK_SECRET");
+const stripeSecretKey = defineSecret("STRIPE_SECRET_KEY");
+
+exports.myFunction = onRequest({ secrets: [stripeSecretKey] }, async (req, res) => {
+    const secretKey = stripeSecretKey.value();  // ✅ Accessing at runtime
+    console.log("Stripe Secret Key:", secretKey);  // Debugging output
+    res.send("Secret Loaded!");
+  });
 
 // Create Stripe customer
 exports.createStripeCustomer = onCall(
@@ -119,8 +125,6 @@ app.use(express.json({ verify: (req, res, buf) => (req.rawBody = buf) }));
 app.use(cors({ origin: true }));
 
 app.post("/webhook", async (req, res) => {
-    const signature = req.headers["stripe-signature"];
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
     let event;
     try {
@@ -216,27 +220,7 @@ exports.stripeWebhook = onRequest(
         region: "us-central1",
         cors: true,
     },
-    app
+    (req, res) => {
+        return app(req, res);
+    }
 );
-
-// cd functions
-// firebase deploy --only functions  <--## only needs to be run when changes to functions are made
-// firebase functions:config:get
-// firebase serve --only hosting
-
-// clean up directory
-// rm -rf node_modules
-// rm package-lock.json
-// npm install firebase-admin@latest firebase-functions@latest stripe@latest
-
-//stop port
-// lsof -i :5001
-// kill -9 <PID>
-// Ctrl + C <-- stops firebase emulators etc.
-
-// other commands •
-// https://github.com/firebase/firebase-tools
-// firebase emulators:start
-// firebase projects:list
-// firebase use <your-project-id>
-// npm outdated
