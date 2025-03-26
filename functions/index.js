@@ -1,8 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const Stripe = require('stripe');
-// const cors = require('cors')({ origin: true });
-
+const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -109,6 +108,110 @@ exports.createCheckoutSession = functions.https.onCall(async (data, context) => 
     }
 });
 
+// Add a webhook handler for Stripe events
+exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
+    const signature = req.headers['stripe-signature'];
+    const webhookSecret = functions.config().stripe.webhook_secret;
+    
+    let event;
+    
+    try {
+        event = stripe.webhooks.constructEvent(
+            req.rawBody,
+            signature,
+            webhookSecret
+        );
+    } catch (err) {
+        console.error('Webhook signature verification failed:', err.message);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+    
+    console.log('Stripe webhook event received:', event.type);
+    
+    // Handle the event
+    switch (event.type) {
+        case 'checkout.session.completed': {
+            const session = event.data.object;
+            console.log('Checkout session completed:', session.id);
+            
+            // Update the checkout session status
+            await db.collection('checkout_sessions').doc(session.id).update({
+                status: 'completed',
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+            
+            // Update the user's subscription status
+            const checkoutDoc = await db.collection('checkout_sessions')
+                .doc(session.id)
+                .get();
+                
+            if (checkoutDoc.exists) {
+                const userId = checkoutDoc.data().userId;
+                
+                await db.collection('users').doc(userId).update({
+                    pro_account: true,
+                    subscription_id: session.subscription,
+                    subscription_status: 'active',
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                });
+                
+                console.log(`User ${userId} updated with pro account status`);
+            }
+            break;
+        }
+        
+        case 'customer.subscription.updated': {
+            const subscription = event.data.object;
+            console.log('Subscription updated:', subscription.id);
+            
+            // Find the user with this subscription
+            const userSnapshot = await db.collection('users')
+                .where('subscription_id', '==', subscription.id)
+                .limit(1)
+                .get();
+                
+            if (!userSnapshot.empty) {
+                const userId = userSnapshot.docs[0].id;
+                
+                await db.collection('users').doc(userId).update({
+                    subscription_status: subscription.status,
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                });
+                
+                console.log(`User ${userId} subscription status updated to ${subscription.status}`);
+            }
+            break;
+        }
+        
+        case 'customer.subscription.deleted': {
+            const subscription = event.data.object;
+            console.log('Subscription deleted:', subscription.id);
+            
+            // Find the user with this subscription
+            const userSnapshot = await db.collection('users')
+                .where('subscription_id', '==', subscription.id)
+                .limit(1)
+                .get();
+                
+            if (!userSnapshot.empty) {
+                const userId = userSnapshot.docs[0].id;
+                
+                await db.collection('users').doc(userId).update({
+                    pro_account: false,
+                    subscription_status: 'cancelled',
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                });
+                
+                console.log(`User ${userId} subscription cancelled, pro account revoked`);
+            }
+            break;
+        }
+    }
+    
+    // Return a 200 response to acknowledge receipt of the event
+    res.status(200).send({ received: true });
+});
+
 // cd functions
 // firebase deploy --only functions  <--## only needs to be run when changes to functions are made
 // firebase functions:config:get
@@ -129,3 +232,4 @@ exports.createCheckoutSession = functions.https.onCall(async (data, context) => 
 // firebase emulators:start
 // firebase projects:list
 // firebase use <your-project-id>
+// npm outdated
