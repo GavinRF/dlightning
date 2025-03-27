@@ -4,7 +4,6 @@ const { onRequest } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
 const express = require("express");
-const cors = require('cors');
 const Stripe = require("stripe");
 
 // Define secrets
@@ -16,12 +15,23 @@ admin.initializeApp();
 const db = admin.firestore();
 
 // Create Stripe customer
+// Configure CORS with allowed origins
+const corsOptions = {
+    origin: [
+        'https://dlightning.org',
+        'https://www.dlightning.org',
+        'http://localhost:5500',
+        'http://localhost:5001'
+    ],
+    optionsSuccessStatus: 200
+};
+
 exports.createStripeCustomer = onCall(
     {
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: true,
+        cors: corsOptions,
     },
     async (data, context) => {
         const stripe = new Stripe(stripeSecretKey.value());
@@ -52,7 +62,7 @@ exports.createStripeCustomer = onCall(
             return { customerId: customer.id };
         } catch (error) {
             logger.error("Stripe customer creation error:", error);
-            throw new Error("An error occurred while creating the customer.");
+            throw new Error(`An error occurred while creating the customer: ${error.message}`);
         }
     }
 );
@@ -63,25 +73,14 @@ exports.createCheckoutSession = onCall(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: true, 
-        enforceAppCheck: false, // Allow calls without App Check
-        maxInstances: 10, // Allow up to 10 instances for better handling
-        timeoutSeconds: 60, // Increase timeout for Stripe API calls
-        minInstances: 0, // Scale to zero when not in use to save costs
-        ingressSettings: "ALLOW_ALL" // Allow calls from any origin
+        cors: corsOptions,
     },
     async (data, context) => {
         const stripe = new Stripe(stripeSecretKey.value());
-        logger.info("createCheckoutSession function called", { auth: !!context.auth });
+        logger.info("createCheckoutSession function called");
 
-        // Log auth information for debugging (don't include sensitive info)
-        if (context.auth) {
-            logger.info("Auth info:", { 
-                uid: context.auth.uid,
-                token: !!context.auth.token
-            });
-        } else {
-            logger.error("No authentication context provided");
+        if (!context.auth) {
+            logger.error("Unauthenticated request");
             throw new Error("The function must be called while authenticated.");
         }
 
@@ -107,8 +106,6 @@ exports.createCheckoutSession = onCall(
                 cancel_url:
                     data.cancelUrl ||
                     "https://dlightning.org/ux-mobile-mock-tool.html?subscription=cancel",
-                // Make sure session expires in a reasonable time
-                expires_at: Math.floor(Date.now() / 1000) + 30 * 60, // 30 minutes from now
             });
 
             logger.info("Checkout session created:", session.id);
@@ -125,121 +122,208 @@ exports.createCheckoutSession = onCall(
             return { url: session.url };
         } catch (error) {
             logger.error("Stripe session creation error:", error);
-            // Include more detailed error information
-            logger.error("Error details:", {
-                message: error.message,
-                code: error.code,
-                type: error.type,
-                stack: error.stack
-            });
             throw new Error(`An error occurred while creating the checkout session: ${error.message}`);
         }
     }
 );
 
-// Stripe Webhook (Gen 2 HTTP function)
-const app = express();
-app.use(express.json({ verify: (req, res, buf) => (req.rawBody = buf) }));
-app.use(cors({ origin: true }));
-
-app.post("/webhook", async (req, res) => {
-    const stripe = new Stripe(stripeSecretKey.value());
-    const signature = req.headers['stripe-signature'];
-    let event;
-    try {
-        event = stripe.webhooks.constructEvent(req.rawBody, signature, webhookSecret);
-    } catch (err) {
-        logger.error("Webhook signature verification failed:", err.message);
-        return res.status(400).send(`Webhook Error: ${err.message}`);
-    }
-
-    logger.info("Stripe webhook event received:", event.type);
-
-    switch (event.type) {
-        case "checkout.session.completed": {
-            const session = event.data.object;
-            logger.info("Checkout session completed:", session.id);
-
-            await db.collection("checkout_sessions").doc(session.id).update({
-                status: "completed",
-                updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-            });
-
-            const checkoutDoc = await db.collection("checkout_sessions").doc(session.id).get();
-            if (checkoutDoc.exists) {
-                const userId = checkoutDoc.data().userId;
-
-                await db.collection("users").doc(userId).update({
-                    pro_account: true,
-                    subscription_id: session.subscription,
-                    subscription_status: "active",
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-                });
-
-                logger.info(`User ${userId} updated with pro account status`);
-            }
-            break;
-        }
-
-        case "customer.subscription.updated": {
-            const subscription = event.data.object;
-            logger.info("Subscription updated:", subscription.id);
-
-            const userSnapshot = await db
-                .collection("users")
-                .where("subscription_id", "==", subscription.id)
-                .limit(1)
-                .get();
-
-            if (!userSnapshot.empty) {
-                const userId = userSnapshot.docs[0].id;
-
-                await db.collection("users").doc(userId).update({
-                    subscription_status: subscription.status,
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-                });
-
-                logger.info(`User ${userId} subscription status updated to ${subscription.status}`);
-            }
-            break;
-        }
-
-        case "customer.subscription.deleted": {
-            const subscription = event.data.object;
-            logger.info("Subscription deleted:", subscription.id);
-
-            const userSnapshot = await db
-                .collection("users")
-                .where("subscription_id", "==", subscription.id)
-                .limit(1)
-                .get();
-
-            if (!userSnapshot.empty) {
-                const userId = userSnapshot.docs[0].id;
-
-                await db.collection("users").doc(userId).update({
-                    pro_account: false,
-                    subscription_status: "cancelled",
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-                });
-
-                logger.info(`User ${userId} subscription cancelled, pro account revoked`);
-            }
-            break;
-        }
-    }
-
-    res.status(200).send({ received: true });
-});
-
+// Properly configured webhook handler with Express app to capture raw body
 exports.stripeWebhook = onRequest(
     {
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: true,
+        // No CORS needed for webhooks as they're server-to-server calls
     },
     (req, res) => {
+        const app = express();
+        
+        // Configure middleware with rawBody option
+        app.use(
+            express.json({
+                verify: (req, res, buf) => {
+                    req.rawBody = buf.toString();
+                }
+            })
+        );
+        
+        // Handle webhook endpoint
+        app.post('/', async (req, res) => {
+            const stripe = new Stripe(stripeSecretKey.value());
+            
+            try {
+                const sig = req.headers['stripe-signature'];
+                
+                if (!sig) {
+                    logger.error('Missing Stripe signature');
+                    return res.status(400).send('Missing Stripe signature');
+                }
+                
+                let event;
+                try {
+                    event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret.value());
+                } catch (err) {
+                    logger.error(`Webhook signature verification failed: ${err.message}`);
+                    return res.status(400).send(`Webhook Error: ${err.message}`);
+                }
+                
+                logger.info("Stripe webhook event received:", event.type);
+                
+                // Handle customer.subscription.created
+                if (event.type === 'customer.subscription.created') {
+                    await handleSubscriptionCreated(event.data.object);
+                }
+                
+                // Handle customer.subscription.updated
+                else if (event.type === 'customer.subscription.updated') {
+                    await handleSubscriptionUpdated(event.data.object);
+                }
+                
+                // Handle customer.subscription.deleted
+                else if (event.type === 'customer.subscription.deleted') {
+                    await handleSubscriptionDeleted(event.data.object);
+                }
+                
+                // Checkout session completed
+                else if (event.type === 'checkout.session.completed') {
+                    await handleCheckoutCompleted(event.data.object);
+                }
+                
+                // Return success response
+                return res.status(200).send({ received: true });
+                
+            } catch (error) {
+                logger.error("Webhook error:", error.message, error.stack);
+                return res.status(400).send(`Webhook Error: ${error.message}`);
+            }
+        });
+        
+        // Handle all other HTTP methods
+        app.all('*', (req, res) => {
+            res.status(405).send('Method Not Allowed');
+        });
+        
+        // Forward the request to our Express app
         return app(req, res);
     }
 );
+
+// Helper functions for handling different webhook events
+async function handleSubscriptionCreated(dataObject) {
+    try {
+        const userSnapshot = await db
+            .collection("users")
+            .where("stripe_customer_key", "==", dataObject.customer)
+            .get();
+        
+        if (!userSnapshot.empty) {
+            for (const userDoc of userSnapshot.docs) {
+                await userDoc.ref.update({
+                    pro_account: true,
+                    subscription_id: dataObject.id,
+                    stripe_subscription_id: dataObject.id,
+                    stripe_plan_end_date: admin.firestore.Timestamp.fromMillis(dataObject.current_period_end * 1000),
+                    stripe_subscription_status: dataObject.status,
+                    stripe_subscription_product_id: dataObject.plan.product,
+                    stripe_subscription_price_id: dataObject.plan.id,
+                    subscription_status: "active",
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+                });
+                
+                logger.info(`Subscription created for user ${userDoc.id}, customer: ${dataObject.customer}`);
+            }
+        } else {
+            logger.warn(`No user found for customer: ${dataObject.customer}`);
+        }
+    } catch (error) {
+        logger.error("Error in handleSubscriptionCreated:", error);
+        throw error;
+    }
+}
+
+async function handleSubscriptionUpdated(dataObject) {
+    try {
+        const userSnapshot = await db
+            .collection("users")
+            .where("stripe_subscription_id", "==", dataObject.id)
+            .get();
+        
+        if (!userSnapshot.empty) {
+            for (const userDoc of userSnapshot.docs) {
+                await userDoc.ref.update({
+                    stripe_plan_end_date: admin.firestore.Timestamp.fromMillis(dataObject.current_period_end * 1000),
+                    stripe_subscription_status: dataObject.status,
+                    stripe_subscription_product_id: dataObject.plan.product,
+                    stripe_subscription_price_id: dataObject.plan.id,
+                    subscription_status: dataObject.status,
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+                });
+                
+                logger.info(`Subscription updated for ID: ${dataObject.id}, status: ${dataObject.status}`);
+            }
+        } else {
+            logger.warn(`No user found for subscription ID: ${dataObject.id}`);
+        }
+    } catch (error) {
+        logger.error("Error in handleSubscriptionUpdated:", error);
+        throw error;
+    }
+}
+
+async function handleSubscriptionDeleted(dataObject) {
+    try {
+        const userSnapshot = await db
+            .collection("users")
+            .where("stripe_subscription_id", "==", dataObject.id)
+            .get();
+        
+        if (!userSnapshot.empty) {
+            for (const userDoc of userSnapshot.docs) {
+                await userDoc.ref.update({
+                    pro_account: false,
+                    stripe_plan_end_date: admin.firestore.Timestamp.fromMillis(dataObject.current_period_end * 1000),
+                    stripe_subscription_status: dataObject.status,
+                    stripe_subscription_product_id: dataObject.plan.product,
+                    stripe_subscription_price_id: dataObject.plan.id,
+                    subscription_status: "cancelled",
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+                });
+                
+                logger.info(`Subscription deleted for ID: ${dataObject.id}, user: ${userDoc.id}`);
+            }
+        } else {
+            logger.warn(`No user found for deleted subscription ID: ${dataObject.id}`);
+        }
+    } catch (error) {
+        logger.error("Error in handleSubscriptionDeleted:", error);
+        throw error;
+    }
+}
+
+async function handleCheckoutCompleted(session) {
+    try {
+        // Update checkout session status
+        await db.collection("checkout_sessions").doc(session.id).update({
+            status: "completed",
+            updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+        
+        // Find associated user and update their status
+        const checkoutDoc = await db.collection("checkout_sessions").doc(session.id).get();
+        if (checkoutDoc.exists) {
+            const userId = checkoutDoc.data().userId;
+            
+            await db.collection("users").doc(userId).update({
+                pro_account: true,
+                subscription_id: session.subscription,
+                subscription_status: "active",
+                updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+            });
+            
+            logger.info(`User ${userId} updated with pro account status from checkout session`);
+        }
+    } catch (error) {
+        logger.error("Error in handleCheckoutCompleted:", error);
+        throw error;
+    }
+}
