@@ -4,7 +4,7 @@ const { onRequest } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
 const express = require("express");
-const cors = require("cors");
+const cors = require('cors');
 const Stripe = require("stripe");
 
 // Define secrets
@@ -63,14 +63,25 @@ exports.createCheckoutSession = onCall(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: true, // Enable CORS for this function
+        cors: true, 
+        enforceAppCheck: false, // Allow calls without App Check
+        maxInstances: 10, // Allow up to 10 instances for better handling
+        timeoutSeconds: 60, // Increase timeout for Stripe API calls
+        minInstances: 0, // Scale to zero when not in use to save costs
+        ingressSettings: "ALLOW_ALL" // Allow calls from any origin
     },
     async (data, context) => {
         const stripe = new Stripe(stripeSecretKey.value());
-        logger.info("createCheckoutSession function called");
+        logger.info("createCheckoutSession function called", { auth: !!context.auth });
 
-        if (!context.auth) {
-            logger.error("Unauthenticated request");
+        // Log auth information for debugging (don't include sensitive info)
+        if (context.auth) {
+            logger.info("Auth info:", { 
+                uid: context.auth.uid,
+                token: !!context.auth.token
+            });
+        } else {
+            logger.error("No authentication context provided");
             throw new Error("The function must be called while authenticated.");
         }
 
@@ -96,6 +107,8 @@ exports.createCheckoutSession = onCall(
                 cancel_url:
                     data.cancelUrl ||
                     "https://dlightning.org/ux-mobile-mock-tool.html?subscription=cancel",
+                // Make sure session expires in a reasonable time
+                expires_at: Math.floor(Date.now() / 1000) + 30 * 60, // 30 minutes from now
             });
 
             logger.info("Checkout session created:", session.id);
@@ -112,7 +125,14 @@ exports.createCheckoutSession = onCall(
             return { url: session.url };
         } catch (error) {
             logger.error("Stripe session creation error:", error);
-            throw new Error("An error occurred while creating the checkout session.");
+            // Include more detailed error information
+            logger.error("Error details:", {
+                message: error.message,
+                code: error.code,
+                type: error.type,
+                stack: error.stack
+            });
+            throw new Error(`An error occurred while creating the checkout session: ${error.message}`);
         }
     }
 );
