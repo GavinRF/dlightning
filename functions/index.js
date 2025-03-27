@@ -3,21 +3,17 @@ const { defineSecret } = require("firebase-functions/params");
 const { onRequest } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
-const Stripe = require("stripe");
 const express = require("express");
 const cors = require("cors");
+const Stripe = require("stripe");
 
-admin.initializeApp();
-const db = admin.firestore();
-
+// Define secrets
 const webhookSecret = defineSecret("STRIPE_WEBHOOK_SECRET");
 const stripeSecretKey = defineSecret("STRIPE_SECRET_KEY");
 
-exports.myFunction = onRequest({ secrets: [stripeSecretKey] }, async (req, res) => {
-    const secretKey = stripeSecretKey.value();  // ✅ Accessing at runtime
-    console.log("Stripe Secret Key:", secretKey);  // Debugging output
-    res.send("Secret Loaded!");
-  });
+// Initialize Firebase
+admin.initializeApp();
+const db = admin.firestore();
 
 // Create Stripe customer
 exports.createStripeCustomer = onCall(
@@ -25,9 +21,10 @@ exports.createStripeCustomer = onCall(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: true, // Enable CORS for this function
+        cors: true,
     },
     async (data, context) => {
+        const stripe = new Stripe(stripeSecretKey.value());
         logger.info("createStripeCustomer function called");
 
         if (!context.auth) {
@@ -69,6 +66,7 @@ exports.createCheckoutSession = onCall(
         cors: true, // Enable CORS for this function
     },
     async (data, context) => {
+        const stripe = new Stripe(stripeSecretKey.value());
         logger.info("createCheckoutSession function called");
 
         if (!context.auth) {
@@ -125,7 +123,8 @@ app.use(express.json({ verify: (req, res, buf) => (req.rawBody = buf) }));
 app.use(cors({ origin: true }));
 
 app.post("/webhook", async (req, res) => {
-
+    const stripe = new Stripe(stripeSecretKey.value());
+    const signature = req.headers['stripe-signature'];
     let event;
     try {
         event = stripe.webhooks.constructEvent(req.rawBody, signature, webhookSecret);
