@@ -20,9 +20,13 @@ const corsOptions = {
     origin: [
         'https://dlightning.org',
         'https://www.dlightning.org',
+        'https://experience-builder-m-v-wxacv7.web.app',
         'http://localhost:5500',
         'http://localhost:5001'
     ],
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
     optionsSuccessStatus: 200
 };
 
@@ -32,7 +36,7 @@ exports.createStripeCustomer = onCall(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: corsOptions,
+        cors: ['dlightning.org', 'www.dlightning.org'],
     },
     async (data, context) => {
         const stripe = new Stripe(stripeSecretKey.value());
@@ -74,7 +78,7 @@ exports.createCheckoutSession = onCall(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: corsOptions,
+        cors: ['dlightning.org', 'www.dlightning.org'],
     },
     async (data, context) => {
         const stripe = new Stripe(stripeSecretKey.value());
