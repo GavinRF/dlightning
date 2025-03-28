@@ -1,4 +1,4 @@
-const { onCall } = require("firebase-functions/v2/https");
+const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const { onRequest } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
@@ -15,20 +15,14 @@ const stripeSecretKey = defineSecret("STRIPE_SECRET_KEY");
 admin.initializeApp();
 const db = admin.firestore();
 
-// Configure CORS with allowed origins
-const corsOptions = {
-    origin: [
-        'https://dlightning.org',
-        'https://www.dlightning.org',
-        'https://experience-builder-m-v-wxacv7.web.app',
-        'http://localhost:5500',
-        'http://localhost:5001'
-    ],
-    methods: ['GET', 'POST', 'OPTIONS'],
+// More permissive CORS configuration to troubleshoot
+const corsHandler = cors({
+    origin: true, // Allow all origins during troubleshooting
+    methods: ['POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-    optionsSuccessStatus: 200
-};
+    maxAge: 86400 // 24 hours
+});
 
 // Create Stripe customer
 exports.createStripeCustomer = onCall(
@@ -36,7 +30,7 @@ exports.createStripeCustomer = onCall(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: ['dlightning.org', 'www.dlightning.org'],
+        cors: true, // Allow all origins for onCall functions
     },
     async (data, context) => {
         const stripe = new Stripe(stripeSecretKey.value());
@@ -44,12 +38,12 @@ exports.createStripeCustomer = onCall(
 
         if (!context.auth) {
             logger.error("Unauthenticated request");
-            throw new Error("The function must be called while authenticated.");
+            throw new HttpsError("unauthenticated", "The function must be called while authenticated.");
         }
 
         if (!data.email) {
             logger.error("Missing email in request");
-            throw new Error("The function must be called with email.");
+            throw new HttpsError("invalid-argument", "The function must be called with email.");
         }
 
         try {
@@ -67,18 +61,18 @@ exports.createStripeCustomer = onCall(
             return { customerId: customer.id };
         } catch (error) {
             logger.error("Stripe customer creation error:", error);
-            throw new Error(`An error occurred while creating the customer: ${error.message}`);
+            throw new HttpsError("internal", `An error occurred while creating the customer: ${error.message}`);
         }
     }
 );
 
-// Create checkout session - FIXED
+// Create checkout session - Fixed with improved CORS handling
 exports.createCheckoutSession = onCall(
     {
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: ['dlightning.org', 'www.dlightning.org'],
+        cors: true, // Allow all origins for onCall functions
     },
     async (data, context) => {
         const stripe = new Stripe(stripeSecretKey.value());
@@ -86,12 +80,12 @@ exports.createCheckoutSession = onCall(
 
         if (!context.auth) {
             logger.error("Unauthenticated request");
-            throw new Error("The function must be called while authenticated.");
+            throw new HttpsError("unauthenticated", "The function must be called while authenticated.");
         }
 
         if (!data.customerId || !data.priceId) {
             logger.error("Missing required data:", { data });
-            throw new Error("The function must be called with customerId and priceId.");
+            throw new HttpsError("invalid-argument", "The function must be called with customerId and priceId.");
         }
 
         try {
@@ -134,12 +128,98 @@ exports.createCheckoutSession = onCall(
             return { sessionId: session.id, url: session.url };
         } catch (error) {
             logger.error("Stripe session creation error:", error);
-            throw new Error(`An error occurred while creating the checkout session: ${error.message}`);
+            throw new HttpsError("internal", `An error occurred while creating the checkout session: ${error.message}`);
         }
     }
 );
 
-// Properly configured webhook handler with Express app to capture raw body - FIXED
+// Alternative implementation as HTTP function with explicit CORS handling
+exports.createCheckoutSessionHttp = onRequest(
+    {
+        cpu: 1,
+        memory: "512MiB",
+        region: "us-central1",
+    },
+    (req, res) => {
+        // Apply CORS middleware
+        return corsHandler(req, res, async () => {
+            // Handle preflight requests
+            if (req.method === 'OPTIONS') {
+                return res.status(204).send('');
+            }
+            
+            // Only allow POST method
+            if (req.method !== 'POST') {
+                return res.status(405).send('Method Not Allowed');
+            }
+            
+            const stripe = new Stripe(stripeSecretKey.value());
+            logger.info("HTTP createCheckoutSession function called");
+
+            try {
+                // Verify Firebase Auth token
+                const authHeader = req.headers.authorization;
+                if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                    return res.status(401).json({ error: 'Unauthorized: No valid token provided' });
+                }
+                
+                const idToken = authHeader.split('Bearer ')[1];
+                const decodedToken = await admin.auth().verifyIdToken(idToken);
+                const uid = decodedToken.uid;
+                
+                const { customerId, priceId, successUrl, cancelUrl } = req.body;
+                
+                if (!customerId || !priceId) {
+                    return res.status(400).json({ error: 'Missing required data (customerId or priceId)' });
+                }
+                
+                // Get domain from data or use default
+                const domain = req.body.domain || 'https://dlightning.org';
+                
+                logger.info("Creating checkout session for customer:", customerId);
+                const session = await stripe.checkout.sessions.create({
+                    customer: customerId,
+                    mode: "subscription",
+                    line_items: [
+                        {
+                            price: priceId,
+                            quantity: 1,
+                        },
+                    ],
+                    success_url: successUrl || 
+                        `${domain}/subscription-success?session_id={CHECKOUT_SESSION_ID}`,
+                    cancel_url: cancelUrl || 
+                        `${domain}/subscription-cancel`,
+                    // Add metadata to help identify the user on webhook events
+                    metadata: {
+                        userId: uid
+                    }
+                });
+
+                logger.info("Checkout session created:", session.id);
+
+                // Store checkout session details in Firestore
+                await db.collection("checkout_sessions").doc(session.id).set({
+                    userId: uid,
+                    sessionId: session.id,
+                    customerId: customerId,
+                    priceId: priceId,
+                    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                    status: "created",
+                });
+
+                logger.info("Session stored in Firestore");
+                return res.status(200).json({ sessionId: session.id, url: session.url });
+                
+            } catch (error) {
+                logger.error("Stripe session creation error:", error);
+                return res.status(500).json({ error: `An error occurred: ${error.message}` });
+            }
+        });
+    }
+);
+
+// Properly configured webhook handler with Express app to capture raw body
 exports.stripeWebhook = onRequest(
     {
         cpu: 1,
