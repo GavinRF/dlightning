@@ -17,9 +17,9 @@ const db = admin.firestore();
 
 // More permissive CORS configuration to troubleshoot
 const corsHandler = cors({
-    origin: true, // Allow all origins during troubleshooting
-    methods: ['POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: true,  
+    methods: ['POST', 'OPTIONS', 'GET'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     credentials: true,
     maxAge: 86400 // 24 hours
 });
@@ -72,7 +72,7 @@ exports.createCheckoutSession = onCall(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
-        cors: true, // Allow all origins for onCall functions
+        cors: true,
     },
     async (data, context) => {
         const stripe = new Stripe(stripeSecretKey.value());
