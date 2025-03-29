@@ -5,7 +5,6 @@ const admin = require("firebase-admin");
 const express = require("express");
 const Stripe = require("stripe");
 const cors = require('cors');
-const bodyParser = require('body-parser');
 
 // Define secrets
 const webhookSecret = defineSecret("STRIPE_WEBHOOK_SECRET");
@@ -15,24 +14,34 @@ const stripeSecretKey = defineSecret("STRIPE_SECRET_KEY");
 admin.initializeApp();
 const db = admin.firestore();
 
-// More permissive CORS configuration to troubleshoot
+// Create our main Express app
+const app = express();
+
+// Setup CORS with more permissive options - this is critical
 const corsOptions = {
-    origin: true,  
-    methods: ['POST', 'OPTIONS', 'GET'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    origin: true, // Allow any origin
+    methods: ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
     credentials: true,
     maxAge: 86400 // 24 hours
 };
 
-// Create our main Express app
-const app = express();
-
-// Apply global middleware
+// Apply CORS middleware to all routes - must come before other middleware
 app.use(cors(corsOptions));
+
+// Apply other middleware
 app.use(express.json());
+
+// Special handling for preflight requests
+app.options('*', cors(corsOptions));
 
 // Auth middleware that verifies the Firebase token
 const authenticateUser = async (req, res, next) => {
+    // Handle OPTIONS requests immediately (though this should be covered by the CORS middleware)
+    if (req.method === 'OPTIONS') {
+        return res.status(204).end();
+    }
+
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ error: 'Unauthorized: No valid token provided' });
@@ -132,8 +141,18 @@ app.post('/create-checkout', authenticateUser, async (req, res) => {
     }
 });
 
+// Simple health check route
+app.get('/', (req, res) => {
+    res.status(200).json({ status: 'ok', message: 'API is running' });
+});
+
 // Webhook handler needs special body parsing for Stripe signature verification
 const webhookApp = express();
+
+// Allow CORS on the webhook app as well
+webhookApp.use(cors({ origin: true }));
+
+// Special body parsing for Stripe webhooks
 webhookApp.use(
     express.json({
         verify: (req, res, buf) => {
@@ -348,6 +367,7 @@ exports.api = onRequest(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
+        cors: true // Ensure CORS is enabled at the function level too
     },
     app
 );
@@ -357,119 +377,9 @@ exports.stripeWebhook = onRequest(
         cpu: 1,
         memory: "512MiB",
         region: "us-central1",
+        cors: true // Enable CORS for webhook endpoint too
     },
     webhookApp
-);
-
-// Keep the callable functions for backward compatibility
-// You can gradually migrate your client code to use the Express endpoints instead
-const functions = require('firebase-functions/v2');
-
-exports.createStripeCustomer = functions.https.onCall(
-    {
-        cpu: 1,
-        memory: "512MiB",
-        region: "us-central1",
-        cors: true, // Allow all origins for onCall functions
-    },
-    async (data, context) => {
-        const stripe = new Stripe(stripeSecretKey.value());
-        logger.info("createStripeCustomer callable function called (legacy)");
-
-        if (!context.auth) {
-            logger.error("Unauthenticated request");
-            throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated.");
-        }
-
-        if (!data.email) {
-            logger.error("Missing email in request");
-            throw new functions.https.HttpsError("invalid-argument", "The function must be called with email.");
-        }
-
-        try {
-            logger.info("Creating Stripe customer for email:", data.email);
-            const customer = await stripe.customers.create({ email: data.email });
-
-            logger.info("Customer created:", customer.id);
-
-            await db.collection("users").doc(context.auth.uid).update({
-                stripe_customer_key: customer.id,
-                updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-            });
-
-            logger.info("User document updated with customer key");
-            return { customerId: customer.id };
-        } catch (error) {
-            logger.error("Stripe customer creation error:", error);
-            throw new functions.https.HttpsError("internal", `An error occurred while creating the customer: ${error.message}`);
-        }
-    }
-);
-
-exports.createCheckoutSession = functions.https.onCall(
-    {
-        cpu: 1,
-        memory: "512MiB",
-        region: "us-central1",
-        cors: true,
-    },
-    async (data, context) => {
-        const stripe = new Stripe(stripeSecretKey.value());
-        logger.info("createCheckoutSession callable function called (legacy)");
-
-        if (!context.auth) {
-            logger.error("Unauthenticated request");
-            throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated.");
-        }
-
-        if (!data.customerId || !data.priceId) {
-            logger.error("Missing required data:", { data });
-            throw new functions.https.HttpsError("invalid-argument", "The function must be called with customerId and priceId.");
-        }
-
-        try {
-            // Get domain from data or use default
-            const domain = data.domain || 'https://dlightning.org';
-            
-            logger.info("Creating checkout session for customer:", data.customerId);
-            const session = await stripe.checkout.sessions.create({
-                customer: data.customerId,
-                mode: "subscription",
-                line_items: [
-                    {
-                        price: data.priceId,
-                        quantity: 1,
-                    },
-                ],
-                success_url: data.successUrl || 
-                    `${domain}/subscription-success?session_id={CHECKOUT_SESSION_ID}`,
-                cancel_url: data.cancelUrl || 
-                    `${domain}/subscription-cancel`,
-                // Add metadata to help identify the user on webhook events
-                metadata: {
-                    userId: context.auth.uid
-                }
-            });
-
-            logger.info("Checkout session created:", session.id);
-
-            // Store checkout session details in Firestore
-            await db.collection("checkout_sessions").doc(session.id).set({
-                userId: context.auth.uid,
-                sessionId: session.id,
-                customerId: data.customerId,
-                priceId: data.priceId,
-                createdAt: admin.firestore.FieldValue.serverTimestamp(),
-                status: "created",
-            });
-
-            logger.info("Session stored in Firestore");
-            return { sessionId: session.id, url: session.url };
-        } catch (error) {
-            logger.error("Stripe session creation error:", error);
-            throw new functions.https.HttpsError("internal", `An error occurred while creating the checkout session: ${error.message}`);
-        }
-    }
 );
 
 // cd functions
