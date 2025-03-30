@@ -1,5 +1,130 @@
 // Add this script to diagnose Stripe payment authentication issues
 // Place before your Stripe payment functions or in a separate file and include it
+function configureFirebaseFunctions() {
+    // Check if we need to set the region
+    const functionsRegion = 'us-central1'; // Change this if your functions are in a different region
+    
+    // Some Firebase configurations might need region specification
+    if (firebase.app().options.region !== functionsRegion) {
+      console.log(`Setting Firebase Functions region to ${functionsRegion}`);
+      firebase.app().functions().useEmulator('localhost', 5001);  // uncomment for local emulator
+      //firebase.app().functions(functionsRegion);  // uncomment for production
+    }
+    
+    console.log('Firebase Functions configured');
+  }
+  
+  // 2. Function to create direct HTTP requests to Firebase Functions
+  // This bypasses potential issues with the httpsCallable method
+  async function callFunctionDirectly(functionName, data) {
+    // Get fresh authentication token
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+    
+    // Force token refresh
+    const token = await user.getIdToken(true);
+    
+    // Build the function URL
+    const projectId = firebase.app().options.projectId;
+    const region = 'us-central1'; // Change this if your functions are in a different region
+    const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/${functionName}`;
+    
+    console.log(`Calling function directly: ${functionUrl}`);
+    
+    // Make direct HTTP request
+    const response = await fetch(functionUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data || {})
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Function response error:', response.status, errorText);
+      throw new Error(`Function error (${response.status}): ${errorText}`);
+    }
+    
+    return response.json();
+  }
+  
+  // 3. Modified createPaymentIntent function using direct HTTP
+  // Replace your existing function with this
+  async function createPaymentIntent(priceId) {
+    console.log(`Creating payment intent for price ID: ${priceId}`);
+    
+    try {
+      // Ensure user is authenticated
+      const currentUser = firebase.auth().currentUser;
+      if (!currentUser) {
+        console.error('No user is logged in');
+        throw new Error('You must be logged in to create a payment intent');
+      }
+      
+      console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
+      
+      // Try first with the standard method
+      try {
+        console.log('Trying with standard httpsCallable method...');
+        const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
+        const result = await createIntentFunction({ priceId });
+        console.log('Standard method succeeded');
+        return result.data;
+      } catch (standardError) {
+        console.warn('Standard method failed, trying direct HTTP method:', standardError);
+        
+        // If standard method fails, try direct HTTP
+        const result = await callFunctionDirectly('createPaymentIntent', { priceId });
+        console.log('Direct HTTP method succeeded');
+        return result;
+      }
+    } catch (error) {
+      console.error('Error creating payment intent:', error);
+      throw error;
+    }
+  }
+  
+  // 4. Modified checkSubscriptionStatus function using direct HTTP
+  // Replace your existing function with this
+  async function checkSubscriptionStatus() {
+    try {
+      // Ensure user is authenticated
+      const currentUser = firebase.auth().currentUser;
+      if (!currentUser) {
+        console.error('No user is logged in');
+        throw new Error('You must be logged in to check subscription status');
+      }
+      
+      // Try first with the standard method
+      try {
+        console.log('Trying check subscription with standard method...');
+        const checkFunction = firebase.functions().httpsCallable('checkSubscriptionStatus');
+        const result = await checkFunction();
+        console.log('Standard check method succeeded');
+        return result.data;
+      } catch (standardError) {
+        console.warn('Standard check method failed, trying direct HTTP:', standardError);
+        
+        // If standard method fails, try direct HTTP
+        const result = await callFunctionDirectly('checkSubscriptionStatus');
+        console.log('Direct HTTP check method succeeded');
+        return result;
+      }
+    } catch (error) {
+      console.error('Error checking subscription status:', error);
+      throw error;
+    }
+  }
+  
+  // Initialize our configuration
+  configureFirebaseFunctions();
+
+// Add this script to diagnose Stripe payment authentication issues
+// Place before your Stripe payment functions or in a separate file and include it
 
 // ========== 1. AUTHENTICATION DIAGNOSTICS ==========
 async function runAuthDiagnostics() {
@@ -60,29 +185,104 @@ async function runAuthDiagnostics() {
   async function testCloudFunction() {
     console.log('======= CLOUD FUNCTIONS DIAGNOSTICS START =======');
     
+    // Ensure user is authenticated
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      console.error('❌ No user is logged in for Functions test');
+      return false;
+    }
+    
+    // Test Cloud Functions using both methods
+    let standardMethodResult = false;
+    let directHttpMethodResult = false;
+    
+    // 1. Try standard httpsCallable method
     try {
-      // Test with a simple function call first (if you have one)
+      console.log('Testing standard httpsCallable method...');
       const testFunction = firebase.functions().httpsCallable('checkSubscriptionStatus');
-      console.log('Calling test cloud function...');
-      
       const result = await testFunction();
-      console.log('✅ Cloud function called successfully');
+      console.log('✅ Standard method succeeded');
       console.log('Response:', result.data);
-      
-      return true;
+      standardMethodResult = true;
     } catch (error) {
-      console.error('❌ Error calling cloud function:', error);
-      // Check for specific error types
+      console.error('❌ Standard method failed:', error);
       if (error.code === 'functions/unauthenticated') {
         console.error('Authentication problem: Firebase Functions reports user as unauthenticated');
-        console.error('This suggests token is not being passed correctly to the function');
       } else if (error.code === 'functions/unavailable') {
         console.error('Connectivity problem: Functions service is unavailable');
       } else if (error.code === 'functions/internal') {
         console.error('Server error: Internal error in Firebase Functions');
       }
-      return false;
     }
+    
+    // 2. Try direct HTTP method
+    try {
+      console.log('Testing direct HTTP method...');
+      
+      // Get fresh token
+      const token = await user.getIdToken(true);
+      
+      // Build the function URL 
+      const projectId = firebase.app().options.projectId;
+      const region = 'us-central1'; // Change if your functions are in a different region
+      const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/checkSubscriptionStatus`;
+      
+      console.log(`Calling: ${functionUrl}`);
+      
+      // Make direct HTTP request
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({})
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('✅ Direct HTTP method succeeded');
+        console.log('Response:', data);
+        directHttpMethodResult = true;
+      } else {
+        const errorText = await response.text();
+        console.error(`❌ Direct HTTP method failed: ${response.status} ${errorText}`);
+      }
+    } catch (httpError) {
+      console.error('❌ Direct HTTP request failed:', httpError);
+    }
+    
+    // 3. Check CORS configuration
+    try {
+      console.log('Testing OPTIONS request for CORS...');
+      const projectId = firebase.app().options.projectId;
+      const region = 'us-central1';
+      const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/checkSubscriptionStatus`;
+      
+      const corsResponse = await fetch(functionUrl, {
+        method: 'OPTIONS'
+      });
+      
+      console.log('CORS Headers:', {
+        'access-control-allow-origin': corsResponse.headers.get('access-control-allow-origin'),
+        'access-control-allow-methods': corsResponse.headers.get('access-control-allow-methods'),
+        'access-control-allow-headers': corsResponse.headers.get('access-control-allow-headers')
+      });
+      
+      if (corsResponse.headers.get('access-control-allow-origin')) {
+        console.log('✅ CORS appears to be configured');
+      } else {
+        console.warn('⚠️ CORS headers missing or restricted');
+      }
+    } catch (corsError) {
+      console.error('❌ CORS check failed:', corsError);
+    }
+    
+    // Overall result
+    const overallResult = standardMethodResult || directHttpMethodResult;
+    console.log(`Cloud Functions test ${overallResult ? 'PASSED' : 'FAILED'} (Standard: ${standardMethodResult}, Direct: ${directHttpMethodResult})`);
+    
+    return overallResult;
   }
   
   // ========== 3. STRIPE SETUP DIAGNOSTICS ==========
