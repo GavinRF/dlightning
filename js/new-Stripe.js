@@ -1,5 +1,273 @@
-// ----- STRIPE INTEGRATION -----
+// Add this script to diagnose Stripe payment authentication issues
+// Place before your Stripe payment functions or in a separate file and include it
 
+// ========== 1. AUTHENTICATION DIAGNOSTICS ==========
+async function runAuthDiagnostics() {
+    console.log('======= AUTHENTICATION DIAGNOSTICS START =======');
+    
+    // Check if Firebase is initialized
+    if (!firebase.apps.length) {
+      console.error('❌ Firebase not initialized');
+      return false;
+    }
+    console.log('✅ Firebase initialized');
+    
+    // Check current user
+    const user = firebase.auth().currentUser;
+    console.log('Current user:', user ? `User UID: ${user.uid} (${user.email})` : 'No user logged in');
+    
+    if (!user) {
+      console.error('❌ No user is logged in');
+      return false;
+    }
+    
+    // Check token 
+    try {
+      console.log('Refreshing authentication token...');
+      const token = await user.getIdToken(true);
+      console.log(`✅ Token refreshed successfully (${token.substring(0, 10)}...)`);
+      
+      // Check Firestore access to verify auth is working
+      try {
+        const userDoc = await firebase.firestore()
+          .collection('users')
+          .doc(user.uid)
+          .get();
+        
+        if (userDoc.exists) {
+          console.log('✅ Successfully accessed Firestore user document');
+          console.log('User data exists:', userDoc.data() ? 'Yes' : 'No');
+          
+          // Check specific data needed for Stripe
+          const userData = userDoc.data();
+          console.log('Has stripe_customer_id:', userData.stripe_customer_id ? 'Yes' : 'No');
+          console.log('Pro account:', userData.pro_account ? 'Yes' : 'No');
+        } else {
+          console.error('❌ User document does not exist in Firestore');
+        }
+      } catch (firestoreError) {
+        console.error('❌ Error accessing Firestore:', firestoreError);
+      }
+      
+      return true;
+    } catch (tokenError) {
+      console.error('❌ Error refreshing token:', tokenError);
+      return false;
+    }
+  }
+  
+  // ========== 2. FUNCTIONS DIAGNOSTICS ==========
+  async function testCloudFunction() {
+    console.log('======= CLOUD FUNCTIONS DIAGNOSTICS START =======');
+    
+    try {
+      // Test with a simple function call first (if you have one)
+      const testFunction = firebase.functions().httpsCallable('checkSubscriptionStatus');
+      console.log('Calling test cloud function...');
+      
+      const result = await testFunction();
+      console.log('✅ Cloud function called successfully');
+      console.log('Response:', result.data);
+      
+      return true;
+    } catch (error) {
+      console.error('❌ Error calling cloud function:', error);
+      // Check for specific error types
+      if (error.code === 'functions/unauthenticated') {
+        console.error('Authentication problem: Firebase Functions reports user as unauthenticated');
+        console.error('This suggests token is not being passed correctly to the function');
+      } else if (error.code === 'functions/unavailable') {
+        console.error('Connectivity problem: Functions service is unavailable');
+      } else if (error.code === 'functions/internal') {
+        console.error('Server error: Internal error in Firebase Functions');
+      }
+      return false;
+    }
+  }
+  
+  // ========== 3. STRIPE SETUP DIAGNOSTICS ==========
+  async function testStripeSetup() {
+    console.log('======= STRIPE SETUP DIAGNOSTICS START =======');
+    
+    // Check if Stripe is loaded
+    if (typeof Stripe === 'undefined') {
+      console.error('❌ Stripe.js is not loaded');
+      return false;
+    }
+    console.log('✅ Stripe.js is loaded');
+    
+    // Check specific to your setup
+    if (window.stripe) {
+      console.log('✅ Stripe instance is already initialized');
+    } else {
+      console.warn('⚠️ Stripe instance is not initialized yet');
+    }
+    
+    return true;
+  }
+  
+  // ========== 4. MAIN DIAGNOSTIC FUNCTION ==========
+  async function runStripeDiagnostics() {
+    console.log('===== STARTING COMPREHENSIVE STRIPE DIAGNOSTICS =====');
+    
+    const authOk = await runAuthDiagnostics();
+    console.log('Authentication check:', authOk ? 'PASSED' : 'FAILED');
+    
+    const functionsOk = await testCloudFunction();
+    console.log('Cloud Functions check:', functionsOk ? 'PASSED' : 'FAILED');
+    
+    const stripeOk = await testStripeSetup();
+    console.log('Stripe setup check:', stripeOk ? 'PASSED' : 'FAILED');
+    
+    console.log('===== DIAGNOSTICS COMPLETE =====');
+    
+    return {
+      authenticationOk: authOk,
+      cloudFunctionsOk: functionsOk,
+      stripeSetupOk: stripeOk,
+      overallStatus: (authOk && functionsOk && stripeOk) ? 'PASSED' : 'FAILED'
+    };
+  }
+  
+  // ========== 5. ENHANCED PAYMENT INTENT FUNCTION ==========
+  async function createPaymentIntentEnhanced(priceId) {
+    console.log('Creating payment intent for price ID:', priceId);
+    
+    // 1. Check authentication
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      console.error('No authenticated user found when creating payment intent');
+      throw new Error('You must be logged in to create a payment intent');
+    }
+    
+    // 2. Refresh token to ensure it's not expired
+    try {
+      console.log('Refreshing authentication token...');
+      await user.getIdToken(true);
+      console.log('Token refreshed successfully');
+    } catch (tokenError) {
+      console.error('Error refreshing token:', tokenError);
+      throw new Error(`Authentication error: ${tokenError.message}`);
+    }
+    
+    // 3. Call cloud function with error handling
+    try {
+      console.log('Calling createPaymentIntent cloud function...');
+      const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
+      const result = await createIntentFunction({ priceId });
+      
+      console.log('Payment intent created successfully');
+      return result.data;
+    } catch (error) {
+      console.error('Error details:', {
+        code: error.code,
+        message: error.message,
+        details: error.details
+      });
+      
+      // Create a more helpful error message
+      let errorMessage = 'Failed to create payment intent';
+      
+      if (error.code === 'functions/unauthenticated') {
+        errorMessage = 'Authentication error: Please try logging out and back in';
+      } else if (error.code === 'functions/unavailable') {
+        errorMessage = 'Server unavailable: Please try again later';
+      } else if (error.code === 'functions/internal') {
+        errorMessage = 'Server error: Our team has been notified';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      throw new Error(errorMessage);
+    }
+  }
+  
+  // ========== 6. ENHANCED STRIPE SETUP ==========
+  async function setupStripePaymentEnhanced(priceId) {
+    console.log('Setting up Stripe payment for price ID:', priceId);
+    
+    try {
+      // 1. Run diagnostics if needed
+      const diagnosticResult = await runStripeDiagnostics();
+      console.log('Diagnostic result:', diagnosticResult);
+      
+      if (!diagnosticResult.overallStatus === 'PASSED') {
+        console.warn('Diagnostics failed but continuing with payment setup');
+      }
+      
+      // 2. Get payment intent with enhanced error handling
+      const response = await createPaymentIntentEnhanced(priceId);
+      const { clientSecret } = response;
+      
+      if (!clientSecret) {
+        throw new Error('Failed to create payment intent: No client secret returned');
+      }
+      
+      console.log('Successfully retrieved client secret');
+      
+      // 3. Create Stripe Elements instance
+      if (!stripe) {
+        console.warn('Stripe not initialized, initializing now...');
+        initStripe();
+        
+        if (!stripe) {
+          throw new Error('Failed to initialize Stripe');
+        }
+      }
+      
+      // 4. Create and mount Elements
+      elements = stripe.elements({
+        clientSecret,
+        appearance: {
+          theme: 'stripe',
+          variables: {
+            colorPrimary: document.documentElement.style.getPropertyValue('--color-primary') || '#3498db',
+            colorBackground: document.documentElement.style.getPropertyValue('--input-bg-color') || '#ffffff',
+            colorText: document.documentElement.style.getPropertyValue('--basic-txt-color') || '#333333',
+          }
+        }
+      });
+      
+      // Create and mount the Payment Element
+      paymentElement = elements.create('payment');
+      
+      const paymentContainer = document.getElementById('payment-element');
+      if (paymentContainer) {
+        paymentElement.mount('#payment-element');
+        console.log('Payment element mounted successfully');
+      } else {
+        console.error('Payment element container not found');
+        throw new Error('Payment container element not found in the DOM');
+      }
+      
+      // Set up form submission
+      paymentForm = document.getElementById('subscription-form');
+      if (paymentForm) {
+        // Remove any existing listeners to prevent duplicates
+        const newForm = paymentForm.cloneNode(true);
+        paymentForm.parentNode.replaceChild(newForm, paymentForm);
+        paymentForm = newForm;
+        
+        paymentForm.addEventListener('submit', handlePaymentSubmission);
+        console.log('Payment form submission handler attached');
+      } else {
+        console.error('Payment form not found');
+        throw new Error('Payment form element not found in the DOM');
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Error setting up Stripe payment:', error);
+      showPaymentError(error.message || 'Failed to set up payment. Please try again.');
+      return false;
+    }
+  }
+  
+  // Use these enhanced functions instead of the original ones
+  // setupStripePaymentEnhanced should replace setupStripePayment
+
+
+// ----- STRIPE INTEGRATION -----
 // Configure Stripe with publishable key (this should be your actual publishable key)
 const stripePublishableKey = 'pk_live_51Img78K5ZALgdbfFCDxjFQ8p0ZdoaozqL4qKqkJYRir3pGzcrlRBGvdqoq8ERRLVhhK7Y78q3PDpLhsH7pNss30U00RkPCgolE';
 let stripe;
@@ -78,25 +346,89 @@ function ensureAuthReady() {
   }
 }
 
-// Create payment intent (this would call your server)
+// Replace the createPaymentIntent function in new-Stripe.js with this version
 async function createPaymentIntent(priceId) {
+    console.log(`Creating payment intent for price ID: ${priceId}`);
+    
     try {
-      // Ensure user is logged in
+      // 1. Ensure user is authenticated
       const currentUser = firebase.auth().currentUser;
       if (!currentUser) {
-        throw new Error('Not authenticated');
+        console.error('No user is logged in');
+        throw new Error('You must be logged in to create a payment intent');
       }
       
-      // Force token refresh to ensure it's not expired
-      await currentUser.getIdToken(true);
+      console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
       
-      // Then call the function
+      // 2. Force token refresh to ensure it's not expired
+      try {
+        console.log('Refreshing authentication token...');
+        await currentUser.getIdToken(true);
+        console.log('Token refreshed successfully');
+      } catch (tokenError) {
+        console.error('Token refresh failed:', tokenError);
+        throw new Error(`Authentication error: ${tokenError.message}`);
+      }
+      
+      // 3. Make sure the user exists in Firestore
+      try {
+        const userDoc = await firebase.firestore().collection('users').doc(currentUser.uid).get();
+        
+        if (!userDoc.exists) {
+          console.error('User document does not exist in Firestore');
+          
+          // Try to create the user document
+          await firebase.firestore().collection('users').doc(currentUser.uid).set({
+            email: currentUser.email,
+            display_name: currentUser.displayName || currentUser.email,
+            created_at: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          
+          console.log('Created new user document in Firestore');
+        } else {
+          console.log('User document exists in Firestore');
+        }
+      } catch (firestoreError) {
+        console.error('Firestore check failed:', firestoreError);
+        // Continue anyway, as this is just a verification step
+      }
+      
+      // 4. Call the Firebase function with error handling
+      console.log('Calling createPaymentIntent Firebase function...');
       const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
-      const result = await createIntentFunction({ priceId });
+      
+      // 5. Add a timeout to detect hanging requests
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Request timeout - Firebase function did not respond')), 20000);
+      });
+      
+      // 6. Call the function with a timeout race
+      const result = await Promise.race([
+        createIntentFunction({ priceId }),
+        timeoutPromise
+      ]);
+      
+      console.log('Payment intent created successfully');
       return result.data;
+      
     } catch (error) {
+      // 7. Enhanced error handling
       console.error('Error creating payment intent:', error);
-      throw error;
+      
+      // Create a more helpful error message
+      let errorMessage = 'Failed to create payment intent';
+      
+      if (error.code === 'functions/unauthenticated') {
+        errorMessage = 'Authentication error: Please try logging out and back in';
+      } else if (error.code === 'functions/unavailable') {
+        errorMessage = 'Server unavailable: Please try again later';
+      } else if (error.code === 'functions/internal') {
+        errorMessage = 'Server error: Our team has been notified';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      throw new Error(errorMessage);
     }
   }
 
@@ -200,137 +532,245 @@ function hidePaymentError() {
   }
 }
 
-// Enhanced showSubscriptionModal method for ProjectManager class
+// Replace the showSubscriptionModal method in your code with this improved version
+
 ProjectManager.prototype.showSubscriptionModal = function(heading, subtext, currentUser) {
-  const existingModal = document.querySelector('#subscription-modal');
-  if (existingModal) {
-    existingModal.remove();
-  }
-  
-  const modal = document.createElement('div');
-  modal.className = 'modal subscription-modal';
-  modal.id = 'subscription-modal';
-  
-  const plans = [
-    {
-      id: 'price_1PnTWAK5ZALgdbfFDXytlpJ6',
-      name: 'Pro Monthly',
-      price: '$8.00',
-      period: 'month',
-      features: [
-        'Unlimited projects',
-        'Firebase image storage',
-        'Advanced components',
-      ]
-    },
-    {
-      id: 'price_1PnTdKK5ZALgdbfFhyRw7qma',
-      name: 'Pro Yearly',
-      price: '$72.00',
-      period: 'year',
-      badge: 'SAVE 36%',
-      features: [
-        'Unlimited projects',
-        'Firebase image storage',
-        'Advanced components',
-      ]
+    // Check if stripe.js is loaded
+    if (typeof Stripe === 'undefined') {
+      console.error('Stripe.js not loaded! Loading it now...');
+      const stripeScript = document.createElement('script');
+      stripeScript.src = 'https://js.stripe.com/v3/';
+      stripeScript.onload = () => {
+        console.log('Stripe.js loaded successfully, retrying modal...');
+        this.showSubscriptionModal(heading, subtext, currentUser);
+      };
+      document.head.appendChild(stripeScript);
+      return;
     }
-  ];
-  
-  // Default to monthly plan
-  let selectedPlanId = plans[0].id;
-  
-  modal.innerHTML = `
-    <div class="modal-content subscription-content">
-      <button class="close-modal">&times;</button>
-      <h2>${heading || 'Upgrade to Pro'}</h2>
-      <p class="subscription-subtext">${subtext || 'Unlock the full potential of Dlightning.'}</p>
-      
-      <div class="subscription-plans">
-        ${plans.map((plan, index) => `
-          <div class="plan-card ${index === 0 ? 'selected' : ''}" data-plan-id="${plan.id}">
-            ${plan.badge ? `<span class="plan-badge">${plan.badge}</span>` : ''}
-            <h3>${plan.name}</h3>
-            <div class="plan-price">
-              <span class="price">${plan.price}</span>
-              <span class="period">/${plan.period}</span>
+    
+    // Ensure user is logged in
+    if (!firebase.auth().currentUser) {
+      this.showNotification('Please log in to subscribe', 'warning');
+      showAuthModal('Log in to Subscribe', 'Create faster with <i>Dlightning⚡</i>');
+      return;
+    }
+    
+    const existingModal = document.querySelector('#subscription-modal');
+    if (existingModal) {
+      existingModal.remove();
+    }
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal subscription-modal';
+    modal.id = 'subscription-modal';
+    
+    const plans = [
+      {
+        id: 'price_1PnTWAK5ZALgdbfFDXytlpJ6',
+        name: 'Pro Monthly',
+        price: '$8.00',
+        period: 'month',
+        features: [
+          'Unlimited projects',
+          'Firebase image storage',
+          'Advanced components',
+        ]
+      },
+      {
+        id: 'price_1PnTdKK5ZALgdbfFhyRw7qma',
+        name: 'Pro Yearly',
+        price: '$72.00',
+        period: 'year',
+        badge: 'SAVE 36%',
+        features: [
+          'Unlimited projects',
+          'Firebase image storage',
+          'Advanced components',
+        ]
+      }
+    ];
+    
+    // Default to monthly plan
+    let selectedPlanId = plans[0].id;
+    
+    modal.innerHTML = `
+      <div class="modal-content subscription-content">
+        <button class="close-modal">&times;</button>
+        <h2>${heading || 'Upgrade to Pro'}</h2>
+        <p class="subscription-subtext">${subtext || 'Unlock the full potential of Dlightning.'}</p>
+        
+        <div class="subscription-plans">
+          ${plans.map((plan, index) => `
+            <div class="plan-card ${index === 0 ? 'selected' : ''}" data-plan-id="${plan.id}">
+              ${plan.badge ? `<span class="plan-badge">${plan.badge}</span>` : ''}
+              <h3>${plan.name}</h3>
+              <div class="plan-price">
+                <span class="price">${plan.price}</span>
+                <span class="period">/${plan.period}</span>
+              </div>
+              <ul class="plan-features">
+                ${plan.features.map(feature => `
+                  <li><i class="fas fa-check"></i> ${feature}</li>
+                `).join('')}
+              </ul>
             </div>
-            <ul class="plan-features">
-              ${plan.features.map(feature => `
-                <li><i class="fas fa-check"></i> ${feature}</li>
-              `).join('')}
-            </ul>
-          </div>
-        `).join('')}
+          `).join('')}
+        </div>
+        
+        <form id="subscription-form" class="payment-form">
+          <div id="payment-element"></div>
+          <div id="payment-error" class="payment-error"></div>
+          <button type="submit" class="payment-button">Subscribe Now</button>
+        </form>
+        
+        <div id="subscription-debug" style="margin-top: 10px; font-size: 12px; color: #666;">
+          <button id="run-diagnostics" style="padding: 5px; font-size: 11px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 3px;">Run Diagnostics</button>
+          <div id="diagnostic-output" style="display: none; margin-top: 5px; background: #f9f9f9; padding: 10px; border-radius: 4px; max-height: 200px; overflow-y: auto;"></div>
+        </div>
       </div>
+    `;
+    
+    document.body.appendChild(modal);
+    modal.style.display = 'flex';
+    
+    // Initialize Stripe if not already initialized
+    if (!window.stripe) {
+      initStripe();
+    }
+    
+    // Prepare authentication
+    ensureAuthenticated().then(isAuthenticated => {
+      if (!isAuthenticated) {
+        showPaymentError('Authentication failed. Please try logging out and back in.');
+        return;
+      }
       
-      <form id="subscription-form" class="payment-form">
-        <div id="payment-element"></div>
-        <div id="payment-error" class="payment-error"></div>
-        <button type="submit" class="payment-button">Subscribe Now</button>
-      </form>
+      // Add diagnostic button handler
+      const diagnosticBtn = modal.querySelector('#run-diagnostics');
+      const diagnosticOutput = modal.querySelector('#diagnostic-output');
       
-    </div>
-  `;
-  
-  document.body.appendChild(modal);
-  modal.style.display = 'flex';
-  
-  // Initialize Stripe if not already initialized
-  if (!window.stripe) {
-    initStripe();
-  }
-  
-  // Add plan selection functionality
-  const planCards = modal.querySelectorAll('.plan-card');
-  planCards.forEach(card => {
-    card.addEventListener('click', async () => {
-      // Update selection UI
-      planCards.forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
+      if (diagnosticBtn) {
+        diagnosticBtn.addEventListener('click', async () => {
+          diagnosticBtn.disabled = true;
+          diagnosticBtn.textContent = 'Running...';
+          diagnosticOutput.style.display = 'block';
+          diagnosticOutput.innerHTML = 'Running diagnostics...';
+          
+          try {
+            const results = await runStripeDiagnostics();
+            diagnosticOutput.innerHTML = `
+              <strong>Diagnostics Results:</strong><br>
+              - Auth: ${results.authenticationOk ? '✅' : '❌'}<br>
+              - Functions: ${results.cloudFunctionsOk ? '✅' : '❌'}<br>
+              - Stripe: ${results.stripeSetupOk ? '✅' : '❌'}<br>
+              <br>
+              <strong>User:</strong> ${firebase.auth().currentUser?.email || 'Not logged in'}<br>
+              <strong>UID:</strong> ${firebase.auth().currentUser?.uid || 'N/A'}<br>
+              <strong>Overall:</strong> ${results.overallStatus}
+            `;
+          } catch (error) {
+            diagnosticOutput.innerHTML = `Error running diagnostics: ${error.message}`;
+          } finally {
+            diagnosticBtn.disabled = false;
+            diagnosticBtn.textContent = 'Run Diagnostics';
+          }
+        });
+      }
       
-      // Get the plan ID
-      const newPlanId = card.dataset.planId;
+      // Add plan selection functionality
+      const planCards = modal.querySelectorAll('.plan-card');
+      planCards.forEach(card => {
+        card.addEventListener('click', async () => {
+          // Update selection UI
+          planCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          
+          // Get the plan ID
+          const newPlanId = card.dataset.planId;
+          
+          // If it's different from the current plan, recreate the payment elements
+          if (newPlanId !== selectedPlanId) {
+            selectedPlanId = newPlanId;
+            
+            // Clear existing payment element
+            if (paymentElement) {
+              paymentElement.destroy();
+            }
+            
+            // Show loading state
+            const paymentContainer = document.getElementById('payment-element');
+            if (paymentContainer) {
+              paymentContainer.innerHTML = '<div class="loading-spinner"></div>';
+            }
+            
+            // Handle subscription errors
+            hidePaymentError();
+            
+            // Setup payment with new plan using the enhanced method
+            await setupStripePaymentEnhanced(selectedPlanId);
+          }
+        });
+      });
       
-      // If it's different from the current plan, recreate the payment elements
-      if (newPlanId !== selectedPlanId) {
-        selectedPlanId = newPlanId;
-        
-        // Clear existing payment element
-        if (paymentElement) {
-          paymentElement.destroy();
-        }
-        
-        // Show loading state
-        const paymentContainer = document.getElementById('payment-element');
-        if (paymentContainer) {
-          paymentContainer.innerHTML = '<div class="loading-spinner"></div>';
-        }
-        
-        // Setup payment with new plan
-        await setupStripePayment(selectedPlanId);
+      // Set up payment elements
+      setupStripePaymentEnhanced(selectedPlanId);
+    });
+    
+    // Close button functionality
+    const closeButton = modal.querySelector('.close-modal');
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+    
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
       }
     });
-  });
+  };
   
-  // Set up payment elements
-  setupStripePayment(selectedPlanId);
-  
-  // Close button functionality
-  const closeButton = modal.querySelector('.close-modal');
-  if (closeButton) {
-    closeButton.addEventListener('click', () => {
-      modal.style.display = 'none';
+  // Helper function to ensure user is authenticated
+  async function ensureAuthenticated() {
+    return new Promise(async (resolve) => {
+      // Check if already authenticated
+      if (firebase.auth().currentUser) {
+        try {
+          // Force token refresh
+          await firebase.auth().currentUser.getIdToken(true);
+          resolve(true);
+        } catch (e) {
+          console.error('Token refresh failed:', e);
+          resolve(false);
+        }
+        return;
+      }
+      
+      // Wait for auth state to resolve
+      const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+        unsubscribe();
+        if (user) {
+          try {
+            // Force token refresh
+            await user.getIdToken(true);
+            resolve(true);
+          } catch (e) {
+            console.error('Token refresh failed:', e);
+            resolve(false);
+          }
+        } else {
+          resolve(false);
+        }
+      });
+      
+      // Set a timeout in case auth takes too long
+      setTimeout(() => {
+        resolve(false);
+      }, 5000);
     });
   }
-  
-  // Close on outside click
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-};
 
 // Add method to check subscription status
 ProjectManager.prototype.checkSubscriptionStatus = async function() {
