@@ -781,7 +781,7 @@ ProjectManager.prototype.showSubscriptionModal = function(heading, subtext, curr
         name: 'Pro Yearly',
         price: '$72.00',
         period: 'year',
-        badge: 'SAVE 36%',
+        badge: 'SAVE 25%',
         features: [
           'Unlimited projects',
           'Firebase image storage',
