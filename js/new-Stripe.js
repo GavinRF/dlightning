@@ -53,7 +53,6 @@ function configureFirebaseFunctions() {
   }
   
   // 3. Modified createPaymentIntent function using direct HTTP
-  // Replace your existing function with this
   async function createPaymentIntent(priceId) {
     console.log(`Creating payment intent for price ID: ${priceId}`);
     
@@ -61,30 +60,96 @@ function configureFirebaseFunctions() {
       // Ensure user is authenticated
       const currentUser = firebase.auth().currentUser;
       if (!currentUser) {
-        console.error('No user is logged in');
+        console.error('No user is logged in when trying to create payment intent');
         throw new Error('You must be logged in to create a payment intent');
       }
       
       console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
       
-      // Try first with the standard method
+      // Force token refresh to ensure it's not expired
       try {
-        console.log('Trying with standard httpsCallable method...');
-        const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
-        const result = await createIntentFunction({ priceId });
-        console.log('Standard method succeeded');
-        return result.data;
-      } catch (standardError) {
-        console.warn('Standard method failed, trying direct HTTP method:', standardError);
+        console.log('Refreshing authentication token...');
+        await currentUser.getIdToken(true);
+        console.log('Token refreshed successfully');
+      } catch (tokenError) {
+        console.error('Token refresh failed:', tokenError);
+        throw new Error(`Authentication error: ${tokenError.message}`);
+      }
+      
+      // Try direct HTTP method first since it's working in diagnostics
+      try {
+        console.log('Trying direct HTTP method for createPaymentIntent...');
+        // Get fresh token
+        const token = await currentUser.getIdToken(true);
         
-        // If standard method fails, try direct HTTP
-        const result = await callFunctionDirectly('createPaymentIntent', { priceId });
+        // Build the function URL 
+        const projectId = firebase.app().options.projectId;
+        const region = 'us-central1';
+        const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/createPaymentIntent`;
+        
+        console.log(`Calling: ${functionUrl}`);
+        
+        // Make direct HTTP request
+        const response = await fetch(functionUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ priceId })
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`Direct HTTP method failed: ${response.status} ${errorText}`);
+          throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
+        }
+        
+        const data = await response.json();
         console.log('Direct HTTP method succeeded');
-        return result;
+        return data;
+      } catch (httpError) {
+        console.warn('Direct HTTP method failed, falling back to httpsCallable:', httpError);
+        
+        // Fall back to Cloud Functions httpsCallable method
+        console.log('Calling createPaymentIntent cloud function via httpsCallable...');
+        
+        // Try with data in the correct format
+        const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
+        
+        // Make sure we're passing the data correctly
+        const result = await createIntentFunction({ 
+          priceId: priceId   // Make sure the parameter name matches exactly what your function expects
+        });
+        
+        console.log('Cloud function call succeeded');
+        return result.data;
       }
     } catch (error) {
-      console.error('Error creating payment intent:', error);
-      throw error;
+      console.error('All payment intent creation methods failed:', error);
+      console.error('Error details:', {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        stack: error.stack
+      });
+      
+      // Create a more helpful error message
+      let errorMessage = 'Failed to create payment intent';
+      
+      if (error.code === 'functions/unauthenticated') {
+        errorMessage = 'Authentication error: Please try logging out and back in';
+      } else if (error.code === 'functions/unavailable') {
+        errorMessage = 'Server unavailable: Please try again later';
+      } else if (error.code === 'functions/internal') {
+        errorMessage = 'Server error: Our team has been notified';
+      } else if (error.code === 'functions/invalid-argument') {
+        errorMessage = 'Invalid data: Please check your subscription details';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      throw new Error(errorMessage);
     }
   }
   
@@ -391,7 +456,7 @@ async function runAuthDiagnostics() {
       const diagnosticResult = await runStripeDiagnostics();
       console.log('Diagnostic result:', diagnosticResult);
       
-      if (!diagnosticResult.overallStatus === 'PASSED') {
+      if (diagnosticResult.overallStatus !== 'PASSED') {
         console.warn('Diagnostics failed but continuing with payment setup');
       }
       
@@ -440,18 +505,38 @@ async function runAuthDiagnostics() {
         throw new Error('Payment container element not found in the DOM');
       }
       
-      // Set up form submission
+      // 5. Set up form submission with extra precautions
       paymentForm = document.getElementById('subscription-form');
       if (paymentForm) {
-        // Remove any existing listeners to prevent duplicates
+        // Remove any existing form submission handling
+        if (paymentForm.onsubmit) {
+          paymentForm.onsubmit = null;
+        }
+        
+        // Remove the form and replace with a clone to remove any attached event listeners
         const newForm = paymentForm.cloneNode(true);
-        paymentForm.parentNode.replaceChild(newForm, paymentForm);
+        if (paymentForm.parentNode) {
+          paymentForm.parentNode.replaceChild(newForm, paymentForm);
+        }
         paymentForm = newForm;
         
-        paymentForm.addEventListener('submit', handlePaymentSubmission);
-        console.log('Payment form submission handler attached');
+        // Add both inline and addEventListener handlers for maximum reliability
+        paymentForm.onsubmit = handlePaymentSubmission;
+        paymentForm.addEventListener('submit', handlePaymentSubmission, false);
+        
+        // Also directly handle the button click
+        const submitButton = paymentForm.querySelector('button[type="submit"]');
+        if (submitButton) {
+          submitButton.onclick = function(clickEvent) {
+            clickEvent.preventDefault();
+            handlePaymentSubmission(new Event('submit'));
+            return false;
+          };
+        }
+        
+        console.log('Payment form submission handlers attached with extra precautions');
       } else {
-        console.error('Payment form not found');
+        console.error('Payment form not found in the DOM');
         throw new Error('Payment form element not found in the DOM');
       }
       
@@ -463,8 +548,117 @@ async function runAuthDiagnostics() {
     }
   }
   
-  // Use these enhanced functions instead of the original ones
-  // setupStripePaymentEnhanced should replace setupStripePayment
+  // Handle payment form submission
+  function handlePaymentSubmission(e) {
+    // Make sure to prevent default form submission
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    
+    console.log('Payment submission handler called');
+    
+    // Find the form and submit button
+    const form = e.target || document.getElementById('subscription-form');
+    const submitButton = form ? form.querySelector('button[type="submit"]') : null;
+    
+    // Show processing state
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    }
+    
+    // Prevent the default form submission again for good measure
+    if (form) {
+      const originalSubmit = form.submit;
+      form.submit = function() {
+        console.log('Prevented direct form submission');
+        return false;
+      };
+    }
+    
+    // Process with Stripe in async context to ensure preventDefault works
+    setTimeout(async () => {
+      try {
+        hidePaymentError();
+        
+        if (!stripe || !elements) {
+          throw new Error('Stripe not initialized properly');
+        }
+        
+        // Confirm payment with Stripe
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/payment-success.html`,
+          },
+          redirect: 'if_required'
+        });
+        
+        if (error) {
+          throw error;
+        }
+        
+        // If we get here without redirect, payment succeeded
+        await handleSuccessfulPayment();
+        
+      } catch (error) {
+        console.error('Payment failed:', error);
+        showPaymentError(error.message || 'Payment failed. Please try again.');
+        
+        // Reset button
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Subscribe Now';
+        }
+      }
+    }, 0);
+    
+    // Return false to prevent form submission
+    return false;
+  }
+  
+  // Optional function to handle successful payment without redirect
+  async function handleSuccessfulPayment() {
+    try {
+      // Show success message
+      const formContainer = document.getElementById('subscription-form');
+      if (formContainer) {
+        formContainer.innerHTML = `
+          <div class="subscription-success">
+            <i class="fas fa-check-circle"></i>
+            <h2>Payment Successful!</h2>
+            <p>Thank you for your subscription. Your account has been upgraded.</p>
+            <button class="close-subscription-modal" onclick="document.querySelector('.subscription-modal').style.display='none'">
+              Close
+            </button>
+          </div>
+        `;
+      }
+      
+      // Update user's subscription status in Firestore
+      if (firebase.auth().currentUser) {
+        const userId = firebase.auth().currentUser.uid;
+        await firebase.firestore().collection('users').doc(userId).update({
+          pro_account: true,
+          subscription_status: 'active',
+          subscription_updated: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        console.log('User subscription status updated successfully');
+      }
+      
+      // Show notification
+      if (window.projectManager && typeof window.projectManager.showNotification === 'function') {
+        window.projectManager.showNotification('Subscription activated successfully!', 'success');
+      }
+      
+    } catch (error) {
+      console.error('Error handling successful payment:', error);
+      if (window.projectManager && typeof window.projectManager.showNotification === 'function') {
+        window.projectManager.showNotification('Payment processed, but there was an issue updating your account. Please contact support.', 'warning');
+      }
+    }
+  }
 
 
 // ----- STRIPE INTEGRATION -----
@@ -567,78 +761,6 @@ async function createPaymentIntent(priceId) {
   }
 }
 
-// Handle payment setup
-async function setupStripePayment(priceId) {
-  try {
-    // Show loading state
-    const paymentContainer = document.getElementById('payment-element');
-    if (paymentContainer) {
-      paymentContainer.innerHTML = '<div class="loading-spinner"></div>';
-    }
-    
-    hidePaymentError();
-    
-    // Get a payment intent from your server
-    const response = await createPaymentIntent(priceId);
-    const { clientSecret } = response;
-    
-    if (!clientSecret) {
-      throw new Error('Failed to create payment intent');
-    }
-    
-    console.log('Received client secret, creating payment elements');
-    
-    // Initialize Stripe if needed
-    if (!stripe) {
-      initStripe();
-    }
-    
-    // Create payment elements
-    elements = stripe.elements({
-      clientSecret,
-      appearance: {
-        theme: 'stripe',
-        variables: {
-          colorPrimary: document.documentElement.style.getPropertyValue('--color-primary') || '#3498db',
-          colorBackground: document.documentElement.style.getPropertyValue('--input-bg-color') || '#ffffff',
-          colorText: document.documentElement.style.getPropertyValue('--basic-txt-color') || '#333333',
-        }
-      }
-    });
-    
-    // Create and mount the Payment Element
-    paymentElement = elements.create('payment');
-    
-    if (paymentContainer) {
-      paymentElement.mount('#payment-element');
-      console.log('Payment element mounted successfully');
-    } else {
-      console.error('Payment element container not found');
-      throw new Error('Payment container element not found');
-    }
-    
-    // Set up form submission
-    paymentForm = document.getElementById('subscription-form');
-    if (paymentForm) {
-      // Remove any existing listeners
-      const newForm = paymentForm.cloneNode(true);
-      if (paymentForm.parentNode) {
-        paymentForm.parentNode.replaceChild(newForm, paymentForm);
-      }
-      paymentForm = newForm;
-      
-      paymentForm.addEventListener('submit', handlePaymentSubmission);
-      console.log('Payment form submission handler attached');
-    } else {
-      console.error('Payment form not found');
-    }
-    
-  } catch (error) {
-    console.error('Error setting up Stripe payment:', error);
-    showPaymentError(error.message || 'Failed to set up payment. Please try again.');
-  }
-}
-
 // Check subscription status
 async function checkSubscriptionStatus() {
   try {
@@ -662,48 +784,72 @@ async function createCustomerPortal(returnUrl) {
 }
 
 // Handle payment form submission
-async function handlePaymentSubmission(e) {
-  e.preventDefault();
-  
-  const form = e.target;
-  const submitButton = form.querySelector('button[type="submit"]');
-  
-  // Show processing state
-  if (submitButton) {
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-  }
-  
-  try {
-    hidePaymentError();
-    
-    // Confirm payment with Stripe
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/payment-success.html`,
-      },
-      redirect: 'if_required'
-    });
-    
-    if (error) {
-      throw error;
+function handlePaymentSubmission(e) {
+    // Make sure to prevent default form submission
+    if (e && e.preventDefault) {
+      e.preventDefault();
     }
     
-    // If we get here without redirect, payment succeeded
-    await handleSuccessfulPayment();
+    console.log('Payment submission handler called');
     
-  } catch (error) {
-    console.error('Payment failed:', error);
-    showPaymentError(error.message || 'Payment failed. Please try again.');
+    const form = e.target;
+    const submitButton = form.querySelector('button[type="submit"]');
     
-    // Reset button
+    // Show processing state
     if (submitButton) {
-      submitButton.disabled = false;
-      submitButton.textContent = 'Subscribe';
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     }
-  }
-}
+    
+    // Prevent the default form submission again for good measure
+    if (form) {
+      const originalSubmit = form.submit;
+      form.submit = function() {
+        console.log('Prevented direct form submission');
+        return false;
+      };
+    }
+    
+    // Process with Stripe in async context to ensure preventDefault works
+    setTimeout(async () => {
+      try {
+        hidePaymentError();
+        
+        if (!stripe || !elements) {
+          throw new Error('Stripe not initialized properly');
+        }
+        
+        // Confirm payment with Stripe
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/payment-success.html`,
+          },
+          redirect: 'if_required'
+        });
+        
+        if (error) {
+          throw error;
+        }
+        
+        // If we get here without redirect, payment succeeded
+        await handleSuccessfulPayment();
+        
+      } catch (error) {
+        console.error('Payment failed:', error);
+        showPaymentError(error.message || 'Payment failed. Please try again.');
+        
+        // Reset button
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Subscribe Now';
+        }
+      }
+    }, 0);
+    
+    // Return false to prevent form submission
+    return false;
+  }  
 
 // Show payment error
 function showPaymentError(message) {
