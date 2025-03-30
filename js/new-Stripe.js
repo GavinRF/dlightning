@@ -7,8 +7,8 @@ function configureFirebaseFunctions() {
     // Some Firebase configurations might need region specification
     if (firebase.app().options.region !== functionsRegion) {
       console.log(`Setting Firebase Functions region to ${functionsRegion}`);
-      firebase.app().functions().useEmulator('localhost', 5001);  // uncomment for local emulator
-      //firebase.app().functions(functionsRegion);  // uncomment for production
+      // firebase.app().functions().useEmulator('localhost', 5001);
+      firebase.app().functions(functionsRegion);  // uncomment for production
     }
     
     console.log('Firebase Functions configured');
