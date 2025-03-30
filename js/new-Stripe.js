@@ -475,7 +475,7 @@ let elements;
 let paymentElement;
 let paymentForm;
 
-// Initialize Stripe (call this after DOM content is loaded)
+// Initialize Stripe
 function initStripe() {
   if (!window.Stripe) {
     console.error('Stripe.js not loaded');
@@ -483,32 +483,114 @@ function initStripe() {
   }
   
   stripe = Stripe(stripePublishableKey);
+  console.log('Stripe initialized');
 }
 
-function ensureAuthReady() {
-    return new Promise((resolve) => {
-      const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-        unsubscribe();
-        resolve(user);
-      });
-    });
+// Direct HTTP method to call Firebase Functions
+async function callFirebaseFunction(functionName, data = {}) {
+  // Get current user
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    throw new Error('Not authenticated');
   }
   
-  // Then in setupStripePayment
-  async function setupStripePayment(priceId) {
+  // Get fresh token
+  const token = await user.getIdToken(true);
+  
+  // Create URL
+  const projectId = firebase.app().options.projectId;
+  const region = 'us-central1';
+  const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/${functionName}`;
+  
+  console.log(`Calling function: ${functionUrl}`);
+  
+  // Make request
+  const response = await fetch(functionUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(data)
+  });
+  
+  // Handle error responses
+  if (!response.ok) {
+    let errorMessage = 'Function call failed';
     try {
-      // Wait for auth to be fully initialized
-      const user = await ensureAuthReady();
-      if (!user) {
-        throw new Error('You must be logged in to make a payment');
-      }
-      
-      // Proceed with payment intent creation
-      const response = await createPaymentIntent(priceId);
-      const { clientSecret } = response;
+      const errorData = await response.json();
+      errorMessage = errorData.error || errorMessage;
+    } catch (e) {
+      // If can't parse JSON
+      errorMessage = `HTTP error ${response.status}`;
+    }
+    throw new Error(errorMessage);
+  }
+  
+  // Return response data
+  return response.json();
+}
+
+// Create payment intent (updated to use direct HTTP)
+async function createPaymentIntent(priceId) {
+  try {
+    console.log(`Creating payment intent for price ID: ${priceId}`);
+    
+    // Ensure user is authenticated
+    const currentUser = firebase.auth().currentUser;
+    if (!currentUser) {
+      console.error('No user is logged in');
+      throw new Error('You must be logged in to create a payment intent');
+    }
+    
+    console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
+    
+    // Force token refresh to ensure it's valid
+    try {
+      console.log('Refreshing authentication token...');
+      await currentUser.getIdToken(true);
+      console.log('Token refreshed successfully');
+    } catch (tokenError) {
+      console.error('Token refresh failed:', tokenError);
+      throw new Error(`Authentication error: ${tokenError.message}`);
+    }
+    
+    // Call Firebase function directly via HTTP
+    const result = await callFirebaseFunction('createPaymentIntent', { priceId });
+    console.log('Payment intent created successfully');
+    
+    return result;
+    
+  } catch (error) {
+    console.error('Error creating payment intent:', error);
+    throw error;
+  }
+}
+
+// Handle payment setup
+async function setupStripePayment(priceId) {
+  try {
+    // Show loading state
+    const paymentContainer = document.getElementById('payment-element');
+    if (paymentContainer) {
+      paymentContainer.innerHTML = '<div class="loading-spinner"></div>';
+    }
+    
+    hidePaymentError();
+    
+    // Get a payment intent from your server
+    const response = await createPaymentIntent(priceId);
+    const { clientSecret } = response;
     
     if (!clientSecret) {
       throw new Error('Failed to create payment intent');
+    }
+    
+    console.log('Received client secret, creating payment elements');
+    
+    // Initialize Stripe if needed
+    if (!stripe) {
+      initStripe();
     }
     
     // Create payment elements
@@ -527,17 +609,28 @@ function ensureAuthReady() {
     // Create and mount the Payment Element
     paymentElement = elements.create('payment');
     
-    const paymentContainer = document.getElementById('payment-element');
     if (paymentContainer) {
       paymentElement.mount('#payment-element');
+      console.log('Payment element mounted successfully');
     } else {
       console.error('Payment element container not found');
+      throw new Error('Payment container element not found');
     }
     
     // Set up form submission
     paymentForm = document.getElementById('subscription-form');
     if (paymentForm) {
+      // Remove any existing listeners
+      const newForm = paymentForm.cloneNode(true);
+      if (paymentForm.parentNode) {
+        paymentForm.parentNode.replaceChild(newForm, paymentForm);
+      }
+      paymentForm = newForm;
+      
       paymentForm.addEventListener('submit', handlePaymentSubmission);
+      console.log('Payment form submission handler attached');
+    } else {
+      console.error('Payment form not found');
     }
     
   } catch (error) {
@@ -546,91 +639,27 @@ function ensureAuthReady() {
   }
 }
 
-// Replace the createPaymentIntent function in new-Stripe.js with this version
-async function createPaymentIntent(priceId) {
-    console.log(`Creating payment intent for price ID: ${priceId}`);
-    
-    try {
-      // 1. Ensure user is authenticated
-      const currentUser = firebase.auth().currentUser;
-      if (!currentUser) {
-        console.error('No user is logged in');
-        throw new Error('You must be logged in to create a payment intent');
-      }
-      
-      console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
-      
-      // 2. Force token refresh to ensure it's not expired
-      try {
-        console.log('Refreshing authentication token...');
-        await currentUser.getIdToken(true);
-        console.log('Token refreshed successfully');
-      } catch (tokenError) {
-        console.error('Token refresh failed:', tokenError);
-        throw new Error(`Authentication error: ${tokenError.message}`);
-      }
-      
-      // 3. Make sure the user exists in Firestore
-      try {
-        const userDoc = await firebase.firestore().collection('users').doc(currentUser.uid).get();
-        
-        if (!userDoc.exists) {
-          console.error('User document does not exist in Firestore');
-          
-          // Try to create the user document
-          await firebase.firestore().collection('users').doc(currentUser.uid).set({
-            email: currentUser.email,
-            display_name: currentUser.displayName || currentUser.email,
-            created_at: firebase.firestore.FieldValue.serverTimestamp()
-          });
-          
-          console.log('Created new user document in Firestore');
-        } else {
-          console.log('User document exists in Firestore');
-        }
-      } catch (firestoreError) {
-        console.error('Firestore check failed:', firestoreError);
-        // Continue anyway, as this is just a verification step
-      }
-      
-      // 4. Call the Firebase function with error handling
-      console.log('Calling createPaymentIntent Firebase function...');
-      const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
-      
-      // 5. Add a timeout to detect hanging requests
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Request timeout - Firebase function did not respond')), 20000);
-      });
-      
-      // 6. Call the function with a timeout race
-      const result = await Promise.race([
-        createIntentFunction({ priceId }),
-        timeoutPromise
-      ]);
-      
-      console.log('Payment intent created successfully');
-      return result.data;
-      
-    } catch (error) {
-      // 7. Enhanced error handling
-      console.error('Error creating payment intent:', error);
-      
-      // Create a more helpful error message
-      let errorMessage = 'Failed to create payment intent';
-      
-      if (error.code === 'functions/unauthenticated') {
-        errorMessage = 'Authentication error: Please try logging out and back in';
-      } else if (error.code === 'functions/unavailable') {
-        errorMessage = 'Server unavailable: Please try again later';
-      } else if (error.code === 'functions/internal') {
-        errorMessage = 'Server error: Our team has been notified';
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-      
-      throw new Error(errorMessage);
-    }
+// Check subscription status
+async function checkSubscriptionStatus() {
+  try {
+    const result = await callFirebaseFunction('checkSubscriptionStatus');
+    return result;
+  } catch (error) {
+    console.error('Error checking subscription status:', error);
+    return { isActive: false, error: error.message };
   }
+}
+
+// Create customer portal session
+async function createCustomerPortal(returnUrl) {
+  try {
+    const result = await callFirebaseFunction('createPortalSession', { returnUrl });
+    return result;
+  } catch (error) {
+    console.error('Error creating portal session:', error);
+    throw error;
+  }
+}
 
 // Handle payment form submission
 async function handlePaymentSubmission(e) {
@@ -676,45 +705,6 @@ async function handlePaymentSubmission(e) {
   }
 }
 
-// Handle successful payment
-async function handleSuccessfulPayment() {
-  try {
-    // Update user's subscription status in Firestore
-    const user = firebase.auth().currentUser;
-    if (!user) throw new Error('User not authenticated');
-    
-    await firebase.firestore().collection('users').doc(user.uid).update({
-      pro_account: true,
-      subscription_status: 'active',
-      subscription_start_date: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    
-    // Show success UI
-    const subscriptionModal = document.getElementById('subscription-modal');
-    if (subscriptionModal) {
-      subscriptionModal.innerHTML = `
-        <div class="modal-content subscription-success">
-          <h2><i class="fas fa-check-circle"></i> Subscription Activated!</h2>
-          <p>Thank you for subscribing to the Pro plan. Your account has been upgraded.</p>
-          <button class="close-subscription-modal">Continue</button>
-        </div>
-      `;
-      
-      document.querySelector('.close-subscription-modal').addEventListener('click', () => {
-        const modal = document.getElementById('subscription-modal');
-        if (modal) modal.style.display = 'none';
-        
-        // Refresh page or update UI to reflect pro status
-        window.location.reload();
-      });
-    }
-    
-  } catch (error) {
-    console.error('Error handling successful payment:', error);
-    showPaymentError('Payment processed, but account update failed. Please contact support.');
-  }
-}
-
 // Show payment error
 function showPaymentError(message) {
   const errorElement = document.getElementById('payment-error');
@@ -731,6 +721,9 @@ function hidePaymentError() {
     errorElement.style.display = 'none';
   }
 }
+
+// Initialize Stripe when the document is ready
+document.addEventListener('DOMContentLoaded', initStripe);
 
 // Replace the showSubscriptionModal method in your code with this improved version
 
