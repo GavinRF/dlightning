@@ -17,12 +17,27 @@ function initStripe() {
   stripe = Stripe(stripePublishableKey);
 }
 
-// Handle payment setup when the subscription modal is shown
-async function setupStripePayment(priceId) {
-  try {
-    // Get a payment intent from your server
-    const response = await createPaymentIntent(priceId);
-    const { clientSecret } = response;
+function ensureAuthReady() {
+    return new Promise((resolve) => {
+      const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        unsubscribe();
+        resolve(user);
+      });
+    });
+  }
+  
+  // Then in setupStripePayment
+  async function setupStripePayment(priceId) {
+    try {
+      // Wait for auth to be fully initialized
+      const user = await ensureAuthReady();
+      if (!user) {
+        throw new Error('You must be logged in to make a payment');
+      }
+      
+      // Proceed with payment intent creation
+      const response = await createPaymentIntent(priceId);
+      const { clientSecret } = response;
     
     if (!clientSecret) {
       throw new Error('Failed to create payment intent');
@@ -65,19 +80,25 @@ async function setupStripePayment(priceId) {
 
 // Create payment intent (this would call your server)
 async function createPaymentIntent(priceId) {
-  try {
-    // In production, this would be a call to your server endpoint
-    // that creates a payment intent or setup intent with Stripe
-    const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
-    
-    const result = await createIntentFunction({ priceId });
-    return result.data;
-    
-  } catch (error) {
-    console.error('Error creating payment intent:', error);
-    throw error;
+    try {
+      // Ensure user is logged in
+      const currentUser = firebase.auth().currentUser;
+      if (!currentUser) {
+        throw new Error('Not authenticated');
+      }
+      
+      // Force token refresh to ensure it's not expired
+      await currentUser.getIdToken(true);
+      
+      // Then call the function
+      const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
+      const result = await createIntentFunction({ priceId });
+      return result.data;
+    } catch (error) {
+      console.error('Error creating payment intent:', error);
+      throw error;
+    }
   }
-}
 
 // Handle payment form submission
 async function handlePaymentSubmission(e) {
@@ -996,11 +1017,7 @@ class AccountManager {
     
     /* Dark theme support */
     
-    .dark-theme .modal-content,
-    .dark-theme header,
-    .dark-theme footer {
-      background-color: #333333;
-    }
+    
     
     .dark-theme .status-value.active {
       background-color: rgba(46, 204, 113, 0.2);
