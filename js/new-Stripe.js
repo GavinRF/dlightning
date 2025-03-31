@@ -475,143 +475,34 @@ async function runAuthDiagnostics() {
   }
   
   // ========== 6. ENHANCED STRIPE SETUP ==========
-  async function setupStripePaymentEnhanced(priceId) {
-    console.log('Setting up Stripe payment for price ID:', priceId);
+  function initStripe() {
+    if (window.stripe) {
+      return window.stripe; // Return existing instance if available
+    }
     
     try {
-      // 1. Run diagnostics if needed
-      const diagnosticResult = await runStripeDiagnostics();
-      console.log('Diagnostic result:', diagnosticResult);
-      
-      if (diagnosticResult.overallStatus !== 'PASSED') {
-        console.warn('Diagnostics failed but continuing with payment setup');
-      }
-      
-      // 2. Initialize Stripe if not already initialized
-      if (!window.stripe) {
-        console.log('Initializing Stripe...');
-        initStripe();
-        
-        if (!window.stripe) {
-          throw new Error('Failed to initialize Stripe');
-        }
-      }
-      
-      // 3. Get payment intent with enhanced error handling - use direct HTTP method
-      // which the diagnostics showed is working correctly
-      const token = await firebase.auth().currentUser.getIdToken();
-      const projectId = firebase.app().options.projectId;
-      const region = 'us-central1';
-      const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/createPaymentIntent`;
-      
-      console.log(`Calling payment intent API: ${functionUrl}`);
-      
-      // Make direct HTTP request
-      const response = await fetch(functionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ priceId })
-      });
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error(`API request failed: ${response.status} ${errorText}`);
-        throw new Error(`Payment setup failed: ${errorText}`);
-      }
-      
-      const paymentData = await response.json();
-      console.log('Payment intent created:', paymentData);
-      
-      if (!paymentData.clientSecret) {
-        throw new Error('Failed to create payment intent: No client secret returned');
-      }
-      
-      const clientSecret = paymentData.clientSecret;
-      console.log('Successfully retrieved client secret');
-      
-      // 4. Create Stripe Elements instance
-      const elements = stripe.elements({
-        clientSecret,
-        appearance: {
-          theme: 'stripe',
-          variables: {
-            colorPrimary: document.documentElement.style.getPropertyValue('--color-primary') || '#3498db',
-            colorBackground: document.documentElement.style.getPropertyValue('--input-bg-color') || '#ffffff',
-            colorText: document.documentElement.style.getPropertyValue('--basic-txt-color') || '#333333',
-          }
-        }
-      });
-      
-      // Create and mount the Payment Element
-      const paymentElement = elements.create('payment');
-      
-      const paymentContainer = document.getElementById('payment-element');
-      if (paymentContainer) {
-        paymentElement.mount('#payment-element');
-        console.log('Payment element mounted successfully');
-      } else {
-        console.error('Payment element container not found');
-        throw new Error('Payment container element not found in the DOM');
-      }
-      
-      // Set up form submission
-      const paymentForm = document.getElementById('subscription-form');
-      if (paymentForm) {
-        // Remove any existing listeners to prevent duplicates
-        const newForm = paymentForm.cloneNode(true);
-        paymentForm.parentNode.replaceChild(newForm, paymentForm);
-        
-        newForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          // Show processing state
-          const submitButton = this.querySelector('button[type="submit"]');
-          if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-          }
-          
-          hidePaymentError();
-          
-          // Confirm payment with Stripe
-          stripe.confirmPayment({
-            elements,
-            confirmParams: {
-              return_url: `${window.location.origin}/payment-success.html`,
-            },
-            redirect: 'if_required'
-          }).then(function(result) {
-            if (result.error) {
-              // Show error to your customer
-              showPaymentError(result.error.message);
-              
-              // Reset button
-              if (submitButton) {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Subscribe Now';
-              }
-            } else {
-              // The payment succeeded!
-              handleSuccessfulPayment();
-            }
-          });
-        });
-        
-        console.log('Payment form submission handler attached');
-      } else {
-        console.error('Payment form not found');
-        throw new Error('Payment form element not found in the DOM');
-      }
-      
-      return true;
+      const stripePublishableKey = 'pk_live_51Img78K5ZALgdbfFCDxjFQ8p0ZdoaozqL4qKqkJYRir3pGzcrlRBGvdqoq8ERRLVhhK7Y78q3PDpLhsH7pNss30U00RkPCgolE';
+      window.stripe = Stripe(stripePublishableKey);
+      console.log('Stripe initialized');
+      return window.stripe;
     } catch (error) {
-      console.error('Error setting up Stripe payment:', error);
-      showPaymentError(error.message || 'Failed to set up payment. Please try again.');
-      return false;
+      console.error('Error initializing Stripe:', error);
+      return null;
     }
+  }
+  
+  // Simple function to ensure Stripe is globally available
+  function ensureStripe() {
+    // First check if window.stripe is already set
+    if (window.stripe) {
+      return window.stripe;
+    }
+    
+    // If not, try to initialize
+    initStripe();
+    
+    // Return the result (could still be null/undefined if initialization failed)
+    return window.stripe;
   }
   
   // Handle payment form submission
@@ -737,14 +628,20 @@ let paymentForm;
 
 // Initialize Stripe
 function initStripe() {
-  if (!window.Stripe) {
-    console.error('Stripe.js not loaded');
-    return;
+    if (window.stripe) {
+      return window.stripe; // Return existing instance if available
+    }
+    
+    try {
+      const stripePublishableKey = 'pk_live_51Img78K5ZALgdbfFCDxjFQ8p0ZdoaozqL4qKqkJYRir3pGzcrlRBGvdqoq8ERRLVhhK7Y78q3PDpLhsH7pNss30U00RkPCgolE';
+      window.stripe = Stripe(stripePublishableKey);
+      console.log('Stripe initialized');
+      return window.stripe;
+    } catch (error) {
+      console.error('Error initializing Stripe:', error);
+      return null;
+    }
   }
-  
-  stripe = Stripe(stripePublishableKey);
-  console.log('Stripe initialized');
-}
 
 // Direct HTTP method to call Firebase Functions
 async function callFirebaseFunction(functionName, data = {}) {
