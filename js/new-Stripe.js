@@ -415,19 +415,44 @@ async function runAuthDiagnostics() {
       throw new Error(`Authentication error: ${tokenError.message}`);
     }
     
-    // 3. Call cloud function with error handling
+    // 3. Call cloud function with proper parameters
     try {
       console.log('Calling createPaymentIntent cloud function...');
-      const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
-      const result = await createIntentFunction({ priceId });
       
-      console.log('Payment intent created successfully');
-      return result.data;
+      // Using direct HTTP method which is more reliable based on diagnostics
+      const token = await user.getIdToken();
+      const projectId = firebase.app().options.projectId;
+      const region = 'us-central1';
+      const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/createPaymentIntent`;
+      
+      console.log(`Calling: ${functionUrl}`);
+      
+      // Make direct HTTP request
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ priceId })
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`Direct HTTP method failed: ${response.status} ${errorText}`);
+        throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
+      }
+      
+      const result = await response.json();
+      console.log('Payment intent created successfully:', result);
+      return result;
+      
     } catch (error) {
       console.error('Error details:', {
         code: error.code,
         message: error.message,
-        details: error.details
+        details: error.details,
+        stack: error.stack
       });
       
       // Create a more helpful error message
@@ -439,6 +464,8 @@ async function runAuthDiagnostics() {
         errorMessage = 'Server unavailable: Please try again later';
       } else if (error.code === 'functions/internal') {
         errorMessage = 'Server error: Our team has been notified';
+      } else if (error.code === 'functions/invalid-argument') {
+        errorMessage = 'Invalid price ID or missing required information';
       } else if (error.message) {
         errorMessage = error.message;
       }
@@ -460,28 +487,53 @@ async function runAuthDiagnostics() {
         console.warn('Diagnostics failed but continuing with payment setup');
       }
       
-      // 2. Get payment intent with enhanced error handling
-      const response = await createPaymentIntentEnhanced(priceId);
-      const { clientSecret } = response;
-      
-      if (!clientSecret) {
-        throw new Error('Failed to create payment intent: No client secret returned');
-      }
-      
-      console.log('Successfully retrieved client secret');
-      
-      // 3. Create Stripe Elements instance
-      if (!stripe) {
-        console.warn('Stripe not initialized, initializing now...');
+      // 2. Initialize Stripe if not already initialized
+      if (!window.stripe) {
+        console.log('Initializing Stripe...');
         initStripe();
         
-        if (!stripe) {
+        if (!window.stripe) {
           throw new Error('Failed to initialize Stripe');
         }
       }
       
-      // 4. Create and mount Elements
-      elements = stripe.elements({
+      // 3. Get payment intent with enhanced error handling - use direct HTTP method
+      // which the diagnostics showed is working correctly
+      const token = await firebase.auth().currentUser.getIdToken();
+      const projectId = firebase.app().options.projectId;
+      const region = 'us-central1';
+      const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/createPaymentIntent`;
+      
+      console.log(`Calling payment intent API: ${functionUrl}`);
+      
+      // Make direct HTTP request
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ priceId })
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`API request failed: ${response.status} ${errorText}`);
+        throw new Error(`Payment setup failed: ${errorText}`);
+      }
+      
+      const paymentData = await response.json();
+      console.log('Payment intent created:', paymentData);
+      
+      if (!paymentData.clientSecret) {
+        throw new Error('Failed to create payment intent: No client secret returned');
+      }
+      
+      const clientSecret = paymentData.clientSecret;
+      console.log('Successfully retrieved client secret');
+      
+      // 4. Create Stripe Elements instance
+      const elements = stripe.elements({
         clientSecret,
         appearance: {
           theme: 'stripe',
@@ -494,7 +546,7 @@ async function runAuthDiagnostics() {
       });
       
       // Create and mount the Payment Element
-      paymentElement = elements.create('payment');
+      const paymentElement = elements.create('payment');
       
       const paymentContainer = document.getElementById('payment-element');
       if (paymentContainer) {
@@ -505,38 +557,52 @@ async function runAuthDiagnostics() {
         throw new Error('Payment container element not found in the DOM');
       }
       
-      // 5. Set up form submission with extra precautions
-      paymentForm = document.getElementById('subscription-form');
+      // Set up form submission
+      const paymentForm = document.getElementById('subscription-form');
       if (paymentForm) {
-        // Remove any existing form submission handling
-        if (paymentForm.onsubmit) {
-          paymentForm.onsubmit = null;
-        }
-        
-        // Remove the form and replace with a clone to remove any attached event listeners
+        // Remove any existing listeners to prevent duplicates
         const newForm = paymentForm.cloneNode(true);
-        if (paymentForm.parentNode) {
-          paymentForm.parentNode.replaceChild(newForm, paymentForm);
-        }
-        paymentForm = newForm;
+        paymentForm.parentNode.replaceChild(newForm, paymentForm);
         
-        // Add both inline and addEventListener handlers for maximum reliability
-        paymentForm.onsubmit = handlePaymentSubmission;
-        paymentForm.addEventListener('submit', handlePaymentSubmission, false);
+        newForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Show processing state
+          const submitButton = this.querySelector('button[type="submit"]');
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+          }
+          
+          hidePaymentError();
+          
+          // Confirm payment with Stripe
+          stripe.confirmPayment({
+            elements,
+            confirmParams: {
+              return_url: `${window.location.origin}/payment-success.html`,
+            },
+            redirect: 'if_required'
+          }).then(function(result) {
+            if (result.error) {
+              // Show error to your customer
+              showPaymentError(result.error.message);
+              
+              // Reset button
+              if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Subscribe Now';
+              }
+            } else {
+              // The payment succeeded!
+              handleSuccessfulPayment();
+            }
+          });
+        });
         
-        // Also directly handle the button click
-        const submitButton = paymentForm.querySelector('button[type="submit"]');
-        if (submitButton) {
-          submitButton.onclick = function(clickEvent) {
-            clickEvent.preventDefault();
-            handlePaymentSubmission(new Event('submit'));
-            return false;
-          };
-        }
-        
-        console.log('Payment form submission handlers attached with extra precautions');
+        console.log('Payment form submission handler attached');
       } else {
-        console.error('Payment form not found in the DOM');
+        console.error('Payment form not found');
         throw new Error('Payment form element not found in the DOM');
       }
       
