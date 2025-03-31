@@ -834,6 +834,107 @@ function hidePaymentError() {
 // Initialize Stripe when the document is ready
 document.addEventListener('DOMContentLoaded', initStripe);
 
+async function setupStripePaymentEnhanced(priceId) {
+    console.log('Setting up Stripe payment for price ID:', priceId);
+    
+    try {
+      // Make sure Stripe is initialized
+      if (!window.stripe) {
+        initStripe();
+        
+        if (!window.stripe) {
+          throw new Error('Could not initialize Stripe');
+        }
+      }
+      
+      // Create payment intent via direct HTTP method
+      const user = firebase.auth().currentUser;
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+      
+      const token = await user.getIdToken(true);
+      const projectId = firebase.app().options.projectId;
+      const functionUrl = `https://us-central1-${projectId}.cloudfunctions.net/createPaymentIntent`;
+      
+      console.log(`Calling payment intent API: ${functionUrl}`);
+      
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ priceId })
+      });
+      
+      if (!response.ok) {
+        let errorText;
+        try {
+          const errorData = await response.json();
+          errorText = errorData.error || `API Error (${response.status})`;
+        } catch (e) {
+          errorText = `API Error: ${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorText);
+      }
+      
+      const paymentData = await response.json();
+      console.log('Payment intent created:', paymentData);
+      
+      if (!paymentData.clientSecret) {
+        throw new Error('Invalid API response: No client secret returned');
+      }
+      
+      const clientSecret = paymentData.clientSecret;
+      console.log('Successfully retrieved client secret');
+      
+      // Create Elements instance
+      const elements = window.stripe.elements({
+        clientSecret,
+        appearance: {
+          theme: 'stripe',
+          variables: {
+            colorPrimary: document.documentElement.style.getPropertyValue('--color-primary') || '#3498db',
+            colorBackground: document.documentElement.style.getPropertyValue('--input-bg-color') || '#ffffff',
+            colorText: document.documentElement.style.getPropertyValue('--basic-txt-color') || '#333333',
+          }
+        }
+      });
+      
+      // Create and mount the Payment Element
+      const paymentElement = elements.create('payment');
+      
+      const paymentContainer = document.getElementById('payment-element');
+      if (!paymentContainer) {
+        throw new Error('Payment element container not found in DOM');
+      }
+      
+      paymentElement.mount('#payment-element');
+      console.log('Payment element mounted successfully');
+      
+      // Set up form submission
+      const paymentForm = document.getElementById('subscription-form');
+      if (!paymentForm) {
+        throw new Error('Payment form not found in DOM');
+      }
+      
+      // Remove any existing listeners to prevent duplicates
+      const newForm = paymentForm.cloneNode(true);
+      paymentForm.parentNode.replaceChild(newForm, paymentForm);
+      
+      // Add the payment submission handler
+      newForm.addEventListener('submit', handlePaymentSubmission);
+      console.log('Payment form submission handler attached');
+      
+      return true;
+    } catch (error) {
+      console.error('Error setting up Stripe payment:', error);
+      showPaymentError(error.message || 'Failed to set up payment. Please try again.');
+      return false;
+    }
+  }
+
 // Replace the showSubscriptionModal method in your code with this improved version
 
 ProjectManager.prototype.showSubscriptionModal = function(heading, subtext, currentUser) {
