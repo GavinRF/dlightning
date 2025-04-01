@@ -53,137 +53,137 @@ function configureFirebaseFunctions() {
   }
   
   // 3. Modified createPaymentIntent function using direct HTTP
-  async function createPaymentIntent(priceId) {
-    console.log(`Creating payment intent for price ID: ${priceId}`);
+//   async function createPaymentIntent(priceId) {
+//     console.log(`Creating payment intent for price ID: ${priceId}`);
     
-    try {
-      // Ensure user is authenticated
-      const currentUser = firebase.auth().currentUser;
-      if (!currentUser) {
-        console.error('No user is logged in when trying to create payment intent');
-        throw new Error('You must be logged in to create a payment intent');
-      }
+//     try {
+//       // Ensure user is authenticated
+//       const currentUser = firebase.auth().currentUser;
+//       if (!currentUser) {
+//         console.error('No user is logged in when trying to create payment intent');
+//         throw new Error('You must be logged in to create a payment intent');
+//       }
       
-      console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
+//       console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
       
-      // Force token refresh to ensure it's not expired
-      try {
-        console.log('Refreshing authentication token...');
-        await currentUser.getIdToken(true);
-        console.log('Token refreshed successfully');
-      } catch (tokenError) {
-        console.error('Token refresh failed:', tokenError);
-        throw new Error(`Authentication error: ${tokenError.message}`);
-      }
+//       // Force token refresh to ensure it's not expired
+//       try {
+//         console.log('Refreshing authentication token...');
+//         await currentUser.getIdToken(true);
+//         console.log('Token refreshed successfully');
+//       } catch (tokenError) {
+//         console.error('Token refresh failed:', tokenError);
+//         throw new Error(`Authentication error: ${tokenError.message}`);
+//       }
       
-      // Try direct HTTP method first since it's working in diagnostics
-      try {
-        console.log('Trying direct HTTP method for createPaymentIntent...');
-        // Get fresh token
-        const token = await currentUser.getIdToken(true);
+//       // Try direct HTTP method first since it's working in diagnostics
+//       try {
+//         console.log('Trying direct HTTP method for createPaymentIntent...');
+//         // Get fresh token
+//         const token = await currentUser.getIdToken(true);
         
-        // Build the function URL 
-        const projectId = firebase.app().options.projectId;
-        const region = 'us-central1';
-        const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/createPaymentIntent`;
+//         // Build the function URL 
+//         const projectId = firebase.app().options.projectId;
+//         const region = 'us-central1';
+//         const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/createPaymentIntent`;
         
-        console.log(`Calling: ${functionUrl}`);
+//         console.log(`Calling: ${functionUrl}`);
         
-        // Make direct HTTP request
-        const response = await fetch(functionUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ priceId })
-        });
+//         // Make direct HTTP request
+//         const response = await fetch(functionUrl, {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': `Bearer ${token}`
+//           },
+//           body: JSON.stringify({ priceId })
+//         });
         
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error(`Direct HTTP method failed: ${response.status} ${errorText}`);
-          throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
-        }
+//         if (!response.ok) {
+//           const errorText = await response.text();
+//           console.error(`Direct HTTP method failed: ${response.status} ${errorText}`);
+//           throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
+//         }
         
-        const data = await response.json();
-        console.log('Direct HTTP method succeeded');
-        return data;
-      } catch (httpError) {
-        console.warn('Direct HTTP method failed, falling back to httpsCallable:', httpError);
+//         const data = await response.json();
+//         console.log('Direct HTTP method succeeded');
+//         return data;
+//       } catch (httpError) {
+//         console.warn('Direct HTTP method failed, falling back to httpsCallable:', httpError);
         
-        // Fall back to Cloud Functions httpsCallable method
-        console.log('Calling createPaymentIntent cloud function via httpsCallable...');
+//         // Fall back to Cloud Functions httpsCallable method
+//         console.log('Calling createPaymentIntent cloud function via httpsCallable...');
         
-        // Try with data in the correct format
-        const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
+//         // Try with data in the correct format
+//         const createIntentFunction = firebase.functions().httpsCallable('createPaymentIntent');
         
-        // Make sure we're passing the data correctly
-        const result = await createIntentFunction({ 
-          priceId: priceId   // Make sure the parameter name matches exactly what your function expects
-        });
+//         // Make sure we're passing the data correctly
+//         const result = await createIntentFunction({ 
+//           priceId: priceId   // Make sure the parameter name matches exactly what your function expects
+//         });
         
-        console.log('Cloud function call succeeded');
-        return result.data;
-      }
-    } catch (error) {
-      console.error('All payment intent creation methods failed:', error);
-      console.error('Error details:', {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        stack: error.stack
-      });
+//         console.log('Cloud function call succeeded');
+//         return result.data;
+//       }
+//     } catch (error) {
+//       console.error('All payment intent creation methods failed:', error);
+//       console.error('Error details:', {
+//         code: error.code,
+//         message: error.message,
+//         details: error.details,
+//         stack: error.stack
+//       });
       
-      // Create a more helpful error message
-      let errorMessage = 'Failed to create payment intent';
+//       // Create a more helpful error message
+//       let errorMessage = 'Failed to create payment intent';
       
-      if (error.code === 'functions/unauthenticated') {
-        errorMessage = 'Authentication error: Please try logging out and back in';
-      } else if (error.code === 'functions/unavailable') {
-        errorMessage = 'Server unavailable: Please try again later';
-      } else if (error.code === 'functions/internal') {
-        errorMessage = 'Server error: Our team has been notified';
-      } else if (error.code === 'functions/invalid-argument') {
-        errorMessage = 'Invalid data: Please check your subscription details';
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
+//       if (error.code === 'functions/unauthenticated') {
+//         errorMessage = 'Authentication error: Please try logging out and back in';
+//       } else if (error.code === 'functions/unavailable') {
+//         errorMessage = 'Server unavailable: Please try again later';
+//       } else if (error.code === 'functions/internal') {
+//         errorMessage = 'Server error: Our team has been notified';
+//       } else if (error.code === 'functions/invalid-argument') {
+//         errorMessage = 'Invalid data: Please check your subscription details';
+//       } else if (error.message) {
+//         errorMessage = error.message;
+//       }
       
-      throw new Error(errorMessage);
-    }
-  }
+//       throw new Error(errorMessage);
+//     }
+//   }
   
   // 4. Modified checkSubscriptionStatus function using direct HTTP
   // Replace your existing function with this
-  async function checkSubscriptionStatus() {
-    try {
-      // Ensure user is authenticated
-      const currentUser = firebase.auth().currentUser;
-      if (!currentUser) {
-        console.error('No user is logged in');
-        throw new Error('You must be logged in to check subscription status');
-      }
+//   async function checkSubscriptionStatus() {
+//     try {
+//       // Ensure user is authenticated
+//       const currentUser = firebase.auth().currentUser;
+//       if (!currentUser) {
+//         console.error('No user is logged in');
+//         throw new Error('You must be logged in to check subscription status');
+//       }
       
-      // Try first with the standard method
-      try {
-        console.log('Trying check subscription with standard method...');
-        const checkFunction = firebase.functions().httpsCallable('checkSubscriptionStatus');
-        const result = await checkFunction();
-        console.log('Standard check method succeeded');
-        return result.data;
-      } catch (standardError) {
-        console.warn('Standard check method failed, trying direct HTTP:', standardError);
+//       // Try first with the standard method
+//       try {
+//         console.log('Trying check subscription with standard method...');
+//         const checkFunction = firebase.functions().httpsCallable('checkSubscriptionStatus');
+//         const result = await checkFunction();
+//         console.log('Standard check method succeeded');
+//         return result.data;
+//       } catch (standardError) {
+//         console.warn('Standard check method failed, trying direct HTTP:', standardError);
         
-        // If standard method fails, try direct HTTP
-        const result = await callFunctionDirectly('checkSubscriptionStatus');
-        console.log('Direct HTTP check method succeeded');
-        return result;
-      }
-    } catch (error) {
-      console.error('Error checking subscription status:', error);
-      throw error;
-    }
-  }
+//         // If standard method fails, try direct HTTP
+//         const result = await callFunctionDirectly('checkSubscriptionStatus');
+//         console.log('Direct HTTP check method succeeded');
+//         return result;
+//       }
+//     } catch (error) {
+//       console.error('Error checking subscription status:', error);
+//       throw error;
+//     }
+//   }
   
   // Initialize our configuration
   configureFirebaseFunctions();
@@ -395,84 +395,84 @@ async function runAuthDiagnostics() {
   }
   
   // ========== 5. ENHANCED PAYMENT INTENT FUNCTION ==========
-  async function createPaymentIntentEnhanced(priceId) {
-    console.log('Creating payment intent for price ID:', priceId);
+//   async function createPaymentIntentEnhanced(priceId) {
+//     console.log('Creating payment intent for price ID:', priceId);
     
-    // 1. Check authentication
-    const user = firebase.auth().currentUser;
-    if (!user) {
-      console.error('No authenticated user found when creating payment intent');
-      throw new Error('You must be logged in to create a payment intent');
-    }
+//     // 1. Check authentication
+//     const user = firebase.auth().currentUser;
+//     if (!user) {
+//       console.error('No authenticated user found when creating payment intent');
+//       throw new Error('You must be logged in to create a payment intent');
+//     }
     
-    // 2. Refresh token to ensure it's not expired
-    try {
-      console.log('Refreshing authentication token...');
-      await user.getIdToken(true);
-      console.log('Token refreshed successfully');
-    } catch (tokenError) {
-      console.error('Error refreshing token:', tokenError);
-      throw new Error(`Authentication error: ${tokenError.message}`);
-    }
+//     // 2. Refresh token to ensure it's not expired
+//     try {
+//       console.log('Refreshing authentication token...');
+//       await user.getIdToken(true);
+//       console.log('Token refreshed successfully');
+//     } catch (tokenError) {
+//       console.error('Error refreshing token:', tokenError);
+//       throw new Error(`Authentication error: ${tokenError.message}`);
+//     }
     
-    // 3. Call cloud function with proper parameters
-    try {
-      console.log('Calling createPaymentIntent cloud function...');
+//     // 3. Call cloud function with proper parameters
+//     try {
+//       console.log('Calling createPaymentIntent cloud function...');
       
-      // Using direct HTTP method which is more reliable based on diagnostics
-      const token = await user.getIdToken();
-      const projectId = firebase.app().options.projectId;
-      const region = 'us-central1';
-      const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/createPaymentIntent`;
+//       // Using direct HTTP method which is more reliable based on diagnostics
+//       const token = await user.getIdToken();
+//       const projectId = firebase.app().options.projectId;
+//       const region = 'us-central1';
+//       const functionUrl = `https://${region}-${projectId}.cloudfunctions.net/createPaymentIntent`;
       
-      console.log(`Calling: ${functionUrl}`);
+//       console.log(`Calling: ${functionUrl}`);
       
-      // Make direct HTTP request
-      const response = await fetch(functionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ priceId })
-      });
+//       // Make direct HTTP request
+//       const response = await fetch(functionUrl, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'Authorization': `Bearer ${token}`
+//         },
+//         body: JSON.stringify({ priceId })
+//       });
       
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error(`Direct HTTP method failed: ${response.status} ${errorText}`);
-        throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
-      }
+//       if (!response.ok) {
+//         const errorText = await response.text();
+//         console.error(`Direct HTTP method failed: ${response.status} ${errorText}`);
+//         throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
+//       }
       
-      const result = await response.json();
-      console.log('Payment intent created successfully:', result);
-      return result;
+//       const result = await response.json();
+//       console.log('Payment intent created successfully:', result);
+//       return result;
       
-    } catch (error) {
-      console.error('Error details:', {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        stack: error.stack
-      });
+//     } catch (error) {
+//       console.error('Error details:', {
+//         code: error.code,
+//         message: error.message,
+//         details: error.details,
+//         stack: error.stack
+//       });
       
-      // Create a more helpful error message
-      let errorMessage = 'Failed to create payment intent';
+//       // Create a more helpful error message
+//       let errorMessage = 'Failed to create payment intent';
       
-      if (error.code === 'functions/unauthenticated') {
-        errorMessage = 'Authentication error: Please try logging out and back in';
-      } else if (error.code === 'functions/unavailable') {
-        errorMessage = 'Server unavailable: Please try again later';
-      } else if (error.code === 'functions/internal') {
-        errorMessage = 'Server error: Our team has been notified';
-      } else if (error.code === 'functions/invalid-argument') {
-        errorMessage = 'Invalid price ID or missing required information';
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
+//       if (error.code === 'functions/unauthenticated') {
+//         errorMessage = 'Authentication error: Please try logging out and back in';
+//       } else if (error.code === 'functions/unavailable') {
+//         errorMessage = 'Server unavailable: Please try again later';
+//       } else if (error.code === 'functions/internal') {
+//         errorMessage = 'Server error: Our team has been notified';
+//       } else if (error.code === 'functions/invalid-argument') {
+//         errorMessage = 'Invalid price ID or missing required information';
+//       } else if (error.message) {
+//         errorMessage = error.message;
+//       }
       
-      throw new Error(errorMessage);
-    }
-  }
+//       throw new Error(errorMessage);
+//     }
+//   }
 
 
   
@@ -508,73 +508,73 @@ async function runAuthDiagnostics() {
   }
   
   // Handle payment form submission
-  function handlePaymentSubmission(e) {
-    // Make sure to prevent default form submission
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
+//   function handlePaymentSubmission(e) {
+//     // Make sure to prevent default form submission
+//     if (e && e.preventDefault) {
+//       e.preventDefault();
+//     }
     
-    console.log('Payment submission handler called');
+//     console.log('Payment submission handler called');
     
-    // Find the form and submit button
-    const form = e.target || document.getElementById('subscription-form');
-    const submitButton = form ? form.querySelector('button[type="submit"]') : null;
+//     // Find the form and submit button
+//     const form = e.target || document.getElementById('subscription-form');
+//     const submitButton = form ? form.querySelector('button[type="submit"]') : null;
     
-    // Show processing state
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-    }
+//     // Show processing state
+//     if (submitButton) {
+//       submitButton.disabled = true;
+//       submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+//     }
     
-    // Prevent the default form submission again for good measure
-    if (form) {
-      const originalSubmit = form.submit;
-      form.submit = function() {
-        console.log('Prevented direct form submission');
-        return false;
-      };
-    }
+//     // Prevent the default form submission again for good measure
+//     if (form) {
+//       const originalSubmit = form.submit;
+//       form.submit = function() {
+//         console.log('Prevented direct form submission');
+//         return false;
+//       };
+//     }
     
-    // Process with Stripe in async context to ensure preventDefault works
-    setTimeout(async () => {
-      try {
-        hidePaymentError();
+//     // Process with Stripe in async context to ensure preventDefault works
+//     setTimeout(async () => {
+//       try {
+//         hidePaymentError();
         
-        if (!stripe || !elements) {
-          throw new Error('Stripe not initialized properly');
-        }
+//         if (!stripe || !elements) {
+//           throw new Error('Stripe not initialized properly');
+//         }
         
-        // Confirm payment with Stripe
-        const { error } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: `${window.location.origin}/payment-success.html`,
-          },
-          redirect: 'if_required'
-        });
+//         // Confirm payment with Stripe
+//         const { error } = await stripe.confirmPayment({
+//           elements,
+//           confirmParams: {
+//             return_url: `${window.location.origin}/payment-success.html`,
+//           },
+//           redirect: 'if_required'
+//         });
         
-        if (error) {
-          throw error;
-        }
+//         if (error) {
+//           throw error;
+//         }
         
-        // If we get here without redirect, payment succeeded
-        await handleSuccessfulPayment();
+//         // If we get here without redirect, payment succeeded
+//         await handleSuccessfulPayment();
         
-      } catch (error) {
-        console.error('Payment failed:', error);
-        showPaymentError(error.message || 'Payment failed. Please try again.');
+//       } catch (error) {
+//         console.error('Payment failed:', error);
+//         showPaymentError(error.message || 'Payment failed. Please try again.');
         
-        // Reset button
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Subscribe Now';
-        }
-      }
-    }, 0);
+//         // Reset button
+//         if (submitButton) {
+//           submitButton.disabled = false;
+//           submitButton.textContent = 'Subscribe Now';
+//         }
+//       }
+//     }, 0);
     
-    // Return false to prevent form submission
-    return false;
-  }
+//     // Return false to prevent form submission
+//     return false;
+//   }
   
   // Optional function to handle successful payment without redirect
   async function handleSuccessfulPayment() {
@@ -690,52 +690,42 @@ async function callFirebaseFunction(functionName, data = {}) {
   return response.json();
 }
 
-// Create payment intent (updated to use direct HTTP)
-async function createPaymentIntent(priceId) {
-  try {
-    console.log(`Creating payment intent for price ID: ${priceId}`);
+// // Create payment intent (updated to use direct HTTP)
+// async function createPaymentIntent(priceId) {
+//   try {
+//     console.log(`Creating payment intent for price ID: ${priceId}`);
     
-    // Ensure user is authenticated
-    const currentUser = firebase.auth().currentUser;
-    if (!currentUser) {
-      console.error('No user is logged in');
-      throw new Error('You must be logged in to create a payment intent');
-    }
+//     // Ensure user is authenticated
+//     const currentUser = firebase.auth().currentUser;
+//     if (!currentUser) {
+//       console.error('No user is logged in');
+//       throw new Error('You must be logged in to create a payment intent');
+//     }
     
-    console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
+//     console.log(`User authenticated: ${currentUser.uid} (${currentUser.email})`);
     
-    // Force token refresh to ensure it's valid
-    try {
-      console.log('Refreshing authentication token...');
-      await currentUser.getIdToken(true);
-      console.log('Token refreshed successfully');
-    } catch (tokenError) {
-      console.error('Token refresh failed:', tokenError);
-      throw new Error(`Authentication error: ${tokenError.message}`);
-    }
+//     // Force token refresh to ensure it's valid
+//     try {
+//       console.log('Refreshing authentication token...');
+//       await currentUser.getIdToken(true);
+//       console.log('Token refreshed successfully');
+//     } catch (tokenError) {
+//       console.error('Token refresh failed:', tokenError);
+//       throw new Error(`Authentication error: ${tokenError.message}`);
+//     }
     
-    // Call Firebase function directly via HTTP
-    const result = await callFirebaseFunction('createPaymentIntent', { priceId });
-    console.log('Payment intent created successfully');
+//     // Call Firebase function directly via HTTP
+//     const result = await callFirebaseFunction('createPaymentIntent', { priceId });
+//     console.log('Payment intent created successfully');
     
-    return result;
+//     return result;
     
-  } catch (error) {
-    console.error('Error creating payment intent:', error);
-    throw error;
-  }
-}
+//   } catch (error) {
+//     console.error('Error creating payment intent:', error);
+//     throw error;
+//   }
+// }
 
-// Check subscription status
-async function checkSubscriptionStatus() {
-  try {
-    const result = await callFirebaseFunction('checkSubscriptionStatus');
-    return result;
-  } catch (error) {
-    console.error('Error checking subscription status:', error);
-    return { isActive: false, error: error.message };
-  }
-}
 
 // Create customer portal session
 async function createCustomerPortal(returnUrl) {
@@ -749,72 +739,72 @@ async function createCustomerPortal(returnUrl) {
 }
 
 // Handle payment form submission
-function handlePaymentSubmission(e) {
-    // Make sure to prevent default form submission
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
+// function handlePaymentSubmission(e) {
+//     // Make sure to prevent default form submission
+//     if (e && e.preventDefault) {
+//       e.preventDefault();
+//     }
     
-    console.log('Payment submission handler called');
+//     console.log('Payment submission handler called');
     
-    const form = e.target;
-    const submitButton = form.querySelector('button[type="submit"]');
+//     const form = e.target;
+//     const submitButton = form.querySelector('button[type="submit"]');
     
-    // Show processing state
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-    }
+//     // Show processing state
+//     if (submitButton) {
+//       submitButton.disabled = true;
+//       submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+//     }
     
-    // Prevent the default form submission again for good measure
-    if (form) {
-      const originalSubmit = form.submit;
-      form.submit = function() {
-        console.log('Prevented direct form submission');
-        return false;
-      };
-    }
+//     // Prevent the default form submission again for good measure
+//     if (form) {
+//       const originalSubmit = form.submit;
+//       form.submit = function() {
+//         console.log('Prevented direct form submission');
+//         return false;
+//       };
+//     }
     
-    // Process with Stripe in async context to ensure preventDefault works
-    setTimeout(async () => {
-      try {
-        hidePaymentError();
+//     // Process with Stripe in async context to ensure preventDefault works
+//     setTimeout(async () => {
+//       try {
+//         hidePaymentError();
         
-        if (!stripe || !elements) {
-          throw new Error('Stripe not initialized properly');
-        }
+//         if (!stripe || !elements) {
+//           throw new Error('Stripe not initialized properly');
+//         }
         
-        // Confirm payment with Stripe
-        const { error } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: `${window.location.origin}/payment-success.html`,
-          },
-          redirect: 'if_required'
-        });
+//         // Confirm payment with Stripe
+//         const { error } = await stripe.confirmPayment({
+//           elements,
+//           confirmParams: {
+//             return_url: `${window.location.origin}/payment-success.html`,
+//           },
+//           redirect: 'if_required'
+//         });
         
-        if (error) {
-          throw error;
-        }
+//         if (error) {
+//           throw error;
+//         }
         
-        // If we get here without redirect, payment succeeded
-        await handleSuccessfulPayment();
+//         // If we get here without redirect, payment succeeded
+//         await handleSuccessfulPayment();
         
-      } catch (error) {
-        console.error('Payment failed:', error);
-        showPaymentError(error.message || 'Payment failed. Please try again.');
+//       } catch (error) {
+//         console.error('Payment failed:', error);
+//         showPaymentError(error.message || 'Payment failed. Please try again.');
         
-        // Reset button
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Subscribe Now';
-        }
-      }
-    }, 0);
+//         // Reset button
+//         if (submitButton) {
+//           submitButton.disabled = false;
+//           submitButton.textContent = 'Subscribe Now';
+//         }
+//       }
+//     }, 0);
     
-    // Return false to prevent form submission
-    return false;
-  }  
+//     // Return false to prevent form submission
+//     return false;
+//   }  
 
 // Show payment error
 function showPaymentError(message) {
@@ -836,113 +826,113 @@ function hidePaymentError() {
 // Initialize Stripe when the document is ready
 document.addEventListener('DOMContentLoaded', initStripe);
 
-async function setupStripePaymentEnhanced(priceId) {
-    console.log('Setting up Stripe payment for price ID:', priceId);
+// async function setupStripePaymentEnhanced(priceId) {
+//     console.log('Setting up Stripe payment for price ID:', priceId);
     
-    try {
-        // Make sure Stripe is initialized
-        if (!window.stripe) {
-            initStripe();
+//     try {
+//         // Make sure Stripe is initialized
+//         if (!window.stripe) {
+//             initStripe();
             
-            if (!window.stripe) {
-                throw new Error('Could not initialize Stripe');
-            }
-        }
+//             if (!window.stripe) {
+//                 throw new Error('Could not initialize Stripe');
+//             }
+//         }
         
-        // Create payment intent via Firebase Function
-        const user = firebase.auth().currentUser;
-        if (!user) {
-            throw new Error('User not authenticated');
-        }
+//         // Create payment intent via Firebase Function
+//         const user = firebase.auth().currentUser;
+//         if (!user) {
+//             throw new Error('User not authenticated');
+//         }
         
-        // Refresh the token to ensure it's valid
-        const token = await user.getIdToken(true);
+//         // Refresh the token to ensure it's valid
+//         const token = await user.getIdToken(true);
         
-        // Call the Firebase Function, not Stripe directly
-        const projectId = firebase.app().options.projectId;
-        const functionUrl = `https://us-central1-${projectId}.cloudfunctions.net/createPaymentIntent`;
+//         // Call the Firebase Function, not Stripe directly
+//         const projectId = firebase.app().options.projectId;
+//         const functionUrl = `https://us-central1-${projectId}.cloudfunctions.net/createPaymentIntent`;
         
-        console.log(`Calling payment intent API: ${functionUrl}`);
+//         console.log(`Calling payment intent API: ${functionUrl}`);
         
-        const response = await fetch(functionUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`  // Send Firebase Auth token, not Stripe key
-            },
-            body: JSON.stringify({ priceId })
-        });
+//         const response = await fetch(functionUrl, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${token}`  // Send Firebase Auth token, not Stripe key
+//             },
+//             body: JSON.stringify({ priceId })
+//         });
         
-        if (!response.ok) {
-            let errorText;
-            try {
-                const errorData = await response.json();
-                errorText = errorData.error || `API Error (${response.status})`;
-            } catch (e) {
-                errorText = `API Error: ${response.status} ${response.statusText}`;
-            }
-            throw new Error(errorText);
-        }
+//         if (!response.ok) {
+//             let errorText;
+//             try {
+//                 const errorData = await response.json();
+//                 errorText = errorData.error || `API Error (${response.status})`;
+//             } catch (e) {
+//                 errorText = `API Error: ${response.status} ${response.statusText}`;
+//             }
+//             throw new Error(errorText);
+//         }
         
-        const paymentData = await response.json();
-        console.log('Payment intent created:', paymentData);
+//         const paymentData = await response.json();
+//         console.log('Payment intent created:', paymentData);
         
-        if (!paymentData.clientSecret) {
-            throw new Error('Invalid API response: No client secret returned');
-        }
+//         if (!paymentData.clientSecret) {
+//             throw new Error('Invalid API response: No client secret returned');
+//         }
         
-        const clientSecret = paymentData.clientSecret;
-        console.log('Successfully retrieved client secret');
+//         const clientSecret = paymentData.clientSecret;
+//         console.log('Successfully retrieved client secret');
         
-        // Create Elements instance
-        const elements = window.stripe.elements({
-            clientSecret,
-            appearance: {
-                theme: 'stripe',
-                variables: {
-                    colorPrimary: document.documentElement.style.getPropertyValue('--color-primary') || '#3498db',
-                    colorBackground: document.documentElement.style.getPropertyValue('--input-bg-color') || '#ffffff',
-                    colorText: document.documentElement.style.getPropertyValue('--basic-txt-color') || '#333333',
-                }
-            }
-        });
+//         // Create Elements instance
+//         const elements = window.stripe.elements({
+//             clientSecret,
+//             appearance: {
+//                 theme: 'stripe',
+//                 variables: {
+//                     colorPrimary: document.documentElement.style.getPropertyValue('--color-primary') || '#3498db',
+//                     colorBackground: document.documentElement.style.getPropertyValue('--input-bg-color') || '#ffffff',
+//                     colorText: document.documentElement.style.getPropertyValue('--basic-txt-color') || '#333333',
+//                 }
+//             }
+//         });
         
-        // Create and mount the Payment Element
-        const paymentElement = elements.create('payment');
+//         // Create and mount the Payment Element
+//         const paymentElement = elements.create('payment');
         
-        const paymentContainer = document.getElementById('payment-element');
-        if (!paymentContainer) {
-            throw new Error('Payment element container not found in DOM');
-        }
+//         const paymentContainer = document.getElementById('payment-element');
+//         if (!paymentContainer) {
+//             throw new Error('Payment element container not found in DOM');
+//         }
         
-        paymentElement.mount('#payment-element');
-        console.log('Payment element mounted successfully');
+//         paymentElement.mount('#payment-element');
+//         console.log('Payment element mounted successfully');
         
-        // Store elements in window scope for later use
-        window.stripe = stripe;
-        window.elements = elements;
+//         // Store elements in window scope for later use
+//         window.stripe = stripe;
+//         window.elements = elements;
         
-        // Set up form submission
-        const paymentForm = document.getElementById('subscription-form');
-        if (!paymentForm) {
-            throw new Error('Payment form not found in DOM');
-        }
+//         // Set up form submission
+//         const paymentForm = document.getElementById('subscription-form');
+//         if (!paymentForm) {
+//             throw new Error('Payment form not found in DOM');
+//         }
         
-        // Remove any existing listeners to prevent duplicates
-        const newForm = paymentForm.cloneNode(true);
-        paymentForm.parentNode.replaceChild(newForm, paymentForm);
+//         // Remove any existing listeners to prevent duplicates
+//         const newForm = paymentForm.cloneNode(true);
+//         paymentForm.parentNode.replaceChild(newForm, paymentForm);
         
-        // Add the payment submission handler
-        newForm.addEventListener('submit', handlePaymentSubmission);
-        console.log('Payment form submission handler attached');
+//         // Add the payment submission handler
+//         newForm.addEventListener('submit', handlePaymentSubmission);
+//         console.log('Payment form submission handler attached');
         
-        return true;
-    } catch (error) {
-        console.error('Error setting up Stripe payment:', error);
-        showPaymentError(error.message || 'Failed to set up payment. Please try again.');
-        return false;
-    }
-}
+//         return true;
+//     } catch (error) {
+//         console.error('Error setting up Stripe payment:', error);
+//         showPaymentError(error.message || 'Failed to set up payment. Please try again.');
+//         return false;
+//     }
+// }
 
 ////// // / /// / SEND TO STRIPE /// /// /// /// // / / / / // / / // / / //// 
 // Handle subscription
@@ -1216,43 +1206,43 @@ ProjectManager.prototype.selectPlan = function(card) {
   }
 
 // Add method to check subscription status
-ProjectManager.prototype.checkSubscriptionStatus = async function() {
-  if (!this.currentUser) return;
+// ProjectManager.prototype.checkSubscriptionStatus = async function() {
+//   if (!this.currentUser) return;
   
-  try {
-    const userDoc = await this.db.collection('users').doc(this.currentUser.uid).get();
+//   try {
+//     const userDoc = await this.db.collection('users').doc(this.currentUser.uid).get();
     
-    if (userDoc.exists) {
-      const userData = userDoc.data();
-      const isProAccount = userData.pro_account === true;
-      const subscriptionStatus = userData.subscription_status;
+//     if (userDoc.exists) {
+//       const userData = userDoc.data();
+//       const isProAccount = userData.pro_account === true;
+//       const subscriptionStatus = userData.subscription_status;
       
-      // If subscription status is not active but pro_account is true, something's wrong
-      if (isProAccount && subscriptionStatus !== 'active') {
-        console.warn('Inconsistent subscription state detected');
+//       // If subscription status is not active but pro_account is true, something's wrong
+//       if (isProAccount && subscriptionStatus !== 'active') {
+//         console.warn('Inconsistent subscription state detected');
         
-        // Check with Stripe (via Firebase Function)
-        const checkSubscriptionFunction = firebase.functions().httpsCallable('checkSubscriptionStatus');
-        const result = await checkSubscriptionFunction();
+//         // Check with Stripe (via Firebase Function)
+//         const checkSubscriptionFunction = firebase.functions().httpsCallable('checkSubscriptionStatus');
+//         const result = await checkSubscriptionFunction();
         
-        if (result.data.isActive) {
-          // Fix the inconsistency
-          await this.db.collection('users').doc(this.currentUser.uid).update({
-            subscription_status: 'active'
-          });
-        } else {
-          // Subscription inactive according to Stripe
-          await this.db.collection('users').doc(this.currentUser.uid).update({
-            pro_account: false,
-            subscription_status: 'inactive'
-          });
-        }
-      }
-    }
-  } catch (error) {
-    console.error('Error checking subscription status:', error);
-  }
-};
+//         if (result.data.isActive) {
+//           // Fix the inconsistency
+//           await this.db.collection('users').doc(this.currentUser.uid).update({
+//             subscription_status: 'active'
+//           });
+//         } else {
+//           // Subscription inactive according to Stripe
+//           await this.db.collection('users').doc(this.currentUser.uid).update({
+//             pro_account: false,
+//             subscription_status: 'inactive'
+//           });
+//         }
+//       }
+//     }
+//   } catch (error) {
+//     console.error('Error checking subscription status:', error);
+//   }
+// };
 
 // Add CSS for the subscription modal
 const subscriptionStyles = document.createElement('style');
