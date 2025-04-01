@@ -239,3 +239,134 @@ exports.createPortalSession = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+// Add this to your index.js file in your Firebase Functions
+
+// Create Checkout Session - CORS-enabled HTTP endpoint
+exports.createCheckoutSession = functions.https.onRequest((req, res) => {
+    return cors(req, res, async () => {
+      try {
+        // Check for OPTIONS method (preflight)
+        if (req.method === 'OPTIONS') {
+          res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+          res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+          res.status(204).send('');
+          return;
+        }
+        
+        // Verify auth token
+        let uid;
+        try {
+          uid = await verifyAuth(req);
+        } catch (authError) {
+          console.error('Authentication failed:', authError);
+          res.status(401).json({ error: 'You must be logged in to create a checkout session' });
+          return;
+        }
+        
+        // Extract data from request
+        const data = req.body || {};
+        const { priceId, successUrl, cancelUrl } = data;
+        
+        if (!priceId) {
+          res.status(400).json({ error: 'Price ID is required' });
+          return;
+        }
+        
+        if (!successUrl || !cancelUrl) {
+          res.status(400).json({ error: 'Success and cancel URLs are required' });
+          return;
+        }
+        
+        // Get user from Firestore
+        const userSnapshot = await admin.firestore().collection('users').doc(uid).get();
+        if (!userSnapshot.exists) {
+          console.error(`User document not found for uid: ${uid}`);
+          res.status(404).json({ error: 'User not found' });
+          return;
+        }
+        
+        const userData = userSnapshot.data();
+        const userEmail = userData.email;
+        
+        // Check if user already has a Stripe customer ID
+        let customerId = userData.stripe_customer_id;
+        
+        if (!customerId) {
+          console.log('Creating new Stripe customer...');
+          // Create a new customer in Stripe
+          const customer = await stripe.customers.create({
+            email: userEmail,
+            metadata: {
+              firebaseUid: uid
+            }
+          });
+          
+          customerId = customer.id;
+          
+          // Save the customer ID to Firestore
+          await admin.firestore().collection('users').doc(uid).update({
+            stripe_customer_id: customerId,
+            stripe_customer_key: customerId // For compatibility with your webhook code
+          });
+          console.log(`Created new customer: ${customerId}`);
+        } else {
+          console.log(`Using existing customer: ${customerId}`);
+        }
+        
+        // Create a checkout session
+        const session = await stripe.checkout.sessions.create({
+          customer: customerId,
+          payment_method_types: ['card'],
+          line_items: [
+            {
+              price: priceId,
+              quantity: 1,
+            },
+          ],
+          mode: 'subscription',
+          allow_promotion_codes: true,
+          success_url: successUrl,
+          cancel_url: cancelUrl,
+          metadata: {
+            firebaseUid: uid
+          }
+        });
+        
+        console.log(`Created checkout session: ${session.id}`);
+        
+        // Return the session URL
+        res.json({
+          url: session.url
+        });
+        
+      } catch (error) {
+        console.error('Error creating checkout session:', error);
+        res.status(500).json({
+          error: error.message || 'An error occurred while creating the checkout session'
+        });
+      }
+    });
+  });
+
+// cd functions
+// firebase deploy --only functions  <--## only needs to be run when changes to functions are made
+// firebase functions:config:get
+// firebase serve --only hosting
+
+// clean up directory
+// rm -rf node_modules
+// rm package-lock.json
+// npm install firebase-admin@latest firebase-functions@latest stripe@latest
+
+//stop port
+// lsof -i :5001
+// kill -9 <PID>
+// Ctrl + C <-- stops firebase emulators etc.
+
+// other commands •
+// https://github.com/firebase/firebase-tools
+// firebase emulators:start
+// firebase projects:list
+// firebase use <your-project-id>
+// npm outdated

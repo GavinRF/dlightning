@@ -473,6 +473,8 @@ async function runAuthDiagnostics() {
       throw new Error(errorMessage);
     }
   }
+
+
   
   // ========== 6. ENHANCED STRIPE SETUP ==========
   function initStripe() {
@@ -838,119 +840,260 @@ async function setupStripePaymentEnhanced(priceId) {
     console.log('Setting up Stripe payment for price ID:', priceId);
     
     try {
-      // Make sure Stripe is initialized
-      if (!window.stripe) {
-        initStripe();
-        
+        // Make sure Stripe is initialized
         if (!window.stripe) {
-          throw new Error('Could not initialize Stripe');
+            initStripe();
+            
+            if (!window.stripe) {
+                throw new Error('Could not initialize Stripe');
+            }
         }
-      }
-      
-      // Create payment intent via direct HTTP method
-      const user = firebase.auth().currentUser;
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-      
-      const token = await user.getIdToken(true);
-      const projectId = firebase.app().options.projectId;
-      const functionUrl = `https://us-central1-${projectId}.cloudfunctions.net/createPaymentIntent`;
-      
-      console.log(`Calling payment intent API: ${functionUrl}`);
-      
-      const response = await fetch(functionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ priceId })
-      });
-      
-      if (!response.ok) {
-        let errorText;
-        try {
-          const errorData = await response.json();
-          errorText = errorData.error || `API Error (${response.status})`;
-        } catch (e) {
-          errorText = `API Error: ${response.status} ${response.statusText}`;
+        
+        // Create payment intent via Firebase Function
+        const user = firebase.auth().currentUser;
+        if (!user) {
+            throw new Error('User not authenticated');
         }
-        throw new Error(errorText);
-      }
-      
-      const paymentData = await response.json();
-      console.log('Payment intent created:', paymentData);
-      
-      if (!paymentData.clientSecret) {
-        throw new Error('Invalid API response: No client secret returned');
-      }
-      
-      const clientSecret = paymentData.clientSecret;
-      console.log('Successfully retrieved client secret');
-      
-      // Create Elements instance
-      const elements = window.stripe.elements({
-        clientSecret,
-        appearance: {
-          theme: 'stripe',
-          variables: {
-            colorPrimary: document.documentElement.style.getPropertyValue('--color-primary') || '#3498db',
-            colorBackground: document.documentElement.style.getPropertyValue('--input-bg-color') || '#ffffff',
-            colorText: document.documentElement.style.getPropertyValue('--basic-txt-color') || '#333333',
-          }
+        
+        // Refresh the token to ensure it's valid
+        const token = await user.getIdToken(true);
+        
+        // Call the Firebase Function, not Stripe directly
+        const projectId = firebase.app().options.projectId;
+        const functionUrl = `https://us-central1-${projectId}.cloudfunctions.net/createPaymentIntent`;
+        
+        console.log(`Calling payment intent API: ${functionUrl}`);
+        
+        const response = await fetch(functionUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // Send Firebase Auth token, not Stripe key
+            },
+            body: JSON.stringify({ priceId })
+        });
+        
+        if (!response.ok) {
+            let errorText;
+            try {
+                const errorData = await response.json();
+                errorText = errorData.error || `API Error (${response.status})`;
+            } catch (e) {
+                errorText = `API Error: ${response.status} ${response.statusText}`;
+            }
+            throw new Error(errorText);
         }
-      });
-      
-      // Create and mount the Payment Element
-      const paymentElement = elements.create('payment');
-      
-      const paymentContainer = document.getElementById('payment-element');
-      if (!paymentContainer) {
-        throw new Error('Payment element container not found in DOM');
-      }
-      
-      paymentElement.mount('#payment-element');
-      console.log('Payment element mounted successfully');
-      
-      // Set up form submission
-      const paymentForm = document.getElementById('subscription-form');
-      if (!paymentForm) {
-        throw new Error('Payment form not found in DOM');
-      }
-      
-      // Remove any existing listeners to prevent duplicates
-      const newForm = paymentForm.cloneNode(true);
-      paymentForm.parentNode.replaceChild(newForm, paymentForm);
-      
-      // Add the payment submission handler
-      newForm.addEventListener('submit', handlePaymentSubmission);
-      console.log('Payment form submission handler attached');
-      
-      return true;
+        
+        const paymentData = await response.json();
+        console.log('Payment intent created:', paymentData);
+        
+        if (!paymentData.clientSecret) {
+            throw new Error('Invalid API response: No client secret returned');
+        }
+        
+        const clientSecret = paymentData.clientSecret;
+        console.log('Successfully retrieved client secret');
+        
+        // Create Elements instance
+        const elements = window.stripe.elements({
+            clientSecret,
+            appearance: {
+                theme: 'stripe',
+                variables: {
+                    colorPrimary: document.documentElement.style.getPropertyValue('--color-primary') || '#3498db',
+                    colorBackground: document.documentElement.style.getPropertyValue('--input-bg-color') || '#ffffff',
+                    colorText: document.documentElement.style.getPropertyValue('--basic-txt-color') || '#333333',
+                }
+            }
+        });
+        
+        // Create and mount the Payment Element
+        const paymentElement = elements.create('payment');
+        
+        const paymentContainer = document.getElementById('payment-element');
+        if (!paymentContainer) {
+            throw new Error('Payment element container not found in DOM');
+        }
+        
+        paymentElement.mount('#payment-element');
+        console.log('Payment element mounted successfully');
+        
+        // Store elements in window scope for later use
+        window.stripe = stripe;
+        window.elements = elements;
+        
+        // Set up form submission
+        const paymentForm = document.getElementById('subscription-form');
+        if (!paymentForm) {
+            throw new Error('Payment form not found in DOM');
+        }
+        
+        // Remove any existing listeners to prevent duplicates
+        const newForm = paymentForm.cloneNode(true);
+        paymentForm.parentNode.replaceChild(newForm, paymentForm);
+        
+        // Add the payment submission handler
+        newForm.addEventListener('submit', handlePaymentSubmission);
+        console.log('Payment form submission handler attached');
+        
+        return true;
     } catch (error) {
-      console.error('Error setting up Stripe payment:', error);
-      showPaymentError(error.message || 'Failed to set up payment. Please try again.');
-      return false;
+        console.error('Error setting up Stripe payment:', error);
+        showPaymentError(error.message || 'Failed to set up payment. Please try again.');
+        return false;
     }
-  }
+}
 
-// Replace the showSubscriptionModal method in your code with this improved version
+////// // / /// / SEND TO STRIPE /// /// /// /// // / / / / // / / // / / //// 
+// Handle subscription
+ProjectManager.prototype.handleSubscriptionPurchase = async function(button) {
+    const modal = button.closest('.modal');
+    const selectedCard = modal.querySelector('.subscription-card.selected');
+    
+    if (!selectedCard) {
+        this.showNotification('Please select a subscription plan', 'warning');
+        return;
+    }
+
+    try {
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+        const plan = selectedCard.dataset.plan; // 'monthly' or 'yearly'
+        
+        // Get the current user from Firebase authentication
+        const currentUser = firebase.auth().currentUser;
+
+        if (!currentUser) {
+            throw new Error('User not authenticated');
+        }
+        
+        // Force token refresh before proceeding
+        try {
+            await currentUser.getIdToken(true);
+            console.log('Auth token refreshed successfully');
+        } catch (tokenError) {
+            console.error('Token refresh failed:', tokenError);
+            throw new Error(`Authentication error: ${tokenError.message}`);
+        }
+        
+        const baseUrl = window.location.origin + window.location.pathname;
+        const successUrl = `${baseUrl}?subscription=success`;
+        const cancelUrl = `${baseUrl}?subscription=cancel`;
+
+        // Call Firebase Function to create a checkout session
+        try {
+            // Get fresh token
+            const token = await currentUser.getIdToken();
+            const projectId = firebase.app().options.projectId;
+            const functionUrl = `https://us-central1-${projectId}.cloudfunctions.net/createCheckoutSession`;
+            
+            console.log(`Calling checkout session API: ${functionUrl}`);
+            
+            // Determine price ID based on plan
+            const priceId = plan === 'yearly' 
+                ? 'price_1PnTdKK5ZALgdbfFhyRw7qma'  // Yearly price ID
+                : 'price_1PnTWAK5ZALgdbfFDXytlpJ6'; // Monthly price ID
+            
+            // Make direct HTTP request
+            const response = await fetch(functionUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ 
+                    priceId: priceId,
+                    successUrl: successUrl,
+                    cancelUrl: cancelUrl
+                })
+            });
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error(`Checkout session creation failed: ${response.status} ${errorText}`);
+                throw new Error(`Error creating checkout session: ${errorText}`);
+            }
+            
+            const result = await response.json();
+            
+            if (!result.url) {
+                throw new Error('No checkout URL returned from server');
+            }
+            
+            // Redirect to Stripe Checkout
+            console.log('Redirecting to Stripe Checkout:', result.url);
+            window.location.href = result.url;
+            
+        } catch (error) {
+            console.error('Error creating checkout session:', error);
+            throw error;
+        }
+
+    } catch (error) {
+        console.error('Subscription error:', error);
+        
+        let errorMessage = error.message || 'Please try again';
+        
+        // Handle common errors with more user-friendly messages
+        if (errorMessage.includes('CORS') || errorMessage.includes('Network Error')) {
+            errorMessage = 'Connection issue. Please try again later.';
+        } else if (errorMessage.includes('internal') || errorMessage.includes('Server error')) {
+            errorMessage = 'Server issue. Please try again later.';
+        } else if (errorMessage.includes('timeout')) {
+            errorMessage = 'Connection timeout. Please check your internet and try again.';
+        }
+        
+        this.showNotification('❌ ' + errorMessage, 'error');
+        
+        // Reset button state
+        button.disabled = false;
+        button.textContent = 'Subscribe Now';
+    }
+}
+
+// Function to check subscription status from URL parameters (call this on page load)
+ProjectManager.prototype.checkSubscriptionStatus = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const subscriptionStatus = urlParams.get("subscription");
+
+    if (subscriptionStatus === "success") {
+        this.showNotification("✅ Subscription successful!", "success");
+        // Remove query parameters from URL (so the toast only shows once)
+        window.history.replaceState(null, "", window.location.pathname);
+        
+        // Update user UI to reflect pro status
+        setTimeout(() => {
+            this.refreshUserStatus();
+        }, 2000);
+    } else if (subscriptionStatus === "cancel") {
+        this.showNotification("❌ Subscription process canceled.", "error");
+        // Remove query parameters from URL (so the toast only shows once)
+        window.history.replaceState(null, "", window.location.pathname);
+    }
+}
+
+// Function to refresh the user's subscription status
+ProjectManager.prototype.refreshUserStatus = async function() {
+    try {
+        if (!firebase.auth().currentUser) return;
+        
+        const userDoc = await firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .get();
+            
+        if (userDoc.exists && userDoc.data().pro_account) {
+            this.showNotification("✨ Pro features activated!", "success");
+            // Update UI elements here to reflect pro status
+        }
+    } catch (error) {
+        console.error('Error refreshing user status:', error);
+    }
+}
 
 ProjectManager.prototype.showSubscriptionModal = function(heading, subtext, currentUser) {
-    // Check if stripe.js is loaded
-    if (typeof Stripe === 'undefined') {
-      console.error('Stripe.js not loaded! Loading it now...');
-      const stripeScript = document.createElement('script');
-      stripeScript.src = 'https://js.stripe.com/v3/';
-      stripeScript.onload = () => {
-        console.log('Stripe.js loaded successfully, retrying modal...');
-        this.showSubscriptionModal(heading, subtext, currentUser);
-      };
-      document.head.appendChild(stripeScript);
-      return;
-    }
-    
     // Ensure user is logged in
     if (!firebase.auth().currentUser) {
       this.showNotification('Please log in to subscribe', 'warning');
@@ -960,180 +1103,77 @@ ProjectManager.prototype.showSubscriptionModal = function(heading, subtext, curr
     
     const existingModal = document.querySelector('#subscription-modal');
     if (existingModal) {
-      existingModal.remove();
+        existingModal.remove();
     }
     
     const modal = document.createElement('div');
     modal.className = 'modal subscription-modal';
     modal.id = 'subscription-modal';
     
-    const plans = [
-      {
-        id: 'price_1PnTWAK5ZALgdbfFDXytlpJ6',
-        name: 'Pro Monthly',
-        price: '$8.00',
-        period: 'month',
-        features: [
-          'Unlimited projects',
-          'Firebase image storage',
-          'Advanced components',
-        ]
-      },
-      {
-        id: 'price_1PnTdKK5ZALgdbfFhyRw7qma',
-        name: 'Pro Yearly',
-        price: '$72.00',
-        period: 'year',
-        badge: 'SAVE 25%',
-        features: [
-          'Unlimited projects',
-          'Firebase image storage',
-          'Advanced components',
-        ]
-      }
-    ];
-    
-    // Default to monthly plan
-    let selectedPlanId = plans[0].id;
-    
     modal.innerHTML = `
-      <div class="modal-content subscription-content">
-        <button class="close-modal">&times;</button>
-        <h2>${heading || 'Upgrade to Pro'}</h2>
-        <p class="subscription-subtext">${subtext || 'Unlock the full potential of Dlightning.'}</p>
-        
-        <div class="subscription-plans">
-          ${plans.map((plan, index) => `
-            <div class="plan-card ${index === 0 ? 'selected' : ''}" data-plan-id="${plan.id}">
-              ${plan.badge ? `<span class="plan-badge">${plan.badge}</span>` : ''}
-              <h3>${plan.name}</h3>
-              <div class="plan-price">
-                <span class="price">${plan.price}</span>
-                <span class="period">/${plan.period}</span>
-              </div>
-              <ul class="plan-features">
-                ${plan.features.map(feature => `
-                  <li><i class="fas fa-check"></i> ${feature}</li>
-                `).join('')}
-              </ul>
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>${heading || 'Upgrade to Pro'}</h2>
+            <p>${subtext || 'Unlock the full potential of Dlightning.'}</p>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;">
+                <ul class="features-list">
+                    <lable><b>Subscription Features Include</b></lable>
+                    <li>Unlimited projects and screens</li>
+                    <li>Early Access to new components</li>
+                    <li>Image saving abilities</li>
+                </ul>
             </div>
-          `).join('')}
+
+            <div class="subscription-cards">
+                <div class="subscription-card" data-plan="monthly" onclick="projectManager.selectPlan(this)">
+                    <h3>1 Month Subscription</h3>
+                    <div class="price">$8.00</div>
+                    <div class="price-subtext">¢27/day</div>
+                </div>
+                
+                <div class="subscription-card" data-plan="yearly" onclick="projectManager.selectPlan(this)">
+                    <h3>1 Year Subscription</h3>
+                    <div class="price">$72.00</div>
+                    <div class="price-subtext">$6.00/month</div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button onclick="projectManager.handleSubscriptionPurchase(this)">Subscribe Now &emsp;<i class="fas fa-arrow-up-right-from-square"></i></button>
+                <button onclick="this.closest('.modal').remove()">Cancel</button>
+            </div>
+            <img src="img/stripe-logo.svg" style="width: 86px; margin: 0 -24px -34px 0; float: right;">
         </div>
-        
-        <form id="subscription-form" class="payment-form">
-          <div id="payment-element"></div>
-          <div id="payment-error" class="payment-error"></div>
-          <button type="submit" class="payment-button">Subscribe Now</button>
-        </form>
-        
-        <div id="subscription-debug" style="margin-top: 10px; font-size: 12px; color: #666;">
-          <button id="run-diagnostics" style="padding: 5px; font-size: 11px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 3px;">Run Diagnostics</button>
-          <div id="diagnostic-output" style="display: none; margin-top: 5px; background: #f9f9f9; padding: 10px; border-radius: 4px; max-height: 200px; overflow-y: auto;"></div>
-        </div>
-      </div>
     `;
     
     document.body.appendChild(modal);
     modal.style.display = 'flex';
     
-    // Initialize Stripe if not already initialized
-    if (!window.stripe) {
-      initStripe();
-    }
-    
-    // Prepare authentication
-    ensureAuthenticated().then(isAuthenticated => {
-      if (!isAuthenticated) {
-        showPaymentError('Authentication failed. Please try logging out and back in.');
-        return;
-      }
-      
-      // Add diagnostic button handler
-      const diagnosticBtn = modal.querySelector('#run-diagnostics');
-      const diagnosticOutput = modal.querySelector('#diagnostic-output');
-      
-      if (diagnosticBtn) {
-        diagnosticBtn.addEventListener('click', async () => {
-          diagnosticBtn.disabled = true;
-          diagnosticBtn.textContent = 'Running...';
-          diagnosticOutput.style.display = 'block';
-          diagnosticOutput.innerHTML = 'Running diagnostics...';
-          
-          try {
-            const results = await runStripeDiagnostics();
-            diagnosticOutput.innerHTML = `
-              <strong>Diagnostics Results:</strong><br>
-              - Auth: ${results.authenticationOk ? '✅' : '❌'}<br>
-              - Functions: ${results.cloudFunctionsOk ? '✅' : '❌'}<br>
-              - Stripe: ${results.stripeSetupOk ? '✅' : '❌'}<br>
-              <br>
-              <strong>User:</strong> ${firebase.auth().currentUser?.email || 'Not logged in'}<br>
-              <strong>UID:</strong> ${firebase.auth().currentUser?.uid || 'N/A'}<br>
-              <strong>Overall:</strong> ${results.overallStatus}
-            `;
-          } catch (error) {
-            diagnosticOutput.innerHTML = `Error running diagnostics: ${error.message}`;
-          } finally {
-            diagnosticBtn.disabled = false;
-            diagnosticBtn.textContent = 'Run Diagnostics';
-          }
-        });
-      }
-      
-      // Add plan selection functionality
-      const planCards = modal.querySelectorAll('.plan-card');
-      planCards.forEach(card => {
-        card.addEventListener('click', async () => {
-          // Update selection UI
-          planCards.forEach(c => c.classList.remove('selected'));
-          card.classList.add('selected');
-          
-          // Get the plan ID
-          const newPlanId = card.dataset.planId;
-          
-          // If it's different from the current plan, recreate the payment elements
-          if (newPlanId !== selectedPlanId) {
-            selectedPlanId = newPlanId;
-            
-            // Clear existing payment element
-            if (paymentElement) {
-              paymentElement.destroy();
-            }
-            
-            // Show loading state
-            const paymentContainer = document.getElementById('payment-element');
-            if (paymentContainer) {
-              paymentContainer.innerHTML = '<div class="loading-spinner"></div>';
-            }
-            
-            // Handle subscription errors
-            hidePaymentError();
-            
-            // Setup payment with new plan using the enhanced method
-            await setupStripePaymentEnhanced(selectedPlanId);
-          }
-        });
-      });
-      
-      // Set up payment elements
-      setupStripePaymentEnhanced(selectedPlanId);
-    });
-    
-    // Close button functionality
+    // Add close button functionality
     const closeButton = modal.querySelector('.close-modal');
     if (closeButton) {
-      closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
     }
     
     // Close on outside click
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
     });
-  };
+}
+
+// Helper method to handle plan selection
+ProjectManager.prototype.selectPlan = function(card) {
+    // Remove selected class from all cards
+    card.parentElement.querySelectorAll('.subscription-card').forEach(c => 
+        c.classList.remove('selected')
+    );
+    // Add selected class to clicked card
+    card.classList.add('selected');
+}
   
   // Helper function to ensure user is authenticated
   async function ensureAuthenticated() {
