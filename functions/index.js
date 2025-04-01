@@ -1,5 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+admin.initializeApp();
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const cors = require('cors')({
   origin: true,  // Allow any origin (or specify ['https://dlightning.org'])
@@ -7,8 +9,6 @@ const cors = require('cors')({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true
 });
-
-admin.initializeApp();
 
 // Helper function to verify authentication
 async function verifyAuth(req) {
@@ -30,102 +30,102 @@ async function verifyAuth(req) {
 }
 
 // Create a payment intent - CORS-enabled HTTP endpoint
-exports.createPaymentIntent = functions.https.onRequest(async (req, res) => {
-  // First, handle CORS preflight request
-  return cors(req, res, async () => {
-    try {
-      // Check for OPTIONS method (preflight)
-      if (req.method === 'OPTIONS') {
-        res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-        res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        res.status(204).send('');
-        return;
-      }
+// exports.createPaymentIntent = functions.https.onRequest(async (req, res) => {
+//   // First, handle CORS preflight request
+//   return cors(req, res, async () => {
+//     try {
+//       // Check for OPTIONS method (preflight)
+//       if (req.method === 'OPTIONS') {
+//         res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+//         res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//         res.status(204).send('');
+//         return;
+//       }
       
-      // Verify auth token
-      let uid;
-      try {
-        uid = await verifyAuth(req);
-      } catch (authError) {
-        console.error('Authentication failed:', authError);
-        res.status(401).json({ error: 'You must be logged in to create a payment intent' });
-        return;
-      }
+//       // Verify auth token
+//       let uid;
+//       try {
+//         uid = await verifyAuth(req);
+//       } catch (authError) {
+//         console.error('Authentication failed:', authError);
+//         res.status(401).json({ error: 'You must be logged in to create a payment intent' });
+//         return;
+//       }
       
-      console.log(`User authenticated: ${uid}`);
+//       console.log(`User authenticated: ${uid}`);
       
-      // Extract data from request
-      const data = req.body || {};
-      const { priceId } = data;
+//       // Extract data from request
+//       const data = req.body || {};
+//       const { priceId } = data;
       
-      if (!priceId) {
-        res.status(400).json({ error: 'Price ID is required' });
-        return;
-      }
+//       if (!priceId) {
+//         res.status(400).json({ error: 'Price ID is required' });
+//         return;
+//       }
       
-      // Get user from Firestore
-      const userSnapshot = await admin.firestore().collection('users').doc(uid).get();
-      if (!userSnapshot.exists) {
-        console.error(`User document not found for uid: ${uid}`);
-        res.status(404).json({ error: 'User not found' });
-        return;
-      }
+//       // Get user from Firestore
+//       const userSnapshot = await admin.firestore().collection('users').doc(uid).get();
+//       if (!userSnapshot.exists) {
+//         console.error(`User document not found for uid: ${uid}`);
+//         res.status(404).json({ error: 'User not found' });
+//         return;
+//       }
       
-      const userData = userSnapshot.data();
-      const userEmail = userData.email;
+//       const userData = userSnapshot.data();
+//       const userEmail = userData.email;
       
-      // Check if user already has a Stripe customer ID
-      let customerId = userData.stripe_customer_id;
+//       // Check if user already has a Stripe customer ID
+//       let customerId = userData.stripe_customer_id;
       
-      if (!customerId) {
-        console.log('Creating new Stripe customer...');
-        // Create a new customer in Stripe
-        const customer = await stripe.customers.create({
-          email: userEmail,
-          metadata: {
-            firebaseUid: uid
-          }
-        });
+//       if (!customerId) {
+//         console.log('Creating new Stripe customer...');
+//         // Create a new customer in Stripe
+//         const customer = await stripe.customers.create({
+//           email: userEmail,
+//           metadata: {
+//             firebaseUid: uid
+//           }
+//         });
         
-        customerId = customer.id;
+//         customerId = customer.id;
         
-        // Save the customer ID to Firestore
-        await admin.firestore().collection('users').doc(uid).update({
-          stripe_customer_id: customerId
-        });
-        console.log(`Created new customer: ${customerId}`);
-      } else {
-        console.log(`Using existing customer: ${customerId}`);
-      }
+//         // Save the customer ID to Firestore
+//         await admin.firestore().collection('users').doc(uid).update({
+//           stripe_customer_id: customerId
+//         });
+//         console.log(`Created new customer: ${customerId}`);
+//       } else {
+//         console.log(`Using existing customer: ${customerId}`);
+//       }
       
-      // Get price info from Stripe
-      const price = await stripe.prices.retrieve(priceId);
+//       // Get price info from Stripe
+//       const price = await stripe.prices.retrieve(priceId);
       
-      // Create a subscription
-      const subscription = await stripe.subscriptions.create({
-        customer: customerId,
-        items: [{ price: priceId }],
-        payment_behavior: 'default_incomplete',
-        payment_settings: { save_default_payment_method: 'on_subscription' },
-        expand: ['latest_invoice.payment_intent']
-      });
+//       // Create a subscription
+//       const subscription = await stripe.subscriptions.create({
+//         customer: customerId,
+//         items: [{ price: priceId }],
+//         payment_behavior: 'default_incomplete',
+//         payment_settings: { save_default_payment_method: 'on_subscription' },
+//         expand: ['latest_invoice.payment_intent']
+//       });
       
-      console.log(`Created subscription: ${subscription.id}`);
+//       console.log(`Created subscription: ${subscription.id}`);
       
-      // Return the client secret
-      res.json({
-        subscriptionId: subscription.id,
-        clientSecret: subscription.latest_invoice.payment_intent.client_secret
-      });
+//       // Return the client secret
+//       res.json({
+//         subscriptionId: subscription.id,
+//         clientSecret: subscription.latest_invoice.payment_intent.client_secret
+//       });
       
-    } catch (error) {
-      console.error('Error creating payment intent:', error);
-      res.status(500).json({
-        error: error.message || 'An error occurred while creating the payment intent'
-      });
-    }
-  });
-});
+//     } catch (error) {
+//       console.error('Error creating payment intent:', error);
+//       res.status(500).json({
+//         error: error.message || 'An error occurred while creating the payment intent'
+//       });
+//     }
+//   });
+// });
 
 // Check subscription status - CORS-enabled HTTP endpoint
 exports.checkSubscriptionStatus = functions.https.onRequest((req, res) => {
