@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,13 +19,11 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
 <link id="google-fonts" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Condensed:ital,wght@0,600;1,600|Open+Sans:400,700|Lato:400,700|Montserrat:400,700|Poppins:400,700|Raleway:400,700|Nunito:400,700|Playfair+Display:ital,wght@400,700|Source+Sans+Pro:400,700|Rubik:400,700&display=swap">
-<link rel="stylesheet" href="css/ux-mock-bldr.css">
-<link rel="stylesheet" href="css/componentVariants.css">
-<link rel="stylesheet" href="css/fontselect.css">
+<link rel="stylesheet" href="dist/css/styles.min.css">
 
 <script src=" https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/dist/html2canvas-pro.min.js "></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
 <!-- STRIPE CONFIG -->
@@ -40,9 +39,8 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
-
-
 </head>
+
 
 <body>
     <!-- Projects Modal -->
@@ -52,7 +50,6 @@
                 <h2>My Projects</h2>
                 <button class="close-modal">&times;</button>
             </div>
-                
             <br>
             <div id="projects-container">
                 <!-- Projects will be loaded here -->
@@ -72,24 +69,27 @@
         </div>
     </div>
 
-    <button id="toggleCanvasBtn" title="toggle the height of the screen." class="toggle-btn"><i style="padding: 2px 0; border-top: 2px solid; border-bottom: 2px solid;" class="fa-solid fa-arrows-up-down"></i> </button>
+    <button id="toggleCanvasBtn" title="toggle the height of the screens" class="toggle-btn"><i class="fa-solid fa-up-down" style="font-size: larger;"></i> </button>
 
     <!-- SIDEBAR ////////////////// -->
     <div class="sidebar">
         <div id="titleBlock">
-            <a href="index.html"><img src="img/icon/logo-spelled-out-white.png" height="18px"></a> 
-            <h1 id="mainH1">Screen Builder</h1>
+                <a href="index.html"><img src="img/transparent white D.png" height="32px"></a> 
+                <h1 id="mainH1">Screen Builder</h1>
+            <div>
+                <button id="sidebar-toggle-btn" title="toggle the sidebar" class="toggle-btn"><i class="fa-solid fa-square-caret-left"></i> </button>
+            </div>
         </div>
     <!-- PROFILE DISPLAY //////////////////  -->
-    <div class="user-profile-section" style="display: none;">
+    <div class="project-controls">
+    <div class="user-profile-section">
         <!-- Will be populated by JavaScript -->
     </div>
-    <div class="project-controls">
         <button id="open-projects-btn">
-            <i class="fas fa-folder-open"></i> My Projects
+            <i title="projects" class="fas fa-folder-open"></i>&nbsp; My Projects
         </button>
         <button class="login-button" onclick="showAuthModal()">
-            <div>Log In <i class="fas fa-sign-in-alt"></i></div>or <div>Sign Up <i class="fas fa-user-plus"></i></div>
+            <div>Sign In &nbsp;<i class="fas fa-sign-in-alt"></i></div>
         </button>
     </div>
     
@@ -101,19 +101,22 @@
             Elements <br><span id="basic-count">0</span>
         </button>
         <button class="sidebar-tab" data-tab="components">
-            Components <span id="components-count">0</span>
+            Components <br>
+            <!-- <i class="fa-solid fa-window-restore"> &nbsp; -->
+            </i><span id="components-count">0</span>
         </button>
         <button class="sidebar-tab" data-tab="theme">
             Theme <br>
-            <!-- <i class="fa-solid fa-cube"></i> -->
-            <i class="fa-solid fa-hexagon-nodes-bolt"></i>
+            <i class="fa-solid fa-swatchbook"></i>
+            <i class="fa-solid fa-font"></i>
+            <!-- <i class="fa-solid fa-hexagon-nodes-bolt"></i> -->
         </button>
     </div>
         <div id="search-container">
             <div class="search-wrapper">
-                <i class="fas fa-search search-icon"></i>
+                <i class="fas fa-search search-icon" aria-hidden="true"></i>
                 <input type="text" id="componentSearch" placeholder="Search..." >
-                <i class="fas fa-times clear-icon" id="clearSearch"></i>
+                <i class="fas fa-times clear-icon" id="clearSearch" title="clear search"></i>
             </div>
         </div>
 </div>
@@ -150,10 +153,20 @@
         </div>
 
         <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="blankCard">
+                <i style="font-size: 17px;" title="blank card" class="fa-regular fa-square"></i> 
+                <!-- <i class="fa-regular fa-rectangle-xmark"></i> -->
+                Blank Card
+                <span>group empty</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
             <button class="component-btn" data-component="button">
-                <i title="button" class="fas fa-square"></i> 
+                <i title="button" class="fas fa-circle-plus"></i> 
                 Button
-                <span>ghost</span>
+                <span>ghost group</span>
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
@@ -161,24 +174,14 @@
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="hzDivider">
                 <i title="divider line" class="fa-solid fa-minus"></i> 
-                Horizontal Divider
-                <span>line break</span>
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
-        </div>
-        
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="blankCard">
-                <i style="font-size: 17px;" title="blank card" class="fa-regular fa-square"></i> 
-                <!-- <i class="fa-regular fa-rectangle-xmark"></i> -->
-                Blank Card
-                <span>group</span>
+                Divider Line
+                <span>horizontal break</span>
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="colorBlock">
+            <button class="component-btn" data-component="colorBlock" style="border-radius: 0px;">
                 <i style="font-size: 16px;" title="color block" class="fa-solid fa-fill-drip"></i> 
                 Color Block 
                 <span>group</span>
@@ -196,6 +199,7 @@
         </div>
 
         <!-- // TEXT ELEMENTS  -->
+        <div class="btn-group-spacer"></div>
         <div class="btn-class-group">
             <label class="groupLabel">Text Elements</label>
                 <div class="comp-btn-wrap">
@@ -243,12 +247,13 @@
             </div>
         </div>
         <!-- // FORM ELEMENTS  -->
+        <div class="btn-group-spacer"></div>
         <div class="btn-class-group">
             <label class="groupLabel">Form Inputs</label>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="input">
-                    <div style="width: 14px; height: 18px; display: inline; border: 2px solid; border-radius: 2px; margin-right: 6px;"><i title="text input" style="font-size: smaller; margin: -1 5px 0 -3px;" class="fa-solid fa-i-cursor"></i></div> 
+                <button class="component-btn" data-component="input" title="text input">
+                    <i style="width: 22px; padding: 0 12px 0 4px; height: 18px; display: inline; border: 2px solid; border-radius: 2px; margin-right: 6px;"><div style="font-size: smaller; margin: -1 5px 0 -3px;" class="fa-solid fa-i-cursor"></div></i> 
                     Input Field
                     <span>text</span>
                 </button>
@@ -256,8 +261,8 @@
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="textarea">
-                    <div style="width: 18px; display: inline-flex; justify-content: end; align-items: flex-end; border: 2px solid; border-radius: 2px; margin-right: 8px;"><i title="textarea" style="transform: rotate(-45deg); margin: 4px -3px -2px 6px;" class="fa-solid fa-caret-down"></i></div> 
+                <button class="component-btn" data-component="textarea" title="textarea">
+                    <i style="width: 18px; display: inline-flex; justify-content: end; align-items: flex-end; border: 2px solid; border-radius: 2px; margin-right: 6px; padding: 0 3px 0 0"><div style="transform: rotate(-45deg); margin: 4px -3px -2px 6px;" class="fa-solid fa-caret-down"></div></i> 
                     Text Area
                     <span>Input</span>
                 </button>
@@ -265,8 +270,8 @@
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="checkbox">
-                    <i title="checkbox" class="fas fa-check-square"></i> 
+                <button class="component-btn" data-component="checkbox" title="checkbox">
+                    <i class="fas fa-check-square"></i> 
                     Checkbox
                 </button>
                 <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
@@ -340,8 +345,9 @@
 
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;">
-                <i titl="top nav" class="fas fa-bars"></i> 
+                <i title="top nav" class="fas fa-bars"></i> 
                 Top Navigation Bar
+                <span>menu</span>
             </button>
         </div>
 
@@ -413,75 +419,77 @@
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="card">
-                <i title="img card" class="fa-regular fa-window-maximize"></i> 
-                Image Card
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        <div class="btn-group-spacer"></div>
+        <div class="btn-class-group">
+            <label class="groupLabel">Cards</label>
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="card">
+                    <i title="img card" class="fa-regular fa-window-maximize"></i> 
+                    Image Card
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="card2">
+                    <!-- <i title="text card" class="fa-solid fa-window-maximize"></i>  -->
+                    <i title="text card" class="fa-solid fa-money-check fa-flip-horizontal"></i>
+                    Text Card
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="listItem">
+                    <i title="text card" class="fa-solid fa-diagram-next"></i>
+                    List Item
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="featureComparisonCard">
+                    <i title="comparison" class="fa-solid fa-check-double"></i></i>  
+                    Comparison Card
+                    <span>product</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+             <!-- next card  -->
+            <!-- <i class="fa-solid fa-pager"></i> -->
         </div>
 
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="card2">
-                <!-- <i title="text card" class="fa-solid fa-window-maximize"></i>  -->
-                <i title="text card" class="fa-solid fa-money-check fa-flip-horizontal"></i>
-                Text Card
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
-        </div>
+        <div class="btn-group-spacer"></div>
+        <div class="btn-class-group">
+            <label class="groupLabel">Media</label>
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="imgGallery">
+                    <i title="gallery" class="fas fa-images"></i> 
+                    Image Gallery
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
 
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="listItem">
-                <i title="text card" class="fa-solid fa-diagram-next"></i>
-                List Item
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
-        </div>
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="video">
+                    <i title="video" class="fas fa-video"></i> 
+                    Video
+                    <span>live stream photo </span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
 
-        <!-- next card  -->
-        <!-- <i class="fa-solid fa-pager"></i> -->
-
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="table">
-                <i title="data table" class="fas fa-table"></i> 
-                Data Table
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="musicPlayer">
+                    <i title="video" class="fas fa-music"></i> 
+                    Music Player
+                    <span> audio player</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
         </div>
-
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="imgGallery">
-                <i title="gallery" class="fas fa-images"></i> 
-                Image Gallery
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
-        </div>
-
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="video">
-                <i title="video" class="fas fa-video"></i> 
-                Video
-                <span>live stream photo </span>
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
-        </div>
-
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="musicPlayer">
-                <i title="video" class="fas fa-music"></i> 
-                Music Player
-                <span> audio player</span>
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
-        </div>
-
-        <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="progressBar">
-                <i title="progress" class="fa-solid fa-bars-progress"></i> 
-                Progress Indicator
-            </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
-        </div>
+        <div style="height: 4px;"></div>
 
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="modal">
@@ -493,10 +501,26 @@
         </div>
 
         <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="table">
+                <i title="data table" class="fas fa-table"></i> 
+                Data Table
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
             <button class="component-btn" data-component="chipGroup">
                 <i title="pills" class="fa-solid fa-capsules fa-rotate-90"></i> 
                 Pills 
                 <span>chips tags hashtags cloud</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="progressBar">
+                <i title="progress" class="fa-solid fa-bars-progress"></i> 
+                Progress Indicator
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
@@ -511,19 +535,18 @@
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="featureComparisonCard">
-                <i title="comparison" class="fa-solid fa-check-double"></i></i>  
-                Comparison Card
-                <span>product</span>
+            <button class="component-btn" data-component="pagination">
+                <i title="pagination" class="fa-solid fa-sort fa-rotate-90"></i></i>  
+                Pagination
+                <span>navigation</span>
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="pagination">
-                <i title="comparison" class="fa-solid fa-sort fa-rotate-90"></i></i>  
-                Pagination
-                <span>navigation</span>
+            <button class="component-btn" data-component="footer">
+                <i title="footer" class="fa-solid fa-mattress-pillow fa-rotate-270"></i> 
+                Footer
             </button>
             <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
@@ -537,19 +560,34 @@
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="footer">
-                <i title="footer" class="fa-solid fa-mattress-pillow fa-rotate-270"></i> 
-                Footer
+            <button class="component-btn" data-component="keyboard">
+                <i title="keyboard" class="fa-solid fa-keyboard"></i> 
+                Keyboard
+                <span>keys</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button class="component-btn" data-component="bottomSheet">
+                <!-- fa-circle-half-stroke fa-rotate-270 -->
+                <i title="bottom sheet" class="fa-solid fa-arrow-up-from-bracket"></i> 
+                Bottom Sheet
+                <span>menu</span>
+            </button>
+            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;">
-            <div title="bottom nav bar" style="background-color: var(--text-on-primary); margin: 0 10px 0 0; border-radius: 0 0 4px 4px; width: 20px;display: inline-flex; justify-content: center; height: 10px !important; outline: 1px solid;"><i style="color: var(--color-primary); margin: -2px 0 4px 0" class="fa-solid fa-ellipsis"></i></div> 
+            
+            <i title="bottom nav bar" style="background-color: var(--text-on-primary); margin: 0 10px 0 0; border-radius: 0 0 4px 4px; width: 20px; display: inline-flex; justify-content: center; height: 10px !important; outline: 1px solid;"><div style="color: var(--color-primary); margin: -2px 0 4px 0" class="fa-solid fa-ellipsis"></div></i>
+           
             Bottom Navigation Bar
             <span>link buttons</span>
         </button>
         
+        <div class="btn-group-spacer"></div>
+        <div class="btn-group-spacer"></div>
         <div class="btn-class-group">
             <label class="groupLabel">Charts</label>
             <div class="comp-btn-wrap">
@@ -571,6 +609,7 @@
             </div>
         </div>
 
+        <div class="btn-group-spacer"></div>
         <div class="btn-class-group">
             <label class="groupLabel">Chat</label>
             <div class="comp-btn-wrap">
@@ -598,26 +637,32 @@
             </div>
         </div>
     </div>
-    <!-- THEME  -->
+
+<!-- THEME // / / /// / / / -->
     <div class="sidebar-content" data-tab="theme">
         <!-- color and font PICKERs ///////////////// -->
-        <div class="color-picker-container">
-            <div style="font-family: Roboto; display: flex; justify-content: space-between; width: 100%;">
-                <div>Primary Color</div><div>&nbsp;&nbsp;Secondary</div><div>Accent&nbsp;</div>
+        
+            <label class="groupLabel">Colors</label>
+            <div class="color-picker-container">
+                <div style="font-family: Roboto; display: flex; justify-content: space-between; width: 100%;">
+                    <div>Primary &emsp;&emsp;&nbsp;</div><div>&nbsp;&nbsp;Secondary</div><div>Accent&nbsp;</div>
+                    </div>
+                    <ul id="colorList"></ul>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 26px;">
+                    <div id="theme-color-picker"></div>
                 </div>
-                <ul id="colorList"></ul>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 26px;">
-                <!-- <p for="color-picker">Color &emsp;&emsp;&emsp;&emsp;&nbsp;</p>
-                <input type="color" id="color-picker" value="#3498db"> -->
-                <div id="theme-color-picker"></div>
             </div>
-        </div>
+
 <!-- FONT PICKERS / -->
-        <!-- <hr> -->
+    <div class="btn-group-spacer"></div>
+    <div class="btn-group-spacer"></div>
+        <div class="font-class-group">
+            <label class="groupLabel">Fonts</label>
+            <div class="btn-group-spacer"></div>
             <div style="display: flex; margin: 0 0 -4px 4px;">
                 <i class="fa-solid fa-f"></i>&thinsp;
                 <i class="fa-solid fa-1">&nbsp;&nbsp;</i>
-                <span style="color:darkgray;">Font 1</span>
+                <!-- <span style="color:darkgray;">Font 1</span> -->
             </div>
             <div class="font-control-group">
                 <!-- <button title="upload font" id="uploadFontBtn" class="upload-font-btn">
@@ -629,7 +674,7 @@
             <div style="display: flex; margin: 6px 0 -4px 4px;">
                 <i class="fa-solid fa-f"></i>&hairsp;
                 <i class="fa-solid fa-2">&nbsp;&nbsp;</i>
-                <span style="color:darkgray;">Font 2</span>
+                <!-- <span style="color:darkgray;">Font 2</span> -->
             </div>
             <div class="font-control-group">
                 <!-- <button title="upload font" id="uploadFontBtn2" class="upload-font-btn">
@@ -637,10 +682,13 @@
                   </button> -->
                 <input type="select" id="fontPicker2">
             </div>
-            <br>
-            <br>
+        </div>
 <!-- HEADINGS!!!  -->
   <!-- h1  -->
+  <div class="btn-group-spacer"></div>  
+
+    <label style="color: #fff; font-size: 16px;">Heading Styles</label>
+    <div class="btn-group-spacer"></div>
         <div class="heading-settings">
             <div class="heading-level-section" id="h1-settings">
                 <div class="heading-preview heading-wrapper">
@@ -648,10 +696,10 @@
                 </div>
                 <div class="heading-bar">
                     <div class="toggle-settings-btn">
-                        <span>H1 Styles</span>
+                        <span>H1 Style Controls</span>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
-                    <div data-level="h1" data-component="heading" class="addHeadingButton">
+                    <div data-level="h1" data-component="heading" class="addHeadingButton" title="add heading">
                         <i class="fa-solid fa-circle-plus"></i>
                     </div>
                 </div>
@@ -667,8 +715,8 @@
                     <div>
                         <label>Weight</label><br>
                         <div class="weight-level-btns">
-                            <button data-level="h1" class="selected"><i class="fas fa-r"></i></button>
-                            <button data-level="h1"><i class="fas fa-bold"></i></button>
+                            <button data-level="h1" class="selected" title="regular"><i class="fas fa-r"></i></button>
+                            <button data-level="h1" title="bold"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
                     <div>
@@ -683,7 +731,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Font Size (px)</label>
+                        <label>Font Size</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-font"></i>
                             <input type="range" 
@@ -704,7 +752,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Letter Spacing (px)</label>
+                        <label>Letter Spacing</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-arrows-left-right"></i>
                             <input type="range" 
@@ -752,10 +800,10 @@
                 </div>
                 <div class="heading-bar">
                     <div class="toggle-settings-btn">
-                        <span>H2 Styles</span>
+                        <span>H2 Style Controls</span>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
-                    <div data-level="h2" data-component="heading" class="addHeadingButton">
+                    <div data-level="h2" data-component="heading" class="addHeadingButton" title="add heading">
                         <i class="fa-solid fa-circle-plus"></i>
                     </div>
                 </div>
@@ -771,8 +819,8 @@
                     <div>
                         <label>Weight</label><br>
                         <div class="weight-level-btns">
-                            <button data-level="h2" class="selected"><i class="fas fa-r"></i></button>
-                            <button data-level="h2"><i class="fas fa-bold"></i></button>
+                            <button data-level="h2" class="selected" title="regular"><i class="fas fa-r"></i></button>
+                            <button data-level="h2" title="bold"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
                     <div>
@@ -787,7 +835,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Font Size (px)</label>
+                        <label>Font Size</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-font"></i>
                             <input type="range" 
@@ -808,7 +856,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Letter Spacing (px)</label>
+                        <label>Letter Spacing</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-arrows-left-right"></i>
                             <input type="range" 
@@ -856,10 +904,10 @@
                 </div>
                 <div class="heading-bar">
                     <div class="toggle-settings-btn">
-                        <span>H3 Styles</span>
+                        <span>H3 Style Controls</span>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
-                    <div data-level="h3" data-component="heading" class="addHeadingButton">
+                    <div data-level="h3" data-component="heading" class="addHeadingButton" title="add heading">
                         <i class="fa-solid fa-circle-plus"></i>
                     </div>
                 </div>
@@ -875,8 +923,8 @@
                     <div>
                         <label>Weight</label><br>
                         <div class="weight-level-btns">
-                            <button data-level="h3" class="selected"><i class="fas fa-r"></i></button>
-                            <button data-level="h3"><i class="fas fa-bold"></i></button>
+                            <button data-level="h3" class="selected" title="regular"><i class="fas fa-r"></i></button>
+                            <button data-level="h3" title="bold"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
                     <div>
@@ -891,7 +939,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Font Size (px)</label>
+                        <label>Font Size</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-font"></i>
                             <input type="range" 
@@ -912,7 +960,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Letter Spacing (px)</label>
+                        <label>Letter Spacing</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-arrows-left-right"></i>
                             <input type="range" 
@@ -959,10 +1007,10 @@
                 </div>
                 <div class="heading-bar">
                     <div class="toggle-settings-btn">
-                        <span>H4 Styles</span>
+                        <span>H4 Style Controls</span>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
-                    <div data-level="h4" data-component="heading" class="addHeadingButton">
+                    <div data-level="h4" data-component="heading" class="addHeadingButton" title="add heading">
                         <i class="fa-solid fa-circle-plus"></i>
                     </div>
                 </div>
@@ -978,8 +1026,8 @@
                     <div>
                         <label>Weight</label><br>
                         <div class="weight-level-btns">
-                            <button data-level="h4" class="selected"><i class="fas fa-r"></i></button>
-                            <button data-level="h4"><i class="fas fa-bold"></i></button>
+                            <button data-level="h4" class="selected" title="regular"><i class="fas fa-r"></i></button>
+                            <button data-level="h4" title="bold"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
                     <div>
@@ -994,7 +1042,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Font Size (px)</label>
+                        <label>Font Size</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-font"></i>
                             <input type="range" 
@@ -1015,7 +1063,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Letter Spacing (px)</label>
+                        <label>Letter Spacing</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-arrows-left-right"></i>
                             <input type="range" 
@@ -1062,10 +1110,10 @@
                 </div>
                 <div class="heading-bar">
                     <div class="toggle-settings-btn">
-                        <span>H5 Styles</span>
+                        <span>H5 Style Controls</span>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
-                    <div data-level="h5" data-component="heading" class="addHeadingButton">
+                    <div data-level="h5" data-component="heading" class="addHeadingButton" title="add heading">
                         <i class="fa-solid fa-circle-plus"></i>
                     </div>
                 </div>
@@ -1081,8 +1129,8 @@
                     <div>
                         <label>Weight</label><br>
                         <div class="weight-level-btns">
-                            <button data-level="h5" class="selcted"><i class="fas fa-r"></i></button>
-                            <button data-level="h5"><i class="fas fa-bold"></i></button>
+                            <button data-level="h5" class="selcted" title="regular"><i class="fas fa-r"></i></button>
+                            <button data-level="h5" title="bold"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1097,7 +1145,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Font Size (px)</label>
+                        <label>Font Size</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-font"></i>
                             <input type="range" 
@@ -1118,7 +1166,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Letter Spacing (px)</label>
+                        <label>Letter Spacing</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-arrows-left-right"></i>
                             <input type="range" 
@@ -1166,10 +1214,10 @@
                 </div>
                 <div class="heading-bar">
                     <div class="toggle-settings-btn">
-                        <span>H6 Styles</span>
+                        <span>H6 Style Controls</span>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
-                    <div data-level="h6" data-component="heading" class="addHeadingButton">
+                    <div data-level="h6" data-component="heading" class="addHeadingButton" title="add heading">
                         <i class="fa-solid fa-circle-plus"></i>
                     </div>
                 </div>
@@ -1185,8 +1233,8 @@
                     <div>
                         <label>Weight</label><br>
                         <div class="weight-level-btns">
-                            <button data-level="h6"><i class="fas fa-r"></i></button>
-                            <button data-level="h6" class="selected"><i class="fas fa-bold"></i></button>
+                            <button data-level="h6" title="regular"><i class="fas fa-r"></i></button>
+                            <button data-level="h6" class="selected" title="bold"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
                     <!-- <div>
@@ -1208,7 +1256,7 @@
                 <!-- <hr> -->
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Font Size (px)</label>
+                        <label>Font Size</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-font"></i>
                             <input type="range" 
@@ -1229,7 +1277,7 @@
                 </div>
                 <div class="heading-theme-row">
                     <div style="width: 100%;">
-                        <label>Letter Spacing (px)</label>
+                        <label>Letter Spacing</label>
                         <div class="range-input-group">
                             <i class="fa-solid fa-arrows-left-right"></i>
                             <input type="range" 
@@ -1271,11 +1319,14 @@
                 </div>
                     <!-- <button data-level="h6"><i class="fas fa-plus-circle"></i></button> -->
             </div>
+        </div>
+        <br>
+
 <!-- BORDER RADIUS  -->
             <div id="radius-preview">
                 <div style="width: 100%;">
-                    <label style="color: white;">Corner Radius (px)</label>
-                    <p style="color: gray; margin: 4px 0;">(applies to all cards and images)</p>
+                    <label style="color: white;"><i class="fa-solid fa-mound fa-rotate-90"></i>&emsp; Corner Radius</label>
+                    <p style="color: gray; margin: 4px 0; font-size: smaller;">(applies to all cards and images)</p>
                     <div class="range-input-group">
                         <input type="range" 
                                class="border-radius-range custom-range-slider" 
@@ -1293,9 +1344,11 @@
         
                 </div>
             </div>
+            <br>
+
     <!-- .canvas-content gap controls -->
-    <label style="color: white;">Component Gap (px)</label>
-    <p style="color: gray; margin: 4px 0;">(applies to selected screen)</p>
+    <label style="color: white;"><i class="fa-solid fa-arrows-left-right-to-line fa-rotate-90"></i>&emsp; Component Gap</label>
+    <p style="color: gray; margin: 4px 0; font-size: smaller;">(applies to selected screen)</p>
                 <div class="gap-controls">
                     <div class="range-input-group">
                         <input type="range" 
@@ -1318,13 +1371,34 @@
                     </div>
                     
                 </div>
+                <br>
 
-    </div>
+                <label style="color: white;"><i class="fa-solid fa-pause"></i>&emsp;&nbsp; Content Padding</label>
+                <p style="color: gray; margin: 4px 0; font-size: smaller;">(applies to selected screen content)</p>
+                <div class="padding-controls">
+                    <div class="range-input-group">
+                        <input type="range" 
+                            class="padding-range custom-range-slider" 
+                            min="0" 
+                            max="180" 
+                            step="1" 
+                            value="16">
+                        <input type="number" 
+                            class="padding-number padding-range" 
+                            value="16" 
+                            step="1" 
+                            min="0">
+                        <div id="padding-preview-outer">
+                            <div class="padding-preview-inner"></div>
+                        </div>
+                    </div>
+                </div>
+                <br>
     </div>
 
     <div style="height: 12px;"></div>
             <div>
-                <button class="system-btn" id="download-btn"><i class="fas fa-circle-down"></i> Download PNG Image</button>
+                <button title="download" class="system-btn" id="download-btn"><i class="fas fa-circle-down"></i> <span> &emsp;Download PNG Image</span></button>
             </div>
 
             <!-- <button id="collaborateBtn" class="system-btn">
@@ -1337,7 +1411,7 @@
               <input type="checkbox" id="darkModeToggle">
               <span class="sliderDark"></span>
             </label>
-            <span class="dark-mode-label">Dark Mode</span>
+            <span id="darkModeLabel"class="dark-mode-label">Dark Mode</span>
         </div>
     <!-- <hr> -->
         <div style="margin: 86px 0 0 0; display: flex; justify-content: center; align-items: center;">
@@ -1348,7 +1422,7 @@
             </a>
         </div>
 
-        <div style="margin: 26px 0 0 0; display: flex; justify-content: center; align-items: center; gap: 12px; font-size: smaller;">
+        <div class="system-links">
             <a style="color: gray;" target="_blank" href="tos">ToS</a>
             <a style="color: gray;" target="_blank" href="privacy-policy">Privacy Policy</a>
             <a style="color: gray;" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfgeMXBqAjawhdWZQKQxKcSPJLSeISE-wz7A9Nzk6jbmFIKhg/viewform?usp=dialog">Feedback</a>
@@ -1473,40 +1547,43 @@
 
     // FONT PICKERS //////////////////
     $(document).ready(function() {
-        $('#fontPicker1').fontselect();
-        $('#fontPicker2').fontselect();
-
-        $('#fontPicker1').trigger('setFont','Open Sans');
-        $('#fontPicker2').trigger('setFont','Roboto');
-
-        // Connect upload buttons to their respective font pickers
-        $('#uploadFontBtn').click(function() {
-            $('.font-select:eq(0) .upload').click();
-        });
-
-        $('#uploadFontBtn2').click(function() {
-            $('.font-select:eq(1) .upload').click();
-        });
+    // Initialize font pickers
+    $('#fontPicker1').fontselect();
+    $('#fontPicker2').fontselect();
+    
+    // Set default fonts
+    $('#fontPicker1').trigger('setFont','Open Sans');
+    $('#fontPicker2').trigger('setFont','Roboto');
+    
+    // Connect upload buttons to their respective font pickers
+    $('#uploadFontBtn').click(function() {
+        $('.font-select:eq(0) .upload').click();
+    });
+    
+    $('#uploadFontBtn2').click(function() {
+        $('.font-select:eq(1) .upload').click();
+    });
+    
+    // Handle font changes
+    $('#fontPicker1').on('change', function() {
+        const selectedFont = $(this).val().split(':')[0];
+        document.documentElement.style.setProperty('--primary-font', selectedFont);
         
-        $('#fontPicker1').on('change', function() {
-            const selectedFont = $(this).val().split(':')[0];
-            document.documentElement.style.setProperty('--primary-font', selectedFont);
-            
-            // Save font to project if a project is active
-            if (projectManager && projectManager.currentProject) {
-            projectManager.saveFontSelection('primaryFont', selectedFont);
-            }
-        });
+        // Save font to project if a project is active
+        if (projectManager && projectManager.currentProject) {
+        projectManager.saveFontSelection('primaryFont', selectedFont);
+        }
+    });
+    
+    $('#fontPicker2').on('change', function() {
+        const selectedFont = $(this).val().split(':')[0];
+        document.documentElement.style.setProperty('--secondary-font', selectedFont);
         
-        $('#fontPicker2').on('change', function() {
-            const selectedFont = $(this).val().split(':')[0];
-            document.documentElement.style.setProperty('--secondary-font', selectedFont);
-            
-            // Save font to project if a project is active
-            if (projectManager && projectManager.currentProject) {
-            projectManager.saveFontSelection('secondaryFont', selectedFont);
-            }
-        });
+        // Save font to project if a project is active
+        if (projectManager && projectManager.currentProject) {
+        projectManager.saveFontSelection('secondaryFont', selectedFont);
+        }
+    });
     });
     
     /////////// text contrast adjuster 2 
@@ -1620,21 +1697,9 @@ document.addEventListener('input', function(e) {
 });
 
 
- </script>
-<!-- lsof -i :1234
- Kill  'PID#'-->
-<!-- <script src="lib/yjs-bundle.js"></script>
-<script src="lib/yjs-config.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-<script src="js/imgGallerySetup.js"></script>
-<script src="js/extra-func.js"></script>
-<script src="js/ux-mock-bldr.js"></script>
-<script src="js/variants.js"></script>
-<script src="js/projectSys.js"></script>
-<script src="js/new-Stripe.js"></script>
-<script src="js/templates.js"></script>
-<script src="js/fontselect.js"></script> 
+</script>
+<script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+<script src="dist/js/bundle.min.js"></script>
 <script type="module" src="functions/index.js"></script>
-<!-- <script src="js/collab-sys.js"></script> -->
 </body>
 </html>
