@@ -19,10 +19,10 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
 <link id="google-fonts" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Condensed:ital,wght@0,600;1,600|Open+Sans:400,700|Lato:400,700|Montserrat:400,700|Poppins:400,700|Raleway:400,700|Nunito:400,700|Playfair+Display:ital,wght@400,700|Source+Sans+Pro:400,700|Rubik:400,700&display=swap">
+
 <link rel="stylesheet" href="dist/css/styles.min.css">
 
 <script src=" https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/dist/html2canvas-pro.min.js "></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
@@ -286,15 +286,6 @@
                 <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
-            <!-- <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="formGroup">
-                    <i title="form group" class="fa-solid fa-object-group"></i> 
-                    Form Group
-                    <span></span>
-                </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
-            </div> -->
-
             <div class="comp-btn-wrap">
                 <button class="component-btn" data-component="dropdown">
                     <i title="dropdown" class="fa-solid fa-chevron-down"></i> 
@@ -497,7 +488,6 @@
                 Modal Pop-up
                 <span>dialog</span>
             </button>
-            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <div class="comp-btn-wrap">
@@ -565,17 +555,14 @@
                 Keyboard
                 <span>keys</span>
             </button>
-            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="bottomSheet">
-                <!-- fa-circle-half-stroke fa-rotate-270 -->
                 <i title="bottom sheet" class="fa-solid fa-arrow-up-from-bracket"></i> 
                 Bottom Sheet
                 <span>menu</span>
             </button>
-            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;">
@@ -641,11 +628,11 @@
 <!-- THEME // / / /// / / / -->
     <div class="sidebar-content" data-tab="theme">
         <!-- color and font PICKERs ///////////////// -->
-        
+        <br>
             <label class="groupLabel">Colors</label>
             <div class="color-picker-container">
                 <div style="font-family: Roboto; display: flex; justify-content: space-between; width: 100%;">
-                    <div>Primary &emsp;&emsp;&nbsp;</div><div>&nbsp;&nbsp;Secondary</div><div>Accent&nbsp;</div>
+                    <div>Primary Color&nbsp;</div><div>&nbsp;&nbsp;Secondary</div><div>Accent&nbsp;</div>
                     </div>
                     <ul id="colorList"></ul>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 26px;">
@@ -654,62 +641,52 @@
             </div>
 
 <!-- FONT PICKERS / -->
+ <br>
+    <div class="btn-group-spacer"></div>
     <div class="btn-group-spacer"></div>
     <div class="btn-group-spacer"></div>
         <div class="font-class-group">
-            <label class="groupLabel">Fonts</label>
+
             <div class="btn-group-spacer"></div>
             <div style="display: flex; margin: 0 0 -4px 4px;">
-                <i class="fa-solid fa-f"></i>&thinsp;
-                <i class="fa-solid fa-1">&nbsp;&nbsp;</i>
-                <!-- <span style="color:darkgray;">Font 1</span> -->
+                <i class="fa-solid fa-p"></i>&thinsp;
+                <i class="fa-solid fa-f">&nbsp;&nbsp;</i>
+                <span style="color:darkgray;">Primary Font</span>
             </div>
             <div class="font-control-group">
-                <!-- <button title="upload font" id="uploadFontBtn" class="upload-font-btn">
-                    <i class="fas fa-file-arrow-up"></i>
-                  </button> -->
+
                 <input type="select" id="fontPicker1">
             </div>
             
             <div style="display: flex; margin: 6px 0 -4px 4px;">
-                <i class="fa-solid fa-f"></i>&hairsp;
-                <i class="fa-solid fa-2">&nbsp;&nbsp;</i>
-                <!-- <span style="color:darkgray;">Font 2</span> -->
+                <i class="fa-solid fa-s"></i>&thinsp;
+                <i class="fa-solid fa-f">&nbsp;&nbsp;</i>
+                <span style="color:darkgray;">Secondary Font</span>
             </div>
             <div class="font-control-group">
-                <!-- <button title="upload font" id="uploadFontBtn2" class="upload-font-btn">
-                    <i class="fas fa-file-arrow-up"></i>
-                  </button> -->
                 <input type="select" id="fontPicker2">
             </div>
         </div>
+        
 <!-- HEADINGS!!!  -->
   <!-- h1  -->
-  <div class="btn-group-spacer"></div>  
-
-    <label style="color: #fff; font-size: 16px;">Heading Styles</label>
+  <!-- <div class="btn-group-spacer"></div>   -->
+   
+    <!-- <label style="color: #fff; font-size: 16px;">Headings</label> -->
     <div class="btn-group-spacer"></div>
         <div class="heading-settings">
             <div class="heading-level-section" id="h1-settings">
                 <div class="heading-preview heading-wrapper">
-                    <h1 contenteditable="true" data-level="h1">H1 Heading Preview</h1>
+                    <h1 contenteditable="true" data-level="h1">Heading 1 Preview</h1>
                 </div>
-                <div class="heading-bar">
-                    <div class="toggle-settings-btn">
-                        <span>H1 Style Controls</span>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div data-level="h1" data-component="heading" class="addHeadingButton" title="add heading">
-                        <i class="fa-solid fa-circle-plus"></i>
-                    </div>
-                </div>
+            
                 <div class="heading-settings-content">
                 <div class="heading-theme-row">
                     <div>
                         <label>H1 Font</label><br>
                         <div class="font-level-btns">
-                        <button data-level="h1" class="selected"><i class="fas fa-f">&thinsp;</i><i class="fas fa-1"></i></button>
-                        <button data-level="h1"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
+                        <button data-level="h1" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
+                        <button data-level="h1"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -792,28 +769,22 @@
                     </div>
                     </div>
                 </div>
+                <button data-level="h1" data-component="heading" class="addHeadingButton component-btn" title="add heading H1">
+                    <i class="fa-solid fa-circle-plus"></i> Add H1 to selected screen(s)
+                </button>
             </div>
     <!-- H2 HEADING 2  -->
             <div class="heading-level-section" id="h2-settings">
                 <div class="heading-preview heading-wrapper">
-                    <h2 class="heading-preview-text" data-level="h2">H2 Heading Preview</h2>
-                </div>
-                <div class="heading-bar">
-                    <div class="toggle-settings-btn">
-                        <span>H2 Style Controls</span>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div data-level="h2" data-component="heading" class="addHeadingButton" title="add heading">
-                        <i class="fa-solid fa-circle-plus"></i>
-                    </div>
+                    <h2 class="heading-preview-text" data-level="h2">Heading 2 Preview</h2>
                 </div>
                 <div class="heading-settings-content">
                 <div class="heading-theme-row">
                     <div>
                         <label>H2 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h2" class="selected"><i class="fas fa-f">&thinsp;</i><i class="fas fa-1"></i></button>
-                            <button data-level="h2"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
+                            <button data-level="h2" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
+                            <button data-level="h2"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -896,28 +867,22 @@
                     </div>
                     </div>
                 </div>
+                <button data-level="h2" data-component="heading" class="addHeadingButton component-btn" title="add heading H2">
+                    <i class="fa-solid fa-circle-plus"></i> Add H2 to selected screen(s)
+                </button>
             </div>
     <!-- H3  -->
             <div class="heading-level-section" id="h3-settings">
                 <div class="heading-preview heading-wrapper">
-                    <h3 class="heading-preview-text" data-level="h3">H3 Heading Preview</h3>
-                </div>
-                <div class="heading-bar">
-                    <div class="toggle-settings-btn">
-                        <span>H3 Style Controls</span>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div data-level="h3" data-component="heading" class="addHeadingButton" title="add heading">
-                        <i class="fa-solid fa-circle-plus"></i>
-                    </div>
+                    <h3 class="heading-preview-text" data-level="h3">Heading 3 Preview</h3>
                 </div>
                 <div class="heading-settings-content">
                 <div class="heading-theme-row">
                     <div>
                         <label>H3 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h3" class="selected"><i class="fas fa-f">&thinsp;</i><i class="fas fa-1"></i></button>
-                            <button data-level="h3"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
+                            <button data-level="h3" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
+                            <button data-level="h3"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1000,27 +965,22 @@
                     </div>
                 </div>
                 </div>
+                <button data-level="h3" data-component="heading" class="addHeadingButton component-btn" title="add heading H3">
+                    <i class="fa-solid fa-circle-plus"></i> Add H3 to selected screen(s)
+                </button>
             </div>
+            <!-- H4 controls  -->
             <div class="heading-level-section" id="h4-settings">
                 <div class="heading-preview heading-wrapper">
-                    <h4 class="heading-preview-text" data-level="h4">H4 Heading Preview</h4>
-                </div>
-                <div class="heading-bar">
-                    <div class="toggle-settings-btn">
-                        <span>H4 Style Controls</span>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div data-level="h4" data-component="heading" class="addHeadingButton" title="add heading">
-                        <i class="fa-solid fa-circle-plus"></i>
-                    </div>
+                    <h4 class="heading-preview-text" data-level="h4">Heading 4 Preview</h4>
                 </div>
                 <div class="heading-settings-content">
                 <div class="heading-theme-row">
                     <div>
                         <label>H4 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h4"><i class="fas fa-f"></i>&thinsp;<i class="fas fa-1"></i></button>
-                            <button data-level="h4" class="selected"><i class="fas fa-f">&hairsp;</i><i class="fas fa-2"></i></button>
+                            <button data-level="h4"><i class="fas fa-p"></i>&thinsp;<i class="fas fa-f"></i></button>
+                            <button data-level="h4" class="selected"><i class="fas fa-s">&thinsp;</i><i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1103,27 +1063,22 @@
                     </div>
                 </div>
                 </div>
+                <button data-level="h4" data-component="heading" class="addHeadingButton component-btn" title="add heading H4">
+                    <i class="fa-solid fa-circle-plus"></i> Add H4 to selected screen(s)
+                </button>
             </div>
+            <!-- H5 controls  -->
             <div class="heading-level-section" id="h5-settings">
                 <div class="heading-preview heading-wrapper">
-                    <h5 class="heading-preview-text" data-level="h5">H5 Heading Preview H5</h5>
-                </div>
-                <div class="heading-bar">
-                    <div class="toggle-settings-btn">
-                        <span>H5 Style Controls</span>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div data-level="h5" data-component="heading" class="addHeadingButton" title="add heading">
-                        <i class="fa-solid fa-circle-plus"></i>
-                    </div>
+                    <h5 class="heading-preview-text" data-level="h5">Heading 5 Preview</h5>
                 </div>
                 <div class="heading-settings-content">
                 <div class="heading-theme-row">
                     <div>
                         <label>H5 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h5" class="selected"><i class="fas fa-f"></i>&thinsp;<i class="fas fa-1"></i></button>
-                            <button data-level="h5"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
+                            <button data-level="h5" class="selected"><i class="fas fa-p"></i>&thinsp;<i class="fas fa-f"></i></button>
+                            <button data-level="h5"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1206,28 +1161,22 @@
                     </div>
                     </div>
                 </div>
+                <button data-level="h5" data-component="heading" class="addHeadingButton component-btn" title="add heading H5">
+                    <i class="fa-solid fa-circle-plus"></i> Add H5 to selected screen(s)
+                </button>
             </div>
-        <!-- H6  -->
+        <!-- H6 controls -->
             <div class="heading-level-section" id="h6-settings">
                 <div class="heading-preview heading-wrapper">
-                    <h6 class="heading-preview-text" data-level="h6">H6 Heading Preview H6</h6>
-                </div>
-                <div class="heading-bar">
-                    <div class="toggle-settings-btn">
-                        <span>H6 Style Controls</span>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div data-level="h6" data-component="heading" class="addHeadingButton" title="add heading">
-                        <i class="fa-solid fa-circle-plus"></i>
-                    </div>
+                    <h6 class="heading-preview-text" data-level="h6">Heading 6 Preview</h6>
                 </div>
                 <div class="heading-settings-content">
                 <div class="heading-theme-row">
                     <div>
                         <label>H6 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h6" class="selected"><i class="fas fa-f">&hairsp;</i><i class="fas fa-1"></i></button>
-                            <button data-level="h6"><i class="fas fa-f"></i>&hairsp;<i class="fas fa-2"></i></button>
+                            <button data-level="h6" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
+                            <button data-level="h6"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1237,12 +1186,6 @@
                             <button data-level="h6" class="selected" title="bold"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
-                    <!-- <div>
-                        <label>Italic</label><br>
-                        <div class="font-level-btns">
-                            <button data-level="h6" class="selected"><i class="fas fa-italic"></i></button>
-                        </div>
-                    </div> -->
                     <div>
                         <label>Text Transform</label><br>
                         <select class="heading-text-transform text-transform-select" data-level="h6">
@@ -1317,10 +1260,12 @@
                     </div>
                 </div>
                 </div>
-                    <!-- <button data-level="h6"><i class="fas fa-plus-circle"></i></button> -->
+                <button data-level="h6" data-component="heading" class="addHeadingButton component-btn" title="add heading H6">
+                    <i class="fa-solid fa-circle-plus"></i> Add H6 to selected screen(s)
+                </button>
             </div>
+
         </div>
-        <br>
 
 <!-- BORDER RADIUS  -->
             <div id="radius-preview">
@@ -1344,11 +1289,10 @@
         
                 </div>
             </div>
-            <br>
 
     <!-- .canvas-content gap controls -->
-    <label style="color: white;"><i class="fa-solid fa-arrows-left-right-to-line fa-rotate-90"></i>&emsp; Component Gap</label>
-    <p style="color: gray; margin: 4px 0; font-size: smaller;">(applies to selected screen)</p>
+    <label style="color: white; margin-left: 6px;"><i class="fa-solid fa-arrows-left-right-to-line fa-rotate-90"></i>&emsp; Component Gap</label>
+    <p style="color: gray; margin: 4px 0 0 6px; font-size: smaller;">(applies to selected screen)</p>
                 <div class="gap-controls">
                     <div class="range-input-group">
                         <input type="range" 
@@ -1371,10 +1315,10 @@
                     </div>
                     
                 </div>
-                <br>
+         
 
-                <label style="color: white;"><i class="fa-solid fa-pause"></i>&emsp;&nbsp; Content Padding</label>
-                <p style="color: gray; margin: 4px 0; font-size: smaller;">(applies to selected screen content)</p>
+                <label style="color: white; margin: 0 0 0 9px;"><i class="fa-solid fa-pause"></i></i>&emsp;&nbsp; Content Padding</label>
+                <p style="color: gray; margin: 5px 0 0 9px; font-size: smaller;">(applies to selected screen content)</p>
                 <div class="padding-controls">
                     <div class="range-input-group">
                         <input type="range" 
@@ -1394,16 +1338,13 @@
                     </div>
                 </div>
                 <br>
+                <div class="btn-group-spacer"></div>
     </div>
 
     <div style="height: 12px;"></div>
             <div>
                 <button title="download" class="system-btn" id="download-btn"><i class="fas fa-circle-down"></i> <span> &emsp;Download PNG Image</span></button>
             </div>
-
-            <!-- <button id="collaborateBtn" class="system-btn">
-                <i class="fa-solid fa-users"></i> Invite Friends to Collaborate
-            </button> -->
 
         <!-- DARK MODE  -->
         <div class="dark-mode-toggle">
@@ -1487,12 +1428,6 @@
 
 <!-- HTML END ////////////////// -->
 
-<!-- <script>
-    // window.addEventListener('load', () => {
-    //     console.log('Yjs loaded:', typeof Y !== 'undefined');
-    //     console.log('WebsocketProvider loaded:', typeof WebsocketProvider !== 'undefined');
-    // });
-</script> -->
  <script>
     var colorPicker = new iro.ColorPicker("#theme-color-picker", {
         width: 190,
@@ -1696,10 +1631,16 @@ document.addEventListener('input', function(e) {
     }
 });
 
+$(document).on('mouseenter', '.previewInnerCon', function() {
+  $(this).find('.component-container.controls-hidden')
+    .removeClass('controls-hidden');
+});
 
-</script>
+ </script>
+
 <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 <script src="dist/js/bundle.min.js"></script>
 <script type="module" src="functions/index.js"></script>
+
 </body>
 </html>
