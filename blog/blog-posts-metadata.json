@@ -1,15 +1,28 @@
 {
     "posts": [
     {
+      "id": "dr-frankensteins-ai",
+      "title": "Dr. Frankenstein's AI",
+      "date": "May 10, 2025",
+      "author": "Ben Almen",
+      "authorImage": "img/ben-almen.jpg",
+      "excerpt": "How we almost replaced ourselves with AI and why that would have violated everything we stand for.",
+      "image": "img/frankenstein-ai.jpg",
+      "img-credit": "Bruno Guerrero",
+      "credit-link": "https://unsplash.com/@pray4bokeh",
+      "tags": ["AI", "Ethics", "Writing", "UX Design", "Humanity"],
+      "category": "Design"
+    },
+    {
         "id": "cup-of-tea-pod",
         "title": "I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.",
         "date": "Oct 10, 2024",
         "author": "Dlightning",
         "authorImage": "img/author.png",
-        "excerpt": "When I let AI deep dive into <i>Your Cup of Tea</i>, the result wasn’t just insightful — it was surprisingly entertaining.",
-        "image": "img/notebook-ai.png",
-        "img-credit": "screenshot",
-        "credit-link": "https://dlightning.org",
+        "excerpt": "When I let AI do a deep dive into <i>Your Cup of Tea</i>, the result was surprisingly human.",
+        "image": "img/podcast-booth.jpg",
+        "img-credit": "Austin Distel",
+        "credit-link": "https://unsplash.com/@austindistel",
         "tags": ["AI", "Process", "Storytelling"],
         "category": "Writing"
     },
@@ -19,7 +32,7 @@
         "date": "Sept 21, 2024",
         "author": "Dlightning",
         "authorImage": "img/author.png",
-        "excerpt": "The surprising first moments of a new encounter with technology.",
+        "excerpt": "The surprising first moments of an encounter with new technology.",
         "image": "img/sail-ui.jpg",
         "img-credit": "Joseph Grev",
         "credit-link": "https://unsplash.com/@lime517",
@@ -34,6 +47,8 @@
         "authorImage": "img/author.png",
         "excerpt": "Design for the mental pathways used to make decisions.",
         "image": "img/dog-cat.jpg",
+        "img-credit": "Krista Mangulsone",
+        "credit-link": "https://unsplash.com/@krista",
         "tags": ["Psychology", "Process", "Theory"],
         "category": "Psychology"
       },
@@ -45,6 +60,8 @@
         "authorImage": "img/author.png",
         "excerpt": "Build emotional connection with storytelling.",
         "image": "img/cc-buck.jpg",
+        "img-credit": "Aaron Burden",
+        "credit-link": "https://unsplash.com/@aaronburden",
         "tags": ["Storytelling", "Nature", "Community", "Experiential Design"],
         "category": "Writing"
       },
@@ -54,8 +71,10 @@
         "date": "Mar 4, 2024",
         "author": "Dlightning",
         "authorImage": "img/author.png",
-        "excerpt": "“Two sides of the same coin” - How the seamless integration of design and engineering shapes customer experiences and drives emotional engagement.",
+        "excerpt": "“Two sides of the same coin” - How the seamless integration of design & engineering shapes customer experience and drives emotional engagement.",
         "image": "img/autoshop.jpg",
+        "img-credit": "Kenny Eliason",
+        "credit-link": "https://unsplash.com/@neonbrand",
         "tags": ["Design", "Engineering", "Ethics in Tech", "Experiential Design"],
         "category": "Design"
       },

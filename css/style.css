@@ -264,6 +264,22 @@ h3 {
   width: 110px;
   padding-top: 5px;
 }
+.logo-item {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-item img {
+  max-width: 75px;
+  min-width: 45px;
+  padding: 12px 0 24px 0;
+  /* filter: brightness(1000%) grayscale(100%); */
+  transition: all 0.3s ease-in-out;
+}
+.logo-item:hover img{
+  transform: translateY(-6px) scale(1.05);
+  /* filter: brightness(100%) grayscale(0%); */
+}
 
 .fWghtLight{
   font-weight: lighter;

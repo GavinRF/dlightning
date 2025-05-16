@@ -81,6 +81,7 @@
     <lastmod>2024-11-04</lastmod>
   </url>
 <!-- // Blog Posts  ++++++++++++++++++++++++++++++++ -->
+<!-- OLDEST to NEWEST  -->
   <url>
     <loc>https://dlightning.org/generated-posts/decision-theories-models.html</loc>
     <lastmod>2024-11-04</lastmod>
@@ -104,6 +105,11 @@
   <url>
     <loc>https://dlightning.org/generated-posts/cup-of-tea-pod.html</loc>
     <lastmod>2024-11-04</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/generated-posts/dr-frankensteins-ai.html</loc>
+    <lastmod>2025-05-10</lastmod>
   </url>
 
 </urlset>
