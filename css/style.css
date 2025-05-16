@@ -100,7 +100,7 @@ li {
 }
 
 p {
-  font-size: 16px;
+  font-size: 1.06rem;
   font-weight: 300;
   line-height: 28px;
   color: #4D4D4D;
@@ -1447,7 +1447,7 @@ h3 {
 }
 
 .Process_area .Process_info {
-  padding-left: 68px;
+  padding-left: 15px;
 }
 
 @media (max-width: 767px) {
