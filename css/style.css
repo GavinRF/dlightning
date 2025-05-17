@@ -3323,11 +3323,14 @@ h3 {
   -moz-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   padding-bottom: 30px;
+  border-radius: 6px;
+  margin: 4px;
 }
 
 .prising_area .single_prising .prising_header {
   background: #E9F4FE;
   padding: 28px 35px;
+  border-radius: 6px 6px 0 0;
 }
 
 .prising_area .single_prising .prising_header h3 {
