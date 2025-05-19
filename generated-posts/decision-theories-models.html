@@ -67,8 +67,21 @@
             font-family: 'inter';
             margin-bottom: 13px !important;
         }
+        .post-content p:first-of-type:first-child:first-letter,
+        .post-content .first-pgh::first-letter {
+            text-transform: capitalize;
+            font-size: 4.2rem;
+            font-weight: bold;
+            color: #05126a;
+            margin-right: 0.2rem;
+            margin-bottom: 0.2rem;
+            margin-top: 0.04rem;
+            font-family: 'Rubik', sans-serif;
+            float: left;
+        }
         .post-content h2 {
             margin-top: 34px;
+            font-size: 1.6rem;
         }
         .post-content blockquote {
             text-align: center;
@@ -82,6 +95,8 @@
             padding: 0.3rem 0.6rem;
             border-radius: 0.25rem;
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
             font-size: 0.8rem;
         }
         .social-sharing {
@@ -89,6 +104,7 @@
         }
         .social-sharing button {
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         #relatedPosts {
             margin-top: 3rem;
@@ -98,7 +114,7 @@
             margin-bottom: 1rem;
         }
         .related-post h3{
-            font-size: .84rem;
+            font-size: .64rem;
             margin-bottom: 0.05rem;
         }
         .related-post img {
@@ -108,18 +124,22 @@
             object-fit: cover;
             margin-right: 6px;
         }
+        li {
+            list-style: disc;
+            margin-left: 1.8rem;
+        }
         hr {
             border: 0;
-            margin: 0.85em auto 0.35em auto;
             max-width: 100%;
             box-sizing: border-box;
             height: 1px;
-            background: linear-gradient(#3a177d, #40015bee, #0e08b4ee, #06022d);
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 150px;
             position: relative;
+            margin: 44px auto 42px auto;
         }
         hr::before {
             content: "✳ ✴ ✳";
@@ -140,13 +160,14 @@
             font-size: 1.05 !important;
             color: #161130;
         }
-        #recentPosts p, #moreRelatedPosts p {
+        #recentPosts small, #moreRelatedPosts small {
             margin-bottom: 0;
             font-size: smaller;
+            color: #4e4e54;
         }
         .recent-post, .related-post {
             display: flex;
-            margin-bottom: 1rem;
+            margin-bottom: .98rem;
         }
         .recent-post h3, .related-post h3 {
             font-size: 1rem;
@@ -164,10 +185,31 @@
             padding-top: 2rem;
             border-top: 1px solid #e9ecef;
         }
+
+        .progress-container {
+        position: fixed;
+        bottom: 0px;
+        z-index: 9999; /* Make sure it's above everything */
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        }
+        .progress-bar {
+        height: 6px;
+        background: linear-gradient(to right, #041cb9, #4d17b3, #5d0fda);
+        width: 0%;
+        transition: width 0.1s ease-out;
+        }
+        ul{
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
     <header id="header"></header>
+    <div class="progress-container">
+        <div class="progress-bar" id="readingProgress"></div>
+    </div>
 
         <!-- hero_area  -->
         <div class="bradcam_area bradcam_bg_1">
@@ -208,70 +250,84 @@
                         <a href="https://unsplash.com/@krista" target="_blank">Krista Mangulsone</a>
                     </figcaption>
 
-                    <div class="post-content mt-4">
-                        <p>Decision making is a process influenced by the way our mind interacts with the problem, the emotions arising from the situation, and the multitude of potential outcomes. Taking action isn’t a simple reduction of the facts; it requires a quick way to filter the pertinent information so that a decision can be made.
+                    <div class="post-content mt-5">
+                        <p>Decision making is a process influenced by the way our mind interacts with the problem, the emotions arising from the situation, and the multitude of potential outcomes. Taking action isn’t a simple reduction of the facts; it requires a quick way to filter the pertinent information so that a decision can be made.</p>
 
-    As the number of choices increases so does the difficulty in determining the best course of action. By categorizing and ranking choices based on their most salient features, we can streamline decision-making to focus on a smaller, more manageable set of criteria.
-</p>
-    <hr/>
-<p> 
-    Within every mind lies a unique algorithm — a mental framework that gathers, sorts, and synthesizes information to reach a resolution that best serves the individual.
-    
-    Let’s explore the decision to adopt a pet. 🐕 🐈
-    The following theories and models provide insights into decision making.
-    
-        Rational Choice Theory posits that individuals make decisions by weighing the costs and benefits of their options and choosing the one that maximizes utility or satisfaction. This theory assumes that decisions are made based on complete information and consistent preferences. However, in reality, people often make decisions with incomplete information and sometimes behave irrationally, especially in scenarios involving uncertainty or high stakes.
-    
-    Aspiring pet owners might inform their decision by weighing the costs (time, money, responsibility) against benefits (companionship, emotional support) of pet ownership. They may also consider factors like their living situation, lifestyle, and ability to care for a pet as factors in their adoption decision. While this is a logical approach, human tendency often leads to ignoring inconvenient facts, favoring emotional reasoning instead.
-    
-        Prospect Theory suggests that people tend to weigh potential losses more heavily than equivalent gains — an effect known as loss aversion. This theory also highlights the importance of framing; the way information is presented can significantly influence decisions. Prospect Theory mainly applies to decisions involving risk and uncertainty. It may not be useful in explaining decisions where risks are not clearly defined or where emotional and social factors play a more significant role.
-    
-    Factors such as the desire for companionship or the fear of loneliness influence the decision to adopt a pet, leading individuals to prioritize emotional gains over potential costs. Social influences, such as seeing friends or celebrities with pets might also sway them. People may be more averse to potential losses associated with adopting a pet, such as the financial costs, time commitment, and potential lifestyle changes than they are excited about the gains of companionship and emotional fulfillment. Depending on whether the focus is on the joys or the sacrifices of pet ownership leads the decision maker to frame their decision as more or less risky.
-    
-        Bounded Rationality due to cognitive limitations, people cannot make fully rational decisions. Instead, they rely on heuristics — mental shortcuts — to simplify complex choices. Heuristics are simple decision rules which reduce complexity and lead to more feasible reasoning; they rely on past experiences in relation to current problems, as well as readily available information and personal tendencies. While heuristics can simplify decision-making, they can also lead to systematic errors and biases.
-    
-    For example, a person might decide to adopt a pet based on a heartwarming story they heard, rather than researching the responsibilities and costs involved. This reliance on anecdotal evidence is a typical heuristic that can be incomplete, filled with bias, and emotionally charged.
-    
-        Dual-Process Theory divides thinking into two systems:
-        System 1 intuitive, automatic, and quick
-        System 2 deliberative, conscious, and slow
-        People use both modes of thinking depending on the nature of the decision. Some people might rely more heavily on one system over the other due to personal habits or experience. The difficulty is determining when someone might switch between systems.
-    
-    System 1 might lead individuals to desire the companionship and emotional benefits of having a pet in a snap judgement, while System 2 might engage in deliberative consideration of factors like the practicality of pet ownership and the long-term commitment.
-    
-        Cognitive Psychology emphasizes attention, memory, and problem-solving strategies which are reliant on the decision makers ability to access and integrate new information. Within Cognitive Psychology the Information Processing Model focuses on how individuals gather, process, and use information to make decisions.
-    
-    In pet adoption, individuals might gather information about different pets, their care requirements, and the impact on their lifestyle. They may also draw on past experiences with pets or preferences for certain breeds. People have a tendency to access information that is in their immediate surroundings rather than doing more extensive research.
-    
-        Neuro-economic Models examines decision-making from a physical biology perspective by exploring how brain structures and processes are involved in making choices. Functional neuroimaging studies provide insights into the neural pathways activated during decision-making.
-    
-    For instance, scientists could investigate how brain structures are activated when contemplating pet adoption, offering insights into the emotional and cognitive aspects of coming to a decision. This emerging field is only beginning to map brain activity patterns to the decision-making process.
-    
-    As the number of decisions we make in a day increases, the quality of those decisions can begin to deteriorate — a phenomenon known as decision fatigue. Mental energy required for decision-making is finite. Design can provide solutions such as simplifying choices or spacing out important decisions to assist customers in high stakes decision points.
-    
-    Decision fatigue can manifest in various ways, such as impulsive decisions, procrastination, or an over-reliance on default options. For example, someone considering pet adoption might start the day with thorough research, and after making numerous other decisions throughout the day, they might opt for the easiest choice.
-</p>
-    <hr/>
-<p>
-    Decision making is a multifaceted process influenced by cognitive, emotional, social, and environmental factors. While rational decision-making models provide a structured framework for understanding choices, real-world decisions often deviate from the models. The theories discussed offer valuable frameworks for understanding decision-making but do not capture the nuance of human choice behavior.
+<p>As the number of choices increases so does the difficulty in determining the best course of action. By categorizing and ranking choices based on their most salient features, we can streamline decision-making to focus on a smaller, more manageable set of criteria.</p>
 
-Psychological aspects of decision-making are from being a peripheral sub-component. The role of mental shortcuts and the influence of emotions point to the fact that what you think determines what you feel — and in turn what you do.
+<p>Within every mind lies a unique algorithm—a mental framework that gathers, sorts, and synthesizes information to reach a resolution that best serves the individual.</p>
 
-Like ripples on a pond, each decision creates a series of interconnected outcomes, spreading out in concentric circles, each one more distant from the source yet still connected to it.
+<hr>
+    
+<p><strong>Let’s explore the decision to adopt a pet.</strong> 🐕 🐈
+The following theories and models provide insights into decision making.</p>
 
-Decisions are often driven by subconscious aspects of personality or desires that we might not fully acknowledge. The perception of risk can strongly affect the emotional weight given to a particular decision, complicating the effort to remain objective and logical.
+<p><strong><b>Rational Choice Theory</b> posits that individuals make decisions by weighing the costs and benefits of their options and choosing the one that maximizes utility or satisfaction. This theory assumes that decisions are made based on complete information and consistent preferences. However, in reality, people often make decisions with incomplete information and sometimes behave irrationally, especially in scenarios involving uncertainty or high stakes.</strong></p>
+    
+<p>Aspiring pet owners might inform their decision by weighing the costs (time, money, responsibility) against benefits (companionship, emotional support) of pet ownership. They may also consider factors like their living situation, lifestyle, and ability to care for a pet as factors in their adoption decision. While this is a logical approach, human tendency often leads to ignoring inconvenient facts, favoring emotional reasoning instead.</p>
 
-Designers have the opportunity to reduce cognitive load and improve user satisfaction by guiding customers naturally to decision points. Having awareness of the decision-making processes allows designers to incorporate strategies to increase the likelihood that the customer will make the right decisions for their needs. For instance, visual aids such as charts, graphs, and mind maps can simplify complex information, making it easier to understand and analyze.
+<br>   
 
-Ultimately, the outcome of any decision-making process is full of inter-connected and competing priorities. Aspects of the process can be influenced to lessen the impact decision fatigue or emotional knee-jerking, not just for individual decision-makers, but to organizational decision-makers as well. Designers provide timely information in simple packaging, so customers can be just a little more decisive.
+<p><strong><b>Prospect Theory</b> suggests that people tend to weigh potential losses more heavily than equivalent gains — an effect known as loss aversion. This theory also highlights the importance of framing; the way information is presented can significantly influence decisions. Prospect Theory mainly applies to decisions involving risk and uncertainty. It may not be useful in explaining decisions where risks are not clearly defined or where emotional and social factors play a more significant role.</strong></p>
+    
+<p>Factors such as the desire for companionship or the fear of loneliness influence the decision to adopt a pet, leading individuals to prioritize emotional gains over potential costs. Social influences, such as seeing friends or celebrities with pets might also sway them. People may be more averse to potential losses associated with adopting a pet, such as the financial costs, time commitment, and potential lifestyle changes than they are excited about the gains of companionship and emotional fulfillment. Depending on whether the focus is on the joys or the sacrifices of pet ownership leads the decision maker to frame their decision as more or less risky.</p>
 
-Consider adopting a pet near you.
-</p>
-    <hr/>
-<p>
-Decision-making bridges psychology, economics, neuroscience, and sociology, playing a role in shaping individuals, organizations, and society.
+<br>   
+    
+<p><strong><b>Bounded Rationality</b> states that due to cognitive limitations, people cannot make fully rational decisions. Instead, they rely on heuristics—mental shortcuts that simplify complex choices. Heuristics are simple decision rules which reduce complexity and lead to more feasible reasoning; they rely on past experiences in relation to current problems, as well as readily available information and personal tendencies. While heuristics can simplify decision-making, they can also lead to systematic errors and biases.</strong></p>
+    
+<p>For example, a person might decide to adopt a pet based on a heartwarming story they heard, rather than researching the responsibilities and costs involved. This reliance on anecdotal evidence is a typical heuristic that can be incomplete, filled with bias, and emotionally charged.</p>
 
-These topics, and more are tackled in my book <a href="../../tea-landing.html">Your Cup of Tea</a>
+<br>
+    
+<p><strong><b>Dual-Process Theory</b> divides thinking into two systems:</strong></p>
+<ul>
+    <li>System 1 intuitive, automatic, and quick</li>
+    <li>System 2 deliberative, conscious, and slow</li>   
+</ul>
+<p><strong>People use both modes of thinking depending on the nature of the decision. Some people might rely more heavily on one system over the other due to personal habits or experience. The difficulty is determining when someone might switch between systems.</strong></p>
+ 
+<p>System 1 might lead individuals to desire the companionship and emotional benefits of having a pet in a snap judgement, while System 2 might engage in deliberative consideration of factors like the practicality of pet ownership and the long-term commitment.</p>
+
+<br>   
+    
+<p><strong><b>Cognitive Psychology</b> emphasizes attention, memory, and problem-solving strategies which are reliant on the decision makers ability to access and integrate new information. Within Cognitive Psychology the Information Processing Model focuses on how individuals gather, process, and use information to make decisions.</strong></p>
+    
+<p>In pet adoption, individuals might gather information about different pets, their care requirements, and the impact on their lifestyle. They may also draw on past experiences with pets or preferences for certain breeds. People have a tendency to access information that is in their immediate surroundings rather than doing more extensive research.</p>
+
+<br>
+    
+<p><strong><b>Neuro-economic Models</b> examines decision-making from a physical biology perspective by exploring how brain structures and processes are involved in making choices. Functional neuroimaging studies provide insights into the neural pathways activated during decision-making.</strong></p>
+    
+<p>For instance, scientists could investigate how brain structures are activated when contemplating pet adoption, offering insights into the emotional and cognitive aspects of coming to a decision. This emerging field is only beginning to map brain activity patterns to the decision-making process.</p>
+
+<br>
+    
+<p>As the number of decisions we make in a day increases, the quality of those decisions can begin to deteriorate—a phenomenon known as decision fatigue. Mental energy required for decision-making is finite. Design can provide solutions such as simplifying choices or spacing out important decisions to assist customers in high stakes decision points.</p>
+    
+<p>Decision fatigue can manifest in various ways, such as impulsive decisions, procrastination, or an over-reliance on default options. For example, someone considering pet adoption might start the day with thorough research, and after making numerous other decisions throughout the day, they might opt for the easiest choice.</p>
+
+<hr/>
+
+<p>Decision making is a multifaceted process influenced by cognitive, emotional, social, and environmental factors. While rational decision-making models provide a structured framework for understanding choices, real-world decisions often deviate from the models. The theories discussed offer valuable frameworks for understanding decision-making but do not capture the nuance of human choice behavior.</p>
+
+<p>Psychological aspects of decision-making are from being a peripheral sub-component. The role of mental shortcuts and the influence of emotions point to the fact that what you think determines what you feel, and in turn what you do.</p>
+
+<p>Like ripples on a pond, each decision creates a series of interconnected outcomes, spreading out in concentric circles, each one more distant from the source yet still connected to it.</p>
+
+<p>Decisions are often driven by subconscious aspects of personality or desires that we might not fully acknowledge. The perception of risk can strongly affect the emotional weight given to a particular decision, complicating the effort to remain objective and logical.</p>
+
+<p>Designers have the opportunity to reduce cognitive load and improve user satisfaction by guiding customers naturally to decision points. Having awareness of the decision-making processes allows designers to incorporate strategies to increase the likelihood that the customer will make the right decisions for their needs. For instance, visual aids such as charts, graphs, and mind maps can simplify complex information, making it easier to understand and analyze.</p>
+
+<p>Ultimately, the outcome of any decision-making process is full of inter-connected and competing priorities. Aspects of the process can be influenced to lessen the impact decision fatigue or emotional knee-jerking, not just for individual decision-makers, but to organizational decision-makers as well. Designers provide timely information in simple packaging, so customers can be a little more decisive.</p>
+
+<p><strong>Consider adopting a pet near you.</strong></p>
+
+<hr/>
+
+<p>Decision-making bridges psychology, economics, neuroscience, and sociology, playing a role in shaping individuals, organizations, and society.
+
+These topics, and more are tackled in my book <i><a href="../../tea-landing.html">Your Cup of Tea</a></i>
 </p>
                     </div>
 
@@ -292,7 +348,7 @@ These topics, and more are tackled in my book <a href="../../tea-landing.html">Y
             </div>
 
             <section id="recentPosts" class="mt-4 mt-lg-0">
-                <h3 class="mb-4">Recent Posts</h3>
+                <h4 class="mb-3" style="margin-top: -4px;">Recent Posts</h4>
                 <div class="recent-posts-container">
                     
         <div class="recent-post">
@@ -304,7 +360,7 @@ These topics, and more are tackled in my book <a href="../../tea-landing.html">Y
             <div>
                 <a href="ui-sailboat.html">
                     <h3>Sailing with the User Interface</h3>
-                    <p>Sept 21, 2024</p>
+                    <small>Sept 21, 2024</small>
                 </a>
             </div>
         </div>
@@ -318,7 +374,7 @@ These topics, and more are tackled in my book <a href="../../tea-landing.html">Y
             <div>
                 <a href="cup-of-tea-pod.html">
                     <h3>I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.</h3>
-                    <p>Oct 10, 2024</p>
+                    <small>Oct 10, 2024</small>
                 </a>
             </div>
         </div>
@@ -332,7 +388,7 @@ These topics, and more are tackled in my book <a href="../../tea-landing.html">Y
             <div>
                 <a href="dr-frankensteins-ai.html">
                     <h3>Dr. Frankenstein's AI</h3>
-                    <p>March 10, 2025</p>
+                    <small>May 10, 2025</small>
                 </a>
             </div>
         </div>
@@ -343,7 +399,7 @@ These topics, and more are tackled in my book <a href="../../tea-landing.html">Y
 
             <div class="col-lg-12">
                 <section id="moreRelatedPosts" class="mt-5">
-                    <h3 class="mb-4">Related Posts</h3>
+                    <h4 class="mb-3">Related Posts</h4>
                     <div class="row">
                         
                     </div>
@@ -391,6 +447,16 @@ These topics, and more are tackled in my book <a href="../../tea-landing.html">Y
             $("html, body").animate({scrollTop: 0}, 500);
         });
 
+        // Reading progress bar
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            // footer height to remove from total height
+            var footerHeight = document.getElementById("footer").offsetHeight;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight - footerHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("readingProgress").style.width = scrolled + "%";
+        };
+
         function shareOnFacebook() {
             const url = encodeURIComponent(window.location.href);
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
@@ -407,6 +473,22 @@ These topics, and more are tackled in my book <a href="../../tea-landing.html">Y
             const title = encodeURIComponent(document.title);
             window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`, '_blank');
         }
+
+               // Estimated reading time
+        $(document).ready(function() {
+            const text = $('.post-content').text();
+            const wpm = 225; // Average reading speed
+            const words = text.trim().split(/\s+/).length;
+            const time = Math.ceil(words / wpm);
+            
+            // Add reading time indicator
+            $('.date').append(`
+                <span class="reading-time" style="margin-left: 16px;">
+                    <i class="far fa-clock"></i>
+                    <span>${time} min read</span>
+                </span>
+            `);
+        });
     </script>
 
     <script src="blog-post.js"></script>

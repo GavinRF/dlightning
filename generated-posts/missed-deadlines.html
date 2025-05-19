@@ -67,8 +67,21 @@
             font-family: 'inter';
             margin-bottom: 13px !important;
         }
+        .post-content p:first-of-type:first-child:first-letter,
+        .post-content .first-pgh::first-letter {
+            text-transform: capitalize;
+            font-size: 4.2rem;
+            font-weight: bold;
+            color: #05126a;
+            margin-right: 0.2rem;
+            margin-bottom: 0.2rem;
+            margin-top: 0.04rem;
+            font-family: 'Rubik', sans-serif;
+            float: left;
+        }
         .post-content h2 {
             margin-top: 34px;
+            font-size: 1.6rem;
         }
         .post-content blockquote {
             text-align: center;
@@ -82,6 +95,8 @@
             padding: 0.3rem 0.6rem;
             border-radius: 0.25rem;
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
             font-size: 0.8rem;
         }
         .social-sharing {
@@ -89,6 +104,7 @@
         }
         .social-sharing button {
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         #relatedPosts {
             margin-top: 3rem;
@@ -98,7 +114,7 @@
             margin-bottom: 1rem;
         }
         .related-post h3{
-            font-size: .84rem;
+            font-size: .64rem;
             margin-bottom: 0.05rem;
         }
         .related-post img {
@@ -108,18 +124,22 @@
             object-fit: cover;
             margin-right: 6px;
         }
+        li {
+            list-style: disc;
+            margin-left: 1.8rem;
+        }
         hr {
             border: 0;
-            margin: 0.85em auto 0.35em auto;
             max-width: 100%;
             box-sizing: border-box;
             height: 1px;
-            background: linear-gradient(#3a177d, #40015bee, #0e08b4ee, #06022d);
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 150px;
             position: relative;
+            margin: 44px auto 42px auto;
         }
         hr::before {
             content: "✳ ✴ ✳";
@@ -140,13 +160,14 @@
             font-size: 1.05 !important;
             color: #161130;
         }
-        #recentPosts p, #moreRelatedPosts p {
+        #recentPosts small, #moreRelatedPosts small {
             margin-bottom: 0;
             font-size: smaller;
+            color: #4e4e54;
         }
         .recent-post, .related-post {
             display: flex;
-            margin-bottom: 1rem;
+            margin-bottom: .98rem;
         }
         .recent-post h3, .related-post h3 {
             font-size: 1rem;
@@ -164,10 +185,31 @@
             padding-top: 2rem;
             border-top: 1px solid #e9ecef;
         }
+
+        .progress-container {
+        position: fixed;
+        bottom: 0px;
+        z-index: 9999; /* Make sure it's above everything */
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        }
+        .progress-bar {
+        height: 6px;
+        background: linear-gradient(to right, #041cb9, #4d17b3, #5d0fda);
+        width: 0%;
+        transition: width 0.1s ease-out;
+        }
+        ul{
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
     <header id="header"></header>
+    <div class="progress-container">
+        <div class="progress-bar" id="readingProgress"></div>
+    </div>
 
         <!-- hero_area  -->
         <div class="bradcam_area bradcam_bg_1">
@@ -208,25 +250,25 @@
                         <a href="#" target="_blank"></a>
                     </figcaption>
 
-                    <div class="post-content mt-4">
-                        <p>I missed my deadline for the last time, and up until now, I had blown every single one. This was the final edit; time to complete the writing project that had consumed the past three years of my life.
+                    <div class="post-content mt-5">
+                        <p>I missed my deadline for the last time, and up until now, I had blown every single one. This was the final edit; time to complete the writing project that had consumed the past three years of my life.</p>
 
-I hadn’t anticipated 120 new comments from the editor this late in the game.
+<p><i>I hadn’t anticipated 120 new comments from the editor this late in the game.</i></p>
 
-How did I not plunge into chaos?
-Deadlines are often arbitrary, and on this occasion, I had set the deadlines myself.
+<p>How did I not plunge into chaos?
+Deadlines are often arbitrary, and on this occasion, I had set the deadlines myself.</p>
 
-My writing process was marked by a series of finishing dates, only to realize that the task was more challenging and would take more time than anticipated. I started writing ‘Your Cup of Tea’ in July 2020, and published the book on January 31st, 2024; my final self-imposed deadline.
+<p>My writing process was marked by a series of finishing dates, only to realize that the task was more challenging and would take more time than anticipated. I started writing <i>‘Your Cup of Tea’</i> in July 2020, and published the book on January 31st, 2024; my final self-imposed deadline.</p>
 
-Progressing towards a final product was not a linear process; it involved cycles of refinement. I couldn’t predict when the book would be finished. Besides, I’d rather the project take more time and be of high quality, than be rushed due to a sense of urgency.
+<p>Progressing towards a final product was not a linear process; it involved cycles of refinement. I couldn’t predict when the book would be finished. Besides, I’d rather the project take more time and be of high quality, than be rushed due to a sense of urgency.</p>
 
-As I reached the end of an increment, I estimated a new cutoff for producing a final product proclaiming, “On this day 👇 I will finish my book.”, when that day came, and it wasn’t, I didn’t get dissapointed. Instead, I reset the clock and recommitted myself.
+<p>As I reached the end of an increment, I estimated a new cutoff for producing a final product proclaiming, “On this day 👇 I will finish my book.”, when that day came, and it wasn’t, I didn’t get dissapointed. Instead, I reset the clock and recommitted myself.</p>
 
-As a strategy for enduring self-directed work, I found deadlines useful. The mental game of sticking with it is fraught with distractions and disillusionment. Assuming I had put in the effort, each time gate was met with a sense of progress. By embracing the organic lifespan of my project, I continued to stay positive throughout the many challenges.
+<p>As a strategy for enduring self-directed work, I found deadlines useful. The mental game of sticking with it is fraught with distractions and disillusionment. Assuming I had put in the effort, each time gate was met with a sense of progress. By embracing the organic lifespan of my project, I continued to stay positive throughout many challenges.</p>
 
-In the past I’ve had difficulties completing personal projects, so it feels immensely satisfying to have this one in the bag. Deadlines became a motivational tool that applied the necessary pressure to push me towards the ultimate joy of completing the book.
+<p>In the past I’ve had difficulties completing personal projects, so it feels immensely satisfying to have this one in the bag. Deadlines became a motivational tool that applied the necessary pressure to push me towards the ultimate joy of completing the book.</p>
 
-Ready to dive in? Get your copy here: 
+<p>Ready to dive in? Get your copy here:
 <a href="../../tea-landing.html">📕 Your Cup of Tea</a>
 </p>
                     </div>
@@ -248,7 +290,7 @@ Ready to dive in? Get your copy here:
             </div>
 
             <section id="recentPosts" class="mt-4 mt-lg-0">
-                <h3 class="mb-4">Recent Posts</h3>
+                <h4 class="mb-3" style="margin-top: -4px;">Recent Posts</h4>
                 <div class="recent-posts-container">
                     
         <div class="recent-post">
@@ -260,7 +302,7 @@ Ready to dive in? Get your copy here:
             <div>
                 <a href="ui-sailboat.html">
                     <h3>Sailing with the User Interface</h3>
-                    <p>Sept 21, 2024</p>
+                    <small>Sept 21, 2024</small>
                 </a>
             </div>
         </div>
@@ -274,7 +316,7 @@ Ready to dive in? Get your copy here:
             <div>
                 <a href="cup-of-tea-pod.html">
                     <h3>I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.</h3>
-                    <p>Oct 10, 2024</p>
+                    <small>Oct 10, 2024</small>
                 </a>
             </div>
         </div>
@@ -288,7 +330,7 @@ Ready to dive in? Get your copy here:
             <div>
                 <a href="dr-frankensteins-ai.html">
                     <h3>Dr. Frankenstein's AI</h3>
-                    <p>March 10, 2025</p>
+                    <small>May 10, 2025</small>
                 </a>
             </div>
         </div>
@@ -299,10 +341,10 @@ Ready to dive in? Get your copy here:
 
             <div class="col-lg-12">
                 <section id="moreRelatedPosts" class="mt-5">
-                    <h3 class="mb-4">Related Posts</h3>
+                    <h4 class="mb-3">Related Posts</h4>
                     <div class="row">
                         
-        <div class="col-md-6 col-lg-3 mb-4">
+        <div class="col-md-6 col-lg-4 mb-4">
             <div class="related-post">
                 <div>
                     <a href="cup-of-tea-pod.html">
@@ -312,13 +354,13 @@ Ready to dive in? Get your copy here:
                 <div>
                     <a href="cup-of-tea-pod.html">
                         <h3>I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.</h3>
-                        <p>Oct 10, 2024</p>
+                        <small>Oct 10, 2024</small>
                     </a>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-6 col-lg-3 mb-4">
+        <div class="col-md-6 col-lg-4 mb-4">
             <div class="related-post">
                 <div>
                     <a href="cherry-tree-buck.html">
@@ -328,7 +370,7 @@ Ready to dive in? Get your copy here:
                 <div>
                     <a href="cherry-tree-buck.html">
                         <h3>Cherry Tree Buck</h3>
-                        <p>Mar 16, 2024</p>
+                        <small>Mar 16, 2024</small>
                     </a>
                 </div>
             </div>
@@ -379,6 +421,16 @@ Ready to dive in? Get your copy here:
             $("html, body").animate({scrollTop: 0}, 500);
         });
 
+        // Reading progress bar
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            // footer height to remove from total height
+            var footerHeight = document.getElementById("footer").offsetHeight;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight - footerHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("readingProgress").style.width = scrolled + "%";
+        };
+
         function shareOnFacebook() {
             const url = encodeURIComponent(window.location.href);
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
@@ -395,6 +447,22 @@ Ready to dive in? Get your copy here:
             const title = encodeURIComponent(document.title);
             window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`, '_blank');
         }
+
+               // Estimated reading time
+        $(document).ready(function() {
+            const text = $('.post-content').text();
+            const wpm = 225; // Average reading speed
+            const words = text.trim().split(/\s+/).length;
+            const time = Math.ceil(words / wpm);
+            
+            // Add reading time indicator
+            $('.date').append(`
+                <span class="reading-time" style="margin-left: 16px;">
+                    <i class="far fa-clock"></i>
+                    <span>${time} min read</span>
+                </span>
+            `);
+        });
     </script>
 
     <script src="blog-post.js"></script>

@@ -28,7 +28,7 @@ def generate_recent_posts(current_post, all_posts):
             <div>
                 <a href="{post['id']}.html">
                     <h3>{post['title']}</h3>
-                    <p>{post['date']}</p>
+                    <small>{post['date']}</small>
                 </a>
             </div>
         </div>
@@ -41,7 +41,7 @@ def generate_related_posts(current_post, all_posts):
     html = ""
     for post in related:
         html += f"""
-        <div class="col-md-6 col-lg-3 mb-4">
+        <div class="col-md-6 col-lg-4 mb-4">
             <div class="related-post">
                 <div>
                     <a href="{post['id']}.html">
@@ -51,7 +51,7 @@ def generate_related_posts(current_post, all_posts):
                 <div>
                     <a href="{post['id']}.html">
                         <h3>{post['title']}</h3>
-                        <p>{post['date']}</p>
+                        <small>{post['date']}</small>
                     </a>
                 </div>
             </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>D⚡ | Cherry Tree Buck</title>
-    <meta name="description" content="Build emotional connection with storytelling.">
+    <meta name="description" content="Building emotional connection through storytelling.">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/magnific-popup.css"> 
@@ -19,7 +19,7 @@
 
     <!-- Open Graph tags -->
     <meta property="og:title" content="Cherry Tree Buck">
-    <meta property="og:description" content="Build emotional connection with storytelling.">
+    <meta property="og:description" content="Building emotional connection through storytelling.">
     <meta property="og:image" content="../blog/img/cc-buck.jpg">
     <meta property="og:url" content="https://dlightning.org/generated-posts/cherry-tree-buck.html">
     <meta property="og:type" content="article">
@@ -67,8 +67,21 @@
             font-family: 'inter';
             margin-bottom: 13px !important;
         }
+        .post-content p:first-of-type:first-child:first-letter,
+        .post-content .first-pgh::first-letter {
+            text-transform: capitalize;
+            font-size: 4.2rem;
+            font-weight: bold;
+            color: #05126a;
+            margin-right: 0.2rem;
+            margin-bottom: 0.2rem;
+            margin-top: 0.04rem;
+            font-family: 'Rubik', sans-serif;
+            float: left;
+        }
         .post-content h2 {
             margin-top: 34px;
+            font-size: 1.6rem;
         }
         .post-content blockquote {
             text-align: center;
@@ -82,6 +95,8 @@
             padding: 0.3rem 0.6rem;
             border-radius: 0.25rem;
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
             font-size: 0.8rem;
         }
         .social-sharing {
@@ -89,6 +104,7 @@
         }
         .social-sharing button {
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         #relatedPosts {
             margin-top: 3rem;
@@ -98,7 +114,7 @@
             margin-bottom: 1rem;
         }
         .related-post h3{
-            font-size: .84rem;
+            font-size: .64rem;
             margin-bottom: 0.05rem;
         }
         .related-post img {
@@ -108,18 +124,22 @@
             object-fit: cover;
             margin-right: 6px;
         }
+        li {
+            list-style: disc;
+            margin-left: 1.8rem;
+        }
         hr {
             border: 0;
-            margin: 0.85em auto 0.35em auto;
             max-width: 100%;
             box-sizing: border-box;
             height: 1px;
-            background: linear-gradient(#3a177d, #40015bee, #0e08b4ee, #06022d);
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 150px;
             position: relative;
+            margin: 44px auto 42px auto;
         }
         hr::before {
             content: "✳ ✴ ✳";
@@ -140,13 +160,14 @@
             font-size: 1.05 !important;
             color: #161130;
         }
-        #recentPosts p, #moreRelatedPosts p {
+        #recentPosts small, #moreRelatedPosts small {
             margin-bottom: 0;
             font-size: smaller;
+            color: #4e4e54;
         }
         .recent-post, .related-post {
             display: flex;
-            margin-bottom: 1rem;
+            margin-bottom: .98rem;
         }
         .recent-post h3, .related-post h3 {
             font-size: 1rem;
@@ -164,10 +185,31 @@
             padding-top: 2rem;
             border-top: 1px solid #e9ecef;
         }
+
+        .progress-container {
+        position: fixed;
+        bottom: 0px;
+        z-index: 9999; /* Make sure it's above everything */
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        }
+        .progress-bar {
+        height: 6px;
+        background: linear-gradient(to right, #041cb9, #4d17b3, #5d0fda);
+        width: 0%;
+        transition: width 0.1s ease-out;
+        }
+        ul{
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
     <header id="header"></header>
+    <div class="progress-container">
+        <div class="progress-bar" id="readingProgress"></div>
+    </div>
 
         <!-- hero_area  -->
         <div class="bradcam_area bradcam_bg_1">
@@ -185,7 +227,7 @@
     <div class="blog-header">
         <div class="container">
             <div style="max-width: 800px !important;">
-            <h2 class="blog-title">Build emotional connection with storytelling.</h2>
+            <h2 class="blog-title">Building emotional connection through storytelling.</h2>
             </div>
             <div class="post-meta">
                 <span class="author ms-3">
@@ -208,66 +250,66 @@
                         <a href="https://unsplash.com/@aaronburden" target="_blank">Aaron Burden</a>
                     </figcaption>
 
-                    <div class="post-content mt-4">
-                        <p>Adapted from a short story by Robin Moore, first told to me as a boy
+                    <div class="post-content mt-5">
+                        <small>Adapted from a short story by Robin Moore, first told to me as a boy...</small>
+<br>
+<br>
+<p class="first-pgh">In the foothills of the Appalachian mountain range running through Lancaster County Pennsylvania lives a small but vibrant farming community.</p>
+    
+<p>A young boy named Sil grew up there, a rough and tumble youth. He loved jumping off of rocks, catching crayfish in the stream, but most of all, he loved climbing trees. Sil, meaning of the forest, was a name bestowed to him by virtue of his family’s closeness to the land and the integrity they felt living in harmony with it. Sil, for one, was enamored by the strength and generosity of trees.</p>
+    
+<p>Around Sil’s thirteenth birthday his grandfather took him into the woods to go hunting. Hunting season is in the fall, and the maple and sycamore leaves crackle underfoot. They moved through the dense leaf litter with care as Grandpa’s old horse riding injury made his knee stiff, and their progress slow. The elder guided Sil to a special hunting spot deep in the forest, where a clearing, nestled between the rolling mountains met a small stream.</p>
+    
+<p>As the pair settled in they came to find that Grandpa’s ammunition belt was empty! While preparing for the hunt the evening before, Sil must have set the rounds down to bring in firewood. After their long trek, and disappointment, the pair decided to eat lunch under a big white oak.</p>
+    
+<p>Grandma, being the thoughtful caretaker she was, had packed them sandwiches and ripe cherries. Contentedly they munched on the cherries, spitting the pits onto the ground. Sil thought to himself, these pits look a bit like bullets. “Hey pap-pap could we use these?” inquiringly, pinching the cherry pit between middle finger and thumb. Grandpa knowingly replied, “I like that kinda’ thinking, it’s worth a shot.”</p>
+    
+<p>Grandpa carries extra black powder in an old bull horn, in case of a misfire. He packed his musket quickly and meticulously, using just enough black powder, and wrapped the largest and toughest cherry pit in a small piece of canvas before ramming it down the barrel.</p>
+    
+<p>They waited in silence, carefully situated downwind from the deer’s path of travel. Eventually, a young buck entered the meadow trotting along, contentedly eating the roughage from senescent blackberry bushes.</p>
+    
+<p>Grandpa lifted the long rifle barrel and without hesitation fired. The deer, stunned, snorted aggressively and shook its head in furor, then bounded off into the forest. Grandpa rarely missed, the shape of the cherry pit must have thrown his shot off course. “That was a beautiful animal. See you around young buck.” Grandpa farewells, as the echo of the gunshot bounced by one last time.</p>
+    
+<p>The pair head home empty handed, as Grandpa uncommonly did.</p>
 
-    In the foothills of the Appalachian mountain range running through Lancaster County Pennsylvania lives a small but vibrant farming community.
-    
-    A young boy named Sil grew up there, a rough and tumble youth. He loved jumping off of rocks, catching crayfish in the stream, but most of all, he loved climbing trees. Sil, meaning of the forest, was a name bestowed to him by virtue of his family’s closeness to the land and the integrity they felt living in harmony with it. Sil, for one, was enamored by the strength and generosity of trees.
-    
-    Around Sil’s thirteenth birthday his grandfather took him into the woods to go hunting. Hunting season is in the fall, and the maple and sycamore leaves crackle underfoot. They moved through the dense leaf litter with care as Grandpa’s old horse riding injury made his knee stiff, and their progress slow. The elder guided Sil to a special hunting spot deep in the forest, where a clearing, nestled between the rolling mountains met a small stream.
-    
-    As the pair settled in they came to find that Grandpa’s ammunition belt was empty! While preparing for the hunt the evening before, Sil must have set the rounds down to bring in firewood. After their long trek, and disappointment, the pair decided to eat lunch under a big white oak.
-    
-    Grandma, being the thoughtful caretaker she was, had packed them sandwiches and ripe cherries. Contentedly they munched on the cherries, spitting the pits onto the ground. Sil thought to himself, these pits look a bit like bullets. “Hey pap-pap could we use these?” inquiringly, pinching the cherry pit between middle finger and thumb. Grandpa knowingly replied, “I like that kinda’ thinking, it’s worth a shot.”
-    
-    Grandpa carries extra black powder in an old bull horn, in case of a misfire. He packed his musket quickly and meticulously, using just enough black powder, and wrapped the largest and toughest cherry pit in a small piece of canvas before ramming it down the barrel.
-    
-    They waited in silence, carefully situated downwind from the deer’s path of travel. Eventually, a young buck entered the meadow trotting along, contentedly eating the roughage from senescent blackberry bushes.
-    
-    Grandpa lifted the long rifle barrel and without hesitation fired. The deer, stunned, snorted aggressively and shook its head in furor, then bounded off into the forest. Grandpa rarely missed, the shape of the cherry pit must have thrown his shot off course. “That was a beautiful animal. See you around young buck.” Grandpa farewells, as the echo of the gunshot bounced by one last time.
-    
-    The pair head home empty handed, as Grandpa uncommonly did.
-    </p>
-    <hr/>
-    <p>
-    Two years later, in the cool sunny days of Spring, Sil noticed a deer in the distance with an oddly shaped third antler protruding from the middle of its head. Sil watched as the deer foraged its way across the field. As it came closer he recognized that this was no ordinary antler, it was a cherry tree in full bloom. Struck with wonderment, could this be the deer that Grandpa had shot with the cherry pit? It had to be, nothing else would explain it! Sil stood in awe as the buck retreated into the forest.
-    
-    Summer was unusually hot and dry for Pennsylvania, and many of the community’s crops failed. Corn wilted and produced few kernels, tomatoes bloomed but never reached their full size, and the beans were scraggly and weak. The tight-nit farming community had plenty of cows, but they were for milking, not meat. Sil toiled to save the remaining crops, carrying water from the stream on the edge of the family property.
-    
-    Later that year, during hunting season, Sil traveled on his own to his grandfather’s secret hunting spot deep in the forest. There, he set himself up by a wild apple tree where deer were sure to visit. Sure enough, a short time after, Sil heard rustling, the sound of a deer trotting through dry leaves.
-    
-    Suddenly, there it was, directly in his line of sight, the cherry tree buck standing firmly in the clearing, just ahead of him.
-    
-    Sil couldn’t believe his eyes. The tree affixed to the deer’s head had bright red cherries hanging from every branch like a Christmas tree. Sil, struck by its beauty, paused, but then a grumble from his stomach reminded him of his charge — to bring food home for his family. This time loaded with real bullets, Sil raised his rifle, and aimed in the direction of the buck. One deep breath, hold, and BOOM the gun thundered, echoing off the hills and throughout the forest.
-    
-    When the smoke cleared, Sil noticed that the young buck was still in the clearing. He watched as he sat down slowly, his legs buckling beneath him. “Oh no,” Sil thought, “I hit him.” After a moment Sil walked over, the buck’s labored breath shallow and weak. At the last moment Sil must have pulled the trigger instead of squeezing it. Sil was delighted, he had missed!
-    
-    It seemed the buck had suffered from the long dry summer and the burden of a tree growing from its forehead. Sil sat with the deer for a while, petting his neck. While comforting the exhausted buck, Sil picked cherries from the tree sprouting between his antlers. Sil fed cherries to the deer from the palm of his hand and packed the rest to take back to his family.
-    </p>
-    <hr/>
-    <p>
-    One year later, during supper at the farmhouse, a gunshot rang out in the corn field only 150 yards away. Sil ran outside to investigate the commotion. As he stepped off of the front porch, Sil saw a hunter walking from the woods. No sooner had his bare feet hit the long grass of the yard, did he lay eyes on the cherry tree buck in the cornfield, motionless. Devastated, Sil advanced furiously at the hunter, “You had no right to hunt here, get off our land!” and chased him away.
-    
-    In normal circumstances, Sil and his family would harvest the deer and use every part, wasting nothing. Sil staggered to the barn, gathered a shovel and started digging a hole alongside where the cherry tree buck lay. Sil delicately buried him in the middle of the cornfield with his nose facing south towards the sun, the cherry tree above ground, surrounded by a set of antlers.
-    
-    In the years that followed, the cherry tree grew to be the biggest, strongest, and most prolific fruiting tree on the farm. If you ever find yourself in central PA, and notice a cherry tree in the middle of a cornfield you may come to find that it has a very interesting backstory.
-    
-    This story was intended to stir up feelings, and we share the emotions of characters in a compelling story. Sil’s dilemma, to feed his family or take the cherry tree buck, puts the conundrum in the reader’s hands. Neurochemicals, oxytocin and cortisol, are released when a story connects with our emotional minds, altering one’s brain chemistry, influencing behavior and recall.
-    </p>
-    <hr/>
-    <p>
-    When oxytocin is produced in the brain it triggers us to believe someone is trustworthy, kind, or generous. Often referred to as the “bonding hormone”, oxytocin motivates cooperation with others by enhancing one’s sense of empathy.
+<hr>
 
-    Cortisol is released when we feel stress. When you are stressed, your heart rate quickens and your focus increases. For a story to successfully trigger cortisol release, it must first earn and retain our attention with growing tension in the narrative. A story with a positive resolution can help reduce cortisol levels by providing a sense of closure or relief.
+<p>Two years later, in the cool sunny days of Spring, Sil noticed a deer in the distance with an oddly shaped third antler protruding from the middle of its head. Sil watched as the deer foraged its way across the field. As it came closer he recognized that this was no ordinary antler, it was a cherry tree in full bloom. Struck with wonderment, could this be the deer that Grandpa had shot with the cherry pit? It had to be, nothing else would explain it! Sil stood in awe as the buck retreated into the forest.</p>
+    
+<p>Summer was unusually hot and dry for Pennsylvania, and many of the community’s crops failed. Corn wilted and produced few kernels, tomatoes bloomed but never reached their full size, and the beans were scraggly and weak. The tight-nit farming community had plenty of cows, but they were for milking, not meat. Sil toiled to save the remaining crops, carrying water from the stream on the edge of the family property.</p>
+    
+<p>Later that year, during hunting season, Sil traveled on his own to his grandfather’s secret hunting spot deep in the forest. There, he set himself up by a wild apple tree where deer were sure to visit. Sure enough, a short time after, Sil heard rustling, the sound of a deer trotting through dry leaves.</p>
+    
+<p>Suddenly, there it was, directly in his line of sight, the cherry tree buck standing firmly in the clearing, just ahead of him.</p>
+    
+<p>Sil couldn’t believe his eyes. The tree affixed to the deer’s head had bright red cherries hanging from every branch like a Christmas tree. Sil, struck by its beauty, paused, but then a grumble from his stomach reminded him of his charge — to bring food home for his family. This time loaded with real bullets, Sil raised his rifle, and aimed in the direction of the buck. One deep breath, hold, and BOOM the gun thundered, echoing off the hills and throughout the forest.</p>
+    
+<p>When the smoke cleared, Sil noticed that the young buck was still in the clearing. He watched as he sat down slowly, his legs buckling beneath him. “Oh no,” Sil thought, “I hit him.” After a moment Sil walked over, the buck’s labored breath shallow and weak. At the last moment Sil must have pulled the trigger instead of squeezing it. Sil was delighted, he had missed!</p>
+    
+<p>It seemed the buck had suffered from the long dry summer and the burden of a tree growing from its forehead. Sil sat with the deer for a while, petting his neck. While comforting the exhausted buck, Sil picked cherries from the tree sprouting between his antlers. Sil fed cherries to the deer from the palm of his hand and packed the rest to take back to his family.</p>
 
-    Storytelling within a digital environment has a vastly new capability to present a story with generative story-lines, making a user the hero of their own story. The “choose your own adventure” genre is far more common through the medium of a digital experience because rich branching or generative story-lines are possible through technology.
+<hr/>
 
-    Storytelling engages multiple regions of the brain, including those responsible for language processing and sensory interpretation. Using character-driven storytelling to generate emotional responses, encourages increased comprehension, engagement, and memory formation.
+<p>One year later, during supper at the farmhouse, a gunshot rang out in the corn field only 150 yards away. Sil ran outside to investigate the commotion. As he stepped off of the front porch, Sil saw a hunter walking from the woods. No sooner had his bare feet hit the long grass of the yard, did he lay eyes on the cherry tree buck in the cornfield, motionless. Devastated, Sil advanced furiously at the hunter, “You had no right to hunt here, get off our land!” and chased him away.</p>
+    
+<p>In normal circumstances, Sil and his family would harvest the deer and use every part, wasting nothing. Sil staggered to the barn, gathered a shovel and started digging a hole alongside where the cherry tree buck lay. Sil delicately buried him in the middle of the cornfield with his nose facing south towards the sun, the cherry tree above ground, surrounded by a set of antlers.</p>
+    
+<p>In the years that followed, the cherry tree grew to be the biggest, strongest, and most prolific fruiting tree on the farm. If you ever find yourself in central PA, and notice a cherry tree in the middle of a cornfield you may come to find that it has a very interesting backstory.</p>
+    
+<p>This story was intended to stir up feelings, and we share the emotions of characters in a compelling story. Sil’s dilemma, to feed his family or take the cherry tree buck, puts the conundrum in the reader’s hands. Neurochemicals, oxytocin and cortisol, are released when a story connects with our emotional minds, altering one’s brain chemistry, influencing behavior and recall.</p>
 
-    This was once in the storytelling section of my book, <a href="../../tea-landing.html">Your Cup of Tea</a>. It was removed for length and a more practical story was set in its place. If you liked this, you’ll love the stories in the book.
+<hr/>
 
-    </p>
+<p>When oxytocin is produced in the brain it triggers us to believe someone is trustworthy, kind, or generous. Often referred to as the “bonding hormone”, oxytocin motivates cooperation with others by enhancing one’s sense of empathy.</p>
+
+<p>Cortisol is released when we feel stress. When you are stressed, your heart rate quickens and your focus increases. For a story to successfully trigger cortisol release, it must first earn and retain our attention with growing tension in the narrative. A story with a positive resolution can help reduce cortisol levels by providing a sense of closure or relief.</p>
+
+<p>Storytelling within a digital environment has a vastly new capability to present a story with generative story-lines, making a user the hero of their own story. The “choose your own adventure” genre is far more common through the medium of a digital experience because rich branching or generative story-lines are possible through technology.</p>
+
+<p>Storytelling engages multiple regions of the brain, including those responsible for language processing and sensory interpretation. Using character-driven storytelling to generate emotional responses, encourages increased comprehension, engagement, and memory formation.</p>
+
+<p>This was once in the storytelling section of my book, <a href="../../tea-landing.html">Your Cup of Tea</a>. It was removed for length and a more practical story was set in its place. If you liked this, you’ll love the stories in the book.</p>
+
                     </div>
 
                     <div class="tags">
@@ -287,7 +329,7 @@
             </div>
 
             <section id="recentPosts" class="mt-4 mt-lg-0">
-                <h3 class="mb-4">Recent Posts</h3>
+                <h4 class="mb-3" style="margin-top: -4px;">Recent Posts</h4>
                 <div class="recent-posts-container">
                     
         <div class="recent-post">
@@ -299,7 +341,7 @@
             <div>
                 <a href="ui-sailboat.html">
                     <h3>Sailing with the User Interface</h3>
-                    <p>Sept 21, 2024</p>
+                    <small>Sept 21, 2024</small>
                 </a>
             </div>
         </div>
@@ -313,7 +355,7 @@
             <div>
                 <a href="cup-of-tea-pod.html">
                     <h3>I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.</h3>
-                    <p>Oct 10, 2024</p>
+                    <small>Oct 10, 2024</small>
                 </a>
             </div>
         </div>
@@ -327,7 +369,7 @@
             <div>
                 <a href="dr-frankensteins-ai.html">
                     <h3>Dr. Frankenstein's AI</h3>
-                    <p>March 10, 2025</p>
+                    <small>May 10, 2025</small>
                 </a>
             </div>
         </div>
@@ -338,10 +380,10 @@
 
             <div class="col-lg-12">
                 <section id="moreRelatedPosts" class="mt-5">
-                    <h3 class="mb-4">Related Posts</h3>
+                    <h4 class="mb-3">Related Posts</h4>
                     <div class="row">
                         
-        <div class="col-md-6 col-lg-3 mb-4">
+        <div class="col-md-6 col-lg-4 mb-4">
             <div class="related-post">
                 <div>
                     <a href="cup-of-tea-pod.html">
@@ -351,13 +393,13 @@
                 <div>
                     <a href="cup-of-tea-pod.html">
                         <h3>I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.</h3>
-                        <p>Oct 10, 2024</p>
+                        <small>Oct 10, 2024</small>
                     </a>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-6 col-lg-3 mb-4">
+        <div class="col-md-6 col-lg-4 mb-4">
             <div class="related-post">
                 <div>
                     <a href="missed-deadlines.html">
@@ -367,7 +409,7 @@
                 <div>
                     <a href="missed-deadlines.html">
                         <h3>Missed Deadlines</h3>
-                        <p>Feb 4, 2024</p>
+                        <small>Feb 4, 2024</small>
                     </a>
                 </div>
             </div>
@@ -418,6 +460,16 @@
             $("html, body").animate({scrollTop: 0}, 500);
         });
 
+        // Reading progress bar
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            // footer height to remove from total height
+            var footerHeight = document.getElementById("footer").offsetHeight;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight - footerHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("readingProgress").style.width = scrolled + "%";
+        };
+
         function shareOnFacebook() {
             const url = encodeURIComponent(window.location.href);
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
@@ -434,6 +486,22 @@
             const title = encodeURIComponent(document.title);
             window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`, '_blank');
         }
+
+               // Estimated reading time
+        $(document).ready(function() {
+            const text = $('.post-content').text();
+            const wpm = 225; // Average reading speed
+            const words = text.trim().split(/\s+/).length;
+            const time = Math.ceil(words / wpm);
+            
+            // Add reading time indicator
+            $('.date').append(`
+                <span class="reading-time" style="margin-left: 16px;">
+                    <i class="far fa-clock"></i>
+                    <span>${time} min read</span>
+                </span>
+            `);
+        });
     </script>
 
     <script src="blog-post.js"></script>

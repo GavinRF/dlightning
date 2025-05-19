@@ -67,8 +67,21 @@
             font-family: 'inter';
             margin-bottom: 13px !important;
         }
+        .post-content p:first-of-type:first-child:first-letter,
+        .post-content .first-pgh::first-letter {
+            text-transform: capitalize;
+            font-size: 4.2rem;
+            font-weight: bold;
+            color: #05126a;
+            margin-right: 0.2rem;
+            margin-bottom: 0.2rem;
+            margin-top: 0.04rem;
+            font-family: 'Rubik', sans-serif;
+            float: left;
+        }
         .post-content h2 {
             margin-top: 34px;
+            font-size: 1.6rem;
         }
         .post-content blockquote {
             text-align: center;
@@ -82,6 +95,8 @@
             padding: 0.3rem 0.6rem;
             border-radius: 0.25rem;
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
             font-size: 0.8rem;
         }
         .social-sharing {
@@ -89,6 +104,7 @@
         }
         .social-sharing button {
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         #relatedPosts {
             margin-top: 3rem;
@@ -98,7 +114,7 @@
             margin-bottom: 1rem;
         }
         .related-post h3{
-            font-size: .84rem;
+            font-size: .64rem;
             margin-bottom: 0.05rem;
         }
         .related-post img {
@@ -108,18 +124,22 @@
             object-fit: cover;
             margin-right: 6px;
         }
+        li {
+            list-style: disc;
+            margin-left: 1.8rem;
+        }
         hr {
             border: 0;
-            margin: 0.85em auto 0.35em auto;
             max-width: 100%;
             box-sizing: border-box;
             height: 1px;
-            background: linear-gradient(#3a177d, #40015bee, #0e08b4ee, #06022d);
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 150px;
             position: relative;
+            margin: 44px auto 42px auto;
         }
         hr::before {
             content: "✳ ✴ ✳";
@@ -140,13 +160,14 @@
             font-size: 1.05 !important;
             color: #161130;
         }
-        #recentPosts p, #moreRelatedPosts p {
+        #recentPosts small, #moreRelatedPosts small {
             margin-bottom: 0;
             font-size: smaller;
+            color: #4e4e54;
         }
         .recent-post, .related-post {
             display: flex;
-            margin-bottom: 1rem;
+            margin-bottom: .98rem;
         }
         .recent-post h3, .related-post h3 {
             font-size: 1rem;
@@ -164,10 +185,31 @@
             padding-top: 2rem;
             border-top: 1px solid #e9ecef;
         }
+
+        .progress-container {
+        position: fixed;
+        bottom: 0px;
+        z-index: 9999; /* Make sure it's above everything */
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        }
+        .progress-bar {
+        height: 6px;
+        background: linear-gradient(to right, #041cb9, #4d17b3, #5d0fda);
+        width: 0%;
+        transition: width 0.1s ease-out;
+        }
+        ul{
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
     <header id="header"></header>
+    <div class="progress-container">
+        <div class="progress-bar" id="readingProgress"></div>
+    </div>
 
         <!-- hero_area  -->
         <div class="bradcam_area bradcam_bg_1">
@@ -208,7 +250,7 @@
                         <a href="https://unsplash.com/@lime517" target="_blank">Joseph Grev</a>
                     </figcaption>
 
-                    <div class="post-content mt-4">
+                    <div class="post-content mt-5">
                         <p>Imagine you awaken to find yourself on a boat out at sea and you are the only human onboard. The small sailing vessel, one you could reasonably pilot yourself, bobs up and down on an open blue ocean, with no shore in sight. Wait, scratch that, you are watching another person in this predicament – your view is an empathetic 3rd person omniscient – you see and share the feelings of a frightened human lost at sea.</p> 
 
 <p>Our unwitting sailor is surrounded by ropes (sheets, and rigging) leading to a mast and a winch that when engaged tighten the sheet and raise the sails. Mechanisms that are needed to pilot a sailboat surrounds them. They look around to orient themselves. With no prior experience sailing a ship, beyond rowing in a kayak, the landlubber is not sure where to start. Realizing the full weight of the predicament and with an eagerness to survive they start reasoning based on their limited knowledge, relying on visual cues and symbols. Their best course of action is to experiment, but to avoid doing something irreversible or fatally incorrect; they are timid to act. “What happens when I crank this winch upwards just a little?” they think.</p>
@@ -222,13 +264,11 @@
 <p>Jargon in dissappearing instructions (like a timed modal popup) the user is left in worse shape than they were before. If it turns out that these “new” words are crucial for communicating about the specific parts of a system they should be introduced before a moment of important decisions. It is possible to teach a motivated community new terms.</p>
 
 <p>The experience designer understands that a new interface is intimidating, and recognizes where the user is trying to “sail” to make that process as simple as possible.
-    
 </p>
 
 <hr>
 
-<p>
-I don’t use this analogy because of the popular terminology in product development to “ship”, the often used phrase meaning to get product X (code + design) out to the masses in rpoduction. But like a sailboat, no software product ever reaches a finished state.
+<p>I don’t use this analogy because of the popular terminology in product development to “ship”, the often used phrase meaning to get product X (code + design) out to the masses in rpoduction. But like a sailboat, no software product ever reaches a finished state.
 
 How many fathoms deep does this analogy go? The hull of the ship, that is the browser window. Lifeboats are modals. The deck is the home page, and subsequent floors are deeper pages in the sitemap, and the portholes are links to new sites. The anchor is a bookmark, the bridge is a navigation bar, the rudder is the invisible hand of the designer…
 </p>
@@ -251,7 +291,7 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
             </div>
 
             <section id="recentPosts" class="mt-4 mt-lg-0">
-                <h3 class="mb-4">Recent Posts</h3>
+                <h4 class="mb-3" style="margin-top: -4px;">Recent Posts</h4>
                 <div class="recent-posts-container">
                     
         <div class="recent-post">
@@ -263,7 +303,7 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
             <div>
                 <a href="cup-of-tea-pod.html">
                     <h3>I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.</h3>
-                    <p>Oct 10, 2024</p>
+                    <small>Oct 10, 2024</small>
                 </a>
             </div>
         </div>
@@ -277,7 +317,7 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
             <div>
                 <a href="dr-frankensteins-ai.html">
                     <h3>Dr. Frankenstein's AI</h3>
-                    <p>March 10, 2025</p>
+                    <small>May 10, 2025</small>
                 </a>
             </div>
         </div>
@@ -291,7 +331,7 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
             <div>
                 <a href="gumball-machine.html">
                     <h3>The Gumball Machine</h3>
-                    <p>Mar 4, 2024</p>
+                    <small>Mar 4, 2024</small>
                 </a>
             </div>
         </div>
@@ -302,10 +342,10 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
 
             <div class="col-lg-12">
                 <section id="moreRelatedPosts" class="mt-5">
-                    <h3 class="mb-4">Related Posts</h3>
+                    <h4 class="mb-3">Related Posts</h4>
                     <div class="row">
                         
-        <div class="col-md-6 col-lg-3 mb-4">
+        <div class="col-md-6 col-lg-4 mb-4">
             <div class="related-post">
                 <div>
                     <a href="dr-frankensteins-ai.html">
@@ -315,13 +355,13 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
                 <div>
                     <a href="dr-frankensteins-ai.html">
                         <h3>Dr. Frankenstein's AI</h3>
-                        <p>March 10, 2025</p>
+                        <small>May 10, 2025</small>
                     </a>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-6 col-lg-3 mb-4">
+        <div class="col-md-6 col-lg-4 mb-4">
             <div class="related-post">
                 <div>
                     <a href="gumball-machine.html">
@@ -331,7 +371,7 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
                 <div>
                     <a href="gumball-machine.html">
                         <h3>The Gumball Machine</h3>
-                        <p>Mar 4, 2024</p>
+                        <small>Mar 4, 2024</small>
                     </a>
                 </div>
             </div>
@@ -382,6 +422,16 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
             $("html, body").animate({scrollTop: 0}, 500);
         });
 
+        // Reading progress bar
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            // footer height to remove from total height
+            var footerHeight = document.getElementById("footer").offsetHeight;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight - footerHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("readingProgress").style.width = scrolled + "%";
+        };
+
         function shareOnFacebook() {
             const url = encodeURIComponent(window.location.href);
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
@@ -398,6 +448,22 @@ How many fathoms deep does this analogy go? The hull of the ship, that is the br
             const title = encodeURIComponent(document.title);
             window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`, '_blank');
         }
+
+               // Estimated reading time
+        $(document).ready(function() {
+            const text = $('.post-content').text();
+            const wpm = 225; // Average reading speed
+            const words = text.trim().split(/\s+/).length;
+            const time = Math.ceil(words / wpm);
+            
+            // Add reading time indicator
+            $('.date').append(`
+                <span class="reading-time" style="margin-left: 16px;">
+                    <i class="far fa-clock"></i>
+                    <span>${time} min read</span>
+                </span>
+            `);
+        });
     </script>
 
     <script src="blog-post.js"></script>

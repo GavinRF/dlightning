@@ -44,17 +44,15 @@ function loadMorePosts() {
                 <article class="blog-post">
                     <a href="../generated-posts/${post.id}.html">
                         <img src="${post.image}" alt="${post.title}" class="img-fluid">
-                    </a>
-                    <div class="blog-post-content">
-                        <a href="../generated-posts/${post.id}.html">
-                            <h2>${post.title}</h2>
-                        </a>
-                        <p class="date"><i class="far fa-calendar-alt me-2"></i> ${post.date}</p>
-                        <p>${post.excerpt}</p>
-                        <div class="tags">
-                            ${post.tags.map(tag => `<span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;${tag}</span>`).join('')}
+                        <div class="blog-post-content">
+                                <h2>${post.title}</h2>
+                            <p class="date"><i class="far fa-calendar-alt me-2"></i> ${post.date}</p>
+                            <p>${post.excerpt}</p>
+                            <div class="tags">
+                                ${post.tags.map(tag => `<span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;${tag}</span>`).join('')}
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </article>
             `;
             blogPostsContainer.appendChild(postElement);
@@ -92,7 +90,7 @@ function updateRecentPosts() {
             </a>
             <div class="media-body ms-3">
                 <a href="generated-posts/${post.id}.html"><h3>${post.title}</h3></a>
-                <p>${post.date}</p>
+                <small>${post.date}</small>
             </div>
         `;
         recentPostsContainer.appendChild(postElement);

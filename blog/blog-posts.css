@@ -7,38 +7,50 @@ body {
     margin: 0 18px;
 }
 .blog-post {
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.92rem;
     background-color: #fff;
     border-radius: 0.5rem;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     overflow: hidden;
+    transition: all 0.2s ease;
+}
+.blog-post:hover {
+    box-shadow: 0 0.4rem .6rem rgba(0, 0, 0, 0.12) !important;
+    transform: translateY(-0.2rem);
+}
+.blog-post:hover img {
+    transform: scale(1.08) translateY(-0.38rem);
 }
 .blog-post img {
     width: 100%;
     object-fit: cover;
     object-position: center;
-    max-height: 266px;
+    max-height: 180px;
+    transition: all 0.32s ease;
 }
 .blog-post-content {
-    padding: 1.5rem;
+    padding: 1.22rem 1.5rem;
 }
 .blog-post h2 {
     font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
     max-width: 650px;
+}
+.blog-post h2:hover {
+    text-decoration: underline;
 }
 .date {
     color: #6c757d;
     font-size: 0.875rem;
 }
 .tags {
-    margin-top: 1rem;
+    
 }
 .tag {
     background: #e9ecef;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     margin-right: 0.5rem;
     color: #495057;
 }
