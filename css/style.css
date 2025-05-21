@@ -2502,6 +2502,12 @@ h3 {
   cursor: pointer;
 }
 
+@media (max-width: 767px) {
+  .footer .footer_top .footer_widget ul li a {
+  font-size: larger;
+}
+}
+
 .footer .footer_top .footer_widget ul li a:hover {
   color: #7fc1ff;
 }

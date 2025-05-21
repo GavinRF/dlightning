@@ -1,5 +1,6 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #f5f5f5;
+    font-family: 'rubik';
 }
 
 .blog-item{
@@ -13,6 +14,7 @@ body {
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     overflow: hidden;
     transition: all 0.2s ease;
+        border: 1px solid #eee;
 }
 .blog-post:hover {
     box-shadow: 0 0.4rem .6rem rgba(0, 0, 0, 0.12) !important;
@@ -43,9 +45,6 @@ body {
     color: #6c757d;
     font-size: 0.875rem;
 }
-.tags {
-    
-}
 .tag {
     background: #e9ecef;
     padding: 0.25rem 0.5rem;
@@ -55,7 +54,7 @@ body {
     color: #495057;
 }
 .blog_right_sidebar {
-    background: #fbf9ff;
+    background: #ffffff;
     border: 1px solid #eee;
     padding: 30px;
 }
