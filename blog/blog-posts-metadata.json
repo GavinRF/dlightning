@@ -1,5 +1,18 @@
 {
     "posts": [
+      {
+      "id": "time-well-wasted",
+      "title": "Dlightning Wouldn't Exist If I Hadn't Already Failed",
+      "date": "May 21, 2025",
+      "author": "Gavin Fiorina",
+      "authorImage": "img/author.png",
+      "excerpt": "I spent four years building an app no one wanted and I consider it a success.<br> Let me explain.",
+      "image": "img/blake-cheek-mYQDJKWqlww-unsplash.jpg",
+      "img-credit": "Blake Cheek",
+      "credit-link": "https://unsplash.com/@blakecheekk",
+      "tags": ["Process", "Engineering", "Motivation", "Creative Journey"],
+      "category": "Development"
+    },
     {
       "id": "dr-frankensteins-ai",
       "title": "Dr. Frankenstein's AI",
@@ -17,7 +30,7 @@
         "id": "cup-of-tea-pod",
         "title": "I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.",
         "date": "Oct 10, 2024",
-        "author": "Dlightning",
+        "author": "Gavin Fiorina",
         "authorImage": "img/author.png",
         "excerpt": "When I let AI do a deep dive into <i>Your Cup of Tea</i>, the result was surprisingly human.",
         "image": "img/podcast-booth.jpg",

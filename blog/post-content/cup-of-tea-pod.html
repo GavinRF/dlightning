@@ -10,7 +10,7 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
     margin: 48px auto;
   }
-  .progress-container {
+  .progress-con {
     position: relative;
     height: 6px;
     background-color: rgba(137, 137, 137, 0.339);
@@ -151,7 +151,7 @@ Experience the AI-powered cliff notes for <i>Your Cup of Tea</i> with the <i>Dee
       <div class="visualizer" id="visualizer">
         <!-- We'll add 32 bars for the visualizer -->
       </div>
-      <div class="progress-container mb-2" id="progress-container">
+      <div class="progress-con mb-2" id="progress-con">
         <div class="progress-bar" id="progress"></div>
         <div class="play-head" id="play-head"></div>
       </div>
@@ -177,7 +177,7 @@ Experience the AI-powered cliff notes for <i>Your Cup of Tea</i> with the <i>Dee
     const playPauseButton = document.getElementById('play-pause');
     const progress = document.getElementById('progress');
     const playHead = document.getElementById('play-head');
-    const progressContainer = document.getElementById('progress-container');
+    const progressContainer = document.getElementById('progress-con');
     const currentTime = document.getElementById('current-time');
     const duration = document.getElementById('duration');
     const visualizer = document.getElementById('visualizer');
