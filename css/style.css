@@ -875,15 +875,18 @@ h3 {
 
 .header-area .main-header-area .expBuilderNavBtn .book_btn a{
   background: #300465;
-  padding: 7px 14px;
+  padding: 8px 14px;
   font-size: 14px;
   color: rgb(255, 213, 220);
   border-radius: 4px;
-  position: absolute;
-  top: -5px;
-  margin-left: 6px;
   text-align: center;
   white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .expBuilderNavBtn{
+    display: none !important;
+  }
 }
 
 .header-area .main-header-area .expBuilderNavBtn .book_btn a:hover{
