@@ -81,7 +81,13 @@
     <lastmod>2025-05-10</lastmod>
   </url>
 <!-- // Blog Posts  ++++++++++++++++++++++++++++++++ -->
-<!-- OLDEST to NEWEST  -->
+<!-- OLDEST to NEWEST (add to the end)  -->
+
+  <url>
+    <loc>https://dlightning.org/generated-posts/missed-deadlines.html</loc>
+    <lastmod>2025-05-10</lastmod>
+  </url>
+
   <url>
     <loc>https://dlightning.org/generated-posts/decision-theories-models.html</loc>
     <lastmod>2025-05-10</lastmod>
@@ -94,11 +100,6 @@
 
   <url>
     <loc>https://dlightning.org/generated-posts/gumball-machine.html</loc>
-    <lastmod>2025-05-10</lastmod>
-  </url>
-
-  <url>
-    <loc>https://dlightning.org/generated-posts/missed-deadlines.html</loc>
     <lastmod>2025-05-10</lastmod>
   </url>
 
@@ -117,9 +118,14 @@
     <lastmod>2025-05-21</lastmod>
   </url>
 
-    <url>
+  <url>
     <loc>https://dlightning.org/generated-posts/logic-and-pixels.html</loc>
     <lastmod>2025-06-16</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/generated-posts/narrow-window.html</loc>
+    <lastmod>2025-07-20</lastmod>
   </url>
 
 </urlset>
