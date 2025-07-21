@@ -1,9 +1,22 @@
 {
     "posts": [
       {
+        "id": "bison-wolf-and-the-designer",
+        "title": "The Bison, The Wolf, and The Designer",
+        "date": "July 20, 2025",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "Observation, connection, and the hidden networks that shape experience.",
+        "image": "img/pepe-estrada-brightscenespix-maoJqJV1GW4-unsplash.jpg",
+        "img-credit": "Pepe Estrada",
+        "credit-link": "https://unsplash.com/@brightscenespix",
+        "tags": ["Systems Thinking", "Observation", "UX Design", "Nature", "Psychology", "Design Philosophy"],
+        "category": "Design"
+      },
+      {
         "id": "narrow-window",
         "title": "The Narrow Window",
-        "date": "July 20, 2025",
+        "date": "July 16, 2025",
         "author": "Dlightning",
         "authorImage": "img/author.png",
         "excerpt": "Human perception is woefully limited. What does this mean for how we design experiences?",
