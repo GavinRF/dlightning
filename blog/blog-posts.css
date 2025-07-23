@@ -59,6 +59,9 @@ body {
             margin-top: 34px;
             font-size: 1.6rem;
         }
+        /* .post-content h6 {
+            margin-bottom: 4px;
+        } */
         .post-content blockquote {
             text-align: center;
         }
@@ -100,6 +103,9 @@ body {
             object-fit: cover;
             margin-right: 6px;
         }
+        .post-content ul {
+            margin: 1rem 0;
+        }
         .post-content ul li {
             list-style: '✴ ';
             margin-left: 3.42rem;
@@ -107,6 +113,8 @@ body {
             font-family: 'Inter', sans-serif;
             /* font-size: 1rem; */
             font-weight: 300;
+            line-height: 1.4;
+            margin-bottom: 12px;
         }
         hr {
             border: 0;
