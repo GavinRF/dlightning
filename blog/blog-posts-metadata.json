@@ -1,6 +1,19 @@
 {
     "posts": [
       {
+        "id": "competition-design-pattern",
+        "title": "The Competition Design Pattern",
+        "date": "July 24, 2025",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "How platform constraints become cultural evolution engines, shaping which ideas survive and spread.",
+        "image": "img/joachim-lesne-mcrj2CkV0PE-unsplash.jpg",
+        "img-credit": "Joachim Lesne",
+        "credit-link": "https://unsplash.com/@joaching",
+        "tags": ["Design Systems", "Culture", "Platform Design", "Information Architecture", "Psychology"],
+        "category": "Psychology"
+      },  
+      {
         "id": "bison-wolf-and-the-designer",
         "title": "The Bison, The Wolf, and The Designer",
         "date": "July 20, 2025",
@@ -16,7 +29,7 @@
       {
         "id": "narrow-window",
         "title": "The Narrow Window",
-        "date": "July 16, 2025",
+        "date": "July 14, 2025",
         "author": "Dlightning",
         "authorImage": "img/author.png",
         "excerpt": "Human perception is woefully limited. What does this mean for how we design experiences?",
