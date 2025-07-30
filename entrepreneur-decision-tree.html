@@ -91,6 +91,7 @@
       #expBld{
         display: flex;
         justify-content: center;
+        text-align: center;
         align-items: center;
         background-image: linear-gradient(to right, #0b0a6c, #331691, #6744ff);
         border-radius: 8px;
@@ -149,6 +150,83 @@
     color: #2c3e50;
     margin-bottom: 20px;
   }
+
+  .custom-tooltip{
+    position: relative;
+    display: inline-block;
+  }
+  
+  .custom-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 280px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -140px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 14px;
+    line-height: 1.4;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .custom-tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .custom-tooltip:hover .tooltiptext {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .score-display {
+    background: #1f1d79;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+  
+  .score-number {
+    font-size: 42px;
+    font-weight: bold;
+    margin: 8px 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  
+  .score-label {
+    font-size: 18px;
+    margin-bottom: 5px;
+    opacity: 0.9;
+  }
+  
+  .score-description {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  .link{
+    color: #038de9;
+  }
+  .link:hover{
+    color: #0b0a6c;
+    text-decoration: underline;
+  }
     </style>
     </head>
     <body>
@@ -165,8 +243,10 @@
             </div>
         </div>
 
-    <div class="container" style="margin: 102px auto 222px auto; max-width: 800px;">
+    <div class="container" style="margin: 44px auto 222px auto; max-width: 800px;">
         <h2>Evaluate Your Business Readiness</h2>
+        <p>This interactive decision tree will guide you through the critical questions every aspiring entrepreneur should consider. Answer honestly to receive personalized insights and actionable next steps tailored to your unique situation and business readiness level.</p>
+        <br>
         <div id="decision-tree">
           <div id="history"></div>
           <div id="current-node"></div>
@@ -182,7 +262,7 @@
                 </div>
             </a>
         </div>
-        <button id="reset" style="display: none;">Start Over</button>        
+        <button id="reset" style="display: none;">Start Over</button>
     </div>
 
     <div id="footer"></div>
@@ -201,58 +281,76 @@
     })
     });
     // Decision Tree
-    const decisionTree = {
+        const decisionTree = {
         question: "Do you have a business idea?",
+        weight: 1,
   options: [
     {
       text: "Yes",
+      points: 2,
       next: {
-        question: "Have you validated your idea with potential customers?",
+        question: "Can you afford to go 12+ months without income from this business?",
+        weight: 2,
         options: [
           {
             text: "Yes",
+            points: 3,
             next: {
-              question: "Is there significant competition in your market?",
+              question: "Are you looking to build a lifestyle business or a scalable startup?",
+              weight: 1,
               options: [
                 {
-                  text: "Yes",
+                  text: "Lifestyle Business",
+                  points: 5,
+                  tooltip: "Focused on steady income, work-life balance, and serving a local or niche market. Typically self-funded and grows at a manageable pace.",
                   next: {
-                    question: "Can you differentiate your product/service?",
+                    question: "Have you validated your idea with potential customers?",
+                    weight: 3,
                     options: [
                       {
                         text: "Yes",
+                        points: 3,
                         next: {
                           question: "Do you have the necessary skills or team to execute the idea?",
+                          weight: 2,
                           options: [
                             {
                               text: "Yes",
+                              points: 4,
                               next: {
-                                question: "Do you have access to required funding?",
+                                question: "Do you have access to initial funding or savings?",
+                                weight: 1,
                                 options: [
                                   {
                                     text: "Yes",
+                                    points: 3,
                                     result: {
-                                      message: "Great! You're ready to start your business. <br> Here's your next steps:",
+                                      message: "Perfect setup for a sustainable lifestyle business!",
                                       actions: [
-                                        "Create a detailed business plan with financial projections",
-                                        "Develop a timeline for product development and launch",
-                                        "Set up legal entity and required licenses",
-                                        "Begin building your minimum viable product (MVP)"
+                                        "Create a lean business plan focused on profitability",
+                                        "Set up efficient operations and systems",
+                                        "Build a strong local or niche customer base",
+                                        "Focus on work-life balance and sustainable growth"
                                       ],
-                                      useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to refine your product vision and create detailed user&nbsp;personas."
+                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to design sustainable business operations and customer acquisition.",
+                                      scoreLabel: "Lifestyle Business Ready!",
+                                      scoreDescription: "You're well-positioned to build a profitable, sustainable business that fits your lifestyle."
                                     }
                                   },
                                   {
                                     text: "No",
+                                    points: 0,
                                     result: {
-                                      message: "Consider exploring these funding options before proceeding:",
+                                      message: "Build your financial foundation for your lifestyle business:",
                                       actions: [
-                                        "Research small business loans and credit options",
-                                        "Explore angel investors and venture capital",
-                                        "Consider crowdfunding platforms",
-                                        "Look into government grants and programs"
+                                        "Create a personal savings plan to fund initial operations",
+                                        "Consider starting as a side business while employed",
+                                        "Look into small business loans or microfinancing",
+                                        "Explore revenue-generating activities while planning"
                                       ],
-                                      useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to create a compelling pitch deck and financial projections."
+                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create a financial runway plan and side-business strategy.",
+                                      scoreLabel: "Lifestyle Business - Build Savings",
+                                      scoreDescription: "Great lifestyle business potential. Focus on building financial runway first."
                                     }
                                   }
                                 ]
@@ -260,15 +358,18 @@
                             },
                             {
                               text: "No",
+                              points: 0,
                               result: {
-                                message: "Focus on building your capabilities:",
+                                message: "Develop your capabilities for lifestyle business success:",
                                 actions: [
-                                  "Identify key skill gaps in your team",
-                                  "Create a hiring plan for essential roles",
-                                  "Consider partnerships or co-founders",
-                                  "Invest in relevant training and education"
+                                  "Identify and develop key skills needed for your business",
+                                  "Consider hiring freelancers for specific tasks",
+                                  "Join industry groups and find mentors",
+                                  "Start small and learn as you grow"
                                 ],
-                                useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to define your ideal team structure and required expertise."
+                                useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to map out skill development and resource needs.",
+                                scoreLabel: "Lifestyle Business - Skill Building",
+                                scoreDescription: "Validated idea with good financial runway. Focus on building execution skills."
                               }
                             }
                           ]
@@ -276,54 +377,198 @@
                       },
                       {
                         text: "No",
+                        points: 0,
                         result: {
-                          message: "Your business needs a unique value proposition:",
+                          message: "Validate your lifestyle business idea:",
                           actions: [
-                            "Research competitor weaknesses and gaps",
-                            "Identify unique features or services you can offer",
-                            "Consider targeting an underserved market segment",
-                            "Develop innovative solutions to common pain points"
+                            "Talk to potential customers about their needs",
+                            "Test your service/product with a small group",
+                            "Research local market demand and competition",
+                            "Create a simple MVP to gather feedback"
                           ],
-                          useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to analyze competition and develop your unique&nbsp;selling&nbsp;proposition."
+                          useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to design customer validation experiments.",
+                          scoreLabel: "Lifestyle Business - Validate Idea",
+                          scoreDescription: "Good financial foundation. Now validate your business idea with real customers."
                         }
                       }
                     ]
                   }
                 },
                 {
-                  text: "No",
+                  text: "Scalable Startup",
+                  points: 2,
+                  tooltip: "Aimed at rapid growth, large market opportunities, and investor funding. Requires significant time investment and targets massive scale.",
                   next: {
-                    question: "Do you have the necessary skills or team to execute the idea?",
+                    question: "Have you validated your idea with potential customers?",
+                    weight: 2,
                     options: [
                       {
                         text: "Yes",
+                        points: 3,
                         next: {
-                          question: "Do you have access to required funding?",
+                          question: "Is there significant competition in your market?",
+                          weight: 1,
                           options: [
                             {
                               text: "Yes",
-                              result: {
-                                message: "You're in a great position to be a first-mover! Next steps:",
-                                actions: [
-                                  "Develop a go-to-market strategy",
-                                  "Create intellectual property protection plan",
-                                  "Build a strong brand identity",
-                                  "Plan for rapid market expansion"
-                                ],
-                                useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to create a comprehensive market entry strategy."
+                              points: 1,
+                              next: {
+                                question: "Can you differentiate your product/service significantly?",
+                                weight: 2,
+                                options: [
+                                  {
+                                    text: "Yes",
+                                    points: 3,
+                                    next: {
+                                      question: "Do you have the necessary skills or team to execute the idea?",
+                                      weight: 2,
+                                      options: [
+                                        {
+                                          text: "Yes",
+                                          points: 3,
+                                          next: {
+                                            question: "Do you have access to significant funding (VC, angels, etc.)?",
+                                            weight: 2,
+                                            options: [
+                                              {
+                                                text: "Yes",
+                                                points: 3,
+                                                result: {
+                                                  message: "Excellent! You're ready to build a scalable startup!",
+                                                  actions: [
+                                                    "Develop a comprehensive business plan with growth projections",
+                                                    "Build your MVP and plan for rapid iteration",
+                                                    "Assemble a strong founding team and advisory board",
+                                                    "Create a go-to-market strategy for scale"
+                                                  ],
+                                                  useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create detailed growth strategies and investor presentations.",
+                                                  scoreLabel: "Startup Launch Ready!",
+                                                  scoreDescription: "You have all elements for a successful scalable startup. Time to execute!"
+                                                }
+                                              },
+                                              {
+                                                text: "No",
+                                                points: 0,
+                                                result: {
+                                                  message: "Secure funding to fuel your startup growth:",
+                                                  actions: [
+                                                    "Create a compelling pitch deck and financial model",
+                                                    "Network with angel investors and VCs in your space",
+                                                    "Consider startup accelerators and incubators",
+                                                    "Build traction to attract investment interest"
+                                                  ],
+                                                  useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create investor-ready materials and funding strategy.",
+                                                  scoreLabel: "Startup Ready - Need Funding",
+                                                  scoreDescription: "Strong startup foundation. Focus on securing growth capital to scale."
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          text: "No",
+                                          points: 0,
+                                          result: {
+                                            message: "Build your startup team and capabilities:",
+                                            actions: [
+                                              "Recruit co-founders with complementary skills",
+                                              "Create an equity and hiring plan",
+                                              "Build relationships with technical and business mentors",
+                                              "Consider joining startup accelerators for support"
+                                            ],
+                                            useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to define team structure and recruitment strategy.",
+                                            scoreLabel: "Startup Potential - Build Team",
+                                            scoreDescription: "Validated startup idea with market opportunity. Focus on building execution team."
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    text: "No",
+                                    points: 0,
+                                    result: {
+                                      message: "Develop your startup's competitive advantage:",
+                                      actions: [
+                                        "Research competitor weaknesses and market gaps",
+                                        "Innovate on product features, business model, or customer experience",
+                                        "Consider targeting an underserved market segment",
+                                        "Build proprietary technology or unique partnerships"
+                                      ],
+                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to analyze competition and develop differentiation strategy.",
+                                      scoreLabel: "Startup Challenge - Need Differentiation",
+                                      scoreDescription: "Validated market but need stronger competitive positioning for startup success."
+                                    }
+                                  }
+                                ]
                               }
                             },
                             {
                               text: "No",
-                              result: {
-                                message: "Secure funding to capitalize on your first-mover advantage:",
-                                actions: [
-                                  "Prepare a compelling pitch deck",
-                                  "Research investor networks in your industry",
-                                  "Consider accelerator programs",
-                                  "Explore strategic partnerships"
-                                ],
-                                useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to create financial models and funding presentations."
+                              points: 3,
+                              next: {
+                                question: "Do you have the necessary skills or team to execute the idea?",
+                                weight: 2,
+                                options: [
+                                  {
+                                    text: "Yes",
+                                    points: 3,
+                                    next: {
+                                      question: "Do you have access to significant funding (VC, angels, etc.)?",
+                                      weight: 2,
+                                      options: [
+                                        {
+                                          text: "Yes",
+                                          points: 3,
+                                          result: {
+                                            message: "Outstanding first-mover advantage opportunity!",
+                                            actions: [
+                                              "Move fast to establish market leadership",
+                                              "Build intellectual property and competitive moats",
+                                              "Scale team and operations rapidly",
+                                              "Plan for market expansion and competition response"
+                                            ],
+                                            useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create rapid scaling and market domination strategy.",
+                                            scoreLabel: "First-Mover Startup Advantage!",
+                                            scoreDescription: "Perfect storm: validated idea, no competition, funding, and team. Move fast!"
+                                          }
+                                        },
+                                        {
+                                          text: "No",
+                                          points: 0,
+                                          result: {
+                                            message: "Secure funding quickly to capitalize on first-mover advantage:",
+                                            actions: [
+                                              "Create urgency-focused pitch highlighting market timing",
+                                              "Target investors who specialize in your industry",
+                                              "Consider strategic partnerships for faster funding",
+                                              "Bootstrap initially while raising to maintain momentum"
+                                            ],
+                                            useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create time-sensitive funding strategy.",
+                                            scoreLabel: "First-Mover - Get Funding Fast",
+                                            scoreDescription: "Exceptional opportunity with validated idea and no competition. Secure funding quickly!"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    text: "No",
+                                    points: 0,
+                                    result: {
+                                      message: "Rapidly build capabilities to capture first-mover advantage:",
+                                      actions: [
+                                        "Recruit experienced co-founders immediately",
+                                        "Consider strategic partnerships to accelerate development",
+                                        "Join accelerators with strong networks and resources",
+                                        "Hire key talent and consultants to fill critical gaps"
+                                      ],
+                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create rapid team building and partnership strategy.",
+                                      scoreLabel: "First-Mover - Build Team Fast",
+                                      scoreDescription: "Huge market opportunity with no competition. Build execution capabilities quickly!"
+                                    }
+                                  }
+                                ]
                               }
                             }
                           ]
@@ -331,15 +576,18 @@
                       },
                       {
                         text: "No",
+                        points: 0,
                         result: {
-                          message: "Build your foundation first:",
+                          message: "Validate your startup idea for scalable growth:",
                           actions: [
-                            "Create a skill development roadmap",
-                            "Network with potential team members",
-                            "Join relevant industry associations",
-                            "Consider business education programs"
+                            "Conduct customer development interviews",
+                            "Build and test MVP with target users",
+                            "Analyze total addressable market (TAM)",
+                            "Study successful companies in adjacent markets"
                           ],
-                          useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to strengthen critical skills and build a team of experts."
+                          useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to design comprehensive validation experiments.",
+                          scoreLabel: "Startup Idea - Validate for Scale",
+                          scoreDescription: "Good startup ambition and financial runway. Validate your idea for scalable growth."
                         }
                       }
                     ]
@@ -350,15 +598,44 @@
           },
           {
             text: "No",
-            result: {
-              message: "Validate your idea with these steps:",
-              actions: [
-                "Conduct customer interviews and surveys",
-                "Create and test a prototype or MVP",
-                "Analyze market size and trends",
-                "Study competitor offerings and pricing"
-              ],
-              useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to create customer personas and validation experiments."
+            points: 0,
+            next: {
+              question: "Have you validated your idea with potential customers?",
+              weight: 2,
+              options: [
+                {
+                  text: "Yes",
+                  points: 3,
+                  result: {
+                    message: "Smart approach! Bootstrap your business while keeping income:",
+                    actions: [
+                      "Start as a side business to minimize risk",
+                      "Focus on cash-flow positive activities first",
+                      "Keep your day job until business generates steady income",
+                      "Reinvest profits to gradually grow the business"
+                    ],
+                    useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create a side-business transition plan.",
+                    scoreLabel: "Bootstrap Business Ready",
+                    scoreDescription: "Validated idea with smart risk management. Perfect for side-business approach."
+                  }
+                },
+                {
+                  text: "No",
+                  points: 0,
+                  result: {
+                    message: "Validate your idea while maintaining financial security:",
+                    actions: [
+                      "Test your idea in evenings and weekends",
+                      "Use low-cost validation methods (surveys, interviews)",
+                      "Start with a simple version to test market demand",
+                      "Keep your current income while exploring"
+                    ],
+                    useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to design low-risk validation experiments.",
+                    scoreLabel: "Side Business - Validate First",
+                    scoreDescription: "Good risk management approach. Validate your idea while maintaining income security."
+                  }
+                }
+              ]
             }
           }
         ]
@@ -366,33 +643,67 @@
     },
     {
       text: "No",
+      points: 0,
       next: {
-        question: "Would you like to explore potential business ideas?",
+        question: "Can you afford to go 12+ months without income?",
+        weight: 2,
         options: [
           {
             text: "Yes",
-            result: {
-              message: "Let's help you discover your perfect business idea:",
-              actions: [
-                "List your skills, interests, and experiences",
-                "Research trending markets and opportunities",
-                "Identify problems you're passionate about solving",
-                "Connect with potential mentors and advisors"
-              ],
-              useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to explore market opportunities and generate business&nbsp;ideas."
+            points: 2,
+            next: {
+              question: "Would you like to explore potential business ideas?",
+              weight: 1,
+              options: [
+                {
+                  text: "Yes",
+                  points: 1,
+                  result: {
+                    message: "Great! You have financial freedom to explore opportunities:",
+                    actions: [
+                      "List your skills, interests, and experiences",
+                      "Research trending markets and emerging opportunities",
+                      "Identify problems you're passionate about solving",
+                      "Network with entrepreneurs and potential mentors"
+                    ],
+                    useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to explore market opportunities and generate business ideas.",
+                    scoreLabel: "Exploration Phase - Well Funded",
+                    scoreDescription: "You have financial runway to explore. Take time to find the right opportunity."
+                  }
+                },
+                {
+                  text: "No",
+                  points: 0,
+                  result: {
+                    message: "Consider these alternatives with your financial stability:",
+                    actions: [
+                      "Angel investing in other entrepreneurs",
+                      "Joining innovative companies in leadership roles",
+                      "Consulting or advising for startups",
+                      "Building skills and network for future opportunities"
+                    ],
+                    useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to explore investment and leadership opportunities.",
+                    scoreLabel: "Alternative Paths - Investor Track",
+                    scoreDescription: "Strong financial position opens doors to investing, advising, and leadership roles."
+                  }
+                }
+              ]
             }
           },
           {
             text: "No",
+            points: 0,
             result: {
-              message: "That's okay! Here are some alternatives to consider:",
+              message: "Build your foundation first before starting a business:",
               actions: [
-                "Explore freelancing or consulting opportunities",
-                "Consider joining a startup as an employee",
-                "Look into franchise opportunities",
-                "Build your skills and network for future opportunities"
+                "Focus on building savings and reducing debt",
+                "Develop valuable skills in your current role",
+                "Start networking and learning about entrepreneurship",
+                "Consider side hustles to increase income and experience"
               ],
-              useBuilder: "Use our <a href='experience-builder.html'>Experience Builder</a> to explore career paths and skill development&nbsp;opportunities."
+              useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create a financial and skill-building roadmap.",
+              scoreLabel: "Foundation Building Phase",
+              scoreDescription: "Focus on financial stability and skill building before entrepreneurship."
             }
           }
         ]
@@ -404,12 +715,33 @@
     
 let currentNode = decisionTree;
 let history = [];
+let totalScore = 0;
+let maxPossibleScore = 0;
+
+function calculateMaxScore(node, currentMax = 0) {
+    if (node.result) {
+        return currentMax;
+    }
+    
+    let maxFromOptions = currentMax;
+    node.options.forEach(option => {
+        const scoreFromThisPath = calculateMaxScore(option.next || option, currentMax + (option.points || 0) * (node.weight || 1));
+        maxFromOptions = Math.max(maxFromOptions, scoreFromThisPath);
+    });
+    
+    return maxFromOptions;
+}
 
 function handleOption(option) {
+    // Add points weighted by the question importance
+    const points = (option.points || 0) * (currentNode.weight || 1);
+    totalScore += points;
+    
     // Add the current selection to history
     history.push({ 
         question: currentNode.question, 
-        answer: option.text
+        answer: option.text,
+        points: points
     });
     
     if (option.result) {
@@ -438,9 +770,29 @@ function renderNode(node) {
         button.className = 'option';
         const icon = option.text.toLowerCase() === 'no' ? 
             'fa-circle-xmark' : 'fa-check-circle';
-        button.innerHTML = `<i class="fas ${icon}"></i>&nbsp; ${option.text}`;
-        button.addEventListener('click', () => handleOption(option));
-        optionsElement.appendChild(button);
+        
+        if (option.tooltip) {
+            // Create tooltip wrapper
+            const tooltipWrapper = document.createElement('div');
+            tooltipWrapper.className = 'custom-tooltip';
+            
+            button.innerHTML = `<i class="fas ${icon}"></i>&nbsp; ${option.text}`;
+            
+            // Create tooltip text
+            const tooltipText = document.createElement('span');
+            tooltipText.className = 'tooltiptext';
+            tooltipText.textContent = option.tooltip;
+            
+            tooltipWrapper.appendChild(button);
+            tooltipWrapper.appendChild(tooltipText);
+            
+            button.addEventListener('click', () => handleOption(option));
+            optionsElement.appendChild(tooltipWrapper);
+        } else {
+            button.innerHTML = `<i class="fas ${icon}"></i>&nbsp; ${option.text}`;
+            button.addEventListener('click', () => handleOption(option));
+            optionsElement.appendChild(button);
+        }
     });
 
     currentNodeElement.appendChild(optionsElement);
@@ -472,8 +824,16 @@ function showResult(result) {
     const currentNodeElement = document.getElementById('current-node');
     currentNodeElement.innerHTML = '';
 
+    // Calculate percentage score
+    const percentage = Math.round((totalScore / maxPossibleScore) * 100);
+    
     const resultElement = document.getElementById('result');
     resultElement.innerHTML = `
+        <div class="score-display">
+            <div class="score-label">${result.scoreLabel}</div>
+            <div class="score-number">${percentage}/100</div>
+            <div class="score-description">${result.scoreDescription}</div>
+        </div>
         <h3>${result.message}</h3>
         <ul class="action-list">
             ${result.actions.map(action => `<li><i class="fas fa-arrow-right"></i> ${action}</li>`).join('')}
@@ -493,6 +853,7 @@ function showResult(result) {
 function resetTree() {
     currentNode = decisionTree;
     history = [];
+    totalScore = 0;
     renderNode(currentNode);
     document.getElementById('history').innerHTML = '';
     document.getElementById('result').textContent = '';
@@ -503,6 +864,9 @@ function resetTree() {
 }
 
 document.getElementById('reset').addEventListener('click', resetTree);
+
+// Calculate max possible score on page load
+maxPossibleScore = calculateMaxScore(decisionTree);
 renderNode(currentNode);
     </script>
     

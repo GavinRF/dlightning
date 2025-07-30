@@ -298,6 +298,12 @@ p {
   line-height: 1.5;
 }
 
+@media (min-width: 1580px) {
+  .page-text p {
+    font-size: 13.05px !important;
+  }
+}
+
 .page-text h3 {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   font-style: italic;
