@@ -46,7 +46,7 @@
         gap: 10px;
       }
       .option {
-        background-color: #3498db;
+        background-color: #0889e0;
         color: white;
         border: none;
         padding: 10px 20px;
@@ -55,7 +55,7 @@
         transition: background-color 0.3s;
       }
       .option:hover {
-        background-color: #2980b9;
+        background-color: #03609e;
       }
       .option.selected {
         background-color: #0c9a47;
@@ -72,7 +72,7 @@
         margin-top: 20px;
         padding: 16px;
         background-color: #eff3f9;
-        border-radius: 6px;
+        border-radius: 12px;
       }
       #reset {
         display: block;
@@ -89,17 +89,24 @@
         background-color: #b51f0f;
       }
       #expBld{
-        display: flex;
+        display: none;
         justify-content: center;
         text-align: center;
         align-items: center;
-        background-image: linear-gradient(to right, #0b0a6c, #331691, #6744ff);
+        background-image: linear-gradient(to right, #100147 , #0b0a6c, #331691, #6744ff);
         border-radius: 8px;
-        margin-top: 44px;
-        padding: 16px;
+        margin-top: 28px;
+        padding: 16px 16px 22px 16px;
         transform: translateY(-20px);
         transition: opacity 0.8s ease, transform 0.8s ease allow-discrete;
     }
+    #email-form-con {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
     .text-yellow{
         color: gold;
     }
@@ -159,7 +166,7 @@
   .custom-tooltip .tooltiptext {
     visibility: hidden;
     width: 280px;
-    background-color: #555;
+    background-color: #484848;
     color: #fff;
     text-align: left;
     border-radius: 6px;
@@ -184,7 +191,7 @@
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: #555 transparent transparent transparent;
+    border-color: #484848 transparent transparent transparent;
   }
   
   .custom-tooltip:hover .tooltiptext {
@@ -245,14 +252,13 @@
 
     <div class="container" style="margin: 44px auto 222px auto; max-width: 800px;">
         <h2>Evaluate Your Business Readiness</h2>
-        <p>This interactive decision tree will guide you through the critical questions every aspiring entrepreneur should consider. Answer honestly to receive personalized insights and actionable next steps tailored to your unique situation and business readiness level.</p>
+        <p>This interactive decision tree will guide you through critical questions to determine your business readiness. Answer honestly to receive a readiness score and actionable next steps.</p>
         <br>
         <div id="decision-tree">
           <div id="history"></div>
           <div id="current-node"></div>
           <div id="result"></div>
-        </div>
-        <div id="expBld" style="display: none;" class="shadow-lg border-bottom">
+          <div id="expBld" class="shadow-lg border-bottom">
             <a href="experience-builder.html">
                 <div>
                 <h3 class="text-white">Discover the Full Power of&nbsp;Your&nbsp;Product</h3>
@@ -262,14 +268,27 @@
                 </div>
             </a>
         </div>
+        </div>
+        <div id="email-form-con"><!-- Filled with email-capture.html --></div>
+
         <button id="reset" style="display: none;">Start Over</button>
     </div>
 
     <div id="footer"></div>
 
     <script>
+      let userInteractionData = ""; 
+      
+      function updateInteractionData() {
+        const pathSummary = history.map(step => `${step.question}: ${step.answer}`).join('\n');
+        const finalScore = totalScore > 0 ? `\nScore: ${totalScore}/${maxPossibleScore}` : '';
+        userInteractionData = `Decision Path:\n${pathSummary}${finalScore}`;
+    }
+
+
     //Header + Footer
     $(document).ready(function() {
+    $('#email-form-con').load("email-capture.html");
     $('#footer').load("footer.html");
     $('#header').load("header.html", function( response, status, xhr ) {
         if ( status == "error" ) {
@@ -281,14 +300,124 @@
     })
     });
     // Decision Tree
-        const decisionTree = {
-        question: "Do you have a business idea?",
+         const decisionTree = {
+        question: "What's your experience level with business?",
         weight: 1,
-  options: [
-    {
-      text: "Yes",
-      points: 2,
-      next: {
+        options: [
+          {
+            text: "Complete Beginner",
+            points: 0,
+            experienceLevel: "beginner",
+            tooltip: "As a complete beginner, expect a steep learning curve but don't let that discourage you - every successful entrepreneur started somewhere!",
+            next: {
+              question: "Do you have a business idea?",
+              weight: 1,
+              options: [
+                {
+                  text: "Yes",
+                  points: 2,
+                  next: "businessStageTree"
+                },
+                {
+                  text: "No",
+                  points: 0,
+                  next: "noIdeaTree"
+                }
+              ]
+            }
+          },
+          {
+            text: "Some Experience",
+            points: 3,
+            experienceLevel: "intermediate",
+            tooltip: "With some business experience, you have an advantage - leverage your past learnings while staying open to new approaches.",
+            next: {
+              question: "Do you have a business idea?",
+              weight: 1,
+              options: [
+                {
+                  text: "Yes",
+                  points: 2,
+                  next: "businessStageTree"
+                },
+                {
+                  text: "No",
+                  points: 0,
+                  next: "noIdeaTree"
+                }
+              ]
+            }
+          },
+          {
+            text: "Experienced Entrepreneur",
+            points: 5,
+            experienceLevel: "experienced",
+            tooltip: "As an experienced entrepreneur, you know the challenges ahead - trust your instincts while staying adaptable to new market conditions.",
+            next: {
+              question: "Do you have a business idea?",
+              weight: 1,
+              options: [
+                {
+                  text: "Yes",
+                  points: 2,
+                  next: "businessStageTree"
+                },
+                {
+                  text: "No",
+                  points: 0,
+                  next: "noIdeaTree"
+                }
+              ]
+            }
+          }
+        ]
+      };
+
+      // Business stage tree - only for people with ideas
+      const businessStageTree = {
+        question: "What stage are you at in your business journey?",
+        weight: 1,
+        options: [
+          {
+            text: "Discovery & Research",
+            points: 1,
+            businessStage: "discovery",
+            tooltip: "Focus on understanding your market, customers, and competition thoroughly.",
+            next: "mainTree"
+          },
+          {
+            text: "Prototyping & Testing",
+            points: 3,
+            businessStage: "prototyping",
+            tooltip: "This is crucial for learning what works before full commitment.",
+            next: "mainTree"
+          },
+          {
+            text: "Launch Preparation",
+            points: 4,
+            businessStage: "prelaunch",
+            tooltip: "Focus on finalizing your go-to-market strategy and operational readiness.",
+            next: "mainTree"
+          },
+          {
+            text: "Live & Iterating",
+            points: 5,
+            businessStage: "live",
+            tooltip: "Focus on customer feedback, optimization, and sustainable growth.",
+            next: "mainTree"
+          },
+          {
+            text: "Scaling Operations",
+            points: 6,
+            businessStage: "scaling",
+            tooltip: "Focus on systems, team building, and strategic expansion while maintaining quality.",
+            next: "mainTree"
+          }
+        ]
+      };
+
+      // Main tree continues after experience/stage questions
+      const mainTreeAffordability = {
         question: "Can you afford to go 12+ months without income from this business?",
         weight: 2,
         options: [
@@ -348,7 +477,7 @@
                                         "Look into small business loans or microfinancing",
                                         "Explore revenue-generating activities while planning"
                                       ],
-                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create a financial runway plan and side-business strategy.",
+                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to plan a financial runway and side-business strategy.",
                                       scoreLabel: "Lifestyle Business - Build Savings",
                                       scoreDescription: "Great lifestyle business potential. Focus on building financial runway first."
                                     }
@@ -639,12 +768,9 @@
             }
           }
         ]
-      }
-    },
-    {
-      text: "No",
-      points: 0,
-      next: {
+      };
+
+      const noIdeaTree = {
         question: "Can you afford to go 12+ months without income?",
         weight: 2,
         options: [
@@ -707,26 +833,52 @@
             }
           }
         ]
-      }
-    }
-  ]
-    };
+      };
     
     
 let currentNode = decisionTree;
 let history = [];
 let totalScore = 0;
 let maxPossibleScore = 0;
+let userExperienceLevel = "";
+let userBusinessStage = "";
+let experienceNote = "";
+let stageNote = "";
 
 function calculateMaxScore(node, currentMax = 0) {
-    if (node.result) {
+    if (!node || node.result) {
+        return currentMax;
+    }
+    
+    // Handle string references
+    if (typeof node === 'string') {
+        return currentMax;
+    }
+    
+    if (!node.options) {
         return currentMax;
     }
     
     let maxFromOptions = currentMax;
     node.options.forEach(option => {
-        const scoreFromThisPath = calculateMaxScore(option.next || option, currentMax + (option.points || 0) * (node.weight || 1));
-        maxFromOptions = Math.max(maxFromOptions, scoreFromThisPath);
+        let nextNode = option.next;
+        
+        // Handle string references to other trees
+        if (nextNode === "businessStageTree") {
+            nextNode = businessStageTree;
+        } else if (nextNode === "mainTree") {
+            nextNode = mainTreeAffordability;
+        } else if (nextNode === "noIdeaTree") {
+            nextNode = noIdeaTree;
+        }
+        
+        if (nextNode) {
+            const scoreFromThisPath = calculateMaxScore(nextNode, currentMax + (option.points || 0) * (node.weight || 1));
+            maxFromOptions = Math.max(maxFromOptions, scoreFromThisPath);
+        } else {
+            // If no next node, just add the points from this option
+            maxFromOptions = Math.max(maxFromOptions, currentMax + (option.points || 0) * (node.weight || 1));
+        }
     });
     
     return maxFromOptions;
@@ -737,17 +889,39 @@ function handleOption(option) {
     const points = (option.points || 0) * (currentNode.weight || 1);
     totalScore += points;
     
+    // Capture experience level and business stage
+    if (option.experienceLevel) {
+        userExperienceLevel = option.experienceLevel;
+        experienceNote = option.experienceNote;
+    }
+    if (option.businessStage) {
+        userBusinessStage = option.businessStage;
+        stageNote = option.stageNote;
+    }
+    
     // Add the current selection to history
     history.push({ 
         question: currentNode.question, 
         answer: option.text,
         points: points
     });
+
+    updateInteractionData();
+    window.userInteractionData = userInteractionData;
     
     if (option.result) {
         showResult(option.result);
     } else {
-        currentNode = option.next;
+        // Handle special navigation cases
+        if (option.next === "businessStageTree") {
+            currentNode = businessStageTree;
+        } else if (option.next === "mainTree") {
+            currentNode = mainTreeAffordability;
+        } else if (option.next === "noIdeaTree") {
+            currentNode = noIdeaTree;
+        } else {
+            currentNode = option.next;
+        }
         renderHistory();
         renderNode(currentNode);
     }
@@ -820,6 +994,33 @@ function renderHistory() {
     });
 }
 
+function getExperienceMessage() {
+    const levelMessages = {
+        "beginner": "As a complete beginner, expect to learn through trial and error - every successful entrepreneur started somewhere!",
+        "intermediate": "With some business experience, you have valuable insights to leverage while staying adaptable to new challenges.",
+        "experienced": "Your entrepreneurial experience is a significant advantage - trust your instincts while remaining open to evolving markets."
+    };
+    
+    const stageMessages = {
+        "discovery": "Being in the research phase means you're building a solid foundation - take time to thoroughly understand your market before moving forward.",
+        "prototyping": "Active prototyping puts you ahead of most entrepreneurs - use this phase to learn fast and fail cheap. Try our <a href='screen-builder.html' class='link'>Screen Builder</a> to quickly prototype your idea.",
+        "prelaunch": "Launch preparation is critical - ensure you have strong fundamentals before going to market.",
+        "live": "Being live in the market gives you real customer feedback - use this invaluable data to optimize and grow.",
+        "scaling": "Operating in growth mode requires balancing expansion with operational excellence and team development."
+    };
+    
+    let message = "";
+    if (userExperienceLevel && levelMessages[userExperienceLevel]) {
+        message += levelMessages[userExperienceLevel];
+    }
+    if (userBusinessStage && stageMessages[userBusinessStage]) {
+        if (message) message += " ";
+        message += stageMessages[userBusinessStage];
+    }
+    
+    return message;
+}
+
 function showResult(result) {
     const currentNodeElement = document.getElementById('current-node');
     currentNodeElement.innerHTML = '';
@@ -848,17 +1049,23 @@ function showResult(result) {
 
     document.getElementById('reset').style.display = 'block';
     document.getElementById('expBld').style.display = 'block';
+    document.getElementById('email-form-con').style.display = 'block';
 }
 
 function resetTree() {
     currentNode = decisionTree;
     history = [];
     totalScore = 0;
+    userExperienceLevel = "";
+    userBusinessStage = "";
+    experienceNote = "";
+    stageNote = "";
     renderNode(currentNode);
     document.getElementById('history').innerHTML = '';
     document.getElementById('result').textContent = '';
     document.getElementById('reset').style.display = 'none';
     document.getElementById('expBld').style.display = 'none';
+    document.getElementById('email-form-con').style.display = 'none';
 
    document.getElementById('header').scrollIntoView({ behavior: 'smooth' });
 }

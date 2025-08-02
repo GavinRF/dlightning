@@ -140,26 +140,54 @@
 
 <div id="error"></div>
 
-<div class="mt-24 w-full bg-blue-950 text-white py-8">
+<div class="mt-24 w-full bg-blue-950 text-white py-8" style="padding: 44px 34px;">
   <div class="container mx-auto px-4">
-    <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
-    <ol class="list-decimal pl-6 space-y-2 instruct-list">
-      <li>Enter your interests, hobbies, and personality traits in the input fields.</li>
-      <li>Click "Generate Business Idea" to start the process.</li>
-      <li>Our system will analyze your input and generate a personalized business idea.</li>
-      <li>Answer follow-up questions to refine and expand on the idea.</li>
-      <li>The system will incorporate your answers to provide more detailed suggestions.</li>
-      <li>After two rounds of refinement, you'll see a comprehensive business plan.</li>
-    </ol>
-    <p class="mt-4 text-gray-400 max-w-screen-lg">The Business Idea Generator uses an advanced algorithm to create unique, personalized business concepts based on your individual interests and personality. It adapts to your responses, helping you explore and develop your entrepreneurial potential.</p>
-  </div>
+    <div class="row">
+      <div class="col-lg-7">
+      <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
+      <ol class="list-decimal pl-6 space-y-2 instruct-list">
+        <li>Enter your interests, hobbies, and personality traits in the input fields.</li>
+        <li>Click "Generate Business Idea" to start the process.</li>
+        <li>Our system will analyze your input and generate a personalized business idea.</li>
+        <li>Answer follow-up questions to refine and expand on the idea.</li>
+        <li>The system will incorporate your answers to provide more detailed suggestions.</li>
+        <li>After two rounds of refinement, you'll see a comprehensive business plan.</li>
+      </ol>
+      <p class="mt-4 text-gray-400 max-w-screen-lg">The Business Idea Generator uses an advanced algorithm to create unique, personalized business concepts based on your individual interests and personality. It adapts to your responses, helping you explore and develop your entrepreneurial potential.</p>
+    </div>
+  <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
+</div>
+</div>
 </div>
 
 <!-- <footer id="footer" class="w-full"></footer> -->
 
 <script>
+  let userInteractionData = "";
+  let currentIdea = {};
+  let round = 0;
+  let allAnswers = {};
+
+function updateInteractionData() {
+    const interests = $('#userInterests').val() || '';
+    const personality = $('#userPersonality').val() || '';
+    
+    let interaction = `Interests: ${interests}\nPersonality: ${personality}`;
+    
+    if (Object.keys(allAnswers).length > 0) {
+        const refinements = Object.entries(allAnswers)
+            .map(([key, value]) => value)
+            .filter(value => value)
+            .join('\n');
+        interaction += `\nRefinements:\n${refinements}`;
+    }
+    
+    userInteractionData = interaction;
+    window.userInteractionData = userInteractionData;
+}
 
 $(document).ready(function() {
+  $('#email-form-con').load("email-capture.html");
   $('#footer').load("footer.html");
   $('#header').load("header.html", function( response, status, xhr ) {
     if ( status == "error" ) {
@@ -169,10 +197,6 @@ $(document).ready(function() {
         $('.business-gen').addClass('thisPage');
     }
   });
-  
-  let currentIdea = {};
-  let round = 0;
-  let allAnswers = {};
 
   function updateUI(data) {
     $('#ideaResult').removeClass('hidden');
@@ -326,6 +350,8 @@ $(document).ready(function() {
         ]
       };
       updateUI(mockData);
+      updateInteractionData();
+      window.userInteractionData = userInteractionData;
     }, 1400);  
   });
 
@@ -340,6 +366,8 @@ $(document).ready(function() {
     });
 
     Object.assign(allAnswers, answers);
+    updateInteractionData();
+    window.userInteractionData = userInteractionData;
 
     $('#ideaContent').append('<div class="text-center mt-4"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">Refining your business idea...</p></div>');
     $('#questions').addClass('hidden');

@@ -1,7 +1,7 @@
 <html><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D⚡ | Advanced UX Methods</title>
+    <title>D⚡ | Advanced UX Methods Tree</title>
     <meta name="description" content="Interactive UX Design Decision Tree tool helps UX designers, researchers, and product managers make informed decisions about user research, interface design, and interaction design. Get personalized recommendations for your UX challenges.">
     <meta name="keywords" content="UX design, user experience, decision tree, UX research, interface design, interaction design, UX tools, design system, user research, UX methodology, design thinking, UX strategy, usability testing, information architecture, visual design">
     <meta name="author" content="Dlightning">
@@ -245,7 +245,7 @@
     }
 
     #expBld2{
-        background-image: linear-gradient(to right, navy, indigo 52%, violet 84%, pink 98%);
+        background-image: linear-gradient(to right, navy, indigo 52%, rgb(187, 103, 229) 84%, rgb(205, 149, 240) 98%);
         border-radius: 8px;
         margin-top: 14px;
         padding: 16px;
@@ -293,6 +293,8 @@
             <!-- <div id="decision-path"></div> -->
             <div id="result" style="display: none;"></div>
 
+            <div class="row">
+                <div class="col-xl-7">
             <a href="experience-builder.html">
                 <div id="expBld2">
                     <h4 class="text-white">Unlock the Full Power of&nbsp;Your&nbsp;Product</h4>
@@ -304,6 +306,12 @@
                 </div>
               </a>
             <button id="restart-tree" style="display: none;">Start Over</button>
+        </div>
+        <div class="col-xl-5">
+            <div id="email-form-con"><!-- Filled with email-capture.html --></div>
+        </div>
+        </div>
+
         </section>
         </div>
     </div>
@@ -311,9 +319,22 @@
 
 <footer id="footer"></footer>
 
-    <script>
+<script>
+    let userInteractionData = "";
+
+    function updateInteractionData() {
+        if (currentPath.length > 0) {
+            const pathSummary = currentPath
+                .filter(step => step.choice)
+                .map(step => `${step.label}: ${step.choice}`)
+                .join('\n');
+            userInteractionData = `UX Path:\n${pathSummary}`;
+            window.userInteractionData = userInteractionData;
+        }
+    }
 //Header + Footer
 $(document).ready(function() {
+  $('#email-form-con').load("email-capture.html");
   $('#footer').load("footer.html");
   $('#header').load("header.html", function( response, status, xhr ) {
     if ( status == "error" ) {
@@ -627,6 +648,7 @@ $(document).ready(function() {
             const resultElement = document.getElementById('result');
             const restartButton = document.getElementById('restart-tree');
             const experienceBld = document.getElementById('expBld2');
+            const emailFormCont = document.getElementById('email-form-con');
             
             const step = decisionTree[currentStep];
 
@@ -665,6 +687,7 @@ $(document).ready(function() {
                 resultElement.style.display = 'none';
                 restartButton.style.display = 'none';
                 experienceBld.style.display = 'none';
+                emailFormCont.style.display = 'none';
             } else if (step.result) {
                 // Build the result HTML including approach, tips, tools, and resources
                 let resultHTML = `<strong>Approach:</strong><br> ${step.result}<br>`;
@@ -708,11 +731,13 @@ $(document).ready(function() {
                 resultElement.style.display = 'block';
                 restartButton.style.display = 'inline-block';
                 experienceBld.style.display = 'block';
+                emailFormCont.style.display = 'block';
 
                 setTimeout(() => {
                     resultElement.classList.add('show');
                     restartButton.classList.add('show');
                     experienceBld.classList.add('show');
+                    emailFormCont.classList.add('show');
                 }, 100);
             }
 
@@ -732,6 +757,8 @@ $(document).ready(function() {
             const currentLevel = parseInt(button.parentElement.id.split('-')[1]);
             currentPath = currentPath.slice(0, currentLevel);
             currentPath[currentLevel - 1].choice = option.text;
+            updateInteractionData();
+            window.userInteractionData = userInteractionData;
 
             currentStep = option.next;
 

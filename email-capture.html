@@ -1,0 +1,208 @@
+
+
+<head>
+
+    <style>
+        .email-capture {
+            max-width: 394px;
+            margin: 12px auto;
+            padding: 28px 22px 20px 22px;
+            border-radius: 8px;
+            background: #f7fafc;
+            text-align: left;
+        }
+
+        .email-capture input,
+        .email-capture textarea {
+            width: 100%;
+            padding: 8px 14px;
+            margin-bottom: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            color: #333;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        .email-capture input:focus,
+        .email-capture textarea:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .email-capture textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .email-capture label {
+            display: block;
+            margin-bottom: 2px;
+            text-align: left;
+        }
+
+        .email-capture button {
+            width: 100%;
+            padding: 12px 24px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .email-capture button:hover {
+            background: #0052a3;
+            transform: translateY(-1px);
+        }
+
+        .email-capture button:active {
+            transform: translateY(0);
+        }
+
+        .email-capture button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Success message styling */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        /* Placeholder styling */
+        .email-capture input::placeholder,
+        .email-capture textarea::placeholder {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-capture">
+        <div class="success-message" id="success-message">
+            Thanks! We'll be in touch soon.
+        </div>
+
+        <!-- <h4>Contact Dlightning</h4> -->
+        <h2 style="color:#0052a3; font-size: 32px; margin-bottom: 8px; text-align: left;">Have a business<br>design challenge?</h2>
+        <h5>Let's discuss how Dlightning⚡ can help.</h5>
+        <br>
+        <form id="email-form">
+            <label for="email-input">Your Email</label>
+            <input 
+                type="email" 
+                id="email-input" 
+                required
+            >
+            <label for="message-input">Message (optional)</label>
+            <textarea 
+                id="message-input" 
+                rows="2"
+            ></textarea>
+            <button type="submit" id="submit-btn">
+                Send
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // const tool = document.getElementById('tool').value;
+        // const infoDump = document.getElementById('infoDump').value;
+
+        function getToolName() {
+            // You can customize this based on your needs
+            const toolName = document.querySelector('[data-tool-name]')?.dataset.toolName || 
+                            document.title || 
+                            window.location.pathname.split('/').pop() || 
+                            'Unknown Tool';
+            return toolName;
+        }
+        
+        function getInfoDump() {
+             const interactionData = window.userInteractionData || '';
+
+            // Collect useful data about the page/tool
+            const info = {
+                referrer: document.referrer || 'Direct',
+                userAgent: navigator.userAgent.substring(0, 100), // First 100 chars
+                screenSize: `${screen.width}x${screen.height}`,
+                viewport: `${window.innerWidth}x${window.innerHeight}`,
+                platform: navigator.platform,
+                scrollDepth: Math.round((window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100) + '%',
+                timeOnPage: getTimeOnPage(),
+                urlParams: new URLSearchParams(window.location.search).toString()
+            };
+            
+            // Convert to readable string
+            return Object.entries(info)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join('\n');
+        }
+
+        function getTimeOnPage() {
+            const start = performance.now();
+            return Math.round(start / 1000) + 's';
+        }
+
+        document.getElementById('email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email-input').value;
+            const message = document.getElementById('message-input').value;
+            const submitBtn = document.getElementById('submit-btn');
+            const successMsg = document.getElementById('success-message');
+            
+            // Disable button during submission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            const interactionData = window.userInteractionData || '';
+            
+            // Replace with your actual Google Form details
+            const formData = new FormData();
+            formData.append('entry.1246979305', email); 
+            formData.append('entry.544528883', message); 
+            formData.append('entry.2116565090', getToolName());
+            formData.append('entry.2069635273', interactionData);
+            formData.append('entry.1823501667', getInfoDump());
+            
+            fetch('https://docs.google.com/forms/d/e/1FAIpQLSea1ckrv5cOMpnCu5huK-Dyc2zBnuX6vRaOSq_uacYykWJoZg/formResponse', {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).then(() => {
+                // Show success message
+                successMsg.style.display = 'block';
+                this.reset(); // Clear form
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send';
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 5000);
+                
+            }).catch(err => {
+                console.error('Error:', err);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send';
+                alert('Something went wrong. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
