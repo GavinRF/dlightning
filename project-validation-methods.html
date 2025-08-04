@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive Project Validation Method Selector. Get personalized recommendations for validating your project idea with the right methodology. Perfect for entrepreneurs, product managers, and developers.">
+  
+  <title>D⚡ | Project Validation Method Selector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <meta property="og:image" content="https://dlightning.org/img/opengraph/validation-selector-og.png"/>
+  <meta property="og:title" content="Dlightning - Project Validation Selector"/>
+  <meta property="og:description" content="Find the perfect validation method for your project."/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    header{
+      z-index: 999;
+    }
+
+    .featureBgImg {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featureBgImg-bg {
+      object-position: center calc(50% + 42px);
+      transition: transform 0.42s ease-in-out;
+    }
+
+    .featureBgImg:hover .featureBgImg-bg {
+      transform: scale(1.1);
+    }
+
+    .featureBgImg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
+      z-index: -1;
+      transition: opacity 0.3s ease-in-out;
+      mix-blend-mode: soft-light;
+    }
+
+    .featureBgImg:hover::after {
+      opacity: 0.8;
+    }
+
+    .featureBgImg h4,
+    .featureBgImg button {
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .featureBgImg:hover h4 {
+      transform: translateY(-5px);
+    }
+
+    .decision-level {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .decision-level.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .option-btn {
+      background-color: #0889e0;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 5px;
+      font-size: 16px;
+      min-width: 180px;
+    }
+
+    .option-btn:hover {
+      background-color: #03609e;
+      transform: translateY(-2px);
+    }
+
+    .option-btn.selected {
+      background-color: #0c9a47;
+      transform: translateY(-2px);
+    }
+
+    .custom-tooltip{
+      position: relative;
+      display: inline-block;
+      cursor: help;
+    }
+
+    .custom-tooltip .tooltiptext {
+      visibility: hidden;
+      width: 280px;
+      background-color: #484848;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 12px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -140px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 14px;
+      line-height: 1.4;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .custom-tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+      .custom-tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #484848 transparent transparent transparent;
+  }
+
+    .score-display {
+      background: linear-gradient(135deg, #1f1d79 0%, #2b0c9a 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .score-title {
+      font-size: 32px;
+      /* font-weight: bold; */
+      margin-bottom: 10px;
+    }
+
+    .score-description {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .method-details {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .method-details h4 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .action-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .action-list li {
+      margin: 10px 0;
+      padding: 12px;
+      background-color: #e8f4fd;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+    }
+
+    .action-list li i {
+      margin-right: 12px;
+      color: #0889e0;
+      font-size: 16px;
+    }
+
+    .tools-section {
+      margin-top: 20px;
+    }
+
+    .tool-tag {
+      display: inline-block;
+      background-color: #e3e3ff;
+      color: #1f1d79;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      margin: 4px;
+    }
+
+    .text-yellow {
+      color: gold;
+    }
+
+    @media (max-width: 567px) {
+      .featureBgImg-bg {
+        object-position: center;
+      }
+      
+      .option-btn {
+        min-width: 140px;
+        font-size: 14px;
+        padding: 10px 16px;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
+<header id='header'></header>
+
+<div class="h-14 bg-blue-800 w-full"></div>
+<div class="mx-2 container">
+<div class="container mt-12 sm:p-8 pt-8 pb-8 bg-white rounded-xl shadow-2xl max-w-4xl">
+  <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Project Validation Method Selector</h1>
+  <p class="text-center text-gray-600 mb-8">Answer a few questions to discover the perfect validation method for your project</p>
+  
+  <div id="decision-tree">
+    <div id="history"></div>
+    <div id="current-node"></div>
+    <div id="result" class="hidden"></div>
+  </div>
+
+  <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
+    <img src="img/exp-builder/immersive-experience.png" alt="Background silhouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
+    <div class="relative z-10">
+      <h4 class="text-2xl text-white mb-2 px-2 font-bold drop-shadow">Take your validation<br>to the next level</h4>
+      <a href="experience-builder.html">
+        <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+          Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
+        </button>
+      </a>
+    </div>
+  </div>
+  
+  <button id="resetBtn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-6 hidden">
+    <i class="fas fa-redo mr-2" aria-hidden="true"></i> Start Over
+  </button>
+</div>
+</div>
+
+<div id="error"></div>
+
+<div class="mt-24 w-full bg-blue-950 text-white py-8" style="padding: 44px 34px;">
+  <div class="container mx-auto px-4">
+    <div class="row">
+      <div class="col-lg-7">
+        <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
+        <ol class="list-decimal pl-6 space-y-2 instruct-list">
+          <li>Answer questions about your project stage, type, and goals.</li>
+          <li>Get personalized validation method recommendations.</li>
+          <li>Learn about implementation timelines and resource requirements.</li>
+          <li>Discover tools and techniques for your chosen method.</li>
+          <li>Follow step-by-step guidance for validation success.</li>
+        </ol>
+        <p class="mt-4 text-gray-400 max-w-screen-lg">Our validation selector analyzes your project characteristics and recommends the most appropriate validation methods based on industry best practices and proven methodologies.</p>
+      </div>
+      <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let userInteractionData = "";
+  let currentNode = null;
+  let history = [];
+
+  const validationMethods = {
+    poc: {
+      name: "Proof of Concept (POC)",
+      timeInvestment: "1-4 weeks",
+      bestFor: "Validating technical feasibility of novel approaches",
+      description: "Focuses on core technical functionality to answer 'Can this be built at all?'",
+      steps: [
+        "Define the core technical challenge to validate",
+        "Build minimal version focusing only on feasibility",
+        "Test under realistic constraints",
+        "Document findings and technical approaches",
+        "Decide whether to proceed with full development"
+      ],
+      tools: ["Your preferred development environment", "Cloud platforms for testing", "Documentation tools"],
+      characteristics: ["Throwaway code acceptable", "Isolated from other systems", "Pure technical focus"]
+    },
+    mvp: {
+      name: "Minimum Viable Product (MVP)",
+      timeInvestment: "1-3 months",
+      bestFor: "Testing market demand with minimal investment",
+      description: "Simplest version that delivers core value to answer 'Will people use and value this?'",
+      steps: [
+        "Identify the core value proposition",
+        "Design minimal feature set",
+        "Build and launch to real users",
+        "Gather usage metrics and feedback",
+        "Iterate based on user behavior"
+      ],
+      tools: ["No-code platforms", "Analytics tools", "User feedback systems", "A/B testing tools"],
+      characteristics: ["Released to actual users", "Designed for feedback collection", "Market-focused validation"]
+    },
+    prototype: {
+      name: "Interactive Prototype",
+      timeInvestment: "1-6 weeks",
+      bestFor: "Testing user experience and interactions",
+      description: "Working version demonstrating workflow and interactions to answer 'How will this work in practice?'",
+      steps: [
+        "Create realistic user scenarios",
+        "Build clickable/interactive version",
+        "Conduct user testing sessions",
+        "Identify usability issues",
+        "Refine design based on feedback"
+      ],
+      tools: ["Figma", "Adobe XD", "InVision", "Principle", "Framer"],
+      characteristics: ["Interactive but not fully functional", "Focus on user experience", "Quick iteration possible"]
+    },
+    concierge: {
+      name: "Concierge MVP",
+      timeInvestment: "1-2 months",
+      bestFor: "Service-based ideas or complex automated systems",
+      description: "Manual processes replace automation to answer 'Is the outcome valuable enough to justify building the system?'",
+      steps: [
+        "Identify what the end result should be",
+        "Manually deliver that result to customers",
+        "Track effort required and customer satisfaction",
+        "Calculate automation ROI potential",
+        "Decide whether to build automated system"
+      ],
+      tools: ["Manual processes", "Customer communication tools", "Time tracking", "Feedback collection"],
+      characteristics: ["Highly personalized service", "Manual processes", "Focus on outcome value"]
+    },
+    concept: {
+      name: "Concept Testing",
+      timeInvestment: "Days to weeks",
+      bestFor: "Gathering feedback before building anything",
+      description: "Present concept through descriptions and mockups to answer 'Does this solve a real problem people care about?'",
+      steps: [
+        "Create concept descriptions and visuals",
+        "Interview potential customers",
+        "Present problem and solution clearly",
+        "Gather feedback on problem importance",
+        "Validate solution approach"
+      ],
+      tools: ["Survey tools", "Interview platforms", "Mockup tools", "Landing pages"],
+      characteristics: ["No building required", "Focus on problem-solution fit", "Interview-based feedback"]
+    },
+    landing: {
+      name: "Landing Page Test",
+      timeInvestment: "Days",
+      bestFor: "Testing market interest with minimal investment",
+      description: "Create page describing product before it exists to answer 'Is there initial interest in this idea?'",
+      steps: [
+        "Create compelling product description",
+        "Set up landing page with clear value proposition",
+        "Drive traffic through marketing channels",
+        "Measure conversion rates and signups",
+        "Analyze interest level and feedback"
+      ],
+      tools: ["Website builders", "Google Analytics", "Email capture tools", "A/B testing platforms"],
+      characteristics: ["Very fast to implement", "Quantifiable interest metrics", "Can test pricing"]
+    },
+    usability: {
+      name: "Usability Testing",
+      timeInvestment: "Days to weeks",
+      bestFor: "Evaluating ease of use",
+      description: "Observe real users completing tasks to answer 'Can users effectively use this?'",
+      steps: [
+        "Define specific tasks to test",
+        "Recruit representative users",
+        "Observe users completing tasks",
+        "Identify friction points and confusion",
+        "Iterate design based on findings"
+      ],
+      tools: ["Screen recording software", "User testing platforms", "Analytics tools", "Survey tools"],
+      characteristics: ["Real user observation", "Task-focused testing", "Identifies usability issues"]
+    },
+    ab: {
+      name: "A/B Testing",
+      timeInvestment: "Days to weeks",
+      bestFor: "Optimizing specific elements",
+      description: "Compare versions with controlled variables to answer 'Which option performs better?'",
+      steps: [
+        "Define hypothesis and success metrics",
+        "Create variations to test",
+        "Split traffic between versions",
+        "Collect statistically significant data",
+        "Implement winning variation"
+      ],
+      tools: ["A/B testing platforms", "Analytics tools", "Statistical analysis tools"],
+      characteristics: ["Data-driven decisions", "Requires existing traffic", "Incremental improvements"]
+    }
+  };
+
+  const decisionTree = {
+    question: "What stage is your project in?",
+    options: [
+      {
+        text: "Idea Stage",
+        tooltip: "You have an idea but haven't built anything yet. Early stages.",
+        next: {
+          question: "What type of project are you working on?",
+          options: [
+            {
+              text: "Software/App",
+              next: {
+                question: "What's your primary concern?",
+                options: [
+                  {
+                    text: "Will people want this?",
+                    result: "concept"
+                  },
+                  {
+                    text: "Can this be built?",
+                    result: "poc"
+                  },
+                  {
+                    text: "How should it work?",
+                    result: "prototype"
+                  }
+                ]
+              }
+            },
+            {
+              text: "Service/Business",
+              next: {
+                question: "How complex is the service?",
+                options: [
+                  {
+                    text: "Simple service",
+                    result: "landing"
+                  },
+                  {
+                    text: "Complex/automated service",
+                    result: "concierge"
+                  }
+                ]
+              }
+            },
+            {
+              text: "Physical Product",
+              result: "concept"
+            }
+          ]
+        }
+      },
+      {
+        text: "Built Something",
+        tooltip: "You have a working version or prototype. Mid stages.",
+        next: {
+          question: "What do you need to validate?",
+          options: [
+            {
+              text: "Market demand",
+              result: "mvp"
+            },
+            {
+              text: "User experience",
+              result: "usability"
+            },
+            {
+              text: "Performance/features",
+              result: "ab"
+            }
+          ]
+        }
+      },
+      {
+        text: "Launched Product",
+        tooltip: "You have users but want to improve. Later stages.",
+        next: {
+          question: "What's your optimization goal?",
+          options: [
+            {
+              text: "Improve conversions",
+              result: "ab"
+            },
+            {
+              text: "Better user experience",
+              result: "usability"
+            },
+            {
+              text: "New feature validation",
+              result: "prototype"
+            }
+          ]
+        }
+      }
+    ]
+  };
+
+  function updateInteractionData() {
+    const pathSummary = history.map(step => `${step.question}: ${step.answer}`).join('\n');
+    userInteractionData = `Validation Path:\n${pathSummary}`;
+    window.userInteractionData = userInteractionData;
+  }
+
+  function renderNode(node) {
+    const currentNodeElement = document.getElementById('current-node');
+    currentNodeElement.innerHTML = '';
+
+    const levelDiv = document.createElement('div');
+    levelDiv.className = 'decision-level';
+
+    const questionElement = document.createElement('div');
+    questionElement.className = 'text-xl font-medium text-gray-700 mb-6 text-center';
+    questionElement.textContent = node.question;
+    levelDiv.appendChild(questionElement);
+
+    const optionsElement = document.createElement('div');
+    optionsElement.className = 'flex flex-wrap justify-center gap-4';
+
+    node.options.forEach(option => {
+      const button = document.createElement('button');
+      button.className = 'option-btn';
+      button.textContent = option.text;
+      
+      if (option.tooltip) {
+        const tooltipWrapper = document.createElement('div');
+        tooltipWrapper.className = 'custom-tooltip inline-block';
+        
+        const tooltipText = document.createElement('span');
+        tooltipText.className = 'tooltiptext';
+        tooltipText.textContent = option.tooltip;
+        
+        tooltipWrapper.appendChild(button);
+        tooltipWrapper.appendChild(tooltipText);
+        optionsElement.appendChild(tooltipWrapper);
+      } else {
+        optionsElement.appendChild(button);
+      }
+
+      button.addEventListener('click', () => handleOption(option));
+    });
+
+    levelDiv.appendChild(optionsElement);
+    currentNodeElement.appendChild(levelDiv);
+
+    setTimeout(() => {
+      levelDiv.classList.add('show');
+    }, 100);
+  }
+
+  function handleOption(option) {
+    // Mark selection visually
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(btn => {
+      btn.classList.remove('selected');
+      if (btn.textContent === option.text) {
+        btn.classList.add('selected');
+      }
+    });
+
+    // Add to history
+    history.push({
+      question: currentNode.question,
+      answer: option.text
+    });
+
+    updateInteractionData();
+
+    setTimeout(() => {
+      if (option.result) {
+        showResult(option.result);
+      } else {
+        currentNode = option.next;
+        renderHistory();
+        renderNode(currentNode);
+      }
+    }, 300);
+  }
+
+  function renderHistory() {
+    const historyElement = document.getElementById('history');
+    historyElement.innerHTML = '';
+
+    history.forEach((step, index) => {
+      const stepElement = document.createElement('div');
+      stepElement.className = 'mb-4 p-4 bg-gray-50 rounded-lg';
+      stepElement.innerHTML = `
+        <div class="font-medium text-gray-700">${step.question}</div>
+        <div class="text-green-600 font-medium mt-1">✓ ${step.answer}</div>
+      `;
+      historyElement.appendChild(stepElement);
+    });
+  }
+
+  function showResult(methodKey) {
+    const method = validationMethods[methodKey];
+    const resultElement = document.getElementById('result');
+    
+    let resultHTML = `
+      <div class="score-display">
+        <div class="score-description">Recommended for your project type and stage</div>
+        <div class="score-title">${method.name}</div>
+      </div>
+      
+      <div class="method-details">
+        <h4><strong>Best for:</strong> ${method.bestFor}</h4>
+        <p><strong>Time Investment:</strong> ${method.timeInvestment}</p>
+        <p><strong>Description:</strong> ${method.description}</p>
+        
+        <h4 class="mt-4">Key Characteristics:</h4>
+        <ul class="list-disc pl-6">
+          ${method.characteristics.map(char => `<li>${char}</li>`).join('')}
+        </ul>
+        
+        <h4 class="mt-4">Implementation Steps:</h4>
+        <ul class="action-list">
+          ${method.steps.map(step => `<li><i class="fas fa-arrow-right"></i> ${step}</li>`).join('')}
+        </ul>
+        
+        <div class="tools-section">
+          <h4>Recommended Tools:</h4>
+          <div class="mt-2">
+            ${method.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    resultElement.innerHTML = resultHTML;
+    resultElement.classList.remove('hidden');
+    document.getElementById('expBld').classList.remove('hidden');
+    document.getElementById('resetBtn').classList.remove('hidden');
+    
+    renderHistory();
+    document.getElementById('current-node').innerHTML = '';
+  }
+
+  function resetTree() {
+    currentNode = decisionTree;
+    history = [];
+    userInteractionData = "";
+    
+    document.getElementById('history').innerHTML = '';
+    document.getElementById('result').classList.add('hidden');
+    document.getElementById('expBld').classList.add('hidden');
+    document.getElementById('resetBtn').classList.add('hidden');
+    
+    renderNode(currentNode);
+  }
+
+  $(document).ready(function() {
+    $('#email-form-con').load("email-capture.html");
+    $('#header').load("header.html", function(response, status, xhr) {
+      if (status == "error") {
+        var msg = "Sorry but there was an error: ";
+        $("#error").html(msg + xhr.status + " " + xhr.statusText);
+      } else {
+        $('.business-gen').addClass('thisPage');
+      }
+    });
+
+    currentNode = decisionTree;
+    renderNode(currentNode);
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', resetTree);
+</script>
+
+</body>
+</html>
