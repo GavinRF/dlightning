@@ -1,0 +1,706 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>D⚡ | Decision Tools</title>
+    <meta name="description" content="Interactive decision tools to guide your business and UX design journey">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/gijgo.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/clouds.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Tool Recommendation Quiz Styles */
+        .quiz-container {
+            /* background: linear-gradient(135deg, #243ca4 0%, #5e1aa1 100%); */
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 60px;
+        }
+        
+        .quiz-box {
+            background: rgba(18, 0, 137, 0.253);
+            background: linear-gradient(135deg, #016de0f2 0%, #003ca4bf 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(4, 0, 36, 0.2);
+        }
+        
+        .quiz-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+            color: white;
+        }
+        
+        .quiz-subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 25px;
+            color: white;
+            font-weight: 300;
+        }
+        
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .quiz-question.active {
+            display: block;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-option {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .quiz-option.selected {
+            background: rgba(255,255,255,0.9);
+            color: #003ca4bf;
+            border-color: white;
+        }
+        
+        .quiz-result {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+        }
+        
+        .quiz-result.show {
+            display: block;
+        }
+        
+        .quiz-recommendation {
+            font-size: 1.64rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-btn {
+            background: white;
+            color: #003ca4bf;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        /* Category Header Styles */
+        .category-header {
+            text-align: center;
+            margin: 60px 0 40px 0;
+        }
+        
+        .category-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .category-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+        
+        .category-title.business:after {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .category-title.ux:after {
+            background: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- header-start -->
+    <header id='header'></header>
+    <!-- bradcam_area  -->
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>Interactive Decision Tools</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /bradcam_area  -->
+
+    <!-- about  -->
+    <div class="Process_area ">
+        <div class="container">
+            <div class="Process_main_wrap">
+                <div class="row  align-items-center">
+                    <div class="col-xl-5 col-lg-5 col-md-6">
+                        <div class="Process_info2">
+                            <h3>Decision Tool Library</h3>
+                            <p>
+                                Guide your entrepreneurial and design journey. Get personalized recommendations based on your specific experience and goals.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-5  col-md-6 ">
+                        <!-- Space for future image if needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ about  -->
+
+        <!-- Tool Recommendation Quiz -->
+        <div class="quiz-container">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 col-lg-10">
+                        <div class="quiz-box">
+                            <!-- <h3 class="quiz-title">Where to Start</h3> -->
+                            <h4 class="quiz-subtitle">Take a two question quiz to determine the best tool for your needs</h4>
+                            
+                            <div id="quiz-content">
+                                <!-- Question 1 -->
+                                <div class="quiz-question active" id="q1">
+                                    What's your primary goal?
+                                </div>
+                                <div class="quiz-options" id="q1-options">
+                                    <button class="quiz-option" data-q="1" data-value="business-idea">Generate a business idea</button>
+                                    <button class="quiz-option" data-q="1" data-value="validate-idea">Validate an existing idea</button>
+                                    <button class="quiz-option" data-q="1" data-value="assess-readiness">Check if I'm ready to start</button>
+                                    <button class="quiz-option" data-q="1" data-value="improve-ux">Improve my product's UX</button>
+                                </div>
+                                
+                                <!-- Question 2 -->
+                                <div class="quiz-question" id="q2">
+                                    How much experience do you have?
+                                </div>
+                                <div class="quiz-options" id="q2-options" style="display: none;">
+                                    <button class="quiz-option" data-q="2" data-value="beginner">Complete beginner</button>
+                                    <button class="quiz-option" data-q="2" data-value="some">Some experience</button>
+                                    <button class="quiz-option" data-q="2" data-value="experienced">Very experienced</button>
+                                </div>
+                                
+                                <!-- Results -->
+                                <div class="quiz-result" id="quiz-result">
+                                    <div class="quiz-recommendation" id="recommendation-text"></div>
+                                    <a href="#" class="quiz-btn" id="recommendation-link">Try This Tool</a>
+                                    <div style="margin-top: 15px;">
+                                        <button class="quiz-option" onclick="resetQuiz()" style="background: transparent; border: 1px solid white;">Take Quiz Again</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool #1: Business Idea Generator -->
+        <div class="section-top-border">
+            <div class="container">
+                <div class="Process_main_wrap">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="Process_info" style="padding-left: 0px;">
+                                <a href="business-idea-generator.html">
+                                <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                    Business Idea Generator <span class="money">Free</span>
+                                </h2>
+                                <p class="wow fadeInUp" data-wow-duration=".6s" data-wow-delay=".2s">Generate personalized business ideas based on your interests and personality. Get detailed business plans with actionable next steps.</p>
+                                </a>
+                                <ul>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".25s">
+                                    Personalized idea generation
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".3s">
+                                    Interactive refinement process
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".35s">
+                                    Complete business plan output
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
+                            <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
+                                <a href="business-idea-generator.html">
+                                    <img style="width: 84%; margin-bottom: 14px;" src="img/products/BIG.png" alt="Business Idea Generator tool screenshot">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                            <div class="about_btn wow fadeInUp" data-wow-duration=".9s" data-wow-delay=".35s" >
+                                <a class="boxed-btn4" href="business-idea-generator.html">
+                                    <i class="fas fa-lightbulb mr-2"></i>Generate Ideas
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool #2: Entrepreneur Decision Tree -->
+        <div class="section-top-border">
+            <div class="container">
+                <div class="Process_main_wrap">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="Process_info" style="padding-left: 0px;">
+                                <a href="entrepreneur-decision-tree.html">
+                                <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                    Entrepreneur Decision Tree <span class="money">Free</span>
+                                </h2>
+                                <p class="wow fadeInUp" data-wow-duration=".6s" data-wow-delay=".25s">Evaluate your readiness for entrepreneurship with our comprehensive assessment. Get a personalized roadmap based on your experience and goals.</p>
+                                </a>
+                                <ul>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".2s">
+                                    Readiness score calculation
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".25s">
+                                    Experience-based recommendations
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".3s">
+                                    Personalized action steps
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
+                            <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
+                                <a href="entrepreneur-decision-tree.html">
+                                    <img style="width: 84%; margin-bottom: 14px; border: 3px solid #eee" src="img/products/EDT.png" alt="Entrepreneur Decision Tree tool screenshot">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                            <div class="about_btn wow fadeInUp" data-wow-duration=".9s" data-wow-delay=".35s" >
+                                <a class="boxed-btn4" href="entrepreneur-decision-tree.html">
+                                    <i class="fas fa-route mr-2"></i>Assess Readiness
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool #3: Project Validation Methods -->
+        <div class="section-top-border">
+            <div class="container">
+                <div class="Process_main_wrap">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="Process_info" style="padding-left: 0px;">
+                                <a href="project-validation-methods.html">
+                                <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                    Project Validation Method Selector <span class="money">Free</span>
+                                </h2>
+                                <p class="wow fadeInUp" data-wow-duration=".6s" data-wow-delay=".25s">Discover the perfect validation method for your project stage and type. Learn implementation steps and required tools.</p>
+                                </a>
+                                <ul>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".2s">
+                                    Method recommendation engine
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".25s">
+                                    Implementation guidance
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".3s">
+                                    Tool recommendations
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
+                            <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
+                                <a href="project-validation-methods.html">
+                                    <img style="width: 84%; margin-bottom: 14px; border: 3px solid #eee" src="img/products/PVMS.png" alt="Project Validation Methods tool screenshot">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                            <div class="about_btn wow fadeInUp" data-wow-duration=".9s" data-wow-delay=".35s" >
+                                <a class="boxed-btn4" href="project-validation-methods.html">
+                                    <i class="fas fa-check-circle mr-2"></i>Find Method
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool #4: UX Maturity Assessment -->
+        <div class="section-top-border">
+            <div class="container">
+                <div class="Process_main_wrap">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="Process_info" style="padding-left: 0px;">
+                                <a href="ux-maturity-assessment.html">
+                                <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                    UX Design Maturity Assessment <span class="money">Free</span>
+                                </h2>
+                                <p class="wow fadeInUp" data-wow-duration=".6s" data-wow-delay=".25s">Evaluate your organization's UX maturity level across key dimensions. Get personalized recommendations to advance your capabilities.</p>
+                                </a>
+                                <ul>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".2s">
+                                    Comprehensive maturity scoring
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".25s">
+                                    Multi-dimensional assessment
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".3s">
+                                    Growth roadmap
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
+                            <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
+                                <a href="ux-maturity-assessment.html">
+                                    <img style="width: 84%; margin-bottom: 14px; border: 3px solid #eee" src="img/products/DMA.png" alt="UX Maturity Assessment tool screenshot">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                            <div class="about_btn wow fadeInUp" data-wow-duration=".9s" data-wow-delay=".35s" >
+                                <a class="boxed-btn4" href="ux-maturity-assessment.html">
+                                    <i class="fas fa-level-up-alt mr-2"></i>Assess Maturity
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool #5: UX Methods Decision Tree -->
+        <div class="section-top-border">
+            <div class="container">
+                <div class="Process_main_wrap">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="Process_info" style="padding-left: 0px;">
+                                <a href="ux-method-tree.html">
+                                <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                    UX Methods Decision Tree <span class="money">Free</span>
+                                </h2>
+                                <p class="wow fadeInUp" data-wow-duration=".6s" data-wow-delay=".25s">Navigate the complex world of UX methodologies with our guided decision tree. Find the right approach for your project needs.</p>
+                                </a>
+                                <ul>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".2s">
+                                    Method selection guidance
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".25s">
+                                    Tool recommendations
+                                    </li>
+                                    <li class="wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".3s">
+                                    Implementation tips
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
+                            <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
+                                <a href="ux-method-tree.html">
+                                    <img style="width: 84%; margin-bottom: 14px; border: 3px solid #eee" src="img/products/MDT.png" alt="UX Methods Decision Tree tool screenshot">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                            <div class="about_btn wow fadeInUp" data-wow-duration=".9s" data-wow-delay=".35s" >
+                                <a class="boxed-btn4" href="ux-method-tree.html">
+                                    <i class="fas fa-sitemap mr-2"></i>Find Methods
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER  -->
+    <div class="footer" id="footer"></div>
+
+    <script>	
+    $(document).ready(function() {
+        $('#footer').load("footer.html");
+        $('#header').load("header.html", function( response, status, xhr ) {
+            if ( status == "error" ) {
+                var msg = "Sorry but there was an error: ";
+                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+            } else {
+                $('.decision-tools').addClass('thisPage');
+            }
+        });
+    });
+
+    // Tool Recommendation Quiz Logic
+    let quizAnswers = {};
+
+    // Quiz recommendation logic
+    const quizRecommendations = {
+        'business-idea_beginner': {
+            tool: 'Business Idea Generator',
+            description: 'Perfect starting point! Generate tailored business concepts based on your interests.',
+            link: 'business-idea-generator.html'
+        },
+        'business-idea_some': {
+            tool: 'Business Idea Generator',
+            description: 'Use your interests and personality to create refined business plans.',
+            link: 'business-idea-generator.html'
+        },
+        'business-idea_experienced': {
+            tool: 'Business Idea Generator',
+            description: 'Use your expertise to quickly generate and evaluate new business opportunities.',
+            link: 'business-idea-generator.html'
+        },
+        'validate-idea_beginner': {
+            tool: 'Project Validation Method Selector',
+            description: 'Learn the best validation approaches for your specific project type and stage.',
+            link: 'project-validation-methods.html'
+        },
+        'validate-idea_some': {
+            tool: 'Project Validation Method Selector',
+            description: 'Choose from 8 validation methods with implementation guides and tool recommendations.',
+            link: 'project-validation-methods.html'
+        },
+        'validate-idea_experienced': {
+            tool: 'Project Validation Method Selector',
+            description: 'Advanced validation strategies with detailed implementation and measurement guidance.',
+            link: 'project-validation-methods.html'
+        },
+        'assess-readiness_beginner': {
+            tool: 'Entrepreneur Decision Tree',
+            description: 'Get a comprehensive readiness assessment with beginner-friendly action steps.',
+            link: 'entrepreneur-decision-tree.html'
+        },
+        'assess-readiness_some': {
+            tool: 'Entrepreneur Decision Tree',
+            description: 'Evaluate your entrepreneurship readiness and get personalized next steps.',
+            link: 'entrepreneur-decision-tree.html'
+        },
+        'assess-readiness_experienced': {
+            tool: 'Entrepreneur Decision Tree',
+            description: 'Advanced readiness assessment focusing on scaling and strategic decisions.',
+            link: 'entrepreneur-decision-tree.html'
+        },
+        'improve-ux_beginner': {
+            tool: 'UX Methods Decision Tree',
+            description: 'Start with foundational UX methods perfect for beginners.',
+            link: 'ux-method-tree.html'
+        },
+        'improve-ux_some': {
+            tool: 'UX Maturity Assessment',
+            description: 'Assess your current UX capabilities and get a roadmap for improvement.',
+            link: 'ux-maturity-assessment.html'
+        },
+        'improve-ux_experienced': {
+            tool: 'UX Maturity Assessment',
+            description: 'Advanced UX maturity evaluation with organizational improvement strategies.',
+            link: 'ux-maturity-assessment.html'
+        }
+    };
+
+    // Quiz option click handler
+    $(document).on('click', '.quiz-option', function() {
+        const question = $(this).data('q');
+        const value = $(this).data('value');
+        
+        // Remove selected class from siblings
+        $(this).siblings().removeClass('selected');
+        $(this).addClass('selected');
+
+        // hide quiz-subtitle
+        $('.quiz-subtitle').hide(600);
+        
+        // Store answer
+        quizAnswers[question] = value;
+        
+        if (question === 1) {
+            // Show question 2
+            setTimeout(() => {
+               // $('#q1').removeClass('active');
+                // hide q1-options except for the selected answer
+                //$('#q1-options').hide();  
+
+                $('#q2').addClass('active');
+                $('#q2-options').show();
+            }, 300);
+        } else if (question === 2) {
+            // Show results
+            setTimeout(() => {
+                showQuizResults();
+            }, 300);
+        }
+    });
+
+    function showQuizResults() {
+        // Hide question 2
+        // $('#q2').removeClass('active');
+        $('#q2-options').hide();
+        
+        // Generate recommendation key
+        const recommendationKey = `${quizAnswers[1]}_${quizAnswers[2]}`;
+        const recommendation = quizRecommendations[recommendationKey];
+        
+        if (recommendation) {
+            $('#recommendation-text').text(`${recommendation.tool}`);
+            $('#recommendation-link').attr('href', recommendation.link);
+            
+            // Add description if available
+            if (recommendation.description) {
+                $('#recommendation-text').append(`<br><small style="font-size: 0.68em; opacity: 0.9;">${recommendation.description}</small>`);
+            }
+        } else {
+            // Fallback recommendation
+            $('#recommendation-text').text('Business Idea Generator');
+            $('#recommendation-link').attr('href', 'business-idea-generator.html');
+        }
+        
+        // Show results
+        $('#quiz-result').addClass('show');
+    }
+
+    function resetQuiz() {
+        // Reset answers
+        quizAnswers = {};
+        
+        // Remove all selected states
+        $('.quiz-option').removeClass('selected');
+        
+        // Hide results and question 2
+        $('#quiz-result').removeClass('show');
+        $('#q2').removeClass('active');
+        $('#q2-options').hide();
+        
+        // Show question 1
+        $('#q1').addClass('active');
+        $('#q1-options').show();
+    }
+
+    // Initialize page
+    $(document).ready(function() {
+        $('#footer').load("footer.html");
+        $('#header').load("header.html", function(response, status, xhr) {
+            if (status == "error") {
+                var msg = "Sorry but there was an error: ";
+                $("#error").html(msg + xhr.status + " " + xhr.statusText);
+            } else {
+                $('.decision-tools').addClass('thisPage');
+            }
+        });
+    });
+
+    // Optional: Track quiz completion for analytics
+    function trackQuizCompletion(goal, experience, recommendation) {
+        // Add your analytics tracking here if needed
+        console.log('Quiz completed:', {
+            goal: goal,
+            experience: experience,
+            recommendation: recommendation
+        });
+    }
+    </script>
+    <!--/ footer + header add end  -->
+    
+    <!-- JS here -->
+    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- popper - help text tooltip  -->
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <!-- waypoints - checks scroll position?-->
+    <script src="js/waypoints.min.js"></script> 
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <!-- wow - reveal animations when in viewport  -->
+    <script src="js/wow.min.js"></script>
+    <!-- nice s - much better select box  -->
+    <!-- <script src="js/nice-select.min.js"></script> -->
+    <!-- nav - hamburger menu  -->
+    <script src="js/jquery.slicknav.min.js"></script>
+    <!-- helper  -->
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

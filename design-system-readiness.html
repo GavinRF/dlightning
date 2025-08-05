@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Assess your team's readiness for implementing a design system. Get personalized recommendations and implementation roadmap based on your team size, product complexity, and design maturity.">
+    
+    <title>D⚡ | Design System Readiness Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <meta property="og:image" content="https://dlightning.org/img/opengraph/design-system-readiness-og.png"/>
+    <meta property="og:title" content="Dlightning - Design System Readiness Assessment"/>
+    <meta property="og:description" content="Discover if your team is ready for a design system implementation."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        header {
+            z-index: 999;
+        }
+
+        .featureBgImg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featureBgImg-bg {
+            object-position: center calc(50% + 42px);
+            transition: transform 0.42s ease-in-out;
+        }
+
+        .featureBgImg:hover .featureBgImg-bg {
+            transform: scale(1.1);
+        }
+
+        .featureBgImg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
+            z-index: -1;
+            transition: opacity 0.3s ease-in-out;
+            mix-blend-mode: soft-light;
+        }
+
+        .featureBgImg:hover::after {
+            opacity: 0.8;
+        }
+
+        .featureBgImg h4,
+        .featureBgImg button {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .featureBgImg:hover h4 {
+            transform: translateY(-5px);
+        }
+
+        .progress-container {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 4px;
+        }
+
+        .question-container {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .question-container.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f8ff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f0f8ff;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .option-text {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .option-description {
+            font-size: 14px;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+        }
+
+        .readiness-level {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .level-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .recommendations {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .recommendations h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .recommendation-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .recommendation-section h4 {
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .recommendations li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            color: #495057;
+            line-height: 1.5;
+        }
+
+        .recommendations li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .phase-timeline {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .phase {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .phase:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .phase-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .phase-content {
+            flex-grow: 1;
+        }
+
+        .phase-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .phase-duration {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .text-yellow {
+            color: gold;
+        }
+
+        footer{padding: 44px 34px;}
+
+        @media (max-width: 567px) {
+            .featureBgImg-bg {
+                object-position: center;
+            }
+            
+            .option {
+                padding: 15px;
+            }
+            
+            .option-text {
+                font-size: 15px;
+            }
+            
+            .score-circle {
+                width: 100px;
+                height: 100px;
+                font-size: 2rem;
+            }
+
+            footer{padding: 64px 8px;}
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
+<header id='header'></header>
+
+<div class="h-14 bg-blue-800 w-full"></div>
+<div class="mx-2 container">
+<div class="container mt-12 sm:p-8 pt-8 pb-8 bg-white rounded-xl shadow-2xl max-w-4xl">
+    <h1 class="text-4xl font-bold mb-4 text-center text-gray-700">Design System Readiness Assessment</h1>
+    <p class="text-center text-gray-600 mb-6">Evaluate your team's readiness for implementing a design system and get a personalized roadmap</p>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div id="questionContainer">
+        <!-- Questions will be inserted here -->
+    </div>
+    
+    <div id="results" class="hidden">
+        <div class="score-display">
+            <div class="score-circle" id="scoreCircle">85%</div>
+            <div class="readiness-level" id="readinessLevel">System Ready</div>
+            <div class="level-description" id="levelDescription"></div>
+        </div>
+        
+        <div class="recommendations">
+            <h3>Personalized Design System Strategy</h3>
+            <div id="recommendationsContent"></div>
+        </div>
+    </div>
+
+    <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
+        <img src="img/exp-builder/immersive-experience.png" alt="Background silhouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
+        <div class="relative z-10">
+            <h4 class="text-2xl text-white mb-2 px-2 font-bold drop-shadow">Build your design<br>system strategy</h4>
+            <a href="experience-builder.html">
+                <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                    Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
+                </button>
+            </a>
+        </div>
+    </div>
+    
+    <button id="resetBtn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-6 hidden">
+        <i class="fas fa-redo mr-2" aria-hidden="true"></i> Start Over
+    </button>
+</div>
+</div>
+
+<div id="error"></div>
+
+<footer class="mt-24 w-full bg-blue-950 text-white py-8">
+    <div class="container mx-auto px-4">
+        <div class="row">
+            <div class="col-lg-7">
+                <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
+                <ol class="list-decimal pl-6 space-y-2 instruct-list">
+                    <li>Answer questions about your team size, product complexity, and design maturity.</li>
+                    <li>Get a comprehensive readiness score and implementation recommendation.</li>
+                    <li>Receive a detailed roadmap with specific phases and timelines.</li>
+                    <li>Learn about tools, resources, and team structure needed for success.</li>
+                    <li>Get actionable next steps tailored to your current situation.</li>
+                </ol>
+                <p class="mt-4 text-gray-400 max-w-screen-lg">Our assessment evaluates your organization's design system readiness across team structure, product complexity, design consistency needs, and resource availability to provide targeted recommendations.</p>
+            </div>
+            <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    let userInteractionData = "";
+    let currentQuestion = 0;
+    let answers = [];
+
+    const questions = [
+        {
+            question: "What's your current team size and structure?",
+            options: [
+                {
+                    text: "Solo designer or very small team (1-2 people)",
+                    description: "Working independently or with minimal design support",
+                    score: 1
+                },
+                {
+                    text: "Small design team (3-5 people)",
+                    description: "Multiple designers working on shared products",
+                    score: 2
+                },
+                {
+                    text: "Medium design team (6-15 people)",
+                    description: "Established design team with some specialization",
+                    score: 3
+                },
+                {
+                    text: "Large design organization (15+ people)",
+                    description: "Multiple teams working across different products",
+                    score: 4
+                }
+            ]
+        },
+        {
+            question: "How complex is your product ecosystem?",
+            options: [
+                {
+                    text: "Single product with simple interface",
+                    description: "One main product with straightforward user flows",
+                    score: 1
+                },
+                {
+                    text: "Single product with complex features",
+                    description: "One product but with multiple complex user journeys",
+                    score: 2
+                },
+                {
+                    text: "Multiple related products",
+                    description: "Several products that share users and branding",
+                    score: 3
+                },
+                {
+                    text: "Complex product ecosystem",
+                    description: "Many products across different platforms and user types",
+                    score: 4
+                }
+            ]
+        },
+        {
+            question: "What's your current design consistency situation?",
+            options: [
+                {
+                    text: "Significant inconsistency across interfaces",
+                    description: "Different patterns, colors, and components everywhere",
+                    score: 4
+                },
+                {
+                    text: "Some consistency but many variations",
+                    description: "Basic patterns exist but implemented differently",
+                    score: 3
+                },
+                {
+                    text: "Mostly consistent with some gaps",
+                    description: "Good foundations but missing some standardization",
+                    score: 2
+                },
+                {
+                    text: "Very consistent already",
+                    description: "Strong consistency across most interfaces",
+                    score: 1
+                }
+            ]
+        },
+        {
+            question: "How mature are your current design processes?",
+            options: [
+                {
+                    text: "Ad hoc design with minimal process",
+                    description: "Designers work independently with little standardization",
+                    score: 1
+                },
+                {
+                    text: "Basic design reviews and handoffs",
+                    description: "Some process but not well documented or consistent",
+                    score: 2
+                },
+                {
+                    text: "Established design workflow with documentation",
+                    description: "Clear processes with some documentation and guidelines",
+                    score: 3
+                },
+                {
+                    text: "Mature design operations with governance",
+                    description: "Well-documented processes with design ops support",
+                    score: 4
+                }
+            ]
+        },
+        {
+            question: "What's your development team's relationship with design?",
+            options: [
+                {
+                    text: "Developers build from mockups with minimal collaboration",
+                    description: "Traditional handoff model with limited interaction",
+                    score: 1
+                },
+                {
+                    text: "Regular collaboration but inconsistent implementation",
+                    description: "Good communication but variable design fidelity",
+                    score: 2
+                },
+                {
+                    text: "Strong design-dev partnership with shared tools",
+                    description: "Collaborative process with good implementation quality",
+                    score: 3
+                },
+                {
+                    text: "Integrated team with design system mindset",
+                    description: "Developers actively contribute to design consistency",
+                    score: 4
+                }
+            ]
+        },
+        {
+            question: "What resources can you dedicate to design system work?",
+            options: [
+                {
+                    text: "Very limited time and budget",
+                    description: "Can only work on this occasionally between other priorities",
+                    score: 1
+                },
+                {
+                    text: "Some dedicated time but competing priorities",
+                    description: "Can allocate time but other work often takes precedence",
+                    score: 2
+                },
+                {
+                    text: "Dedicated resources for design system initiatives",
+                    description: "Have budget and time specifically for this work",
+                    score: 3
+                },
+                {
+                    text: "Full-time design system team or strong commitment",
+                    description: "Dedicated personnel or significant organizational support",
+                    score: 4
+                }
+            ]
+        },
+        {
+            question: "How supportive is leadership of design standardization?",
+            options: [
+                {
+                    text: "Leadership doesn't see the value yet",
+                    description: "Need to build a business case and gain buy-in",
+                    score: 1
+                },
+                {
+                    text: "Some interest but not a priority",
+                    description: "Supportive in principle but not actively promoting it",
+                    score: 2
+                },
+                {
+                    text: "Supportive and willing to invest",
+                    description: "Leadership understands value and supports investment",
+                    score: 3
+                },
+                {
+                    text: "Strong champion and strategic priority",
+                    description: "Design system work is seen as critical to success",
+                    score: 4
+                }
+            ]
+        }
+    ];
+
+    function updateInteractionData() {
+        const answeredQuestions = answers.map((score, index) => {
+            if (score !== undefined) {
+                const q = questions[index];
+                const selectedOption = q.options.find(opt => opt.score === score);
+                return `Q${index + 1}: ${selectedOption.text} (${score}/4)`;
+            }
+            return null;
+        }).filter(Boolean);
+        
+        const currentScore = answers.filter(a => a !== undefined).reduce((sum, score) => sum + score, 0);
+        const maxPossible = answers.filter(a => a !== undefined).length * 4;
+        const currentPercentage = maxPossible > 0 ? Math.round((currentScore / maxPossible) * 100) : 0;
+        
+        userInteractionData = `Design System Readiness Assessment:\n${answeredQuestions.join('\n')}\nCurrent Score: ${currentScore}/${maxPossible} (${currentPercentage}%)`;
+        window.userInteractionData = userInteractionData;
+    }
+
+    function initAssessment() {
+        renderQuestion();
+        updateProgress();
+    }
+
+    function renderQuestion() {
+        const container = document.getElementById('questionContainer');
+        
+        if (currentQuestion >= questions.length) {
+            showResults();
+            return;
+        }
+
+        const q = questions[currentQuestion];
+        const html = `
+            <div class="question-container active">
+                <div class="text-sm text-blue-600 font-medium mb-3">Question ${currentQuestion + 1} of ${questions.length}</div>
+                <div class="text-xl font-semibold text-gray-800 mb-6">${q.question}</div>
+                <div class="options">
+                    ${q.options.map((option, index) => `
+                        <div class="option" onclick="selectOption(${index})" data-option="${index}">
+                            <div class="option-text">${option.text}</div>
+                            <div class="option-description">${option.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="navigation">
+                    <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300" onclick="previousQuestion()" ${currentQuestion === 0 ? 'style="visibility: hidden"' : ''}>
+                        <i class="fas fa-arrow-left mr-2"></i> Previous
+                    </button>
+                    <button class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300 transform hover:-translate-y-1" id="nextBtn" onclick="nextQuestion()" disabled>
+                        Next <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        container.innerHTML = html;
+        
+        // If there's a previous answer, select it
+        if (answers[currentQuestion] !== undefined) {
+            const selectedScore = answers[currentQuestion];
+            const optionIndex = q.options.findIndex(opt => opt.score === selectedScore);
+            if (optionIndex !== -1) {
+                document.querySelector(`[data-option="${optionIndex}"]`).classList.add('selected');
+                document.getElementById('nextBtn').disabled = false;
+            }
+        }
+    }
+
+    function selectOption(optionIndex) {
+        // Remove previous selection
+        document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+        
+        // Add selection to clicked option
+        document.querySelector(`[data-option="${optionIndex}"]`).classList.add('selected');
+        
+        // Store answer
+        answers[currentQuestion] = questions[currentQuestion].options[optionIndex].score;
+        
+        // Enable next button
+        document.getElementById('nextBtn').disabled = false;
+        
+        // Update interaction data
+        updateInteractionData();
+    }
+
+    function nextQuestion() {
+        if (answers[currentQuestion] === undefined) return;
+        
+        currentQuestion++;
+        renderQuestion();
+        updateProgress();
+    }
+
+    function previousQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            renderQuestion();
+            updateProgress();
+        }
+    }
+
+    function updateProgress() {
+        const progress = ((currentQuestion) / questions.length) * 100;
+        document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
+    }
+
+    function calculateResults() {
+        const totalScore = answers.reduce((sum, score) => sum + score, 0);
+        const maxScore = questions.length * 4;
+        const percentage = Math.round((totalScore / maxScore) * 100);
+        
+        let level, description, recommendations;
+        
+        if (percentage >= 80) {
+            level = "System Ready";
+            description = "Your organization is well-positioned to implement a comprehensive design system. You have the team structure, processes, and support needed for success.";
+            recommendations = {
+                approach: "Comprehensive Design System",
+                timeline: "6-12 months",
+                phases: [
+                    { title: "Foundation Setup", duration: "4-6 weeks", description: "Establish governance, audit existing components, create core tokens" },
+                    { title: "Component Library", duration: "8-12 weeks", description: "Build comprehensive component library with documentation" },
+                    { title: "Team Adoption", duration: "6-8 weeks", description: "Roll out to teams with training and support systems" },
+                    { title: "Iteration & Scale", duration: "Ongoing", description: "Continuous improvement and expansion based on usage" }
+                ],
+                priorities: [
+                    "Establish design system governance structure",
+                    "Conduct comprehensive design audit and token extraction",
+                    "Build robust component library with extensive documentation",
+                    "Create adoption training program for all teams",
+                    "Set up automated testing and quality assurance processes"
+                ],
+                resources: [
+                    "Dedicated design system team (2-3 people minimum)",
+                    "Design system tools (Figma, Storybook, documentation platform)",
+                    "Strong development partnerships for implementation",
+                    "Executive sponsorship and change management support"
+                ]
+            };
+        } else if (percentage >= 60) {
+            level = "Foundation Ready";
+            description = "You have good fundamentals in place. Focus on building strong foundations before scaling to a full design system.";
+            recommendations = {
+                approach: "Phased Foundation Building",
+                timeline: "4-8 months",
+                phases: [
+                    { title: "Process Strengthening", duration: "3-4 weeks", description: "Improve design processes and team collaboration" },
+                    { title: "Core Components", duration: "6-8 weeks", description: "Create foundational component library" },
+                    { title: "Documentation & Guidelines", duration: "4-6 weeks", description: "Build comprehensive usage documentation" },
+                    { title: "Gradual Adoption", duration: "8-10 weeks", description: "Pilot with key teams and iterate based on feedback" }
+                ],
+                priorities: [
+                    "Strengthen design review and approval processes",
+                    "Create core component library focusing on most-used patterns",
+                    "Develop comprehensive style guide and usage documentation",
+                    "Improve designer-developer collaboration workflows",
+                    "Build business case for expanded design system investment"
+                ],
+                resources: [
+                    "Part-time design system champion (50% allocation)",
+                    "Basic design system tools and documentation platform",
+                    "Cross-functional working group for governance decisions",
+                    "Training budget for team capability building"
+                ]
+            };
+        } else if (percentage >= 40) {
+            level = "Building Readiness";
+            description = "You're making progress but need to strengthen team processes and gain more organizational support before implementing a design system.";
+            recommendations = {
+                approach: "Capability Building Focus",
+                timeline: "3-6 months",
+                phases: [
+                    { title: "Team Alignment", duration: "2-3 weeks", description: "Align team on design system vision and benefits" },
+                    { title: "Process Improvement", duration: "4-6 weeks", description: "Establish better design and development workflows" },
+                    { title: "Pilot Components", duration: "6-8 weeks", description: "Create small set of reusable components" },
+                    { title: "Stakeholder Buy-in", duration: "4-6 weeks", description: "Build business case and secure leadership support" }
+                ],
+                priorities: [
+                    "Establish consistent design review processes",
+                    "Create shared design principles and basic style guide",
+                    "Build small pilot component library to demonstrate value",
+                    "Improve designer-developer communication and handoffs",
+                    "Document business case for design system investment"
+                ],
+                resources: [
+                    "Design system advocate (20-30% time allocation)",
+                    "Basic component library tools (Figma libraries, simple documentation)",
+                    "Regular cross-team meetings for alignment",
+                    "Small budget for tools and training"
+                ]
+            };
+        } else {
+            level = "Early Preparation";
+            description = "Focus on building team capabilities and organizational readiness before attempting a design system implementation.";
+            recommendations = {
+                approach: "Foundation & Culture Building",
+                timeline: "2-4 months",
+                phases: [
+                    { title: "Vision Setting", duration: "1-2 weeks", description: "Define design system goals and expected benefits" },
+                    { title: "Skill Building", duration: "4-6 weeks", description: "Improve team design and collaboration skills" },
+                    { title: "Process Basics", duration: "3-4 weeks", description: "Establish fundamental design and review processes" },
+                    { title: "Small Wins", duration: "4-6 weeks", description: "Create simple shared assets to build momentum" }
+                ],
+                priorities: [
+                    "Build design team skills and standardize basic workflows",
+                    "Create simple style guide with colors, typography, and basic patterns",
+                    "Establish regular design reviews and feedback processes",
+                    "Improve designer-developer communication and understanding",
+                    "Begin educating stakeholders on design system value"
+                ],
+                resources: [
+                    "Design team training and skill development",
+                    "Basic design tools and shared libraries",
+                    "Regular team meetings and collaboration time",
+                    "Simple documentation and sharing platforms"
+                ]
+            };
+        }
+        
+        return { percentage, level, description, recommendations };
+    }
+
+    function showResults() {
+        const results = calculateResults();
+        
+        // Update final interaction data
+        updateInteractionData();
+        
+        document.getElementById('scoreCircle').textContent = `${results.percentage}%`;
+        document.getElementById('readinessLevel').textContent = results.level;
+        document.getElementById('levelDescription').textContent = results.description;
+        
+        const recommendationsContent = document.getElementById('recommendationsContent');
+        recommendationsContent.innerHTML = `
+            <div class="recommendation-section">
+                <h4>Recommended Approach: ${results.recommendations.approach}</h4>
+                <p><strong>Estimated Timeline:</strong> ${results.recommendations.timeline}</p>
+            </div>
+            
+            <div class="recommendation-section">
+                <h4>Implementation Roadmap</h4>
+                <div class="phase-timeline">
+                    ${results.recommendations.phases.map((phase, index) => `
+                        <div class="phase">
+                            <div class="phase-number">${index + 1}</div>
+                            <div class="phase-content">
+                                <div class="phase-title">${phase.title}</div>
+                                <div class="phase-duration">${phase.duration} • ${phase.description}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="recommendation-section">
+                <h4>Key Priorities</h4>
+                <ul>
+                    ${results.recommendations.priorities.map(priority => `<li>${priority}</li>`).join('')}
+                </ul>
+            </div>
+            
+            <div class="recommendation-section">
+                <h4>Required Resources</h4>
+                <ul>
+                    ${results.recommendations.resources.map(resource => `<li>${resource}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+        
+        document.getElementById('questionContainer').style.display = 'none';
+        document.getElementById('results').classList.remove('hidden');
+        document.getElementById('expBld').classList.remove('hidden');
+        document.getElementById('resetBtn').classList.remove('hidden');
+        
+        updateProgress(); // Set to 100%
+    }
+
+    function resetAssessment() {
+        currentQuestion = 0;
+        answers = [];
+        userInteractionData = "";
+        
+        document.getElementById('questionContainer').style.display = 'block';
+        document.getElementById('results').classList.add('hidden');
+        document.getElementById('expBld').classList.add('hidden');
+        document.getElementById('resetBtn').classList.add('hidden');
+        
+        renderQuestion();
+        updateProgress();
+    }
+
+    $(document).ready(function() {
+        $('#email-form-con').load("email-capture.html");
+        $('#header').load("header.html", function(response, status, xhr) {
+            if (status == "error") {
+                var msg = "Sorry but there was an error: ";
+                $("#error").html(msg + xhr.status + " " + xhr.statusText);
+            } else {
+                $('.design-system').addClass('thisPage');
+            }
+        });
+
+        initAssessment();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', resetAssessment);
+</script>
+
+</body>
+</html>
