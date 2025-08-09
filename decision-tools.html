@@ -23,7 +23,7 @@
         .quiz-container {
             /* background: linear-gradient(135deg, #243ca4 0%, #5e1aa1 100%); */
             color: white;
-            padding: 30px 0;
+            padding: 40px 0;
             margin-bottom: 60px;
         }
         
@@ -55,7 +55,7 @@
         .quiz-question {
             font-size: 1.1rem;
             font-weight: 500;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             text-align: center;
             display: none;
         }
@@ -76,7 +76,7 @@
             background: rgba(255,255,255,0.2);
             border: 2px solid rgba(255,255,255,0.3);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -91,44 +91,57 @@
         .quiz-option.selected {
             background: rgba(255,255,255,0.9);
             color: #003ca4bf;
-            border-color: white;
+            border-color: whitesmoke;
+            opacity: .88;
         }
         
         .quiz-result {
             display: none;
             text-align: center;
-            padding: 20px;
+            padding: 4px;
             background: rgba(255,255,255,0.15);
             border-radius: 10px;
+            margin-top: 38px;
+            outline: 8px solid rgba(255,255,255,0.15);
         }
         
         .quiz-result.show {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
         }
         
-        .quiz-recommendation {
-            font-size: 1.64rem;
+        .quiz-recommendation h3 {
+            font-size: 1.68rem;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: -12px;
+            /* line-height: 1.22; */
+            letter-spacing: .04rem;
+            color: white;
+            margin-top: 14px;
+            text-shadow: 0 2px 6px rgba(4, 20, 88, 0.2);
         }
         
         .quiz-btn {
             background: white;
             color: #033488e8;
             border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 28px;
+            font-weight: 500;
+            letter-spacing: .04rem;
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
-            margin-top: 15px;
+            margin: 14px 0;
+            text-transform: uppercase;
         }
         
         .quiz-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            color: #667eea;
+            color: #1b38b7;
             text-decoration: none;
         }
         
@@ -178,9 +191,9 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="bradcam_text">
-                        <h3>Interactive Decision Tools</h3>
+                        <h3>Interactive Decision&nbsp;Tools</h3>
                         <p>
-                            Guide your entrepreneurial & design journey
+                            Guide your entrepreneurial & design&nbsp;journey
                         </p>
                     </div>
                 </div>
@@ -189,27 +202,7 @@
     </div>
     <!-- /bradcam_area  -->
 
-    <!-- about  -->
     <div class="Process_area ">
-        <div class="container">
-            <div class="Process_main_wrap">
-                <div class="row  align-items-center">
-                    <div class="col-xl-5 col-lg-5 col-md-6">
-                        <div class="Process_info2">
-                            <!-- <h3>Decision Tool Library</h3> -->
-                            <!-- <p>
-                                Guide your entrepreneurial and design journey. Get personalized recommendations based on your specific experience and goals.
-                            </p> -->
-                        </div>
-                    </div>
-                    <div class="col-xl-5 col-lg-5  col-md-6 ">
-                        <!-- Space for future image if needed -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--/ about  -->
-
         <!-- Tool Recommendation Quiz -->
         <div class="quiz-container">
             <div class="container">
@@ -217,7 +210,7 @@
                     <div class="col-xl-8 col-lg-10">
                         <div class="quiz-box">
                             <!-- <h3 class="quiz-title">Where to Start</h3> -->
-                            <h4 class="quiz-subtitle">Take a two question quiz to find the decision tool for your specific needs</h4>
+                            <h4 class="quiz-subtitle">Take a two question quiz to match a decision tool to your specific&nbsp;needs</h4>
                             
                             <div id="quiz-content">
                                 <!-- Question 1 -->
@@ -596,12 +589,12 @@
         // Business Idea paths
         'business-idea_time': {
             tool: 'Business Idea Generator',
-            description: 'Quick idea generation with automated business plan creation to save time.',
+            description: 'Idea generation with automated business plan.',
             link: 'business-idea-generator.html'
         },
         'business-idea_skills': {
             tool: 'Business Idea Generator',
-            description: 'Generate ideas that match your existing skills and interests for easier execution.',
+            description: 'Generate ideas that match your existing skills and interests.',
             link: 'business-idea-generator.html'
         },
         'business-idea_budget': {
@@ -613,51 +606,51 @@
         // Validate Idea paths
         'validate-idea_fast-feedback': {
             tool: 'Project Validation Method Selector',
-            description: 'Learn rapid validation methods like landing page tests and concept validation.',
+            description: 'Learn rapid validation methods.',
             link: 'project-validation-methods.html'
         },
         'validate-idea_low-cost': {
             tool: 'Project Validation Method Selector',
-            description: 'Discover budget-friendly validation approaches like surveys and interviews.',
+            description: 'Discover budget-friendly validation approaches.',
             link: 'project-validation-methods.html'
         },
         'validate-idea_deep-insight': {
             tool: 'Project Validation Method Selector',
-            description: 'Comprehensive validation methods including user research and prototyping.',
+            description: 'Comprehensive validation methods.',
             link: 'project-validation-methods.html'
         },
 
         // Assess Readiness paths
         'assess-readiness_personal': {
             tool: 'Entrepreneur Decision Tree',
-            description: 'Evaluate your personal entrepreneurial readiness and get actionable next steps.',
+            description: 'Evaluate your entrepreneurial readiness and get actionable next steps.',
             link: 'entrepreneur-decision-tree.html'
         },
         'assess-readiness_team': {
             tool: 'Design System Readiness Assessment',
-            description: 'Assess your team\'s capabilities and readiness for systematic product development.',
+            description: 'Assess your team\'s readiness for systematic product development.',
             link: 'design-system-readiness.html'
         },
         'assess-readiness_market': {
             tool: 'Entrepreneur Decision Tree',
-            description: 'Comprehensive market and business readiness assessment with strategic guidance.',
+            description: 'Comprehensive business readiness assessment with strategic guidance.',
             link: 'entrepreneur-decision-tree.html'
         },
 
         // Improve UX paths
         'improve-ux_ux-approach': {
             tool: 'UX Methods Decision Tree',
-            description: 'Find the right UX methods for your specific project type and constraints.',
+            description: 'Find the right UX methods for your specific project.',
             link: 'ux-method-tree.html'
         },
         'improve-ux_design-processes': {
             tool: 'UX Maturity Assessment',
-            description: 'Evaluate and improve your team\'s design processes and collaboration methods.',
+            description: 'Evaluate and improve your team\'s design processes and collaboration.',
             link: 'ux-maturity-assessment.html'
         },
         'improve-ux_product-market-fit': {
             tool: 'Project Validation Method Selector',
-            description: 'Validate your product-market fit with user research and testing methods.',
+            description: 'Validate your product-market fit with user research and testing.',
             link: 'project-validation-methods.html'
         }
     };
@@ -692,12 +685,17 @@
             // Hide non-selected Q1 options and show question 2
             setTimeout(() => {
                 $('#q1-options').find('.quiz-option').not('.selected').hide(320);
+                // make selected option disabled with disabled attribute
+                $('#q1-options').find('.quiz-option.selected').attr('disabled', true);
+
                 populateQ2For(value);
             }, 300);
         } else if (question === 2) {
             // Hide non-selected Q2 options and show results
             setTimeout(() => {
                 $('#q2-options').find('.quiz-option').not('.selected').hide(320);
+                // make selected option disabled with disabled attribute
+                $('#q2-options').find('.quiz-option.selected').attr('disabled', true);
                 showQuizResults();
             }, 300);
         }
@@ -712,12 +710,12 @@
         const recommendation = quizRecommendations[recommendationKey];
         
         if (recommendation) {
-            $('#recommendation-text').text(`${recommendation.tool}`);
+            $('#recommendation-text').append(`<h3>${recommendation.tool}</h3>`);
             $('#recommendation-link').attr('href', recommendation.link);
             
             // Add description if available
             if (recommendation.description) {
-                $('#recommendation-text').append(`<br><small style="font-size: 0.68em; opacity: 0.9;">${recommendation.description}</small>`);
+                $('#recommendation-text').append(`<br><span style="font-size: 1.22em; opacity: 0.9; line-height: .08rem; font-weight: 300; margin-top: 4px;">${recommendation.description}</span>`);
             }
         } else {
             // Fallback recommendation
@@ -731,7 +729,12 @@
 
     function resetQuiz() {
         // Reset answers
-        quizAnswers = {};
+        quizAnswers = {}; 
+        //remove all content from #recommendation-text
+        $('#recommendation-text').empty();
+
+        $('#q2-options').find('.quiz-option.selected').attr('disabled', false);
+        $('#q1-options').find('.quiz-option.selected').attr('disabled', false);
         
         // Remove all selected states
         $('.quiz-option').removeClass('selected');
@@ -745,6 +748,7 @@
         $('#q1-options .quiz-option').show();
         $('#q1').addClass('active');
         $('#q1-options').show();
+       
     }
 
     </script>
