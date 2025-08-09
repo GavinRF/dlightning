@@ -11,8 +11,12 @@ body {
         }
         .blog-title{
             color: #333;
+            margin-bottom: 0.82rem;
         }
         @media only screen and (max-width: 518px) {
+            .blog-header{
+                margin-bottom: 0.2rem;
+            }
             .blog-title{
                 font-size: 1.46rem;
             }
@@ -26,7 +30,10 @@ body {
             width: 26px;
             height: 26px;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-right: 4px;
+        }
+        .reading-time{
+            margin-left: 14px;
         }
         .featured-image {
             width: 100%;
