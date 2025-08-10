@@ -25,6 +25,9 @@ body {
             font-size: 0.9rem;
             color: #6c757d;
             margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            max-width: 388px;
         }
         .author-image {
             width: 26px;

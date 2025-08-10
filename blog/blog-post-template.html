@@ -57,10 +57,11 @@
                     <img src="../blog/{AUTHOR_IMAGE}" alt="{AUTHOR}" class="author-image">
                      {AUTHOR} &emsp;
                 </span>
+                <div class="date-con">
                 <span class="date"><i class="far fa-calendar-alt me-2"></i> {DATE}</span>
-                <br><br>
-                <a href="../blog/blog.html"><i class="fa fa-arrow-left"></i> Sparks list</a>
+                </div>
             </div>
+                <a href="../blog/blog.html"><i class="fa fa-arrow-left"></i> Sparks list</a>
         </div>
     </div>
 
@@ -186,7 +187,7 @@
             const time = Math.ceil(words / wpm);
             
             // Add reading time indicator
-            $('.date').append(`
+            $('.post-meta').append(`
                 <span class="reading-time">
                     <i class="far fa-clock"></i>
                     <span>${time} min read</span>
