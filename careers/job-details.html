@@ -1,0 +1,1004 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>D⚡ | Job Details</title>
+    <meta name="description" content="Job details and application for positions at Dlightning">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/animate.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        header {
+            z-index: 999;
+        }
+
+        .job-hero {
+            background-size: cover;
+            background-position: bottom;
+            padding: 134px 0 90px 0px;
+            background-repeat: no-repeat;
+            position: relative;
+            z-index: 0;
+            background-color: #0181F5;
+        }
+
+        .job-hero h1 {
+            font-size: 60px;
+            color: #fff;
+            font-weight: 300;
+            margin-bottom: 0;
+            text-transform: capitalize;
+        }
+
+        .job-hero p {
+            font-size: 18px;
+            color: #fff;
+            font-weight: 400;
+            text-transform: capitalize;
+        }
+
+        .job-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .badge-fulltime, .badge-parttime, .badge-contract, .badge-internship,
+        .badge-remote, .badge-onsite, .badge-hybrid { 
+            background: rgba(255,255,255,0.2); 
+            color: white; 
+        }
+
+        .job-content {
+            background: white;
+            margin: -30px auto 60px auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            padding: 40px;
+        }
+
+        .content-section {
+            padding: 30px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .content-section:last-child {
+            border-bottom: none;
+        }
+
+        .content-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .apply-section {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .back-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+            color: rgba(255,255,255,1);
+        }
+
+        .job-meta {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .meta-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .meta-item i {
+            width: 20px;
+            color: #0181F5;
+            margin-right: 12px;
+        }
+
+        .application-form {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #0181F5;
+            box-shadow: 0 0 0 3px rgba(1, 129, 245, 0.1);
+        }
+
+        .btn-apply {
+            background: #0181F5;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-apply:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 767px) {
+            .job-hero {
+                padding: 80px 0 40px 0;
+            }
+            
+            .job-hero h1 {
+                font-size: 30px;
+            }
+            
+            .job-content {
+                margin: -20px 15px 0 15px;
+                padding: 20px;
+            }
+            
+            .content-section {
+                padding: 20px 0;
+            }
+            
+            .apply-section {
+                padding: 25px;
+                margin: 25px 0;
+            }
+
+            .content-section {
+                padding: 20px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header-start -->
+    <header id='header'></header>
+
+    <!-- Job Hero Section -->
+    <div class="job-hero bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <a href="careers-list.html" class="back-link">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Careers
+                    </a>
+                    
+                    <div id="jobHeaderContent">
+                        <!-- Job header will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Content -->
+    <div class="Process_area">
+        <div class="container" style="max-width: 900px;">
+            <div class="job-content">
+                
+                <div id="jobDetailsContent">
+                    <!-- Job details will be loaded here -->
+                </div>
+                
+                <!-- Application Section -->
+                <div class="apply-section">
+                    <h3>Ready to Apply?</h3>
+                    <p class="mb-4">Join our team and help shape the future of innovation. We'd love to hear from you!</p>
+                    <button id="showApplicationForm" class="btn btn-apply">
+                        Apply for This Position
+                    </button>
+                </div>
+                
+                <!-- Application Form (Initially Hidden) -->
+                <div id="applicationForm" class="application-form" style="display: none;">
+                    <h3 class="mb-4">Application Form</h3>
+                    <p>* indicates required field</p>
+                    <form id="jobApplicationForm">
+                       
+                        <div class="form-group">
+                             <label>Name *</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>LinkedIn Profile URL</label>
+                            <input type="url" name="linkedin" class="form-control" placeholder="https://linkedin.com/in/yourprofile">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Portfolio/Github/Website URL</label>
+                            <input type="url" name="portfolio" class="form-control" placeholder="https://yourportfolio.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Resume/CV URL (Google Drive, Dropbox, etc.)</label>
+                            <input type="url" name="resume" class="form-control" placeholder="https://drive.google.com/...">
+                            <small class="text-muted">We prefer that you hold onto your data so you can update it</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Optional Message</label>
+                            <textarea name="optionalMessage" class="form-control" rows="6" 
+                                      placeholder="Tell us why you're interested in this role and what makes you a great fit for our team. Anything else you'd like us to know? Or, questions you have about the role."></textarea>
+                        </div>
+                        
+                        <input type="hidden" name="jobTitle" id="hiddenJobTitle">
+                        <input type="hidden" name="jobId" id="hiddenJobId">
+                        <input type="hidden" name="applicationDate" id="hiddenApplicationDate">
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-apply" style="margin-bottom: 22px;">
+                                Submit Application
+                            </button>
+                            <button type="button" id="cancelApplication" class="btn btn-secondary ml-3" style="margin-bottom: 22px;">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Success Message -->
+                <div id="successMessage" class="apply-section" style="display: none; background: #d4edda; border: 1px solid #c3e6cb;">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 20px;"></i>
+                    <h3 style="color: #155724;">Application Submitted!</h3>
+                    <p style="color: #155724;">Thank you for your interest in joining Dlightning. We've received your application and will review it shortly. You should hear back from us within 1-2 weeks.</p>
+                    <a href="careers-list.html" class="btn btn-outline-success">
+                        <i class="fas fa-arrow-left mr-2"></i>View More Opportunities
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="error"></div>
+
+    <!-- FOOTER -->
+    <div class="footer" id="footer"></div>
+
+<script>
+    // Sample job data - matches the careers page
+    const sampleJobs = [
+        {
+            id: 1,
+            title: "Experience Designer Intern",
+            department: "Design",
+            employmentType: "Internship",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "At Dlightning⚡ we're on a mission to empower innovators by helping them quickly validate business ideas and achieve product-market fit. Our platform guides users through refining their product narrative, ensuring that great ideas turn into successful ventures. We're passionate about creativity, innovation, and making an impact on the world through social-entrepreneurship.",
+            roleDescription: "This part-time remote role for an Intern at Dlightning. The Intern will be responsible for assisting with various day-to-day tasks and projects to support the team's objectives. As an intern at Dlightning, you'll have the unique opportunity to work closely with our product development team, contributing to the design and implementation of features that enhance the user experience. You'll gain hands-on experience in the startup environment, learning about the full cycle of product development—from ideation to execution.",
+            responsibilities: [
+                "Design thinking and user research",
+                "Visual design and user experience (UX) design", 
+                "Prototyping and wireframing",
+                "Collaborating with product development team",
+                "Contributing to feature design and implementation",
+                "Learning the full product development cycle"
+            ],
+            qualifications: [
+                "Design Thinking and User Research skills",
+                "Visual Design and User Experience (UX) skills",
+                "Prototyping skills",
+                "Strong creativity and problem-solving abilities",
+                "Excellent communication and collaboration skills",
+                "Ability to work independently and as part of a team",
+                "Pursuing a degree in Design, Human-Computer Interaction, or related field",
+                "Passionate about startups, innovation, and user experience design",
+                "Eagerness to learn and take on new challenges"
+            ],
+            benefits: [
+                "Work directly with experienced entrepreneurs and product developers",
+                "Gain valuable experience in a fast-paced, innovative environment",
+                "Flexible working hours and remote work options",
+                "Opportunity to make a tangible impact on the success of a growing startup",
+                "Potential for full-time opportunities after the internship"
+            ],
+            salaryRange: "Unpaid (Academic Credit Available)",
+            applicationDeadline: "2025-12-15",
+            contactEmail: "dlightningexperience@gmail.com",
+            datePosted: "2025-08-15",
+            isActive: true
+        },
+        {
+            id: 2,
+            title: "Senior Product Designer",
+            department: "Design",
+            employmentType: "Full-time",
+            location: "Hybrid",
+            experienceLevel: "Senior Level",
+            description: "Lead the design vision for our platform and shape the future of innovation tools. Drive user-centered design across all product touchpoints while mentoring the next generation of designers.",
+            roleDescription: "As a Senior Product Designer at Dlightning, you'll be responsible for leading the design strategy and execution for our core platform. You'll work closely with product managers, engineers, and stakeholders to create intuitive, beautiful experiences that help entrepreneurs validate and develop their ideas. This role combines strategic thinking with hands-on design work.",
+            responsibilities: [
+                "Lead design strategy and vision for core platform features",
+                "Conduct user research and usability testing",
+                "Create wireframes, prototypes, and high-fidelity designs",
+                "Collaborate with engineering teams on implementation",
+                "Mentor junior designers and interns",
+                "Develop and maintain design systems",
+                "Present design concepts to stakeholders"
+            ],
+            qualifications: [
+                "5+ years of product design experience",
+                "Strong portfolio showcasing successful digital products",
+                "Expertise in design tools (Figma, Sketch, etc.)",
+                "Experience with design systems and component libraries",
+                "Understanding of front-end development constraints",
+                "Excellent communication and presentation skills",
+                "Experience in startup or fast-paced environments",
+                "Bachelor's degree in Design, HCI, or related field"
+            ],
+            benefits: [
+                "Competitive salary ($90,000 - $120,000)",
+                "Equity compensation",
+                "Full health, dental, and vision insurance",
+                "Flexible PTO and work-from-home options",
+                "Professional development budget ($2,000/year)",
+                "Latest design tools and equipment provided"
+            ],
+            salaryRange: "$90,000 - $120,000",
+            applicationDeadline: "2025-12-28",
+            contactEmail: "dlightningexperience@gmail.com",
+            datePosted: "2025-08-10",
+            isActive: true
+        },
+        {
+            id: 3,
+            title: "Frontend Developer",
+            department: "Engineering",
+            employmentType: "Full-time",
+            location: "Remote",
+            experienceLevel: "Mid Level",
+            description: "Build and maintain our web platform using modern JavaScript frameworks. Work closely with designers to create exceptional user experiences that help entrepreneurs succeed.",
+            roleDescription: "As a Frontend Developer at Dlightning, you'll be responsible for implementing user-facing features and ensuring our platform delivers a smooth, responsive experience. You'll work in a collaborative environment with designers, backend developers, and product managers to bring innovative ideas to life.",
+            responsibilities: [
+                "Develop responsive web applications using React/Vue.js",
+                "Collaborate with designers to implement pixel-perfect UIs",
+                "Optimize application performance and user experience",
+                "Write clean, maintainable, and well-tested code",
+                "Participate in code reviews and technical discussions",
+                "Stay current with frontend technologies and best practices",
+                "Contribute to technical architecture decisions"
+            ],
+            qualifications: [
+                "3+ years of frontend development experience",
+                "Strong proficiency in JavaScript (ES6+), HTML5, CSS3",
+                "Experience with React, Vue.js, or similar frameworks",
+                "Knowledge of responsive design and cross-browser compatibility",
+                "Experience with version control (Git) and CI/CD",
+                "Understanding of web performance optimization",
+                "Strong problem-solving and debugging skills",
+                "Bachelor's degree in Computer Science or equivalent experience"
+            ],
+            benefits: [
+                "Remote-first culture with flexible hours",
+                "Competitive salary ($70,000 - $95,000)",
+                "Equity participation",
+                "Health insurance and wellness benefits",
+                "Learning and development budget",
+                "Latest development tools and equipment"
+            ],
+            salaryRange: "$70,000 - $95,000",
+            applicationDeadline: "2025-12-15",
+            contactEmail: "dlightningexperience@gmail.com",
+            datePosted: "2025-08-08",
+            isActive: true
+        },
+        {
+            id: 4,
+            title: "Marketing Communications Intern",
+            department: "Marketing",
+            employmentType: "Internship",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "Join our marketing team to help amplify Dlightning's mission and connect with innovators worldwide. You'll craft compelling narratives, develop content strategies, and learn the fundamentals of startup marketing in a fast-paced environment.",
+            roleDescription: "This part-time remote internship offers hands-on experience in marketing communications at a growing startup. You'll work closely with our marketing team to develop and execute campaigns that showcase how Dlightning empowers entrepreneurs to validate ideas and achieve product-market fit. From content creation to social media strategy, you'll gain exposure to all aspects of marketing communications while contributing to our mission of supporting innovation worldwide.",
+            responsibilities: [
+            "Create engaging content for social media, blog posts, and marketing materials",
+            "Assist in developing and executing email marketing campaigns",
+            "Support content strategy development and editorial calendar planning",
+            "Conduct research on target audiences and market trends",
+            "Help manage social media presence across multiple platforms",
+            "Assist with event planning and promotional activities",
+            "Collaborate with design team on visual marketing assets",
+            "Monitor and analyze marketing campaign performance metrics"
+            ],
+            qualifications: [
+            "Pursuing a degree in Marketing, Communications, Journalism, or related field",
+            "Strong writing and communication skills with attention to detail",
+            "Basic understanding of social media platforms and digital marketing",
+            "Creative mindset with ability to think outside the box",
+            "Familiarity with content management systems and basic design tools",
+            "Analytical skills to interpret marketing metrics and data",
+            "Passionate about startups, entrepreneurship, and innovation",
+            "Self-motivated with ability to work independently in remote environment",
+            "Eagerness to learn and adapt in a fast-paced startup setting"
+            ],
+            benefits: [
+            "Gain hands-on experience in all aspects of startup marketing",
+            "Work directly with experienced marketing professionals and entrepreneurs",
+            "Flexible working hours that accommodate academic schedule",
+            "Remote work environment with collaborative team culture",
+            "Opportunity to see direct impact of your work on company growth",
+            "Professional development and mentorship opportunities",
+            "Potential for full-time position upon graduation",
+            "Build portfolio of real marketing campaigns and content"
+            ],
+            salaryRange: "Academic Credit Available / Stipend Considered",
+            applicationDeadline: "2025-12-08",
+            contactEmail: "careers@dlightning.org",
+            datePosted: "2025-08-20",
+            isActive: true
+        },
+        {
+            id: 5,
+            title: "Product Development Apprentice",
+            department: "Operations",
+            employmentType: "Full-time",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "Launch your career in product development with a comprehensive apprenticeship program. You'll rotate through different teams, learn from experienced professionals, and contribute to building tools that help entrepreneurs succeed.",
+            roleDescription: "This full-time remote apprenticeship is designed for recent graduates or career changers who want to break into product development. Over 12 months, you'll work alongside our product team, engineering team, and design team to understand the complete product lifecycle. You'll contribute to meaningful projects while receiving structured mentorship and professional development opportunities that prepare you for a successful career in tech.",
+            responsibilities: [
+            "Rotate through product, engineering, and design teams to gain comprehensive experience",
+            "Collaborate with product managers to conduct user research and competitive analysis",
+            "Assist in feature development from conception through implementation",
+            "Support quality assurance testing and user acceptance testing processes",
+            "Help maintain product documentation and user guides",
+            "Participate in daily standups, sprint planning, and retrospective meetings",
+            "Contribute to product roadmap discussions and strategic planning sessions",
+            "Assist with customer feedback analysis and feature prioritization",
+            "Support data analysis initiatives to inform product decisions"
+            ],
+            qualifications: [
+            "Bachelor's degree in Computer Science, Design, Business, or related field (or equivalent experience)",
+            "Strong analytical and problem-solving abilities",
+            "Basic understanding of product development methodologies (Agile/Scrum preferred)",
+            "Excellent written and verbal communication skills",
+            "Demonstrated interest in startups, technology, and innovation",
+            "Ability to work effectively in cross-functional teams",
+            "Detail-oriented with strong organizational skills",
+            "Adaptability and eagerness to learn new technologies and processes",
+            "Self-motivated with ability to take initiative in remote work environment"
+            ],
+            benefits: [
+            "Comprehensive 12-month structured learning program",
+            "Direct mentorship from senior product and engineering professionals",
+            "Competitive salary with performance-based increases",
+            "Full health, dental, and vision insurance coverage",
+            "Professional development budget for courses and conferences",
+            "Flexible PTO and work-from-home setup allowance",
+            "Clear path to full-time product role upon successful completion",
+            "Opportunity to work on products used by entrepreneurs worldwide",
+            "Exposure to all aspects of startup operations and growth"
+            ],
+            salaryRange: "$45,000 - $55,000 (with progression potential)",
+            applicationDeadline: "2025-02-29",
+            contactEmail: "careers@dlightning.org", 
+            datePosted: "2025-08-18",
+            isActive: true
+        },
+        {
+            id: 6,
+            title: "User Research Intern",
+            department: "Design",
+            employmentType: "Internship",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "At Dlightning⚡, we're on a mission to empower innovators by helping them quickly validate business ideas and achieve product-market fit. Our platform guides users through refining their product narrative at each stage, ensuring that great ideas turn into successful ventures. We're passionate about creativity, innovation, and making an impact on the world through social-entrepreneurship.",
+            roleDescription: "This part-time remote internship offers hands-on experience in user research at a growing startup focused on innovation and entrepreneurship. You'll work directly with our product and design teams to understand how entrepreneurs use our platform, what challenges they face, and how we can better serve their needs. This role provides comprehensive exposure to user research methodologies while contributing to real product decisions that impact thousands of innovators worldwide.",
+            responsibilities: [
+            "Conduct user interviews with entrepreneurs to understand their validation challenges",
+            "Design and distribute surveys to gather quantitative user feedback",
+            "Assist in planning and executing usability testing sessions for new features",
+            "Analyze user behavior data and identify patterns in platform usage",
+            "Create detailed user personas based on research findings",
+            "Develop user journey maps highlighting pain points and opportunities",
+            "Compile research insights into clear, actionable reports for product team",
+            "Support A/B testing initiatives and analyze results for statistical significance",
+            "Maintain organized repository of user research findings and methodologies"
+            ],
+            qualifications: [
+            "Currently pursuing degree in Psychology, Human-Computer Interaction, Design, or related field",
+            "Basic understanding of qualitative and quantitative research methodologies",
+            "Strong analytical skills with attention to detail and pattern recognition",
+            "Excellent written and verbal communication skills for presenting findings",
+            "Genuine curiosity about user behavior, motivations, and decision-making processes",
+            "Experience with survey tools (Google Forms, Typeform, etc.) preferred",
+            "Basic knowledge of statistical analysis and data interpretation",
+            "Empathy and ability to build rapport with interview participants",
+            "Self-directed learning ability and eagerness to master new research tools"
+            ],
+            benefits: [
+            "Academic credit available through university partnership programs",
+            "Direct mentorship from experienced UX researchers and product team",
+            "Hands-on experience with research that directly influences product decisions",
+            "Flexible schedule designed to accommodate academic commitments",
+            "Portfolio-building opportunities with real user research projects",
+            "Professional development through exposure to startup product development",
+            "Potential for extended internship and full-time offer upon graduation",
+            "Access to premium research tools and platforms for learning",
+            "Networking opportunities within design and research community"
+            ],
+            salaryRange: "Academic Credit + Potential Stipend",
+            applicationDeadline: "2025-02-28",
+            contactEmail: "careers@dlightning.org",
+            datePosted: "2025-08-19",
+            isActive: true
+        },
+        {
+            id: 7,
+            title: "Video Content Creator",
+            department: "Marketing",
+            employmentType: "Contract",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "At Dlightning⚡, we're on a mission to empower innovators by helping them quickly validate business ideas and achieve product-market fit. Our platform guides users through refining their product narrative at each stage, ensuring that great ideas turn into successful ventures. We're passionate about creativity, innovation, and making an impact on the world through social-entrepreneurship.",
+            roleDescription: "This contract position focuses on creating compelling video content that educates entrepreneurs and showcases the power of proper idea validation. You'll work closely with our marketing team to develop a comprehensive video content strategy, from educational tutorials to inspiring customer success stories. This role offers creative freedom to build our video marketing program from the ground up while helping entrepreneurs worldwide understand the value of validating their ideas before building.",
+            responsibilities: [
+            "Produce educational video tutorials demonstrating platform features and best practices",
+            "Create engaging social media video content optimized for different platforms",
+            "Film and edit customer success stories and case study videos",
+            "Develop video content strategy aligned with marketing goals and user needs",
+            "Collaborate with marketing team on promotional campaign videos",
+            "Optimize video content for YouTube, LinkedIn, TikTok, and other social platforms",
+            "Create animated explainer videos for complex validation concepts",
+            "Manage video content calendar and ensure consistent publishing schedule",
+            "Analyze video performance metrics and optimize content based on data"
+            ],
+            qualifications: [
+            "1-2 years of video production experience with portfolio of completed projects",
+            "Proficiency with video editing software (Adobe Premiere, Final Cut Pro, or similar)",
+            "Understanding of social media video best practices and platform requirements",
+            "Creative storytelling abilities with focus on educational and inspirational content",
+            "Basic motion graphics and animation skills (After Effects preferred)",
+            "Experience with video SEO and YouTube optimization",
+            "Self-directed project management skills with ability to meet deadlines",
+            "Understanding of entrepreneur and startup ecosystem preferred",
+            "Ability to translate complex concepts into accessible visual content"
+            ],
+            benefits: [
+            "Project-based compensation with potential for ongoing partnership",
+            "Complete creative control over video strategy and content development",
+            "Flexible schedule and fully remote work arrangement",
+            "Opportunity to build video marketing program from the ground up",
+            "Portfolio development with diverse, high-impact content types",
+            "Potential equity participation with sustained high-quality contribution",
+            "Professional development through exposure to startup marketing",
+            "Access to premium video tools and software licensing",
+            "Credit and recognition for building successful video marketing channel"
+            ],
+            salaryRange: "Project-Based + Performance Bonuses",
+            applicationDeadline: "2025-12-08",
+            contactEmail: "careers@dlightning.org",
+            datePosted: "2025-08-20",
+            isActive: true
+        },
+        {
+            id: 8,
+            title: "People & Culture Specialist",
+            department: "Operations",
+            employmentType: "Part-time",
+            location: "Remote",
+            experienceLevel: "Mid Level",
+            description: "At Dlightning⚡, we're on a mission to empower innovators by helping them quickly validate business ideas and achieve product-market fit. Our platform guides users through refining their product narrative at each stage, ensuring that great ideas turn into successful ventures. We're passionate about creativity, innovation, and making an impact on the world through social-entrepreneurship.",
+            roleDescription: "This part-time remote role combines HR fundamentals with startup agility to help us build an amazing team culture while streamlining our hiring process. As our People & Culture Specialist, you'll be instrumental in shaping how we attract, hire, and support our growing team. You'll balance the practical needs of HR administration with the cultural mission of creating an environment where innovative, passionate people can do their best work while helping entrepreneurs worldwide succeed.",
+            responsibilities: [
+            "Manage end-to-end recruitment process from job posting to onboarding",
+            "Develop comprehensive onboarding programs for new team members",
+            "Create and maintain HR policies, procedures, and employee handbook",
+            "Coordinate team building activities and culture initiatives for remote team",
+            "Handle employee relations, conflict resolution, and performance discussions",
+            "Manage benefits administration and ensure compliance with employment regulations",
+            "Support performance review processes and professional development planning",
+            "Develop employer branding strategy to attract top talent",
+            "Create systems for tracking team satisfaction and engagement metrics"
+            ],
+            qualifications: [
+            "2+ years of HR or recruiting experience, preferably in startup environments",
+            "Understanding of employment law basics and compliance requirements",
+            "Experience with recruiting platforms and applicant tracking systems",
+            "Strong interpersonal and communication skills with conflict resolution experience",
+            "Ability to thrive in ambiguous, fast-changing startup environment",
+            "Genuine passion for building positive, inclusive team culture",
+            "Experience with remote team management and virtual culture building",
+            "Problem-solving mindset with ability to create processes from scratch",
+            "Discretion and professionalism in handling sensitive employee matters"
+            ],
+            benefits: [
+            "Equity compensation package with opportunity for increased ownership",
+            "Flexible part-time schedule (20-25 hours/week) with core collaboration hours",
+            "Opportunity to build HR function and culture from the ground up",
+            "Complete remote work flexibility with home office setup support",
+            "Direct collaboration with founders on strategic people decisions",
+            "Potential for full-time Chief People Officer role as team grows",
+            "Professional development budget for HR certifications and training",
+            "Significant impact on company culture and team member experience",
+            "Access to HR tools and platforms for professional skill building"
+            ],
+            salaryRange: "Equity + Part-time Compensation",
+            applicationDeadline: "2025-02-25",
+            contactEmail: "careers@dlightning.org",
+            datePosted: "2025-08-18",
+            isActive: true
+        },
+        {
+            id: 9,
+            title: "Content Marketing Manager",
+            department: "Marketing",
+            employmentType: "Contract",
+            location: "Remote",
+            experienceLevel: "Mid Level",
+            description: "At Dlightning⚡, we're on a mission to empower innovators by helping them quickly validate business ideas and achieve product-market fit. Our platform guides users through refining their product narrative at each stage, ensuring that great ideas turn into successful ventures. We're passionate about creativity, innovation, and making an impact on the world through social-entrepreneurship.",
+            roleDescription: "This contract role focuses on driving customer acquisition through strategic content that educates entrepreneurs about the importance of idea validation. You'll develop and execute a comprehensive content marketing strategy that positions Dlightning as the go-to resource for entrepreneurs looking to validate their ideas and achieve product-market fit. Working closely with our founders and product team, you'll create content that not only drives traffic and leads but genuinely helps entrepreneurs succeed in their validation journey.",
+            responsibilities: [
+            "Develop and execute comprehensive content marketing strategy aligned with business goals",
+            "Create high-quality, educational blog posts and in-depth guides for entrepreneurs",
+            "Manage editorial calendar and ensure consistent, valuable content publication",
+            "Optimize all content for SEO to drive organic traffic and lead generation",
+            "Collaborate with product team to create user-focused content and case studies",
+            "Analyze content performance metrics and optimize strategy based on data insights",
+            "Develop and manage email marketing campaigns to nurture leads and users",
+            "Create content frameworks and templates for other team members",
+            "Research and develop thought leadership content on innovation and validation trends"
+            ],
+            qualifications: [
+            "3+ years of content marketing experience, preferably in B2B SaaS or startup environment",
+            "Exceptional writing skills with ability to explain complex concepts simply",
+            "Strong understanding of SEO best practices and content optimization",
+            "Experience with email marketing platforms and marketing automation",
+            "Deep knowledge of entrepreneur and startup ecosystem challenges",
+            "Proven track record of content that drives measurable business results",
+            "Self-directed with ability to work independently and manage priorities",
+            "Experience with content analytics tools (Google Analytics, SEMrush, etc.)",
+            "Understanding of content distribution and promotion strategies"
+            ],
+            benefits: [
+            "Significant equity compensation package with growth potential",
+            "Complete flexibility in schedule and work arrangement",
+            "Opportunity to build content marketing program from ground up",
+            "Direct collaboration with founders on strategic content initiatives",
+            "Potential for full-time role as company scales and revenue grows",
+            "Professional development budget for marketing courses and conferences",
+            "Credit and ownership of content marketing success and growth",
+            "Access to premium marketing tools and content creation resources",
+            "Networking opportunities within startup and marketing communities"
+            ],
+            salaryRange: "Equity Package + Performance Incentives",
+            applicationDeadline: "2025-02-29",
+            contactEmail: "careers@dlightning.org",
+            datePosted: "2025-08-22",
+            isActive: true
+        },
+        {
+            id: 10,
+            title: "Community Builder",
+            department: "Marketing",
+            employmentType: "Part-time",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "At Dlightning⚡, we're on a mission to empower innovators by helping them quickly validate business ideas and achieve product-market fit. Our platform guides users through refining their product narrative at each stage, ensuring that great ideas turn into successful ventures. We're passionate about creativity, innovation, and making an impact on the world through social-entrepreneurship.",
+            roleDescription: "This part-time remote role for a Community Builder at Dlightning focuses on fostering a thriving ecosystem of entrepreneurs and innovators. You'll be the voice and heart of our community, engaging with users across various platforms and creating meaningful connections that drive both user success and business growth. As our Community Builder, you'll have the opportunity to shape how thousands of entrepreneurs interact with our platform and with each other, building the supportive network that's essential for startup success.",
+            responsibilities: [
+            "Engage authentically with users across social media platforms, forums, and community spaces",
+            "Facilitate meaningful online discussions and moderate community conversations",
+            "Organize and host virtual events, workshops, and networking sessions for entrepreneurs",
+            "Create and maintain community guidelines that foster positive, productive interactions",
+            "Gather user feedback, success stories, and feature requests from community interactions",
+            "Support new user onboarding through community channels and peer connections",
+            "Collaborate with content team to amplify user-generated content and success stories",
+            "Monitor community health metrics and report on engagement trends",
+            "Identify and nurture community champions and brand advocates"
+            ],
+            qualifications: [
+            "1-2 years of community building, social media, or customer engagement experience",
+            "Excellent written and verbal communication skills with authentic, engaging voice",
+            "Deep understanding of entrepreneur mindset, challenges, and motivations",
+            "Experience with community platforms (Discord, Slack, Reddit, LinkedIn groups)",
+            "Creative event planning and facilitation abilities for virtual environments",
+            "Strong empathy and ability to build genuine relationships with diverse users",
+            "Self-motivated with ability to work independently in remote environment",
+            "Passion for helping entrepreneurs and small business owners succeed",
+            "Basic understanding of startup ecosystem and product development"
+            ],
+            benefits: [
+            "Flexible part-time schedule (15-20 hours/week) with core collaboration hours",
+            "Equity participation with opportunity to grow stake as company expands",
+            "Complete remote work flexibility with home office setup support",
+            "Direct mentorship from marketing team and founders",
+            "Opportunity to build and shape community strategy from the ground up",
+            "Professional development budget for community management courses",
+            "Access to startup events and networking opportunities",
+            "Clear path to full-time Community Lead role as we scale",
+            "Build extensive network within entrepreneur and startup community"
+            ],
+            salaryRange: "Equity + Performance Bonuses",
+            applicationDeadline: "2025-12-15",
+            contactEmail: "careers@dlightning.org",
+            datePosted: "2025-08-21",
+            isActive: true
+        },
+    ];
+
+    let currentJob = null;
+
+    $(document).ready(function() {
+        $('#footer').load("../footer.html");
+        $('#header').load("../header.html", function(response, status, xhr) {
+            if (status == "error") {
+                var msg = "Sorry but there was an error: ";
+                $("#error").html(msg + xhr.status + " " + xhr.statusText);
+            } else {
+               //$('.careers').addClass('thisPage');
+            }
+        });
+
+        loadJobDetails();
+        initializeForm();
+    });
+
+    function loadJobDetails() {
+        // Get job ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = parseInt(urlParams.get('id'));
+        
+        if (!jobId) {
+            // Redirect to careers page if no job ID
+            window.location.href = 'careers-list.html';
+            return;
+        }
+        
+        // Find the job
+        currentJob = sampleJobs.find(job => job.id === jobId);
+        
+        if (!currentJob) {
+            // Job not found
+            $('#jobHeaderContent').html('<h1>Job Not Found</h1><p>The requested position could not be found.</p>');
+            $('#jobDetailsContent').html('<p><a href="careers-list.html">← Back to all positions</a></p>');
+            return;
+        }
+        
+        // Update page title
+        document.title = `${currentJob.title} - Dlightning Careers`;
+        
+        // Render job header
+        renderJobHeader();
+        
+        // Render job details
+        renderJobDetails();
+        
+        // Set hidden form fields
+        $('#hiddenJobTitle').val(currentJob.title);
+        $('#hiddenJobId').val(currentJob.id);
+        $('#hiddenApplicationDate').val(new Date().toISOString());
+    }
+
+    function renderJobHeader() {
+        const headerHtml = `
+            <div class="mt-4">
+                <h1 class="mb-3" style="color: white; font-size: 2.5rem;">${currentJob.title}</h1>
+                <div class="mb-3">
+                    <span class="job-badge badge-${currentJob.employmentType.toLowerCase().replace('-', '')}">${currentJob.employmentType}</span>
+                    <span class="job-badge badge-${currentJob.location.toLowerCase().replace('-', '')}">${currentJob.location}</span>
+                    <span class="job-badge badge-fulltime">${currentJob.department}</span>
+                </div>
+                <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; text-transform: none;">${currentJob.description}</p>
+            </div>
+        `;
+        
+        $('#jobHeaderContent').html(headerHtml);
+    }
+
+    function renderJobDetails() {
+        const detailsHtml = `
+            <div class="job-meta">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="meta-item">
+                            <i class="fas fa-building"></i>
+                            <span><strong>Department:</strong> ${currentJob.department}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span><strong>Type:</strong> ${currentJob.employmentType}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span><strong>Location:</strong> ${currentJob.location}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="meta-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span><strong>Experience:</strong> ${currentJob.experienceLevel}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span><strong>Salary:</strong> ${currentJob.salaryRange}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span><strong>Apply by:</strong> ${formatDate(currentJob.applicationDeadline)}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3>Role Description</h3>
+                <p>${currentJob.roleDescription}</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Key Responsibilities</h3>
+                <ul>
+                    ${currentJob.responsibilities.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h3>Qualifications</h3>
+                <ul>
+                    ${currentJob.qualifications.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h3>Why Join Us?</h3>
+                <ul>
+                    ${currentJob.benefits.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+                <p class="mt-3"><em>Join Dlightning and be part of a team that's shaping the future of design innovation!</em></p>
+            </div>
+        `;
+        
+        $('#jobDetailsContent').html(detailsHtml);
+    }
+
+    function initializeForm() {
+        // Show application form
+        $('#showApplicationForm').on('click', function() {
+            $('#applicationForm').slideDown();
+            $('html, body').animate({
+                scrollTop: $('#applicationForm').offset().top - 100
+            }, 500);
+        });
+
+        // Cancel application
+        $('#cancelApplication').on('click', function() {
+            $('#applicationForm').slideUp();
+            $('#jobApplicationForm')[0].reset();
+        });
+
+        // Handle form submission
+        $('#jobApplicationForm').on('submit', function(e) {
+            e.preventDefault();
+            submitApplication();
+        });
+    }
+
+    function submitApplication() {
+        // Get form data
+        const formData = new FormData($('#jobApplicationForm')[0]);
+        
+        // Convert to object for easier handling
+        const applicationData = {};
+        for (let [key, value] of formData.entries()) {
+            applicationData[key] = value;
+        }
+        
+        // Show loading state
+        const $submitBtn = $('#jobApplicationForm button[type="submit"]');
+        const originalText = $submitBtn.html();
+        $submitBtn.html('<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...').prop('disabled', true);
+        
+        // Submit Google Form
+        setTimeout(() => {
+            // Hide application form and show success message
+            $('#applicationForm').slideUp();
+            $('#successMessage').slideDown();
+            
+            // Scroll to success message
+            $('html, body').animate({
+                scrollTop: $('#successMessage').offset().top - 100
+            }, 500);
+            
+            // Reset form and button
+            $('#jobApplicationForm')[0].reset();
+            $submitBtn.html(originalText).prop('disabled', false);
+            
+            // In real implementation, submit to Google Form like this:
+
+            const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdOw3N1WoUbtwNCCLBFuArBES_PCUr7RqD_wdGqSPmPosJx_w/formResponse';
+            const googleFormData = new FormData();
+            
+            // Map form fields to Google Form entry IDs
+            googleFormData.append('entry.1865754144', applicationData.name);
+            googleFormData.append('entry.956631536', applicationData.email);
+            googleFormData.append('entry.1589418848', applicationData.phone);
+            googleFormData.append('entry.54140577', applicationData.linkedin);
+            googleFormData.append('entry.1063727846', applicationData.portfolio);
+            googleFormData.append('entry.1984329477', applicationData.resume);
+            googleFormData.append('entry.46411543', applicationData.optionalMessage);
+            googleFormData.append('entry.536020974', applicationData.jobTitle);
+            
+            fetch(googleFormUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: googleFormData
+            });
+            
+        }, 2000);
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    }
+</script>
+
+</body>
+</html>

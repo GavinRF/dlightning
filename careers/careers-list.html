@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name=description content="Join Dlightning and help empower innovators. Explore career opportunities in design, engineering, and innovation.">
+    
+    <title>D⚡ | Careers - Join Our Innovation Team</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        header {
+            z-index: 999;
+        }
+
+        .value-item h4,
+        .value-item p {
+            color: whitesmoke;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .job-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-color: #0181F5;
+        }
+
+        .job-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .badge-full-time { background: #e8f5e8; color: #2d5a2d; }
+        .badge-part-time { background: #fff3e0; color: #e65100; }
+        .badge-contract { background: #f3e5f5; color: #7b1fa2; }
+        .badge-internship { background: #e3f2fd; color: #1565c0; }
+
+        .badge-remote { background: #e8f5e8; color: #2d5a2d; }
+        .badge-onsite { background: #fff3e0; color: #e65100; }
+        .badge-hybrid { background: #f3e5f5; color: #7b1fa2; }
+
+        .search-filters {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            margin-bottom: 0px;
+        }
+
+        .filter-button {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-button:hover {
+            border-color: #0181F5;
+            color: #0181F5;
+        }
+
+        .filter-button.active {
+            background: #0181F5;
+            border-color: #0181F5;
+            color: white;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .company-values {
+            background: linear-gradient(135deg, #0181F5 0%, #045ff1 100%);
+            color: white;
+            padding: 60px 0;
+            margin: 60px 0 0 0;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 20px;
+            color: whitesmoke !important;
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+
+        @media (max-width: 567px) {
+            
+            .job-card {
+                padding: 16px;
+            }
+            
+            .search-filters {
+                padding: 15px;
+            }
+        }
+
+        /* Custom CSS for footer styling */
+.careers-footer {
+    margin-top: 0px; /* mt-24 equivalent (24 * 0.25rem = 6rem) */
+    width: 100%;
+    background-color: #0b2e8e; /* bg-blue-950 equivalent */
+    color: white;
+    padding: 2rem 0; /* py-8 equivalent */
+}
+
+.careers-footer .container {
+    padding-left: 1rem; /* px-4 equivalent */
+    padding-right: 1rem;
+}
+
+.footer-title {
+    font-size: 1.5rem; /* text-2xl equivalent */
+    font-weight: bold;
+    margin-bottom: 1rem; /* mb-4 equivalent */
+    color: white;
+}
+
+.footer-text {
+    color: #c9cbce;
+    max-width: 100%;
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+.footer-link {
+    color: #79b6fd;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #bfdbfe; /* hover:text-blue-200 equivalent */
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .careers-footer {
+        margin-top: 3rem; /* Reduced margin on mobile */
+        padding: 1.5rem 0;
+    }
+    
+    .footer-title {
+        font-size: 1.25rem; /* Slightly smaller on mobile */
+        margin-bottom: 0.75rem;
+    }
+}
+    </style>
+</head>
+
+<body class="bg-gradient-to-r from-blue-50 to-cyan-50 min-h-screen">
+<header id='header'></header>
+
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                    <h1>Join The Team</h1>
+                    <p>Help us empower innovators and shape the future of product development</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin: 44px auto 0 auto; max-width: 1000px;">
+    <!-- Search and Filters -->
+    <div class="search-filters">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Search Jobs</label>
+                <input type="text" id="jobSearch" class="form-control" placeholder="Search by title, department, or keywords...">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Department</label>
+                <select id="departmentFilter" class="form-control">
+                    <option value="">All Departments</option>
+                    <option value="Design">Design</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Operations">Operations</option>
+                    <option value="Business Development">Business Development</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <label class="form-label">Employment Type</label>
+                <div class="filter-buttons">
+                    <button class="filter-button" data-filter="employment" data-value="">All Types</button>
+                    <button class="filter-button" data-filter="employment" data-value="Full-time">Full-time</button>
+                    <button class="filter-button" data-filter="employment" data-value="Part-time">Part-time</button>
+                    <button class="filter-button" data-filter="employment" data-value="Contract">Contract</button>
+                    <button class="filter-button" data-filter="employment" data-value="Internship">Internship</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-12">
+                <label class="form-label">Location</label>
+                <div class="filter-buttons">
+                    <button class="filter-button" data-filter=location data-value="">All Locations</button>
+                    <button class="filter-button" data-filter=location data-value="Remote">Remote</button>
+                    <button class="filter-button" data-filter=location data-value="On-site">On-site</button>
+                    <button class="filter-button" data-filter=location data-value="Hybrid">Hybrid</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Results -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 id="resultsCount">Loading opportunities...</h3>
+                <button class="btn btn-outline-primary" onclick="clearAllFilters()">
+                    <i class="fas fa-refresh mr-2"></i>Clear Filters
+                </button>
+            </div>
+            
+            <div id="jobListings">
+                <!-- Jobs will be loaded here -->
+            </div>
+            
+            <div id="noResults" class="no-results" style="display: none;">
+                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.3;"></i>
+                <h4>No positions found</h4>
+                <p>Try adjusting your search criteria or check back later for new opportunities.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Company Values Section -->
+<div class="company-values">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 style="color: white; margin-bottom: 20px;">Why Work at Dlightning?</h2>
+                <p style="color: white; opacity: 0.9; font-size: 1.1rem;">Join a team that's passionate about innovation and making a real impact</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Innovation First</h4>
+                    <p>Work on cutting-edge projects that shape the future of product development</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Collaborative Culture</h4>
+                    <p>Join a team where every voice matters and creativity is encouraged</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Growth Opportunities</h4>
+                    <p>Develop your skills in a fast-paced, learning-focused environment</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h4>Global Impact</h4>
+                    <p>Help entrepreneurs worldwide bring their innovative ideas to life</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="careers-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h3 class="footer-title">Ready to Join Us?</h3>
+                <p class="footer-text">
+                    Don't see the perfect role? We're always looking for talented individuals who share our passion for innovation.
+                    <a href="mailto:dlightningexperience@gmail.com" class="footer-link">Send us your resume</a>
+                    and tell us how you'd like to contribute to our mission.
+                </p>
+            </div>
+            <div class="col-lg-4" id="email-form-con">
+                <!-- Optional: Could load email capture form -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div id="error"></div> -->
+
+<div class="footer" id="footer"></div>
+
+<script>
+     $(document).ready(function() {
+        $('#footer').load("../footer.html");
+        $('#header').load("../header.html", function( response, status, xhr ) {
+            if ( status == "error" ) {
+                var msg = "Sorry but there was an error: ";
+                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+            } else {
+                $('.careers').addClass('thisPage');
+            }
+        });
+    });
+
+    // Sample job data - In real implementation, this would come from your form responses
+    const sampleJobs = [
+        {
+            id: 1,
+            title: "Experience Designer Intern",
+            department: "Design",
+            employmentType: "Internship",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "Join our product development team and contribute to features that enhance user experience. Gain hands-on startup experience from ideation to execution.",
+            responsibilities: "Design thinking, user research, visual design, user experience (UX) design, and prototyping",
+            qualifications: "Design Thinking and User Research skills, Visual Design and UX skills, Prototyping skills, Strong creativity and problem-solving abilities",
+            benefits: "Work with experienced entrepreneurs, flexible hours, remote work, tangible impact, potential full-time opportunities",
+            datePosted: "2025-07-15",
+            isActive: true
+        },
+        {
+            id: 2,
+            title: "Senior Product Designer",
+            department: "Design",
+            employmentType: "Full-time",
+            location: "Hybrid",
+            experienceLevel: "Senior Level",
+            description: "Lead the design vision for our platform and mentor junior designers. Drive user-centered design across all product touchpoints.",
+            responsibilities: "Lead design strategy, mentor team members, conduct user research, create design systems",
+            qualifications: "5+ years UX/Product Design experience, portfolio of successful products, design systems experience",
+            benefits: "Competitive salary, equity, full benefits, professional development budget",
+            datePosted: "2025-07-10",
+            isActive: true
+        },
+        {
+            id: 3,
+            title: "Frontend Developer",
+            department: "Engineering",
+            employmentType: "Full-time",
+            location: "Remote",
+            experienceLevel: "Mid Level",
+            description: "Build and maintain our web platform using modern JavaScript frameworks. Collaborate closely with designers to create exceptional user experiences.",
+            responsibilities: "Develop responsive web applications, optimize performance, collaborate with design team",
+            qualifications: "3+ years JavaScript experience, React expertise, responsive design skills",
+            benefits: "Remote-first culture, competitive compensation, learning budget, flexible schedule",
+            datePosted: "2025-07-08",
+            isActive: true
+        },
+        {
+            id: 4,
+            title: "Marketing Communications Intern",
+            department: "Marketing",
+            employmentType: "Internship",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "Join our marketing team to help amplify Dlightning's mission and connect with innovators worldwide. Craft compelling narratives and develop content strategies.",
+            responsibilities: "Create engaging content for social media and blog posts, assist in email marketing campaigns, support content strategy development, conduct audience research, manage social media presence, collaborate on visual marketing assets",
+            qualifications: "Pursuing degree in Marketing/Communications/Journalism, strong writing and communication skills, basic understanding of social media and digital marketing, creative mindset, passionate about startups and innovation",
+            benefits: "Hands-on startup marketing experience, flexible hours accommodating academic schedule, remote work environment, mentorship opportunities, potential full-time position upon graduation, build real marketing portfolio",
+            datePosted: "2025-07-20",
+            isActive: true
+        },
+        {
+            id: 5,
+            title: "Product Development Apprentice",
+            department: "Operations",
+            employmentType: "Full-time",
+            location: "Remote",
+            experienceLevel: "Entry Level",
+            description: "Launch your career in product development with a comprehensive apprenticeship program. Rotate through teams and learn from experienced professionals.",
+            responsibilities: "Rotate through product, engineering, and design teams, conduct user research and competitive analysis, assist in feature development, support QA testing, maintain product documentation, participate in sprint planning",
+            qualifications: "Bachelor's degree in Computer Science/Design/Business or equivalent, strong analytical and problem-solving abilities, basic understanding of Agile/Scrum, excellent communication skills, interest in startups and technology",
+            benefits: "Comprehensive 12-month structured learning program, direct mentorship from senior professionals, competitive salary with performance increases, full health/dental/vision insurance, professional development budget, clear path to full-time role",
+            datePosted: "2025-07-18",
+            isActive: true
+            },
+              {
+                id: 6,
+                title: "User Research Intern",
+                department: "Design",
+                employmentType: "Internship",
+                location: "Remote",
+                experienceLevel: "Entry Level",
+                description: "Help us understand our users better by conducting research that directly informs product decisions. Learn user research methodologies while contributing to product improvements.",
+                responsibilities: "Conduct user interviews and surveys, analyze user behavior data, assist in usability testing sessions, create user personas and journey maps, compile research findings into actionable insights, support A/B testing initiatives, help maintain user research repository",
+                qualifications: "Pursuing degree in Psychology, HCI, Design, or related field, basic understanding of research methodologies, strong analytical and communication skills, detail-oriented with ability to synthesize insights, curiosity about user behavior and motivations, experience with survey tools preferred",
+                benefits: "Academic credit available, mentorship from experienced researchers, hands-on experience with real product decisions, flexible schedule around classes, portfolio-building research projects, potential for extended internship or full-time offer, learn from startup environment",
+                datePosted: "2025-08-19",
+                isActive: true
+            },
+            {
+                id: 7,
+                title: "Video Content Creator",
+                department: "Marketing",
+                employmentType: "Contract",
+                location: "Remote",
+                experienceLevel: "Entry Level",
+                description: "Create engaging video content that educates entrepreneurs and demonstrates our platform's value. From tutorials to success stories, help bring our mission to life through compelling visuals.",
+                responsibilities: "Produce educational video content and tutorials, create social media video content, film and edit customer success stories, develop video content strategy for different platforms, collaborate with marketing team on campaign videos, optimize videos for various social platforms and YouTube",
+                qualifications: "1-2 years video production experience, proficiency with video editing software (Premiere, Final Cut, or similar), understanding of social media video best practices, creative storytelling abilities, basic animation skills preferred, self-directed with ability to manage projects independently",
+                benefits: "Project-based compensation with potential for ongoing work, full creative control over video strategy, flexible schedule and remote work, opportunity to build video marketing program, portfolio development with diverse content types, potential for equity participation with sustained contribution",
+                datePosted: "2025-08-20",
+                isActive: true
+            },
+            {
+                id: 8,
+                title: "People & Culture Specialist",
+                department: "Operations",
+                employmentType: "Part-time",
+                location: "Remote",
+                experienceLevel: "Mid Level",
+                description: "Help us build an amazing team culture and streamline our hiring process. Balance HR fundamentals with startup agility to support our growing team.",
+                responsibilities: "Manage end-to-end recruitment process, develop onboarding programs for new hires, create and maintain HR policies and procedures, coordinate team building and culture initiatives, handle employee relations and conflict resolution, manage benefits administration and compliance, support performance review processes",
+                qualifications: "2+ years HR or recruiting experience preferably in startups, understanding of employment law and compliance basics, experience with recruiting tools and platforms, strong interpersonal and communication skills, ability to work in ambiguous startup environment, passion for building positive team culture",
+                benefits: "Equity compensation package, flexible part-time schedule (20-25 hours/week), opportunity to build HR function from ground up, remote work flexibility, direct collaboration with founders, potential for full-time role as team grows, gain startup HR experience",
+                datePosted: "2025-08-18",
+                isActive: true
+            },  
+            {
+                id: 9,
+                title: "Content Marketing Manager",
+                department: "Marketing",
+                employmentType: "Contract",
+                location: "Remote",
+                experienceLevel: "Mid Level",
+                description: "Drive customer acquisition through compelling content that educates entrepreneurs and showcases the value of idea validation. Build our thought leadership in the innovation space.",
+                responsibilities: "Develop and execute content strategy, create educational blog posts and guides, manage editorial calendar, optimize content for SEO, collaborate with product team on user-focused content, analyze content performance metrics, develop email marketing campaigns",
+                qualifications: "3+ years content marketing experience, strong writing skills with startup/tech focus, understanding of SEO and content analytics, experience with email marketing platforms, knowledge of entrepreneur/startup ecosystem, self-directed with ability to work independently",
+                benefits: "Equity compensation package, flexible schedule and remote work, opportunity to build content program from ground up, work directly with founders, potential for full-time role as company grows, build portfolio with high-impact startup content",
+                datePosted: "2025-08-22",
+                isActive: true
+            },
+            {
+                id: 10,
+                title: "Community Builder",
+                department: "Marketing",
+                employmentType: "Part-time",
+                location: "Remote",
+                experienceLevel: "Entry Level",
+                description: "Foster a thriving community of entrepreneurs and innovators around Dlightning. Engage with users, facilitate discussions, and help build the support network that drives customer success.",
+                responsibilities: "Engage with users on social media and forums, facilitate online discussions and events, create community guidelines and moderate discussions, organize virtual meetups and workshops, gather user feedback and success stories, support customer onboarding through community channels",
+                qualifications: "1-2 years community building or social media experience, excellent communication and interpersonal skills, understanding of entrepreneur mindset and challenges, experience with community platforms (Discord, Slack, etc.), creative event planning abilities, passion for helping others succeed",
+                benefits: "Flexible part-time schedule (15-20 hours/week), equity participation, remote work flexibility, direct mentorship from marketing team, opportunity to grow with company, build network in startup community, potential transition to full-time role",
+                datePosted: "2025-08-21",
+                isActive: true
+            }
+    ];
+
+    let currentFilters = {
+        search: '',
+        department: '',
+        employment: '',
+        location: ''
+    };
+
+    // Initialize page
+    $(document).ready(function() {
+        $('#header').load("header.html", function(response, status, xhr) {
+            if (status == "error") {
+                var msg = "Sorry but there was an error: ";
+                $("#error").html(msg + xhr.status + " " + xhr.statusText);
+            } else {
+                $('.careers').addClass('thisPage');
+            }
+        });
+
+        loadJobs();
+        initializeFilters();
+    });
+
+    function loadJobs() {
+        const filteredJobs = filterJobs(sampleJobs);
+        displayJobs(filteredJobs);
+        updateResultsCount(filteredJobs.length);
+    }
+
+    function filterJobs(jobs) {
+        return jobs.filter(job => {
+            if (!job.isActive) return false;
+            
+            // Search filter
+            if (currentFilters.search) {
+                const searchTerm = currentFilters.search.toLowerCase();
+                const searchableText = `${job.title} ${job.department} ${job.description} ${job.responsibilities}`.toLowerCase();
+                if (!searchableText.includes(searchTerm)) return false;
+            }
+            
+            // Department filter
+            if (currentFilters.department && job.department !== currentFilters.department) return false;
+            
+            // Employment type filter
+            if (currentFilters.employment && job.employmentType !== currentFilters.employment) return false;
+            
+            // Location filter
+            if (currentFilters.location && job.location !== currentFilters.location) return false;
+            
+            return true;
+        });
+    }
+
+    function displayJobs(jobs) {
+        const $container = $('#jobListings');
+        const $noResults = $('#noResults');
+        
+        if (jobs.length === 0) {
+            $container.hide();
+            $noResults.show();
+            return;
+        }
+        
+        $noResults.hide();
+        $container.show();
+        
+        const jobsHtml = jobs.map(job => `
+            <div class="job-card" onclick="viewJob(${job.id})">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h4 class="mb-2">${job.title}</h4>
+                        <p class="text-muted mb-0">${job.department}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="job-badge badge-${job.employmentType.toLowerCase().replace('-', '')}">${job.employmentType}</span>
+                        <span class="job-badge badge-${job.location.toLowerCase().replace('-', '')}">${job.location}</span>
+                    </div>
+                </div>
+                
+                <p class="mb-3">${job.description.substring(0, 150)}...</p>
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        <i class="fas fa-calendar mr-1"></i>
+                        Posted ${formatDate(job.datePosted)}
+                    </small>
+                    <button class="btn btn-outline-primary btn-sm">
+                        View Details <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+        
+        $container.html(jobsHtml);
+    }
+
+    function initializeFilters() {
+        // Search input
+        $('#jobSearch').on('input', function() {
+            currentFilters.search = $(this).val();
+            loadJobs();
+        });
+        
+        // Department select
+        $('#departmentFilter').on('change', function() {
+            currentFilters.department = $(this).val();
+            loadJobs();
+        });
+        
+        // Filter buttons
+        $('.filter-button').on('click', function() {
+            const filterType = $(this).data('filter');
+            const filterValue = $(this).data('value');
+            
+            // Update active state
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+            
+            // Update filter
+            currentFilters[filterType] = filterValue;
+            loadJobs();
+        });
+        
+        // Set initial active states
+        $('.filter-button[data-value=""]').addClass('active');
+    }
+
+    function clearAllFilters() {
+        currentFilters = {
+            search: '',
+            department: '',
+            employment: '',
+            location: ''
+        };
+        
+        $('#jobSearch').val('');
+        $('#departmentFilter').val('');
+        $('.filter-button').removeClass('active');
+        $('.filter-button[data-value=""]').addClass('active');
+        
+        loadJobs();
+    }
+
+    function updateResultsCount(count) {
+        const text = count === 1 ? `${count} open position` : `${count} open positions`;
+        $('#resultsCount').text(text);
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 1) return 'yesterday';
+        if (diffDays < 7) return `${diffDays} days ago`;
+        if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+        return date.toLocaleDateString();
+    }
+
+    function viewJob(jobId) {
+        // Navigate to individual job page
+        window.location.href = `job-details.html?id=${jobId}`;
+    }
+</script>
+    <script src="../js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="../js/jquery.slicknav.min.js"></script>
+    <script src="../js/main.js"></script>
+
+</body>
+</html>
