@@ -971,7 +971,26 @@
                     displaySummary = displaySummary.replace(/\n\s*\n\s*\n/g, '\n\n').trim();
                 }
 
-                document.getElementById('summaryContent').innerHTML = displaySummary.replace(/\n/g, '<br>');
+                // Build complete summary with client info first, then AI summary
+                const clientInfoHtml = `
+                    <div class="client-info-summary mb-4" style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #007bff;">
+                        <h4 class="mb-3"><i class="fa fa-user"></i> Client Information</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Name:</strong> ${this.clientData.name}</p>
+                                <p><strong>Email:</strong> ${this.clientData.email}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Company:</strong> ${this.clientData.company || 'Not provided'}</p>
+                                <p><strong>Website:</strong> ${this.clientData.website || 'Not provided'}</p>
+                                <p><strong>Phone:</strong> ${this.clientData.phone || 'Not provided'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                const fullSummary = clientInfoHtml + displaySummary.replace(/\n/g, '<br>');
+                document.getElementById('summaryContent').innerHTML = fullSummary;
                 document.getElementById('completionSummary').style.display = 'block';
 
                 // Add event listener for Purchase Concierge Service button

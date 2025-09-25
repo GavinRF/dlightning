@@ -10,13 +10,14 @@
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            color: #0c052f;
         }
 
         .login-container {
             max-width: 400px;
             margin: 100px auto;
             padding: 40px;
-            background: white;
+            background: #dddeff;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
@@ -28,7 +29,7 @@
         }
 
         .admin-header {
-            background: white;
+            background: #dddeff;
             padding: 24px 30px;
             border-radius: 15px;
             margin-bottom: 14px;
@@ -36,7 +37,7 @@
         }
 
         .intake-card {
-            background: white;
+            background: #dddeff;
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
@@ -46,6 +47,18 @@
 
         .intake-card:hover {
             transform: translateY(-2px);
+        }
+
+        .intake-card.pinned {
+            border-left: 4px solid #28a745;
+            background: linear-gradient(135deg, #dddeff 0%, #cbcef9 100%);
+            position: relative;
+        }
+
+        .pin-indicator {
+            color: #28a745;
+            font-size: 18px;
+            transform: rotate(45deg);
         }
 
         .status-badge {
@@ -68,7 +81,7 @@
 
         .info-item {
             padding: 10px;
-            background: #f8f9fa;
+            background: #eeecff;
             border-radius: 8px;
             border-left: 4px solid #667eea;
         }
@@ -83,17 +96,23 @@
 
         .info-value {
             font-size: 14px;
-            color: #333;
+            color: #110b32;
         }
 
         .summary-preview {
             max-height: 100px;
             overflow: hidden;
             position: relative;
-            background: #f8f9fa;
+            background: #eeecff;
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .summary-preview:hover {
+            background-color: #c6c3fe;
         }
 
         .summary-preview::after {
@@ -102,22 +121,58 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 30px;
-            background: linear-gradient(transparent, #f8f9fa);
+            height: 38px;
+            background: linear-gradient(transparent, #867bfb28);
+            pointer-events: none;
+        }
+
+        .summary-preview:hover::after {
+            background: linear-gradient(transparent, #dab2ff26);
         }
 
         .expand-summary {
             cursor: pointer;
-            color: #667eea;
-            text-decoration: underline;
-            font-size: 12px;
+            color: #425fe2;
+            background: #eeecff;
+            border: 2px solid #667eea;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .expand-summary:hover {
+            background: #667eea;
+            color: #dddeff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .expand-conversation {
+            border-color: #0066cc !important;
+            color: #0066cc !important;
             margin-top: 10px;
+            /* background: #e7f3ff !important; */
+        }
+
+        .expand-conversation:hover {
+            background: #0066cc !important;
+            color: #dddeff !important;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3) !important;
+        }
+
+        .expand-conversation:hover .msg-count {
+            color: #dddeff !important;
         }
 
         .loading {
             text-align: center;
             padding: 50px;
-            color: white;
+            color: #dddeff;
         }
 
         .stats-row {
@@ -128,9 +183,9 @@
         }
 
         .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
+            background: #dddeff;
+            padding: 16px;
+            border-radius: 14px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
@@ -138,17 +193,16 @@
         .stat-number {
             font-size: 2em;
             font-weight: bold;
-            color: #667eea;
+            color: #344dc1;
         }
 
         .stat-label {
             color: #666;
             font-size: 14px;
-            margin-top: 5px;
         }
 
         .filters {
-            background: white;
+            background: #dddeff;
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 20px;
@@ -173,14 +227,14 @@
         }
 
         .actions-history {
-            background: #f8f9fa;
+            background: #eeecff;
             border-radius: 8px;
             padding: 15px;
             border-left: 4px solid #667eea;
         }
 
         .action-item {
-            background: white;
+            background: #dddeff;
             border-radius: 6px;
             padding: 10px;
             margin-bottom: 8px;
@@ -193,7 +247,7 @@
 
         .action-type {
             font-weight: 500;
-            color: #333;
+            color: #110b32;
         }
 
         .action-note {
@@ -211,6 +265,94 @@
 
         .modal-dialog {
             max-width: 500px;
+        }
+
+        /* Conversation Modal Styles */
+        .conversation-content {
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 15px 0;
+        }
+
+        .conversation-message {
+            margin: 0 12px 14px 12px;
+            padding: 12px 15px;
+            border-radius: 10px;
+        }
+
+        .conversation-message.user {
+            background-color: #0052bb;
+            color: #dddeff;
+        }
+
+        .conversation-message.assistant {
+            background-color: #eeecff;
+            color: #110b32;
+            border: 1px solid #dee2e6;
+        }
+
+        .message-role {
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .message-content {
+            line-height: 1.4;
+        }
+
+        /* Compact View Styles */
+        .intake-card.compact {
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .intake-card.compact:not(.expanded) .client-info,
+        .intake-card.compact:not(.expanded) .summary-preview,
+        .intake-card.compact:not(.expanded) .expand-summary,
+        .intake-card.compact:not(.expanded) .expand-conversation,
+        .intake-card.compact:not(.expanded) .actions-history,
+        .intake-card.compact:not(.expanded) .alert {
+            display: none !important;
+        }
+
+        .intake-card.compact:not(.expanded) .admin-actions {
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .intake-card.compact.expanded {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .compact-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .compact-client-details h4 {
+            margin-bottom: 2px;
+        }
+
+        .compact-client-details small {
+            display: block;
+            margin-bottom: 1px;
+        }
+
+        .compact-expanded-content {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .intake-card.compact.expanded .compact-expanded-content {
+            display: block;
         }
     </style>
 </head>
@@ -268,6 +410,14 @@
                         <option value="archived">Archived</option>
                         <option value="all">All (including archived)</option>
                     </select>
+                    <div class="btn-group me-2" role="group">
+                        <button class="btn btn-outline-secondary" id="compactViewBtn" onclick="toggleView('compact')">
+                            <i class="fa fa-list"></i> Compact
+                        </button>
+                        <button class="btn btn-secondary" id="detailedViewBtn" onclick="toggleView('detailed')">
+                            <i class="fa fa-th-large"></i> Detailed
+                        </button>
+                    </div>
                     <button class="btn btn-primary" onclick="refreshData()">
                         <i class="fa fa-refresh"></i>
                     </button>
@@ -325,6 +475,26 @@
         </div>
     </div>
 
+    <!-- Conversation Modal -->
+    <div class="modal fade" id="conversationModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-comments me-2"></i>Client Conversation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="conversationContent" class="conversation-content">
+                        <!-- Conversation will be loaded here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase Configuration -->
     <script type="module">
         // Import Firebase modules
@@ -352,6 +522,7 @@
 
         // Global variables
         let allIntakes = [];
+        let currentViewMode = 'detailed'; // 'detailed' or 'compact'
         let isLoggedIn = false;
 
         // Login functionality
@@ -422,6 +593,7 @@
             const total = intakes.length;
             const completed = intakes.filter(i => i.summary).length;
             const incomplete = total - completed;
+            const needsFollowUp = intakes.filter(i => i.summary && (!i.actions || i.actions.length === 0)).length;
 
             document.getElementById('statsContainer').innerHTML = `
                 <div class="stat-card">
@@ -435,6 +607,10 @@
                 <div class="stat-card">
                     <div class="stat-number">${incomplete}</div>
                     <div class="stat-label">Incomplete</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: #dc3545;">${needsFollowUp}</div>
+                    <div class="stat-label">Needs Follow-up</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${Math.round((completed / total) * 100) || 0}%</div>
@@ -457,19 +633,128 @@
                 return;
             }
 
-            container.innerHTML = intakes.map(intake => {
+            // Sort intakes: pinned first, then by creation date (newest first)
+            const sortedIntakes = intakes.sort((a, b) => {
+                if (a.pinned && !b.pinned) return -1;
+                if (!a.pinned && b.pinned) return 1;
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+
+            container.innerHTML = sortedIntakes.map(intake => {
                 const status = intake.summary ? 'completed' : 'incomplete';
                 const statusClass = `status-${status}`;
                 const createdDate = new Date(intake.createdAt).toLocaleDateString();
                 const createdTime = new Date(intake.createdAt).toLocaleTimeString();
 
+                if (currentViewMode === 'compact') {
+                    return `
+                        <div class="intake-card compact ${intake.pinned ? 'pinned' : ''}">
+                            ${intake.pinned ? '<i class="fa fa-thumbtack pin-indicator"></i>' : ''}
+                            <div class="compact-info">
+                                <div class="compact-client-details">
+                                    <h4 class="mb-0">${intake.clientInfo?.name || 'Anonymous'}</h4>
+                                    <small class="text-muted">${intake.clientInfo?.email || 'No email'}</small>
+                                    <small class="text-muted">${intake.clientInfo?.company || 'No company'}</small>
+                                </div>
+                                <div class="text-center">
+                                    <span class="status-badge ${statusClass}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
+                                </div>
+                                <div class="text-center">
+                                    <small class="text-muted">${createdDate}</small>
+                                </div>
+                                <div class="admin-actions">
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-sm ${intake.pinned ? 'btn-success' : 'btn-outline-secondary'}" onclick="togglePin('${intake.id}')">
+                                            <i class="fa fa-thumbtack"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="toggleExpanded('${intake.id}')">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Expanded Content (hidden by default) -->
+                            <div class="compact-expanded-content">
+                                <div class="client-info">
+                                    <div class="info-item">
+                                        <div class="info-label">Email</div>
+                                        <div class="info-value">${intake.clientInfo?.email || 'Not provided'}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Company</div>
+                                        <div class="info-value">${intake.clientInfo?.company || 'Not provided'}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Phone</div>
+                                        <div class="info-value">${intake.clientInfo?.phone || 'Not provided'}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Website</div>
+                                        <div class="info-value">${intake.clientInfo?.website ? '<a href="'+intake.clientInfo?.website+'" target="_blank">' +intake.clientInfo?.website+ '</a>' : 'Not provided'}</div>
+                                    </div>
+                                </div>
+
+                                ${intake.summary ? `
+                                    <div class="summary-preview" id="summary-${intake.id}" onclick="toggleSummary('${intake.id}')">
+                                        <div class="info-label">Project Summary</div>
+                                        <div class="summary-content">${intake.summary.substring(0, 300)}...</div>
+                                    </div>
+                                    <div class="expand-summary" onclick="toggleSummary('${intake.id}')">
+                                        <i class="fa fa-expand me-1"></i>View Full Summary
+                                    </div>
+                                    ${intake.responses && intake.responses.length > 0 ? `
+                                        <div class="expand-summary expand-conversation" onclick="showConversationModal('${intake.id}')">
+                                            <i class="fa fa-comments me-1"></i>View Full Conversation
+                                            <div>
+                                                <small class="text-muted msg-count">${intake.responses.length} messages in conversation</small>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                ` : intake.responses && intake.responses.length > 0 ? `
+                                    <div class="alert alert-info">
+                                        <i class="fa fa-comments me-2"></i>Conversation exists but no summary generated
+                                    </div>
+                                    <div class="expand-summary" onclick="showConversationModal('${intake.id}')">
+                                        <i class="fa fa-comments me-1"></i>View Full Conversation
+                                        <div>
+                                            <small class="text-muted msg-count">${intake.responses.length} messages in conversation</small>
+                                        </div>
+                                    </div>
+                                ` : `
+                                    <div class="alert alert-warning">
+                                        <i class="fa fa-clock me-2"></i>Intake session incomplete
+                                    </div>
+                                `}
+
+                                <!-- Admin Actions for expanded view -->
+                                <div class="admin-actions mt-3 pt-3 border-top">
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-sm ${intake.pinned ? 'btn-success' : 'btn-outline-secondary'}" onclick="togglePin('${intake.id}')">
+                                            <i class="fa ${intake.pinned ? 'fa-thumbtack' : 'fa-thumbtack'} me-1"></i>${intake.pinned ? 'Pinned' : 'Pin'}
+                                        </button>
+                                        <button class="btn btn-sm btn-warning" onclick="archiveIntake('${intake.id}')" ${intake.archived ? 'disabled' : ''}>
+                                            <i class="fa fa-archive me-1"></i>${intake.archived ? 'Archived' : 'Archive'}
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteIntake('${intake.id}')">
+                                            <i class="fa fa-trash me-1"></i>Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
                 return `
-                    <div class="intake-card">
+                    <div class="intake-card ${intake.pinned ? 'pinned' : ''}">
+                        
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div>
-                                <h5 class="mb-1">${intake.clientInfo?.name || 'Anonymous'}</h5>
+                                <h4 class="mb-1">${intake.clientInfo?.name || 'Anonymous'}</h4>
                                 <small class="text-muted">Session ID: ${intake.id}</small>
                             </div>
+                            ${intake.pinned ? '<i class="fa fa-thumbtack pin-indicator"></i>' : ''}
                             <div class="text-end">
                                 <span class="status-badge ${statusClass}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
                                 <br><small class="text-muted">${createdDate} ${createdTime}</small>
@@ -491,17 +776,39 @@
                             </div>
                             <div class="info-item">
                                 <div class="info-label">Website</div>
-                                <div class="info-value">${intake.clientInfo?.website || 'Not provided'}</div>
+                                <div class="info-value">${'<a href="'+intake.clientInfo?.website+'" target="_blank">' +intake.clientInfo?.website+ '</a>' || 'Not provided'}</div>
                             </div>
                         </div>
 
                         ${intake.summary ? `
-                            <div class="summary-preview" id="summary-${intake.id}">
+                            <div class="summary-preview" id="summary-${intake.id}" onclick="toggleSummary('${intake.id}')">
                                 <div class="info-label">Project Summary</div>
                                 <div class="summary-content">${intake.summary.substring(0, 300)}...</div>
                             </div>
                             <div class="expand-summary" onclick="toggleSummary('${intake.id}')">
                                 <i class="fa fa-expand me-1"></i>View Full Summary
+                            </div>
+                            ${intake.responses && intake.responses.length > 0 ? `
+                                <div class="expand-summary expand-conversation" onclick="showConversationModal('${intake.id}')">
+                                    <i class="fa fa-comments me-1"></i>View Full Conversation
+                                                            ${intake.responses && intake.responses.length > 0 ? `
+                            <div>
+                                <small class="text-muted msg-count">${intake.responses.length} messages in conversation</small>
+                            </div>
+                        ` : ''}
+                                </div>
+                            ` : ''}
+                        ` : intake.responses && intake.responses.length > 0 ? `
+                            <div class="alert alert-info">
+                                <i class="fa fa-comments me-2"></i>Conversation exists but no summary generated
+                            </div>
+                            <div class="expand-summary" onclick="showConversationModal('${intake.id}')">
+                                <i class="fa fa-comments me-1"></i>View Full Conversation
+                                                        ${intake.responses && intake.responses.length > 0 ? `
+                            <div>
+                                <small class="text-muted msg-count">${intake.responses.length} messages in conversation</small>
+                            </div>
+                        ` : ''}
                             </div>
                         ` : `
                             <div class="alert alert-warning">
@@ -530,15 +837,12 @@
                             </div>
                         </div>
 
-                        ${intake.conversation && intake.conversation.length > 0 ? `
-                            <div class="mt-3">
-                                <small class="text-muted">${intake.conversation.length} messages in conversation</small>
-                            </div>
-                        ` : ''}
-
                         <!-- Admin Actions -->
                         <div class="admin-actions mt-3 pt-3 border-top">
                             <div class="btn-group" role="group">
+                                <button class="btn btn-sm ${intake.pinned ? 'btn-success' : 'btn-outline-secondary'}" onclick="togglePin('${intake.id}')">
+                                    <i class="fa ${intake.pinned ? 'fa-thumbtack' : 'fa-thumbtack'} me-1"></i>${intake.pinned ? 'Pinned' : 'Pin'}
+                                </button>
                                 <button class="btn btn-sm btn-warning" onclick="archiveIntake('${intake.id}')" ${intake.archived ? 'disabled' : ''}>
                                     <i class="fa fa-archive me-1"></i>${intake.archived ? 'Archived' : 'Archive'}
                                 </button>
@@ -610,6 +914,46 @@
                     summaryDiv.nextElementSibling.innerHTML = '<i class="fa fa-compress me-1"></i>Collapse Summary';
                 }
             }
+        };
+
+        // Show conversation modal
+        window.showConversationModal = function(intakeId) {
+            const intake = allIntakes.find(i => i.id === intakeId);
+
+            if (!intake || !intake.responses || intake.responses.length === 0) {
+                alert('No conversation found for this intake.');
+                return;
+            }
+
+            const conversationContent = document.getElementById('conversationContent');
+            let conversationHtml = '';
+
+            intake.responses.forEach(msg => {
+                // Add user message if it exists
+                if (msg.userMessage) {
+                    conversationHtml += `
+                        <div class="conversation-message user">
+                            <div class="message-role">Client</div>
+                            <div class="message-content">${msg.userMessage.replace(/\n/g, '<br>')}</div>
+                        </div>
+                    `;
+                }
+
+                // Add assistant response if it exists
+                if (msg.assistantResponse) {
+                    conversationHtml += `
+                        <div class="conversation-message assistant">
+                            <div class="message-role">Assistant</div>
+                            <div class="message-content">${msg.assistantResponse.replace(/\n/g, '<br>')}</div>
+                        </div>
+                    `;
+                }
+            });
+
+            conversationContent.innerHTML = conversationHtml;
+
+            const modal = new bootstrap.Modal(document.getElementById('conversationModal'));
+            modal.show();
         };
 
         // Helper functions for actions
@@ -727,6 +1071,74 @@
             } catch (error) {
                 console.error('Error deleting intake:', error);
                 alert('Error deleting intake. Please try again.');
+            }
+        };
+
+        window.togglePin = async function(intakeId) {
+            const intake = allIntakes.find(i => i.id === intakeId);
+            const newPinnedState = !intake?.pinned;
+
+            try {
+                // Call backend function to persist pin state
+                const togglePin = httpsCallable(functions, 'togglePin');
+                const result = await togglePin({
+                    password: document.getElementById('adminPassword').value,
+                    intakeId,
+                    pinned: newPinnedState
+                });
+
+                if (result.data.success) {
+                    await refreshData();
+                } else {
+                    alert('Failed to toggle pin status. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error toggling pin:', error);
+                alert('Error updating pin status. Please try again.');
+            }
+        };
+
+        // Toggle between compact and detailed view
+        window.toggleView = function(viewMode) {
+            currentViewMode = viewMode;
+
+            // Update button states
+            document.getElementById('compactViewBtn').className = viewMode === 'compact' ? 'btn btn-secondary' : 'btn btn-outline-secondary';
+            document.getElementById('detailedViewBtn').className = viewMode === 'detailed' ? 'btn btn-secondary' : 'btn btn-outline-secondary';
+
+            // Re-render current data
+            displayIntakes(allIntakes);
+            updateStats(allIntakes);
+        };
+
+        // Toggle expanded state of a specific card in compact view
+        window.toggleExpanded = function(intakeId) {
+            const card = document.querySelector(`[onclick*="togglePin('${intakeId}')"]`)?.closest('.intake-card.compact');
+            if (!card) return;
+
+            const isExpanded = card.classList.contains('expanded');
+
+            if (isExpanded) {
+                // Collapse the card
+                card.classList.remove('expanded');
+                const eyeButton = card.querySelector('[onclick*="toggleExpanded"]');
+                if (eyeButton) {
+                    eyeButton.innerHTML = '<i class="fa fa-eye"></i>';
+                    eyeButton.className = 'btn btn-sm btn-outline-primary';
+                }
+            } else {
+                // Expand the card
+                card.classList.add('expanded');
+                const eyeButton = card.querySelector('[onclick*="toggleExpanded"]');
+                if (eyeButton) {
+                    eyeButton.innerHTML = '<i class="fa fa-eye-slash"></i>';
+                    eyeButton.className = 'btn btn-sm btn-primary';
+                }
+
+                // Scroll to the card smoothly
+                // setTimeout(() => {
+                //     card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // }, 100);
             }
         };
     </script>
