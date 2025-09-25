@@ -271,19 +271,19 @@
         <div class="footer" id="footer"></div>
 
         <script>	
-            AOS.init();
+        AOS.init();
 
          $(document).ready(function() {
             $('#footer').load("footer.html");
             $('#header').load("header.html", function( response, status, xhr ) {
-            if ( status == "error" ) {
-                var msg = "Sorry but there was an error: ";
-                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
-            } else {
-                $('.process').addClass('thisPage');
-            }
+                if ( status == "error" ) {
+                    var msg = "Sorry but there was an error: ";
+                    $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+                } else {
+                    $('.process').addClass('thisPage');
+                }
             });
-            });
+        });
 
             //Scroll to top
             var $backToTop = $(".back-to-top");

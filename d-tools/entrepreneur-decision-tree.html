@@ -14,8 +14,8 @@
         <meta property="og:image:width" content="824"/>
         <meta property="og:image:height" content="551"/>
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/style.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
@@ -298,8 +298,8 @@
     //Header + Footer
     $(document).ready(function() {
     $('#email-form-con').load("email-capture.html");
-    $('#footer').load("footer.html");
-    $('#header').load("header.html", function( response, status, xhr ) {
+    $('#footer').load("../footer.html");
+    $('#header').load("../header.html", function( response, status, xhr ) {
         if ( status == "error" ) {
             var msg = "Sorry but there was an error: ";
             $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );

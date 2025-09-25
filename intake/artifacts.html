@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D⚡ | Design Artifacts</title>
+    
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <link rel="stylesheet" href="../css/style.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --gradient-primary: linear-gradient(135deg, #5568bd 32%, #b4b4fa , #c4a4e3 100%);
+            --gradient-secondary: linear-gradient(135deg, #4c73e7 0%, #113274 100%);
+            --gradient-tertiary: linear-gradient(135deg, #3096f0 0%, #08b4bd 100%);
+            --gradient-quaternary: linear-gradient(135deg, #5c4ce7 0%, #201174 100%);
+            --gradient-primary-alt: linear-gradient(135deg, #9a9af1 0%, #ada4e3 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff08" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            color: var(--primary-color);
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-elements::before,
+        .floating-elements::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            filter: blur(14px);
+        }
+
+        .floating-elements::before {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            right: 10%;
+            animation-delay: -2s;
+        }
+
+        .floating-elements::after {
+            width: 150px;
+            height: 150px;
+            bottom: 10%;
+            left: 10%;
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            33% { transform: translateY(-20px); }
+            66% { transform: translateY(10px); }
+        }
+
+        .section-divider {
+            height: 100px;
+            background: var(--gradient-primary);
+        }
+
+        .feature-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(59, 130, 246, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon-research {
+            background: var(--gradient-secondary);
+        }
+
+        .icon-data {
+            background: var(--gradient-tertiary);
+        }
+
+        .icon-impact {
+            background: var(--gradient-quaternary);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-benefits {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-benefits li {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .feature-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .value-proposition {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .value-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12);
+        }
+
+        .value-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-tertiary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .process-section {
+            padding: 2rem 0;
+            background: white;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        .process-step:nth-child(even) {
+            flex-direction: row-reverse;
+            transform: translateX(10px);
+        }
+
+        .process-step:nth-child(1) { animation-delay: 0.2s; }
+        .process-step:nth-child(2) { animation-delay: 0.4s; }
+        .process-step:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .process-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient-secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 2rem;
+            flex-shrink: 0;
+        }
+
+        .process-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .process-content p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .cta-section {
+            background: var(--gradient-primary-alt);
+            padding: 5rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .feature-card {
+                padding: 2rem;
+            }
+            
+            .process-step {
+                flex-direction: column !important;
+                text-align: center;
+            }
+            
+            .process-number {
+                margin: 0 0 1rem 0;
+            }
+        }
+
+        #shader-canvas {
+            position: absolute;
+            z-index: 351;
+            width: 1000px;
+            height: 437px;
+            top: 30%;
+            left: 32%;
+            z-index: 1;
+            background: transparent;
+            animation: float 10s ease-in-out infinite;
+            mix-blend-mode: multiply;
+        }
+
+        @media (max-width: 468px) {
+            #shader-canvas {
+                left: -82%;
+                top: 60%
+            }
+        }
+
+        .fa-arrow-up {
+            font-family: 'FontAwesome';
+            font-size: 16px;
+            padding-left: 1px;
+        }
+
+        .qxCTlb::before {
+            content: "";
+            font-family: 'FontAwesome';
+            margin-right: 6px;
+            font-weight: 200;
+        }
+    </style>
+</head>
+<body>
+        <!-- header-start -->
+        <header id='header'></header>
+        <!-- header-end -->
+    <!-- Hero Section -->
+    <section class="hero-section">
+        
+        <div class="floating-elements"></div>
+        <!-- Shader Canvas -->
+        <canvas id="shader-canvas"></canvas>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Design Artifacts That Align Teams & Drive Success</h1>
+                        <p class="hero-subtitle">
+                            Transform your UX research into compelling case studies that go far beyond validation—creating organizational alignment and measurable business impact.
+                        </p>
+                        <a href="#features" class="cta-button">
+                            <i class="fas fa-bolt me-2"></i>
+                            Discover Experience Builder
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Core Value Proposition -->
+    <section class="value-proposition">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-8 offset-2">
+                    <h2 class="display-4 fw-bold text-dark mb-3">Beyond Validation</h2>
+                    <p class="lead text-muted">The Experience Builder creates living design artifacts that serve as both documentation and alignment tools, transforming how teams collaborate and succeed.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="value-card">
+                        <div class="value-number">85%</div>
+                        <h4>Faster Alignment</h4>
+                        <p class="text-muted">Teams reach consensus quicker when working from comprehensive design artifacts</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card">
+                        <div class="value-number">3x</div>
+                        <h4>Success Rate</h4>
+                        <p class="text-muted">Products with structured UX documentation have significantly higher market success</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card">
+                        <div class="value-number">60%</div>
+                        <h4>Risk Reduction</h4>
+                        <p class="text-muted">Comprehensive case studies identify and mitigate potential issues before development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features -->
+    <section id="features" class="feature-section">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-4 fw-bold mb-3">Transform Your UX Practice</h2>
+                    <p class="lead text-muted">Master the essential skills that forward-thinking organizations value most</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon icon-research">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="feature-title">Become the Interpreter of Unspoken User Truths</h3>
+                        <p class="feature-description">
+                            Beyond basic usability testing, skilled researchers uncover deeper psychological needs users can't easily articulate. You'll transform complex research data into clear insights that drive innovation and reduce product development risks.
+                        </p>
+                        <ul class="feature-benefits">
+                            <li>Uncover hidden user motivations and pain points</li>
+                            <li>Extract meaningful patterns from behavioral data</li>
+                            <li>Translate insights into actionable design decisions</li>
+                            <li>Build competitive advantage through deep user understanding</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon icon-data">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3 class="feature-title">Transform Gut Feelings into Measurable Impact</h3>
+                        <p class="feature-description">
+                            Data-savvy designers connect creative decisions to quantifiable business outcomes, moving beyond subjective debates toward evidence-based design. By understanding how design choices impact key metrics, you'll speak the language executives value.
+                        </p>
+                        <ul class="feature-benefits">
+                            <li>Connect design decisions to conversion rates</li>
+                            <li>Demonstrate ROI of UX improvements</li>
+                            <li>Build credibility with data-driven stakeholders</li>
+                            <li>Optimize for retention and revenue growth</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon icon-impact">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">Transform Great Ideas into Real-World Impact</h3>
+                        <p class="feature-description">
+                            Effective communication, presentation materials, and cross-disciplinary problem-solving skills are essential. By speaking the languages of engineering, product management, and business, you'll build the relationships necessary to shepherd design vision through to successful implementation.
+                        </p>
+                        <ul class="feature-benefits">
+                            <li>Master stakeholder communication and buy-in</li>
+                            <li>Bridge gaps between design and development teams</li>
+                            <li>Create compelling presentation materials</li>
+                            <li>Build lasting cross-functional relationships</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-4 fw-bold mb-3">How Experience Builder Works</h2>
+                    <p class="lead text-muted">Simple actions yielding outsized rewards through structured UX documentation</p>
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <div class="col-lg-6">
+                    <div class="process-content">
+                        <h3>Comprehensive Research Framework</h3>
+                        <p>
+                            Organize market segmentation, product goals, business questions, and upcoming interviews effortlessly. The Experience Builder prompts for details about your project and structures them into a cohesive research plan that includes persona development, empathy mapping, value proposition canvas, and journey mapping.
+                        </p>
+                    </div>
+                </div>
+                <div class="process-number">1</div>
+                <div class="col-lg-5">
+                    <i class="fas fa-clipboard-list" style="font-size: 8rem; color: var(--accent-color); opacity: 0.3;"></i>
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <div class="col-lg-5">
+                    <i class="fas fa-palette" style="font-size: 8rem; color: var(--accent-color); opacity: 0.3;"></i>
+                </div>
+                <div class="process-number">2</div>
+                <div class="col-lg-6">
+                    <div class="process-content">
+                        <h3>Beautiful, Professional Documentation</h3>
+                        <p>
+                            Watch as your research transforms into beautifully designed artifacts without finger cramping. The Project Overview comes to life as you complete each phase, turning simple data inputs into compelling competitor analyses, user personas, and strategic insights that impress stakeholders and align teams.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <div class="col-lg-6">
+                    <div class="process-content">
+                        <h3>Real-Time Collaboration & Alignment</h3>
+                        <p>
+                            Your team can easily view progress, jump in to edit, and build your case study with lightning speed. The Project Overview reveals how the product will serve your customers and aligns the product team around a singular vision, creating the foundation for successful product development and launch.
+                        </p>
+                    </div>
+                </div>
+                <div class="process-number">3</div>
+                <div class="col-lg-6">
+                    <i class="fas fa-handshake" style="font-size: 8rem; color: var(--accent-color); opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="cta-title">Ready to Transform Your UX Practice?</h2>
+                    <p class="cta-text">
+                        Join forward-thinking organizations that are moving beyond gut feelings to create design artifacts that drive measurable business success.
+                    </p>
+                    <a href="https://dlightning.io" class="cta-button me-3">
+                        <i class="fas fa-play me-2"></i>
+                        Start Building
+                    </a>
+                                    <!-- Google Calendar Appointment Scheduling begin -->
+                        <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+                        <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+                        <script>
+                            (function() {
+                            var target = document.currentScript;
+                            window.addEventListener('load', function() {
+                                calendar.schedulingButton.load({
+                                url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1c2Ui9MTkZEcu97MepuTZnO2HjTkt_4mCeJK19OAbDeXT9sTH57Z-GEKZVnKjjxcO33KsGlO8F?gv=true',
+                                color: '#1e40af',
+                                label: 'Schedule a call',
+                                target,
+                                });
+                            });
+                            })();
+                        </script>
+                            <!-- end Google Calendar Appointment Scheduling -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="back-to-top" data-scroll-nav="0"><i class="fa-solid fa-arrow-up"></i></div>
+     <!-- footer start -->
+    <div class="footer" id="footer"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="../js/jquery.slicknav.min.js"></script>
+    <script src="../js/plugins.js"></script>
+
+    <script src="../js/main.js"></script>
+    <script>
+       AOS.init();
+
+            $(document).ready(function() {
+            $('#footer').load("../footer.html");
+            $('#header').load("../header.html", function( response, status, xhr ) {
+            if ( status == "error" ) {
+                var msg = "Sorry but there was an error: ";
+                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+            } else {
+                $('.pricing').addClass('thisPage');
+            }
+            });
+            });
+
+            var $backToTop = $(".back-to-top");
+            $backToTop.hide();
+
+            $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+            });
+
+            $backToTop.on('click', function(e) {
+            $("html, body").animate({scrollTop: 0}, 500);
+            });
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation trigger
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Observe all feature cards for animation
+        document.querySelectorAll('.feature-card, .value-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.floating-elements');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add dynamic counter animation
+        const counters = document.querySelectorAll('.value-number');
+        counters.forEach(counter => {
+            const target = counter.textContent;
+            const increment = target.includes('%') ? 1 : target.includes('x') ? 0.1 : 1;
+            const targetValue = parseFloat(target);
+            let current = 0;
+            
+            const updateCounter = () => {
+                if (current < targetValue) {
+                    current += increment;
+                    counter.textContent = current.toFixed(target.includes('x') ? 1 : 0) + target.replace(/[0-9.]/g, '');
+                    requestAnimationFrame(updateCounter);
+                }
+            };
+            
+            observer.observe(counter);
+            counter.addEventListener('animationstart', updateCounter);
+        });
+
+$(document).ready(function() {
+            // Initialize WebGL Shader
+            initShader();
+            
+        // WebGL Shader Implementation
+        function initShader() {
+            const canvas = document.getElementById('shader-canvas');
+            
+            if (!canvas) {
+                console.error('Canvas element not found');
+                return;
+            }
+            
+            const gl = canvas.getContext('webgl', { alpha: true }) 
+       || canvas.getContext('experimental-webgl', { alpha: true });
+
+            
+            if (!gl) {
+                //alert('Your browser does not support WebGL');
+                return;
+            }
+
+            // Vertex shader source code
+            const vertexShaderSource = `
+                attribute vec2 a_position;
+                void main() {
+                    gl_Position = vec4(a_position, 0, 1);
+                }
+            `;
+
+            // Fragment shader source code (your volumetric cloud shader)
+            const fragmentShaderSource = `
+                precision mediump float;
+                uniform vec2 iResolution;
+                uniform float iTime;
+                
+                vec3 rY(vec3 p, float a) {
+                    vec3 q = p;
+                    float c = cos(a);
+                    float s = sin(a);
+                    q.x = c * p.x + s * p.z;
+                    q.z = -s * p.x + c * p.z;
+                    return q;
+                }
+
+                vec2 sphereIntersectionDistances(vec3 rayOrigin, vec3 rayDirection, vec3 sphereOrigin, float sphereRadius) {
+                    vec3 toCenter = sphereOrigin - rayOrigin;
+                    float toCenterAlongRay = dot(toCenter, rayDirection);
+                    
+                    float perpendicularDistanceSquared = dot(toCenter, toCenter) - toCenterAlongRay * toCenterAlongRay;
+                    float radiusSquared = sphereRadius * sphereRadius;
+                    
+                    if (perpendicularDistanceSquared > radiusSquared) {
+                        return vec2(0.);
+                    }
+                    
+                    float insideSphereAlongRay = sqrt(radiusSquared - perpendicularDistanceSquared);
+                    
+                    float intersection1 = toCenterAlongRay - insideSphereAlongRay;
+                    float intersection2 = toCenterAlongRay + insideSphereAlongRay;
+                    if (intersection1 > intersection2) {
+                        float t = intersection1;
+                        intersection1 = intersection2;
+                        intersection2 = t;
+                    }
+                    
+                    if (intersection1 < 0.) {
+                        if (intersection2 < 0.) {
+                            return vec2(0.);
+                        } else {
+                            intersection1 = intersection2;
+                            intersection2 = 0.;
+                        }
+                    }
+                    
+                    return vec2(intersection1, intersection2);
+                }
+
+                vec3 hash( vec3 p ) {
+                    p = vec3( dot(p,vec3(127.1,311.7, 74.7)),
+                              dot(p,vec3(269.5,183.3,246.1)),
+                              dot(p,vec3(113.5,271.9,124.6)));
+                    return -1.0 + 2.0*fract(sin(p)*43758.5453123);
+                }
+
+                float noise( in vec3 p ) {
+                    vec3 i = floor( p );
+                    vec3 f = fract( p );
+                    vec3 u = f*f*(3.0-2.0*f);
+
+                    return mix( mix( mix( dot( hash( i + vec3(0.0,0.0,0.0) ), f - vec3(0.0,0.0,0.0) ), 
+                                          dot( hash( i + vec3(1.0,0.0,0.0) ), f - vec3(1.0,0.0,0.0) ), u.x),
+                                     mix( dot( hash( i + vec3(0.0,1.0,0.0) ), f - vec3(0.0,1.0,0.0) ), 
+                                          dot( hash( i + vec3(1.0,1.0,0.0) ), f - vec3(1.0,1.0,0.0) ), u.x), u.y),
+                                mix( mix( dot( hash( i + vec3(0.0,0.0,1.0) ), f - vec3(0.0,0.0,1.0) ), 
+                                          dot( hash( i + vec3(1.0,0.0,1.0) ), f - vec3(1.0,0.0,1.0) ), u.x),
+                                     mix( dot( hash( i + vec3(0.0,1.0,1.0) ), f - vec3(0.0,1.0,1.0) ), 
+                                          dot( hash( i + vec3(1.0,1.0,1.0) ), f - vec3(1.0,1.0,1.0) ), u.x), u.y), u.z );
+                }
+
+                float hash11(float p) {
+                    p = fract(p * .1031);
+                    p *= p + 33.33;
+                    p *= p + p;
+                    return fract(p);
+                }
+
+                vec3 hash31(float p) {
+                   vec3 p3 = fract(vec3(p) * vec3(.1031, .1030, .0973));
+                   p3 += dot(p3, p3.yzx + 33.33);
+                   return fract((p3.xxy + p3.yzz) * p3.zyx); 
+                }
+
+                float octavedNoise(vec3 position) {
+                    vec3 samplePosition = position * 2.;
+                    float noiseAmount = noise(samplePosition + iTime * vec3(0.0,0.2,0.0));
+                    samplePosition *= 1.99;
+                    noiseAmount += noise(samplePosition + iTime * vec3(0.05,-0.37,0.02)) * 0.51;
+                    noiseAmount /= 1.51;
+                    return noiseAmount;
+                }
+
+                float density(vec3 position) {
+                    float baseValue = 1.0 - pow(max(0.0, length(position)), 2.0);
+                    float noiseAmount = octavedNoise(position);
+                    return max(0.,min(1.,baseValue - max(0.,noiseAmount * 1.5)));
+                }
+
+                vec4 innerLightPositionAndIntensity() {
+                    float scaledTime = iTime * 6.1;
+                    float hashInput = floor(scaledTime) * 0.1;
+                    
+                    if (hash11(hashInput) < 0.8) return vec4(0.);
+                        
+                    vec3 hash = hash31(hashInput);
+                    float theta = hash.x * 6.283;
+                    float z = hash.y * 2. - 1.;
+                    float sinPhi = sin(acos(z));
+                    vec3 position = vec3(sinPhi * cos(theta), sinPhi * sin(theta), z) * (0.6 + hash.z * 0.2);
+                    
+                    float intensity = sin(fract(scaledTime) * 3.142);
+                    
+                    return vec4(position, intensity);
+                }
+
+                vec4 march(vec3 origin, vec3 direction) {
+                    const int mainSteps = 30;
+                    const int shadowSteps = 10;
+                    const vec3 toLight = normalize(vec3(1.0,1.0,0.));
+                    const float mainDensityScale = 4.;
+                    
+                    const float shadowingThreshold = 0.001;
+                    const float shadowDensityScale = 3.;
+                    
+                    vec3 light = vec3(0.);
+                    float transmittance = 1.;
+                    
+                    vec3 samplePosition = origin;
+                   
+                    const float mainStepLength = 2. / float(mainSteps);
+                    const float shadowStepLength = 1. / float(shadowSteps);
+                    
+                    const vec3 scaledShadowDensity = shadowDensityScale * shadowStepLength / vec3(0.8,0.7,1.0);
+                    const float shadowConstant = -log(shadowingThreshold) / scaledShadowDensity.z;
+                    
+                    const vec3 mainLightColor = vec3(0.6,0.8,1.1);
+                    const vec3 innerLightColor = vec3(0.7,0.4,1.) * 4.;
+                    
+                    vec3 mainStepAmount = direction * mainStepLength;
+                    vec3 shadowStepAmount = toLight * shadowStepLength;
+                    vec4 innerLight = innerLightPositionAndIntensity();
+                    
+                    for(int i = 0; i < mainSteps; i++) {
+                        float localDensity = min(1.0, density(samplePosition) * mainDensityScale);
+                        if (localDensity > 0.001) {
+                            
+                            vec3 shadowSamplePosition = samplePosition;
+                            float shadowAccumulation = 0.;
+                            for(int j = 0; j < shadowSteps; j++) {
+                                shadowSamplePosition += shadowStepAmount;
+                                
+                                shadowAccumulation += min(1.0, density(shadowSamplePosition) * shadowDensityScale);
+                                if (shadowAccumulation > shadowConstant || dot(shadowSamplePosition, shadowSamplePosition) > 1.) break;
+                            }
+                            
+                            vec3 shadowTerm = exp(-shadowAccumulation * scaledShadowDensity);
+                            float stepDensity = min(1.,localDensity * mainStepLength);
+                            vec3 absorbedLight = shadowTerm * stepDensity;
+                            
+                            light += absorbedLight * transmittance * mainLightColor;
+                            
+                            shadowSamplePosition = samplePosition;
+                            shadowAccumulation = 0.;
+                            vec3 toInnerLight = innerLight.xyz - samplePosition;
+                            vec3 innerLightShadowStepAmount = normalize(toInnerLight) * shadowStepLength;
+                            
+                            for(int j = 0; j < shadowSteps; j++) {
+                                shadowSamplePosition += innerLightShadowStepAmount;
+                                
+                                shadowAccumulation += min(1.0, density(shadowSamplePosition) * shadowDensityScale);
+                                
+                                if (shadowAccumulation > shadowConstant || dot(shadowSamplePosition, shadowSamplePosition) > 1.) break;
+                            }
+                            
+                            shadowTerm = exp(-shadowAccumulation * scaledShadowDensity);
+                            absorbedLight = shadowTerm * stepDensity;
+                            
+                            float attenuation = min(1.0, 1.0 / (dot(toInnerLight, toInnerLight) * 2. + 0.0001)) * innerLight.w;
+                            light += absorbedLight * (transmittance * attenuation) * innerLightColor;
+                            
+                            transmittance *= (1.0 - stepDensity);
+
+                            if (transmittance < 0.01) {
+                                break;
+                            }
+                        }
+                        
+                        samplePosition += mainStepAmount;
+                    }
+                    
+                    return vec4(vec3(light), transmittance);
+                }
+
+                void main() {
+                    vec2 uv = 2.0 * (gl_FragCoord.xy / iResolution.xy - 0.5);
+                    uv.x *= iResolution.x / iResolution.y;
+                    const vec3 cameraLookAt = vec3(0.0, 0.0, 0.0);
+                    vec3 cameraPosition = rY(vec3(0.0, 0.1, 1.0) * 2.5, iTime * 0.2);
+                    vec3 cameraForward = normalize(cameraLookAt - cameraPosition);
+                    vec3 cameraRight = cross(cameraForward, vec3(0.0, 1.0, 0.0));
+                    vec3 cameraUp = cross(cameraRight, cameraForward);
+                    
+                    vec3 rayDirection = normalize(uv.x * cameraRight + uv.y * cameraUp + 2.0 * cameraForward);
+                    
+                    vec2 rayDistances = sphereIntersectionDistances(cameraPosition, rayDirection, vec3(0.), 1.);
+                    
+                    vec3 backgroundColor = vec3(1.0);
+                    
+                    if (rayDistances.x != 0. && rayDistances.y != 0.) {
+                        vec3 farIntersection = cameraPosition + rayDirection * rayDistances.y;
+                        
+                        vec4 value = march(farIntersection, -rayDirection);
+                        gl_FragColor = vec4(mix(value.rgb, backgroundColor, value.w), 1.0);
+                    } else {
+                        gl_FragColor = vec4(backgroundColor, 1.0);
+                    }
+                }
+            `;
+
+            // vec3 backgroundColor = vec3(0.1) - length(uv) * 0.04;
+
+            function createShader(gl, type, source) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                    console.error('Error compiling shader:', gl.getShaderInfoLog(shader));
+                    gl.deleteShader(shader);
+                    return null;
+                }
+                return shader;
+            }
+
+            const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+            const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                console.error('Error linking program:', gl.getProgramInfoLog(program));
+                return;
+            }
+
+            const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
+            const resolutionUniformLocation = gl.getUniformLocation(program, 'iResolution');
+            const timeUniformLocation = gl.getUniformLocation(program, 'iTime');
+
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            const positions = [
+                -1, -1,
+                 1, -1,
+                -1,  1,
+                -1,  1,
+                 1, -1,
+                 1,  1,
+            ];
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+            function resizeCanvas() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            }
+
+            function render(time) {
+                resizeCanvas();
+                
+                gl.clearColor(1, 1, 1, 1);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+
+                gl.useProgram(program);
+
+                gl.enableVertexAttribArray(positionAttributeLocation);
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+
+                gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
+                gl.uniform1f(timeUniformLocation, time * 0.001);
+
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+                gl.enable(gl.BLEND);
+                gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+                requestAnimationFrame(render);
+            }
+
+            requestAnimationFrame(render);
+        }
+    });
+    </script>
+</body>
+</html>

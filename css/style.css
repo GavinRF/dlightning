@@ -107,7 +107,7 @@ p {
   font-size: 1.06rem;
   font-weight: 300;
   line-height: 28px;
-  color: #4D4D4D;
+  color: #333333;
   margin-bottom: 12px;
   font-family: 'Rubik', sans-serif;
 }
@@ -1054,7 +1054,7 @@ h3 {
   -webkit-transition: transform 500ms ease, background 500ms ease;
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.1);
   /* background: #081c81; */
-  background-color: #0946af;
+  background-color: #003dc1;
 }
 
 .talk{
@@ -1590,7 +1590,7 @@ h3 {
 }
 
 .productivity_area {
-  background-color: #0b3daa;
+  background-color: #0337a8;
   padding: 64px 0;
 }
 
@@ -2400,7 +2400,7 @@ h3 {
 .footer .footer_top {
   padding-top: 117px;
   padding-bottom: 205px;
-  background: #052e75;
+  background: #012170;
 }
 
 @media (max-width: 767px) {
@@ -2574,7 +2574,7 @@ h3 {
   height: 40px;
   display: inline-block;
   text-align: center;
-  background: #191d34;
+  background: #0a0f28;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;

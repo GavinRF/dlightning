@@ -7,8 +7,8 @@
     
     <title>D⚡ | UX Design Maturity Assessment</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
     
     <meta property="og:image" content="https://dlightning.org/img/products/DMA.png"/>
     <meta property="og:title" content="Dlightning - UX Maturity Assessment"/>
@@ -687,7 +687,7 @@
 
     $(document).ready(function() {
         $('#email-form-con').load("email-capture.html");
-        $('#header').load("header.html", function(response, status, xhr) {
+        $('#header').load("../header.html", function(response, status, xhr) {
             if (status == "error") {
                 var msg = "Sorry but there was an error: ";
                 $("#error").html(msg + xhr.status + " " + xhr.statusText);

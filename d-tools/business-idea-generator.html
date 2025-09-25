@@ -8,8 +8,8 @@
 
 <title>D⚡ | Business Idea Generator</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
 
 <meta property="og:image" content="https://dlightning.org/img/products/featureBgImg-bg.png"/>
 <meta property="og:title" content="Dlightning - Business Idea Generator"/>
@@ -193,8 +193,8 @@ function updateInteractionData() {
 
 $(document).ready(function() {
   $('#email-form-con').load("email-capture.html");
-  $('#footer').load("footer.html");
-  $('#header').load("header.html", function( response, status, xhr ) {
+  $('#footer').load("../footer.html");
+  $('#header').load("../header.html", function( response, status, xhr ) {
     if ( status == "error" ) {
         var msg = "Sorry but there was an error: ";
         $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );

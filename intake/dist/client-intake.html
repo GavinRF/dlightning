@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>D⚡ | Client Intake</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dlightning Client Intake Portal - Share your project details with our AI-powered intake specialist to get started with your Experience Design project.">
+
+    <!-- CSS here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/client-intake.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Splitting.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting-cells.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-functions.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <meta property="og:image" content="https://dlightning.org/img/opengraph/client-intake.png"/>
+    <meta property="og:title" content="Dlightning - Client Intake Portal"/>
+    <meta property="og:description" content="Start your UX project with our AI-powered intake specialist."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+
+</head>
+
+<body>
+
+    <!-- main content -->
+    <main>
+        <section class="info-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="intake-header">
+                            <a href="../../index.html">
+                            <img src="../../img/transparent white D.png" alt="Dlightning logo" width="44" height="44" style="margin: -12px 0 6px -8px;">
+                            </a>
+                            <h1 class="text-white">Client Intake</h1>
+                            <p class="text-white">Share your project details with our AI-powered intake specialist to get started.<br><br>  <i style="color: whitesmoke;">If you'd like to skip AI intake, you can set up a call with one of our Experience Design consultants directly. We'll be happy to walk you through the process and answer any questions you may&nbsp;have.</i></p>
+                            <!-- Google Calendar Appointment Scheduling begin -->
+                        <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+                        <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+                        <script>
+                            (function() {
+                            var target = document.currentScript;
+                            window.addEventListener('load', function() {
+                                calendar.schedulingButton.load({
+                                url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1c2Ui9MTkZEcu97MepuTZnO2HjTkt_4mCeJK19OAbDeXT9sTH57Z-GEKZVnKjjxcO33KsGlO8F?gv=true',
+                                color: '#295fdc',
+                                label: 'Schedule a call',
+                                target,
+                                });
+                            });
+                            })();
+                        </script>
+                            <!-- end Google Calendar Appointment Scheduling -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="intake-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="intake-container">
+
+                            <!-- Progress Indicator -->
+                            <div id="progressIndicator" class="progress-indicator">
+                                <div class="progress-steps">
+                                    <div class="progress-step active" id="step-1">
+                                        <div class="step-number">1</div>
+                                        <div class="step-label">Basic Info</div>
+                                    </div>
+                                    <div class="progress-step" id="step-2">
+                                        <div class="step-number">2</div>
+                                        <div class="step-label">Contact Details</div>
+                                    </div>
+                                    <div class="progress-step" id="step-3">
+                                        <div class="step-number">3</div>
+                                        <div class="step-label">Service Info</div>
+                                    </div>
+                                    <div class="progress-step" id="step-4">
+                                        <div class="step-number">4</div>
+                                        <div class="step-label">Project Discussion</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden Client Info Form for processing -->
+                            <div id="initialForm" class="intake-form" style="display: none;">
+                                <form id="clientInfoForm">
+                                    <input type="text" id="clientName" style="display: none;" spellcheck="true">
+                                    <input type="email" id="clientEmail" style="display: none;" spellcheck="true">
+                                    <input type="text" id="clientCompany" style="display: none;" spellcheck="true">
+                                    <input type="url" id="clientWebsite" style="display: none;" spellcheck="true">
+                                    <input type="tel" id="clientPhone" style="display: none;" spellcheck="true">
+                                </form>
+                            </div>
+
+                            <!-- Chat Interface -->
+                            <div id="chatContainer" class="chat-container" style="display: block;">
+                                <div id="messagesContainer">
+                                </div>
+                                <div class="typing-indicator" id="typingIndicator">
+                                    <span>Assistant is thinking</span>
+                                    <div class="typing">
+                                        <div class="dot"></div>
+                                        <div class="dot"></div>
+                                        <div class="dot"></div>
+                                    </div>
+                                </div>
+                                <!-- Scroll to Bottom Button -->
+                                <button id="scrollToBottomBtn" class="scroll-to-bottom-btn" style="display: none;">
+                                    <i class="fa fa-chevron-down"></i>
+                                </button>
+                            </div>
+
+                            <!-- Message Input -->
+                            <div id="messageInputContainer" class="message-input-container" style="display: block;">
+                                    <div class="text-center">
+                                    <button class="btn btn-success" id="completeIntakeBtn" style="display: none;">
+                                        Complete Intake Session
+                                    </button>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="messageInput" placeholder="Enter your name..." spellcheck="true">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button" id="sendMessageBtn">
+                                            <i class="fa fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Completion Summary -->
+                            <div id="completionSummary" class="completion-summary">
+                                <div class="success-icon">
+                                    <i class="fa fa-check-circle"></i>
+                                </div>
+                                <h3 class="text-center mb-4">Intake Complete!</h3>
+                                <p class="text-center text-muted mb-4">Thank you for providing your project details. Our team will review your information and get back to you within 48 hours.</p>
+                                <div id="summaryContent"></div>
+
+                                <!-- Purchase Concierge Service Section -->
+                                <div class="text-center mt-4 mb-4" style="background: #f8f9fa; padding: 30px; border-radius: 12px; border: 2px solid #e9ecef;">
+                                    <h4 class="mb-3" style="color: #304abe;">Ready to Get Started?</h4>
+                                    <p class="mb-3 text-muted">Based on your project requirements, our Experience Builder <strong>Concierge Service</strong> is the perfect next step. The output builds a solid foundation for your project.</p>
+                                    <button id="purchaseConciergeBtn" class="btn btn-success btn-lg me-3 mb-2">
+                                        <i class="fa fa-shopping-cart"></i> Purchase Concierge Service
+                                    </button>
+                                    <p class="small text-muted mt-2">Secure payment via Stripe • Full <a href="../../experience-builder" target="_blank">Experience Builder <i class="fa fa-external-link-alt"></i></a> package • Your intake summary will be automatically added to your project</p>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <a href="../../index.html" class="btn btn-primary">Return to Home</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            $('#header').load("header.html", function( response, status, xhr ) {
+                if ( status == "error" ) {
+                    var msg = "Sorry but there was an error: ";
+                    $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+                } else {
+                    //$('.process').addClass('thisPage');
+                }
+            });
+        });
+    </script>
+
+    <!-- Firebase Configuration -->
+    <script type="module" defer>
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+        import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-functions.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "experience-builder-m-v-wxacv7.firebaseapp.com",
+            projectId: "experience-builder-m-v-wxacv7",
+            storageBucket: "experience-builder-m-v-wxacv7.appspot.com",
+            messagingSenderId: "940965852397",
+            appId: "1:940965852397:web:06f19e756e7db4b7d748e4"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const functions = getFunctions(app);
+
+        // Connect to Functions emulator in development
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            connectFunctionsEmulator(functions, 'localhost', 5001);
+        }
+
+
+        // Client Intake App
+        class ClientIntakeApp {
+            constructor() {
+                this.sessionId = null;
+                this.messageCount = 0;
+                this.currentStep = 'welcome';
+                this.summaryGenerated = false;
+                this.exitIntentDetected = false;
+                this.detectedDomain = null;
+                this.progressStep = 1;
+                this.aiConversationCount = 0;
+                this.isProcessing = false;
+                this.readyToConclude = false;
+                this.postConclusionMessageCount = 0;
+                this.clientData = {
+                    name: '',
+                    email: '',
+                    company: '',
+                    phone: '',
+                    website: ''
+                };
+                this.initializeEventListeners();
+                this.setupExitIntentDetection();
+                this.showInitialWelcomeMessage();
+            }
+
+            initializeEventListeners() {
+                document.getElementById('sendMessageBtn').addEventListener('click', this.sendMessage.bind(this));
+                document.getElementById('messageInput').addEventListener('keypress', this.handleKeyPress.bind(this));
+                document.getElementById('completeIntakeBtn').addEventListener('click', this.completeIntake.bind(this));
+
+                // Add click listeners to progress steps for navigation
+                for (let i = 1; i <= 4; i++) {
+                    const stepElement = document.getElementById(`step-${i}`);
+                    if (stepElement) {
+                        stepElement.addEventListener('click', () => this.goToStep(i));
+                        stepElement.style.cursor = 'pointer';
+                    }
+                }
+
+                // Add scroll-to-bottom button functionality
+                const scrollBtn = document.getElementById('scrollToBottomBtn');
+                const chatContainer = document.getElementById('chatContainer');
+
+                if (scrollBtn && chatContainer) {
+                    scrollBtn.addEventListener('click', () => this.scrollToBottom(chatContainer));
+
+                    // Show/hide scroll button based on scroll position
+                    chatContainer.addEventListener('scroll', () => this.handleScroll());
+                }
+
+                // Prevent form submission
+                const form = document.getElementById('clientInfoForm');
+                if (form) {
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    });
+                }
+            }
+
+            showInitialWelcomeMessage() {
+                const welcomeMessage = `👋 Hello! Welcome to Dlightning's Client Intake Portal.
+                I'm here to help you get started with your Experience Design project.
+
+                Let's start with the basics - <b>what's your name?</b>
+            `;
+
+                this.addMessage(welcomeMessage, 'assistant');
+                this.updatePlaceholder("Enter your name...");
+            }
+
+            updatePlaceholder(text) {
+                document.getElementById('messageInput').placeholder = text;
+            }
+
+            handleScroll() {
+                const chatContainer = document.getElementById('chatContainer');
+                const scrollBtn = document.getElementById('scrollToBottomBtn');
+
+                if (chatContainer && scrollBtn) {
+                    // Show button if not scrolled to bottom (with a small tolerance)
+                    const isAtBottom = chatContainer.scrollTop + chatContainer.clientHeight >= chatContainer.scrollHeight - 10;
+                    scrollBtn.style.display = isAtBottom ? 'none' : 'flex';
+                }
+            }
+
+            hideMessageInput() {
+                const messageInputContainer = document.getElementById('messageInputContainer');
+                const messageInput = document.getElementById('messageInput');
+                const sendButton = document.getElementById('sendMessageBtn');
+
+                if (messageInputContainer && messageInput && sendButton && messageInput.style.display !== 'none') {
+                    messageInput.style.display = 'none';
+                    sendButton.style.display = 'none';
+
+                    // Add a message explaining the conversation has ended
+                    const endMessage = document.createElement('div');
+                    endMessage.className = 'alert alert-secondary mt-3';
+                    endMessage.innerHTML = `
+                        <i class="fa fa-info-circle"></i>
+                        The conversation has concluded. Click "Complete Your Intake" above to proceed.
+                    `;
+                    messageInputContainer.appendChild(endMessage);
+                }
+            }
+
+            validateEmail(email) {
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return emailPattern.test(email);
+            }
+
+            cleanCompany(input) {
+                // Check if response is too long (more than 10 words)
+                const wordCount = input.trim().split(/\s+/).length;
+                if (wordCount > 10) {
+                    return null; // Signal that we need to ask for just the company name
+                }
+
+                // Remove common business-related conversational phrases
+                let cleanedCompany = input.trim();
+
+                // Remove greetings and conversational phrases at the start
+                cleanedCompany = cleanedCompany.replace(/^(hi|hello|hey|greetings|good morning|good afternoon|good evening),?\s*/i, '');
+
+                // Remove business-related conversational phrases
+                cleanedCompany = cleanedCompany.replace(/^(my business is|my company is|the company is|the business is|company name is|business name is|it's|its|i work for|i work at|we are|our company is|our business is)\s+/i, '');
+
+                // Remove common business descriptors that might be conversational
+                cleanedCompany = cleanedCompany.replace(/^(we have|we run|we operate|i own|i run|i operate)\s+(a |an |the )?(business|company|organization|startup|firm|agency|shop|store|restaurant|service|consultancy)(\s+called)?\s+/i, '');
+
+                // Remove trailing descriptive text
+                cleanedCompany = cleanedCompany.replace(/\s+(is|does|makes|provides|offers|specializes in|focuses on).*$/i, '');
+
+                // Remove extra phrases
+                cleanedCompany = cleanedCompany.replace(/^(called|named)\s+/i, '');
+
+                // Remove articles and common prefixes if they seem standalone
+                cleanedCompany = cleanedCompany.replace(/^(a|an|the)\s+/i, '');
+
+                // Trim whitespace and capitalize properly
+                cleanedCompany = cleanedCompany.trim();
+
+                // Basic validation - must have at least one character after cleaning
+                if (cleanedCompany.length === 0) {
+                    return null; // Ask for company name again
+                }
+
+                return cleanedCompany;
+            }
+
+
+            async sendMessage() {
+                if (this.isProcessing) {
+                    return;
+                }
+
+                const messageInput = document.getElementById('messageInput');
+                const message = messageInput.value.trim();
+
+                if (!message) return;
+
+                // Check for back commands before processing
+                if (this.isBackCommand(message)) {
+                    this.handleBackCommand(message);
+                    this.isProcessing = false;
+                    return;
+                }
+
+                this.isProcessing = true;
+                messageInput.value = '';
+                this.addMessage(message, 'user');
+
+                try {
+                    // Handle different steps of the conversation
+                    switch (this.currentStep) {
+                    case 'welcome':
+                        await this.handleNameStep(message);
+                        break;
+                    case 'email':
+                        await this.handleEmailStep(message);
+                        break;
+                    case 'business-domain-check':
+                        await this.handleBusinessDomainCheck(message);
+                        break;
+                    case 'company':
+                        await this.handleCompanyStep(message);
+                        break;
+                    case 'website':
+                        await this.handleWebsiteStep(message);
+                        break;
+                    case 'phone':
+                        await this.handlePhoneStep(message);
+                        break;
+                    case 'experience-builder':
+                        await this.handleExperienceBuilderStep(message);
+                        break;
+                    case 'ai-conversation':
+                        await this.handleAIConversation(message);
+                        break;
+                }
+                } catch (error) {
+                    this.addMessage('Sorry, there was an error processing your message. Please try again.', 'assistant');
+                } finally {
+                    this.isProcessing = false;
+                }
+            }
+
+            isBackCommand(message) {
+                const trimmedMessage = message.toLowerCase().trim();
+                const exactBackCommands = [
+                    'back', 'go back', 'previous', 'undo', 'return', 'edit',
+                    'go to previous', 'previous step', 'back to previous',
+                    'step back', 'take me back', 'let me go back'
+                ];
+                return exactBackCommands.includes(trimmedMessage) ||
+                       /^(go\s+)?back(\s+please)?$/.test(trimmedMessage) ||
+                       /^(take\s+me\s+)?back(\s+to\s+(previous|last)\s+(step|question))?$/.test(trimmedMessage);
+            }
+
+            handleBackCommand(message) {
+                const messageInput = document.getElementById('messageInput');
+                messageInput.value = '';
+
+                // Add the user's back message to chat
+                this.addMessage(message, 'user');
+
+                // Determine previous step based on current step
+                const stepMap = {
+                    'email': 'welcome',
+                    'business-domain-check': 'email',
+                    'company': 'email',
+                    'website': 'company',
+                    'phone': 'website',
+                    'experience-builder': 'phone',
+                    'ai-conversation': 'experience-builder'
+                };
+
+                const previousStep = stepMap[this.currentStep];
+                if (previousStep) {
+                    this.goToStep(this.getStepNumber(previousStep));
+                } else {
+                    this.addMessage("You're already at the beginning of the process. Let's continue from here!", 'assistant');
+                }
+            }
+
+            getStepNumber(stepName) {
+                const stepNumbers = {
+                    'welcome': 1,              // Step 1: Basic Info (name)
+                    'email': 2,                // Step 2: Contact Details (email)
+                    'business-domain-check': 2, // Still part of contact details
+                    'company': 3,              // Step 3: Service Info (company)
+                    'website': 3,              // Step 3: Service Info (website)
+                    'phone': 3,                // Step 3: Service Info (phone)
+                    'experience-builder': 4,   // Step 4: Project Discussion
+                    'ai-conversation': 4       // Step 4: Project Discussion
+                };
+                return stepNumbers[stepName] || 1;
+            }
+
+            goToStep(stepNumber) {
+                // Only allow going back to completed or current steps
+                if (stepNumber > this.progressStep) {
+                    this.addMessage("You can only go back to previous steps that you've already completed.", 'assistant');
+                    return;
+                }
+
+                // Clear subsequent messages to avoid confusion
+                const chatContainer = document.getElementById('chatContainer');
+                if (chatContainer) {
+                    // Keep only initial messages up to the target step
+                    const messages = chatContainer.querySelectorAll('.message-wrapper');
+                    let keepCount = this.getMessageCountForStep(stepNumber);
+
+                    for (let i = keepCount; i < messages.length; i++) {
+                        messages[i].remove();
+                    }
+                }
+
+                // Reset to appropriate step
+                switch (stepNumber) {
+                    case 1:
+                        this.currentStep = 'welcome';
+                        this.updatePlaceholder("Enter your name...");
+                        this.addMessage("Let's start over. What's your name?", 'assistant');
+                        break;
+                    case 2:
+                        // Step 2 is "Contact Details" - this should be email
+                        this.currentStep = 'email';
+                        this.updatePlaceholder("Enter your email address...");
+                        this.addMessage(`Nice to meet you, ${this.clientData.name || 'there'}! Now I'll need your email address so we can keep you updated on your project. 
+                        <i>Tip: You can type "back" if you want to return to the previous step.</i>`, 'assistant');
+                        break;
+                    case 3:
+                        // Step 3 is "Service Info" - this includes company and website
+                        this.currentStep = 'company';
+                        this.updatePlaceholder("Enter your company name...");
+                        this.addMessage("What's the name of your company or organization?", 'assistant');
+                        break;
+                    case 4:
+                        this.currentStep = 'experience-builder';
+                        this.updatePlaceholder("Type 'Yes', 'No', or 'Somewhat'...");
+                        this.addMessage("Do you have a clear understanding of what Dlightning's Concierge Service for our Experience Builder offers?", 'assistant');
+                        break;
+                }
+
+                this.updateProgress(stepNumber);
+            }
+
+            getMessageCountForStep(stepNumber) {
+                // Return approximate number of messages that should exist at each step
+                const baseCounts = {
+                    1: 2, // Welcome + name question
+                    2: 4, // + email question and response
+                    3: 8, // + company + website + phone questions
+                    4: 10 // + experience builder question
+                };
+                return baseCounts[stepNumber] || 2;
+            }
+
+            updateProgress(step) {
+                try {
+                    this.progressStep = step;
+
+                    // Update visual indicators
+                    for (let i = 1; i <= 4; i++) {
+                        const stepElement = document.getElementById(`step-${i}`);
+                        const stepNumber = stepElement?.querySelector('.step-number');
+
+                        if (stepElement) {
+                            if (i < step) {
+                                stepElement.className = 'progress-step completed';
+                                // Change number to checkmark for completed steps
+                                if (stepNumber) {
+                                    stepNumber.innerHTML = '<i class="fa fa-check"></i>';
+                                }
+                            } else if (i === step) {
+                                stepElement.className = 'progress-step active';
+                                // Keep number for active step
+                                if (stepNumber) {
+                                    stepNumber.textContent = i;
+                                }
+                            } else {
+                                stepElement.className = 'progress-step';
+                                // Keep number for future steps
+                                if (stepNumber) {
+                                    stepNumber.textContent = i;
+                                }
+                            }
+                        }
+                    }
+
+
+                    // Hide progress indicator after completion (step 4 + 2 AI responses)
+                    if (step >= 4 && this.aiConversationCount >= 2) {
+                        setTimeout(() => {
+                            const progressIndicator = document.getElementById('progressIndicator');
+                            if (progressIndicator) {
+                                progressIndicator.style.opacity = '0.7';
+                                progressIndicator.style.transform = 'scale(0.98)';
+                            }
+                        }, 1000);
+                    }
+                } catch (error) {
+                    console.warn('Error updating progress indicator:', error);
+                }
+            }
+
+            cleanName(input) {
+                // Check if response is too long (more than 8 words)
+                const wordCount = input.trim().split(/\s+/).length;
+                if (wordCount > 8) {
+                    return null; // Signal that we need to ask for just the name
+                }
+
+                // Remove common greetings and conversational phrases
+                let cleanedName = input.trim();
+
+                // Remove more comprehensive greetings at the start
+                cleanedName = cleanedName.replace(/^(hi|hello|hey|greetings|good morning|good afternoon|good evening|howdy|what's up|whats up),?\s*/i, '');
+
+                // Remove "I'm" or "I am" patterns and variations
+                cleanedName = cleanedName.replace(/^(I'm|I am|my name is|it's|its|the name is|this is|call me)\s+/i, '');
+
+                // Remove common social phrases
+                cleanedName = cleanedName.replace(/^(nice to meet you|pleased to meet you|thanks|thank you),?\s*/i, '');
+
+                // Remove trailing punctuation
+                cleanedName = cleanedName.replace(/[.!?]+$/, '');
+
+                // If after cleaning we have no meaningful content, return null
+                if (cleanedName.length === 0 || /^(hi|hello|hey|thanks)$/i.test(cleanedName)) {
+                    return null;
+                }
+
+                // Capitalize first letter of each word
+                cleanedName = cleanedName.replace(/\b\w+/g, word =>
+                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                );
+
+                return cleanedName.trim();
+            }
+
+            async handleNameStep(name) {
+                const cleanedName = this.cleanName(name);
+
+                // If cleanName returns null, ask for just the name
+                if (cleanedName === null) {
+                    this.addMessage("I'd love to get to know you better, but could you please share just your name for now? We'll have plenty of time to chat about your project in a moment!", 'assistant');
+                    this.updatePlaceholder("Enter your name...");
+                    return; // Stay in the name step
+                }
+
+                this.clientData.name = cleanedName;
+                this.addMessage(`Nice to meet you, ${cleanedName}! Now I'll need your <strong>email address</strong> so we can keep you updated on your\xA0project. 
+                <i>Tip: You can type "back" if you want to return to the previous step.</i>`, 'assistant');
+                this.updatePlaceholder("Enter your email address...");
+                this.currentStep = 'email';
+                this.updateProgress(2);
+            }
+
+            async handleEmailStep(email) {
+                if (!this.validateEmail(email)) {
+                    this.addMessage("That doesn't look like a valid email address. Could you please try again?", 'assistant');
+                    return;
+                }
+
+                this.clientData.email = email;
+
+                // Check if this looks like a business email
+                const domain = email.split('@')[1]?.toLowerCase();
+                const commonProviders = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com', 'me.com', 'protonmail.com'];
+
+                if (domain && !commonProviders.includes(domain)) {
+                    // Looks like a business domain - skip company question and ask about website
+                    this.addMessage(`I notice you're using ${domain}. Is <b>${domain}</b> the business website you're contacting us about today?\n\nPlease type:\n• "Yes" if this is your business website\n• "No" if you'd like to provide a different website\n• "Skip" if you prefer not to share a website`, 'assistant');
+                    this.updatePlaceholder("Type 'Yes', 'No', or 'Skip'...");
+                    this.currentStep = 'business-domain-check';
+                    this.detectedDomain = domain;
+                } else {
+                    // Regular flow for personal email providers
+                    this.addMessage(`Perfect! Now, what's the <b>name of your company or organization</b>?\n<i>(You can type "skip" if you prefer not to share)</i>`, 'assistant');
+                    this.updatePlaceholder("Enter your company name or 'skip'...");
+                    this.currentStep = 'company';
+                }
+            }
+
+            async handleBusinessDomainCheck(response) {
+                const answer = response.toLowerCase();
+
+                if (answer.includes('yes')) {
+                    // Use the detected domain as both website and company name
+                    this.clientData.website = this.detectedDomain;
+                    this.clientData.company = this.detectedDomain.replace('.com', '').replace('.org', '').replace('.net', '');
+
+                    this.addMessage(`Perfect! Now, would you like to provide a <b>phone number</b> where we can reach you?\n<i>(You can type "skip" if you prefer not to share)</i>`, 'assistant');
+                    this.updatePlaceholder("Enter your phone number or 'skip'...");
+                    this.currentStep = 'phone';
+                } else if (answer.includes('no')) {
+                    // Continue with normal website flow
+                    this.addMessage(`No problem! Could you please share your <b>business website</b>?\n<i>(You can type "skip" if you prefer not to share)</i>`, 'assistant');
+                    this.updatePlaceholder("Enter your website URL or 'skip'...");
+                    this.currentStep = 'website';
+                } else if (answer.includes('skip')) {
+                    // Skip website, ask for company name instead
+                    this.addMessage(`No worries! What's the <b>name of your company or organization</b>?\n<i>(You can type "skip" if you prefer not to share)</i>`, 'assistant');
+                    this.updatePlaceholder("Enter your company name or 'skip'...");
+                    this.currentStep = 'company';
+                } else {
+                    // Invalid response, ask again
+                    this.addMessage(`Please type "Yes" if ${this.detectedDomain} is your business website, "No" if you'd like to provide a different website, or "Skip" if you prefer not to share.`, 'assistant');
+                }
+            }
+
+            async handleCompanyStep(company) {
+                if (company.toLowerCase() !== 'skip') {
+                    // Clean the company name
+                    const cleanedCompany = this.cleanCompany(company);
+
+                    // If cleanCompany returns null, ask for just the company name
+                    if (cleanedCompany === null) {
+                        this.addMessage("I'd love to learn more about your business, but could you please share just your company or organization name? We'll have time to discuss details later!", 'assistant');
+                        this.updatePlaceholder("Enter your company name...");
+                        return; // Stay in the company step
+                    }
+
+                    this.clientData.company = cleanedCompany;
+                    this.addMessage(`Got it, ${cleanedCompany}! Do you have a <b>website</b> you could share with us?\n<i>(You can type "skip" if you prefer not to share)</i>`, 'assistant');
+                    this.updatePlaceholder("Enter your website URL or 'skip'...");
+                    this.currentStep = 'website';
+                } else {
+                    this.addMessage(`No problem! Lastly, would you like to provide a <b>phone number</b> where we can reach you?\n<i>(You can type "skip" if you prefer not to share)</i>`, 'assistant');
+                    this.updatePlaceholder("Enter your phone number or 'skip'...");
+                    this.currentStep = 'phone';
+                }
+            }
+
+            async handleWebsiteStep(website) {
+                if (website.toLowerCase() !== 'skip') {
+                    this.clientData.website = website;
+                    this.addMessage(`Great! Lastly, would you like to provide a <b>phone number</b> where we can reach you?\n<i>(You can type "skip" if you prefer not to share)</i>`, 'assistant');
+                } else {
+                    this.addMessage(`No problem! Lastly, would you like to provide a <b>phone number</b> where we can reach you?\n<i>(You can type "skip" if you prefer not to share)</i>`, 'assistant');
+                }
+                this.updatePlaceholder("Enter your phone number or 'skip'...");
+                this.currentStep = 'phone';
+            }
+
+            async handlePhoneStep(phone) {
+
+                if (phone.toLowerCase() !== 'skip') {
+                    this.clientData.phone = phone;
+                }
+
+                try {
+                    // Store data in hidden form fields
+                    document.getElementById('clientName').value = this.clientData.name;
+                    document.getElementById('clientEmail').value = this.clientData.email;
+                    document.getElementById('clientCompany').value = this.clientData.company;
+                    document.getElementById('clientWebsite').value = this.clientData.website;
+                    document.getElementById('clientPhone').value = this.clientData.phone;
+
+                    // Create the intake session now that we have all basic info
+                    const createSession = httpsCallable(functions, 'createClientIntakeSession');
+
+                    try {
+                        const result = await createSession({ clientInfo: this.clientData });
+                        this.sessionId = result.data.sessionId;
+
+                    } catch (functionError) {
+                        throw functionError;
+                    }
+
+                } catch (error) {
+                    console.error('Error creating intake session:', error);
+                    this.addMessage('Sorry, there was an error setting up your session. Please refresh and try again.', 'assistant');
+                    return;
+                }
+
+                this.addMessage(`Thank you for providing your information! Before we dive into your specific project needs, I'd like to know:
+
+                Do you have a clear understanding of what Dlightning's Concierge Service for our <b>Experience Builder</b> offers?
+
+                Please type:
+                • "Yes" if you're familiar with it
+                • "No" if you'd like an explanation
+                • "Somewhat" if you have a general idea but want more details`, 'assistant');
+                this.updatePlaceholder("Type 'Yes', 'No', or 'Somewhat'...");
+                this.currentStep = 'experience-builder';
+
+                // Update progress with error handling
+                try {
+                    this.updateProgress(3);
+                } catch (error) {
+                    console.warn('Progress update error:', error);
+                }
+            }
+
+            async handleExperienceBuilderStep(response) {
+                const answer = response.toLowerCase();
+
+                if (answer.includes('no') || answer.includes('not')) {
+                    this.addMessage(`No Problem! Dlightning's <a href="../../experience-builder" target="_blank">Experience Builder <i class="fa fa-external-link-alt"></i></a> is our comprehensive Experience Design service that helps businesses create exceptional digital experiences.
+
+                Here's an example of the Experience Builder output: 
+                <a href="http://dlightning.io/overviewofProject?exploreProject2Overview=I2dmUDX9MSSodXcH38uT" target="_blank">Immersive Colors & Sounds <i class="fa fa-external-link-alt"></i></a> project.
+
+                This output is included when you sign up for our <b>Concierge Service</b>, which is a great way to get started with your project because it lays the groundwork for a successful implementation.
+
+                We can talk more about what Dlightning offers in our initial call, for now, let's talk about your specific project needs!`, 'assistant');
+                } else if (answer.includes('somewhat') || answer.includes('general')) {
+                    this.addMessage(`Perfect! Since you have some familiarity, let me just highlight that Dlightning Concierge Service for Experience Builder provides design artifacts from initial user research through problem definition and solutioning.
+
+                    Our <b>Concierge Service</b> is a great way to get started with your project because it lays the groundwork for a successful implementation.
+
+                    Now let's dive into your specific project!`, 'assistant');
+                } else {
+                    this.addMessage(`Excellent! Since you're already familiar with our <a href="../../experience-builder" target="_blank">Experience Builder <i class="fa fa-external-link-alt"></i></a> service, let's jump right into discussing your specific project needs.`, 'assistant');
+                }
+
+                // Now transition to AI conversation (session already created)
+                this.updateProgress(4);
+                await this.startAIConversation();
+            }
+
+            async startAIConversation() {
+                try {
+                    this.showTyping(true);
+
+                    // Wait for previous message to load and animate first
+                    await new Promise(resolve => setTimeout(resolve, 4000));
+
+                    // Start AI conversation (session already created)
+                    this.addMessage(`What brings you to Dlightning today? Tell me about the challenges you're facing or the goals you're trying to achieve.`, 'assistant');
+                    this.updatePlaceholder("Tell me about your project...");
+                    this.currentStep = 'ai-conversation';
+
+                } catch (error) {
+                    console.error('Error starting AI conversation:', error);
+                    this.addMessage('Sorry, there was an error starting the conversation. Please try again.', 'assistant');
+                } finally {
+                    this.showTyping(false);
+                }
+            }
+
+            async handleAIConversation(message) {
+                if (!this.sessionId) {
+                    this.addMessage('Session error. Please refresh the page and try again.', 'assistant');
+                    return;
+                }
+
+                try {
+                    this.showTyping(true);
+
+                    const sendMessage = httpsCallable(functions, 'sendIntakeMessage');
+                    const result = await sendMessage({
+                        sessionId: this.sessionId,
+                        message: message
+                    });
+
+                    this.addMessage(result.data.response, 'assistant');
+                    this.messageCount++;
+                    this.aiConversationCount++;
+                    this.checkShowCompleteButton();
+
+                    // Hide input after enough AI exchanges (e.g., 6+ exchanges)
+                    if (this.aiConversationCount >= 6) {
+                        this.hideMessageInput();
+                    }
+
+                    // Update progress indicator after AI responses
+                    if (this.progressStep >= 4 && this.aiConversationCount >= 2) {
+                        this.updateProgress(5); // Completion state
+                    }
+
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                    this.addMessage('Sorry, there was an error processing your message. Please try again.', 'assistant');
+                } finally {
+                    this.showTyping(false);
+                }
+            }
+
+            async completeIntake() {
+                if (!this.sessionId) return;
+
+                try {
+                    this.showIntakeCompletionLoading(true);
+
+                    const completeIntake = httpsCallable(functions, 'completeClientIntake');
+                    const result = await completeIntake({ sessionId: this.sessionId });
+
+                    this.showCompletionSummary(result.data.summary);
+
+                } catch (error) {
+                    console.error('Error completing intake:', error);
+                    alert('Sorry, there was an error completing the intake. Please try again.');
+                } finally {
+                    this.showIntakeCompletionLoading(false);
+                }
+            }
+
+            addMessage(content, type) {
+                const messagesContainer = document.getElementById('messagesContainer');
+
+                // Create wrapper div
+                const messageWrapper = document.createElement('div');
+                messageWrapper.className = `message-wrapper ${type}`;
+
+                // Create avatar
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = `avatar-container ${type}`;
+
+                if (type === 'assistant') {
+                    // Use robot emoji for assistant
+                    avatarDiv.innerHTML = '<img src="../../img/transparent white D.png" alt="Dlightning logo" width="32" height="32" style="margin: 2px 0 0 2px;">';
+                } else {
+                    // Use first letter of client's name
+                    const firstLetter = this.clientData.name ? this.clientData.name.charAt(0) : '👤';
+                    avatarDiv.textContent = firstLetter;
+                }
+
+                // Create message div
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                messageDiv.innerHTML = content.replace(/\n/g, '<br>');
+
+                // Append avatar and message to wrapper
+                messageWrapper.appendChild(avatarDiv);
+                messageWrapper.appendChild(messageDiv);
+
+                // Add wrapper to container
+                messagesContainer.appendChild(messageWrapper);
+
+                // Apply Splitting.js animation to assistant messages
+                if (type === 'assistant' && window.Splitting) {
+                    // Add animated class to trigger CSS animations
+                    messageDiv.classList.add('animated');
+
+                    // Apply Splitting.js to the message
+                    setTimeout(() => {
+                        Splitting({ target: messageDiv, by: 'chars' });
+                    }, 50);
+                }
+
+                // Scroll to bottom - need to scroll the chat container, not messages container
+                const chatContainer = document.getElementById('chatContainer');
+                this.scrollToBottom(chatContainer);
+            }
+
+            scrollToBottom(container) {
+                // Multiple approaches for better browser compatibility
+                setTimeout(() => {
+                    // Method 1: Try scrollTo with smooth behavior
+                    if (container.scrollTo) {
+                        try {
+                            container.scrollTo({
+                                top: container.scrollHeight,
+                                behavior: 'smooth'
+                            });
+                        } catch (e) {
+                            // Fallback to scrollTop if scrollTo with options fails
+                            container.scrollTop = container.scrollHeight;
+                        }
+                    } else {
+                        // Fallback for older browsers
+                        container.scrollTop = container.scrollHeight;
+                    }
+                }, 50);
+
+                // Secondary attempt with longer delay for content that might be still rendering
+                setTimeout(() => {
+                    container.scrollTop = container.scrollHeight;
+                }, 200);
+            }
+
+            showCompletionSummary(summary) {
+                this.summaryGenerated = true;
+
+                document.getElementById('chatContainer').style.display = 'none';
+                document.getElementById('messageInputContainer').style.display = 'none';
+                document.getElementById('progressIndicator').style.display = 'none';
+
+                // Remove CLIENT_BRIEF section from the displayed summary
+                let displaySummary = summary;
+                const startMarker = 'CLIENT_BRIEF_START';
+                const endMarker = 'CLIENT_BRIEF_END';
+                const startIndex = displaySummary.indexOf(startMarker);
+                const endIndex = displaySummary.indexOf(endMarker);
+
+                if (startIndex !== -1 && endIndex !== -1) {
+                    // Remove the entire CLIENT_BRIEF section including markers
+                    displaySummary = displaySummary.substring(0, startIndex) +
+                                   displaySummary.substring(endIndex + endMarker.length);
+                    // Clean up any extra whitespace or line breaks
+                    displaySummary = displaySummary.replace(/\n\s*\n\s*\n/g, '\n\n').trim();
+                }
+
+                document.getElementById('summaryContent').innerHTML = displaySummary.replace(/\n/g, '<br>');
+                document.getElementById('completionSummary').style.display = 'block';
+
+                // Add event listener for Purchase Concierge Service button
+                const purchaseBtn = document.getElementById('purchaseConciergeBtn');
+                if (purchaseBtn) {
+                    purchaseBtn.addEventListener('click', this.purchaseConciergeService.bind(this));
+                }
+            }
+
+            showTyping(show) {
+                document.getElementById('typingIndicator').style.display = show ? 'block' : 'none';
+                if (show) {
+                    const chatContainer = document.getElementById('chatContainer');
+                    this.scrollToBottom(chatContainer);
+                }
+            }
+
+            showLoading(show) {
+                const submitBtn = document.querySelector('#clientInfoForm button[type="submit"]');
+                const sendBtn = document.getElementById('sendMessageBtn');
+                const completeBtn = document.getElementById('completeIntakeBtn');
+
+                if (show) {
+                    if (submitBtn) submitBtn.disabled = true;
+                    if (sendBtn) sendBtn.disabled = true;
+                    if (completeBtn) completeBtn.disabled = true;
+                } else {
+                    if (submitBtn) submitBtn.disabled = false;
+                    if (sendBtn) sendBtn.disabled = false;
+                    if (completeBtn) completeBtn.disabled = false;
+                }
+            }
+
+            showIntakeCompletionLoading(show) {
+                const completeBtn = document.getElementById('completeIntakeBtn');
+
+                if (show) {
+                    if (completeBtn) {
+                        completeBtn.disabled = true;
+                        completeBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating summary...';
+                    }
+                } else {
+                    if (completeBtn) {
+                        completeBtn.disabled = false;
+                        // Restore original button text based on message count
+                        if (this.messageCount >= 6) {
+                            completeBtn.innerHTML = '<i class="fa fa-check-circle"></i> Complete Your Intake';
+                        } else {
+                            completeBtn.innerHTML = '<i class="fa fa-check"></i> Complete Intake';
+                        }
+                    }
+                }
+            }
+
+            showError(message, title = 'Error') {
+                // Create a more user-friendly error display
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
+                errorDiv.innerHTML = `
+                    <strong>${title}:</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+
+                // Insert error at the top of the form
+                const container = document.querySelector('.intake-form') || document.body;
+                container.insertBefore(errorDiv, container.firstChild);
+
+                // Auto-remove after 10 seconds
+                setTimeout(() => {
+                    if (errorDiv.parentNode) {
+                        errorDiv.remove();
+                    }
+                }, 10000);
+            }
+
+            checkShowCompleteButton() {
+                const completeBtn = document.getElementById('completeIntakeBtn');
+
+                if (this.messageCount >= 2) {
+                    completeBtn.style.display = 'inline-block';
+                }
+
+                // After 6+ messages, make the complete button more prominent
+                if (this.messageCount >= 6) {
+                    completeBtn.className = 'btn btn-success btn-lg';
+                    completeBtn.innerHTML = '<i class="fa fa-check-circle"></i> Complete Your Intake';
+
+                    // Add a helpful message
+                    const messageInputContainer = document.getElementById('messageInputContainer');
+                    const existingNotice = document.getElementById('completion-notice');
+
+                    if (!existingNotice) {
+                        const notice = document.createElement('div');
+                        notice.id = 'completion-notice';
+                        notice.className = 'alert alert-info mt-3';
+                        notice.style.marginBottom = '0px';
+                        notice.innerHTML = `
+                            <i class="fa fa-info-circle"></i>
+                            <strong>Ready to proceed?</strong> You've provided great details about your project.
+                            Click "Complete Your Intake" to receive your project summary and next steps.
+                        `;
+                        messageInputContainer.appendChild(notice);
+                    }
+                }
+            }
+
+            handleKeyPress(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.sendMessage();
+                }
+            }
+
+            async purchaseConciergeService() {
+                if (!this.sessionId) {
+                    alert('Session error. Please refresh the page and try again.');
+                    return;
+                }
+
+                try {
+                    // Disable button and show loading
+                    const purchaseBtn = document.getElementById('purchaseConciergeBtn');
+                    purchaseBtn.disabled = true;
+                    purchaseBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating checkout...';
+
+                    // Create Stripe checkout session for Concierge Service
+                    const createCheckout = httpsCallable(functions, 'createConciergeCheckout');
+                    const result = await createCheckout({
+                        intakeSessionId: this.sessionId,
+                        clientEmail: this.clientData.email,
+                        clientName: this.clientData.name
+                    });
+
+                    // Redirect to Stripe checkout
+                    window.location.href = result.data.url;
+
+                } catch (error) {
+                    console.error('Error creating checkout:', error);
+                    alert('Sorry, there was an error processing your request. Please try again.');
+
+                    // Re-enable button
+                    const purchaseBtn = document.getElementById('purchaseConciergeBtn');
+                    purchaseBtn.disabled = false;
+                    purchaseBtn.innerHTML = '<i class="fa fa-shopping-cart"></i> Purchase Concierge Service';
+                }
+            }
+
+            setupExitIntentDetection() {
+                // Detect mouse movement towards top of page (intent to leave)
+                document.addEventListener('mouseleave', (e) => {
+                    if (e.clientY <= 0 && !this.summaryGenerated && this.sessionId && this.messageCount > 0 && !this.exitIntentDetected) {
+                        this.exitIntentDetected = true;
+                        this.showExitIntentModal();
+                    }
+                });
+
+                // Detect before page unload
+                window.addEventListener('beforeunload', (e) => {
+                    if (!this.summaryGenerated && this.sessionId && this.messageCount > 0) {
+                        e.preventDefault();
+                        e.returnValue = 'You have an incomplete intake session. Would you like to generate a summary before leaving?';
+                        return e.returnValue;
+                    }
+                });
+
+                // Detect tab visibility changes
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden && !this.summaryGenerated && this.sessionId && this.messageCount > 0 && !this.exitIntentDetected) {
+                        // Set a timeout to show modal if user doesn't return quickly
+                        setTimeout(() => {
+                            if (document.hidden && !this.exitIntentDetected) {
+                                this.exitIntentDetected = true;
+                                this.showExitIntentModal();
+                            }
+                        }, 2000);
+                    }
+                });
+            }
+
+            showExitIntentModal() {
+                if (this.summaryGenerated || !this.sessionId) return;
+
+                const modal = document.createElement('div');
+                modal.className = 'modal fade show';
+                modal.style.display = 'block';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                modal.innerHTML = `
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    <i class="fa fa-exclamation-triangle text-warning"></i>
+                                    Don't Leave Without Your Summary!
+                                </h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>You've provided valuable information about your project. Would you like to generate a summary of your intake session before leaving?</p>
+                                <p class="text-muted small">This will help preserve your project details and next steps.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="exitModalContinue">
+                                    <i class="fa fa-times"></i> I'm not leaving
+                                </button>
+                                <button type="button" class="btn btn-primary" id="exitModalComplete">
+                                    <i class="fa fa-check-circle"></i> Generate Summary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+
+                // Handle modal buttons
+                document.getElementById('exitModalComplete').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                    this.completeIntake();
+                });
+
+                document.getElementById('exitModalContinue').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                    this.exitIntentDetected = false; // Reset so it can be triggered again
+                });
+
+                // Auto-close modal after 10 seconds
+                setTimeout(() => {
+                    if (document.body.contains(modal)) {
+                        document.body.removeChild(modal);
+                        this.exitIntentDetected = false;
+                    }
+                }, 10000);
+            }
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.intakeApp = new ClientIntakeApp();
+        });
+    </script>
+
+    <!-- JS here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Splitting.js -->
+    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+</body>
+
+</html>

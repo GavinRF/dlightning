@@ -1,0 +1,70 @@
+# Claude Code and AI Assistant files
+CLAUDE.md
+CLIENT_INTAKE_SETUP.md
+*.claude.md
+
+# Environment variables and secrets
+.env
+.env.local
+.env.production
+functions/.env
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Node modules
+node_modules/
+functions/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build outputs
+build/
+
+# Backup files
+*.backup
+*.bak
+functions/index.js.backup
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# Firebase Functions
+functions/lib/
+
+# Local Firebase emulator data
+.firebase/
