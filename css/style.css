@@ -1295,11 +1295,11 @@ h3 {
 .slider_area .single_slider .slider_text h1 {
   color: #FFF;
   font-family: 'Rubik', sans-serif;
-  font-size: 48px;
+  font-size: 58px;
   text-transform: capitalize;
-  letter-spacing: 1px;
-  font-weight: 600;
-  line-height: 68px;
+  letter-spacing: .02rem;
+  font-weight: 520;
+  line-height: 76px;
 }
 
 @media (max-width: 767px) {
