@@ -16,7 +16,7 @@
         .email-capture textarea {
             width: 100%;
             padding: 8px 14px;
-            margin-bottom: 12px;
+            margin-bottom: 6px;
             border: 2px solid #e1e5e9;
             border-radius: 8px;
             font-size: 16px;
@@ -34,9 +34,37 @@
             box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
         }
 
+        .email-capture input.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .email-capture input.is-valid {
+            border-color: #28a745;
+        }
+
         .email-capture textarea {
             resize: vertical;
             min-height: 80px;
+        }
+
+        .email-capture .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: -4px;
+            margin-bottom: 8px;
+            display: none;
+        }
+
+        .email-capture .error-message.show {
+            display: block;
+        }
+
+        .email-capture .char-counter {
+            font-size: 12px;
+            color: #6c757d;
+            text-align: right;
+            margin-top: -4px;
+            margin-bottom: 8px;
         }
 
         .email-capture label {
@@ -85,6 +113,21 @@
             transform: none;
         }
 
+        .email-capture button .btn-spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Success message styling */
         .success-message {
             background: #d4edda;
@@ -93,6 +136,23 @@
             border-radius: 8px;
             margin-bottom: 12px;
             display: none;
+            font-weight: 500;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Placeholder styling */
@@ -156,22 +216,28 @@
         <br>
         <form id="email-form">
             <label for="email-input">Your Email</label>
-            <input 
-                type="email" 
-                id="email-input" 
+            <input
+                type="email"
+                id="email-input"
                 required
             >
+            <div class="error-message" id="email-error"></div>
+
             <label for="message-input">Message (optional)</label>
-            <textarea 
-                id="message-input" 
+            <textarea
+                id="message-input"
                 rows="2"
+                maxlength="500"
             ></textarea>
+            <div class="char-counter" id="char-counter">0 / 500 characters</div>
+
             <div class="privacy-notice">
-            We collect basic analytics (browser info, referrer) to improve our service. 
+            We collect basic analytics (browser info, referrer) to improve our service.
             <a href="#" onclick="openModal();">See details</a>
             </div>
             <button type="submit" id="submit-btn">
-                Send
+                <span class="btn-spinner"></span>
+                <span class="btn-text">Send</span>
             </button>
         </form>
     </div>
@@ -241,49 +307,125 @@
             return Math.round(start / 1000) + 's';
         }
 
+        // Form validation and submission
+        const emailField = document.getElementById('email-input');
+        const messageField = document.getElementById('message-input');
+        const emailError = document.getElementById('email-error');
+        const charCounter = document.getElementById('char-counter');
+        let isSubmitting = false;
+
+        // Real-time email validation
+        emailField.addEventListener('blur', function() {
+            validateEmail();
+        });
+
+        emailField.addEventListener('input', function() {
+            if (this.classList.contains('is-invalid')) {
+                validateEmail();
+            }
+        });
+
+        function validateEmail() {
+            const email = emailField.value.trim();
+            const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+
+            if (email === '') {
+                emailField.classList.remove('is-valid', 'is-invalid');
+                emailError.classList.remove('show');
+                return false;
+            }
+
+            if (!emailPattern.test(email)) {
+                emailField.classList.remove('is-valid');
+                emailField.classList.add('is-invalid');
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.classList.add('show');
+                return false;
+            }
+
+            emailField.classList.remove('is-invalid');
+            emailField.classList.add('is-valid');
+            emailError.classList.remove('show');
+            return true;
+        }
+
+        // Character counter for message
+        messageField.addEventListener('input', function() {
+            const length = this.value.length;
+            charCounter.textContent = length + ' / 500 characters';
+            if (length > 450) {
+                charCounter.style.color = '#dc3545';
+            } else {
+                charCounter.style.color = '#6c757d';
+            }
+        });
+
         document.getElementById('email-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const email = document.getElementById('email-input').value;
-            const message = document.getElementById('message-input').value;
+
+            // Prevent double submission
+            if (isSubmitting) return;
+
+            // Validate email before submission
+            if (!validateEmail()) {
+                emailField.focus();
+                return;
+            }
+
+            isSubmitting = true;
+
+            const email = emailField.value.trim();
+            const message = messageField.value.trim();
             const submitBtn = document.getElementById('submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnSpinner = submitBtn.querySelector('.btn-spinner');
             const successMsg = document.getElementById('success-message');
-            
-            // Disable button during submission
+
+            // Show loading state
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
+            btnText.style.display = 'none';
+            btnSpinner.style.display = 'inline-flex';
             const interactionData = window.userInteractionData || '';
-            
+
             // Replace with your actual Google Form details
             const formData = new FormData();
-            formData.append('entry.1246979305', email); 
-            formData.append('entry.544528883', message); 
+            formData.append('entry.1246979305', email);
+            formData.append('entry.544528883', message);
             formData.append('entry.2116565090', getToolName());
             formData.append('entry.2069635273', interactionData);
             formData.append('entry.1823501667', getInfoDump());
-            
+
             fetch('https://docs.google.com/forms/d/e/1FAIpQLSea1ckrv5cOMpnCu5huK-Dyc2zBnuX6vRaOSq_uacYykWJoZg/formResponse', {
                 method: 'POST',
                 mode: 'no-cors',
                 body: formData
             }).then(() => {
-                // Show success message
-                successMsg.style.display = 'block';
-                this.reset(); // Clear form
-                
+                // Show success message with animation
+                successMsg.classList.add('show');
+                this.reset();
+
+                // Reset validation states
+                emailField.classList.remove('is-valid', 'is-invalid');
+                charCounter.textContent = '0 / 500 characters';
+                charCounter.style.color = '#6c757d';
+
                 // Reset button
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Send';
-                
+                btnText.style.display = 'inline';
+                btnSpinner.style.display = 'none';
+                isSubmitting = false;
+
                 // Hide success message after 5 seconds
                 setTimeout(() => {
-                    successMsg.style.display = 'none';
+                    successMsg.classList.remove('show');
                 }, 5000);
-                
+
             }).catch(err => {
                 console.error('Error:', err);
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Send';
+                btnText.style.display = 'inline';
+                btnSpinner.style.display = 'none';
+                isSubmitting = false;
                 alert('Something went wrong. Please try again.');
             });
         });
