@@ -1,6 +1,19 @@
 {
     "posts": [
       {
+        "id": "instant-bonsai",
+        "title": "Instant Bonsai",
+        "date": "Sept 29, 2025",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "What it means to work with something living, something that remembers every decision you make.",
+        "image": "img/dario-bertolino-GSTYwxJGaMM-unsplash.jpg",
+        "img-credit": "Dario Bertolino",
+        "credit-link": "https://unsplash.com/@dariobertolino",
+        "tags": ["Craft", "Process", "Nature", "Reflection"],
+        "category": "Writing"
+      },
+      {
         "id": "competition-design-pattern",
         "title": "The Competition Design Pattern",
         "date": "July 24, 2025",
