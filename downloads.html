@@ -96,7 +96,7 @@
                         <div class="row">
                             <div class="col-xl-5 col-lg-5 col-md-5">
                                 <div class="Process_info" style="padding-left: 0px;">
-                                    <h3 data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">Experience Builder </h3>
+                                    <a href="/experience-builder.html"><h3 data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">Experience Builder </h3></a>
                                     <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">One place to capture all of your product reaserch.</p>
                                     <ul>
                                         <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
@@ -141,7 +141,7 @@
                         <div class="row">
                             <div class="col-xl-5 col-lg-5 col-md-5">
                                 <div class="Process_info" style="padding-left: 0px;">
-                                    <h3 data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">Screen Builder </h3>
+                                    <a href="/screen-builder.html"><h3 data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">Screen Builder </h3></a>
                                     <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Create mock screens in a quarter of the time.</p>
                                     <ul>
                                         <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
@@ -284,16 +284,19 @@
             </div> 
 
             <!-- Interactive Tools Section -->
-            <!-- <div class="section-top-border">
+            <div class="section-top-border">
                 <div class="container">
-                    <div class="row">
+                    <div>
+                        <a href="d-tools/decision-tools.html"><h3>Interactive Decision Tools</h3></a>
+                        <p class="section-subtitle">Guide your business and product decisions with our interactive decision tools.</p>
                     </div>
+                    <br>
                     <div class="row align-items-stretch">
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
-                            <a href="entrepreneur-decision-tree.html" class="tool-card">
+                            <a href="d-tools/entrepreneur-decision-tree.html" class="tool-card">
                                 <div class="tool-card-content">
                                     <div class="tool-card-image">
-                                        <img src="img/products/entrepreneur-tree.png" alt="Entrepreneur's Decision Tree">
+                                        <img src="img/products/EDT.png" alt="Entrepreneur's Decision Tree">
                                     </div>
                                     <div class="tool-card-body">
                                         <h4>Entrepreneur's Decision Tree</h4>
@@ -303,10 +306,10 @@
                             </a>
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
-                            <a href="ux-method-tree.html" class="tool-card">
+                            <a href="d-tools/ux-method-tree.html" class="tool-card">
                                 <div class="tool-card-content">
                                     <div class="tool-card-image">
-                                        <img src="img/products/ux-methods.png" alt="UX Methods Decision Tree">
+                                        <img src="img/products/MDT.png" alt="UX Methods Decision Tree">
                                     </div>
                                     <div class="tool-card-body">
                                         <h4>UX Methods Decision Tree</h4>
@@ -316,10 +319,10 @@
                             </a>
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
-                            <a href="business-idea-generator.html" class="tool-card">
+                            <a href="d-tools/business-idea-generator.html" class="tool-card">
                                 <div class="tool-card-content">
                                     <div class="tool-card-image">
-                                        <img src="img/products/business-generator.png" alt="Business Idea Generator">
+                                        <img src="img/products/BIG.png" alt="Business Idea Generator">
                                     </div>
                                     <div class="tool-card-body">
                                         <h4>Business Idea Generator</h4>
@@ -328,9 +331,22 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
+                            <a href="d-tools/project-validation-methods.html" class="tool-card">
+                                <div class="tool-card-content">
+                                    <div class="tool-card-image">
+                                        <img src="img/products/PVMS.png" alt="Business Idea Generator">
+                                    </div>
+                                    <div class="tool-card-body">
+                                        <h4>Project Validation Methods</h4>
+                                        <small>Discover the perfect validation method for your project.</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
             
             <!-- main wrapper below -->
         </div>
@@ -339,18 +355,13 @@
      <!-- Scroll to top button  -->
      <div class="back-to-top" data-scroll-nav="0"><i class="fa fa-arrow-up"></i></div>
 
-    <!-- <div class="col-xl-12 col-lg-12 col-md-12">
-        <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
-            <img style="width: 35%; -webkit-transform: scaleX(-1);
-            transform: scaleX(-1); margin-left: 40%;" src="img/ilstrator/workers.png" alt="">
-        </div>
-    </div> -->
-
     <!-- FOOTER  -->
     <div class="footer" id="footer"></div>
 
     <script>	
-        AOS.init();
+        AOS.init({
+            once: true
+        });
 
     $(document).ready(function() {
         $('#footer').load("footer.html");

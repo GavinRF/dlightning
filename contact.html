@@ -59,17 +59,362 @@
     <section class="contact-section">
         <div class="container">
     
-            <div class="row">
-                    <!-- <div class="col-2 col-sm-0"></div> -->
-                <div class="col-12 align-items-center" style="margin-bottom: 2px; overflow-y: hidden;">
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfbHfY7Zr0-51-ZspAZm6KmREMIFdohdcXBNXjQqH5e7AkUFg/viewform?embedded=true" width="100%" style="min-width: 345px" height="1022" style="margin: 0 auto;" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> 
+            <div class="row justify-content-center">
+                <h2>We want to hear from you!</h2>
+                <div class="col-lg-8 col-md-10">
+                    <br>
+                    <form id="contactForm" class="custom-contact-form" method="POST" action="https://docs.google.com/forms/d/e/1FAIpQLSf8XnYx0SkPNM-q9TfTozZzLVxt9LMtOMgQXt_h8F2REqw7uA/formResponse" target="hidden_iframe" onsubmit="return submitForm()">
+                        <p>Fill out the form below to get in touch. We'll get back to you as soon as possible.</p>
+
+                        <div class="form-group">
+                            <label for="name">Name <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="name" name="entry.1709323460" placeholder="Your Name" required minlength="2">
+                            <small class="error-message" id="nameError"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email <span style="color: red;">*</span></label>
+                            <input type="email" class="form-control" id="email" name="entry.58281753" placeholder="your.email@example.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                            <small class="error-message" id="emailError"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone <span><small> (optional)</small></span></label>
+                            <input type="tel" class="form-control" id="phone" name="entry.710102933" placeholder="(555) 123-4567" maxlength="14">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comments">Comments</label>
+                            <textarea class="form-control" id="comments" name="entry.1760989356" rows="6" placeholder="Tell us about your project or question..." maxlength="1000"></textarea>
+                            <small class="char-counter" id="charCounter">0 / 1000 characters</small>
+                        </div>
+
+                        <div id="formSuccess" class="success-message" style="display: none;">
+                            <strong>✓ Success!</strong> Thank you for reaching out. We'll get back to you soon!
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="boxed-btn3" id="submitBtn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-spinner" style="display: none;">
+                                    <span class="spinner"></span> Sending...
+                                </span>
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <!-- Hidden iframe for form submission -->
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {document.getElementById('formSuccess').style.display='block'; document.getElementById('contactForm').reset();}"></iframe>
                 </div>
-                    <!-- <div class="col-2"></div> -->
             </div>
+
+            <style>
+                .custom-contact-form {
+                    background: #ffffff;
+                    padding: 40px 40px 20px 40px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+                    margin-bottom: 88px;
+                }
+
+                .custom-contact-form .form-group {
+                    margin-bottom: 14px;
+                }
+
+                .custom-contact-form label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 500;
+                    color: var(--color-text-primary);
+                    font-size: 14px;
+                }
+
+                .custom-contact-form .form-control {
+                    width: 100%;
+                    padding: 12px 16px;
+                    border: 1px solid #e5e6e9;
+                    border-radius: 4px;
+                    font-size: 15px;
+                    transition: border-color 0.3s, box-shadow 0.3s;
+                    font-family: var(--font-family-primary);
+                }
+
+                .custom-contact-form .form-control:focus {
+                    outline: none;
+                    border-color: var(--color-primary-light);
+                    box-shadow: 0 0 0 3px rgba(93, 178, 255, 0.1);
+                }
+
+                .custom-contact-form .form-control.is-invalid {
+                    border-color: #dc3545;
+                }
+
+                .custom-contact-form .form-control.is-valid {
+                    border-color: #28a745;
+                }
+
+                .custom-contact-form textarea.form-control {
+                    resize: vertical;
+                    min-height: 120px;
+                }
+
+                .custom-contact-form .error-message {
+                    display: block;
+                    color: #dc3545;
+                    font-size: 13px;
+                    margin-top: 5px;
+                    min-height: 18px;
+                }
+
+                .custom-contact-form .help-text {
+                    display: block;
+                    color: var(--color-gray-400);
+                    font-size: 13px;
+                    margin-top: 5px;
+                }
+
+                .custom-contact-form .char-counter {
+                    display: block;
+                    color: var(--color-gray-400);
+                    font-size: 13px;
+                    margin-top: 5px;
+                    text-align: right;
+                }
+
+                .custom-contact-form .boxed-btn3 {
+                    min-width: 200px;
+                    margin-top: 10px;
+                    position: relative;
+                    transition: all 0.3s ease;
+                }
+
+                .custom-contact-form .boxed-btn3:disabled {
+                    opacity: 0.7;
+                    cursor: not-allowed;
+                }
+
+                .custom-contact-form .btn-spinner {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .spinner {
+                    display: inline-block;
+                    width: 14px;
+                    height: 14px;
+                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    border-top-color: #fff;
+                    border-radius: 50%;
+                    animation: spin 0.8s linear infinite;
+                }
+
+                @keyframes spin {
+                    to { transform: rotate(360deg); }
+                }
+
+                .success-message {
+                    background: #d4edda;
+                    border: 1px solid #c3e6cb;
+                    color: #155724;
+                    padding: 16px 20px;
+                    border-radius: 4px;
+                    margin-top: 20px;
+                    animation: slideDown 0.4s ease-out;
+                }
+
+                @keyframes slideDown {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-10px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .success-message.fade-out {
+                    animation: fadeOut 0.5s ease-out forwards;
+                }
+
+                @keyframes fadeOut {
+                    to {
+                        opacity: 0;
+                        transform: translateY(-10px);
+                    }
+                }
+
+                @media (max-width: 767px) {
+                    .custom-contact-form {
+                        padding: 25px 20px;
+                    }
+                }
+            </style>
+
+            <script>
+                var submitted = false;
+                var isSubmitting = false;
+
+                // Phone number auto-formatting
+                document.getElementById('phone').addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        if (value.length <= 3) {
+                            value = '(' + value;
+                        } else if (value.length <= 6) {
+                            value = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+                        } else {
+                            value = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                        }
+                    }
+                    e.target.value = value;
+                });
+
+                // Character counter for comments
+                const commentsField = document.getElementById('comments');
+                const charCounter = document.getElementById('charCounter');
+
+                commentsField.addEventListener('input', function() {
+                    const length = this.value.length;
+                    const maxLength = 1000;
+                    charCounter.textContent = length + ' / ' + maxLength + ' characters';
+
+                    if (length > maxLength * 0.9) {
+                        charCounter.style.color = '#dc3545';
+                    } else {
+                        charCounter.style.color = 'var(--color-gray-400)';
+                    }
+                });
+
+                // Real-time validation
+                const nameField = document.getElementById('name');
+                const emailField = document.getElementById('email');
+
+                nameField.addEventListener('blur', function() {
+                    validateName();
+                });
+
+                emailField.addEventListener('blur', function() {
+                    validateEmail();
+                });
+
+                function validateName() {
+                    const name = nameField.value.trim();
+                    const errorEl = document.getElementById('nameError');
+
+                    if (name.length < 2) {
+                        nameField.classList.add('is-invalid');
+                        nameField.classList.remove('is-valid');
+                        errorEl.textContent = 'Name must be at least 2 characters';
+                        return false;
+                    } else {
+                        nameField.classList.remove('is-invalid');
+                        nameField.classList.add('is-valid');
+                        errorEl.textContent = '';
+                        return true;
+                    }
+                }
+
+                function validateEmail() {
+                    const email = emailField.value.trim();
+                    const errorEl = document.getElementById('emailError');
+                    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+
+                    if (!emailPattern.test(email)) {
+                        emailField.classList.add('is-invalid');
+                        emailField.classList.remove('is-valid');
+                        errorEl.textContent = 'Please enter a valid email address';
+                        return false;
+                    } else {
+                        emailField.classList.remove('is-invalid');
+                        emailField.classList.add('is-valid');
+                        errorEl.textContent = '';
+                        return true;
+                    }
+                }
+
+                // Form submission with loading state
+                function submitForm() {
+                    // Prevent double submission
+                    if (isSubmitting) {
+                        return false;
+                    }
+
+                    // Validate all fields
+                    const isNameValid = validateName();
+                    const isEmailValid = validateEmail();
+
+                    if (!isNameValid || !isEmailValid) {
+                        return false;
+                    }
+
+                    // Show loading state
+                    isSubmitting = true;
+                    const submitBtn = document.getElementById('submitBtn');
+                    const btnText = submitBtn.querySelector('.btn-text');
+                    const btnSpinner = submitBtn.querySelector('.btn-spinner');
+
+                    submitBtn.disabled = true;
+                    btnText.style.display = 'none';
+                    btnSpinner.style.display = 'inline-flex';
+
+                    submitted = true;
+                    return true;
+                }
+
+                // Handle successful submission
+                const hiddenIframe = document.getElementById('hidden_iframe');
+                hiddenIframe.addEventListener('load', function() {
+                    if (submitted) {
+                        // Reset button state
+                        const submitBtn = document.getElementById('submitBtn');
+                        const btnText = submitBtn.querySelector('.btn-text');
+                        const btnSpinner = submitBtn.querySelector('.btn-spinner');
+
+                        setTimeout(function() {
+                            submitBtn.disabled = false;
+                            btnText.style.display = 'inline';
+                            btnSpinner.style.display = 'none';
+                            isSubmitting = false;
+                        }, 500);
+
+                        // Show success message
+                        const successMsg = document.getElementById('formSuccess');
+                        successMsg.style.display = 'block';
+
+                        // Reset form
+                        document.getElementById('contactForm').reset();
+
+                        // Clear validation classes
+                        document.querySelectorAll('.is-valid, .is-invalid').forEach(el => {
+                            el.classList.remove('is-valid', 'is-invalid');
+                        });
+
+                        // Reset character counter
+                        charCounter.textContent = '0 / 1000 characters';
+
+                        // Auto-hide success message after 5 seconds
+                        setTimeout(function() {
+                            successMsg.classList.add('fade-out');
+                            setTimeout(function() {
+                                successMsg.style.display = 'none';
+                                successMsg.classList.remove('fade-out');
+                            }, 500);
+                        }, 5000);
+
+                        // Scroll to success message
+                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                        submitted = false;
+                    }
+                });
+            </script>
 
             <div class="row">
                 <div class="d-flex justify-content-center col-12 align-items-center">
-                    <h4><b>Ready to discuss? Grab a consultation time slot.</b></h4>
+                    <h3><b>Ready to discuss? Grab a consultation time slot.</b></h3>
                 </div>
             </div>
                   
