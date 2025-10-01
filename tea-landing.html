@@ -18,10 +18,74 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/book-mock.css">
-    <link rel="stylesheet" href="css/open-book.css">
     <link rel="stylesheet" href="css/blog.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* Modern Table of Contents Styling */
+        .toc-container {
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .toc-section {
+            font-size: 16px;
+            font-weight: 700;
+            color: #103e8f;
+            margin: 16px 0 12px 0;
+            padding: 8px 0;
+            border-bottom: 2px solid #CCA684;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 14px;
+        }
+
+        .toc-chapter {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin: 10px 0 8px 0;
+            padding-left: 8px;
+            border-left: 3px solid #CCA684;
+            transition: all 0.2s ease;
+        }
+
+        .toc-chapter:hover {
+            padding-left: 14px;
+            color: #103e8f;
+        }
+
+        .toc-item {
+            font-size: 14px;
+            color: #666;
+            padding: 0 0 6px 24px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .toc-item:before {
+            content: "•";
+            position: absolute;
+            left: 12px;
+            color: #CCA684;
+            font-weight: bold;
+        }
+
+        .toc-item:hover {
+            color: #103e8f;
+            padding-left: 28px;
+        }
+
+        @media (max-width: 768px) {
+            .toc-container {
+                margin-top: 30px;
+            }
+        }
+    </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -95,7 +159,7 @@
                 <div class="container">
                     <div class="Process_main_wrap" style="padding-bottom: 0px;">
                         <div class="row  align-items-center">
-                            <div class="col-xl-6 col-lg-6 col-md-7">
+                            <div class="col-xl-6 col-lg-6 col-md-6">
                                 <div class="Process_info2" data-aos="fade-left" data-aos-delay="400" data-aos-duration="650">
                                     <h3>Become a Designer of the&nbsp;Future</h3>
                                     <p class="excert">
@@ -103,7 +167,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xl-5 col-lg-5  col-md-6 ">
+                            <div class="col-xl-6 col-lg-6 col-md-6 ">
                                 <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
                                     <div class="stickyBook">
                                         <ul class="shelf">
@@ -180,7 +244,7 @@
 
                 <h4>How We'll Get There</h4>
                    <p>
-                    Through compelling examples <i>Your Cup of Tea</i> unveils the profound connection between individuals and the technology they access to reach their goal. Customer experience takes center stage as readers navigate human perception, the psychology of decision-making, and the formation of habits.
+                    Through compelling examples <i>Your Cup of Tea</i> unveils the profound connection between individuals and the technology they access to reach their goals. Customer experience takes center stage as readers navigate human perception, the psychology of decision-making, and the formation of habits.
                    </p>
 
                    <p>
@@ -194,81 +258,326 @@
      </div>
   </section>
 
-  <!-- OPEN BOOK  -->
-  <div class="scene">
-    <div class="book-wrap">
-      <div class="left-side">
-        <div class="book-cover-left"></div>
-        <div class="layer1">
-          <div class="page-left"></div>
-        </div>
-        <div class="layer2">
-          <div class="page-left"></div>
-        </div>
-        <div class="layer3">
-          <div class="page-left"></div>
-        </div>
-        <div class="layer4">
-          <div class="page-left"></div>
-        </div>
-        <div class="layer-text">
-          <div class="page-left-2">
-            <div class="corner"></div>
-            <div class="corner2"></div>
-            <div class="corner-fold"></div>
-            <div class="page-text w-richtext">
-              <h3 style="margin-top: 40px;"><strong>Introduction</strong></h3>
-              <h6><i>We shape our tools and thereafter our tools shape us.</i><br><a href="https://www.marshallmcluhan.com/" target="_blank">—Marshall McLuhan
-            </a></h6>
-              
-              <p>When people have the tools to formulate their own positive vision of the world, they are empowered to re-shape life for the better. Digital technology enables self-change offering opportunities to acquire skills and personal development advice. Additionally, digital technology provides innovative ways to organize and present data, enhancing our ability to comprehend and establish connections on a larger scale. As a result, user interfaces are driving radical change across every sector of life, altering our perceptions and interactions with the material world.
-                <br><br>
-                In the pages of this book, you'll discover practical methods to tackle real-world, human-centered problems. If you aspire to build a business from the ground up, or to create a product that truly resonates with an audience, first it’ll have to meet a distinct need — but defining what people need is a tricky thing to nail down.
-                </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="center"></div>
-      <div class="right-side">
-        <div class="book-cover-right"></div>
-        <div class="layer1">
-          <div class="page-right"></div>
-        </div>
-        <div class="layer2 right">
-          <div class="page-right"></div>
-        </div>
-        <div class="layer3 right">
-          <div class="page-right"></div>
-        </div>
-        <div class="layer4 right">
-          <div class="page-right"></div>
-        </div>
-        <div class="layer-text right">
-          <div class="page-right-2">
-            <div class="page-text w-richtext">
-              
-              <p>‍</p>
-              <p style="margin-top: 16px;">
-                This book is a roadmap to validating the merit of a problem solution. We’ll delve deep into the art and science of Experience Design, a dynamic approach that enhances interactions with right-time, right-place technology to accelerate the way people reach their goals and shape their reality.
-                <br><br>
-                It's not just about solving problems; it's about exceeding expectations. The reader will build confidence in their ability to fulfill the wishes of customers by forging lasting connections that extend far beyond a single transaction because <b>making things that people want, is far greater than making people want things.</b>
-                <br><br>
-                Products that build connections and prioritize the customer experience will out-compete and outlast their competitors. The products and services that endure are often those that captivate with wonder, have a history of quality, or stand for convenience. Products like these have a tendency to prioritize emotions and hook into deeply seated human ... 
-            </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- BOOK EXCERPT -->
+    <section class="container" style="margin: 60px auto;">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <blockquote style="border-left: 4px solid #CCA684; padding: 30px 40px; background-color: #f9f9f9; font-family: Georgia, 'Times New Roman', serif; line-height: 1.8;">
+                    <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 28px; font-weight: bold;">From the Book's Introduction</h3>
+                    <p style="font-style: italic; margin-bottom: 15px; color: #666;">
+                        "We shape our tools and thereafter our tools shape us."<br>
+                        <a href="https://www.marshallmcluhan.com/" target="_blank" style="color: #a93d04; text-decoration: none;">—Marshall McLuhan</a>
+                    </p>
 
-        <!-- Points area  -->
+                    <p style="margin-bottom: 15px;">
+                        When people have the tools to formulate their own positive vision of the world, they are empowered to re-shape life for the better. Digital technology enables self-change offering opportunities to acquire skills and access personal development advice. Additionally, digital technology provides innovative ways to organize and present data, enhancing our ability to comprehend and establish connections on a larger scale. As a result, user interfaces are driving radical change across every sector of life, altering our perceptions and interactions with the material world.
+                    </p>
+
+                    <p style="margin-bottom: 15px;">
+                        In the pages of this book, you'll discover practical methods to tackle real-world, human-centered problems. If you aspire to build a business from the ground up, or to create a product that truly resonates with an audience, first it'll have to meet a distinct need—but defining what people <i>need</i> is a tricky thing to nail down.
+                    </p>
+
+                    <p style="margin-bottom: 15px;">
+                        This book is a roadmap to validating the merit of a problem solution. We'll delve deep into the art and science of Experience Design, a dynamic approach that enhances interactions with right-time, right-place technology to accelerate the way people reach their goals and shape their reality.
+                    </p>
+
+                    <p style="margin-bottom: 15px;">
+                        It's not just about solving problems; it's about exceeding expectations. The reader will build confidence in their ability to fulfill the wishes of customers by forging lasting connections that extend far beyond a single transaction because <strong>making things that people want, is far greater than making people want things.</strong>
+                    </p>
+
+                    <p style="margin-bottom: 0;">
+                        Products that build connections and prioritize the customer experience will out-compete and outlast their competitors. The products and services that endure are often those that captivate with wonder, have a history of quality, or stand for service. Products like these have a tendency to prioritize emotions and hook into deeply seated human needs...
+                    </p>
+                    <br>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+<!-- END BOOK EXCERPT -->
+
+        <section class="container" id="buyIt">
+            <div class="row" style="margin-bottom: 48px;">
+        
+                <div class="col-md-8 sol-sm-12 col-lg-8 col-xl-8">
+                    <script src="https://gumroad.com/js/gumroad-embed.js"></script>
+                    <div class="gumroad-product-embed"><a href="https://dlightning.gumroad.com/l/your_cup_of_tea">Loading...</a></div>
+                </div>
+        
+            <div id="contents" class="col-md-4 col-sm-12">
+                <div class="toc-container">
+                    <h3 style="margin-bottom: 20px;">Table of Contents</h3>
+                    <div class="toc-chapter">What is Experience?</div>
+                    <div class="toc-item">Knowledge Argument — A Thought Experiment</div>
+                    <div class="toc-item">The Problem</div>
+                    <div class="toc-item">What is Interaction?</div>
+
+                    <div class="toc-chapter">The Way of the Tea Master</div>
+
+                    <div class="toc-chapter">Design Cycle</div>
+                    <div class="toc-item">Hypothesis</div>
+                    <div class="toc-item">Competitor Analysis</div>
+                    <div class="toc-item">Proto Persona</div>
+                    <div class="toc-item">Human Subject Research Introduction</div>
+                    <div class="toc-item">Research Planning</div>
+                    <div class="toc-item">Conducting the interview</div>
+
+                    <div class="toc-chapter">Asking Questions</div>
+
+                    <div class="toc-chapter">Research Analysis and Synthesis</div>
+                    <div class="toc-item">Pattern Recognition</div>
+                    <div class="toc-item">Affinity diagram</div>
+                    <div class="toc-item">Empathy Map</div>
+                    <div class="toc-item">Persona</div>
+                    <div class="toc-item">Research Insights</div>
+
+                    <div class="toc-chapter">Ideation Phase</div>
+                    <div class="toc-item">Brainstorming</div>
+                    <div class="toc-item">I Like, I Wish, What If Method</div>
+                    <div class="toc-item">Lateral Thinking</div>
+                    <div class="toc-item">Feature Prioritization</div>
+                    <div class="toc-item">Value Proposition Statement</div>
+
+                    <div class="toc-chapter">Declamation</div>
+                    <div class="toc-item">Experience Design Reactivation</div>
+                    <div class="toc-item">Peer Critique</div>
+                    <div class="toc-item">Imposter Syndrome</div>
+                    <div class="toc-item">Accessibility, Usability, & Universality</div>
+                    <div class="toc-item">10 UI Usability Heuristics</div>
+
+                    <div class="toc-chapter">Circumstantial Storytelling</div>
+                    <div class="toc-item">Storyboarding</div>
+                    <div class="toc-item">Journey Map</div>
+                    <div class="toc-item">Task Flow Analysis</div>
+                    <div class="toc-item">Onboarding</div>
+
+                    <div class="toc-chapter">Interfaces</div>
+                    <div class="toc-item">Designed Interfaces in Context</div>
+                    <div class="toc-item">Low Fidelity Prototyping - Wireframes</div>
+                    <div class="toc-item">User Interfaces (UI)</div>
+
+                    <div class="toc-chapter">Systems & Emergence</div>
+
+                    <div class="toc-chapter">Building Lasting Community and Engagement</div>
+                    <div class="toc-item">Core Learning Loop</div>
+
+                    <div class="toc-chapter">Ethical Design</div>
+                    <div class="toc-item">Habitual Design for Good</div>
+
+                    <div class="toc-chapter">Language is Fundamental</div>
+
+                    <div class="toc-chapter">Entrepreneurial Spirit</div>
+                    <div class="toc-item">Pitching or Presenting</div>
+                    <div class="toc-item">Effecting Change</div>
+
+                    <div class="toc-section">Resolution</div>
+                </div>
+            </div>
+          </div>
+        </section>
+
+    <!-- testmonial_area  -->
+    <!-- <div class="container" id="peopleSay">
+        <a href="downloads.html">
+        <div class="col-xl-12 text-center produt-title"><h2>What People Are Saying</h2></div>
+        </a>
+    </div> -->
+    <section id="peopleSay" style="padding: 80px 0; background-color: #fff;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 style="margin-bottom: 30px;" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">
+                        What People Are Saying
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">
+                    <div style="background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); height: calc(100% - 30px);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src='img/icon/review-1-a.png' style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px; object-fit: cover;">
+                            <div>
+                                <div style="font-weight: 600; color: #333; margin-bottom: 4px;">Michael R.</div>
+                                <div style="font-size: 13px; color: #999;">CFE MBA</div>
+                            </div>
+                        </div>
+                        <div style="color: #CCA684; margin-bottom: 15px; font-size: 14px;">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p style="color: #666; line-height: 1.7; margin: 0; font-size: 15px;">
+                            Your Cup o' Tea provides a framework for understanding, prioritizing, and executing complex ideas. Recognizing the importance of customer experience enables us to deliver optimal solutions that improve our world today.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                    <div style="background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); height: calc(100% - 30px);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src='img/icon/review-2-a.png' style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px; object-fit: cover;">
+                            <div>
+                                <div style="font-weight: 600; color: #333; margin-bottom: 4px;">Skylar H.</div>
+                                <div style="font-size: 13px; color: #999;">Designer/Student</div>
+                            </div>
+                        </div>
+                        <div style="color: #CCA684; margin-bottom: 15px; font-size: 14px;">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p style="color: #666; line-height: 1.7; margin: 0; font-size: 15px;">
+                            "Your Cup of Tea" expertly combines the best of human centered design, positive psychology, systems-theory, and ethics providing a step-by-step guide for entrepreneurs, big and small.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-duration="500" data-aos-delay="400">
+                    <div style="background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); height: calc(100% - 30px);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src='img/icon/review-3-a.png' style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px; object-fit: cover;">
+                            <div>
+                                <div style="font-weight: 600; color: #333; margin-bottom: 4px;">Jillian G.</div>
+                                <div style="font-size: 13px; color: #999;">Writer/Comic</div>
+                            </div>
+                        </div>
+                        <div style="color: #CCA684; margin-bottom: 15px; font-size: 14px;">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p style="color: #666; line-height: 1.7; margin: 0; font-size: 15px;">
+                            As a novice in design, I found Your Cup of Tea to be an invaluable guide. Practical advice and real-world examples sprinkled throughout are helpful for someone just delving into the world of design, as well as professionals looking to revisit their approach.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-duration="500" data-aos-delay="500">
+                    <div style="background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); height: calc(100% - 30px);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src='img/icon/review-4-a.png' style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px; object-fit: cover;">
+                            <div>
+                                <div style="font-weight: 600; color: #333; margin-bottom: 4px;">Jenny A.</div>
+                                <div style="font-size: 13px; color: #999;">Designer/DJ</div>
+                            </div>
+                        </div>
+                        <div style="color: #CCA684; margin-bottom: 15px; font-size: 14px;">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p style="color: #666; line-height: 1.7; margin: 0; font-size: 15px;">
+                            An essential reading for all levels of Experience/Product Designers. Your Cup of Tea takes you on an exciting journey clarifying complex product design concepts, and processes making them palatable in a harmonious blend of flavors.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-duration="500" data-aos-delay="600">
+                    <div style="background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); height: calc(100% - 30px);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src='img/icon/review-5-a.png' style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px; object-fit: cover;">
+                            <div>
+                                <div style="font-weight: 600; color: #333; margin-bottom: 4px;">Ben A.</div>
+                                <div style="font-size: 13px; color: #999;">Musician/Linguist</div>
+                            </div>
+                        </div>
+                        <div style="color: #CCA684; margin-bottom: 15px; font-size: 14px;">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p style="color: #666; line-height: 1.7; margin: 0; font-size: 15px;">
+                            This book cuts to the core of what it means to be a human interacting with the designed world, while offering pragmatic methods for how designers can effortlessly integrate this critical humanity into their craft.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-duration="500" data-aos-delay="700">
+                    <div style="background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); height: calc(100% - 30px);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src='img/icon/review-6-a.jpg' style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px; object-fit: cover;">
+                            <div>
+                                <div style="font-weight: 600; color: #333; margin-bottom: 4px;">Saskia M.</div>
+                                <div style="font-size: 13px; color: #999;">Designer/Educator</div>
+                            </div>
+                        </div>
+                        <div style="color: #CCA684; margin-bottom: 15px; font-size: 14px;">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p style="color: #666; line-height: 1.7; margin: 0; font-size: 15px;">
+                            Design can be overwhelming, but Your Cup of Tea breaks it down beautifully. The book's structure is a genius guide for designers, which leads you with the optimistic wisdom of a mentor who believes in your potential.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/ testmonial_area  -->
+
+    <!-- Tea banner section -->
+    <section class="tea-banner-section" style="margin-bottom: 60px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <img src="img/banner/sip-tea.png" alt="Sip tea banner" style="width: 100%; max-height: 380px; object-fit: cover; display: block; border-radius: 12px;" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/ tea-banner-section  -->
+
+    <section class="container">
+        <div id="steps" class="row" style="margin-bottom: 38px;">
+            <div class="col-lg-4 col-md-4">
+                <div class="single_service" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                    <span>01</span>
+                    <h3>Unlock Product Success</h3>
+                    <p> This book offers actionable insights, proven methodologies, and expert guidance to elevate your skills and achieve success as a product designer.</p>
+                </div>
+                <br>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="single_service" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+                    <span>02</span>
+                    <h3>Comprehensive Toolkit</h3>
+                    <p>Dive into user identification, research methods, and interface design techniques. Each section is crafted to equip you with the knowledge to excel in every aspect of product validation.</p>
+                </div>
+                <br>
+            </div>
+            <div class="col-lg-4 col-md-4" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
+                <div class="single_service">
+                    <span>03</span>
+                    <h3>Empowering Social Ventures</h3>
+                    <p>Tailored to entrepreneurs with a vision for impactful business; this book explores social change, ethical consumption, and systems design that enhance profit by delivering lasting value.</p>
+                </div>
+            </div>
+        </div>
+
+    <!-- Principles Area  -->
+    <br><br><br><br>
         <section class="Process_area" id="methods">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-7">
+                        <div class="col-xl-5 col-lg-5 col-md-5 align-items-center" style="display: flex; align-items: center;">
+                            <div data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">
+                                <img style="width: 102%; margin: -122px 0 0 58px;" src="img/products/simple-tea.png" alt="tea and cacti, chillin">
+                            </div>
+                        </div>
+                        <div class="col-xl-7 col-lg-7 col-md-7">
                             <div class="Process_info" style="padding-left: 0px;">
                                 <h3 style="font-size: 28px" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">Focus on Principles</h3>
                                 <!-- <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
@@ -295,300 +604,61 @@
                                 <br><br>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 align-items-center" style="display: flex; align-items: center;">
-                            <div data-aos="fade-left" data-aos-duration="400" data-aos-delay="300">
-                                <img style="width: 62%; margin: -12px 0 0 58px;" src="img/products/Chilling-Tea.png" alt="tea and cacti, chillin">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+                <!-- Dlightning Pro Discount area  -->
+                <div class="Process_area" style="margin: 60px 0;">
+                    <div class="container">
+                        <div class="Process_main_wrap">
+                            <div style="background-color: #fffcf9; border-radius: 16px; padding: 40px 40px 60px 40px; max-width: 860px; margin: 0 auto; outline: 1px solid #CCA684; outline-offset: -12px;">
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-10 col-lg-10 col-md-12">
+                                        <div class="Process_info" style="text-align: center;">
+                                            <h3 style="font-size: 38px; color: #103e8f; margin-bottom: 12px;" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                                Exclusive Book Buyer Offer
+                                            </h3>
+                                            <p style="font-size: 22px; line-height: 1.2; margin-bottom: 38px;" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+                                                <strong>Get 50% off your first 3 months of Dlightning Pro!</strong>
+                                            </p>
+                                            <p style="line-height: 1.6; margin-bottom: 6px; text-align:left;" data-aos="fade-up" data-aos-duration="600" data-aos-delay="450">
+                                                Put the book's methods into practice with our professional tools:
+                                            </p>
+                                            <ul style="margin-bottom: 38px; text-align: left;">
+                                                <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
+                                                    <strong>Experience Builder</strong> — Follow the design methods from the book
+                                                </li>
+                                                <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="550">
+                                                    <strong>Screen Builder</strong> — Design and prototype your interfaces
+                                                </li>
+                                                <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="600">
+                                                    Unlimited projects and exports
+                                                </li>
+                                            </ul>
+                                            <div style="background: #fff; border-left: 4px solid #CCA684; padding: 20px; border-radius: 4px; margin: 0 auto; max-width: 600px;" data-aos="fade-up" data-aos-duration="700" data-aos-delay="700">
+                                                <p style="margin: 0; font-size: 16px; color: #434343; text-align: left;">
+                                                    <strong style="color: #103e8f;">Your exclusive coupon code will be provided when you purchase the book.</strong><br>
+                                                    <small>Use it at checkout when subscribing to Dlightning Pro.</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="container" id="buyIt">
-            <div class="row" style="margin-bottom: 48px;">
-        
-                <div class="col-md-8 sol-sm-12" >
-                    <script src="https://gumroad.com/js/gumroad-embed.js"></script>
-                    <div class="gumroad-product-embed"><a href="https://dlightning.gumroad.com/l/your_cup_of_tea">Loading...</a></div>
-                </div>
-        
-            <div id="contents" class="col-md-4 col-sm-12">
-                <h3>Table of Contents</h3>
-                <div>
-                    <details>
-                        <summary><b>What is Experience?</b></summary>
-                            <ul class="unordered-list">
-                                <li>Knowledge Argument — A Thought Experiment</li>
-                                <li>The Problem</li>
-                                <li>What is Interaction?</li>
-                            </ul>
-                    </details>
-                    <span><b>The Way of the Tea Master</b></span>
-                    <details>
-                        <summary><b>Design Cycle</b></summary>
-                            <ul class="unordered-list">
-                            <li>Hypothesis</li>
-                            <li>Competitor Analysis</li>
-                            <li>Proto Persona</li>
-                            <li>Human Subject Research Introduction</li>
-                            <li>Research Planning</li>
-                            <li>Conducting the interview</li>
-                        </ul>                    
-                    </details>
-                    <span><b>Asking Questions</b></span>
-                    <details>
-                        <summary><b>Research Analysis and Synthesis</b></summary>
-                        <ul class="unordered-list">
-                            <li>Pattern Recognition</li>
-                            <li>Affinity diagram</li>
-                            <li>Empathy Map</li>
-                            <li>Persona</li>
-                            <li>Research Insights</li>
-                        </ul>                    
-                    </details>
-                    <details>
-                        <summary><b>Ideation Phase</b></summary>
-                        <ul class="unordered-list">
-                            <li>Brainstorming</li>
-                            <li>I Like, I Wish, What If Method</li>
-                            <li>Lateral Thinking</li>
-                            <li>Feature Prioritization</li>
-                            <li>Value Proposition Statement</li>
-                        </ul>                    
-                    </details>
-                    <details>
-                        <summary><b>Declamation</b></summary>
-                        <ul class="unordered-list">
-                            <li>Experience Design Reactivation</li>
-                            <li>Peer Critique</li>
-                            <li>Imposter Syndrome</li>
-                            <li>Accessibility, Usability, & Universality</li>
-                            <li>10 UI Usability Heuristics</li>
-                        </ul>                    
-                    </details>
-                    <details>
-                        <summary><b>Circumstantial Storytelling</b></summary>
-                        <ul class="unordered-list">
-                            <li>Storyboarding</li>
-                            <li>Journey Map</li>
-                            <li>Task Flow Analysis</li>
-                            <li>Onboarding</li>
-                        </ul>                    
-                    </details>
-                    <details>
-                        <summary><b>Interfaces</b></summary>
-                        <ul class="unordered-list">
-                            <li>Designed Interfaces in Context</li>
-                            <li>Low Fidelity Prototyping - Wireframes</li>
-                            <li>User Interfaces (UI)</li>
-                        </ul>                    
-                    </details>
-                    <span><b>Systems & Emergence</b></span>
-                    <details>
-                        <summary><b>Building Lasting Community and Engagement</b></summary>
-                        <ul class="unordered-list">
-                            <li>Core Learning Loop</li>
-                        </ul>                    
-                    </details>
-                    <details>
-                        <summary><b>Ethical Design</b></summary>
-                        <ul class="unordered-list">
-                            <li>Habitual Design for Good</li>
-                        </ul>                    
-                    </details>
-                    <span><b>Language is Fundamental</b></span>
-                    <details>
-                        <summary><b>Entrepreneurial Spirit</b></summary>
-                        <ul class="unordered-list">
-                            <li>Pitching or Presenting</li>
-                            <li>Effecting Change</li>
-                        </ul>                    
-                    </details>
-                    <span><b>Resolution</b></span>
-                </div>
-            </div>
-          </div>
-        </section>
-
-    <!-- testmonial_area  -->
-    <!-- <div class="container" id="peopleSay">
-        <a href="downloads.html">
-        <div class="col-xl-12 text-center produt-title"><h2>What People Are Saying</h2></div>
-        </a>
-    </div> -->
-    <section class="testmonial_area" id="peopleSay">
-        <div class="container">
-            <div class="col-xl-12">
-                <div class="testmonial_active owl-carousel">
-                    <div class="single_testmonial text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
-                        <div class="section_title">
-                        </div>
-                        <img class='testa-people review' src='img/icon/review-1-a.png'>
-                        <p>
-                             Your Cup o’ Tea provides a framework for understanding, prioritizing, and executing<br> complex ideas. Recognizing the importance of customer experience enables us<br> to deliver optimal solutions that improve our world today.
-                        </p>
-                        <div class="rating_author">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                       </div>
-                       <br>
-                            <span style="color:white">
-                                Michael R.<br>
-                                <small style="color:#ffffff94">CFE MBA</small>
-                            </span>
-  
-                    </div>
-
-                    <div class="single_testmonial text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
-                        <div class="section_title">
-                        </div>
-                        <img class='testa-people review' src='img/icon/review-2-a.png'>
-                        <p>
-                            “Your Cup of Tea” expertly combines the best of human centered design,<br> positive psychology, systems-theory, and ethics  providing a <br>step-by-step guide for entrepreneurs, big and small.
-                        </p>
-                        <div class="rating_author">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <br>
-                            <span style="color:white">
-                                Skylar H.<br>
-                                <small style="color:#ffffff94">Designer/Student</small>
-                            </span>
-                    </div>
-
-                    <div class="single_testmonial text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
-                        <div class="section_title">
-                        </div>
-                        <img class='testa-people review' src='img/icon/review-3-a.png'>
-                        <p> 
-                            As a novice in design, I found Your Cup of Tea to be an invaluable guide.<br> Practical advice and real-world examples sprinkled throughout<br> are helpful for someone just delving into the world of design,<br> as well as professionals looking to revisit their approach.
-                        </p>
-                        <div class="rating_author">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <br>
-                            <span style="color:white">
-                                Jillian G.<br>
-                                <small style="color:#ffffff94">Writer/Comic</small>
-                            </span>
-                    </div>
-
-                    <div class="single_testmonial text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
-                        <div class="section_title">
-                        </div>
-                        <img class='testa-people review' src='img/icon/review-4-a.png'>
-                        <p> 
-                            An essential reading for all levels of Experience/Product Designers.<br>Your Cup of Tea takes you on an exciting journey clarifying complex product design concepts,<br> and processes making them palatable in a harmonious blend of flavors.
-                        </p>
-                        <div class="rating_author">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <br>
-                            <span style="color:white">
-                                Jenny A.<br>
-                                <small style="color:#ffffff94">Designer/DJ</small>
-                            </span>
-                    </div>
-
-                    <div class="single_testmonial text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
-                        <div class="section_title">
-                        </div>
-                        <img class='testa-people review' src='img/icon/review-5-a.png'>
-                        <p> 
-                            This book cuts to the core of what it means to be a human interacting with the designed world,<br> while offering pragmatic methods for how designers can effortlessly integrate<br>this critical humanity into their craft.
-                        </p>
-                        <div class="rating_author">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <br>
-                            <span style="color:white">
-                                Ben A.<br>
-                                <small style="color:#ffffff94">Musician/Linguist</small>
-                            </span>
-                    </div>
-
-                    <div class="single_testmonial text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
-                        <div class="section_title">
-                        </div>
-                        <img class='testa-people review' src='img/icon/review-6-a.jpg'>
-                        <p> 
-                            Design can be overwhelming, but Your Cup of Tea breaks it down beautifully. <br>The book's structure is a genius guide for designers, which leads you with <br>the optimistic wisdom of a mentor who believes in your potential.
-                        </p>
-                        <div class="rating_author">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <br>
-                            <span style="color:white">
-                                Saskia M.<br>
-                                <small style="color:#ffffff94">Designer/Educator</small>
-                            </span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section> 
-    <!--/ testmonial_area  -->
-
-    <section class="container">
-        <div id="steps" class="row" style="margin-bottom: 38px;">
-            <div class="col-lg-4 col-md-4">
-                <div class="single_service" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
-                    <span>01</span>
-                    <h3>Unlock Product Success</h3>
-                    <p> This book offers actionable insights, proven methodologies, and expert guidance to elevate your skills and achieve success as a product designer.</p>
-                </div>
-                <br>
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <div class="single_service" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
-                    <span>02</span>
-                    <h3>Comprehensive Toolkit</h3>
-                    <p>Dive into user identification, research methods, and interface design techniques. Each section is crafted to equip you with the knowledge to excel in every aspect of product validation.</p>
-                </div>
-                <br>
-            </div>
-            <div class="col-lg-4 col-md-4" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
-                <div class="single_service">
-                    <span>03</span>
-                    <h3>Empowering Social Ventures</h3>
-                    <p>Tailored to entrepreneurs with a vision for impactful business; this book explores social change, ethical consumption, and systems that enhance profit by delivering lasting value.</p>
-                </div>
-            </div>
-        </div>
-
-                <!-- Points area  -->
-                <div class="Process_area" id="methods">
+                <!-- Figma Templates area  -->
+                <!-- <div class="Process_area" id="methods">
                     <div class="container">
                         <div class="Process_main_wrap">
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6 col-md-7">
                                     <div class="Process_info" style="padding-left: 0px;">
-                                        <h3 style="font-size: 28px" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">Figma Templates</h3>
+                                        <h3 style="font-size: 28px" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">Bonus: Figma Templates</h3>
                                          <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
                                             Helpful templates that mirror the methods in the book.<br>Included when you buy!
                                         </p> 
@@ -615,7 +685,7 @@
                                                 Wireframes & Hi-fi Screens
                                             </li>
                                         </ul>
-                                        <!-- <a class="wow fadeInUp gumroad-button" data-wow-duration=".9s" data-wow-delay="1.3s" href="https://dlightning.gumroad.com/l/your_cup_of_tea" data-gumroad-overlay-checkout="true">Buy it on</a> -->
+                                        <a class="wow fadeInUp gumroad-button" data-wow-duration=".9s" data-wow-delay="1.3s" href="https://dlightning.gumroad.com/l/your_cup_of_tea" data-gumroad-overlay-checkout="true">Buy it on</a>
                                         <br><br>
                                     </div>
                                 </div>
@@ -629,7 +699,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
         <!-- FROM THE AUTOR -->
             <br>
@@ -641,7 +711,7 @@
                         </div>
                         </a>
                     </div>
-                    <div id="auth" class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                    <div id="auth" class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
                         <div class="Process_info" >
                             <h3 data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">From the Author
                             </h3>
@@ -649,7 +719,8 @@
                             Thank you for considering Your Cup of Tea. My promise to readers is that within this book, they will discover practices that not only elevate everyday interactions but also encourage entrepreneurship, nurture community, and contribute to sustainable economies.</p>
                             <div style="height: 2px;"></div>
                             <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="300" style="line-height: 1.46;">
-                            I wrote 'Your Cup of Tea' after noticing gaps in the design curriculum — specifically, a disconnect between consumption, humanity, and our planet. This book introduces a sustainable vision for product design within our interconnected society. My aim is to inspire a shift in consciousness, encouraging product designers to consider the impact of their decisions. Together, let's create experiences that benefit individuals, communities, and society so we all thrive together.
+                            I wrote 'Your Cup of Tea' after noticing gaps in the design curriculum—specifically, a disconnect between consumption, humanity, and our planet. This book introduces a sustainable vision for product design within our interconnected society. My aim is to inspire a shift in business methods, encouraging product designers to consider the far-reaching impact of their decisions.
+                            <br><br> Together, let's create products and experiences that benefit individuals, communities, and society so we all thrive together.
                             </p>
                             <span data-aos="fade-up" data-aos-duration="600" data-aos-delay="300" style="color:#103e8f">
                                 —Gavin F.<br>
@@ -661,7 +732,7 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <div class="about_btn" data-aos="fade-up" data-aos-duration="900" data-aos-delay="650" >
-                            <a class="gumroad-button" style="margin-bottom: 22px" href="https://dlightning.gumroad.com/l/your_cup_of_tea" data-gumroad-overlay-checkout="true">Buy it on</a>
+                            <a class="gumroad-button" style="margin-bottom: 22px" href="https://dlightning.gumroad.com/l/your_cup_of_tea" data-gumroad-overlay-checkout="true">Buy 'Your Cup of Tea' on</a>
                             &emsp14; &emsp14;
                             <a href="Your Cup of Tea - Preview - What is Interaction-1.pdf" download>
                                 <u>Download&nbsp;a&nbsp;sample&nbsp;chapter</u>
@@ -672,11 +743,11 @@
                 </div>
                 </div>
                 <br><br><br><br><br><br>
-                <div class="row align-items-center">
+                <!-- <div class="row align-items-center">
                     <div class="col-xl-12 col-lg-12 col-md-12" data-aos="fade-up" data-aos-duration="1600" data-aos-delay="850" style="padding: 40px;">
                     <a href="#buyIt"><p style="text-align: center; font-size: 45px">🍵</p></a>
                     </div>
-                </div>
+                </div> -->
                     <div class="col-xl-8 col-lg-8 col-md-8 p-5 offset-xl-5 offset-lg-5">
                     <!-- <a class="wow fadeInUp gumroad-button" data-wow-duration=".9s" data-wow-delay="1.3s" href="https://dlightning.gumroad.com/l/your_cup_of_tea" data-gumroad-overlay-checkout="true">Buy it on</a>
                     <br><br> -->
