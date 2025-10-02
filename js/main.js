@@ -23,6 +23,8 @@ if(menu.length){
 		openedSymbol:'-'
 	});
 };
+
+
 // blog-menu
   // $('ul#blog-menu').slicknav({
   //   prependTo: ".blog_menu"
@@ -162,17 +164,17 @@ center: true,
 // });
 
 /* magnificPopup img view */
-$('.img-pop-up').magnificPopup({
-	type: 'image',
-	gallery: {
-	  enabled: true
-	}
-});
+// $('.img-pop-up').magnificPopup({
+// 	type: 'image',
+// 	gallery: {
+// 	  enabled: true
+// 	}
+// });
 
-/* magnificPopup video view */
-$('.popup-video').magnificPopup({
-	type: 'iframe'
-});
+// /* magnificPopup video view */
+// $('.popup-video').magnificPopup({
+// 	type: 'iframe'
+// });
 
 
   // scrollIt for smooth scroll
@@ -197,9 +199,6 @@ $('.popup-video').magnificPopup({
     scrollText: '<i class="fa fa-angle-double-up"></i>', // Text for element
     activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
   });
-
-
-  // blog-page
 
   //brand-active
 $('.brand-active').owlCarousel({

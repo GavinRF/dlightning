@@ -74,7 +74,32 @@
     </header>
 
 <script>
-	$(".burger").on('click', function() {
-		$(".navbar-nav").toggleClass("menu-show");
+	const $burger = $(".burger");
+	const $menu = $(".navbar-nav");
+
+	// Toggle menu on burger click
+	$burger.on('click', function(e) {
+		e.stopPropagation();
+		$menu.toggleClass("menu-show");
+		$burger.toggleClass("active");
+		$("body").toggleClass("menu-open");
+	});
+
+	// Close menu when clicking outside (on the menu background)
+	$menu.on('click', function(e) {
+		if (e.target === this) {
+			$menu.removeClass("menu-show");
+			$burger.removeClass("active");
+			$("body").removeClass("menu-open");
+		}
+	});
+
+	// Close menu when clicking a link
+	$menu.find('a').on('click', function() {
+		if (window.innerWidth <= 992) {
+			$menu.removeClass("menu-show");
+			$burger.removeClass("active");
+			$("body").removeClass("menu-open");
+		}
 	});
 </script>

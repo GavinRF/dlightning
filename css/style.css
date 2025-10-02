@@ -48,6 +48,7 @@
 
   /* Typography */
   --font-family-primary: 'Rubik', sans-serif;
+  --font-family-secondary: 'Inter', sans-serif;
 }
 
 .flex-center-start {
@@ -80,6 +81,7 @@ body {
   font-weight: normal;
   font-style: normal;
   max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .img {
@@ -1093,7 +1095,8 @@ h3 {
 .header-area .main-header-area.sticky {
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.1);
   position: fixed;
-  width: 100vw;
+  width: 100%;
+  max-width: 100vw;
   top: -70px;
   left: 0;
   right: 0;
@@ -1104,6 +1107,13 @@ h3 {
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.1);
   /* background: #081c81; */
   background-color: #003dc1;
+  box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+  .header-area .main-header-area.sticky {
+    padding: 10px 0px !important;
+  }
 }
 
 .talk{
@@ -2100,7 +2110,7 @@ h3 {
 
 @media (max-width: 767px) {
   .bradcam_area {
-    padding: 80px 0 40px 0;
+    padding: 140px 0 40px 0;
   }
 }
 
@@ -2949,24 +2959,127 @@ h6 {
 
 .burger{
   font-size: 2em;
-  color: #fff;
+  color: #fff !important;
   position: absolute;
-  right: 15px;
-  top: 10px;
-  z-index: 33;
+  right: 15px !important;
+  top: 10px !important;
+  z-index: 1100 !important;
   cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
 }
+
+.burger.active::before {
+  content: "\f00d";
+  font-family: FontAwesome;
+}
+
+.burger.active {
+  color: #fff !important;
+}
+
 .menu-show{
   display: block !important;
 }
 
+/* Mobile menu overlay - behind the menu */
+.mobile-menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 900;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.mobile-menu-overlay.active {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
 @media (max-width: 992px){
-  #menu{
-    margin: 25px;
+  body.menu-open {
+    overflow: hidden;
   }
+
+  .main-menu {
+    position: fixed !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100vw !important;
+    height: 100vh;
+    background: hsla(218, 78%, 34%, 0.97);
+    z-index: 1050;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    padding-top: 80px;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+
+  .main-menu.menu-show {
+    left: 0 !important;
+  }
+
+  .main-menu nav {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 80px 20px 20px 20px;
+    box-sizing: border-box;
+  }
+
+  #menu{
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   #menu li{
     display: block;
-    padding: 5px;
+    padding: 0;
+    margin: 14px 0;
+  }
+
+  #menu li a {
+    font-size: 22px !important;
+    padding: 12px 20px !important;
+    display: block;
+  }
+
+  #menu li .submenu {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    width: 100% !important;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #menu li .submenu li {
+    margin: 0;
+  }
+
+  #menu li .submenu li a {
+    font-size: 18px !important;
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+  }
+
+  #menu li .submenu li a:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
 
   .center-sm{
@@ -3083,6 +3196,7 @@ details[open] summary ~ * {
 
 .pDash{
   width:76%;
+  box-shadow: -2px 2px 18px #03032a2b;
 }
 
 @media (max-width: 990px) {
