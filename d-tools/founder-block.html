@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founder Blockers Diagnostic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateX(5px);
+        }
+
+        .option-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        }
+
+        .option-card input[type="radio"] {
+            display: none;
+        }
+
+        .option-card h3 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+
+        .option-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .results {
+            line-height: 1.8;
+        }
+
+        .results h3 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .tendency-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .commitment-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+                .educational-note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        .educational-note strong {
+            color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Founder Blockers Diagnostic</h1>
+            <p>Find what's blocking you—fix it in 2 minutes</p>
+        </div>
+
+        <div class="card">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <!-- Section 1: Tendency Selection -->
+            <div class="section active" id="section1">
+                <h2>Which tendency blocks you most?</h2>
+                <div class="educational-note">
+                    <strong>💡 Why this matters:</strong> Most founders unknowingly sabotage themselves by defaulting to one of three tendencies. Identifying yours is the first step to breaking free.
+                </div>
+                <div class="option-group">
+                    <label class="option-card">
+                        <input type="radio" name="tendency" value="optimizing">
+                        <h3>🔧 Over-Optimizing</h3>
+                        <p>Tweaking endlessly before launch. "It needs to be perfect first."</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="tendency" value="planning">
+                        <h3>📋 Over-Planning</h3>
+                        <p>Making detailed roadmaps but rarely shipping. Analysis paralysis.</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="tendency" value="protecting">
+                        <h3>🛡️ Over-Protecting</h3>
+                        <p>Avoiding feedback or showing unfinished work. No one will steal your idea, even if they do execution is everything.</p>
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button class="btn-primary" id="next1" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Section 2: Cost -->
+            <div class="section" id="section2">
+                <h2>What's this costing you?</h2>
+                <div class="educational-note">
+                    <strong>💡 The hidden cost:</strong> Every tendency has a price. Being honest about what it's costing you is crucial for change.
+                </div>
+                <div class="option-group">
+                    <label class="option-card">
+                        <input type="radio" name="cost" value="time">
+                        <h3>⏰ Time</h3>
+                        <p>Months spent on things nobody asked for</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="cost" value="momentum">
+                        <h3>📉 Momentum</h3>
+                        <p>Lost energy and motivation to keep going</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="cost" value="opportunities">
+                        <h3>💼 Opportunities</h3>
+                        <p>Missed chances while stuck in analysis mode</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="cost" value="relationships">
+                        <h3>👥 Relationships</h3>
+                        <p>Co-founder or team frustration building up</p>
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" id="back2">Back</button>
+                    <button class="btn-primary" id="next2" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Section 3: Industry Context -->
+            <div class="section" id="section3">
+                <h2>What problem space do you know deeply?</h2>
+                <div class="educational-note">
+                    <strong>💡 Your unfair advantage:</strong> You've seen something break that others haven't. This is your personal differentiation moat.
+                </div>
+                <div class="option-group">
+                    <label class="option-card">
+                        <input type="radio" name="context" value="healthcare">
+                        <h3>🏥 Healthcare</h3>
+                        <p>Insurance, patient data, compliance workflows</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="context" value="finance">
+                        <h3>💰 Finance</h3>
+                        <p>Banking, payments, regulatory reporting</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="context" value="saas">
+                        <h3>💻 SaaS/Tech</h3>
+                        <p>Product development, sales, customer success</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="context" value="ecommerce">
+                        <h3>🛒 E-commerce</h3>
+                        <p>Inventory, customer support, fulfillment</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="context" value="education">
+                        <h3>📚 Education</h3>
+                        <p>Teaching, administration, parent communication</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="context" value="other">
+                        <h3>🔧 Other Industry</h3>
+                        <p>Something different with its own quirks</p>
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" id="back3">Back</button>
+                    <button class="btn-primary" id="next3" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Section 4: Pain Point -->
+            <div class="section" id="section4">
+                <h2>What painful workflow have you seen break?</h2>
+                <div class="educational-note">
+                    <strong>💡 PMO Framework:</strong> Great positioning follows Pain → Mechanism → Outcome. Let's build yours.
+                </div>
+                <div class="option-group">
+                    <label class="option-card">
+                        <input type="radio" name="pain" value="manual-data">
+                        <h3>📝 Manual Data Entry</h3>
+                        <p>People reformatting/re-entering the same info across systems</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="pain" value="communication">
+                        <h3>💬 Communication Chaos</h3>
+                        <p>Information lost in email threads, Slack, meetings</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="pain" value="compliance">
+                        <h3>📋 Compliance Hell</h3>
+                        <p>Audit prep taking weeks, always scrambling for docs</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="pain" value="decision-making">
+                        <h3>🤔 Slow Decisions</h3>
+                        <p>Waiting on data, reports, or approvals that delay action</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="pain" value="customer-requests">
+                        <h3>🎫 Repetitive Requests</h3>
+                        <p>Same questions/tickets over and over, burning time</p>
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" id="back4">Back</button>
+                    <button class="btn-primary" id="next4" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Section 5: New Behavior -->
+            <div class="section" id="section5">
+                <h2>What will you do THIS WEEK?</h2>
+                <div class="educational-note">
+                    <strong>💡 Break the pattern:</strong> Awareness isn't enough. You need a specific replacement behavior.
+                </div>
+                <div class="option-group">
+                    <label class="option-card">
+                        <input type="radio" name="behavior" value="ship">
+                        <h3>🚀 Ship Something Imperfect</h3>
+                        <p>Get one person to test your messy prototype</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="behavior" value="talk">
+                        <h3>💬 Talk to 3 Users</h3>
+                        <p>Schedule calls with people in your target market</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="behavior" value="test">
+                        <h3>🧪 Run a Small Test</h3>
+                        <p>Post your idea publicly or send a landing page to 10 people</p>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="behavior" value="validate">
+                        <h3>✅ Validate One Assumption</h3>
+                        <p>Pick your riskiest assumption and test it this week</p>
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" id="back5">Back</button>
+                    <button class="btn-primary" id="generateResults" disabled>See My Results</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="section" id="results">
+                <h2>🎯 Your Diagnostic Results</h2>
+                
+                <div class="results" id="resultsContent"></div>
+
+                <div class="cta-box">
+                    <h3>⚡ Ready to Validate?</h3>
+                    <p>Test your positioning with real users before you build anything.</p>
+                    <button class="cta-button" onclick="window.open('experience-builder.html', '_blank')">Start in Experience Builder</button>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-secondary" onclick="location.reload()">Start Over</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const userData = {
+            tendency: '',
+            cost: '',
+            context: '',
+            pain: '',
+            behavior: ''
+        };
+
+        let currentSection = 1;
+        const totalSections = 5;
+
+        function updateProgress() {
+            const progress = (currentSection / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showSection(sectionNum) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            const section = document.getElementById('section' + sectionNum);
+            if (section) {
+                section.classList.add('active');
+                currentSection = sectionNum;
+                updateProgress();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Section 1: tendency
+        document.querySelectorAll('input[name="tendency"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('#section1 .option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                this.parentElement.classList.add('selected');
+                userData.tendency = this.value;
+                document.getElementById('next1').disabled = false;
+            });
+        });
+
+        document.getElementById('next1').addEventListener('click', () => showSection(2));
+
+        // Section 2: Cost
+        document.querySelectorAll('input[name="cost"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('#section2 .option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                this.parentElement.classList.add('selected');
+                userData.cost = this.value;
+                document.getElementById('next2').disabled = false;
+            });
+        });
+
+        document.getElementById('back2').addEventListener('click', () => showSection(1));
+        document.getElementById('next2').addEventListener('click', () => showSection(3));
+
+        // Section 3: Context
+        document.querySelectorAll('input[name="context"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('#section3 .option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                this.parentElement.classList.add('selected');
+                userData.context = this.value;
+                document.getElementById('next3').disabled = false;
+            });
+        });
+
+        document.getElementById('back3').addEventListener('click', () => showSection(2));
+        document.getElementById('next3').addEventListener('click', () => showSection(4));
+
+        // Section 4: Pain
+        document.querySelectorAll('input[name="pain"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('#section4 .option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                this.parentElement.classList.add('selected');
+                userData.pain = this.value;
+                document.getElementById('next4').disabled = false;
+            });
+        });
+
+        document.getElementById('back4').addEventListener('click', () => showSection(3));
+        document.getElementById('next4').addEventListener('click', () => showSection(5));
+
+        // Section 5: Behavior
+        document.querySelectorAll('input[name="behavior"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('#section5 .option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                this.parentElement.classList.add('selected');
+                userData.behavior = this.value;
+                document.getElementById('generateResults').disabled = false;
+            });
+        });
+
+        document.getElementById('back5').addEventListener('click', () => showSection(4));
+        document.getElementById('generateResults').addEventListener('click', generateDiagnostic);
+
+        function generateDiagnostic() {
+            const tendencyData = {
+                optimizing: {
+                    name: 'Over-Optimizing',
+                    advice: 'You perfect before you ship. Ship something 80% done this week.'
+                },
+                planning: {
+                    name: 'Over-Planning',
+                    advice: 'You strategize without executing. Set a 1-week deadline and ship.'
+                },
+                protecting: {
+                    name: 'Over-Protecting',
+                    advice: 'You hide your work. Share your idea with 3 people today.'
+                }
+            };
+
+            const costData = {
+                time: 'Months wasted on features nobody asked for',
+                momentum: 'Lost energy and motivation',
+                opportunities: 'Missed market windows and chances',
+                relationships: 'Team or co-founder frustration'
+            };
+
+            const contextData = {
+                healthcare: 'Healthcare workflows',
+                finance: 'Finance and compliance',
+                saas: 'SaaS product development',
+                ecommerce: 'E-commerce operations',
+                education: 'Education and teaching',
+                other: 'Your industry domain'
+            };
+
+            const painData = {
+                'manual-data': 'Manual data entry across systems',
+                'communication': 'Communication and information chaos',
+                'compliance': 'Compliance and audit preparation',
+                'decision-making': 'Slow decision-making from lack of data',
+                'customer-requests': 'Repetitive customer requests'
+            };
+
+            const behaviorData = {
+                ship: 'Ship something imperfect and get one real user to test it',
+                talk: 'Talk to 3 people in your target market',
+                test: 'Run one small public test (landing page or social post)',
+                validate: 'Test your riskiest assumption'
+            };
+
+            const positioning = `"We help [${contextData[userData.context]}] professionals who waste hours on ${painData[userData.pain]}, by [your solution approach], so they can focus on high-value work."`;
+
+            const results = `
+                <h3>Your Blocking tendency</h3>
+                <div class="tendency-badge">${tendencyData[userData.tendency].name}</div>
+                <p style="margin-top: 15px;">${tendencyData[userData.tendency].advice}</p>
+
+                <h3>What It's Costing You</h3>
+                <div class="result-box">
+                    ${costData[userData.cost]}
+                </div>
+
+                <h3>Your Positioning Framework</h3>
+                <div class="result-box">
+                    <strong>Context:</strong> ${contextData[userData.context]}<br>
+                    <strong>Pain Point:</strong> ${painData[userData.pain]}<br><br>
+                    <strong>Draft Positioning:</strong><br>
+                    ${positioning}
+                </div>
+
+                <h3>Your Commitment</h3>
+                <div class="commitment-box">
+                    "This week, I'll stop ${userData.tendency === 'optimizing' ? 'tweaking' : userData.tendency === 'planning' ? 'planning' : 'hiding'} and instead: <strong>${behaviorData[userData.behavior]}</strong>"
+                </div>
+
+                <div class="educational-note">
+                    <strong>📚 What you learned:</strong> You've completed the Founder Instinct diagnostic and built your positioning using the PMO framework (Pain-Mechanism-Outcome). Your next step is to validate this positioning with real users before building anything.
+                </div>
+            `;
+
+            document.getElementById('resultsContent').innerHTML = results;
+            
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            const resultsSection = document.getElementById('results');
+            if (resultsSection) {
+                resultsSection.classList.add('active');
+            }
+            
+            document.getElementById('progressFill').style.width = '100%';
+            window.scrollTo(0, 0);
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agent Idea Validation Quiz | Dlightning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    .quiz-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    
+    .quiz-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .progress-bar {
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: white;
+      transition: width 0.3s ease;
+      border-radius: 3px;
+    }
+    
+    .question-container {
+      padding: 3rem 2rem;
+      min-height: 400px;
+    }
+    
+    .question-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+    }
+    
+    .question-subtext {
+      color: #718096;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .option-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .option-btn {
+      background: #f7fafc;
+      border: 2px solid #e2e8f0;
+      padding: 1.25rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      display: flex;
+      align-items: start;
+      gap: 0.75rem;
+    }
+    
+    .option-btn:hover {
+      border-color: #667eea;
+      background: #edf2f7;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+    
+    .option-btn.selected {
+      background: #667eea;
+      border-color: #667eea;
+      color: white;
+    }
+    
+    .option-btn.selected .option-icon {
+      color: white;
+    }
+    
+    .option-icon {
+      font-size: 1.5rem;
+      min-width: 30px;
+      color: #667eea;
+    }
+    
+    .option-text {
+      flex: 1;
+    }
+    
+    .text-input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    
+    .text-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .nav-buttons {
+      padding: 1.5rem 2rem;
+      background: #f7fafc;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      font-size: 1rem;
+    }
+    
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+    
+    .btn-primary:hover:not(:disabled) {
+      background: #5568d3;
+      transform: translateY(-1px);
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #4a5568;
+      border: 2px solid #e2e8f0;
+    }
+    
+    .btn-secondary:hover {
+      border-color: #cbd5e0;
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .result-container {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    
+    .score-circle {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      font-weight: 700;
+      color: white;
+      position: relative;
+    }
+    
+    .score-label {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 1rem;
+    }
+    
+    .result-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 1rem 0;
+    }
+    
+    .result-description {
+      font-size: 1.1rem;
+      color: #4a5568;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .cta-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 2rem;
+      border-radius: 16px;
+      margin: 2rem 0;
+      color: white;
+    }
+    
+    .email-form {
+      display: flex;
+      gap: 1rem;
+      max-width: 500px;
+      margin: 1.5rem auto 0;
+    }
+    
+    .email-input {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    
+    .email-submit {
+      padding: 1rem 2rem;
+      background: white;
+      color: #667eea;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .email-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .builder-banner {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      padding: 2rem;
+      border-radius: 16px;
+      margin: 2rem 0;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    
+    .builder-icon {
+      font-size: 3rem;
+      min-width: 60px;
+    }
+    
+    .builder-content {
+      flex: 1;
+    }
+    
+    .builder-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .builder-description {
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+    
+    .builder-btn {
+      background: white;
+      color: #f5576c;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+    
+    .builder-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    @media (max-width: 640px) {
+      .quiz-container {
+        margin: 1rem;
+        border-radius: 16px;
+      }
+      
+      .question-container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .builder-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .email-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1 class="text-3xl font-bold mb-2">AI Agent Idea Validation Quiz</h1>
+      <p class="text-lg opacity-90">Will your AI agent idea actually work? Take the 3-minute reality check</p>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+      </div>
+      <p class="mt-2 text-sm opacity-75">Question <span id="currentQ">1</span> of <span id="totalQ">10</span></p>
+    </div>
+    
+    <div id="questionsSection">
+      <div class="question-container" id="questionContainer"></div>
+      
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" id="backBtn" onclick="goBack()">
+          <i class="fas fa-arrow-left mr-2"></i>Back
+        </button>
+        <button class="btn btn-primary" id="nextBtn" onclick="goNext()" disabled>
+          Next<i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div id="resultsSection" class="hidden">
+      <div class="result-container">
+        <div class="score-circle" id="scoreCircle">
+          <span id="scoreNumber">0</span>
+        </div>
+        <div class="score-label" id="scoreLabel">YOUR SCORE</div>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-description" id="resultDescription"></p>
+        
+        <div class="cta-section">
+          <h3 class="text-2xl font-bold mb-2">Get Your Detailed Action Plan</h3>
+          <p class="opacity-90 mb-4">Enter your email to receive your personalized next steps, validation templates, and expert tips.</p>
+          <div class="email-form">
+            <input type="email" class="email-input" id="emailInput" placeholder="your@email.com" required>
+            <button class="email-submit" onclick="submitEmail()">
+              <i class="fas fa-paper-plane mr-2"></i>Send Results
+            </button>
+          </div>
+          <p class="text-xs opacity-75 mt-3">We respect your privacy. Unsubscribe anytime.</p>
+        </div>
+        
+        <div class="builder-banner">
+          <div class="builder-icon">
+            <i class="fas fa-magic"></i>
+          </div>
+          <div class="builder-content">
+            <h3 class="builder-title">Ready to Validate with Real Users?</h3>
+            <p class="builder-description">Use Experience Builder to prototype your AI agent idea and test it with actual users—no coding required. Build interactive flows, gather feedback, and validate before you invest in development.</p>
+            <a href="experience-builder.html" class="builder-btn mt-3">
+              Explore Experience Builder<i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <button class="btn btn-secondary mt-4" onclick="restartQuiz()">
+          <i class="fas fa-redo mr-2"></i>Take Quiz Again
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        id: 1,
+        question: "Who specifically needs this AI agent?",
+        subtext: "Think about the person who would use this daily",
+        options: [
+          { icon: "fas fa-bullhorn", text: "Sales teams (reps, managers, sales operations)", value: "sales", points: 10 },
+          { icon: "fas fa-headset", text: "Customer support teams (agents, managers, success teams)", value: "support", points: 10 },
+          { icon: "fas fa-chart-line", text: "Research/analytics teams (analysts, researchers, strategists)", value: "research", points: 10 },
+          { icon: "fas fa-cogs", text: "Operations teams (managers, inventory, logistics)", value: "ops", points: 10 },
+          { icon: "fas fa-hospital", text: "Healthcare professionals (doctors, nurses, clinic staff)", value: "healthcare", points: 10 },
+          { icon: "fas fa-bullseye", text: "Marketing teams (content creators, campaign managers)", value: "marketing", points: 10 },
+          { icon: "fas fa-briefcase", text: "Business owners/founders (solo entrepreneurs, small business)", value: "founders", points: 10 },
+          { icon: "fas fa-graduation-cap", text: "Educators/trainers (teachers, coaches, instructors)", value: "educators", points: 10 },
+          { icon: "fas fa-ellipsis-h", text: "Other (please specify)", value: "other", points: 5, hasInput: true }
+        ]
+      },
+      {
+        id: 2,
+        question: "What size organization do they work in?",
+        subtext: "This affects how they buy and what they can afford",
+        options: [
+          { icon: "fas fa-user", text: "Solo/freelancer (1 person)", value: "solo", points: 8 },
+          { icon: "fas fa-users", text: "Micro team (2-10 people)", value: "micro", points: 9 },
+          { icon: "fas fa-building", text: "Small business (11-50 people)", value: "small", points: 10 },
+          { icon: "fas fa-city", text: "Mid-market (51-200 people)", value: "mid", points: 10 },
+          { icon: "fas fa-globe", text: "Enterprise (200+ people)", value: "enterprise", points: 8 },
+          { icon: "fas fa-question-circle", text: "Not sure yet / varies widely", value: "varies", points: 3 }
+        ]
+      },
+      {
+        id: 3,
+        question: "What's happening in their world right now?",
+        subtext: "What trigger or change creates the need for your agent?",
+        options: [
+          { icon: "fas fa-chart-line", text: "Growing fast (hiring, scaling, more volume)", value: "growth", points: 10 },
+          { icon: "fas fa-fire", text: "Drowning in manual work (overwhelmed, backlogged)", value: "overwhelmed", points: 10 },
+          { icon: "fas fa-dollar-sign", text: "Just got funding (have budget, need efficiency)", value: "funded", points: 9 },
+          { icon: "fas fa-exclamation-triangle", text: "Facing compliance/audit pressure (regulatory deadline)", value: "compliance", points: 9 },
+          { icon: "fas fa-tired", text: "Burned by current solution (frustrated with existing tools)", value: "frustrated", points: 8 },
+          { icon: "fas fa-lightbulb", text: "Exploring AI adoption (curious, testing, researching)", value: "exploring", points: 6 },
+          { icon: "fas fa-ellipsis-h", text: "Other trigger", value: "other", points: 5, hasInput: true }
+        ]
+      },
+      {
+        id: 4,
+        question: "What painful task takes up most of their time?",
+        subtext: "The thing they do over and over that feels soul-crushing",
+        options: [
+          { icon: "fas fa-pen", text: "Writing/drafting (emails, reports, documentation)", value: "writing", points: 10 },
+          { icon: "fas fa-folder-open", text: "Organizing/categorizing (tickets, leads, documents)", value: "organizing", points: 10 },
+          { icon: "fas fa-search", text: "Researching/analyzing (reading reports, finding insights)", value: "researching", points: 10 },
+          { icon: "fas fa-phone", text: "Repetitive communication (follow-ups, status updates)", value: "communication", points: 9 },
+          { icon: "fas fa-keyboard", text: "Data entry/formatting (copy-paste, reformatting)", value: "data-entry", points: 9 },
+          { icon: "fas fa-calendar", text: "Scheduling/coordinating (meetings, tasks, resources)", value: "scheduling", points: 8 },
+          { icon: "fas fa-calculator", text: "Manual calculations/tracking (spreadsheets, metrics)", value: "calculations", points: 8 },
+          { icon: "fas fa-random", text: "Routing/triage (deciding who handles what)", value: "triage", points: 9 },
+          { icon: "fas fa-ellipsis-h", text: "Other repetitive work", value: "other", points: 5, hasInput: true }
+        ]
+      },
+      {
+        id: 5,
+        question: "What does 'done' look like when your agent finishes?",
+        subtext: "The tangible thing they get back",
+        options: [
+          { icon: "fas fa-file-alt", text: "Written document (report, email, summary)", value: "document", points: 10 },
+          { icon: "fas fa-chart-bar", text: "Dashboard/visualization (charts, metrics, insights)", value: "dashboard", points: 10 },
+          { icon: "fas fa-check-square", text: "Sorted/categorized items (prioritized list, tagged tickets)", value: "sorted", points: 10 },
+          { icon: "fas fa-bell", text: "Alert/notification (Slack message, email ping)", value: "alert", points: 8 },
+          { icon: "fas fa-table", text: "Formatted output (spreadsheet, API data, template filled)", value: "formatted", points: 9 },
+          { icon: "fas fa-comment-dots", text: "Drafted response (ready-to-send message)", value: "draft", points: 9 },
+          { icon: "fas fa-compass", text: "Recommendation (what to do next, who to contact)", value: "recommendation", points: 8 },
+          { icon: "fas fa-ellipsis-h", text: "Other deliverable", value: "other", points: 5, hasInput: true }
+        ]
+      },
+      {
+        id: 6,
+        question: "How would they interact with your agent?",
+        subtext: "Where does this fit into their daily workflow?",
+        options: [
+          { icon: "fas fa-comment", text: "Chat interface (ask questions, get answers)", value: "chat", points: 9 },
+          { icon: "fas fa-file-invoice", text: "Form submission (fill out inputs, get result)", value: "form", points: 10 },
+          { icon: "fas fa-envelope", text: "Email-based (send request, receive output)", value: "email", points: 8 },
+          { icon: "fas fa-plug", text: "Embedded in existing tool (Slack bot, CRM plugin)", value: "embedded", points: 10 },
+          { icon: "fas fa-desktop", text: "Web dashboard (log in, view results)", value: "dashboard", points: 9 },
+          { icon: "fas fa-mobile-alt", text: "Mobile app (on-the-go access)", value: "mobile", points: 7 },
+          { icon: "fas fa-robot", text: "Fully automated (runs in background, sends results)", value: "automated", points: 10 },
+          { icon: "fas fa-question", text: "Still figuring this out", value: "unsure", points: 3 }
+        ]
+      },
+      {
+        id: 7,
+        question: "Could you deliver this outcome manually first?",
+        subtext: "Before building AI, could a human do this for customers?",
+        options: [
+          { icon: "fas fa-smile", text: "Yes, easily! I could do this manually in under an hour", value: "easy", points: 10 },
+          { icon: "fas fa-clock", text: "Yes, but it would take several hours of work", value: "time-consuming", points: 9 },
+          { icon: "fas fa-exclamation-circle", text: "Maybe, but requires specialized expertise", value: "specialized", points: 7 },
+          { icon: "fas fa-times-circle", text: "No, requires real-time AI capabilities", value: "requires-ai", points: 3 },
+          { icon: "fas fa-question-circle", text: "Hmm... I haven't thought about this", value: "unsure", points: 2 }
+        ]
+      },
+      {
+        id: 8,
+        question: "Are people already paying for solutions in this space?",
+        subtext: "Does money flow here already?",
+        options: [
+          { icon: "fas fa-dollar-sign", text: "Yes, expensive solutions exist ($500+/month)", value: "expensive", points: 10 },
+          { icon: "fas fa-money-bill", text: "Yes, affordable tools exist ($50-500/month)", value: "affordable", points: 10 },
+          { icon: "fas fa-gift", text: "Only free/manual alternatives exist", value: "free", points: 6 },
+          { icon: "fas fa-rocket", text: "No, this is completely new territory", value: "new", points: 5 },
+          { icon: "fas fa-question", text: "Not sure, haven't researched yet", value: "unsure", points: 2 }
+        ]
+      },
+      {
+        id: 9,
+        question: "Can you describe the problem in one clear sentence?",
+        subtext: "Use this format: 'People in [WHO] struggle with [WHAT] because [WHY]'",
+        type: "text",
+        placeholder: "Example: Sales managers at small software companies struggle with reformatting weekly reports because their CRM doesn't export in the format finance needs",
+        scoring: function(text) {
+          let score = 0;
+          const lower = text.toLowerCase();
+          
+          // Check for WHO indicators
+          const whoWords = ['people in', 'teams', 'managers', 'professionals', 'users', 'employees', 'owners', 'founders'];
+          if (whoWords.some(word => lower.includes(word))) score += 3;
+          
+          // Check for WHAT indicators
+          const whatWords = ['struggle', 'have trouble', 'face challenges', 'difficulty', 'problem', 'issue'];
+          if (whatWords.some(word => lower.includes(word))) score += 3;
+          
+          // Check for WHY/consequence indicators
+          const whyWords = ['because', 'since', 'due to', 'as', 'which leads to', 'resulting in'];
+          if (whyWords.some(word => lower.includes(word))) score += 4;
+          
+          // Length bonus (good problem statements are detailed)
+          if (text.length > 50) score += 2;
+          
+          // Penalty for very short responses
+          if (text.length < 20) score = Math.max(0, score - 3);
+          
+          return Math.min(10, score);
+        }
+      },
+      {
+        id: 10,
+        question: "What makes YOUR version different?",
+        subtext: "Why would someone choose your agent over alternatives?",
+        options: [
+          { icon: "fas fa-user-check", text: "I deeply understand this user (lived experience, insider knowledge)", value: "expertise", points: 10 },
+          { icon: "fas fa-handshake", text: "I have unique access (distribution, partnerships, audience)", value: "access", points: 10 },
+          { icon: "fas fa-bolt", text: "I can deliver faster/cheaper than alternatives", value: "efficiency", points: 8 },
+          { icon: "fas fa-bullseye", text: "I'm solving a specific niche others ignore", value: "niche", points: 9 },
+          { icon: "fas fa-users", text: "I have early users ready to test with me", value: "users", points: 10 },
+          { icon: "fas fa-clone", text: "This is the same as existing solutions (honesty check!)", value: "same", points: 2 },
+          { icon: "fas fa-question-circle", text: "Not sure what makes mine different yet", value: "unsure", points: 3 }
+        ]
+      }
+    ];
+
+    let currentQuestion = 0;
+    let answers = [];
+    let score = 0;
+
+    function init() {
+      document.getElementById('totalQ').textContent = questions.length;
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById('questionContainer');
+      
+      let html = `
+        <div class="question-text">${q.question}</div>
+        <div class="question-subtext">${q.subtext}</div>
+      `;
+      
+      if (q.type === 'text') {
+        html += `
+          <textarea 
+            class="text-input" 
+            id="textAnswer" 
+            rows="4" 
+            placeholder="${q.placeholder}"
+            oninput="enableNext()"
+          ></textarea>
+        `;
+      } else {
+        html += '<div class="option-grid">';
+        q.options.forEach((opt, idx) => {
+          html += `
+            <div class="option-btn" onclick="selectOption(${idx}, ${opt.hasInput || false})">
+              <div class="option-icon"><i class="${opt.icon}"></i></div>
+              <div class="option-text">${opt.text}</div>
+            </div>
+          `;
+          if (opt.hasInput) {
+            html += `
+              <input 
+                type="text" 
+                class="text-input hidden" 
+                id="optionInput${idx}" 
+                placeholder="Please specify..."
+                oninput="enableNext()"
+              />
+            `;
+          }
+        });
+        html += '</div>';
+      }
+      
+      container.innerHTML = html;
+      
+      // Update progress
+      const progress = ((currentQuestion) / questions.length) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+      document.getElementById('currentQ').textContent = currentQuestion + 1;
+      
+      // Update back button
+      document.getElementById('backBtn').disabled = currentQuestion === 0;
+      document.getElementById('nextBtn').disabled = true;
+      
+      // Restore previous answer if exists
+      if (answers[currentQuestion]) {
+        if (q.type === 'text') {
+          document.getElementById('textAnswer').value = answers[currentQuestion].text || '';
+          enableNext();
+        } else {
+          const selectedIdx = answers[currentQuestion].index;
+          if (selectedIdx !== undefined) {
+            selectOption(selectedIdx, q.options[selectedIdx].hasInput);
+          }
+        }
+      }
+    }
+
+    function selectOption(index, hasInput = false) {
+      const q = questions[currentQuestion];
+      const buttons = document.querySelectorAll('.option-btn');
+      
+      buttons.forEach(btn => btn.classList.remove('selected'));
+      buttons[index].classList.add('selected');
+      
+      // Handle "Other" option with text input
+      if (hasInput) {
+        const input = document.getElementById('optionInput' + index);
+        input.classList.remove('hidden');
+        input.focus();
+        
+        // Don't enable next until they type something
+        if (!input.value.trim()) {
+          document.getElementById('nextBtn').disabled = true;
+          return;
+        }
+      } else {
+        // Hide all inputs
+        document.querySelectorAll('[id^="optionInput"]').forEach(inp => {
+          inp.classList.add('hidden');
+        });
+      }
+      
+      answers[currentQuestion] = {
+        index: index,
+        value: q.options[index].value,
+        points: q.options[index].points,
+        text: hasInput ? document.getElementById('optionInput' + index).value : q.options[index].text
+      };
+      
+      enableNext();
+    }
+
+    function enableNext() {
+      const q = questions[currentQuestion];
+      let canProceed = false;
+      
+      if (q.type === 'text') {
+        const text = document.getElementById('textAnswer').value.trim();
+        canProceed = text.length > 0;
+        if (canProceed) {
+          answers[currentQuestion] = {
+            text: text,
+            points: q.scoring(text)
+          };
+        }
+      } else {
+        const selected = answers[currentQuestion];
+        if (selected) {
+          const opt = q.options[selected.index];
+          if (opt.hasInput) {
+            const input = document.getElementById('optionInput' + selected.index);
+            canProceed = input && input.value.trim().length > 0;
+            if (canProceed) {
+              answers[currentQuestion].text = input.value;
+            }
+          } else {
+            canProceed = true;
+          }
+        }
+      }
+      
+      document.getElementById('nextBtn').disabled = !canProceed;
+    }
+
+    function goNext() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        calculateAndShowResults();
+      }
+    }
+
+    function goBack() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function calculateAndShowResults() {
+      // Calculate total score
+      score = answers.reduce((sum, answer) => sum + (answer.points || 0), 0);
+      
+      // Show results section
+      document.getElementById('questionsSection').classList.add('hidden');
+      document.getElementById('resultsSection').classList.remove('hidden');
+      
+      // Determine result tier
+      let resultData;
+      if (score >= 90) {
+        resultData = {
+          color: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+          emoji: '🚀',
+          title: 'Ready to Build!',
+          description: 'You have a clear problem, specific target user, and a deliverable outcome. Your idea shows strong validation potential. The market exists, and you understand how to test it manually first. Time to start prototyping!'
+        };
+      } else if (score >= 70) {
+        resultData = {
+          color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          emoji: '💪',
+          title: 'Strong Foundation',
+          description: 'You have good clarity on most elements, but there are 1-2 areas that need sharpening. With some focused work on positioning and validation approach, you\'ll be ready to test your idea with real users.'
+        };
+      } else if (score >= 50) {
+        resultData = {
+          color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+          emoji: '🔍',
+          title: 'Needs Validation Research',
+          description: 'Your idea exists, but there are gaps in problem-solution fit. Before building anything, spend time talking to potential users. Understand their pain points deeply and validate that your solution addresses real needs.'
+        };
+      } else {
+        resultData = {
+          color: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+          emoji: '🌱',
+          title: 'Start with Discovery',
+          description: 'You\'re in the early exploration phase. That\'s okay! The next step is customer discovery: talk to 10-15 people in your target audience. Learn about their workflows, pain points, and what they currently do. This will help you shape a clearer idea.'
+        };
+      }
+      
+      // Update UI with results
+      document.getElementById('scoreCircle').style.background = resultData.color;
+      document.getElementById('scoreNumber').textContent = score;
+      document.getElementById('scoreLabel').textContent = resultData.emoji + ' ' + resultData.title.toUpperCase();
+      document.getElementById('resultTitle').textContent = resultData.title;
+      document.getElementById('resultDescription').textContent = resultData.description;
+      
+      // Scroll to top of results
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitEmail() {
+      const email = document.getElementById('emailInput').value.trim();
+      
+      if (!email) {
+        alert('Please enter your email address');
+        return;
+      }
+      
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        return;
+      }
+      
+      // Here you would integrate with your email service
+      // For now, we'll just show a success message
+      alert('Thank you! Check your inbox for your detailed action plan and validation resources.');
+      
+      // Log the data for integration
+      console.log('Quiz Results:', {
+        email: email,
+        score: score,
+        answers: answers,
+        timestamp: new Date().toISOString()
+      });
+      
+      // Disable the button after submission
+      document.querySelector('.email-submit').disabled = true;
+      document.querySelector('.email-submit').textContent = 'Results Sent!';
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      answers = [];
+      score = 0;
+      
+      document.getElementById('questionsSection').classList.remove('hidden');
+      document.getElementById('resultsSection').classList.add('hidden');
+      document.getElementById('emailInput').value = '';
+      document.querySelector('.email-submit').disabled = false;
+      document.querySelector('.email-submit').innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Send Results';
+      
+      renderQuestion();
+    }
+
+    // Initialize on page load
+    init();
+  </script>
+</body>
+</html>
