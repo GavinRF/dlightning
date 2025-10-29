@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏝️ Oasea | Save Water, Rehydrate the Land</title>
+    <meta name="description" content="Oasea is a serene world-building game where you transform barren islands into lush, living oases. Watch life return to the desert.">
+    <meta name="keywords" content="Oasea, island game, oasis builder, nature simulation, world builder, sandbox game, relaxing game, indie game, ocean, desert island, water simulation, environment, growth, regeneration, ecology, atmospheric game">
+    <meta name="author" content="Dlightning">
+
+    <link rel="canonical" href="https://dlightning.org/games/oasea/">
+    <meta name="theme-color" content="#0078b4">
+    <meta name="color-scheme" content="light dark">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Oasea — Turn Desert Islands into Living Oases">
+    <meta property="og:description" content="Transform desert islands into lush, living worlds in this relaxing, atmospheric simulation game.">
+    <meta property="og:image" content="https://dlightning.org/games/oasea/images/oasea-preview.jpg">
+    <meta property="og:url" content="https://dlightning.org/games/oasea/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Oasea — Turn Desert Islands into Living Oases">
+    <meta name="twitter:description" content="Watch barren islands come alive with water, plants, and light in Oasea.">
+    <meta name="twitter:image" content="https://dlightning.org/games/oasea/images/oasea-preview.jpg">
+
+
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="module" crossorigin src="/assets/index-CyUY4wgO.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-D-9ivNVN.css">
+  </head>
+
+  <body>
+    <div id="title-splash">
+      <h1>Oasea</h1>
+      <small style="color: azure;"><p>/oʊ.əˈsiː/</p></small>
+      <p class="all-about">Turn a desert island into a lush&nbsp;oasis by guiding rainwater to&nbsp;the&nbsp;aquifer.</p>
+        <div id="splash-buttons">
+          <button id="title-play-button" class="play-btn">
+            <span class="material-icons">play_arrow</span>
+            Play
+          </button>
+        <button id="instructions-button" class="secondary-btn">How to Play</button>
+        </div>
+    </div>
+    <!-- Welcome Modal -->
+    <div id="welcome-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h2>Oasea</h2>
+
+        <div class="instructions">
+          <h3>Rehydrate the Island by Sculpting the&nbsp;Terrain</h3>
+            <p class="desktop-instructions"><i>Click and drag</i> to raise the terrain.<br>Hold the <i><strong>shift</strong></i> key, or <i>right click</i>, to lower the terrain.</p>
+            <p class="mobile-instructions">Tap to raise terrain, double finger touch to lower.</p>
+
+          <!-- Placeholder for interaction GIF -->
+          <div class="gif-container">
+            <img src="img/gameplay.gif" alt="Gameplay demonstration" class="gameplay-gif" />
+          </div>
+        </div>
+
+        <button id="play-button" class="play-btn">
+          <span class="material-icons">play_arrow</span>
+          Play
+        </button>
+      </div>
+    </div>
+
+    <div class="ui-controls">
+      <button class="ui-control-btn" id="sound"><span class="material-icons">&#xe050;</span></button>
+      <button class="ui-control-btn" id="reset"><span class="material-icons">&#xe042;</span></button>
+    </div>
+    <!-- <h1>Oasea</h1> -->
+
+    <!-- Level Info -->
+    <div id="level-info">
+      <div id="level-name"> 🏝️ </div>
+    </div>
+
+    <!-- Progress Bar UI -->
+    <div id="progress-container">
+      <div id="progress-text">0%</div>
+      <div id="goal-marker"></div>
+      <div id="progress-fill"></div>
+    </div>
+
+    <div id="next-level-btn" style="display: none;">
+      <span class="material-icons">arrow_forward</span>
+      Next Island
+    </div>
+
+    <!-- Simple Play Overlay for subsequent levels -->
+    <div id="simple-play-overlay" style="display: none;">
+      <button id="simple-play-button" class="play-btn">
+        <span class="material-icons">play_arrow</span>
+        Play
+      </button>
+    </div>
+
+    <!-- Level Select Modal -->
+    <div id="level-select-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Island Select</h2>
+
+        <div id="level-grid">
+          <!-- Levels will be populated by JavaScript -->
+        </div>
+
+        <button id="close-level-select" class="close-modal-btn">
+          <span class="material-icons">close</span>
+          Close
+        </button>
+      </div>
+    </div>
+
+    <div id="bottom-logo-bar">
+      <a href="https://dlightning.org" target="_blank">
+        <img src="img/transparent_white_D.png" alt="Dlighting logo">
+      </a>
+      <!-- <a href="https://www.watershed-alliance.org" target="_blank">
+        <img src="img/watershed-al.png" alt="Watershed Alliance Logo">
+      </a> -->
+    </div>
+
+    <!-- Credits Modal -->
+    <div id="credits-modal" class="modal" style="display: none;">
+      <div class="modal-content credits-content">
+        <h2>Water is Life. Congratulations!</h2>
+        <p class="victory-message">You've restored all of the islands!</p>
+
+        <div class="credits-section">
+          <h3>Oasea <span>is a game by </span><a href="https://dlightning.org"><i>Dlightning</i>⚡️</a></h3>
+          
+          <h4>Special Thanks to Our Sponsors</h4>
+          <div class="sponsors">
+            <div class="sponsor-item">
+              <a href="https://www.watershed-alliance.org" target="_blank">
+              <img src="img/earthworks.png" alt="Earthworkers Ultd">
+              </a>
+              <a href="https://www.watershed-alliance.org" target="_blank">Earthworkers Ultd.</a>
+            </div>
+            <div class="sponsor-item">
+              <a href="https://www.watershed-alliance.org" target="_blank">
+              <img src="img/watershed-al.png" alt="Watershed Alliance">
+              </a>
+              <a href="https://www.watershed-alliance.org" target="_blank">Watershed Alliance</a>
+            </div>
+            <div class="sponsor-item">
+              <a href="https://oceanprotectors.com" target="_blank">
+              <img src="img/ocean-protectors.png" alt="Ocean Protectors">
+              </a>
+              <a href="https://oceanprotectors.com" target="_blank">Ocean Protectors</a>
+            </div>
+          </div>
+
+          <h5>3D Models</h5>
+          <ul>
+            <li>Shark, Whale, Manta Ray, Fish, and Dolphin by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
+            <li>Grass by <a href="https://sketchfab.com/3d.lizard" target="_blank">3D.Lizard</a></li>
+            <li>Bismarck Palm, Lady Palm, and by <a href="https://poly.pizza" target="_blank">Google Poly</a></li>
+            <li>Mayan Temple by <a href="https://sketchfab.com/3d.lizard" target="_blank">3D.Lizard</a></li>
+          </ul>
+
+          <h5>SFX</h5>
+          <ul>
+            <li>Ocean Waves by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
+            <li>Thunderstorm by <a href="https://sketchfab.com/3d.lizard" target="_blank">3D.Lizard</a></li>
+            <li>Water Drops by <a href="https://poly.pizza" target="_blank">Google Poly</a></li>
+          </ul>
+
+          
+        </div>
+
+        <button id="close-credits" class="play-btn">
+          <span class="material-icons">close</span>
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- END HTML -->
+
+  </body>
+</html>
