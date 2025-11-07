@@ -30,11 +30,11 @@
 
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <script type="module" crossorigin src="/games/oasea/assets/index-BUdc6Gvv.js"></script>
+    <script type="module" crossorigin src="/games/oasea/assets/index-Y9gByCYb.js"></script>
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-a87GWk7o.js">
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-Cb4MsTzb.js">
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-D6xm0ZbH.js">
-    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-CRYDOCSQ.css">
+    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-F-a26YU8.css">
   </head>
 
   <body>
@@ -114,8 +114,6 @@
     <!-- Welcome Modal -->
     <div id="welcome-modal" class="modal" style="display: none;">
       <div class="modal-content">
-        <h2>Oasea</h2>
-
         <div class="instructions">
           <h3>Rehydrate the Island by Sculpting the&nbsp;Terrain</h3>
             <p class="desktop-instructions"><i>Click and drag</i> to raise the terrain.<br>Hold <i><strong>shift</strong></i>, or <i>right click</i>, to lower terrain.<br>Return water to the aquifer by reaching the goal.</p>
@@ -160,7 +158,7 @@
 
     <div id="next-level-btn" style="display: none;">
       <span class="material-icons">arrow_forward</span>
-      Next Island
+      Next&nbsp;Island
     </div>
 
     <!-- Simple Play Overlay for subsequent levels -->
@@ -197,7 +195,15 @@
     <!-- Score Breakdown Modal -->
     <div id="score-modal" style="display: none;">
       <div class="modal-content score-content">
-        <h2>Island Restored!</h2>
+
+          <div class="player-name-display">
+            <input
+              type="text"
+              id="score-player-name"
+              maxlength="20"
+              autocomplete="off"
+            />
+          </div>
 
           <div class="score-stats">
             <div class="stat-item">
@@ -207,6 +213,10 @@
             <div class="stat-item">
               <span class="material-icons">schedule</span>
               <span id="completion-time">0:00</span>
+            </div>
+            <div class="stat-item">
+              <span class="material-icons">touch_app</span>
+              <span id="terrain-edits">0</span>
             </div>
           </div>
 
@@ -226,14 +236,6 @@
           <div class="score-row total">
             <span class="score-label">Level Score:</span>
             <span class="score-value" id="score-total">0</span>
-          </div>
-          <div class="player-name-display">
-            <input
-              type="text"
-              id="score-player-name"
-              maxlength="20"
-              autocomplete="off"
-            />
           </div>
           <div class="score-row career-total">
             <span class="score-label">Career Total:</span>
@@ -255,7 +257,7 @@
     <!-- Leaderboard Modal -->
     <div id="leaderboard-modal" class="modal" style="display: none;">
       <div class="modal-content leaderboard-content">
-        <h2>Oasea Leaderboard</h2>
+        <h2>Oasea</h2>
 
         <div class="leaderboard-tabs">
           <button class="tab-btn active" data-tab="today">Today</button>
@@ -295,7 +297,7 @@
             <div class="drop"></div>
             <div class="collection"></div>
           </div>
-          <div class="stats-grid" id="stats-content" style="display: none;">
+          <div class="stats-grid leaderboard-list" id="stats-content" style="display: none;">
             <div class="stat-card">
               <h3 id="total-score-stat">0</h3>
               <p>Total Score</p>
@@ -332,7 +334,7 @@
         </div>
 
         <div id="leaderboard-credits" class="leaderboard-tab-content" style="display: none;">
-          <div class="credits-content credits-section">
+          <div class="credits-content credits-section leaderboard-list">
             <h3>A game by <a href="https://dlightning.org"><i>Dlightning⚡️</i></a></h3>
             <h4>Special Thanks to Our Sponsors</h4>
           <div class="sponsors">
@@ -370,6 +372,7 @@
             <li>Mayan Temple by <a href="https://poly.pizza/u/Steve%20Atkins" target="_blank">Steve Atkins</a></li>
             <li>Seagulls by <a href="https://www.youtube.com/channel/UCzP-KJIwS1Shjt7H2KpokEw" target="_blank">Vicente Betoret</a></li>
             <li>Whale Shark by <a href="https://sketchfab.com/kenchoo" target="_blank">Ken Choo</a></li>
+            <li>Sail-fish by <a href="https://sketchfab.com/larycim" target="_blank">Lary</a></li>
           </ul>
 
           <h5>SFX</h5>
@@ -422,8 +425,6 @@
         <div class="credits-section">
           <h3>Oasea <span>is a game by </span><a href="https://dlightning.org"><i>Dlightning</i>⚡️</a></h3>
 
-          <p>You shaped valleys, drew water back to its heart, and watched the parched earth breathe again.<br>Treat our planet with care, guide water home, and life will find the way.</p>
-          
           <h4>Special Thanks to Our Sponsors</h4>
           <div class="sponsors">
             <div class="sponsor-item">
@@ -459,6 +460,8 @@
             <li>Container Ship by <a href="https://www.alexsafayan.com/" target="_blank">Alex Safayan</a></li>
             <li>Mayan Temple by <a href="https://poly.pizza/u/Steve%20Atkins" target="_blank">Steve Atkins</a></li>
             <li>Seagulls by <a href="https://www.youtube.com/channel/UCzP-KJIwS1Shjt7H2KpokEw" target="_blank">Vicente Betoret</a></li>
+            <li>Whale Shark by <a href="https://sketchfab.com/kenchoo" target="_blank">Ken Choo</a></li>
+            <li>Sail-fish by <a href="https://sketchfab.com/larycim" target="_blank">Lary</a></li>
           </ul>
 
           <h5>SFX</h5>
