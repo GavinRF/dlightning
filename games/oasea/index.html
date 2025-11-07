@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏝️ Oasea | Save Water, Rehydrate the Land</title>
+    <title>🏝️ Oasea | Rehydrate the Land</title>
     <meta name="description" content="Oasea is a serene world-building game where you transform barren islands into lush, living oases. Watch life return to the desert.">
     <meta name="keywords" content="Oasea, island game, oasis builder, nature simulation, world builder, sandbox game, relaxing game, indie game, ocean, desert island, water simulation, environment, growth, regeneration, ecology, atmospheric game">
     <meta name="author" content="Dlightning">
@@ -15,7 +15,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Oasea — Turn Desert Islands into Living Oases">
     <meta property="og:description" content="Transform desert islands into lush, living worlds in this relaxing, atmospheric simulation game.">
-    <meta property="og:image" content="https://dlightning.org/games/oasea/images/oasea-preview.jpg">
+    <meta property="og:image" content="https://dlightning.org/img/opengraph/Oasea-Ultimate.png">
     <meta property="og:url" content="https://dlightning.org/games/oasea/">
     <meta property="og:type" content="website">
 
@@ -25,13 +25,80 @@
     <meta name="twitter:description" content="Watch barren islands come alive with water, plants, and light in Oasea.">
     <meta name="twitter:image" content="https://dlightning.org/games/oasea/images/oasea-preview.jpg">
 
+   <!-- Preload critical font -->
+   <link rel="preload" href="/games/oasea/font/HagridText-Regular.otf" as="font" type="font/otf" crossorigin>
 
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script type="module" crossorigin src="/games/oasea/assets/index-D_hJJf7z.js"></script>
-    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-DS6OMpQ9.css">
+       <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script type="module" crossorigin src="/games/oasea/assets/index-BUdc6Gvv.js"></script>
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-a87GWk7o.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-Cb4MsTzb.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-D6xm0ZbH.js">
+    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-CRYDOCSQ.css">
   </head>
 
   <body>
+    <!-- SVG Filter for water drop goo effect -->
+    <svg class="svg-filter" style="position: absolute; width: 0; height: 0;">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="
+            1 0 0 0 0
+            0 1 0 0 0
+            0 0 1 0 0
+            0 0 0 18 -7
+          " result="goo" />
+          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- Main Page Loading Screen -->
+    <div id="page-loading-screen">
+      <div class="loading-content" id="loading-content" style="opacity: 0;">
+        <!-- <h1 style="margin-bottom: 40px;">Oasea</h1> -->
+        <div class="stats-loading-animation">
+          <div class="drop"></div>
+          <div class="drop"></div>
+          <div class="drop"></div>
+          <div class="collection"></div>
+        </div>
+        <p class="loading-text">Loading...</p>
+      </div>
+    </div>
+
+    <script>
+      // Wait for Hagrid-Regular font to load before showing loading screen content
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          document.fonts.load('bold 16vw Hagrid-Regular').then(() => {
+            const loadingContent = document.getElementById('loading-content');
+            if (loadingContent) {
+              loadingContent.style.transition = 'opacity 0.3s ease';
+              loadingContent.style.opacity = '1';
+            }
+          }).catch(() => {
+            // Fallback: show content after short delay if font fails to load
+            setTimeout(() => {
+              const loadingContent = document.getElementById('loading-content');
+              if (loadingContent) {
+                loadingContent.style.opacity = '1';
+              }
+            }, 300);
+          });
+        });
+      } else {
+        // Fallback for browsers without FontFace API
+        setTimeout(() => {
+          const loadingContent = document.getElementById('loading-content');
+          if (loadingContent) {
+            loadingContent.style.opacity = '1';
+          }
+        }, 300);
+      }
+    </script>
+
     <div id="title-splash">
       <h1>Oasea</h1>
       <small style="color: azure;"><p>/oʊ.əˈsiː/</p></small>
@@ -51,8 +118,8 @@
 
         <div class="instructions">
           <h3>Rehydrate the Island by Sculpting the&nbsp;Terrain</h3>
-            <p class="desktop-instructions"><i>Click and drag</i> to raise the terrain.<br>Hold the <i><strong>shift</strong></i> key, or <i>right click</i>, to lower the terrain.</p>
-            <p class="mobile-instructions">Tap to raise terrain, double finger touch to lower.</p>
+            <p class="desktop-instructions"><i>Click and drag</i> to raise the terrain.<br>Hold <i><strong>shift</strong></i>, or <i>right click</i>, to lower terrain.<br>Return water to the aquifer by reaching the goal.</p>
+            <p class="mobile-instructions">Tap and hold to raise terrain, add a second finger anywhere on the&nbsp;island&nbsp;to&nbsp;lower&nbsp;it.<br>Touch the Ocean to pan or pinch&nbsp;to&nbsp;zoom</p>
 
           <!-- Placeholder for interaction GIF -->
           <div class="gif-container">
@@ -68,10 +135,16 @@
     </div>
 
     <div class="ui-controls">
-      <button class="ui-control-btn" id="sound"><span class="material-icons">&#xe050;</span></button>
-      <button class="ui-control-btn" id="reset"><span class="material-icons">&#xe042;</span></button>
+      <button class="ui-control-btn" id="sound" title="Toggle Sound"><span class="material-icons">&#xe050;</span></button>
+      <button class="ui-control-btn" id="leaderboard-btn" title="Leaderboard"><span class="material-icons">leaderboard</span></button>
+      <!-- <button class="ui-control-btn" id="fullscreen" title="fullscreen toggle"><span class="material-icons">fullscreen</span></button> -->
+      <!-- <button class="ui-control-btn" id="reset" title="Reset Level"><span class="material-icons">&#xe042;</span></button> -->
     </div>
-    <!-- <h1>Oasea</h1> -->
+
+    <!-- Level Story Overlay (shown during transitions) -->
+    <div id="level-story-overlay" style="display: none;">
+      <p id="level-story-text"></p>
+    </div>
 
     <!-- Level Info -->
     <div id="level-info">
@@ -96,6 +169,223 @@
         <span class="material-icons">play_arrow</span>
         Play
       </button>
+    </div>
+
+    <!-- Player Name Prompt Modal (First Time) -->
+    <div id="name-prompt-modal" class="modal" style="display: none;">
+      <div class="modal-content score-content">
+        <h2>Welcome, Explorer!</h2>
+        <p style="text-align: center; margin-bottom: 20px;">Enter a screen-name to track your scores</p>
+
+        <div class="name-input-container">
+          <input
+            type="text"
+            id="player-name-input"
+            placeholder="Your name"
+            maxlength="20"
+            autocomplete="off"
+          />
+        </div>
+
+        <button id="save-name-btn" class="play-btn">
+          <span class="material-icons">check</span>
+          Continue
+        </button>
+      </div>
+    </div>
+
+    <!-- Score Breakdown Modal -->
+    <div id="score-modal" style="display: none;">
+      <div class="modal-content score-content">
+        <h2>Island Restored!</h2>
+
+          <div class="score-stats">
+            <div class="stat-item">
+              <span class="material-icons">water_drop</span>
+              <span id="water-collected">0%</span>
+            </div>
+            <div class="stat-item">
+              <span class="material-icons">schedule</span>
+              <span id="completion-time">0:00</span>
+            </div>
+          </div>
+
+        <div id="score-breakdown">
+          <div class="score-row">
+            <span class="score-label">Base Points:</span>
+            <span class="score-value" id="score-base">0</span>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Bonus Points:</span>
+            <span class="score-value" id="score-bonus">0</span>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Time Bonus:</span>
+            <span class="score-value" id="score-time">0</span>
+          </div>
+          <div class="score-row total">
+            <span class="score-label">Level Score:</span>
+            <span class="score-value" id="score-total">0</span>
+          </div>
+          <div class="player-name-display">
+            <input
+              type="text"
+              id="score-player-name"
+              maxlength="20"
+              autocomplete="off"
+            />
+          </div>
+          <div class="score-row career-total">
+            <span class="score-label">Career Total:</span>
+            <span class="score-value" id="career-total">0</span>
+          </div>
+          <div id="personal-best-badge" style="display: none;">
+            <span class="material-icons">star</span>
+            New Personal Best!
+          </div>
+        </div>
+
+        <button id="close-score" class="play-btn">
+          <span class="material-icons">close</span>
+          Close
+        </button>
+      </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboard-modal" class="modal" style="display: none;">
+      <div class="modal-content leaderboard-content">
+        <h2>Oasea Leaderboard</h2>
+
+        <div class="leaderboard-tabs">
+          <button class="tab-btn active" data-tab="today">Today</button>
+          <button class="tab-btn" data-tab="alltime">All Time</button>
+          <button class="tab-btn" data-tab="stats">My Stats</button>
+          <button class="tab-btn" data-tab="credits">Credits</button>
+        </div>
+
+        <div id="leaderboard-today" class="leaderboard-tab-content">
+          <div class="stats-loading-animation" id="today-loading">
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="collection"></div>
+          </div>
+          <div class="leaderboard-list" id="today-scores" style="display: none;">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+
+        <div id="leaderboard-alltime" class="leaderboard-tab-content" style="display: none;">
+          <div class="stats-loading-animation" id="alltime-loading">
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="collection"></div>
+          </div>
+          <div class="leaderboard-list" id="alltime-scores" style="display: none;">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+
+        <div id="leaderboard-stats" class="leaderboard-tab-content" style="display: none;">
+          <div class="stats-loading-animation" id="stats-loading">
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="collection"></div>
+          </div>
+          <div class="stats-grid" id="stats-content" style="display: none;">
+            <div class="stat-card">
+              <h3 id="total-score-stat">0</h3>
+              <p>Total Score</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="best-single-stat">0</h3>
+              <p>Best Single Run</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="levels-completed-stat">0</h3>
+              <p>Islands Completed</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="favorite-island-stat">—</h3>
+              <p>Favorite Island</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="total-time-stat">0:00</h3>
+              <p>Total Play Time</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="fastest-time-stat">—</h3>
+              <p>Fastest Time</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="avg-score-stat">0</h3>
+              <p>Average Score</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="avg-water-stat">0%</h3>
+              <p>Avg Water Saved</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="leaderboard-credits" class="leaderboard-tab-content" style="display: none;">
+          <div class="credits-content credits-section">
+            <h3>A game by <a href="https://dlightning.org"><i>Dlightning⚡️</i></a></h3>
+            <h4>Special Thanks to Our Sponsors</h4>
+          <div class="sponsors">
+            <div class="sponsor-item">
+              <a href="https://www.watershed-alliance.org" target="_blank">
+              <img src="img/earthworks.png" alt="Earthworkers Ultd">
+              </a>
+              <a href="https://www.watershed-alliance.org" target="_blank">Earthworkers Ultd.</a>
+            </div>
+            <div class="sponsor-item">
+              <a href="https://www.watershed-alliance.org" target="_blank">
+              <img src="img/watershed-al.png" alt="Watershed Alliance">
+              </a>
+              <a href="https://www.watershed-alliance.org" target="_blank">Watershed Alliance</a>
+            </div>
+            <div class="sponsor-item">
+              <a href="https://oceanprotectors.com" target="_blank">
+              <img src="img/ocean-protectors.png" alt="Ocean Protectors">
+              </a>
+              <a href="https://oceanprotectors.com" target="_blank">Ocean Protectors</a>
+            </div>
+          </div>
+
+          <h5>Typeface</h5>
+          <ul>
+            <li>Hagrid by Cosimo Lorenzo Pancini</li>
+          </ul>
+
+          <h5>3D Models</h5>
+          <ul>
+            <li>Shark, Whale, Manta Ray, Fish, Dolphin, & Grass by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
+            <li>Palm Tree by <a href="https://sketchfab.com/KrazzyElf" target="_blank">Krazzy Elf</a></li>
+            <li>Sailboat, Bismarck, Lady, Olive, and Ivory Cane Palms by <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank">Google Poly</a></li>
+            <li>Container Ship by <a href="https://www.alexsafayan.com/" target="_blank">Alex Safayan</a></li>
+            <li>Mayan Temple by <a href="https://poly.pizza/u/Steve%20Atkins" target="_blank">Steve Atkins</a></li>
+            <li>Seagulls by <a href="https://www.youtube.com/channel/UCzP-KJIwS1Shjt7H2KpokEw" target="_blank">Vicente Betoret</a></li>
+            <li>Whale Shark by <a href="https://sketchfab.com/kenchoo" target="_blank">Ken Choo</a></li>
+          </ul>
+
+          <h5>SFX</h5>
+          <ul>
+            <li>Ocean Waves by <a href="https://freesound.org/people/richwise/" target="_blank">richwise</a></li>
+            <li>Thunderstorm, Jungle, Water Drops & gameplay by <a href="https://mixkit.co" target="_blank">mixkit</a></li>
+            <li>Transition woosh by <a href="https://freesound.org/people/newagesoup/" target="_blank">newagesoup</a></li>
+          </ul>
+          </div>
+        </div>
+
+        <button id="close-leaderboard" class="close-modal-btn">
+          <span class="material-icons">close</span>
+          Close
+        </button>
+      </div>
     </div>
 
     <!-- Level Select Modal -->
@@ -126,11 +416,13 @@
     <!-- Credits Modal -->
     <div id="credits-modal" class="modal" style="display: none;">
       <div class="modal-content credits-content">
-        <h2>Water is Life. Congratulations!</h2>
-        <p class="victory-message">You've restored all of the islands!</p>
+        <h2>Water is Life.</h2>
+        <!-- <p class="victory-message">Congratulations<br>You've restored all of the islands!</p> -->
 
         <div class="credits-section">
           <h3>Oasea <span>is a game by </span><a href="https://dlightning.org"><i>Dlightning</i>⚡️</a></h3>
+
+          <p>You shaped valleys, drew water back to its heart, and watched the parched earth breathe again.<br>Treat our planet with care, guide water home, and life will find the way.</p>
           
           <h4>Special Thanks to Our Sponsors</h4>
           <div class="sponsors">
@@ -154,21 +446,27 @@
             </div>
           </div>
 
+          <h5>Typeface</h5>
+          <ul>
+            <li>Hagrid by Cosimo Lorenzo Pancini</li>
+          </ul>
+
           <h5>3D Models</h5>
           <ul>
-            <li>Shark, Whale, Manta Ray, Fish, and Dolphin by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
-            <li>Grass by <a href="https://sketchfab.com/3d.lizard" target="_blank">3D.Lizard</a></li>
-            <li>Bismarck Palm, Lady Palm, and by <a href="https://poly.pizza" target="_blank">Google Poly</a></li>
-            <li>Mayan Temple by <a href="https://sketchfab.com/3d.lizard" target="_blank">3D.Lizard</a></li>
+            <li>Shark, Whale, Manta Ray, Fish, Dolphin, & Grass by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
+            <li>Palm Tree by <a href="https://sketchfab.com/KrazzyElf" target="_blank">Krazzy Elf</a></li>
+            <li>Sailboat, Bismarck, Lady, Olive, and Ivory Cane Palms by <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank">Google Poly</a></li>
+            <li>Container Ship by <a href="https://www.alexsafayan.com/" target="_blank">Alex Safayan</a></li>
+            <li>Mayan Temple by <a href="https://poly.pizza/u/Steve%20Atkins" target="_blank">Steve Atkins</a></li>
+            <li>Seagulls by <a href="https://www.youtube.com/channel/UCzP-KJIwS1Shjt7H2KpokEw" target="_blank">Vicente Betoret</a></li>
           </ul>
 
           <h5>SFX</h5>
           <ul>
-            <li>Ocean Waves by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
-            <li>Thunderstorm by <a href="https://sketchfab.com/3d.lizard" target="_blank">3D.Lizard</a></li>
-            <li>Water Drops by <a href="https://poly.pizza" target="_blank">Google Poly</a></li>
+            <li>Ocean Waves by <a href="https://freesound.org/people/richwise/" target="_blank">richwise</a></li>
+            <li>Thunderstorm, Jungle, Water Drops & gameplay by <a href="https://mixkit.co" target="_blank">mixkit</a></li>
+            <li>Transition woosh by <a href="https://freesound.org/people/newagesoup/" target="_blank">newagesoup</a></li>
           </ul>
-
           
         </div>
 
