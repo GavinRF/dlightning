@@ -30,11 +30,11 @@
 
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <script type="module" crossorigin src="/games/oasea/assets/index-Y9gByCYb.js"></script>
+    <script type="module" crossorigin src="/games/oasea/assets/index-Bjk5x9pW.js"></script>
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-a87GWk7o.js">
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-Cb4MsTzb.js">
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-D6xm0ZbH.js">
-    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-F-a26YU8.css">
+    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-CNA2FIBh.css">
   </head>
 
   <body>
@@ -133,9 +133,9 @@
     </div>
 
     <div class="ui-controls">
+            <button class="ui-control-btn" id="fullscreen" title="Toggle Fullscreen"><span class="material-icons">fullscreen</span></button>
       <button class="ui-control-btn" id="sound" title="Toggle Sound"><span class="material-icons">&#xe050;</span></button>
       <button class="ui-control-btn" id="leaderboard-btn" title="Leaderboard"><span class="material-icons">leaderboard</span></button>
-      <!-- <button class="ui-control-btn" id="fullscreen" title="fullscreen toggle"><span class="material-icons">fullscreen</span></button> -->
       <!-- <button class="ui-control-btn" id="reset" title="Reset Level"><span class="material-icons">&#xe042;</span></button> -->
     </div>
 
@@ -335,8 +335,8 @@
 
         <div id="leaderboard-credits" class="leaderboard-tab-content" style="display: none;">
           <div class="credits-content credits-section leaderboard-list">
-            <h3>A game by <a href="https://dlightning.org"><i>Dlightning⚡️</i></a></h3>
-            <h4>Special Thanks to Our Sponsors</h4>
+          <h2>Water is Life.</h2>
+          <h4>Special Thanks to Our Sponsors</h4>
           <div class="sponsors">
             <div class="sponsor-item">
               <a href="https://www.watershed-alliance.org" target="_blank">
@@ -360,14 +360,14 @@
 
           <h5>Typeface</h5>
           <ul>
-            <li>Hagrid by Cosimo Lorenzo Pancini</li>
+            <li>Hagrid Grotesque by <a href="https://www.zetafonts.com/collection" target="_blank">Cosimo Lorenzo Pancini</a></li>
           </ul>
 
           <h5>3D Models</h5>
           <ul>
             <li>Shark, Whale, Manta Ray, Fish, Dolphin, & Grass by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
+            <li>Sailboat + Bismarck, Lady, Olive, and Ivory Cane Palms by <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank">Google Poly</a></li>
             <li>Palm Tree by <a href="https://sketchfab.com/KrazzyElf" target="_blank">Krazzy Elf</a></li>
-            <li>Sailboat, Bismarck, Lady, Olive, and Ivory Cane Palms by <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank">Google Poly</a></li>
             <li>Container Ship by <a href="https://www.alexsafayan.com/" target="_blank">Alex Safayan</a></li>
             <li>Mayan Temple by <a href="https://poly.pizza/u/Steve%20Atkins" target="_blank">Steve Atkins</a></li>
             <li>Seagulls by <a href="https://www.youtube.com/channel/UCzP-KJIwS1Shjt7H2KpokEw" target="_blank">Vicente Betoret</a></li>
@@ -381,10 +381,70 @@
             <li>Thunderstorm, Jungle, Water Drops & gameplay by <a href="https://mixkit.co" target="_blank">mixkit</a></li>
             <li>Transition woosh by <a href="https://freesound.org/people/newagesoup/" target="_blank">newagesoup</a></li>
           </ul>
+          <br><br>
+          <h3>A game by <a href="https://dlightning.org"><i>Dlightning⚡️</i></a></h3>
           </div>
         </div>
 
         <button id="close-leaderboard" class="close-modal-btn">
+          <span class="material-icons">close</span>
+          Close
+        </button>
+      </div>
+    </div>
+
+    <!-- Player Profile Modal -->
+    <div id="player-profile-modal" class="modal" style="display: none;">
+      <div class="modal-content leaderboard-content">
+        <div class="player-profile-header">
+          <h2 id="profile-player-name">Player</h2>
+          <p id="profile-member-since" class="profile-subtitle">Member since</p>
+        </div>
+
+        <!-- Player Stats Grid -->
+        <div class="stats-loading-animation" id="profile-loading">
+          <div class="drop"></div>
+          <div class="drop"></div>
+          <div class="drop"></div>
+          <div class="collection"></div>
+        </div>
+
+        <div class="stats-grid leaderboard-list" id="profile-stats-content" style="display: none;">
+          <div class="stat-card">
+            <h3 id="profile-total-score">0</h3>
+            <p>Total Score</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="profile-best-single">0</h3>
+            <p>Best Single Run</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="profile-levels-completed">0</h3>
+            <p>Islands Completed</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="profile-games-played">0</h3>
+            <p>Games Played</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="profile-total-time">0:00</h3>
+            <p>Total Play Time</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="profile-avg-score">0</h3>
+            <p>Average Score</p>
+          </div>
+        </div>
+
+        <!-- Recent Scores -->
+        <div class="profile-section" id="profile-recent-scores" style="display: none;">
+          <h3>Recent Scores</h3>
+          <div class="leaderboard-list" id="profile-scores-list">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+
+        <button id="close-player-profile" class="close-modal-btn">
           <span class="material-icons">close</span>
           Close
         </button>
@@ -416,69 +476,6 @@
       </a> -->
     </div>
 
-    <!-- Credits Modal -->
-    <div id="credits-modal" class="modal" style="display: none;">
-      <div class="modal-content credits-content">
-        <h2>Water is Life.</h2>
-        <!-- <p class="victory-message">Congratulations<br>You've restored all of the islands!</p> -->
-
-        <div class="credits-section">
-          <h3>Oasea <span>is a game by </span><a href="https://dlightning.org"><i>Dlightning</i>⚡️</a></h3>
-
-          <h4>Special Thanks to Our Sponsors</h4>
-          <div class="sponsors">
-            <div class="sponsor-item">
-              <a href="https://www.watershed-alliance.org" target="_blank">
-              <img src="img/earthworks.png" alt="Earthworkers Ultd">
-              </a>
-              <a href="https://www.watershed-alliance.org" target="_blank">Earthworkers Ultd.</a>
-            </div>
-            <div class="sponsor-item">
-              <a href="https://www.watershed-alliance.org" target="_blank">
-              <img src="img/watershed-al.png" alt="Watershed Alliance">
-              </a>
-              <a href="https://www.watershed-alliance.org" target="_blank">Watershed Alliance</a>
-            </div>
-            <div class="sponsor-item">
-              <a href="https://oceanprotectors.com" target="_blank">
-              <img src="img/ocean-protectors.png" alt="Ocean Protectors">
-              </a>
-              <a href="https://oceanprotectors.com" target="_blank">Ocean Protectors</a>
-            </div>
-          </div>
-
-          <h5>Typeface</h5>
-          <ul>
-            <li>Hagrid by Cosimo Lorenzo Pancini</li>
-          </ul>
-
-          <h5>3D Models</h5>
-          <ul>
-            <li>Shark, Whale, Manta Ray, Fish, Dolphin, & Grass by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
-            <li>Palm Tree by <a href="https://sketchfab.com/KrazzyElf" target="_blank">Krazzy Elf</a></li>
-            <li>Sailboat, Bismarck, Lady, Olive, and Ivory Cane Palms by <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank">Google Poly</a></li>
-            <li>Container Ship by <a href="https://www.alexsafayan.com/" target="_blank">Alex Safayan</a></li>
-            <li>Mayan Temple by <a href="https://poly.pizza/u/Steve%20Atkins" target="_blank">Steve Atkins</a></li>
-            <li>Seagulls by <a href="https://www.youtube.com/channel/UCzP-KJIwS1Shjt7H2KpokEw" target="_blank">Vicente Betoret</a></li>
-            <li>Whale Shark by <a href="https://sketchfab.com/kenchoo" target="_blank">Ken Choo</a></li>
-            <li>Sail-fish by <a href="https://sketchfab.com/larycim" target="_blank">Lary</a></li>
-          </ul>
-
-          <h5>SFX</h5>
-          <ul>
-            <li>Ocean Waves by <a href="https://freesound.org/people/richwise/" target="_blank">richwise</a></li>
-            <li>Thunderstorm, Jungle, Water Drops & gameplay by <a href="https://mixkit.co" target="_blank">mixkit</a></li>
-            <li>Transition woosh by <a href="https://freesound.org/people/newagesoup/" target="_blank">newagesoup</a></li>
-          </ul>
-          
-        </div>
-
-        <button id="close-credits" class="play-btn">
-          <span class="material-icons">close</span>
-          Close
-        </button>
-      </div>
-    </div>
     <!-- END HTML -->
 
   </body>
