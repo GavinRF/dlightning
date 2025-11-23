@@ -12,6 +12,14 @@
     <meta name="theme-color" content="#0078b4">
     <meta name="color-scheme" content="light dark">
 
+    <!-- PWA Support -->
+    <link rel="manifest" href="/games/oasea/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Oasea">
+    <link rel="apple-touch-icon" href="/games/oasea/assets/transparent_white_D-D_kkh0Kt.png">
+
     <!-- Open Graph -->
     <meta property="og:title" content="Oasea — Turn Desert Islands into Living Oases">
     <meta property="og:description" content="Transform desert islands into lush, living worlds in this relaxing, atmospheric simulation game.">
@@ -29,12 +37,13 @@
    <link rel="preload" href="/games/oasea/font/HagridText-Regular.otf" as="font" type="font/otf" crossorigin>
 
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-       <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <script type="module" crossorigin src="/games/oasea/assets/index-Bjk5x9pW.js"></script>
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-a87GWk7o.js">
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-Cb4MsTzb.js">
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-D6xm0ZbH.js">
-    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-CNA2FIBh.css">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <script type="module" crossorigin src="/games/oasea/assets/index-BgzgYDEo.js"></script>
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-BM-_dztD.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-BFZyaTYb.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-6RHs7m4s.js">
+    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-kkr5Q2kN.css">
   </head>
 
   <body>
@@ -108,36 +117,39 @@
             <span class="material-icons">play_arrow</span>
             Play
           </button>
+        <!-- <button id="daily-button" class="daily-level-card">Daily Islet</button> -->
         <button id="instructions-button" class="secondary-btn">How to Play</button>
         </div>
     </div>
     <!-- Welcome Modal -->
-    <div id="welcome-modal" class="modal" style="display: none;">
+    <div id="welcome-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="welcome-title" aria-describedby="welcome-description" style="display: none;">
       <div class="modal-content">
         <div class="instructions">
-          <h3>Rehydrate the Island by Sculpting the&nbsp;Terrain</h3>
-            <p class="desktop-instructions"><i>Click and drag</i> to raise the terrain.<br>Hold <i><strong>shift</strong></i>, or <i>right click</i>, to lower terrain.<br>Return water to the aquifer by reaching the goal.</p>
-            <p class="mobile-instructions">Tap and hold to raise terrain, add a second finger anywhere on the&nbsp;island&nbsp;to&nbsp;lower&nbsp;it.<br>Touch the Ocean to pan or pinch&nbsp;to&nbsp;zoom</p>
+          <h3 id="welcome-title">Rehydrate the Island by Sculpting&nbsp;the&nbsp;Terrain</h3>
+            <p id="welcome-description" class="desktop-instructions"><i>Click and drag</i>&nbsp; your mouse to raise the terrain.<br>Hold <i><strong>shift</strong></i> while dragging, or <i>right&nbsp;click</i> to lower&nbsp;the&nbsp;terrain.</p>
+            <p class="desktop-instructions">Click and drag outside of the terrain to pan the camera. Use mouse wheel or pinch to zoom.</p>
+            <p id="welcome-description" class="mobile-instructions">Tap and drag your finger to raise the terrain; add a second finger to&nbsp;lower&nbsp;it.</p>
+            <p class="mobile-instructions">Touch outside of the terrain to pan, or pinch&nbsp;to&nbsp;zoom</p>
 
           <!-- Placeholder for interaction GIF -->
           <div class="gif-container">
-            <img src="img/gameplay.gif" alt="Gameplay demonstration" class="gameplay-gif" />
+            <img src="img/gameplay.gif" alt="Gameplay demonstration showing how to sculpt terrain and guide water" class="gameplay-gif" />
           </div>
         </div>
 
-        <button id="play-button" class="play-btn">
-          <span class="material-icons">play_arrow</span>
+        <button id="play-button" class="play-btn" aria-label="Start playing the game">
+          <span class="material-icons" aria-hidden="true">play_arrow</span>
           Play
         </button>
       </div>
     </div>
 
-    <div class="ui-controls">
-            <button class="ui-control-btn" id="fullscreen" title="Toggle Fullscreen"><span class="material-icons">fullscreen</span></button>
-      <button class="ui-control-btn" id="sound" title="Toggle Sound"><span class="material-icons">&#xe050;</span></button>
-      <button class="ui-control-btn" id="leaderboard-btn" title="Leaderboard"><span class="material-icons">leaderboard</span></button>
+    <nav class="ui-controls" role="navigation" aria-label="Game controls">
+            <button class="ui-control-btn" id="fullscreen" title="Toggle Fullscreen" aria-label="Toggle fullscreen mode"><span class="material-icons" aria-hidden="true">fullscreen</span></button>
+      <button class="ui-control-btn" id="sound" title="Toggle Sound" aria-label="Toggle sound on or off"><span class="material-icons" aria-hidden="true">&#xe050;</span></button>
+      <button class="ui-control-btn" id="leaderboard-btn" title="Leaderboard" aria-label="View leaderboard"><span class="material-icons" aria-hidden="true">leaderboard</span></button>
       <!-- <button class="ui-control-btn" id="reset" title="Reset Level"><span class="material-icons">&#xe042;</span></button> -->
-    </div>
+    </nav>
 
     <!-- Level Story Overlay (shown during transitions) -->
     <div id="level-story-overlay" style="display: none;">
@@ -146,20 +158,32 @@
 
     <!-- Level Info -->
     <div id="level-info">
-      <div id="level-name"> 🏝️ </div>
+      <button id="level-name" aria-label="View level select menu. Current level: Island 1"> 🏝️ </button>
     </div>
 
     <!-- Progress Bar UI -->
-    <div id="progress-container">
-      <div id="progress-text">0%</div>
-      <div id="goal-marker"></div>
-      <div id="progress-fill"></div>
-    </div>
+    <aside id="progress-container"
+           role="progressbar"
+           aria-label="Water collection progress"
+           aria-valuemin="0"
+           aria-valuemax="100"
+           aria-valuenow="0"
+           aria-valuetext="0% collected">
+      <div id="progress-text" aria-hidden="true">0%</div>
+      <div id="goal-marker" aria-hidden="true"></div>
+      <div id="progress-fill" aria-hidden="true"></div>
+    </aside>
 
-    <div id="next-level-btn" style="display: none;">
-      <span class="material-icons">arrow_forward</span>
+    <!-- Play Again Button (Daily Levels Only) -->
+    <button id="replay-daily-btn" style="display: none;" aria-label="Play this daily level again">
+      <span class="material-icons" aria-hidden="true">replay</span>
+      Play&nbsp;Again
+    </button>
+
+    <button id="next-level-btn" style="display: none;" aria-label="Continue to next island">
+      <span class="material-icons" aria-hidden="true">arrow_forward</span>
       Next&nbsp;Island
-    </div>
+    </button>
 
     <!-- Simple Play Overlay for subsequent levels -->
     <div id="simple-play-overlay" style="display: none;">
@@ -170,53 +194,64 @@
     </div>
 
     <!-- Player Name Prompt Modal (First Time) -->
-    <div id="name-prompt-modal" class="modal" style="display: none;">
+    <div id="name-prompt-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="name-prompt-title" aria-describedby="name-prompt-description" style="display: none;">
       <div class="modal-content score-content">
-        <h2>Welcome, Explorer!</h2>
-        <p style="text-align: center; margin-bottom: 20px;">Enter a screen-name to track your scores</p>
+        <h2 id="name-prompt-title">Welcome, Island Conservator!</h2>
+        <p id="name-prompt-description" style="text-align: center; margin-bottom: 20px;">Enter a screen-name to track your scores</p>
 
         <div class="name-input-container">
+          <label for="player-name-input" class="sr-only">Your player name (2-20 characters)</label>
           <input
             type="text"
             id="player-name-input"
+            name="playerName"
             placeholder="Your name"
+            minlength="2"
             maxlength="20"
-            autocomplete="off"
+            required
+            aria-required="true"
+            aria-label="Enter your player name"
+            autocomplete="username"
           />
         </div>
 
-        <button id="save-name-btn" class="play-btn">
-          <span class="material-icons">check</span>
+        <button id="save-name-btn" class="play-btn" aria-label="Save name and continue">
+          <span class="material-icons" aria-hidden="true">check</span>
           Continue
         </button>
       </div>
     </div>
 
     <!-- Score Breakdown Modal -->
-    <div id="score-modal" style="display: none;">
+    <div id="score-modal" role="dialog" aria-modal="true" aria-labelledby="score-modal-title" style="display: none;">
       <div class="modal-content score-content">
 
+          <h2 id="score-modal-title" class="sr-only">Level Complete - Score Breakdown</h2>
+
           <div class="player-name-display">
+            <label for="score-player-name" class="sr-only">Your player name</label>
             <input
               type="text"
               id="score-player-name"
+              name="playerName"
               maxlength="20"
-              autocomplete="off"
+              aria-label="Your player name"
+              autocomplete="username"
             />
           </div>
 
-          <div class="score-stats">
+          <div class="score-stats" role="region" aria-label="Level statistics">
             <div class="stat-item">
-              <span class="material-icons">water_drop</span>
-              <span id="water-collected">0%</span>
+              <span class="material-icons" aria-hidden="true">schedule</span>
+              <span id="completion-time" aria-label="Completion time">0:00</span>
             </div>
             <div class="stat-item">
-              <span class="material-icons">schedule</span>
-              <span id="completion-time">0:00</span>
+              <span class="material-icons" aria-hidden="true">water_drop</span>
+              <span id="water-collected" aria-label="Water collected">0%</span>
             </div>
             <div class="stat-item">
-              <span class="material-icons">touch_app</span>
-              <span id="terrain-edits">0</span>
+              <span class="material-icons" aria-hidden="true">touch_app</span>
+              <span id="terrain-edits" aria-label="Terrain edits">0</span>
             </div>
           </div>
 
@@ -226,7 +261,7 @@
             <span class="score-value" id="score-base">0</span>
           </div>
           <div class="score-row">
-            <span class="score-label">Bonus Points:</span>
+            <span class="score-label">Collection Bonus:</span>
             <span class="score-value" id="score-bonus">0</span>
           </div>
           <div class="score-row">
@@ -247,46 +282,75 @@
           </div>
         </div>
 
-        <button id="close-score" class="play-btn">
-          <span class="material-icons">close</span>
+        <button id="close-score" class="play-btn" aria-label="Close score modal">
+          <span class="material-icons" aria-hidden="true">close</span>
           Close
         </button>
       </div>
     </div>
 
     <!-- Leaderboard Modal -->
-    <div id="leaderboard-modal" class="modal" style="display: none;">
+    <div id="leaderboard-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="leaderboard-modal-title" style="display: none;">
       <div class="modal-content leaderboard-content">
-        <h2>Oasea</h2>
+        <h2 id="leaderboard-modal-title" class="sr-only">Leaderboard and Statistics</h2>
 
-        <div class="leaderboard-tabs">
-          <button class="tab-btn active" data-tab="today">Today</button>
-          <button class="tab-btn" data-tab="alltime">All Time</button>
-          <button class="tab-btn" data-tab="stats">My Stats</button>
-          <button class="tab-btn" data-tab="credits">Credits</button>
+        <div class="leaderboard-tabs" role="tablist" aria-label="Leaderboard sections">
+          <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="leaderboard-leaderboard" data-tab="leaderboard">Leaderboard</button>
+          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="leaderboard-stats" data-tab="stats">My Stats</button>
+          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="leaderboard-credits" data-tab="credits">Credits</button>
         </div>
 
-        <div id="leaderboard-today" class="leaderboard-tab-content">
-          <div class="stats-loading-animation" id="today-loading">
+        <div id="leaderboard-leaderboard" class="leaderboard-tab-content" role="tabpanel" aria-labelledby="tab-leaderboard">
+          <!-- Level Selector -->
+          <div class="leaderboard-filters">
+            <div class="filter-row">
+              <label for="level-filter" class="sr-only">Filter leaderboard by level</label>
+              <select id="level-filter" class="level-select" aria-label="Select level to view leaderboard">
+                <option value="999">Daily Level</option>
+                <option value="all">All Levels</option>
+                <!-- Level options populated dynamically from levels.js -->
+              </select>
+              <div id="daily-countdown" class="daily-countdown" style="display: none;">
+                <span class="countdown-label">Next daily:</span>
+                <span id="countdown-timer" class="countdown-timer">--:--:--</span>
+              </div>
+            </div>
+
+            <!-- Time Period Filters -->
+            <div class="filter-row">
+              <!-- <label class="filter-label">Period:</label> -->
+              <div class="time-period-filters">
+                <button class="period-btn active" data-period="today">Today</button>
+                <button class="period-btn" data-period="month">This Month</button>
+                <button class="period-btn" data-period="alltime">All Time</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Your Rank Banner -->
+          <div id="your-rank-banner" class="your-rank-banner" style="display: none;">
+            <div class="rank-info">
+              <span class="rank-label">Your Rank:</span>
+              <span id="player-rank" class="rank-value">#--</span>
+            </div>
+            <div class="best-score-info">
+              <span class="best-label">Your Best:</span>
+              <span id="player-best-score" class="best-value">--</span>
+            </div>
+          </div>
+
+          <!-- Loading Animation -->
+          <div class="stats-loading-animation" id="leaderboard-loading">
             <div class="drop"></div>
             <div class="drop"></div>
             <div class="drop"></div>
             <div class="collection"></div>
           </div>
-          <div class="leaderboard-list" id="today-scores" style="display: none;">
-            <!-- Populated by JavaScript -->
-          </div>
-        </div>
 
-        <div id="leaderboard-alltime" class="leaderboard-tab-content" style="display: none;">
-          <div class="stats-loading-animation" id="alltime-loading">
-            <div class="drop"></div>
-            <div class="drop"></div>
-            <div class="drop"></div>
-            <div class="collection"></div>
-          </div>
-          <div class="leaderboard-list" id="alltime-scores" style="display: none;">
+          <!-- Leaderboard List -->
+          <div class="leaderboard-list" id="leaderboard-scores" style="display: none;">
             <!-- Populated by JavaScript -->
+            <!-- Show More button appended dynamically after scores -->
           </div>
         </div>
 
@@ -297,7 +361,17 @@
             <div class="drop"></div>
             <div class="collection"></div>
           </div>
+          <div class="stats-player-header" id="stats-player-header" style="display: none;">
+            <h3 id="stats-player-name">Player</h3>
+          </div>
+          <!-- Achievements Section -->
           <div class="stats-grid leaderboard-list" id="stats-content" style="display: none;">
+            <div id="stats-achievements-section" style="display: none;">
+              <div class="achievements-container" id="stats-achievements-list">
+                <!-- Populated by JavaScript -->
+              </div>
+            </div>
+
             <div class="stat-card">
               <h3 id="total-score-stat">0</h3>
               <p>Total Score</p>
@@ -319,8 +393,8 @@
               <p>Total Play Time</p>
             </div>
             <div class="stat-card">
-              <h3 id="fastest-time-stat">—</h3>
-              <p>Fastest Time</p>
+              <h3 id="daily-levels-played-stat">—</h3>
+              <p>Daily Levels Played</p>
             </div>
             <div class="stat-card">
               <h3 id="avg-score-stat">0</h3>
@@ -373,6 +447,8 @@
             <li>Seagulls by <a href="https://www.youtube.com/channel/UCzP-KJIwS1Shjt7H2KpokEw" target="_blank">Vicente Betoret</a></li>
             <li>Whale Shark by <a href="https://sketchfab.com/kenchoo" target="_blank">Ken Choo</a></li>
             <li>Sail-fish by <a href="https://sketchfab.com/larycim" target="_blank">Lary</a></li>
+            <li>Green Sea Turtle by <a href="https://linktr.ee/lucasBS8" target="_blank">Lucas B.</a></li>
+            <li>Firefly Squid by <a href="https://misaooo.artstation.com/" target="_blank">Kristina Sergeeva</a></li>
           </ul>
 
           <h5>SFX</h5>
@@ -409,6 +485,14 @@
           <div class="collection"></div>
         </div>
 
+        <div class="leaderboard-list">
+        <!-- Achievements Section -->
+        <div id="profile-achievements-section" style="display: none;">
+          <div class="achievements-container" id="profile-achievements-list">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+
         <div class="stats-grid leaderboard-list" id="profile-stats-content" style="display: none;">
           <div class="stat-card">
             <h3 id="profile-total-score">0</h3>
@@ -439,9 +523,10 @@
         <!-- Recent Scores -->
         <div class="profile-section" id="profile-recent-scores" style="display: none;">
           <h3>Recent Scores</h3>
-          <div class="leaderboard-list" id="profile-scores-list">
+          <div id="profile-scores-list">
             <!-- Populated by JavaScript -->
           </div>
+        </div>
         </div>
 
         <button id="close-player-profile" class="close-modal-btn">
@@ -454,7 +539,9 @@
     <!-- Level Select Modal -->
     <div id="level-select-modal" class="modal hidden">
       <div class="modal-content">
-        <h2>Island Select</h2>
+        <h2>Island Select <span class="material-symbols-outlined">
+mountain_steam
+</span></h2>
 
         <div id="level-grid">
           <!-- Levels will be populated by JavaScript -->
@@ -467,6 +554,63 @@
       </div>
     </div>
 
+    <!-- Share Score Modal (Daily Levels) -->
+    <div id="share-modal" class="modal hidden">
+      <div class="modal-content share-content">
+        <h2>Share Your Score</h2>
+
+        <div id="share-score-summary">
+          <div class="share-level-name"></div>
+          <div class="share-score-value"></div>
+          <div class="share-time-value"></div>
+          <div class="share-rank-row" style="display: none;">
+            <div class="share-rank-stat">
+              <span class="share-rank-label">Rank:</span>
+              <span class="share-rank-value"></span>
+            </div>
+            <div class="share-percentile-stat">
+              <span class="share-percentile-label">Percentile:</span>
+              <span class="share-percentile-value"></span>
+            </div>
+          </div>
+          <div class="share-stats-row">
+            <div class="share-stat">
+              <span class="share-stat-icon">💧</span>
+              <span class="share-water-value"></span>
+            </div>
+            <div class="share-stat">
+              <span class="share-stat-icon">⚡</span>
+              <span class="share-efficiency-value"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="share-buttons">
+          <button id="copy-score-btn" class="share-btn">
+            <span class="material-icons">content_copy</span>
+            Copy Score
+          </button>
+
+          <button id="native-share-btn" class="share-btn" style="display: none;">
+            <span class="material-icons">share</span>
+            Share
+          </button>
+        </div>
+
+        <button id="close-share" class="close-modal-btn">
+          <span class="material-icons">close</span>
+          Play Another
+        </button>
+      </div>
+    </div>
+
+    <!-- Play Again Button (shown after credits) -->
+    <div id="play-again-overlay" style="display: none; opacity: 0;">
+      <button id="play-again-btn" class="play-btn">
+        Play Again?
+      </button>
+    </div>
+
     <div id="bottom-logo-bar">
       <a href="https://dlightning.org" target="_blank">
         <img src="img/transparent_white_D.png" alt="Dlighting logo">
@@ -477,6 +621,85 @@
     </div>
 
     <!-- END HTML -->
+
+    <!-- Service Worker Registration -->
+    <script>
+      // Register service worker for PWA support
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('Service Worker registered successfully:', registration.scope);
+
+              // Check for updates
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // New service worker available, show update notification
+                    console.log('New version available! Refresh to update.');
+
+                    // Optional: Show a toast notification to the user
+                    if (window.showToast) {
+                      window.showToast('Update available! Refresh to get the latest version.', 'info');
+                    }
+                  }
+                });
+              });
+
+              // Check for updates every hour
+              setInterval(() => {
+                registration.update();
+              }, 60 * 60 * 1000);
+            })
+            .catch((error) => {
+              console.log('Service Worker registration failed:', error);
+            });
+        });
+
+        // Handle service worker messages
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data && event.data.type === 'CACHE_UPDATED') {
+            console.log('Cache has been updated');
+          }
+        });
+
+        // Reload page when new service worker takes control
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+          }
+        });
+      }
+
+      // Install prompt handling
+      let deferredPrompt;
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+
+        console.log('PWA install prompt available');
+
+        // Optional: Show your own install button
+        // You could create a custom "Add to Home Screen" button and show it here
+      });
+
+      window.addEventListener('appinstalled', () => {
+        console.log('PWA was installed successfully');
+        deferredPrompt = null;
+
+        // Optional: Track installation with analytics
+        if (window.showToast) {
+          window.showToast('Oasea installed! You can now play offline.', 'success');
+        }
+      });
+    </script>
 
   </body>
 </html>

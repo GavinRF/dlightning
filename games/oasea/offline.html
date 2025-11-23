@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Oasea</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #0078b4 0%, #005f8f 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .offline-container {
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .island-icon {
+      font-size: 120px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .retry-button {
+      background: white;
+      color: #0078b4;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .retry-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .retry-button:active {
+      transform: translateY(0);
+    }
+
+    .status-text {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .offline-tips {
+      margin-top: 2rem;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
+
+    .offline-tips h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .offline-tips ul {
+      list-style: none;
+      text-align: left;
+    }
+
+    .offline-tips li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .offline-tips li:before {
+      content: "💧";
+      position: absolute;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="island-icon">🏝️</div>
+    <h1>You're Offline</h1>
+    <p>The ocean waves can't reach you right now. Check your internet connection to continue your oasis journey.</p>
+
+    <button class="retry-button" onclick="window.location.reload()">
+      Try Again
+    </button>
+
+    <div class="offline-tips">
+      <h3>While You're Offline:</h3>
+      <ul>
+        <li>Check your Wi-Fi or mobile data connection</li>
+        <li>Make sure airplane mode is turned off</li>
+        <li>Some cached islands may still be playable</li>
+      </ul>
+    </div>
+
+    <p class="status-text" id="status">Checking connection...</p>
+  </div>
+
+  <script>
+    // Monitor connection status
+    function updateStatus() {
+      const statusEl = document.getElementById('status');
+      if (navigator.onLine) {
+        statusEl.textContent = 'Connection restored! Click "Try Again" to continue.';
+        statusEl.style.color = '#90EE90';
+      } else {
+        statusEl.textContent = 'Still offline...';
+        statusEl.style.color = 'rgba(255, 255, 255, 0.7)';
+      }
+    }
+
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+
+    // Initial status check
+    updateStatus();
+
+    // Auto-reload when connection is restored
+    window.addEventListener('online', () => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
