@@ -1,12 +1,11 @@
 const CACHE_VERSION = 'oasea-v1.0.0';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
-const OFFLINE_PAGE = '/offline.html';
+const OFFLINE_PAGE = '/games/oasea/offline.html';
 
 // Critical assets to cache immediately
 const STATIC_ASSETS = [
-  '/index.html',
-  '/offline.html'
+  '/games/oasea/offline.html'
 ];
 
 // Maximum number of items to keep in dynamic cache
