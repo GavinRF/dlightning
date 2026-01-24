@@ -12,7 +12,7 @@
     <meta name="theme-color" content="#0078b4">
     <meta name="color-scheme" content="light dark">
 
-    <!-- PWA Support -->
+    <!-- PWA Support ﹏𓂁﹏ -->
     <link rel="manifest" href="/games/oasea/manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -39,11 +39,11 @@
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-    <script type="module" crossorigin src="/games/oasea/assets/index-DLf-cT-P.js"></script>
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-BM-_dztD.js">
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-BFZyaTYb.js">
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-6RHs7m4s.js">
-    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-BWT07PVf.css">
+    <script type="module" crossorigin src="/games/oasea/assets/index-D4ecI0AF.js"></script>
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-CCm9rQuF.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-CKC5f6tm.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-BPXRSdKH.js">
+    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-XWAkITZ_.css">
   </head>
 
   <body>
@@ -126,7 +126,7 @@
       <div class="modal-content">
         <div class="instructions">
           <h3 id="welcome-title">Rehydrate the Island by Sculpting&nbsp;the&nbsp;Terrain</h3>
-            <p id="welcome-description" class="desktop-instructions"><i>Click and drag</i>&nbsp; your mouse to raise the terrain.<br>Hold <i><strong>shift</strong></i> while dragging, or <i>right&nbsp;click</i> to lower&nbsp;the&nbsp;terrain.</p>
+            <p id="welcome-description" class="desktop-instructions"><i>Click and drag</i>&nbsp; to raise the terrain.<br>Hold <i><strong>shift</strong></i>&nbsp; or <i>right&nbsp;click</i>&nbsp; while dragging to lower&nbsp;the&nbsp;terrain.</p>
             <p class="desktop-instructions">Click and drag outside of the terrain to pan the camera. Use mouse wheel or pinch to zoom.</p>
             <p id="welcome-description" class="mobile-instructions">Tap and drag your finger to raise the terrain; add a second finger to&nbsp;lower&nbsp;it.</p>
             <p class="mobile-instructions">Touch outside of the terrain to pan, or pinch&nbsp;to&nbsp;zoom</p>
@@ -145,7 +145,6 @@
     </div>
 
     <nav class="ui-controls" role="navigation" aria-label="Game controls">
-            <button class="ui-control-btn" id="fullscreen" title="Toggle Fullscreen" aria-label="Toggle fullscreen mode"><span class="material-icons" aria-hidden="true">fullscreen</span></button>
       <button class="ui-control-btn" id="sound" title="Toggle Sound" aria-label="Toggle sound on or off"><span class="material-icons" aria-hidden="true">&#xe050;</span></button>
       <button class="ui-control-btn" id="leaderboard-btn" title="Leaderboard" aria-label="View leaderboard"><span class="material-icons" aria-hidden="true">leaderboard</span></button>
       <!-- <button class="ui-control-btn" id="reset" title="Reset Level"><span class="material-icons">&#xe042;</span></button> -->
@@ -191,6 +190,44 @@
         <span class="material-icons">play_arrow</span>
         Play
       </button>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div id="tutorial-overlay" class="tutorial-overlay" style="display: none;">
+      <!-- Top section: Title and Description -->
+      <div class="tutorial-top">
+        <h3 class="tutorial-title" id="tutorial-title">Raise Terrain</h3>
+        <p class="tutorial-description" id="tutorial-description">Click and drag on the island to raise the terrain.</p>
+      </div>
+
+      <!-- Center section: Animation over the island -->
+      <div class="tutorial-center">
+        <!-- Animation container -->
+        <div class="tutorial-animation" id="tutorial-animation"></div>
+
+        <!-- Icon fallback -->
+        <div class="tutorial-icon" id="tutorial-icon" style="display: none;">
+          <span class="material-icons-outlined">touch_app</span>
+        </div>
+      </div>
+
+      <!-- Bottom section: Progress and Skip -->
+      <div class="tutorial-bottom">
+        <div class="tutorial-progress-wrapper">
+          <span class="tutorial-step-indicator" id="tutorial-step-indicator">Step 1 of 4</span>
+          <div class="tutorial-progress-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+        <button id="tutorial-skip-btn" class="tutorial-skip-btn">Skip Tutorial</button>
+      </div>
+    </div>
+
+    <div id="fullscreen-controls" role="fullscreen mode" aria-label="Game controls">
+      <button class="ui-control-btn" id="fullscreen" title="Toggle Fullscreen" aria-label="Toggle fullscreen mode"><span class="material-icons" aria-hidden="true">fullscreen</span></button>
     </div>
 
     <!-- Player Name Prompt Modal (First Time) -->
@@ -306,7 +343,7 @@
             <div class="filter-row">
               <label for="level-filter" class="sr-only">Filter leaderboard by level</label>
               <select id="level-filter" class="level-select" aria-label="Select level to view leaderboard">
-                <option value="999">Daily Level</option>
+                <option value="daily">Daily Level</option>
                 <option value="all">All Levels</option>
                 <!-- Level options populated dynamically from levels.js -->
               </select>
@@ -441,7 +478,7 @@
           <ul>
             <li>Shark, Whale, Manta Ray, Fish, Dolphin, & Grass by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
             <li>Sailboat + Bismarck, Lady, Olive, and Ivory Cane Palms by <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank">Google Poly</a></li>
-            <li>Palm Tree by <a href="https://sketchfab.com/KrazzyElf" target="_blank">Krazzy Elf</a></li>
+            <li>Palm Tree by <a href="https://sketchfab.com/PlantCatalog" target="_blank">Plant Catalog</a></li>
             <li>Container Ship by <a href="https://www.alexsafayan.com/" target="_blank">Alex Safayan</a></li>
             <li>Mayan Temple by <a href="https://poly.pizza/u/Steve%20Atkins" target="_blank">Steve Atkins</a></li>
             <li>Seagulls by <a href="https://www.youtube.com/channel/UCzP-KJIwS1Shjt7H2KpokEw" target="_blank">Vicente Betoret</a></li>
@@ -456,6 +493,7 @@
             <li>Ocean Waves by <a href="https://freesound.org/people/richwise/" target="_blank">richwise</a></li>
             <li>Thunderstorm, Jungle, Water Drops & gameplay by <a href="https://mixkit.co" target="_blank">mixkit</a></li>
             <li>Transition woosh by <a href="https://freesound.org/people/newagesoup/" target="_blank">newagesoup</a></li>
+            <li>Terrain Normal Maps by <a href="https://www.filterforge.com/" target="_blank">Filter Forge</a></li>
           </ul>
           <br><br>
           <h3>A game by <a href="https://dlightning.org"><i>Dlightning⚡️</i></a></h3>
@@ -610,6 +648,11 @@ mountain_steam
         Play Again?
       </button>
     </div>
+
+    <!-- Mobile Terrain Lower Button -->
+    <button id="mobile-lower-btn" class="mobile-lower-btn" aria-label="Hold to lower terrain">
+      <span class="material-icons" aria-hidden="true">arrow_downward</span>
+    </button>
 
     <div id="bottom-logo-bar">
       <a href="https://dlightning.org" target="_blank">
