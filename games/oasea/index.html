@@ -39,11 +39,11 @@
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-    <script type="module" crossorigin src="/games/oasea/assets/index-BXggeDiE.js"></script>
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-CCm9rQuF.js">
+    <script type="module" crossorigin src="/games/oasea/assets/index-CSSr7DsZ.js"></script>
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-CzRfLIGt.js">
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-CKC5f6tm.js">
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-BPXRSdKH.js">
-    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-CZQnbuLb.css">
+    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-D85HsJpD.css">
   </head>
 
   <body>
@@ -173,11 +173,25 @@
       <div id="progress-fill" aria-hidden="true"></div>
     </aside>
 
-    <!-- Play Again Button (Daily Levels Only) -->
-    <button id="replay-daily-btn" style="display: none;" aria-label="Play this daily level again">
-      <span class="material-icons" aria-hidden="true">replay</span>
-      Play&nbsp;Again
+    <!-- Cloud Bonus Indicator (outside progress container to avoid overflow:hidden clipping) -->
+    <button id="cloud-bonus-indicator" aria-label="Claim cloud bonus" style="display: none;">
+      <span class="material-icons" aria-hidden="true">cloud</span>
+      <span id="cloud-bonus-count" aria-hidden="true">1</span>
     </button>
+
+    <!-- Daily Level Navigation (Daily Levels Only) -->
+    <div id="daily-nav-container" style="display: none;">
+      <button id="next-daily-btn" class="daily-nav-btn" aria-label="Next daily level">
+        <span class="material-icons" aria-hidden="true">chevron_left</span>
+      </button>
+      <button id="replay-daily-btn" aria-label="Play this daily level again">
+        <span class="material-icons" aria-hidden="true">replay</span>
+        Replay
+      </button>
+      <button id="prev-daily-btn" class="daily-nav-btn" aria-label="Previous daily level">
+        <span class="material-icons" aria-hidden="true">chevron_right</span>
+      </button>
+    </div>
 
     <button id="next-level-btn" style="display: none;" aria-label="Continue to next island">
       <span class="material-icons" aria-hidden="true">arrow_forward</span>
@@ -265,17 +279,10 @@
 
           <!-- <h2 id="score-modal-title" class="sr-only">Level Complete - Score Breakdown</h2> -->
 
-          <!-- <div class="player-name-display">
-            <label for="score-player-name" class="sr-only">Your player name</label>
-            <input
-              type="text"
-              id="score-player-name"
-              name="playerName"
-              maxlength="20"
-              aria-label="Your player name"
-              autocomplete="username"
-            />
-          </div> -->
+          <button class="player-name-btn" id="score-player-name-btn" aria-label="View my stats">
+            <span id="score-player-name"></span>
+            <span class="material-icons">chevron_right</span>
+          </button>
 
           <div class="score-stats" role="region" aria-label="Level statistics">
             <div class="stat-item">
@@ -309,6 +316,20 @@
             <span class="score-label">Level Score:</span>
             <span class="score-value" id="score-total">0</span>
           </div>
+          <div class="stars-display" id="stars-display" aria-label="Stars earned">
+            <span class="star" data-star="1" data-tooltip="Complete the level">
+              <span class="material-icons">star</span>
+              <span class="star-tooltip">Complete the level</span>
+            </span>
+            <span class="star" data-star="2" data-tooltip="Finish in under 2:30">
+              <span class="material-icons">star</span>
+              <span class="star-tooltip">Finish in under 2:30</span>
+            </span>
+            <span class="star" data-star="3" data-tooltip="High efficiency">
+              <span class="material-icons">star</span>
+              <span class="star-tooltip">High efficiency</span>
+            </span>
+          </div>
           <div class="score-row career-total">
             <span class="score-label">Career Total:</span>
             <span class="score-value" id="career-total">0</span>
@@ -329,7 +350,7 @@
     <!-- Leaderboard Modal -->
     <div id="leaderboard-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="leaderboard-modal-title" style="display: none;">
       <div class="modal-content leaderboard-content">
-        <h2 id="leaderboard-modal-title" class="sr-only">Leaderboard and Statistics</h2>
+        <!-- <h2 id="leaderboard-modal-title" class="sr-only">Leaderboard and Statistics</h2> -->
 
         <div class="leaderboard-tabs" role="tablist" aria-label="Leaderboard sections">
           <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="leaderboard-leaderboard" data-tab="leaderboard">Leaderboard</button>
@@ -339,6 +360,7 @@
 
         <div id="leaderboard-leaderboard" class="leaderboard-tab-content" role="tabpanel" aria-labelledby="tab-leaderboard">
           <!-- Level Selector -->
+           <div class="leaderboard-list">
           <div class="leaderboard-filters">
             <div class="filter-row">
               <label for="level-filter" class="sr-only">Filter leaderboard by level</label>
@@ -385,10 +407,11 @@
           </div>
 
           <!-- Leaderboard List -->
-          <div class="leaderboard-list" id="leaderboard-scores" style="display: none;">
+          <div id="leaderboard-scores" style="display: none;">
             <!-- Populated by JavaScript -->
             <!-- Show More button appended dynamically after scores -->
           </div>
+        </div>
         </div>
 
         <div id="leaderboard-stats" class="leaderboard-tab-content" style="display: none;">
@@ -398,11 +421,12 @@
             <div class="drop"></div>
             <div class="collection"></div>
           </div>
+          <div class="leaderboard-list">
           <div class="stats-player-header" id="stats-player-header" style="display: none;">
             <h3 id="stats-player-name">Player</h3>
           </div>
           <!-- Achievements Section -->
-          <div class="stats-grid leaderboard-list" id="stats-content" style="display: none;">
+          <div class="stats-grid" id="stats-content" style="display: none;">
             <div id="stats-achievements-section" style="display: none;">
               <div class="achievements-container" id="stats-achievements-list">
                 <!-- Populated by JavaScript -->
@@ -443,9 +467,11 @@
             </div>
           </div>
         </div>
+        </div>
 
         <div id="leaderboard-credits" class="leaderboard-tab-content" style="display: none;">
-          <div class="credits-content credits-section leaderboard-list">
+          <div class="leaderboard-list">
+          <div class="credits-content credits-section">
           <h2>Water is Life.</h2>
           <h4>Special Thanks to Our Sponsors</h4>
           <div class="sponsors">
@@ -498,6 +524,7 @@
           <br><br>
           <h3>A game by <a href="https://dlightning.org"><i>Dlightning⚡️</i></a></h3>
           </div>
+        </div>
         </div>
 
         <button id="close-leaderboard" class="close-modal-btn">
@@ -581,7 +608,7 @@
 mountain_steam
 </span></h2>
 
-        <div id="level-grid">
+        <div id="level-grid" class="leaderboard-list">
           <!-- Levels will be populated by JavaScript -->
         </div>
 
