@@ -39,16 +39,16 @@
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-    <script type="module" crossorigin src="/games/oasea/assets/index-CSSr7DsZ.js"></script>
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-CzRfLIGt.js">
+    <script type="module" crossorigin src="/games/oasea/assets/index-De8DOUV2.js"></script>
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-0vheUKy_.js">
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-CKC5f6tm.js">
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-BPXRSdKH.js">
-    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-D85HsJpD.css">
+    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-B0NGPd-8.css">
   </head>
 
   <body>
     <!-- SVG Filter for water drop goo effect -->
-    <svg class="svg-filter" style="position: absolute; width: 0; height: 0;">
+    <svg class="svg-filter" style="position: absolute; width: 0; height: 0; overflow: visible;">
       <defs>
         <filter id="goo">
           <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
@@ -108,6 +108,8 @@
       }
     </script>
 
+    <div id="color-verlay"></div>
+
     <div id="title-splash">
       <h1>Oasea</h1>
       <small style="color: azure;"><p>/oʊ.əˈsiː/</p></small>
@@ -121,6 +123,7 @@
         <button id="instructions-button" class="secondary-btn">How to Play</button>
         </div>
     </div>
+
     <!-- Welcome Modal -->
     <div id="welcome-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="welcome-title" aria-describedby="welcome-description" style="display: none;">
       <div class="modal-content">
@@ -133,7 +136,7 @@
 
           <!-- Placeholder for interaction GIF -->
           <div class="gif-container">
-            <img src="img/gameplay.gif" alt="Gameplay demonstration showing how to sculpt terrain and guide water" class="gameplay-gif" />
+            <img src="img/gameplay.gif" alt="Gameplay demonstration showing how to sculpt terrain and guide water" class="gameplay-gif" loading="lazy"/>
           </div>
         </div>
 
@@ -146,6 +149,7 @@
 
     <nav class="ui-controls" role="navigation" aria-label="Game controls">
       <button class="ui-control-btn" id="sound" title="Toggle Sound" aria-label="Toggle sound on or off"><span class="material-icons" aria-hidden="true">&#xe050;</span></button>
+      <button class="ui-control-btn" id="haptics" title="Toggle Vibration" aria-label="Toggle vibration on or off"><span class="material-icons" aria-hidden="true">vibration</span></button>
       <button class="ui-control-btn" id="leaderboard-btn" title="Leaderboard" aria-label="View leaderboard"><span class="material-icons" aria-hidden="true">leaderboard</span></button>
       <!-- <button class="ui-control-btn" id="reset" title="Reset Level"><span class="material-icons">&#xe042;</span></button> -->
     </nav>
@@ -241,7 +245,7 @@
     </div>
 
     <div id="fullscreen-controls" role="fullscreen mode" aria-label="Game controls">
-      <button class="ui-control-btn" id="fullscreen" title="Toggle Fullscreen" aria-label="Toggle fullscreen mode"><span class="material-icons" aria-hidden="true">fullscreen</span></button>
+      <button class="ui-control-btn expanded" id="fullscreen" title="Toggle Fullscreen" aria-label="Toggle fullscreen mode"><span class="fullscreen-label">full-screen</span><span class="material-icons" aria-hidden="true">fullscreen</span></button>
     </div>
 
     <!-- Player Name Prompt Modal (First Time) -->
@@ -285,18 +289,36 @@
           </button>
 
           <div class="score-stats" role="region" aria-label="Level statistics">
-            <div class="stat-item">
+            <div class="stat-item has-tooltip">
               <span class="material-icons" aria-hidden="true">schedule</span>
               <span id="completion-time" aria-label="Completion time">0:00</span>
+              <span class="stat-tooltip">Time to complete</span>
             </div>
-            <div class="stat-item">
+            <div class="stat-item has-tooltip">
               <span class="material-icons" aria-hidden="true">water_drop</span>
               <span id="water-collected" aria-label="Water collected">0%</span>
+              <span class="stat-tooltip">Water collected</span>
             </div>
-            <div class="stat-item">
+            <div class="stat-item has-tooltip">
               <span class="material-icons" aria-hidden="true">touch_app</span>
               <span id="terrain-edits" aria-label="Terrain edits">0</span>
+              <span class="stat-tooltip">Sculpting touches</span>
             </div>
+          </div>
+
+          <div class="stars-display" id="stars-display" aria-label="Stars earned">
+            <span class="star" data-star="1" data-tooltip="Complete the level">
+              <span class="material-icons">star</span>
+              <span class="star-tooltip">Complete the level</span>
+            </span>
+            <span class="star" data-star="2" data-tooltip="Finish in under 2:30">
+              <span class="material-icons">star</span>
+              <span class="star-tooltip">Finish in under 2:30</span>
+            </span>
+            <span class="star" data-star="3" data-tooltip="High efficiency">
+              <span class="material-icons">star</span>
+              <span class="star-tooltip">High efficiency</span>
+            </span>
           </div>
 
         <div id="score-breakdown">
@@ -315,24 +337,6 @@
           <div class="score-row total">
             <span class="score-label">Level Score:</span>
             <span class="score-value" id="score-total">0</span>
-          </div>
-          <div class="stars-display" id="stars-display" aria-label="Stars earned">
-            <span class="star" data-star="1" data-tooltip="Complete the level">
-              <span class="material-icons">star</span>
-              <span class="star-tooltip">Complete the level</span>
-            </span>
-            <span class="star" data-star="2" data-tooltip="Finish in under 2:30">
-              <span class="material-icons">star</span>
-              <span class="star-tooltip">Finish in under 2:30</span>
-            </span>
-            <span class="star" data-star="3" data-tooltip="High efficiency">
-              <span class="material-icons">star</span>
-              <span class="star-tooltip">High efficiency</span>
-            </span>
-          </div>
-          <div class="score-row career-total">
-            <span class="score-label">Career Total:</span>
-            <span class="score-value" id="career-total">0</span>
           </div>
           <div id="personal-best-badge" style="display: none;">
             <span class="material-icons">star</span>
@@ -495,6 +499,11 @@
             </div>
           </div>
 
+          <h5>Music</h5>
+          <ul>
+            <li>Soundtrack - all tracks by <a href="https://linktr.ee/zootuland?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank">Zootu 🐠</a></li>
+          </ul>
+
           <h5>Typeface</h5>
           <ul>
             <li>Hagrid Grotesque by <a href="https://www.zetafonts.com/collection" target="_blank">Cosimo Lorenzo Pancini</a></li>
@@ -502,6 +511,7 @@
 
           <h5>3D Models</h5>
           <ul>
+            <li>Quetzal - sythwave-bird by <a href="https://sketchfab.com/hans.fredo/models" target="_blank">Hancock</a></li>
             <li>Shark, Whale, Manta Ray, Fish, Dolphin, & Grass by <a href="https://quaternius.com/" target="_blank">Quaternius</a></li>
             <li>Sailboat + Bismarck, Lady, Olive, and Ivory Cane Palms by <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank">Google Poly</a></li>
             <li>Palm Tree by <a href="https://sketchfab.com/PlantCatalog" target="_blank">Plant Catalog</a></li>
@@ -672,14 +682,14 @@ mountain_steam
     <!-- Play Again Button (shown after credits) -->
     <div id="play-again-overlay" style="display: none; opacity: 0;">
       <button id="play-again-btn" class="play-btn">
-        Play Again?
+        Next Level
       </button>
     </div>
 
     <!-- Mobile Terrain Lower Button -->
-    <button id="mobile-lower-btn" class="mobile-lower-btn" aria-label="Hold to lower terrain">
+    <!-- <button id="mobile-lower-btn" class="mobile-lower-btn" aria-label="Hold to lower terrain">
       <span class="material-icons" aria-hidden="true">arrow_downward</span>
-    </button>
+    </button> -->
 
     <div id="bottom-logo-bar">
       <a href="https://dlightning.org" target="_blank">
