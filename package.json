@@ -9,7 +9,7 @@
     "lib": "lib"
   },
   "devDependencies": {
-    "firebase-tools": "^13.30.0"
+    "firebase-tools": "^15.12.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
