@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏝️ Oasea | Rehydrate the Land</title>
+    <title>🏝️ Oasea | Every Drop Counts</title>
     <meta name="description" content="Oasea is a serene world-building game where you transform barren islands into lush, living oases. Watch life return to the desert.">
     <meta name="keywords" content="Oasea, island game, oasis builder, nature simulation, world builder, sandbox game, relaxing game, indie game, ocean, desert island, water simulation, environment, growth, regeneration, ecology, atmospheric game">
     <meta name="author" content="Dlightning">
@@ -18,7 +18,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Oasea">
-    <link rel="apple-touch-icon" href="/games/oasea/assets/transparent_white_D-D_kkh0Kt.png">
+    <link rel="apple-touch-icon" href="./img/transparent_white_D.png">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Oasea — Turn Desert Islands into Living Oases">
@@ -33,17 +33,20 @@
     <meta name="twitter:description" content="Watch barren islands come alive with water, plants, and light in Oasea.">
     <meta name="twitter:image" content="https://dlightning.org/games/oasea/images/oasea-preview.jpg">
 
-   <!-- Preload critical font -->
-   <link rel="preload" href="/games/oasea/font/HagridText-Regular.otf" as="font" type="font/otf" crossorigin>
 
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-    <script type="module" crossorigin src="/games/oasea/assets/index-De8DOUV2.js"></script>
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-0vheUKy_.js">
-    <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-CKC5f6tm.js">
+    <script type="module" crossorigin src="/games/oasea/assets/index-Cdy-Qkf2.js"></script>
     <link rel="modulepreload" crossorigin href="/games/oasea/assets/supabase-BPXRSdKH.js">
-    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-B0NGPd-8.css">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/three-8-mrVIKw.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/physics-CKC5f6tm.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/physicsQueue-XOQprDaT.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/audioManager-3P7ETVi4.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/levelManager-CHNwhEgk.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/inputHandler-B7oprosV.js">
+    <link rel="modulepreload" crossorigin href="/games/oasea/assets/lava-CShya5DE.js">
+    <link rel="stylesheet" crossorigin href="/games/oasea/assets/index-D3qwGqe-.css">
   </head>
 
   <body>
@@ -120,39 +123,106 @@
             Play
           </button>
         <!-- <button id="daily-button" class="daily-level-card">Daily Islet</button> -->
-        <button id="instructions-button" class="secondary-btn">How to Play</button>
         </div>
-    </div>
-
-    <!-- Welcome Modal -->
-    <div id="welcome-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="welcome-title" aria-describedby="welcome-description" style="display: none;">
-      <div class="modal-content">
-        <div class="instructions">
-          <h3 id="welcome-title">Rehydrate the Island by Sculpting&nbsp;the&nbsp;Terrain</h3>
-            <p id="welcome-description" class="desktop-instructions"><i>Click and drag</i>&nbsp; to raise the terrain.<br>Hold <i><strong>shift</strong></i>&nbsp; or <i>right&nbsp;click</i>&nbsp; while dragging to lower&nbsp;the&nbsp;terrain.</p>
-            <p class="desktop-instructions">Click and drag outside of the terrain to pan the camera. Use mouse wheel or pinch to zoom.</p>
-            <p id="welcome-description" class="mobile-instructions">Tap and drag your finger to raise the terrain; add a second finger to&nbsp;lower&nbsp;it.</p>
-            <p class="mobile-instructions">Touch outside of the terrain to pan, or pinch&nbsp;to&nbsp;zoom</p>
-
-          <!-- Placeholder for interaction GIF -->
-          <div class="gif-container">
-            <img src="img/gameplay.gif" alt="Gameplay demonstration showing how to sculpt terrain and guide water" class="gameplay-gif" loading="lazy"/>
-          </div>
-        </div>
-
-        <button id="play-button" class="play-btn" aria-label="Start playing the game">
-          <span class="material-icons" aria-hidden="true">play_arrow</span>
-          Play
-        </button>
-      </div>
     </div>
 
     <nav class="ui-controls" role="navigation" aria-label="Game controls">
-      <button class="ui-control-btn" id="sound" title="Toggle Sound" aria-label="Toggle sound on or off"><span class="material-icons" aria-hidden="true">&#xe050;</span></button>
-      <button class="ui-control-btn" id="haptics" title="Toggle Vibration" aria-label="Toggle vibration on or off"><span class="material-icons" aria-hidden="true">vibration</span></button>
-      <button class="ui-control-btn" id="leaderboard-btn" title="Leaderboard" aria-label="View leaderboard"><span class="material-icons" aria-hidden="true">leaderboard</span></button>
+      <button class="ui-control-btn" id="settings-btn" title="Settings" aria-label="Open settings"><span class="material-icons-outlined" aria-hidden="true">settings</span></button>
+      <button class="ui-control-btn" id="leaderboard-btn" title="Leaderboard" aria-label="View leaderboard"><span class="material-symbols-outlined" aria-hidden="true" style="font-size: 22px">social_leaderboard</span></button>
       <!-- <button class="ui-control-btn" id="reset" title="Reset Level"><span class="material-icons">&#xe042;</span></button> -->
     </nav>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title" style="display: none;">
+      <div class="modal-content settings-content">
+        <h2 id="settings-modal-title">Settings</h2>
+        <div class="leaderboard-list">
+          <section class="settings-section">
+            <h3 class="settings-section-title">Push Notifications</h3>
+            <button class="sound-mute-btn" id="push-notifications" aria-label="Toggle daily push notifications" style="display:none">
+              <span class="material-icons" aria-hidden="true">notifications</span>
+              <span class="sound-mute-label">Daily alerts off</span>
+            </button>
+          </section>
+          <section class="settings-section" id="install-app-section" style="display:none">
+            <h3 class="settings-section-title">App</h3>
+            <button class="sound-mute-btn" id="install-app-btn" aria-label="Install Oasea app">
+              <span class="material-icons" aria-hidden="true">install_mobile</span>
+              <span class="sound-mute-label">Add to Home Screen</span>
+            </button>
+          </section>
+        <section class="settings-section">
+          <h3 class="settings-section-title">Sound</h3>
+          <div class="sound-controls">
+            <div class="sound-volume-row">
+              <span class="sound-track-artist">SFX &nbsp;&nbsp;</span>
+              <span class="material-icons sound-vol-icon" aria-hidden="true">water_drop</span>
+              <input type="range" id="sfx-volume" class="sound-volume-slider" min="0" max="1" step="0.01" value="1" aria-label="Sound effects volume">
+            </div>
+            <div class="sound-volume-row">
+              <span class="sound-track-artist">Music</span>
+              <span class="material-icons sound-vol-icon" aria-hidden="true">music_note</span>
+              <input type="range" id="soundtrack-volume" class="sound-volume-slider" min="0" max="1" step="0.01" value="0.36" aria-label="Soundtrack volume">
+            </div>
+            <div class="sound-track-row">
+              <button class="sound-track-btn" id="prev-track-btn" aria-label="Previous track">
+                <span class="material-icons" aria-hidden="true">skip_previous</span>
+              </button>
+              <div class="sound-track-info">
+                <span id="settings-track-name" class="sound-track-name">Born of Water</span>
+                <span class="sound-track-artist">Zootu</span>
+              </div>
+              <button class="sound-track-btn" id="next-track-btn" aria-label="Next track">
+                <span class="material-icons" aria-hidden="true">skip_next</span>
+              </button>
+            </div>
+            <button class="sound-mute-btn" id="sound" aria-label="Toggle sound on or off">
+              <span class="material-icons" aria-hidden="true">&#xe050;</span>
+              <span class="sound-mute-label">Sound on</span>
+            </button>
+            <button class="sound-mute-btn" id="haptics" aria-label="Toggle vibration on or off" style="display:none">
+              <span class="material-icons" aria-hidden="true">vibration</span>
+              <span class="sound-mute-label">Vibration on</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <h3 class="settings-section-title">Visual Quality</h3>
+          <!-- <p class="sound-track-artist">Higher quality looks better but may reduce performance.</p> -->
+          <div class="quality-selector" role="group" aria-label="Quality setting">
+            <button class="quality-btn" data-quality="0" aria-pressed="false">Low</button>
+            <button class="quality-btn" data-quality="1" aria-pressed="false">Med</button>
+            <button class="quality-btn" data-quality="2" aria-pressed="false">High</button>
+            <button class="quality-btn" data-quality="3" aria-pressed="false">Sharp</button>
+            <button class="quality-btn" data-quality="4" aria-pressed="false">Ultra</button>
+          </div>
+          <p class="settings-quality-hint" id="quality-hint"></p>
+          <button class="quality-btn quality-btn-adaptive quality-btn-standalone" data-quality="adaptive" aria-pressed="false">
+            <span class="material-icons" aria-hidden="true">auto_awesome</span>
+            Adaptive
+          </button>
+          
+        </section>
+
+        <section class="settings-section">
+          <h3 class="settings-section-title">Links</h3>
+          <div class="icon-row" style="display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; align-items: center;">
+            <a href="https://dlightning.org" target="_blank">
+              <img src="img/transparent_white_D.png" alt="Dlighting logo" width="32" height="32">
+            </a>
+            <a href="https://www.instagram.com/oasea_islands/" target="_blank">
+              <!-- <span class="material-icons">
+                instagram
+              </span> -->
+              <img src="img/insta.png" alt="instagram logo" width="28" height="28">
+            </a>
+          </div>
+        </section>
+        </div>
+        <button id="close-settings" class="play-btn" style="margin-top: 8px;" aria-label="Close settings">Done</button>
+      </div>
+    </div>
 
     <!-- Level Story Overlay (shown during transitions) -->
     <div id="level-story-overlay" style="display: none;">
@@ -481,19 +551,19 @@
           <div class="sponsors">
             <div class="sponsor-item">
               <a href="https://www.watershed-alliance.org" target="_blank">
-              <img src="img/earthworks.png" alt="Earthworkers Ultd">
+              <img src="img/earthworks.png" alt="Earthworkers Ultd" width="40" height="40" decoding="async">
               </a>
               <a href="https://www.watershed-alliance.org" target="_blank">Earthworkers Ultd.</a>
             </div>
             <div class="sponsor-item">
               <a href="https://www.watershed-alliance.org" target="_blank">
-              <img src="img/watershed-al.png" alt="Watershed Alliance">
+              <img src="img/watershed-al.png" alt="Watershed Alliance" width="40" height="40" decoding="async">
               </a>
               <a href="https://www.watershed-alliance.org" target="_blank">Watershed Alliance</a>
             </div>
             <div class="sponsor-item">
               <a href="https://oceanprotectors.com" target="_blank">
-              <img src="img/ocean-protectors.png" alt="Ocean Protectors">
+              <img src="img/ocean-protectors.png" alt="Ocean Protectors" width="40" height="40" decoding="async">
               </a>
               <a href="https://oceanprotectors.com" target="_blank">Ocean Protectors</a>
             </div>
@@ -622,10 +692,20 @@ mountain_steam
           <!-- Levels will be populated by JavaScript -->
         </div>
 
-        <button id="close-level-select" class="close-modal-btn">
-          <span class="material-icons">close</span>
-          Close
-        </button>
+        <div id="level-select-footer">
+          <button id="back-to-levels-btn" class="back-to-levels-btn" aria-label="Go back to island select">
+            <span class="material-icons" aria-hidden="true">arrow_back</span>
+            <span>Back to Island Select</span>
+          </button>
+          <button id="past-daily-levels-btn" class="past-daily-footer-btn visible" aria-label="View past daily levels">
+            <span class="material-icons" aria-hidden="true">history</span>
+            <span>Past Daily Levels</span>
+          </button>
+          <button id="close-level-select" class="close-modal-btn">
+            <span class="material-icons">close</span>
+            Close
+          </button>
+        </div>
       </div>
     </div>
 
@@ -692,9 +772,9 @@ mountain_steam
     </button> -->
 
     <div id="bottom-logo-bar">
-      <a href="https://dlightning.org" target="_blank">
-        <img src="img/transparent_white_D.png" alt="Dlighting logo">
-      </a>
+      <button id="past-daily-logo-btn" class="logo-bar-icon-btn" aria-label="View past daily levels">
+        <span class="material-icons">history</span>
+      </button>
       <!-- <a href="https://www.watershed-alliance.org" target="_blank">
         <img src="img/watershed-al.png" alt="Watershed Alliance Logo">
       </a> -->
@@ -704,77 +784,48 @@ mountain_steam
 
     <!-- Service Worker Registration -->
     <script>
-      // Register service worker for PWA support
+      // Register service worker for PWA support (required for push notifications)
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-              console.log('Service Worker registered successfully:', registration.scope);
-
-              // Check for updates
-              registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-
-                newWorker.addEventListener('statechange', () => {
-                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                    // New service worker available, show update notification
-                    console.log('New version available! Refresh to update.');
-
-                    // Optional: Show a toast notification to the user
-                    if (window.showToast) {
-                      window.showToast('Update available! Refresh to get the latest version.', 'info');
-                    }
-                  }
-                });
-              });
-
-              // Check for updates every hour
-              setInterval(() => {
-                registration.update();
-              }, 60 * 60 * 1000);
-            })
-            .catch((error) => {
-              console.log('Service Worker registration failed:', error);
-            });
-        });
-
-        // Handle service worker messages
-        navigator.serviceWorker.addEventListener('message', (event) => {
-          if (event.data && event.data.type === 'CACHE_UPDATED') {
-            console.log('Cache has been updated');
-          }
-        });
-
-        // Reload page when new service worker takes control
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (!refreshing) {
-            refreshing = true;
-            window.location.reload();
+        window.addEventListener('load', async () => {
+          try {
+            const reg = await navigator.serviceWorker.register('/games/oasea/sw.js');
+            console.log('SW registered:', reg.scope);
+            // Sync push subscription state after SW is ready (lazy import keeps it out of critical path)
+            import('/games/oasea/assets/pushNotifications-BAvCvRpF.js')
+              .then(({ syncPushSubscriptionState }) => syncPushSubscriptionState())
+              .catch(() => {});
+          } catch (e) {
+            console.log('SW registration failed:', e);
           }
         });
       }
 
       // Install prompt handling
       let deferredPrompt;
+      const installBtn = document.getElementById('install-app-btn');
+      const installSection = document.getElementById('install-app-section');
 
       window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent the mini-infobar from appearing on mobile
         e.preventDefault();
-        // Stash the event so it can be triggered later
         deferredPrompt = e;
-
-        console.log('PWA install prompt available');
-
-        // Optional: Show your own install button
-        // You could create a custom "Add to Home Screen" button and show it here
+        if (installSection) installSection.style.display = '';
       });
 
-      window.addEventListener('appinstalled', () => {
-        console.log('PWA was installed successfully');
-        deferredPrompt = null;
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            if (installSection) installSection.style.display = 'none';
+          }
+          deferredPrompt = null;
+        });
+      }
 
-        // Optional: Track installation with analytics
+      window.addEventListener('appinstalled', () => {
+        deferredPrompt = null;
+        if (installSection) installSection.style.display = 'none';
         if (window.showToast) {
           window.showToast('Oasea installed! You can now play offline.', 'success');
         }

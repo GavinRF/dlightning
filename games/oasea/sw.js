@@ -1,192 +1,189 @@
-const CACHE_VERSION = 'oasea-v1.0.0';
+const CACHE_VERSION = 'oasea-v1.0.1';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
-const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
+const ASSET_CACHE = `${CACHE_VERSION}-assets`;   // models, audio, textures — never evicted
+const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`; // JS chunks, CSS, HTML — capped
 const OFFLINE_PAGE = '/games/oasea/offline.html';
 
-// Critical assets to cache immediately
+const DYNAMIC_CACHE_LIMIT = 60;
+
+// Critical assets to cache immediately on install
 const STATIC_ASSETS = [
+  '/games/oasea/',
   '/games/oasea/offline.html'
 ];
 
-// Maximum number of items to keep in dynamic cache
-const DYNAMIC_CACHE_LIMIT = 50;
-
-// Helper function to cache assets one by one
-async function cacheAssets(cache, assets) {
-  const results = { success: [], failed: [] };
-
-  for (const asset of assets) {
-    try {
-      await cache.add(asset);
-      results.success.push(asset);
-      console.log(`[Service Worker] Cached: ${asset}`);
-    } catch (error) {
-      results.failed.push(asset);
-      console.warn(`[Service Worker] Failed to cache ${asset}:`, error.message);
-    }
-  }
-
-  return results;
+// Asset path prefixes that go into the permanent asset cache
+function isLargeAsset(url) {
+  const path = url.pathname;
+  return path.includes('/models/') ||
+         path.includes('/sounds/') ||
+         path.endsWith('.glb') ||
+         path.endsWith('.mp3') ||
+         path.endsWith('.ogg') ||
+         path.endsWith('.wav') ||
+         path.endsWith('.m4a') ||
+         path.endsWith('.jpg') ||
+         path.endsWith('.png') ||
+         path.endsWith('.json') ||
+         path.endsWith('.lottie');
 }
 
-// Install event - cache static assets
+// Install event - cache app shell
 self.addEventListener('install', (event) => {
-  console.log('[Service Worker] Installing...', CACHE_VERSION);
-
   event.waitUntil(
-    (async () => {
-      try {
-        const cache = await caches.open(STATIC_CACHE);
-        console.log('[Service Worker] Caching static assets');
-
-        const results = await cacheAssets(cache, STATIC_ASSETS);
-        console.log(`[Service Worker] Successfully cached ${results.success.length}/${STATIC_ASSETS.length} assets`);
-
-        if (results.failed.length > 0) {
-          console.warn('[Service Worker] Failed to cache:', results.failed);
-        }
-
-        await self.skipWaiting();
-        console.log('[Service Worker] Installation complete');
-      } catch (error) {
-        console.error('[Service Worker] Installation error:', error);
-        throw error;
-      }
-    })()
+    caches.open(STATIC_CACHE)
+      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('[Service Worker] Activating...', CACHE_VERSION);
-
+  const keep = new Set([STATIC_CACHE, ASSET_CACHE, DYNAMIC_CACHE]);
   event.waitUntil(
     caches.keys()
-      .then((cacheNames) => {
-        return Promise.all(
-          cacheNames
-            .filter((cacheName) => {
-              // Delete old versions of our caches
-              return cacheName.startsWith('oasea-') && cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE;
-            })
-            .map((cacheName) => {
-              console.log('[Service Worker] Deleting old cache:', cacheName);
-              return caches.delete(cacheName);
-            })
-        );
-      })
+      .then((names) => Promise.all(
+        names
+          .filter((name) => name.startsWith('oasea-') && !keep.has(name))
+          .map((name) => caches.delete(name))
+      ))
       .then(() => self.clients.claim())
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET requests
-  if (request.method !== 'GET') {
-    return;
-  }
+  if (request.method !== 'GET') return;
+  if (url.protocol === 'chrome-extension:') return;
 
-  // Skip chrome extension requests
-  if (url.protocol === 'chrome-extension:') {
-    return;
-  }
+  // Pass range requests through — audio/video streaming uses these and
+  // partial responses (206) can't be safely cached or reconstructed.
+  if (request.headers.get('range')) return;
 
-  // Handle API requests - network first, then cache
+  // Supabase / API — network first, fall back to cache
   if (url.hostname.includes('supabase') || url.pathname.startsWith('/api')) {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          // Clone the response
-          const responseClone = response.clone();
-
-          // Cache successful responses
           if (response.status === 200) {
+            const clone = response.clone();
             caches.open(DYNAMIC_CACHE).then((cache) => {
-              cache.put(request, responseClone);
+              cache.put(request, clone);
               limitCacheSize(DYNAMIC_CACHE, DYNAMIC_CACHE_LIMIT);
             });
           }
-
           return response;
         })
-        .catch(() => {
-          // If network fails, try cache
-          return caches.match(request);
-        })
+        .catch(() => caches.match(request))
     );
     return;
   }
 
-  // Handle all other requests - cache first, then network
-  event.respondWith(
-    caches.match(request)
-      .then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
+  // Models, audio, textures — cache first, permanent (never evicted)
+  if (isLargeAsset(url)) {
+    event.respondWith(
+      caches.open(ASSET_CACHE).then(async (cache) => {
+        const cached = await cache.match(request);
+        if (cached) return cached;
+        try {
+          const response = await fetch(request);
+          if (response.status === 200) {
+            cache.put(request, response.clone());
+          }
+          return response;
+        } catch {
+          return new Response('Asset unavailable offline', { status: 503 });
         }
-
-        // Not in cache, fetch from network
-        return fetch(request)
-          .then((response) => {
-            // Don't cache non-successful responses
-            if (!response || response.status !== 200 || response.type === 'error') {
-              return response;
-            }
-
-            // Clone the response
-            const responseClone = response.clone();
-
-            // Cache the new resource
-            caches.open(DYNAMIC_CACHE).then((cache) => {
-              cache.put(request, responseClone);
-              limitCacheSize(DYNAMIC_CACHE, DYNAMIC_CACHE_LIMIT);
-            });
-
-            return response;
-          })
-          .catch(() => {
-            // If both cache and network fail, show offline page for navigation requests
-            if (request.destination === 'document') {
-              return caches.match(OFFLINE_PAGE);
-            }
-          });
       })
+    );
+    return;
+  }
+
+  // JS chunks, CSS, HTML — cache first, then network, cap size
+  event.respondWith(
+    caches.match(request).then(async (cached) => {
+      if (cached) return cached;
+      try {
+        const response = await fetch(request);
+        if (response && response.status === 200 && response.type !== 'error') {
+          const clone = response.clone();
+          caches.open(DYNAMIC_CACHE).then((cache) => {
+            cache.put(request, clone);
+            limitCacheSize(DYNAMIC_CACHE, DYNAMIC_CACHE_LIMIT);
+          });
+        }
+        return response;
+      } catch {
+        if (request.destination === 'document') {
+          return caches.match(OFFLINE_PAGE);
+        }
+      }
+    })
   );
 });
 
-// Limit the size of a cache
 function limitCacheSize(cacheName, maxItems) {
   caches.open(cacheName).then((cache) => {
     cache.keys().then((keys) => {
       if (keys.length > maxItems) {
-        cache.delete(keys[0]).then(() => {
-          limitCacheSize(cacheName, maxItems);
-        });
+        cache.delete(keys[0]).then(() => limitCacheSize(cacheName, maxItems));
       }
     });
   });
 }
 
-// Listen for messages from the client
+// Messages from client
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
+  if (event.data?.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
-
-  if (event.data && event.data.type === 'CLEAR_CACHE') {
+  if (event.data?.type === 'CLEAR_CACHE') {
     event.waitUntil(
-      caches.keys().then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => {
-            if (cacheName.startsWith('oasea-')) {
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
+      caches.keys().then((names) => Promise.all(
+        names.filter((n) => n.startsWith('oasea-')).map((n) => caches.delete(n))
+      ))
     );
   }
+});
+
+// Push event — fired when the server sends a push message
+self.addEventListener('push', (event) => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch {
+    data = { body: event.data ? event.data.text() : '' };
+  }
+
+  const title = data.title || 'Oasea';
+  const options = {
+    body: data.body || 'A new daily island is ready!',
+    icon: '/games/oasea/img/island-thumb.png',
+    badge: '/games/oasea/img/island-thumb.png',
+    tag: 'oasea-daily',   // collapses multiple daily notifications into one
+    renotify: false,
+    data: { url: data.url || '/games/oasea/' }
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Notification click — open or focus the game
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const targetUrl = event.notification.data?.url || '/games/oasea/';
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url.includes('/games/oasea/') && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) return clients.openWindow(targetUrl);
+    })
+  );
 });

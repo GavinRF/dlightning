@@ -1,22 +1,22 @@
 {
-  "name": "Oasea - Rehydrate the Land",
+  "name": "Oasea 🏝️",
   "short_name": "Oasea",
   "description": "Transform barren islands into lush, living oases by guiding rainwater to the aquifer",
-  "start_url": "/",
+  "start_url": "/games/oasea/",
   "display": "standalone",
   "background_color": "#0078b4",
   "theme_color": "#0078b4",
   "orientation": "any",
-  "scope": "/",
+  "scope": "/games/oasea/",
   "icons": [
     {
-      "src": "/public/img/transparent_white_D.png",
+      "src": "/games/oasea/img/island-thumb.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/public/img/transparent_white_D.png",
+      "src": "/games/oasea/img/island-thumb.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -25,8 +25,9 @@
   "categories": ["games", "entertainment"],
   "screenshots": [],
   "share_target": {
-    "action": "/",
+    "action": "/games/oasea/",
     "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
     "params": {
       "title": "title",
       "text": "text",
