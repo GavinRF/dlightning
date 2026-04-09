@@ -349,7 +349,7 @@ import{g as getDefaultExportFromCjs,_ as __vitePreload}from"./supabase-BPXRSdKH.
         vClipSpace = gl_Position; // Store for reflection texture sampling
       }
     `,fragmentShader:`
-      precision mediump float;
+      precision highp float;
       // vOriginalWorldXZ carries world-space coordinates (±10 units) — mediump only has
       // ~0.02 unit steps at that range, which creates a visible grid pattern in texture UVs.
       // vClipSpace needs highp for the perspective divide (xy/w) used in reflection UVs.
