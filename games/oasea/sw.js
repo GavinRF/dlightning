@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'oasea-v1.0.3';
+const CACHE_VERSION = 'oasea-v1.0.4';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const ASSET_CACHE = `${CACHE_VERSION}-assets`;   // models, audio, textures — never evicted
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`; // JS chunks, CSS, HTML — capped
