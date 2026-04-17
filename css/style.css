@@ -3224,8 +3224,17 @@ details[open] summary ~ * {
   }
 }
 
+.product-card-area{
+  background: #06063129; 
+  border-radius: 16px; 
+  outline: 4px solid #04045a29; 
+  margin: 4px; 
+  overflow: hidden;
+  padding: 22px 0px 20px 26px;
+}
+
 .pDash{
-  width:76%;
+  width: 86%;
   box-shadow: -2px 2px 18px #03032a2b;
 }
 
