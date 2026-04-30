@@ -210,4 +210,10 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://dlightning.org/generated-posts/what-the-hands-know.html</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>

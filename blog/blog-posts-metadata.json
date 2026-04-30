@@ -1,6 +1,19 @@
 {
     "posts": [
       {
+        "id": "what-the-hands-know",
+        "title": "What the Hands Know",
+        "date": "Apr 30, 2026",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "We are building more intelligence. The question worth asking is what kind.",
+        "image": "img/shubham-nayak-sK4sJic5huQ-unsplash.jpg",
+        "img-credit": "Shubham Nayak",
+        "credit-link": "https://unsplash.com/@digilens",
+        "tags": ["AI", "Design Philosophy", "Human Limitations", "Systems Thinking", "Nature"],
+        "category": "Design"
+      },
+      {
         "id": "the-psychology-of-enough",
         "title": "The Psychology of \"Enough\"",
         "date": "Apr 30, 2026",
