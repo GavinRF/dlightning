@@ -1,6 +1,19 @@
 {
     "posts": [
       {
+        "id": "the-psychology-of-enough",
+        "title": "The Psychology of \"Enough\"",
+        "date": "Apr 30, 2026",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "Most digital products don't know the word enough. That's not an accident — it's architecture.",
+        "image": "img/hanna-lazar-cY_tQ10NNyk-unsplash.jpg",
+        "img-credit": "Hanna Lazar",
+        "credit-link": "https://unsplash.com/@potokvarte",
+        "tags": ["Psychology", "Design Philosophy", "UX Design", "Human Limitations", "Process"],
+        "category": "Design"
+      },
+      {
         "id": "instant-bonsai",
         "title": "Instant Bonsai",
         "date": "Sept 29, 2025",

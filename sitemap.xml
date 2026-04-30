@@ -116,7 +116,7 @@
   </url>
 
   <url>
-    <loc>https://dlightning.org/d-tools/blog/blog.html</loc>
+    <loc>https://dlightning.org/blog/blog.html</loc>
     <lastmod>2025-08-20</lastmod>
     <priority>0.6</priority>
   </url>
@@ -201,6 +201,12 @@
   <url>
     <loc>https://dlightning.org/generated-posts/instant-bonsai.html</loc>
     <lastmod>2025-09-29</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/generated-posts/the-psychology-of-enough.html</loc>
+    <lastmod>2026-04-30</lastmod>
     <priority>0.6</priority>
   </url>
 
