@@ -1,9 +1,22 @@
 {
     "posts": [
       {
+        "id": "the-environment-is-the-interface",
+        "title": "The Environment Is the Interface",
+        "date": "Jan 04, 2026",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "Every interface lives inside a context that's doing more design work than the interface itself.",
+        "image": "img/etienne-boulanger-iYcuJQaVTvg-unsplash.jpg",
+        "img-credit": "Etienne Boulanger",
+        "credit-link": "https://unsplash.com/photos/iYcuJQaVTvg",
+        "tags": ["Design Philosophy", "UX Design", "Psychology", "Systems Thinking", "Observation"],
+        "category": "Design"
+      },
+      {
         "id": "what-the-hands-know",
         "title": "What the Hands Know",
-        "date": "Apr 30, 2026",
+        "date": "Nov 30, 2025",
         "author": "Dlightning",
         "authorImage": "img/author.png",
         "excerpt": "We are building more intelligence. The question worth asking is what kind.",
@@ -16,10 +29,10 @@
       {
         "id": "the-psychology-of-enough",
         "title": "The Psychology of \"Enough\"",
-        "date": "Apr 30, 2026",
+        "date": "Oct 21, 2025",
         "author": "Dlightning",
         "authorImage": "img/author.png",
-        "excerpt": "Most digital products don't know the word enough. That's not an accident — it's architecture.",
+        "excerpt": "Most digital products don't know the word enough. That's not an accident, it's architecture.",
         "image": "img/hanna-lazar-cY_tQ10NNyk-unsplash.jpg",
         "img-credit": "Hanna Lazar",
         "credit-link": "https://unsplash.com/@potokvarte",

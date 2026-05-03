@@ -68,3 +68,6 @@ functions/lib/
 
 # Local Firebase emulator data
 .firebase/
+
+# Blog content pipeline (transcripts, drafts, ideas — kept local only)
+blog-pipeline/

@@ -137,82 +137,88 @@
 <!-- OLDEST to NEWEST (add to the end)  -->
 
   <url>
-    <loc>https://dlightning.org/generated-posts/missed-deadlines.html</loc>
+    <loc>https://dlightning.org/blog-posts/missed-deadlines.html</loc>
     <lastmod>2025-08-20</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/decision-theories-models.html</loc>
+    <loc>https://dlightning.org/blog-posts/decision-theories-models.html</loc>
     <lastmod>2025-08-20</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/cherry-tree-buck.html</loc>
+    <loc>https://dlightning.org/blog-posts/cherry-tree-buck.html</loc>
     <lastmod>2025-08-20</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/gumball-machine.html</loc>
+    <loc>https://dlightning.org/blog-posts/gumball-machine.html</loc>
     <lastmod>2025-08-20</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/cup-of-tea-pod.html</loc>
+    <loc>https://dlightning.org/blog-posts/cup-of-tea-pod.html</loc>
     <lastmod>2025-08-20</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/dr-frankensteins-ai.html</loc>
+    <loc>https://dlightning.org/blog-posts/dr-frankensteins-ai.html</loc>
     <lastmod>2025-08-20</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/time-well-wasted.html</loc>
+    <loc>https://dlightning.org/blog-posts/time-well-wasted.html</loc>
     <lastmod>2025-05-21</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/logic-and-pixels.html</loc>
+    <loc>https://dlightning.org/blog-posts/logic-and-pixels.html</loc>
     <lastmod>2025-06-16</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/narrow-window.html</loc>
+    <loc>https://dlightning.org/blog-posts/narrow-window.html</loc>
     <lastmod>2025-07-20</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/bison-wolf-and-the-designer.html</loc>
+    <loc>https://dlightning.org/blog-posts/bison-wolf-and-the-designer.html</loc>
     <lastmod>2025-07-22</lastmod>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/competition-design-pattern.html</loc>
+    <loc>https://dlightning.org/blog-posts/competition-design-pattern.html</loc>
     <lastmod>2025-07-24</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/ui-sailboat.html</loc>
+    <loc>https://dlightning.org/blog-posts/ui-sailboat.html</loc>
     <lastmod>2025-09-29</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/instant-bonsai.html</loc>
+    <loc>https://dlightning.org/blog-posts/instant-bonsai.html</loc>
     <lastmod>2025-09-29</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/the-psychology-of-enough.html</loc>
+    <loc>https://dlightning.org/blog-posts/the-psychology-of-enough.html</loc>
     <lastmod>2026-04-30</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://dlightning.org/generated-posts/what-the-hands-know.html</loc>
+    <loc>https://dlightning.org/blog-posts/what-the-hands-know.html</loc>
     <lastmod>2026-04-30</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/blog-posts/the-environment-is-the-interface.html</loc>
+    <lastmod>2026-05-02</lastmod>
     <priority>0.6</priority>
   </url>
 

@@ -42,7 +42,7 @@ function loadMorePosts() {
             postElement.setAttribute('data-tags', post.tags.join(' '));
             postElement.innerHTML = `
                 <article class="blog-post">
-                    <a href="../generated-posts/${post.id}.html">
+                    <a href="../blog-posts/${post.id}.html">
                         <img src="${post.image}" alt="${post.title}" class="img-fluid">
                         <div class="blog-post-content">
                                 <h2>${post.title}</h2>
@@ -85,11 +85,11 @@ function updateRecentPosts() {
         const postElement = document.createElement('div');
         postElement.className = 'media post_item';
         postElement.innerHTML = `
-            <a href="generated-posts/${post.id}.html">
+            <a href="blog-posts/${post.id}.html">
                 <img src="${post.image}" alt="${post.title}" loading="lazy">
             </a>
             <div class="media-body ms-3">
-                <a href="generated-posts/${post.id}.html"><h3>${post.title}</h3></a>
+                <a href="blog-posts/${post.id}.html"><h3>${post.title}</h3></a>
                 <small>${post.date}</small>
             </div>
         `;

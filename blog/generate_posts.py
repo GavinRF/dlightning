@@ -60,7 +60,7 @@ def generate_related_posts(current_post, all_posts):
     return html
 
 def generate_posts(metadata, template):
-    os.makedirs('generated-posts', exist_ok=True)
+    os.makedirs('blog-posts', exist_ok=True)
     for post in metadata['posts']:
         post_content = load_post_content(post['id'])
         post_html = template
@@ -68,7 +68,7 @@ def generate_posts(metadata, template):
         post_html = post_html.replace('{TITLE}', post['title'])
         post_html = post_html.replace('{EXCERPT}', post['excerpt'])
         post_html = post_html.replace('{IMAGE}', post['image'])
-        post_html = post_html.replace('{URL}', f"https://dlightning.org/generated-posts/{post['id']}.html")
+        post_html = post_html.replace('{URL}', f"https://dlightning.org/blog-posts/{post['id']}.html")
         post_html = post_html.replace('{DATE}', post['date'])
         post_html = post_html.replace('{AUTHOR}', post['author'])
         post_html = post_html.replace('{AUTHOR_IMAGE}', post['authorImage'])
@@ -85,7 +85,7 @@ def generate_posts(metadata, template):
         related_posts = generate_related_posts(post, metadata['posts'])
         post_html = post_html.replace('{MORE_RELATED_POSTS}', related_posts)
         # Write the generated HTML to a file
-        with open(f"generated-posts/{post['id']}.html", 'w') as f:
+        with open(f"blog-posts/{post['id']}.html", 'w') as f:
             f.write(post_html)
 
 if __name__ == "__main__":
