@@ -1,6 +1,19 @@
 {
     "posts": [
       {
+        "id": "outvoted",
+        "title": "Outvoted",
+        "date": "Feb 22, 2026",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "The intellect runs the numbers and usually wins. What it means when the chest refuses to tighten and you act anyway.",
+        "image": "img/marcos-paulo-prado-GAI_kOUIc8U-unsplash.jpg",
+        "img-credit": "Marcos Paulo Prado",
+        "credit-link": "https://unsplash.com/photos/GAI_kOUIc8U",
+        "tags": ["Psychology", "Reflection", "Perception", "Human Limitations"],
+        "category": "Psychology"
+      },
+      {
         "id": "the-environment-is-the-interface",
         "title": "The Environment Is the Interface",
         "date": "Jan 04, 2026",

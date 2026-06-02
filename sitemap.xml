@@ -222,4 +222,10 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://dlightning.org/blog-posts/outvoted.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>

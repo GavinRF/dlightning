@@ -15,7 +15,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy:functions": "firebase deploy --only functions",
     "serve:functions": "firebase emulators:start --only functions",
-    "dev": "firebase emulators:start"
+    "dev": "firebase emulators:start",
+    "images": "node blog-pipeline/check-images.js",
+    "images:available": "node blog-pipeline/check-images.js --available"
   },
   "keywords": [],
   "author": "Dlightning",
