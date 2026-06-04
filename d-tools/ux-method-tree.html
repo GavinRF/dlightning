@@ -1,7 +1,7 @@
 <html><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D⚡ | UX Methods Tree - Interactive Design Decision Tool</title>
+    <title>UX Methods Tree - Interactive Design Decision Tool | Dlightning</title>
     <meta name="description" content="Interactive UX Design Decision Tree helps designers and product managers make informed decisions about user research, interface design, and interaction design. Get personalized UX recommendations.">
     <meta name="keywords" content="UX design decision tree, UX research methods, design methodology, UX tools, usability testing, information architecture, design thinking">
     <link rel="canonical" href="https://dlightning.org/d-tools/ux-method-tree.html">
@@ -18,12 +18,12 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Dlightning">
     <meta property="og:image" content="https://dlightning.org/img/products/MDT.png"/>
-    <meta property="og:title" content="D⚡ | UX Methods Tree - Interactive Design Decision Tool"/>
+    <meta property="og:title" content="UX Methods Tree - Interactive Design Decision Tool | Dlightning"/>
     <meta property="og:description" content="Interactive UX Design Decision Tree helps you choose the right research and design methods for your project."/>
     <meta property="og:image:width" content="824"/>
     <meta property="og:image:height" content="551"/>
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="D⚡ | UX Methods Tree">
+    <meta name="twitter:title" content="UX Methods Tree - Interactive Design Decision Tool | Dlightning">
     <meta name="twitter:description" content="Interactive UX Design Decision Tree helps you choose the right methods for your project.">
     <meta name="twitter:image" content="https://dlightning.org/img/products/MDT.png">
 
@@ -283,6 +283,12 @@
         line-height: 2 !important;
     }
 </style>
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
 
@@ -329,7 +335,9 @@
         
         </section>
         <br>
-        <a style="margin-top: 24px;" href="decision-tools.html"><i class="fa fa-arrow-left"></i> Decision Tools</a>
+
+<!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
+<div id="related-tools-con"></div>
 
         </div>
     </div>
@@ -354,6 +362,7 @@
 //Header + Footer
 $(document).ready(function() {
   $('#email-form-con').load("email-capture.html");
+  $('#related-tools-con').load("related-tools.html");
   $('#footer').load("../footer.html");
   $('#header').load("../header.html", function( response, status, xhr ) {
     if ( status == "error" ) {

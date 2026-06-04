@@ -2,7 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>D⚡ | Entrepreneur Decision Tree - Startup Guidance Tool</title>
+        <title>Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning</title>
         <meta name="description" content="Use the Entrepreneur's Decision Tree to guide your startup journey. Answer key questions to determine readiness, validate ideas, explore funding options, and build a successful business.">
         <meta name="keywords" content="entrepreneur decision tree, startup guidance, business validation, startup roadmap, business planning, funding options, startup tools">
         <link rel="canonical" href="https://dlightning.org/d-tools/entrepreneur-decision-tree.html">
@@ -14,12 +14,12 @@
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="Dlightning">
         <meta property="og:image" content="https://dlightning.org/img/products/EDT.png"/>
-        <meta property="og:title" content="D⚡ | Entrepreneur Decision Tree - Startup Guidance Tool"/>
+        <meta property="og:title" content="Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning"/>
         <meta property="og:description" content="Interactive decision tree to guide your startup journey. Determine readiness, validate ideas, and explore funding options."/>
         <meta property="og:image:width" content="824"/>
         <meta property="og:image:height" content="551"/>
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="D⚡ | Entrepreneur Decision Tree">
+        <meta name="twitter:title" content="Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning">
         <meta name="twitter:description" content="Interactive decision tree to guide your startup journey.">
         <meta name="twitter:image" content="https://dlightning.org/img/products/EDT.png">
 
@@ -251,7 +251,13 @@
     text-decoration: underline;
   }
     </style>
-    </head>
+        <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
     <body>
     <header id='header'></header>
         <div class="bradcam_area bradcam_bg_1">
@@ -286,7 +292,9 @@
         </div>
         </div>
         <br>
-        <a href="decision-tools.html"><i class="fa fa-arrow-left"></i> Decision Tools</a>
+
+<!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
+<div id="related-tools-con"></div>
         <div id="email-form-con"><!-- Filled with email-capture.html --></div>
 
         <button id="reset" style="display: none;">Start Over</button>
@@ -307,6 +315,7 @@
     //Header + Footer
     $(document).ready(function() {
     $('#email-form-con').load("email-capture.html");
+    $('#related-tools-con').load("related-tools.html");
     $('#footer').load("../footer.html");
     $('#header').load("../header.html", function( response, status, xhr ) {
         if ( status == "error" ) {

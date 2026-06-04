@@ -3,47 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Founder Blockers Diagnostic</title>
+    <meta name="description" content="Find what's blocking you as a founder—over-optimizing, over-planning, or over-protecting—and get a concrete next step plus a positioning framework in 2 minutes.">
+    <meta name="keywords" content="founder blockers, founder diagnostic, analysis paralysis, founder mindset, startup positioning, PMO framework, ship faster">
+    <link rel="canonical" href="https://dlightning.org/d-tools/founder-block.html">
+    <meta name="author" content="Dlightning">
+    <meta name="robots" content="index, follow">
+
+    <title>Founder Blockers Diagnostic - What's Holding You Back | Dlightning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <meta property="og:url" content="https://dlightning.org/d-tools/founder-block.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Dlightning">
+    <meta property="og:title" content="Founder Blockers Diagnostic - What's Holding You Back | Dlightning"/>
+    <meta property="og:description" content="Find what's blocking you as a founder and fix it in 2 minutes."/>
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Founder Blockers Diagnostic - What's Holding You Back | Dlightning">
+    <meta name="twitter:description" content="Find what's blocking you as a founder and fix it in 2 minutes.">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
+        header {
+            z-index: 999;
+        }
+
+        .fb-page {
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
             padding: 20px;
+            width: 100%;
         }
 
-        .container {
-            max-width: 800px;
+        .fb-page .container {
+            max-width: 820px;
             margin: 0 auto;
         }
 
         .header {
             text-align: center;
-            color: white;
+            color: #1a2b6b;
             margin-bottom: 40px;
         }
 
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
+            font-weight: 700;
         }
 
         .header p {
             font-size: 1.2em;
-            opacity: 0.95;
+            opacity: 0.9;
         }
 
         .card {
             background: white;
+            border: none;
             border-radius: 15px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
             margin-bottom: 20px;
         }
 
@@ -58,7 +78,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(90deg, #016de0 0%, #003ca4 100%);
             width: 0%;
             transition: width 0.3s ease;
         }
@@ -77,7 +97,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h2 {
+        .fb-page h2 {
             color: #2c3e50;
             margin-bottom: 20px;
             font-size: 1.8em;
@@ -106,14 +126,14 @@
         }
 
         .option-card:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
+            border-color: #0066cc;
+            background: #f4f8ff;
             transform: translateX(5px);
         }
 
         .option-card.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-color: #0066cc;
+            background: linear-gradient(135deg, #016de012 0%, #003ca412 100%);
         }
 
         .option-card input[type="radio"] {
@@ -138,7 +158,7 @@
             margin-top: 30px;
         }
 
-        button {
+        .fb-page .button-group button {
             flex: 1;
             padding: 15px 30px;
             border: none;
@@ -150,13 +170,13 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #016de0 0%, #003ca4 100%);
             color: white;
         }
 
         .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 20px rgba(1, 109, 224, 0.4);
         }
 
         .btn-primary:disabled {
@@ -178,7 +198,7 @@
         }
 
         .results h3 {
-            color: #667eea;
+            color: #0052a3;
             margin-top: 30px;
             margin-bottom: 15px;
             font-size: 1.5em;
@@ -187,7 +207,7 @@
         .tendency-badge {
             display: inline-block;
             padding: 8px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #016de0 0%, #003ca4 100%);
             color: white;
             border-radius: 20px;
             font-weight: 600;
@@ -196,7 +216,7 @@
 
         .result-box {
             background: #f8f9fa;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #0066cc;
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
@@ -212,8 +232,33 @@
             font-weight: 500;
         }
 
+        /* Experience Builder banner — shared dlightning style */
+        .featureBgImg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featureBgImg-bg {
+            object-position: center calc(50% + 42px);
+            transition: transform 0.42s ease-in-out;
+        }
+
+        .featureBgImg:hover .featureBgImg-bg {
+            transform: scale(1.1);
+        }
+
+        .featureBgImg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
+            z-index: -1;
+            transition: opacity 0.3s ease-in-out;
+            mix-blend-mode: soft-light;
+        }
+
         .cta-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4f3ad6 0%, #7a1fae 100%);
             color: white;
             padding: 30px;
             border-radius: 15px;
@@ -229,23 +274,6 @@
         .cta-box p {
             margin-bottom: 20px;
             opacity: 0.95;
-        }
-
-        .cta-button {
-            background: white;
-            color: #667eea;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         @media (max-width: 600px) {
@@ -275,8 +303,19 @@
             color: #1976D2;
         }
     </style>
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
-<body>
+<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center">
+<header id='header'></header>
+
+<div class="h-14 bg-blue-800 w-full"></div>
+
+<div class="fb-page">
     <div class="container">
         <div class="header">
             <h1>Founder Blockers Diagnostic</h1>
@@ -473,10 +512,17 @@
                 
                 <div class="results" id="resultsContent"></div>
 
-                <div class="cta-box">
-                    <h3>⚡ Ready to Validate?</h3>
-                    <p>Test your positioning with real users before you build anything.</p>
-                    <button class="cta-button" onclick="window.open('experience-builder.html', '_blank')">Start in Experience Builder</button>
+                <div class="cta-box featureBgImg relative overflow-hidden">
+                    <img src="../img/exp-builder/immersive-experience.png" alt="Background silhouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
+                    <div class="relative z-10">
+                        <h3>⚡ Ready to Validate?</h3>
+                        <p>Test your positioning with real users before you build anything.</p>
+                        <a href="../experience-builder.html">
+                            <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" style="flex: none;">
+                                Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
+                            </button>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="button-group" style="margin-top: 30px;">
@@ -485,8 +531,42 @@
             </div>
         </div>
     </div>
+</div>
+
+<div id="error"></div>
+
+<!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
+<div id="related-tools-con"></div>
+
+<footer class="mt-24 w-full bg-blue-950 text-white py-8">
+  <div class="container mx-auto px-4">
+    <div class="row">
+      <div class="col-lg-7">
+        <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
+        <ol class="list-decimal pl-6 space-y-2 instruct-list">
+          <li>Identify which tendency blocks you most—over-optimizing, over-planning, or over-protecting.</li>
+          <li>Name what it's costing you and the problem space you know deeply.</li>
+          <li>Get a draft positioning statement using the Pain → Mechanism → Outcome framework.</li>
+          <li>Commit to one concrete behavior you'll do this week to break the pattern.</li>
+        </ol>
+        <p class="mt-4 text-gray-400 max-w-screen-lg">Most founders unknowingly sabotage themselves by defaulting to one tendency. This 2-minute diagnostic surfaces yours and turns it into a clear, validation-focused next step.</p>
+      </div>
+      <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
+    </div>
+  </div>
+</footer>
 
     <script>
+        $(document).ready(function() {
+            $('#email-form-con').load("email-capture.html");
+            $('#related-tools-con').load("related-tools.html");
+            $('#header').load("../header.html", function(response, status, xhr) {
+                if (status == "error") {
+                    $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
+                }
+            });
+        });
+
         const userData = {
             tendency: '',
             cost: '',
@@ -666,7 +746,17 @@
             `;
 
             document.getElementById('resultsContent').innerHTML = results;
-            
+
+            // Make the diagnostic available to the shared email-capture module
+            window.userInteractionData = [
+                `Blocking tendency: ${tendencyData[userData.tendency].name}`,
+                `Cost: ${costData[userData.cost]}`,
+                `Problem space: ${contextData[userData.context]}`,
+                `Pain point: ${painData[userData.pain]}`,
+                `This week's commitment: ${behaviorData[userData.behavior]}`,
+                `Draft positioning: ${positioning}`
+            ].join('\n');
+
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             const resultsSection = document.getElementById('results');
             if (resultsSection) {

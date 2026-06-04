@@ -3,256 +3,268 @@
 
   <url>
     <loc>https://dlightning.org/</loc>
-    <lastmod>2026-04-15</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/Process.html</loc>
-    <lastmod>2025-09-30</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/Pricing.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/collective-info.html</loc>
-    <lastmod>2025-09-30</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/downloads.html</loc>
-    <lastmod>2025-09-30</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/experience-builder.html</loc>
-    <lastmod>2025-09-30</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/tea-landing.html</loc>
-    <lastmod>2026-04-15</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/gum-templates.html</loc>
-    <lastmod>2025-09-30</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/d-tools/decision-tools.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/contact.html</loc>
-    <lastmod>2025-09-30</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/screen-builder.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/privacy-policy.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/tos.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.3</priority>
   </url>
 <!-- // Lead Magnet  ++++++++++++++++++++++++++++++++ -->
   <url>
     <loc>https://dlightning.org/d-tools/business-idea-generator.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/d-tools/ux-method-tree.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/d-tools/entrepreneur-decision-tree.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/d-tools/project-validation-methods.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/d-tools/ux-maturity-assessment.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/d-tools/design-system-readiness.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/d-tools/AI-agent-idea-validation.html</loc>
+    <lastmod>2026-06-04</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/d-tools/founder-block.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog/blog.html</loc>
-    <lastmod>2025-08-20</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 <!-- // Careers  ++++++++++++++++++++++++++++++++ -->
   <url>
     <loc>https://dlightning.org/careers/careers-list.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/careers/job-details.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
-  
+
 <!-- // Blog Posts  ++++++++++++++++++++++++++++++++ -->
 <!-- OLDEST to NEWEST (add to the end)  -->
 
   <url>
     <loc>https://dlightning.org/blog-posts/missed-deadlines.html</loc>
-    <lastmod>2025-08-20</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/decision-theories-models.html</loc>
-    <lastmod>2025-08-20</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/cherry-tree-buck.html</loc>
-    <lastmod>2025-08-20</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/gumball-machine.html</loc>
-    <lastmod>2025-08-20</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/cup-of-tea-pod.html</loc>
-    <lastmod>2025-08-20</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/dr-frankensteins-ai.html</loc>
-    <lastmod>2025-08-20</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/time-well-wasted.html</loc>
-    <lastmod>2025-05-21</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/logic-and-pixels.html</loc>
-    <lastmod>2025-06-16</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/narrow-window.html</loc>
-    <lastmod>2025-07-20</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/bison-wolf-and-the-designer.html</loc>
-    <lastmod>2025-07-22</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/competition-design-pattern.html</loc>
-    <lastmod>2025-07-24</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/ui-sailboat.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/instant-bonsai.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/the-psychology-of-enough.html</loc>
-    <lastmod>2026-04-30</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/what-the-hands-know.html</loc>
-    <lastmod>2026-04-30</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/the-environment-is-the-interface.html</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/outvoted.html</loc>
-    <lastmod>2026-06-02</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/solar-punk-has-no-soil.html</loc>
-    <lastmod>2026-06-02</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/designing-for-the-irrational-majority.html</loc>
-    <lastmod>2026-06-02</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/the-meaning-layer.html</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <priority>0.6</priority>
   </url>
 

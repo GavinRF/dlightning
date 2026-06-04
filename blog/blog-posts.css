@@ -320,6 +320,23 @@ body {
 .single_sidebar_widget {
     margin-bottom: 30px;
 }
+.about_widget p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+.about_widget_actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.about_widget_link {
+    font-weight: 600;
+    text-decoration: none;
+}
+.about_widget_link:hover {
+    text-decoration: underline;
+}
 .widget_title {
     font-size: 1.2rem;
     margin-bottom: 1rem;

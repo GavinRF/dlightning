@@ -9,7 +9,7 @@
   <meta name="author" content="Dlightning">
   <meta name="robots" content="index, follow">
 
-  <title>D⚡ | Project Validation Method Selector</title>
+  <title>Project Validation Method Selector | Dlightning</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/style.css">
@@ -18,12 +18,12 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Dlightning">
   <meta property="og:image" content="https://dlightning.org/img/products/PVMS.png"/>
-  <meta property="og:title" content="D⚡ | Project Validation Method Selector"/>
+  <meta property="og:title" content="Project Validation Method Selector | Dlightning"/>
   <meta property="og:description" content="Find the perfect validation method for your project. Interactive tool for entrepreneurs and product managers."/>
   <meta property="og:image:width" content="824"/>
   <meta property="og:image:height" content="551"/>
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="D⚡ | Project Validation Method Selector">
+  <meta name="twitter:title" content="Project Validation Method Selector | Dlightning">
   <meta name="twitter:description" content="Find the perfect validation method for your project.">
   <meta name="twitter:image" content="https://dlightning.org/img/products/PVMS.png">
   
@@ -236,6 +236,12 @@
       footer{padding: 64px 8px;}
     }
   </style>
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 
 <body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
@@ -272,7 +278,9 @@
 </div>
 
 <div id="error"></div>
-<a style="margin-top: 24px;" href="decision-tools.html"><i class="fa fa-arrow-left"></i> Decision Tools</a>
+
+<!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
+<div id="related-tools-con"></div>
 
 <footer class="mt-24 w-full bg-blue-950 text-white py-8">
   <div class="container mx-auto px-4">
@@ -672,6 +680,7 @@
 
   $(document).ready(function() {
     $('#email-form-con').load("email-capture.html");
+    $('#related-tools-con').load("related-tools.html");
     $('#header').load("../header.html", function(response, status, xhr) {
       if (status == "error") {
         var msg = "Sorry but there was an error: ";

@@ -22,7 +22,7 @@ function initializeBlog() {
     blogPostsContainer.innerHTML = ''; // Clear existing content
     currentIndex = 0;
     loadMorePosts();
-    updateRecentPosts();
+    updateArchivePosts();
     updateCategories();
     updateTagCloud();
     updateSearchBar();
@@ -92,12 +92,16 @@ function applyFilter() {
     });
 }
 
-function updateRecentPosts() {
-    const recentPostsContainer = document.getElementById('recentPosts');
-    recentPostsContainer.innerHTML = '';
+function updateArchivePosts() {
+    const archivePostsContainer = document.getElementById('archivePosts');
+    archivePostsContainer.innerHTML = '';
 
-    const recentPosts = allPosts.slice(0, 4);
-    recentPosts.forEach(post => {
+    // allPosts is newest-first. Skip the posts already visible at the top of the
+    // feed so the archive surfaces older writing the reader would otherwise miss.
+    const pool = allPosts.slice(postsPerLoad);
+    const archivePosts = sampleRandom(pool.length ? pool : allPosts, 4);
+
+    archivePosts.forEach(post => {
         const postElement = document.createElement('div');
         postElement.className = 'media post_item';
         postElement.innerHTML = `
@@ -109,8 +113,18 @@ function updateRecentPosts() {
                 <small>${post.date}</small>
             </div>
         `;
-        recentPostsContainer.appendChild(postElement);
+        archivePostsContainer.appendChild(postElement);
     });
+}
+
+// Return up to `count` items picked at random from `items`, without mutating it.
+function sampleRandom(items, count) {
+    const copy = items.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, count);
 }
 
 function updateCategories() {

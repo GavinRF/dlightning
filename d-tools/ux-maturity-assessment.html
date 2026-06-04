@@ -9,7 +9,7 @@
     <meta name="author" content="Dlightning">
     <meta name="robots" content="index, follow">
 
-    <title>D⚡ | UX Maturity Assessment - Evaluate Your Design Process</title>
+    <title>UX Maturity Assessment - Evaluate Your Design Process | Dlightning</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -18,12 +18,12 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Dlightning">
     <meta property="og:image" content="https://dlightning.org/img/products/DMA.png"/>
-    <meta property="og:title" content="D⚡ | UX Maturity Assessment - Evaluate Your Design Process"/>
+    <meta property="og:title" content="UX Maturity Assessment - Evaluate Your Design Process | Dlightning"/>
     <meta property="og:description" content="Assess your organization's UX design maturity level. Get personalized recommendations to improve your design process."/>
     <meta property="og:image:width" content="824"/>
     <meta property="og:image:height" content="551"/>
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="D⚡ | UX Maturity Assessment">
+    <meta name="twitter:title" content="UX Maturity Assessment - Evaluate Your Design Process | Dlightning">
     <meta name="twitter:description" content="Assess your organization's UX design maturity level and get personalized recommendations.">
     <meta name="twitter:image" content="https://dlightning.org/img/products/DMA.png">
     
@@ -252,6 +252,12 @@
             footer{padding: 64px 8px;}
         }
     </style>
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 
 <body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
@@ -287,7 +293,7 @@
     <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
         <img src="../img/exp-builder/immersive-experience.png" alt="Background silhouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
         <div class="relative z-10">
-            <h4 class="text-2xl text-white mb-2 px-2 font-bold drop-shadow">Enhance your UX<br>maturity journey</h4>
+            <h4 class="text-2xl text-white mb-2 px-2 drop-shadow">Enhance your UX<br>maturity journey</h4>
             <a href="experience-builder.html">
                 <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                     Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
@@ -296,14 +302,56 @@
         </div>
     </div>
     
-    <button id="resetBtn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-6 hidden">
+    <button id="resetBtn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-6 hidden">
         <i class="fas fa-redo mr-2" aria-hidden="true"></i> Start Over
     </button>
 </div>
 </div>
 
 <div id="error"></div>
-<a style="margin-top: 24px;" href="decision-tools.html"><i class="fa fa-arrow-left"></i> Decision Tools</a>
+
+<!-- SEO content: sits BELOW the tool so it never gets in the way of using it -->
+<section class="ux-seo" aria-label="About the UX maturity assessment">
+  <style>
+    .ux-seo{max-width:1024px;width:100%;margin:64px auto 0;padding:0 66px;color:#1f2937;line-height:1.65;font-family:inherit;}
+    .ux-seo h2{font-size:1.25rem;font-weight:600;color:#111827;margin:0 0 10px;}
+    .ux-seo .ux-faq{margin:8px 0;}
+    .ux-seo details{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:0 18px;margin-bottom:12px;}
+    .ux-seo summary{cursor:pointer;color:#111827;padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;}
+    .ux-seo summary::-webkit-details-marker{display:none;}
+    .ux-seo summary::after{content:"+";color:#009DFF;font-size:1.3rem;font-weight:700;margin-left:12px;}
+    .ux-seo details[open] summary::after{content:"\2013";}
+    .ux-seo details p{padding:0 0 16px;margin:0;color:#374151;}
+    @media (max-width:640px){.ux-seo{padding:0 16px;}}
+  </style>
+
+  <h2>Frequently asked questions</h2>
+  <div class="ux-faq">
+    <details>
+      <summary>How long does the UX maturity assessment take?</summary>
+      <p>About two to three minutes — seven multiple-choice questions, with instant results.</p>
+    </details>
+    <details>
+      <summary>Is the assessment free?</summary>
+      <p>Yes. It's free, needs no signup, and gives you a maturity level plus recommendations right away.</p>
+    </details>
+    <details>
+      <summary>How is the UX maturity score calculated?</summary>
+      <p>Each question scores 1–4. Your answers total into a percentage mapped to one of four levels: Early Journey, Growing Foundation, Advanced Practitioner, or Experience Design Leader.</p>
+    </details>
+    <details>
+      <summary>Who should take this assessment?</summary>
+      <p>Design leaders, product managers, founders, and teams who want an honest read on their UX practice and a clear next step.</p>
+    </details>
+    <details>
+      <summary>How can we improve our UX maturity?</summary>
+      <p>Start with the recommendations for your level, then advance one dimension at a time. Our <a href="experience-builder.html">Experience Builder</a> helps you put those practices into action.</p>
+    </details>
+  </div>
+</section>
+
+<!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
+<div id="related-tools-con"></div>
 
 <footer class="mt-24 w-full bg-blue-950 text-white py-8">
     <div class="container mx-auto px-4">
@@ -698,6 +746,7 @@
 
     $(document).ready(function() {
         $('#email-form-con').load("email-capture.html");
+        $('#related-tools-con').load("related-tools.html");
         $('#header').load("../header.html", function(response, status, xhr) {
             if (status == "error") {
                 var msg = "Sorry but there was an error: ";
@@ -711,6 +760,65 @@
     });
 
     document.getElementById('resetBtn').addEventListener('click', resetAssessment);
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "UX Maturity Assessment",
+  "url": "https://dlightning.org/d-tools/ux-maturity-assessment.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "description": "A free, 7-question interactive assessment that measures your organization's UX design maturity across research, design decisions, collaboration, and measurement, then gives a maturity level and personalized recommendations.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@type": "Organization", "name": "Dlightning", "url": "https://dlightning.org" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does the UX maturity assessment take?",
+      "acceptedAnswer": { "@type": "Answer", "text": "About two to three minutes — seven multiple-choice questions, with instant results." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the assessment free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. It's free, needs no signup, and gives you a maturity level plus recommendations right away." }
+    },
+    {
+      "@type": "Question",
+      "name": "How is the UX maturity score calculated?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Each question scores 1–4. Your answers total into a percentage mapped to one of four levels: Early Journey, Growing Foundation, Advanced Practitioner, or Experience Design Leader." }
+    },
+    {
+      "@type": "Question",
+      "name": "Who should take this assessment?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Design leaders, product managers, founders, and teams who want an honest read on their UX practice and a clear next step." }
+    },
+    {
+      "@type": "Question",
+      "name": "How can we improve our UX maturity?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Start with the recommendations for your level, then advance one dimension at a time. Our Experience Builder helps you put those practices into action." }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dlightning.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Decision Tools", "item": "https://dlightning.org/d-tools/decision-tools.html" },
+    { "@type": "ListItem", "position": 3, "name": "UX Maturity Assessment", "item": "https://dlightning.org/d-tools/ux-maturity-assessment.html" }
+  ]
+}
 </script>
 
 </body>

@@ -1,0 +1,85 @@
+<!--
+  Reusable cross-link component for the d-tools pages.
+  Load it the same way as header.html / email-capture.html, e.g.:
+      $('#related-tools-con').load("related-tools.html");
+  Lives in /d-tools/, so the relative links below resolve correctly from any tool page.
+  Self-contained styles (no Tailwind/Bootstrap dependency) so it renders on every tool.
+
+  Shows a curated set of (max 3) related tools that changes per page.
+  To tune what each page links to, edit the RELATED map below.
+  Pages not in the map fall back to the first three other tools.
+-->
+<section class="dtools-related" aria-label="More free design and startup tools">
+  <style>
+    .dtools-related{max-width:1024px;margin:148px auto 0;padding:0 16px;font-family:inherit;}
+    .dtools-related h2{font-size:1.46rem;font-weight:500;color:#425b7d;margin:0 0 6px;text-align:center;}
+    .dtools-related .dtools-sub{text-align:center;color:#6b7280;margin:0 0 28px;font-size:1rem;}
+    .dtools-related .dtools-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+    @media (max-width:640px){.dtools-related .dtools-grid{grid-template-columns:1fr;}}
+    .dtools-related .dtools-card{display:block;background:#ffffff87;border:1px solid #e5e7eb;border-radius:14px;padding:20px;
+      text-decoration:none;color:inherit;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;height:100%;}
+    .dtools-related .dtools-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(8,137,224,.15);border-color:#009DFF;}
+    .dtools-related .dtools-card .dtools-ico{font-size:1.5rem;color:#009DFF;margin-bottom:10px;}
+    .dtools-related .dtools-card h3{font-size:1.05rem;font-weight:700;color:#111827;margin:0 0 6px;}
+    .dtools-related .dtools-card p{font-size:.9rem;color:#6b7280;margin:0;line-height:1.45;}
+    .dtools-related .dtools-alllink{text-align:center;margin-top:24px;}
+    .dtools-related .dtools-alllink a{color:#009DFF;text-decoration:none;}
+    .dtools-related .dtools-alllink a:hover{text-decoration:underline;}
+  </style>
+
+  <h2>More free design &amp; startup tools</h2>
+  <p class="dtools-sub">Interactive, no-signup tools to help you research, validate, and build better products.</p>
+
+  <div class="dtools-grid" id="dtools-grid"></div>
+
+  <div class="dtools-alllink">
+    <a href="decision-tools.html">Browse all decision tools <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+  </div>
+
+  <script>
+    (function () {
+      // All tools, keyed by filename.
+      var TOOLS = {
+        "ux-maturity-assessment.html":  { icon: "fa-chart-line",  title: "UX Maturity Assessment",        desc: "Measure how user-centered your organization really is across 7 dimensions." },
+        "ux-method-tree.html":          { icon: "fa-sitemap",     title: "UX Methods Tree",                desc: "Find the right research or design method for what you're trying to learn." },
+        "design-system-readiness.html": { icon: "fa-cubes",       title: "Design System Readiness",        desc: "See whether your team is ready to invest in a design system yet." },
+        "project-validation-methods.html": { icon: "fa-flask",    title: "Project Validation Methods",     desc: "Match your idea to the right validation method before you build." },
+        "business-idea-generator.html": { icon: "fa-lightbulb",   title: "Business Idea Generator",        desc: "Generate startup concepts tailored to your interests and strengths." },
+        "entrepreneur-decision-tree.html": { icon: "fa-code-branch", title: "Entrepreneur Decision Tree",  desc: "Work through the key startup decisions one question at a time." },
+        "founder-block.html":           { icon: "fa-hand-rock",   title: "Founder Blockers Diagnostic",    desc: "Find what's holding you back as a founder and get a concrete next step." },
+        "AI-agent-idea-validation.html":{ icon: "fa-robot",       title: "AI Agent Idea Validation",       desc: "Reality-check your AI agent concept across user, market, and problem fit." }
+      };
+
+      // Curated, max-3 related set per page. Edit freely.
+      var RELATED = {
+        "ux-maturity-assessment.html":     ["ux-method-tree.html", "design-system-readiness.html", "project-validation-methods.html"],
+        "ux-method-tree.html":             ["ux-maturity-assessment.html", "design-system-readiness.html", "project-validation-methods.html"],
+        "design-system-readiness.html":    ["ux-maturity-assessment.html", "ux-method-tree.html", "project-validation-methods.html"],
+        "project-validation-methods.html": ["ux-method-tree.html", "ux-maturity-assessment.html", "business-idea-generator.html"],
+        "business-idea-generator.html":    ["entrepreneur-decision-tree.html", "AI-agent-idea-validation.html", "founder-block.html"],
+        "entrepreneur-decision-tree.html": ["business-idea-generator.html", "founder-block.html", "project-validation-methods.html"],
+        "founder-block.html":              ["entrepreneur-decision-tree.html", "business-idea-generator.html", "AI-agent-idea-validation.html"],
+        "AI-agent-idea-validation.html":   ["business-idea-generator.html", "project-validation-methods.html", "entrepreneur-decision-tree.html"]
+      };
+
+      var current = location.pathname.split("/").pop();
+      var picks = RELATED[current];
+
+      // Fallback for any page without a curated set: first 3 other tools.
+      if (!picks) {
+        picks = Object.keys(TOOLS).filter(function (f) { return f !== current; }).slice(0, 3);
+      }
+
+      var grid = document.getElementById("dtools-grid");
+      grid.innerHTML = picks.slice(0, 3).map(function (f) {
+        var t = TOOLS[f];
+        if (!t) return "";
+        return '<a class="dtools-card" href="' + f + '">' +
+                 '<div class="dtools-ico"><i class="fas ' + t.icon + '" aria-hidden="true"></i></div>' +
+                 '<h3>' + t.title + '</h3>' +
+                 '<p>' + t.desc + '</p>' +
+               '</a>';
+      }).join("");
+    })();
+  </script>
+</section>

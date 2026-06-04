@@ -3,30 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Agent Idea Validation Quiz | Dlightning</title>
+  <meta name="description" content="Will your AI agent idea actually work? Take Dlightning's 3-minute reality check to validate your AI agent concept across target user, market, and problem-solution fit.">
+  <meta name="keywords" content="AI agent validation, AI startup idea, validate AI agent, AI product validation, AI agent quiz, startup validation tool">
+  <link rel="canonical" href="https://dlightning.org/d-tools/AI-agent-idea-validation.html">
+  <meta name="author" content="Dlightning">
+  <meta name="robots" content="index, follow">
+
+  <title>AI Agent Idea Validation - 3-Minute Reality Check | Dlightning</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <meta property="og:url" content="https://dlightning.org/d-tools/AI-agent-idea-validation.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Dlightning">
+  <meta property="og:title" content="AI Agent Idea Validation - 3-Minute Reality Check | Dlightning"/>
+  <meta property="og:description" content="Will your AI agent idea actually work? Take the 3-minute reality check to validate your concept."/>
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AI Agent Idea Validation - 3-Minute Reality Check | Dlightning">
+  <meta name="twitter:description" content="Will your AI agent idea actually work? Take the 3-minute reality check.">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <style>
-    body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    header {
+      z-index: 999;
     }
-    
     .quiz-container {
-      max-width: 800px;
-      margin: 2rem auto;
+      width: 100%;
+      max-width: 920px;
+      margin: 3rem auto 0;
       background: white;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
       overflow: hidden;
     }
-    
+
     .quiz-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #016de0 0%, #003ca4 100%);
       color: white;
       padding: 2rem;
       text-align: center;
+    }
+
+    .quiz-header h1,
+    .quiz-header p {
+      color: white;
     }
     
     .progress-bar {
@@ -82,26 +104,26 @@
     }
     
     .option-btn:hover {
-      border-color: #667eea;
+      border-color: #0066cc;
       background: #edf2f7;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
     }
-    
+
     .option-btn.selected {
-      background: #667eea;
-      border-color: #667eea;
+      background: #0066cc;
+      border-color: #0066cc;
       color: white;
     }
-    
+
     .option-btn.selected .option-icon {
       color: white;
     }
-    
+
     .option-icon {
       font-size: 1.5rem;
       min-width: 30px;
-      color: #667eea;
+      color: #0066cc;
     }
     
     .option-text {
@@ -119,7 +141,7 @@
     
     .text-input:focus {
       outline: none;
-      border-color: #667eea;
+      border-color: #0066cc;
     }
     
     .nav-buttons {
@@ -141,12 +163,12 @@
     }
     
     .btn-primary {
-      background: #667eea;
+      background: #0066cc;
       color: white;
     }
-    
+
     .btn-primary:hover:not(:disabled) {
-      background: #5568d3;
+      background: #0052a3;
       transform: translateY(-1px);
     }
     
@@ -209,47 +231,33 @@
       margin-right: auto;
     }
     
-    .cta-section {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 2rem;
-      border-radius: 16px;
-      margin: 2rem 0;
-      color: white;
+    /* Experience Builder banner — shared dlightning style */
+    .featureBgImg {
+      position: relative;
+      overflow: hidden;
     }
-    
-    .email-form {
-      display: flex;
-      gap: 1rem;
-      max-width: 500px;
-      margin: 1.5rem auto 0;
+
+    .featureBgImg-bg {
+      object-position: center calc(50% + 42px);
+      transition: transform 0.42s ease-in-out;
     }
-    
-    .email-input {
-      flex: 1;
-      padding: 1rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
+
+    .featureBgImg:hover .featureBgImg-bg {
+      transform: scale(1.1);
     }
-    
-    .email-submit {
-      padding: 1rem 2rem;
-      background: white;
-      color: #667eea;
-      border: none;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
+
+    .featureBgImg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
+      z-index: -1;
+      transition: opacity 0.3s ease-in-out;
+      mix-blend-mode: soft-light;
     }
-    
-    .email-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    
+
     .builder-banner {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      background: linear-gradient(135deg, #4f3ad6 0%, #7a1fae 100%);
       padding: 2rem;
       border-radius: 16px;
       margin: 2rem 0;
@@ -258,50 +266,30 @@
       align-items: center;
       gap: 1.5rem;
     }
-    
-    .builder-icon {
-      font-size: 3rem;
-      min-width: 60px;
-    }
-    
+
     .builder-content {
       flex: 1;
     }
-    
+
     .builder-title {
       font-size: 1.5rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
+      color: white;
     }
-    
+
     .builder-description {
       opacity: 0.95;
       line-height: 1.5;
     }
-    
-    .builder-btn {
-      background: white;
-      color: #f5576c;
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.2s;
-    }
-    
-    .builder-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    
+
     .hidden {
       display: none;
     }
     
     @media (max-width: 640px) {
       .quiz-container {
-        margin: 1rem;
+        margin: 1.5rem 0 0;
         border-radius: 16px;
       }
       
@@ -323,8 +311,19 @@
       }
     }
   </style>
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
-<body>
+<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center">
+<header id='header'></header>
+
+<div class="h-14 bg-blue-800 w-full"></div>
+
+<div class="w-full px-4 flex justify-center">
   <div class="quiz-container">
     <div class="quiz-header">
       <h1 class="text-3xl font-bold mb-2">AI Agent Idea Validation Quiz</h1>
@@ -357,39 +356,61 @@
         <h2 class="result-title" id="resultTitle"></h2>
         <p class="result-description" id="resultDescription"></p>
         
-        <div class="cta-section">
-          <h3 class="text-2xl font-bold mb-2">Get Your Detailed Action Plan</h3>
-          <p class="opacity-90 mb-4">Enter your email to receive your personalized next steps, validation templates, and expert tips.</p>
-          <div class="email-form">
-            <input type="email" class="email-input" id="emailInput" placeholder="your@email.com" required>
-            <button class="email-submit" onclick="submitEmail()">
-              <i class="fas fa-paper-plane mr-2"></i>Send Results
-            </button>
-          </div>
-          <p class="text-xs opacity-75 mt-3">We respect your privacy. Unsubscribe anytime.</p>
-        </div>
-        
-        <div class="builder-banner">
-          <div class="builder-icon">
-            <i class="fas fa-magic"></i>
-          </div>
-          <div class="builder-content">
+        <div class="builder-banner featureBgImg relative overflow-hidden">
+          <img src="../img/exp-builder/immersive-experience.png" alt="Background silhouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
+          <div class="builder-content relative z-10">
             <h3 class="builder-title">Ready to Validate with Real Users?</h3>
             <p class="builder-description">Use Experience Builder to prototype your AI agent idea and test it with actual users—no coding required. Build interactive flows, gather feedback, and validate before you invest in development.</p>
-            <a href="../experience-builder.html" class="builder-btn mt-3">
-              Explore Experience Builder<i class="fas fa-arrow-right ml-2"></i>
+            <a href="../experience-builder.html">
+              <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-3">
+                Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
+              </button>
             </a>
           </div>
         </div>
-        
+
         <button class="btn btn-secondary mt-4" onclick="restartQuiz()">
           <i class="fas fa-redo mr-2"></i>Take Quiz Again
         </button>
       </div>
     </div>
   </div>
+</div>
+
+<div id="error"></div>
+
+<!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
+<div id="related-tools-con"></div>
+
+<footer class="mt-24 w-full bg-blue-950 text-white py-8">
+  <div class="container mx-auto px-4">
+    <div class="row">
+      <div class="col-lg-7">
+        <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
+        <ol class="list-decimal pl-6 space-y-2 instruct-list">
+          <li>Answer 10 quick questions about your AI agent idea.</li>
+          <li>We score your target user, market signal, and problem-solution fit.</li>
+          <li>Get a validation score with a clear next-step recommendation.</li>
+          <li>See whether you're ready to build, or need more discovery first.</li>
+        </ol>
+        <p class="mt-4 text-gray-400 max-w-screen-lg">This reality check stress-tests your AI agent concept against the same criteria investors and operators use—who it's for, what painful task it removes, and whether people already pay to solve it.</p>
+      </div>
+      <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
+    </div>
+  </div>
+</footer>
 
   <script>
+    $(document).ready(function() {
+      $('#email-form-con').load("email-capture.html");
+      $('#related-tools-con').load("related-tools.html");
+      $('#header').load("../header.html", function(response, status, xhr) {
+        if (status == "error") {
+          $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
+        }
+      });
+    });
+
     const questions = [
       {
         id: 1,
@@ -730,7 +751,7 @@
         };
       } else if (score >= 70) {
         resultData = {
-          color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'linear-gradient(135deg, #016de0 0%, #003ca4 100%)',
           emoji: '💪',
           title: 'Strong Foundation',
           description: 'You have good clarity on most elements, but there are 1-2 areas that need sharpening. With some focused work on positioning and validation approach, you\'ll be ready to test your idea with real users.'
@@ -757,54 +778,34 @@
       document.getElementById('scoreLabel').textContent = resultData.emoji + ' ' + resultData.title.toUpperCase();
       document.getElementById('resultTitle').textContent = resultData.title;
       document.getElementById('resultDescription').textContent = resultData.description;
-      
+
+      // Make quiz answers available to the shared email-capture module
+      updateInteractionData(resultData.title);
+
       // Scroll to top of results
       document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function submitEmail() {
-      const email = document.getElementById('emailInput').value.trim();
-      
-      if (!email) {
-        alert('Please enter your email address');
-        return;
-      }
-      
-      // Basic email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address');
-        return;
-      }
-      
-      // Here you would integrate with your email service
-      // For now, we'll just show a success message
-      alert('Thank you! Check your inbox for your detailed action plan and validation resources.');
-      
-      // Log the data for integration
-      console.log('Quiz Results:', {
-        email: email,
-        score: score,
-        answers: answers,
-        timestamp: new Date().toISOString()
+    // Summarize the quiz for the shared email-capture form (window.userInteractionData)
+    function updateInteractionData(resultTitle) {
+      const lines = [`Validation score: ${score}/100 (${resultTitle})`];
+      questions.forEach((q, i) => {
+        const a = answers[i];
+        if (!a) return;
+        lines.push(`Q${i + 1} ${q.question} — ${a.text || a.value || ''}`);
       });
-      
-      // Disable the button after submission
-      document.querySelector('.email-submit').disabled = true;
-      document.querySelector('.email-submit').textContent = 'Results Sent!';
+      window.userInteractionData = lines.join('\n');
     }
 
     function restartQuiz() {
       currentQuestion = 0;
       answers = [];
       score = 0;
-      
+      window.userInteractionData = '';
+
       document.getElementById('questionsSection').classList.remove('hidden');
       document.getElementById('resultsSection').classList.add('hidden');
-      document.getElementById('emailInput').value = '';
-      document.querySelector('.email-submit').disabled = false;
-      document.querySelector('.email-submit').innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Send Results';
-      
+
       renderQuestion();
     }
 

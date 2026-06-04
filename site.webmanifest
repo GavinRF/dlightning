@@ -1,0 +1,19 @@
+{
+  "name": "Dlightning",
+  "short_name": "Dlightning",
+  "icons": [
+    {
+      "src": "/img/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#020c26",
+  "background_color": "#020c26",
+  "display": "standalone"
+}
