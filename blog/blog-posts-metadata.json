@@ -1,6 +1,32 @@
 {
     "posts": [
       {
+        "id": "designing-for-the-irrational-majority",
+        "title": "Designing for the Irrational Majority",
+        "date": "May 12, 2026",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "Most UX research assumes a user who weighs every option and knows their own mind. That user doesn't exist, and building for them costs you the people who actually show up.",
+        "image": "img/sasha-matveeva-oDCwxiVOzVs-unsplash.jpg",
+        "img-credit": "Sasha Matveeva",
+        "credit-link": "https://unsplash.com/photos/oDCwxiVOzVs",
+        "tags": ["Psychology", "UX Design", "Perception", "Human Limitations"],
+        "category": "Psychology"
+      },
+      {
+        "id": "solar-punk-has-no-soil",
+        "title": "Solar-punk Has No Soil",
+        "date": "March 08, 2026",
+        "author": "Dlightning",
+        "authorImage": "img/author.png",
+        "excerpt": "Every optimistic green-future render crops out the same thing: the soil, the part that rots and feeds what comes next. It's the same part we leave out when we design products to grow and never to end.",
+        "image": "img/sandie-clarke-q13Zq1Jufks-unsplash.jpg",
+        "img-credit": "Sandie Clarke",
+        "credit-link": "https://unsplash.com/@honeypoppet",
+        "tags": ["Design Philosophy", "Systems Thinking", "Nature", "Process"],
+        "category": "Design"
+      },
+      {
         "id": "outvoted",
         "title": "Outvoted",
         "date": "Feb 22, 2026",

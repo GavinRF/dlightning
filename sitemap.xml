@@ -139,51 +139,61 @@
   <url>
     <loc>https://dlightning.org/blog-posts/missed-deadlines.html</loc>
     <lastmod>2025-08-20</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/decision-theories-models.html</loc>
     <lastmod>2025-08-20</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/cherry-tree-buck.html</loc>
     <lastmod>2025-08-20</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/gumball-machine.html</loc>
     <lastmod>2025-08-20</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/cup-of-tea-pod.html</loc>
     <lastmod>2025-08-20</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/dr-frankensteins-ai.html</loc>
     <lastmod>2025-08-20</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/time-well-wasted.html</loc>
     <lastmod>2025-05-21</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/logic-and-pixels.html</loc>
     <lastmod>2025-06-16</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/narrow-window.html</loc>
     <lastmod>2025-07-20</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/blog-posts/bison-wolf-and-the-designer.html</loc>
     <lastmod>2025-07-22</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
@@ -224,6 +234,18 @@
 
   <url>
     <loc>https://dlightning.org/blog-posts/outvoted.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/blog-posts/solar-punk-has-no-soil.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/blog-posts/designing-for-the-irrational-majority.html</loc>
     <lastmod>2026-06-02</lastmod>
     <priority>0.6</priority>
   </url>
