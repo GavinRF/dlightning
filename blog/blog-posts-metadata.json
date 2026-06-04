@@ -1,136 +1,229 @@
 {
-    "posts": [
-      {
-        "id": "designing-for-the-irrational-majority",
-        "title": "Designing for the Irrational Majority",
-        "date": "May 12, 2026",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "Most UX research assumes a user who weighs every option and knows their own mind. That user doesn't exist, and building for them costs you the people who actually show up.",
-        "image": "img/sasha-matveeva-oDCwxiVOzVs-unsplash.jpg",
-        "img-credit": "Sasha Matveeva",
-        "credit-link": "https://unsplash.com/photos/oDCwxiVOzVs",
-        "tags": ["Psychology", "UX Design", "Perception", "Human Limitations"],
-        "category": "Psychology"
-      },
-      {
-        "id": "solar-punk-has-no-soil",
-        "title": "Solar-punk Has No Soil",
-        "date": "March 08, 2026",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "Every optimistic green-future render crops out the same thing: the soil, the part that rots and feeds what comes next. It's the same part we leave out when we design products to grow and never to end.",
-        "image": "img/sandie-clarke-q13Zq1Jufks-unsplash.jpg",
-        "img-credit": "Sandie Clarke",
-        "credit-link": "https://unsplash.com/@honeypoppet",
-        "tags": ["Design Philosophy", "Systems Thinking", "Nature", "Process"],
-        "category": "Design"
-      },
-      {
-        "id": "outvoted",
-        "title": "Outvoted",
-        "date": "Feb 22, 2026",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "The intellect runs the numbers and usually wins. What it means when the chest refuses to tighten and you act anyway.",
-        "image": "img/marcos-paulo-prado-GAI_kOUIc8U-unsplash.jpg",
-        "img-credit": "Marcos Paulo Prado",
-        "credit-link": "https://unsplash.com/photos/GAI_kOUIc8U",
-        "tags": ["Psychology", "Reflection", "Perception", "Human Limitations"],
-        "category": "Psychology"
-      },
-      {
-        "id": "the-environment-is-the-interface",
-        "title": "The Environment Is the Interface",
-        "date": "Jan 04, 2026",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "Every interface lives inside a context that's doing more design work than the interface itself.",
-        "image": "img/etienne-boulanger-iYcuJQaVTvg-unsplash.jpg",
-        "img-credit": "Etienne Boulanger",
-        "credit-link": "https://unsplash.com/photos/iYcuJQaVTvg",
-        "tags": ["Design Philosophy", "UX Design", "Psychology", "Systems Thinking", "Observation"],
-        "category": "Design"
-      },
-      {
-        "id": "what-the-hands-know",
-        "title": "What the Hands Know",
-        "date": "Nov 30, 2025",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "We are building more intelligence. The question worth asking is what kind.",
-        "image": "img/zetong-li-iFTqbA-TGhs-unsplash.jpg",
-        "img-credit": "Zetong Li",
-        "credit-link": "https://unsplash.com/@zetong",
-        "tags": ["AI", "Design Philosophy", "Human Limitations", "Systems Thinking", "Nature"],
-        "category": "Design"
-      },
-      {
-        "id": "the-psychology-of-enough",
-        "title": "The Psychology of \"Enough\"",
-        "date": "Oct 21, 2025",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "Most digital products don't know the word enough. That's not an accident, it's architecture.",
-        "image": "img/hanna-lazar-cY_tQ10NNyk-unsplash.jpg",
-        "img-credit": "Hanna Lazar",
-        "credit-link": "https://unsplash.com/@potokvarte",
-        "tags": ["Psychology", "Design Philosophy", "UX Design", "Human Limitations", "Process"],
-        "category": "Design"
-      },
-      {
-        "id": "instant-bonsai",
-        "title": "Instant Bonsai",
-        "date": "Sept 29, 2025",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "What it means to work with something living, something that remembers every decision you make.",
-        "image": "img/dario-bertolino-GSTYwxJGaMM-unsplash.jpg",
-        "img-credit": "Dario Bertolino",
-        "credit-link": "https://unsplash.com/@dariobertolino",
-        "tags": ["Craft", "Process", "Nature", "Reflection"],
-        "category": "Writing"
-      },
-      {
-        "id": "competition-design-pattern",
-        "title": "The Competition Design Pattern",
-        "date": "July 24, 2025",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "How platform constraints become cultural evolution engines, shaping which ideas survive and spread.",
-        "image": "img/joachim-lesne-mcrj2CkV0PE-unsplash.jpg",
-        "img-credit": "Joachim Lesne",
-        "credit-link": "https://unsplash.com/@joaching",
-        "tags": ["Design Systems", "Culture", "Platform Design", "Information Architecture", "Psychology"],
-        "category": "Psychology"
-      },  
-      {
-        "id": "bison-wolf-and-the-designer",
-        "title": "The Bison, The Wolf, and The Designer",
-        "date": "July 20, 2025",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "Observation, connection, and the hidden networks that shape experience.",
-        "image": "img/pepe-estrada-brightscenespix-maoJqJV1GW4-unsplash.jpg",
-        "img-credit": "Pepe Estrada",
-        "credit-link": "https://unsplash.com/@brightscenespix",
-        "tags": ["Systems Thinking", "Observation", "UX Design", "Nature", "Psychology", "Design Philosophy"],
-        "category": "Design"
-      },
-      {
-        "id": "narrow-window",
-        "title": "The Narrow Window",
-        "date": "July 14, 2025",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "Human perception is woefully limited. What does this mean for how we design experiences?",
-        "image": "img/balint-mendlik-aLw9A_-XgPY-unsplash.jpg",
-        "img-credit": "Balint Mendlik",
-        "credit-link": "https://unsplash.com/@balintm",
-        "tags": ["Perception", "Philosophy", "Design Thinking", "Human Limitations", "Systems Thinking"],
-        "category": "Design"
-      },
-      {
+  "posts": [
+    {
+      "id": "naming-the-machine",
+      "title": "Naming the Machine",
+      "date": "June 4, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "The name you give a machine is the first design decision, made before any code.",
+      "image": "img/brad-pearson-hSh8WKyA7vU-unsplash.jpg",
+      "img-credit": "Brad Pearson",
+      "credit-link": "https://unsplash.com/photos/hSh8WKyA7vU",
+      "tags": [
+        "AI",
+        "Perception",
+        "Psychology",
+        "Design Philosophy"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "the-meaning-layer",
+      "title": "The Meaning Layer",
+      "date": "June 1, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "On what design tools take when they hand you the finished thing instead of the skill to make it.",
+      "image": "img/sergi-viladesau-dttmeqFUDSU-unsplash.jpg",
+      "img-credit": "Sergi Viladesau",
+      "credit-link": "https://unsplash.com/photos/dttmeqFUDSU",
+      "tags": [
+        "Craft",
+        "Process",
+        "Design Philosophy",
+        "Design Systems"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "designing-for-the-irrational-majority",
+      "title": "Designing for the Irrational Majority",
+      "date": "May 12, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Most UX research assumes a user who weighs every option and knows their own mind. That user doesn't exist.",
+      "image": "img/sasha-matveeva-oDCwxiVOzVs-unsplash.jpg",
+      "img-credit": "Sasha Matveeva",
+      "credit-link": "https://unsplash.com/photos/oDCwxiVOzVs",
+      "tags": [
+        "Psychology",
+        "UX Design",
+        "Perception",
+        "Human Limitations"
+      ],
+      "category": "Psychology"
+    },
+    {
+      "id": "solar-punk-has-no-soil",
+      "title": "Solar-punk Has No Soil",
+      "date": "March 08, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Every optimistic green-future render crops out the same thing: the soil, the part that rots and feeds what comes next.",
+      "image": "img/sandie-clarke-q13Zq1Jufks-unsplash.jpg",
+      "img-credit": "Sandie Clarke",
+      "credit-link": "https://unsplash.com/@honeypoppet",
+      "tags": [
+        "Design Philosophy",
+        "Systems Thinking",
+        "Nature",
+        "Process"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "outvoted",
+      "title": "Outvoted",
+      "date": "Feb 22, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "The intellect runs the numbers and usually wins. What it means when the chest refuses to tighten and you act anyway.",
+      "image": "img/marcos-paulo-prado-GAI_kOUIc8U-unsplash.jpg",
+      "img-credit": "Marcos Paulo Prado",
+      "credit-link": "https://unsplash.com/photos/GAI_kOUIc8U",
+      "tags": [
+        "Psychology",
+        "Reflection",
+        "Perception",
+        "Human Limitations"
+      ],
+      "category": "Psychology"
+    },
+    {
+      "id": "the-environment-is-the-interface",
+      "title": "The Environment Is the Interface",
+      "date": "Jan 04, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Every interface lives inside a context that's doing more design work than the interface itself.",
+      "image": "img/etienne-boulanger-iYcuJQaVTvg-unsplash.jpg",
+      "img-credit": "Etienne Boulanger",
+      "credit-link": "https://unsplash.com/photos/iYcuJQaVTvg",
+      "tags": [
+        "Design Philosophy",
+        "UX Design",
+        "Psychology",
+        "Systems Thinking",
+        "Observation"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "what-the-hands-know",
+      "title": "What the Hands Know",
+      "date": "Nov 30, 2025",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "We are building more intelligence. The question worth asking is what kind.",
+      "image": "img/zetong-li-iFTqbA-TGhs-unsplash.jpg",
+      "img-credit": "Zetong Li",
+      "credit-link": "https://unsplash.com/@zetong",
+      "tags": [
+        "AI",
+        "Design Philosophy",
+        "Human Limitations",
+        "Systems Thinking",
+        "Nature"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "the-psychology-of-enough",
+      "title": "The Psychology of \"Enough\"",
+      "date": "Oct 21, 2025",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Most digital products don't know the word enough. That's not an accident, it's architecture.",
+      "image": "img/hanna-lazar-cY_tQ10NNyk-unsplash.jpg",
+      "img-credit": "Hanna Lazar",
+      "credit-link": "https://unsplash.com/@potokvarte",
+      "tags": [
+        "Psychology",
+        "Design Philosophy",
+        "UX Design",
+        "Human Limitations",
+        "Process"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "instant-bonsai",
+      "title": "Instant Bonsai",
+      "date": "Sept 29, 2025",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "What it means to work with something living, something that remembers every decision you make.",
+      "image": "img/dario-bertolino-GSTYwxJGaMM-unsplash.jpg",
+      "img-credit": "Dario Bertolino",
+      "credit-link": "https://unsplash.com/@dariobertolino",
+      "tags": [
+        "Craft",
+        "Process",
+        "Nature",
+        "Reflection"
+      ],
+      "category": "Writing"
+    },
+    {
+      "id": "competition-design-pattern",
+      "title": "The Competition Design Pattern",
+      "date": "July 24, 2025",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "How platform constraints become cultural evolution engines, shaping which ideas survive and spread.",
+      "image": "img/joachim-lesne-mcrj2CkV0PE-unsplash.jpg",
+      "img-credit": "Joachim Lesne",
+      "credit-link": "https://unsplash.com/@joaching",
+      "tags": [
+        "Design Systems",
+        "Culture",
+        "Platform Design",
+        "Information Architecture",
+        "Psychology"
+      ],
+      "category": "Psychology"
+    },
+    {
+      "id": "bison-wolf-and-the-designer",
+      "title": "The Bison, The Wolf, and The Designer",
+      "date": "July 20, 2025",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Observation, connection, and the hidden networks that shape experience.",
+      "image": "img/pepe-estrada-brightscenespix-maoJqJV1GW4-unsplash.jpg",
+      "img-credit": "Pepe Estrada",
+      "credit-link": "https://unsplash.com/@brightscenespix",
+      "tags": [
+        "Systems Thinking",
+        "Observation",
+        "UX Design",
+        "Nature",
+        "Psychology",
+        "Design Philosophy"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "narrow-window",
+      "title": "The Narrow Window",
+      "date": "July 14, 2025",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Human perception is woefully limited. What does this mean for how we design experiences?",
+      "image": "img/balint-mendlik-aLw9A_-XgPY-unsplash.jpg",
+      "img-credit": "Balint Mendlik",
+      "credit-link": "https://unsplash.com/@balintm",
+      "tags": [
+        "Perception",
+        "Philosophy",
+        "Design Thinking",
+        "Human Limitations",
+        "Systems Thinking"
+      ],
+      "category": "Design"
+    },
+    {
       "id": "logic-and-pixels",
       "title": "Logic & Pixels",
       "date": "June 16, 2025",
@@ -140,10 +233,16 @@
       "image": "img/francesco-la-corte-QK1DmRmej6k-unsplash.jpg",
       "img-credit": "Francesco La Corte",
       "credit-link": "https://unsplash.com/@lordfre",
-      "tags": ["Design", "Development", "Process", "Systems Thinking", "Logic"],
+      "tags": [
+        "Design",
+        "Development",
+        "Process",
+        "Systems Thinking",
+        "Logic"
+      ],
       "category": "Design"
-      },
-      {
+    },
+    {
       "id": "time-well-wasted",
       "title": "Failing Forward",
       "date": "May 21, 2025",
@@ -153,7 +252,12 @@
       "image": "img/blake-cheek-mYQDJKWqlww-unsplash.jpg",
       "img-credit": "Blake Cheek",
       "credit-link": "https://unsplash.com/@blakecheekk",
-      "tags": ["Process", "Engineering", "Motivation", "Creative Journey"],
+      "tags": [
+        "Process",
+        "Engineering",
+        "Motivation",
+        "Creative Journey"
+      ],
       "category": "Development"
     },
     {
@@ -166,84 +270,119 @@
       "image": "img/frankenstein-ai.jpg",
       "img-credit": "Bruno Guerrero",
       "credit-link": "https://unsplash.com/@pray4bokeh",
-      "tags": ["AI", "Ethics", "Writing", "UX Design", "Humanity"],
+      "tags": [
+        "AI",
+        "Ethics",
+        "Writing",
+        "UX Design",
+        "Humanity"
+      ],
       "category": "Design"
     },
     {
-        "id": "cup-of-tea-pod",
-        "title": "I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.",
-        "date": "Oct 10, 2024",
-        "author": "Gavin Fiorina",
-        "authorImage": "img/author.png",
-        "excerpt": "When I let AI do a deep dive into <i>Your Cup of Tea</i>, the result was surprisingly human.",
-        "image": "img/podcast-booth.jpg",
-        "img-credit": "Austin Distel",
-        "credit-link": "https://unsplash.com/@austindistel",
-        "tags": ["AI", "Process", "Storytelling"],
-        "category": "Writing"
+      "id": "cup-of-tea-pod",
+      "title": "I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.",
+      "date": "Oct 10, 2024",
+      "author": "Gavin Fiorina",
+      "authorImage": "img/author.png",
+      "excerpt": "When I let AI do a deep dive into <i>Your Cup of Tea</i>, the result was surprisingly human.",
+      "image": "img/podcast-booth.jpg",
+      "img-credit": "Austin Distel",
+      "credit-link": "https://unsplash.com/@austindistel",
+      "tags": [
+        "AI",
+        "Process",
+        "Storytelling"
+      ],
+      "category": "Writing"
     },
     {
-        "id": "ui-sailboat",
-        "title": "Sailing with the User Interface",
-        "date": "Sept 21, 2024",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "The surprising first moments of an encounter with new technology.",
-        "image": "img/sail-ui.jpg",
-        "img-credit": "Joseph Grev",
-        "credit-link": "https://unsplash.com/@lime517",
-        "tags": ["Psychology", "Process", "Theory"],
-        "category": "Design"
-      },
-      {
-        "id": "decision-theories-models",
-        "title": "Decision Theories & Models",
-        "date": "Mar 31, 2024",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "Design for the mental pathways used to make decisions.",
-        "image": "img/dog-cat.jpg",
-        "img-credit": "Krista Mangulsone",
-        "credit-link": "https://unsplash.com/@krista",
-        "tags": ["Psychology", "Process", "Theory"],
-        "category": "Psychology"
-      },
-      {
-        "id": "cherry-tree-buck",
-        "title": "Cherry Tree Buck",
-        "date": "Mar 16, 2024",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "Building emotional connection through storytelling.",
-        "image": "img/cc-buck.jpg",
-        "img-credit": "Aaron Burden",
-        "credit-link": "https://unsplash.com/@aaronburden",
-        "tags": ["Storytelling", "Nature", "Community", "Experiential Design"],
-        "category": "Writing"
-      },
-      {
-        "id": "gumball-machine",
-        "title": "The Gumball Machine",
-        "date": "Mar 4, 2024",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "How the seamless integration of design & engineering shapes customer experience driving emotional engagement.",
-        "image": "img/autoshop.jpg",
-        "img-credit": "Kenny Eliason",
-        "credit-link": "https://unsplash.com/@neonbrand",
-        "tags": ["Design", "Engineering", "Ethics in Tech", "Experiential Design"],
-        "category": "Design"
-      },
-      {
-        "id": "missed-deadlines",
-        "title": "Missed Deadlines",
-        "date": "Feb 4, 2024",
-        "author": "Dlightning",
-        "authorImage": "img/author.png",
-        "excerpt": "How setting a due date and repeatedly missing it got me to the finish line.",
-        "image": "img/contact-sheet.png",
-        "tags": ["Writing", "Motivation", "Time Management", "Creative Journey", "Process", "Experience"],
-        "category": "Writing"
-      }
-    ]
-  }
+      "id": "ui-sailboat",
+      "title": "Sailing with the User Interface",
+      "date": "Sept 21, 2024",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "The surprising first moments of an encounter with new technology.",
+      "image": "img/sail-ui.jpg",
+      "img-credit": "Joseph Grev",
+      "credit-link": "https://unsplash.com/@lime517",
+      "tags": [
+        "Psychology",
+        "Process",
+        "Theory"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "decision-theories-models",
+      "title": "Decision Theories & Models",
+      "date": "Mar 31, 2024",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Design for the mental pathways used to make decisions.",
+      "image": "img/dog-cat.jpg",
+      "img-credit": "Krista Mangulsone",
+      "credit-link": "https://unsplash.com/@krista",
+      "tags": [
+        "Psychology",
+        "Process",
+        "Theory"
+      ],
+      "category": "Psychology"
+    },
+    {
+      "id": "cherry-tree-buck",
+      "title": "Cherry Tree Buck",
+      "date": "Mar 16, 2024",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Building emotional connection through storytelling.",
+      "image": "img/cc-buck.jpg",
+      "img-credit": "Aaron Burden",
+      "credit-link": "https://unsplash.com/@aaronburden",
+      "tags": [
+        "Storytelling",
+        "Nature",
+        "Community",
+        "Experiential Design"
+      ],
+      "category": "Writing"
+    },
+    {
+      "id": "gumball-machine",
+      "title": "The Gumball Machine",
+      "date": "Mar 4, 2024",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "How the seamless integration of design & engineering shapes customer experience driving emotional engagement.",
+      "image": "img/autoshop.jpg",
+      "img-credit": "Kenny Eliason",
+      "credit-link": "https://unsplash.com/@neonbrand",
+      "tags": [
+        "Design",
+        "Engineering",
+        "Ethics in Tech",
+        "Experiential Design"
+      ],
+      "category": "Design"
+    },
+    {
+      "id": "missed-deadlines",
+      "title": "Missed Deadlines",
+      "date": "Feb 4, 2024",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "How setting a due date and repeatedly missing it got me to the finish line.",
+      "image": "img/contact-sheet.png",
+      "tags": [
+        "Writing",
+        "Motivation",
+        "Time Management",
+        "Creative Journey",
+        "Process",
+        "Experience"
+      ],
+      "category": "Writing"
+    }
+  ]
+}

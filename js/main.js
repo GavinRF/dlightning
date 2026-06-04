@@ -1,5 +1,24 @@
 (function ($) {
 "use strict";
+
+// Not every page loads every jQuery plugin used below (e.g. the blog has no
+// carousels or lightboxes). Stub any missing plugin as a chainable no-op so a
+// single page's absent plugin doesn't throw and abort the rest of this script.
+$.each(['owlCarousel', 'magnificPopup', 'niceSelect', 'slicknav'], function (i, name) {
+	if (typeof $.fn[name] !== 'function') {
+		$.fn[name] = function () { return this; };
+	}
+});
+if (typeof $.fn.imagesLoaded !== 'function') {
+	$.fn.imagesLoaded = function () {
+		var chain = { always: cb, done: cb, fail: cb, progress: cb };
+		function cb(fn) { if (typeof fn === 'function') { fn(); } return chain; }
+		return chain;
+	};
+}
+if (typeof $.scrollIt !== 'function') { $.scrollIt = function () {}; }
+if (typeof $.scrollUp !== 'function') { $.scrollUp = function () {}; }
+
 // TOP Menu Sticky
 $(window).on('scroll', function () {
 	var scroll = $(window).scrollTop();

@@ -2,6 +2,26 @@ import json
 import os
 from datetime import datetime
 
+_warned_dates = set()
+
+def parse_date(date_str):
+    """Parse a post date like 'June 4, 2026' or 'Feb 22, 2026' into a datetime.
+
+    Metadata uses full ('June'), abbreviated ('Feb'), and the nonstandard
+    'Sept' month spellings, and days may or may not be zero-padded.
+    Unrecognized values sort last and warn once each, so a typo never silently
+    reorders the sidebars."""
+    normalized = date_str.replace("Sept ", "Sep ")  # %b expects 'Sep'
+    for fmt in ("%B %d, %Y", "%b %d, %Y"):
+        try:
+            return datetime.strptime(normalized, fmt)
+        except ValueError:
+            continue
+    if date_str not in _warned_dates:
+        _warned_dates.add(date_str)
+        print(f"  WARNING: could not parse date '{date_str}'; it will sort last")
+    return datetime.min
+
 def load_metadata():
     with open('blog/blog-posts-metadata.json', 'r') as f:
         return json.load(f)
@@ -15,7 +35,7 @@ def load_post_content(post_id):
         return f.read()
 
 def generate_recent_posts(current_post, all_posts):
-    recent = sorted([p for p in all_posts if p['id'] != current_post['id']], key=lambda x: x['date'], reverse=True)[:3]
+    recent = sorted([p for p in all_posts if p['id'] != current_post['id']], key=lambda x: parse_date(x['date']), reverse=True)[:3]
     html = ""
     for post in recent:
         html += f"""
@@ -37,7 +57,7 @@ def generate_recent_posts(current_post, all_posts):
 
 def generate_related_posts(current_post, all_posts):
     related = [p for p in all_posts if p['category'] == current_post['category'] and p['id'] != current_post['id']]
-    related = sorted(related, key=lambda x: x['date'], reverse=True)[:4]
+    related = sorted(related, key=lambda x: parse_date(x['date']), reverse=True)[:4]
     html = ""
     for post in related:
         html += f"""
@@ -61,6 +81,7 @@ def generate_related_posts(current_post, all_posts):
 
 def generate_posts(metadata, template):
     os.makedirs('blog-posts', exist_ok=True)
+    changed, unchanged = [], []
     for post in metadata['posts']:
         post_content = load_post_content(post['id'])
         post_html = template
@@ -84,15 +105,28 @@ def generate_posts(metadata, template):
         post_html = post_html.replace('{RECENT_POSTS}', recent_posts)
         related_posts = generate_related_posts(post, metadata['posts'])
         post_html = post_html.replace('{MORE_RELATED_POSTS}', related_posts)
-        # Write the generated HTML to a file
-        with open(f"blog-posts/{post['id']}.html", 'w') as f:
-            f.write(post_html)
+        # Write only when the rendered HTML actually changed, so unchanged
+        # posts are left untouched (clean git diffs, stable mtimes).
+        out_path = f"blog-posts/{post['id']}.html"
+        existing = None
+        if os.path.exists(out_path):
+            with open(out_path, 'r') as f:
+                existing = f.read()
+        if existing == post_html:
+            unchanged.append(post['id'])
+        else:
+            with open(out_path, 'w') as f:
+                f.write(post_html)
+            changed.append(post['id'])
+    return changed, unchanged
 
 if __name__ == "__main__":
     metadata = load_metadata()
     template = load_template()
-    generate_posts(metadata, template)
-    print("Blog posts generated successfully!")
+    changed, unchanged = generate_posts(metadata, template)
+    print(f"Done. {len(changed)} updated, {len(unchanged)} unchanged.")
+    for pid in changed:
+        print(f"  updated: {pid}")
 
 
 # RUN COMMAND to Generate Posts from MetaData

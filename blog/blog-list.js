@@ -1,11 +1,13 @@
-let $grid;
 let currentIndex = 0;
-const postsPerLoad = 5;
+const postsPerLoad = 6; // even, so the 2-column grid never leaves a lonely gap
 let isLoading = false;
 let allPosts = [];
 
+// Active filter applied to rendered items. Returns true if an item should show.
+let currentFilter = () => true;
+
 // # RUN COMMAND to Generate Posts from MetaData
-// # python3 blog/generate_posts.py 
+// # python3 blog/generate_posts.py
 
 // Fetch blog posts metadata
 fetch('blog-posts-metadata.json')
@@ -24,7 +26,6 @@ function initializeBlog() {
     updateCategories();
     updateTagCloud();
     updateSearchBar();
-    // initIsotope();
 }
 
 function loadMorePosts() {
@@ -32,7 +33,7 @@ function loadMorePosts() {
     isLoading = true;
 
     const postsToLoad = allPosts.slice(currentIndex, currentIndex + postsPerLoad);
-    
+
     if (postsToLoad.length > 0) {
         const blogPostsContainer = document.getElementById('blogPosts');
         postsToLoad.forEach(post => {
@@ -43,7 +44,9 @@ function loadMorePosts() {
             postElement.innerHTML = `
                 <article class="blog-post">
                     <a href="../blog-posts/${post.id}.html">
-                        <img src="${post.image}" alt="${post.title}" class="img-fluid">
+                        <div class="blog-post-thumb">
+                            <img src="${post.image}" alt="${post.title}" class="img-fluid" loading="lazy">
+                        </div>
                         <div class="blog-post-content">
                                 <h2>${post.title}</h2>
                             <p class="date"><i class="far fa-calendar-alt me-2"></i> ${post.date}</p>
@@ -55,16 +58,22 @@ function loadMorePosts() {
                     </a>
                 </article>
             `;
+            // Respect the active filter for newly loaded items.
+            postElement.style.display = currentFilter(postElement) ? '' : 'none';
             blogPostsContainer.appendChild(postElement);
-        });
-        currentIndex += postsToLoad.length;
-        $('#blogPosts').imagesLoaded(function() {
-            if ($grid) {
-                $grid.isotope('reloadItems').isotope();
+
+            // Reveal the image (and stop the shimmer) once it loads.
+            const thumb = postElement.querySelector('.blog-post-thumb');
+            const img = thumb.querySelector('img');
+            const reveal = () => thumb.classList.add('loaded');
+            if (img.complete) {
+                reveal();
             } else {
-                initIsotope();
+                img.addEventListener('load', reveal);
+                img.addEventListener('error', reveal); // don't shimmer forever on a broken image
             }
         });
+        currentIndex += postsToLoad.length;
     }
 
     isLoading = false;
@@ -74,6 +83,13 @@ function loadMorePosts() {
     } else {
         document.getElementById('loadMoreBtn').style.display = 'block';
     }
+}
+
+// Apply the current filter to every rendered item by toggling visibility.
+function applyFilter() {
+    document.querySelectorAll('#blogPosts .blog-item').forEach(item => {
+        item.style.display = currentFilter(item) ? '' : 'none';
+    });
 }
 
 function updateRecentPosts() {
@@ -157,29 +173,23 @@ function updateSearchBar() {
 
 function filterPosts() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    $grid.isotope({ filter: function() {
-        const title = $(this).find('h2').text().toLowerCase();
-        const description = $(this).find('p').text().toLowerCase();
-        const tags = $(this).attr('data-tags').toLowerCase();
+    currentFilter = (item) => {
+        const title = item.querySelector('h2').textContent.toLowerCase();
+        const description = item.querySelector('p').textContent.toLowerCase();
+        const tags = item.getAttribute('data-tags').toLowerCase();
         return title.includes(searchTerm) || description.includes(searchTerm) || tags.includes(searchTerm);
-    }});
+    };
+    applyFilter();
 }
 
 function filterByCategory(category) {
-    $grid.isotope({ filter: `[data-category="${category}"]` });
+    currentFilter = (item) => item.getAttribute('data-category') === category;
+    applyFilter();
 }
 
 function filterByTag(tag) {
-    $grid.isotope({ filter: function() {
-        return $(this).attr('data-tags').toLowerCase().includes(tag.toLowerCase());
-    }});
-}
-
-function initIsotope() {
-    $grid = $('#blogPosts').isotope({
-        itemSelector: '.blog-item',
-        layoutMode: 'fitRows'
-    });
+    currentFilter = (item) => item.getAttribute('data-tags').toLowerCase().includes(tag.toLowerCase());
+    applyFilter();
 }
 
 // Initial display
@@ -190,11 +200,4 @@ $(document).ready(function() {
             loadMorePosts();
         }
     });
-});
-
-// Reinitialize Isotope on window resize
-$(window).on('resize', function() {
-    if ($grid) {
-        $grid.isotope('reloadItems').isotope();
-    }
 });
