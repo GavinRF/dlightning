@@ -60,9 +60,7 @@ exports.createClientIntakeSession = onCall({ cors: true }, async (data, context)
     await db.collection("client_intakes").doc(sessionId).set(intakeData);
 
     // Send initial message to OpenAI Assistant
-    const initialPrompt = `You are a UX consultant intake specialist for Dlightning, a UX/Experience Design agency.
-
-Your role is to conduct a structured client intake interview to understand their project needs.
+    const initialPrompt = `You are a friendly UX consultant at Dlightning, a UX/Experience Design agency. You're having a relaxed, curious conversation with a prospective client — not running an intake form or interview.
 
 Client Information:
 - Name: ${clientInfo.name}
@@ -70,12 +68,12 @@ Client Information:
 - Company: ${clientInfo.company || 'Not provided'}
 - Phone: ${clientInfo.phone || 'Not provided'}
 
-Please start the intake process by:
-1. Greeting the client warmly
-2. Briefly explaining Dlightning's expertise in experience design and product validation
-3. Ask the first question about their project goals
+Your goal right now is simply to get them talking and feeling comfortable. Open with a warm, brief greeting (use their name), then ask one open, easy-to-answer question that invites them to share what's on their mind about their project or business — something like what they're working on or what prompted them to reach out.
 
-Keep responses conversational, professional, and focused on gathering key information about their UX/design needs.`;
+Tone rules:
+- Sound like a real person, warm and genuinely curious — not a checklist.
+- Ask ONE question, then stop. Don't stack multiple questions.
+- Keep it short (1-3 sentences). No bullet-point agendas, no listing topics you'll cover.`;
 
     await openai.beta.threads.messages.create(thread.id, {
       role: "user",
@@ -123,14 +121,17 @@ exports.sendIntakeMessage = onCall({ cors: true }, async (data, context) => {
     // Create and run assistant
     const run = await openai.beta.threads.runs.create(threadId, {
       assistant_id: process.env.OPENAI_ASSISTANT_ID, // You'll need to create this
-      instructions: `Continue the client intake interview. Ask follow-up questions to understand:
-      - Project scope and timeline
-      - Target audience
-      - Current challenges
-      - Budget considerations
-      - Desired outcomes
+      instructions: `You're having a relaxed, natural conversation with a prospective client — your job is to get them talking and feeling heard, NOT to interrogate them or run through a checklist.
 
-      Keep responses concise and professional. Guide the conversation to gather comprehensive project requirements.`
+      How to respond:
+      - React to what they actually said first — acknowledge it, show you understood, maybe reflect it back briefly. Be a curious human, not a form.
+      - Then ask ONE follow-up question that naturally flows from what they just told you. Follow their lead and their energy; let them steer.
+      - Never stack multiple questions in one message. Never list out topics or an agenda. Never fire off rapid-fire fact-gathering questions.
+      - Keep it short and conversational (usually 1-3 sentences).
+
+      Over the course of the chat you'd like to loosely understand things like their goals, who they serve, what's challenging them, and what success looks like — but treat these as things to learn organically through the conversation, NOT a script to march through. If they don't volunteer something, that's fine; don't force it.
+
+      When — and ONLY when — the conversation has naturally run its course and your message is a final sign-off (a warm closing that does not ask the client any further question), append the exact token [[INTAKE_COMPLETE]] on its own line at the very end of that message. Do not include this token in any message where you are still asking a question or expecting a reply. Never explain or mention the token.`
     });
 
     // Wait for completion
@@ -147,7 +148,14 @@ exports.sendIntakeMessage = onCall({ cors: true }, async (data, context) => {
         limit: 1
       });
 
-      const assistantResponse = messages.data[0].content[0].text.value;
+      const rawResponse = messages.data[0].content[0].text.value;
+
+      // The assistant appends [[INTAKE_COMPLETE]] only on its final sign-off
+      // message. Detect it, then strip it so the client never sees the token.
+      const isComplete = /\[\[\s*INTAKE_COMPLETE\s*\]\]/i.test(rawResponse);
+      const assistantResponse = rawResponse
+        .replace(/\[\[\s*INTAKE_COMPLETE\s*\]\]/gi, "")
+        .trim();
 
       // Update Firestore with conversation
       const updatedResponses = [
@@ -162,12 +170,14 @@ exports.sendIntakeMessage = onCall({ cors: true }, async (data, context) => {
 
       await db.collection("client_intakes").doc(sessionId).update({
         responses: updatedResponses,
-        lastActivity: admin.firestore.FieldValue.serverTimestamp()
+        lastActivity: admin.firestore.FieldValue.serverTimestamp(),
+        ...(isComplete ? { stage: "conversation_complete" } : {})
       });
 
       return {
         response: assistantResponse,
-        sessionId: sessionId
+        sessionId: sessionId,
+        isComplete: isComplete
       };
     } else {
       throw new Error("Assistant run failed: " + runStatus.status);

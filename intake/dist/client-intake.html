@@ -844,8 +844,10 @@
                     this.aiConversationCount++;
                     this.checkShowCompleteButton();
 
-                    // Hide input after enough AI exchanges (e.g., 6+ exchanges)
-                    if (this.aiConversationCount >= 6) {
+                    // The backend flags isComplete only when the assistant has reached
+                    // its final sign-off, so the user is never cut off while a question
+                    // is still pending. A high exchange count is only a safety cap.
+                    if (result.data.isComplete || this.aiConversationCount >= 15) {
                         this.hideMessageInput();
                     }
 

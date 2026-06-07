@@ -331,15 +331,16 @@ body {
     gap: 0.75rem;
 }
 .about_widget_link {
-    font-weight: 600;
+    font-weight: 400;
     text-decoration: none;
+    margin-bottom: 14px;
 }
 .about_widget_link:hover {
     text-decoration: underline;
 }
 .widget_title {
     font-size: 1.2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.61rem;
 }
 .post_item {
     margin-bottom: 20px;
