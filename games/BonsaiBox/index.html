@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BonsaiBox 型木</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Grow, shape, and prune your own stylized 3D bonsai in a zen garden — right in the browser.">
+
+  <!-- Social link previews. og:url / og:image must be absolute URLs on the public
+       host (set below). These never show in the browser tab; they only render when
+       the link is shared (Slack/Discord/X/etc.). -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BonsaiBox">
+  <meta property="og:title" content="BonsaiBox 型木">
+  <meta property="og:description" content="Grow, shape, and prune your own stylized 3D bonsai in a zen garden — right in the browser.">
+  <meta property="og:url" content="https://dlightning.org/games/bonsaibox/">
+  <meta property="og:image" content="https://dlightning.org/games/bonsaibox/assets/img/bonsai-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A stylized 3D bonsai tree in a zen garden">
+
+  <!-- Twitter / X large-image card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BonsaiBox 型木">
+  <meta name="twitter:description" content="Grow, shape, and prune your own stylized 3D bonsai in a zen garden — right in the browser.">
+  <meta name="twitter:image" content="https://dlightning.org/games/bonsaibox/assets/img/bonsai-og.png">
+
+  <link rel="stylesheet" href="app.min.css">
+
+  <link rel="icon" href="assets/img/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
+</head>
+<body>
+  <!-- Loading screen: shown until the first scene frame renders (dismissed in main.js).
+       Pure-CSS bonsai (a fresh informal-upright variation) + the wordmark. -->
+  <div id="loading-screen">
+    <img class="loader-bonsai-svg" src="assets/img/bonsaibox-icon.svg" alt="" aria-hidden="true">
+    <div class="lb-dots"><span></span><span></span><span></span></div>
+  </div>
+
+  <div id="world"></div>
+
+  <h1 id="app-title">BonsaiBox 型木</h1>
+
+  <button id="settings-button" onclick="toggleSettings()" aria-label="Settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+  </button>
+
+  <button id="fullscreen-button" onclick="toggleFullscreen()" aria-label="Toggle fullscreen">⛶</button>
+
+  <!-- The lone control left visible in Zen mode; hidden otherwise (see tree.css). -->
+  <button id="zen-exit-button" onclick="exitZenMode()" aria-label="Exit zen mode">Exit Zen Mode</button>
+
+  <div id="settingsDrawer">
+    <div class="settings-header">
+      <h2>Settings</h2>
+      <span class="close-button" onclick="toggleSettings()">&times;</span>
+    </div>
+    <div class="settings-section">
+      <h3>🏔️ Backdrops</h3>
+      <label class="settings-row">
+        <span>Mountains</span>
+        <input type="checkbox" id="toggleMountains">
+      </label>
+      <label class="settings-row">
+        <span>Forest</span>
+        <input type="checkbox" id="toggleForest">
+      </label>
+      <label class="settings-row">
+        <span>Pagoda</span>
+        <input type="checkbox" id="togglePagoda">
+      </label>
+      <label class="settings-row">
+        <span>Courtyard</span>
+        <input type="checkbox" id="toggleCourtyard">
+      </label>
+    </div>
+    <div class="settings-section">
+      <h3>🏮 Decor</h3>
+      <label class="settings-row">
+        <span>Stone Lantern</span>
+        <input type="checkbox" id="toggleLantern">
+      </label>
+      <label class="settings-row">
+        <span>Short Stone Lantern</span>
+        <input type="checkbox" id="toggleShortLantern">
+      </label>
+      <label class="settings-row">
+        <span>Torii Gate</span>
+        <input type="checkbox" id="toggleTorii">
+      </label>
+      <label class="settings-row">
+        <span>Watering Can</span>
+        <input type="checkbox" id="toggleWaterCan">
+      </label>
+    </div>
+    <div class="settings-section">
+      <h3>🪨 Zen Garden</h3>
+      <label class="settings-row">
+        <span>Darker Gravel</span>
+        <input type="checkbox" id="toggleGravelDark">
+      </label>
+    </div>
+    <div class="settings-section">
+      <h3>🧘 Zen Mode</h3>
+      <button class="settings-zen-btn" onclick="enterZenMode()">Hide all controls</button>
+    </div>
+    <!-- 3D model attribution (CC-BY). Must list EVERY model the build ships in
+         assets/models/ — keep in sync when adding/removing models. -->
+    <div class="settings-section settings-credits">
+      <h3>🙏 Credits</h3>
+      <p class="credits-intro">3D models:</p>
+      <ul>
+        <li>Pagoda — <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank" rel="noopener">Poly by Google</a></li>
+        <li>Torii Gate, Pebble — <a href="https://poly.pizza/u/Quaternius" target="_blank" rel="noopener">Quaternius</a></li>
+        <li>Stone Lantern — <a href="https://poly.pizza/u/Flopsi" target="_blank" rel="noopener">Flopsi</a></li>
+        <li>Short Stone Lantern — <a href="https://sketchfab.com/MatthewRiegert" target="_blank" rel="noopener">MatthewRiegert</a></li>
+        <li>Courtyard — <a href="https://sketchfab.com/Shiroinu25" target="_blank" rel="noopener">Shiroinu25</a></li>
+        <li>Watering Can — <a href="https://poly.pizza/u/Zoe%20XR" target="_blank" rel="noopener">Zoe XR</a></li>
+      </ul>
+    </div>
+  </div>
+
+<div id="control-col">
+  <!-- <div><h4>Controls</h4><span class="close-button" onclick="hideControls()">&times;</span></div> -->
+  <!-- Name of the tree currently on screen. Editable; Save writes it to the
+       current saved tree (or names a brand-new save). -->
+  <div id="tree-name-card">
+    <label for="treeName" class="control-label tree-name-label">Tree Name</label>
+    <input id="treeName" type="text" maxlength="40" placeholder="Name your bonsai" aria-label="Bonsai name" autocomplete="off">
+  </div>
+  <div id="gallery-button-col">
+      <button class="btn btn-primary" onclick="generateNewTree()"><span>🌱</span> <span class="btn-text btn-text-full">New Bonsai</span><span class="btn-text btn-text-short">New</span></button>
+      <div class="side-by-side">
+        <button class="btn btn-save expand-button" onclick="saveBonsai()">Save</button>
+        <button class="btn btn-share expand-button" onclick="shareBonsai()">Share</button>
+        <button class="btn btn-gallery expand-button" onclick="toggleGallery()">Gallery</button>
+      </div>
+  </div>
+  <!-- Mobile-only tab bar: two accordion sheets. Tap a tab to open its panel (swipe
+       up opens / down closes); opening one closes the other, so only ~25% of the
+       screen is ever covered. Sits above #controls so the handle rides to the top of
+       the sheet as the panel expands beneath it. Wired in treeUI.js; hidden on
+       desktop, where both sections show stacked. -->
+  <div id="sheet-tabs">
+    <div id="trunk-handle" class="sheet-tab" data-sheet="trunk"><span class="tab-icon">🌳</span> <span class="tab-label">Trunk</span></div>
+    <div id="foliage-handle" class="sheet-tab" data-sheet="foliage"><span class="tab-icon">🍃</span> <span class="tab-label">Foliage</span></div>
+  </div>
+
+  <div id="controls">
+    <!-- Each section is its own collapsible sheet panel (mobile). On desktop the
+         wrappers are display:contents, so the sections stack exactly as before. -->
+    <div class="sheet-panel" id="trunk-panel">
+    <div class="control-section" id="truncSection">
+      <h3>🌳 Trunk</h3>
+      <div class="control-row">
+        <span class="control-label">Height</span>
+        <input type="range" id="truncHeight" min="40" max="140" value="100" class="control-input">
+        <span class="value-display" id="truncHeightValue">100</span>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Thickness</span>
+        <input type="range" id="truncThickness" min="4" max="18" value="4" class="control-input">
+        <span class="value-display" id="truncThicknessValue">6</span>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Roughness</span>
+        <input type="range" id="truncNoise" min="0" max="16" value="2" step="0.2" class="control-input">
+        <span class="value-display" id="truncNoiseValue">2</span>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Curve</span>
+        <input type="range" id="truncCurve" min="0" max="45" value="6" step="0.5" class="control-input">
+        <span class="value-display" id="truncCurveValue">6</span>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Trunk Color</span>
+        <select id="truncColor" class="control-input">
+          <option value="0x8B4513">Brown</option>
+          <option value="0xA0522D">Sienna</option>
+          <option value="0x654321">Dark Brown</option>
+          <option value="0x696969">Gray</option>
+          <option value="0x6B7355">Mossy</option>
+          <option value="0xF0EDE5">White</option>
+        </select>
+      </div>
+    </div>
+    </div>
+
+    <div class="sheet-panel" id="foliage-panel">
+    <div class="control-section">
+      <h3>🍃 Foliage</h3>
+      <div class="control-row">
+        <span class="control-label">Leaf Type</span>
+        <select id="leafType" class="control-input">
+          <option value="pine">Needles</option>
+          <option value="candle">Long Needles</option>
+          <option value="deciduous">Broad Leaf</option>
+          <option value="willow">Willow</option>
+          <option value="cherry">Cherry Blossom</option>
+          <option value="maple">Maple</option>
+          <option value="none">Bare / Winter</option>
+        </select>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Leaf Color</span>
+        <select id="foliageColor" class="control-input">
+          <option value="greens">Green</option>
+          <option value="spring">Spring Green</option>
+          <option value="sage">Sage</option>
+          <option value="pinks">Pink</option>
+          <option value="yellows">Yellow</option>
+          <option value="purples">Purple</option>
+          <option value="autumn">Autumn</option>
+        </select>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Density</span>
+        <input type="range" id="foliageDensity" min="3" max="150" value="30" class="control-input">
+        <span class="value-display" id="foliageDensityValue">30</span>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Size</span>
+        <input type="range" id="foliageSize" min="5" max="40" value="15" class="control-input">
+        <span class="value-display" id="foliageSizeValue">15</span>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="action-button-col main-btn-group">
+      <button class="btn btn-secondary grow-more-btn" onclick="growMoreBranches()"><span>🌿</span> <span class="btn-text btn-text-full">Grow Branches</span><span class="btn-text btn-text-short">Grow</span></button>
+      <button class="btn btn-secondary main-branches-btn" onclick="mainBranches()"><span>🪵</span> <span class="btn-text btn-text-full">Add Main Branches</span><span class="btn-text btn-text-short">Add</span></button>
+      <button id="shapeModeToggle" class="btn btn-shape"><span>🪾</span> Shape</button>
+      <button id="pruneModeToggle" class="btn btn-accent active-prune-mode"><span>✂️</span> Prune</button>
+  </div>
+
+</div>
+
+  <div id="instructions">
+    Drag to rotate • Pinch to zoom • Tap to prune <span class="close-instructions">✕</span>
+  </div>
+
+      <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="toggleGallery()">&times;</span>
+            <h2>Bonsai Gallery (<span id="treeCount">0</span>)</h2>
+            <div id="galleryShelf" class="tree-shelf">
+                <!-- Tree cards will be rendered here -->
+            </div>
+            <div class="gallery-footer">
+                <!-- <button onclick="clearGallery()">Clear All Trees</button> -->
+            </div>
+        </div>
+    </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script type="module" src="app.min.js"></script>
+
+</body>
+</html>
