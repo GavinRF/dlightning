@@ -124,6 +124,20 @@
         <li>Watering Can — <a href="https://poly.pizza/u/Zoe%20XR" target="_blank" rel="noopener">Zoe XR</a></li>
       </ul>
     </div>
+
+    <div class="settings-section">
+      <h3>🔗 Links</h3>
+      <label class="settings-row">
+        <span>BonsaiBox is brought to you&nbsp;by</span><a href="https://dlightning.org/" target="_blank" rel="noopener">Dlightning⚡️</a>
+      </label>
+      <label class="settings-row">
+        <span>Enjoyed this? You're going to love our feature game </span><a href="https://oasea.earth/" target="_blank" rel="noopener">Oasea&nbsp;🏝️</a>
+      </label>
+      <label class="settings-row">
+        <span>Share this app with friends and strangers in real&nbsp;life! </span>
+        <img src="assets/img/bonsaibox-QR.png" alt="BonsaiBox icon" width="132" height="132">
+      </label>
+    </div>
   </div>
 
 <div id="control-col">
@@ -148,52 +162,15 @@
        the sheet as the panel expands beneath it. Wired in treeUI.js; hidden on
        desktop, where both sections show stacked. -->
   <div id="sheet-tabs">
-    <div id="trunk-handle" class="sheet-tab" data-sheet="trunk"><span class="tab-icon">🌳</span> <span class="tab-label">Trunk</span></div>
     <div id="foliage-handle" class="sheet-tab" data-sheet="foliage"><span class="tab-icon">🍃</span> <span class="tab-label">Foliage</span></div>
+    <div id="trunk-handle" class="sheet-tab" data-sheet="trunk"><span class="tab-icon">🌳</span> <span class="tab-label">Trunk</span></div>
   </div>
 
   <div id="controls">
     <!-- Each section is its own collapsible sheet panel (mobile). On desktop the
          wrappers are display:contents, so the sections stack exactly as before. -->
-    <div class="sheet-panel" id="trunk-panel">
-    <div class="control-section" id="truncSection">
-      <h3>🌳 Trunk</h3>
-      <div class="control-row">
-        <span class="control-label">Height</span>
-        <input type="range" id="truncHeight" min="40" max="140" value="100" class="control-input">
-        <span class="value-display" id="truncHeightValue">100</span>
-      </div>
-      <div class="control-row">
-        <span class="control-label">Thickness</span>
-        <input type="range" id="truncThickness" min="4" max="18" value="4" class="control-input">
-        <span class="value-display" id="truncThicknessValue">6</span>
-      </div>
-      <div class="control-row">
-        <span class="control-label">Roughness</span>
-        <input type="range" id="truncNoise" min="0" max="16" value="2" step="0.2" class="control-input">
-        <span class="value-display" id="truncNoiseValue">2</span>
-      </div>
-      <div class="control-row">
-        <span class="control-label">Curve</span>
-        <input type="range" id="truncCurve" min="0" max="45" value="6" step="0.5" class="control-input">
-        <span class="value-display" id="truncCurveValue">6</span>
-      </div>
-      <div class="control-row">
-        <span class="control-label">Trunk Color</span>
-        <select id="truncColor" class="control-input">
-          <option value="0x8B4513">Brown</option>
-          <option value="0xA0522D">Sienna</option>
-          <option value="0x654321">Dark Brown</option>
-          <option value="0x696969">Gray</option>
-          <option value="0x6B7355">Mossy</option>
-          <option value="0xF0EDE5">White</option>
-        </select>
-      </div>
-    </div>
-    </div>
-
     <div class="sheet-panel" id="foliage-panel">
-    <div class="control-section">
+    <div class="control-section foliage-section">
       <h3>🍃 Foliage</h3>
       <div class="control-row">
         <span class="control-label">Leaf Type</span>
@@ -219,18 +196,57 @@
           <option value="autumn">Autumn</option>
         </select>
       </div>
-      <div class="control-row">
+      <div class="control-row with-slider">
         <span class="control-label">Density</span>
         <input type="range" id="foliageDensity" min="3" max="150" value="30" class="control-input">
         <span class="value-display" id="foliageDensityValue">30</span>
       </div>
-      <div class="control-row">
+      <div class="control-row with-slider">
         <span class="control-label">Size</span>
         <input type="range" id="foliageSize" min="5" max="40" value="15" class="control-input">
         <span class="value-display" id="foliageSizeValue">15</span>
       </div>
     </div>
     </div>
+
+    <div class="sheet-panel" id="trunk-panel">
+    <div class="control-section" id="truncSection">
+      <h3>🌳 Trunk</h3>
+            <div class="control-row">
+        <span class="control-label">Trunk Color</span>
+        <select id="truncColor" class="control-input">
+          <option value="0x8B4513">Brown</option>
+          <option value="0xA0522D">Sienna</option>
+          <option value="0x654321">Dark Brown</option>
+          <option value="0x696969">Gray</option>
+          <option value="0x6B7355">Mossy</option>
+          <option value="0xF0EDE5">White</option>
+        </select>
+      </div>
+      <div class="control-row with-slider">
+        <span class="control-label">Height</span>
+        <input type="range" id="truncHeight" min="40" max="140" value="100" class="control-input">
+        <span class="value-display" id="truncHeightValue">100</span>
+      </div>
+      <div class="control-row with-slider">
+        <span class="control-label">Thickness</span>
+        <input type="range" id="truncThickness" min="4" max="18" value="4" class="control-input">
+        <span class="value-display" id="truncThicknessValue">6</span>
+      </div>
+      <div class="control-row with-slider">
+        <span class="control-label">Roughness</span>
+        <input type="range" id="truncNoise" min="0" max="16" value="2" step="0.2" class="control-input">
+        <span class="value-display" id="truncNoiseValue">2</span>
+      </div>
+      <div class="control-row with-slider">
+        <span class="control-label">Curve</span>
+        <input type="range" id="truncCurve" min="0" max="45" value="6" step="0.5" class="control-input">
+        <span class="value-display" id="truncCurveValue">6</span>
+      </div>
+    </div>
+    </div>
+
+   
   </div>
 
   <div class="action-button-col main-btn-group">
