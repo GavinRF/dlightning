@@ -44,14 +44,25 @@
 
   <h1 id="app-title">BonsaiBox 型木</h1>
 
-  <button id="settings-button" onclick="toggleSettings()" aria-label="Settings">
+  <button id="settings-button" onclick="toggleSettings()" aria-label="Settings" title="Settings">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="3"></circle>
       <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
     </svg>
   </button>
 
-  <button id="fullscreen-button" onclick="toggleFullscreen()" aria-label="Toggle fullscreen">⛶</button>
+  <button id="fullscreen-button" onclick="toggleFullscreen()" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+
+  <!-- Quick shortcut into Zen mode; a simple lotus to match the gear/fullscreen pills. -->
+  <button id="zen-button" onclick="enterZenMode()" aria-label="Enter zen mode" title="Enter Zen Mode">
+    <svg viewBox="1 0 22 22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 17C9.5 13 9.5 8 12 5 14.5 8 14.5 13 12 17Z"></path>
+      <path d="M12 17C8 16 5.5 12.5 5.5 8 9.5 9 11 13 12 17Z"></path>
+      <path d="M12 17C16 16 18.5 12.5 18.5 8 14.5 9 13 13 12 17Z"></path>
+      <path d="M12 17C7.5 16.5 4 15.5 3 12.5 7 13 10 15 12 17Z"></path>
+      <path d="M12 17C16.5 16.5 20 15.5 21 12.5 17 13 14 15 12 17Z"></path>
+    </svg>
+  </button>
 
   <!-- The lone control left visible in Zen mode; hidden otherwise (see tree.css). -->
   <button id="zen-exit-button" onclick="exitZenMode()" aria-label="Exit zen mode">Exit Zen Mode</button>
@@ -62,13 +73,56 @@
       <span class="close-button" onclick="toggleSettings()">&times;</span>
     </div>
     <div class="settings-section">
+      <h3>🔊 Sound</h3>
+      <label class="settings-row">
+        <span>Mute all</span>
+        <input type="checkbox" id="toggleMute">
+      </label>
+      <label class="settings-row">
+        <span>Music</span>
+        <input type="checkbox" id="toggleMusic">
+      </label>
+      <label class="settings-row">
+        <span>Music volume</span>
+        <input type="range" id="musicVolume" min="0" max="1" step="0.01">
+      </label>
+      <div class="settings-row">
+        <span id="nowPlaying" class="now-playing">—</span>
+        <button class="settings-next-btn" onclick="nextTrack()">⏭ Next</button>
+      </div>
+      <label class="settings-row">
+        <span>Sound effects</span>
+        <input type="checkbox" id="toggleSfx">
+      </label>
+      <label class="settings-row">
+        <span>SFX volume</span>
+        <input type="range" id="sfxVolume" min="0" max="1" step="0.01">
+      </label>
+      <label class="settings-row">
+        <span>Ambient</span>
+        <input type="checkbox" id="toggleAmbient">
+      </label>
+    </div>
+    <div class="settings-section">
       <h3>🏔️ Backdrops</h3>
+      <label class="settings-row">
+        <span>Sky</span>
+        <select id="skyPreset">
+          <option value="clear">Clear</option>
+          <option value="partly" selected>Partly Cloudy</option>
+          <option value="overcast">Overcast</option>
+          <option value="golden">Golden Hour</option>
+          <option value="dawn">Dawn</option>
+          <option value="night">Night</option>
+          <option value="cycle">Cycle</option>
+        </select>
+      </label>
       <label class="settings-row">
         <span>Mountains</span>
         <input type="checkbox" id="toggleMountains">
       </label>
       <label class="settings-row">
-        <span>Forest</span>
+        <span>Distant Forest</span>
         <input type="checkbox" id="toggleForest">
       </label>
       <label class="settings-row">
@@ -78,6 +132,10 @@
       <label class="settings-row">
         <span>Courtyard</span>
         <input type="checkbox" id="toggleCourtyard">
+      </label>
+      <label class="settings-row">
+        <span>Cloud Drift</span>
+        <input type="checkbox" id="toggleClouds">
       </label>
     </div>
     <div class="settings-section">
@@ -98,6 +156,18 @@
         <span>Watering Can</span>
         <input type="checkbox" id="toggleWaterCan">
       </label>
+      <label class="settings-row">
+        <span>Stool</span>
+        <input type="checkbox" id="toggleStool">
+      </label>
+      <label class="settings-row">
+        <span>Tea</span>
+        <input type="checkbox" id="toggleTea">
+      </label>
+      <label class="settings-row">
+        <span>Bamboo</span>
+        <input type="checkbox" id="toggleBamboo">
+      </label>
     </div>
     <div class="settings-section">
       <h3>🪨 Zen Garden</h3>
@@ -106,9 +176,24 @@
         <input type="checkbox" id="toggleGravelDark">
       </label>
     </div>
+    
     <div class="settings-section">
       <h3>🧘 Zen Mode</h3>
-      <button class="settings-zen-btn" onclick="enterZenMode()">Hide all controls</button>
+      <button class="settings-zen-btn" onclick="enterZenMode()">🪷 Hide all controls</button>
+    </div>
+    <div class="settings-section settings-shortcuts">
+      <h3>⌨️ Shortcuts</h3>
+      <div class="shortcut-row"><span>New tree</span><kbd>N</kbd></div>
+      <div class="shortcut-row"><span>Grow branches</span><kbd>B</kbd></div>
+      <div class="shortcut-row"><span>Main branches</span><kbd>M</kbd></div>
+      <div class="shortcut-row"><span>Shape mode</span><kbd>S</kbd></div>
+      <div class="shortcut-row"><span>Prune mode</span><kbd>P</kbd></div>
+      <div class="shortcut-row"><span>Gallery</span><kbd>G</kbd></div>
+      <div class="shortcut-row"><span>Settings</span><kbd>,</kbd></div>
+      <div class="shortcut-row"><span>Zen mode</span><kbd>Z</kbd></div>
+      <div class="shortcut-row"><span>Fullscreen</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span>Save</span><span class="shortcut-keys"><kbd>⌘/Ctrl</kbd><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span>Back / exit</span><kbd>Esc</kbd></div>
     </div>
     <!-- 3D model attribution (CC-BY). Must list EVERY model the build ships in
          assets/models/ — keep in sync when adding/removing models. -->
@@ -122,7 +207,24 @@
         <li>Short Stone Lantern — <a href="https://sketchfab.com/MatthewRiegert" target="_blank" rel="noopener">MatthewRiegert</a></li>
         <li>Courtyard — <a href="https://sketchfab.com/Shiroinu25" target="_blank" rel="noopener">Shiroinu25</a></li>
         <li>Watering Can — <a href="https://poly.pizza/u/Zoe%20XR" target="_blank" rel="noopener">Zoe XR</a></li>
+        <li>Stool — <a href="https://poly.pizza/u/iPoly3D" target="_blank" rel="noopener">iPoly3D</a></li>
+        <li>Tea Set — <a href="https://sketchfab.com/alc.72" target="_blank" rel="noopener">捺/nuts</a></li>
+        <li>Bamboo — <a href="https://sketchfab.com/evolveduk" target="_blank" rel="noopener">evolveduk</a></li>
       </ul>
+      <p class="credits-intro">Sounds (<a href="https://freesound.org" target="_blank" rel="noopener">Freesound</a>):</p>
+      <ul>
+        <li>Rustle — <a href="https://freesound.org/people/schademans/sounds/2597/" target="_blank" rel="noopener">schademans</a>, <a href="https://freesound.org/people/zepurple/sounds/540267/" target="_blank" rel="noopener">zepurple</a>, <a href="https://freesound.org/people/egomassive/sounds/536767/" target="_blank" rel="noopener">egomassive</a>, <a href="https://freesound.org/people/kyles/sounds/637732/" target="_blank" rel="noopener">kyles</a>, <a href="https://freesound.org/people/j1987/sounds/106113/" target="_blank" rel="noopener">j1987</a></li>
+        <li>Pruning shears — <a href="https://freesound.org/people/Sadiquecat/sounds/789033/" target="_blank" rel="noopener">Sadiquecat</a></li>
+        <li>Handsaw — <a href="https://freesound.org/people/SamuelGremaud/sounds/511739/" target="_blank" rel="noopener">SamuelGremaud</a></li>
+        <li>Grow — <a href="https://freesound.org/people/squidge316/sounds/677814/" target="_blank" rel="noopener">squidge316</a>, <a href="https://freesound.org/people/JoelAudio/sounds/135468/" target="_blank" rel="noopener">JoelAudio</a></li>
+        <li>Pulling plant — <a href="https://freesound.org/people/WxLMusic365/sounds/700532/" target="_blank" rel="noopener">WxLMusic365</a></li>
+      </ul>
+      <p class="credits-intro">Music (<a href="https://uppbeat.io" target="_blank" rel="noopener">Uppbeat</a>):</p>
+      <ul>
+        <li><a href="https://uppbeat.io/t/tranquilium" target="_blank" rel="noopener">Tranquilium</a></li>
+        <li><a href="https://uppbeat.io/t/all-ambient/pertranseo-slower-headspace" target="_blank" rel="noopener">All:Ambient</a></li>
+      </ul>
+      <p class="credits-intro">Ambient (<a href="https://mixkit.co/free-sound-effects/" target="_blank" rel="noopener">Mixkit</a>)</p>
     </div>
 
     <div class="settings-section">
@@ -149,7 +251,7 @@
     <input id="treeName" type="text" maxlength="40" placeholder="Name your bonsai" aria-label="Bonsai name" autocomplete="off">
   </div>
   <div id="gallery-button-col">
-      <button class="btn btn-primary" onclick="generateNewTree()"><span>🌱</span> <span class="btn-text btn-text-full">New Bonsai</span><span class="btn-text btn-text-short">New</span></button>
+      <button class="btn btn-primary" onclick="generateNewTree()"><span>🌱</span> <span class="btn-text btn-text-full"><span class="hotkey">N</span>ew Bonsai</span><span class="btn-text btn-text-short">New</span></button>
       <div class="side-by-side">
         <button class="btn btn-save expand-button" onclick="saveBonsai()">Save</button>
         <button class="btn btn-share expand-button" onclick="shareBonsai()">Share</button>
@@ -250,8 +352,8 @@
   </div>
 
   <div class="action-button-col main-btn-group">
-      <button class="btn btn-secondary grow-more-btn" onclick="growMoreBranches()"><span>🌿</span> <span class="btn-text btn-text-full">Grow Branches</span><span class="btn-text btn-text-short">Grow</span></button>
-      <button class="btn btn-secondary main-branches-btn" onclick="mainBranches()"><span>🪵</span> <span class="btn-text btn-text-full">Add Main Branches</span><span class="btn-text btn-text-short">Add</span></button>
+      <button class="btn btn-secondary grow-more-btn" onclick="growMoreBranches()"><span>🌿</span> <span class="btn-text btn-text-full">Grow <span class="hotkey">B</span>ranches</span><span class="btn-text btn-text-short">Grow</span></button>
+      <button class="btn btn-secondary main-branches-btn" onclick="mainBranches()"><span>🪵</span> <span class="btn-text btn-text-full">Add <span class="hotkey">M</span>ain Branches</span><span class="btn-text btn-text-short">Add</span></button>
       <button id="shapeModeToggle" class="btn btn-shape"><span>🪾</span> Shape</button>
       <button id="pruneModeToggle" class="btn btn-accent active-prune-mode"><span>✂️</span> Prune</button>
   </div>
