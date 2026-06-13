@@ -73,30 +73,42 @@
       <span class="close-button" onclick="toggleSettings()">&times;</span>
     </div>
     <div class="settings-section">
+      <h3>🖥️ Quality</h3>
+      <label class="settings-row">
+        <span>Resolution</span>
+        <select id="resolutionPreset">
+          <option value="low">Low</option>
+          <option value="med">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </label>
+    </div>
+    <div class="settings-section">
       <h3>🔊 Sound</h3>
       <label class="settings-row">
         <span>Mute all</span>
         <input type="checkbox" id="toggleMute">
       </label>
-      <label class="settings-row">
+      <label class="settings-row no-bb">
         <span>Music</span>
         <input type="checkbox" id="toggleMusic">
       </label>
-      <label class="settings-row">
+      <label class="settings-row no-bb">
         <span>Music volume</span>
-        <input type="range" id="musicVolume" min="0" max="1" step="0.01">
+        <input type="range" id="musicVolume" min="0" max="1" step="0.01" value="0.5">
       </label>
       <div class="settings-row">
+        <span>Now playing</span>
         <span id="nowPlaying" class="now-playing">—</span>
         <button class="settings-next-btn" onclick="nextTrack()">⏭ Next</button>
       </div>
-      <label class="settings-row">
+      <label class="settings-row no-bb">
         <span>Sound effects</span>
         <input type="checkbox" id="toggleSfx">
       </label>
       <label class="settings-row">
         <span>SFX volume</span>
-        <input type="range" id="sfxVolume" min="0" max="1" step="0.01">
+        <input type="range" id="sfxVolume" min="0" max="1" step="0.01" value="0.4">
       </label>
       <label class="settings-row">
         <span>Ambient</span>
@@ -104,9 +116,9 @@
       </label>
     </div>
     <div class="settings-section">
-      <h3>🏔️ Backdrops</h3>
+      <h3>🌤️ Sky</h3>
       <label class="settings-row">
-        <span>Sky</span>
+        <span>Time of Day/Weather</span>
         <select id="skyPreset">
           <option value="clear">Clear</option>
           <option value="partly" selected>Partly Cloudy</option>
@@ -118,8 +130,19 @@
         </select>
       </label>
       <label class="settings-row">
+        <span>Cloud Drift</span>
+        <input type="checkbox" id="toggleClouds">
+      </label>
+    </div>
+    <div class="settings-section">
+      <h3>🏔️ Backdrops</h3>
+      <label class="settings-row">
         <span>Mountains</span>
         <input type="checkbox" id="toggleMountains">
+      </label>
+      <label class="settings-row">
+        <span>Mt. Fuji</span>
+        <input type="checkbox" id="toggleFuji">
       </label>
       <label class="settings-row">
         <span>Distant Forest</span>
@@ -134,18 +157,18 @@
         <input type="checkbox" id="toggleCourtyard">
       </label>
       <label class="settings-row">
-        <span>Cloud Drift</span>
-        <input type="checkbox" id="toggleClouds">
+        <span>House</span>
+        <input type="checkbox" id="toggleHouse">
       </label>
     </div>
     <div class="settings-section">
       <h3>🏮 Decor</h3>
       <label class="settings-row">
-        <span>Stone Lantern</span>
+        <span>Stone Lantern (tall)</span>
         <input type="checkbox" id="toggleLantern">
       </label>
       <label class="settings-row">
-        <span>Short Stone Lantern</span>
+        <span>Stone Lantern (short)</span>
         <input type="checkbox" id="toggleShortLantern">
       </label>
       <label class="settings-row">
@@ -175,8 +198,20 @@
         <span>Darker Gravel</span>
         <input type="checkbox" id="toggleGravelDark">
       </label>
+      <label class="settings-row">
+        <span>Fireflies (night)</span>
+        <input type="checkbox" id="toggleFireflies">
+      </label>
+      <label class="settings-row">
+        <span>Surface Textures</span>
+        <input type="checkbox" id="toggleBarkTexture">
+      </label>
     </div>
     
+    <div class="settings-section">
+      <h3>🎬 Share Clip</h3>
+      <button class="settings-zen-btn" onclick="recordBonsai()">🎥 Record 10s video</button>
+    </div>
     <div class="settings-section">
       <h3>🧘 Zen Mode</h3>
       <button class="settings-zen-btn" onclick="enterZenMode()">🪷 Hide all controls</button>
@@ -202,14 +237,16 @@
       <p class="credits-intro">3D models:</p>
       <ul>
         <li>Pagoda — <a href="https://poly.pizza/u/Poly%20by%20Google" target="_blank" rel="noopener">Poly by Google</a></li>
-        <li>Torii Gate, Pebble — <a href="https://poly.pizza/u/Quaternius" target="_blank" rel="noopener">Quaternius</a></li>
+        <li>Torii Gate, Pebble, Deer — <a href="https://poly.pizza/u/Quaternius" target="_blank" rel="noopener">Quaternius</a></li>
         <li>Stone Lantern — <a href="https://poly.pizza/u/Flopsi" target="_blank" rel="noopener">Flopsi</a></li>
         <li>Short Stone Lantern — <a href="https://sketchfab.com/MatthewRiegert" target="_blank" rel="noopener">MatthewRiegert</a></li>
         <li>Courtyard — <a href="https://sketchfab.com/Shiroinu25" target="_blank" rel="noopener">Shiroinu25</a></li>
         <li>Watering Can — <a href="https://poly.pizza/u/Zoe%20XR" target="_blank" rel="noopener">Zoe XR</a></li>
         <li>Stool — <a href="https://poly.pizza/u/iPoly3D" target="_blank" rel="noopener">iPoly3D</a></li>
         <li>Tea Set — <a href="https://sketchfab.com/alc.72" target="_blank" rel="noopener">捺/nuts</a></li>
-        <li>Bamboo — <a href="https://sketchfab.com/evolveduk" target="_blank" rel="noopener">evolveduk</a></li>
+        <li>Bamboo — <a href="https://sketchfab.com/1-3D.com" target="_blank" rel="noopener">1-3D.com</a></li>
+        <li>House — <a href="https://sketchfab.com/DanielStringer" target="_blank" rel="noopener">Daniel Stringer</a></li>
+        <li>Shiba Inu — <a href="https://sketchfab.com/aaadragon" target="_blank" rel="noopener">aaadragon</a></li>
       </ul>
       <p class="credits-intro">Sounds (<a href="https://freesound.org" target="_blank" rel="noopener">Freesound</a>):</p>
       <ul>
@@ -243,7 +280,6 @@
   </div>
 
 <div id="control-col">
-  <!-- <div><h4>Controls</h4><span class="close-button" onclick="hideControls()">&times;</span></div> -->
   <!-- Name of the tree currently on screen. Editable; Save writes it to the
        current saved tree (or names a brand-new save). -->
   <div id="tree-name-card">
@@ -294,7 +330,7 @@
           <option value="sage">Sage</option>
           <option value="pinks">Pink</option>
           <option value="yellows">Yellow</option>
-          <option value="purples">Purple</option>
+          <option value="purples">Burgundy</option>
           <option value="autumn">Autumn</option>
         </select>
       </div>
@@ -315,7 +351,7 @@
     <div class="control-section" id="truncSection">
       <h3>🌳 Trunk</h3>
             <div class="control-row">
-        <span class="control-label">Trunk Color</span>
+        <span class="control-label">Color</span>
         <select id="truncColor" class="control-input">
           <option value="0x8B4513">Brown</option>
           <option value="0xA0522D">Sienna</option>
@@ -327,12 +363,12 @@
       </div>
       <div class="control-row with-slider">
         <span class="control-label">Height</span>
-        <input type="range" id="truncHeight" min="40" max="140" value="100" class="control-input">
+        <input type="range" id="truncHeight" min="40" max="140" value="100" step="0.5" class="control-input">
         <span class="value-display" id="truncHeightValue">100</span>
       </div>
       <div class="control-row with-slider">
         <span class="control-label">Thickness</span>
-        <input type="range" id="truncThickness" min="4" max="18" value="4" class="control-input">
+        <input type="range" id="truncThickness" min="4" max="18" value="4" step="0.5" class="control-input">
         <span class="value-display" id="truncThicknessValue">6</span>
       </div>
       <div class="control-row with-slider">
@@ -372,7 +408,6 @@
                 <!-- Tree cards will be rendered here -->
             </div>
             <div class="gallery-footer">
-                <!-- <button onclick="clearGallery()">Clear All Trees</button> -->
             </div>
         </div>
     </div>
