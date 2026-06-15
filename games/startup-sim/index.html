@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Cards — Free Startup Simulator Game</title>
+    <link rel="stylesheet" href="css/bundle.min.css">
+    <meta name="description" content="Build and run your own startup. Make strategic decisions, watch your runway, revenue, and team evolve in this browser-based startup simulator.">
+    <link rel="canonical" href="https://dlightning.org/games/startup-sim/">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" href="img/favicons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png">
+    <link rel="manifest" href="img/favicons/site.webmanifest">
+    <meta name="theme-color" content="#1d4ed8">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Startup Cards">
+    <meta property="og:description" content="Build and run your own startup. Make strategic decisions, watch your runway, revenue, and team evolve in this browser-based startup simulator.">
+    <meta property="og:url" content="https://dlightning.org/games/startup-sim/">
+    <meta property="og:image" content="https://dlightning.org/games/startup-sim/img/startupCards-og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Startup Cards">
+    <meta name="twitter:description" content="Build and run your own startup. Make strategic decisions, watch your runway, revenue, and team evolve in this browser-based startup simulator.">
+    <meta name="twitter:image" content="https://dlightning.org/games/startup-sim/img/startupCards-og.png">
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Startup Cards",
+      "alternateName": "Startup Simulator",
+      "url": "https://dlightning.org/games/startup-sim/",
+      "image": "https://dlightning.org/games/startup-sim/img/startupCards-og.png",
+      "description": "Build and run your own startup. Make strategic decisions, watch your runway, revenue, and team evolve in this free browser-based startup simulator.",
+      "genre": ["Simulation", "Strategy", "Business"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any (web browser)",
+      "playMode": "SinglePlayer",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Dlightning",
+        "url": "https://dlightning.org"
+      }
+    }
+    </script>
+
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> -->
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1 class="sr-only">Startup Cards — a free browser-based startup simulator game</h1>
+    <header class="header">
+        <div class="business-stats" role="group" aria-label="Company stats">
+            <div class="stats-wordmark"><a href="https://dlightning.org/games" target="_blank" rel="noopener" aria-label="Dlightning games (opens in new tab)"><img src="svg/startupCards.svg" width="42px" alt="" loading="lazy"/></a></div>
+            <div class="stat-item" aria-live="polite" aria-atomic="true">
+                <span class="stat-label">Team Size</span>
+                <span class="stat-value" id="teamSize">1</span>
+            </div>
+            <div class="stat-item month-counter" aria-live="polite" aria-atomic="true">
+                <span class="stat-label">Month</span>
+                <span class="stat-value" id="currentMonth">M1</span>
+            </div>
+            <div class="stat-item" aria-live="polite" aria-atomic="true">
+                <span class="stat-label">Runway</span>
+                <span class="stat-value" id="runway">100K</span>
+            </div>
+            <div class="stat-item" aria-live="polite" aria-atomic="true">
+                <span class="stat-label">Revenue</span>
+                <span class="stat-value" id="revenue">$0/mo</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="simulator-container" id="simulatorContainer" aria-label="Decision cards">
+        <p id="cardKeyHelp" class="sr-only">
+            Use the Add and Skip buttons, or press Right Arrow to add this card,
+            Left Arrow to skip it, and Enter to flip it for the full breakdown.
+            Press the question mark key for a list of all keyboard shortcuts.
+        </p>
+        <!-- Cards will be dynamically inserted here -->
+    </main>
+
+    <nav class="bottom-nav" aria-label="Game actions">
+            <button type="button" class="company-name" id="companyName" aria-haspopup="dialog">
+                YourStartup Inc.
+            </button>
+            <div class="price-control" role="group" aria-label="Price per customer per month">
+                <span class="price-control-label">Price</span>
+                <div class="price-control-value">
+                <button type="button" class="price-step" id="priceDown" aria-label="Decrease price per customer">−</button>
+                <span class="price-value" id="priceValue" aria-live="polite">$10</span>
+                <button type="button" class="price-step" id="priceUp" aria-label="Increase price per customer">+</button>
+                </div>
+            </div>
+            <button type="button" id="selectionsBtn" class="btn btn-outline-primary" aria-haspopup="dialog">
+                <i class="fas fa-pencil mr-2" aria-hidden="true"></i>Selections
+            </button>
+    </nav>
+    <div class="price-projection" id="priceProjection" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="js/bundle.min.js"></script>
+</body>
+</html>
