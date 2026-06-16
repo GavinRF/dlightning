@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "the-slow-thing",
+      "title": "The Slow Thing",
+      "date": "June 16, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "There are two ways to leave a mark on the world. One of them grows back.",
+      "image": "img/julian-santa-ana-R6YZhThU-NU-unsplash.jpg",
+      "img-credit": "Julian Santa Ana",
+      "credit-link": "https://unsplash.com/photos/R6YZhThU-NU",
+      "tags": [
+        "Nature",
+        "Systems Thinking",
+        "Philosophy",
+        "Culture"
+      ],
+      "category": "Writing"
+    },
+    {
       "id": "naming-the-machine",
       "title": "Naming the Machine",
       "date": "June 4, 2026",
@@ -53,6 +71,24 @@
         "Human Limitations"
       ],
       "category": "Psychology"
+    },
+    {
+      "id": "squint",
+      "title": "Squint",
+      "date": "April 14, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "A screen always looks finished before anyone has actually seen it.",
+      "image": "img/toomas-tartes-zuIbCmY19Kw-unsplash.jpg",
+      "img-credit": "Toomas Tartes",
+      "credit-link": "https://unsplash.com/photos/zuIbCmY19Kw",
+      "tags": [
+        "Perception",
+        "Observation",
+        "Design Philosophy",
+        "Craft"
+      ],
+      "category": "Design"
     },
     {
       "id": "solar-punk-has-no-soil",
