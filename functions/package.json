@@ -25,7 +25,8 @@
     "firebase-functions-test": "^3.1.0"
   },
   "overrides": {
-    "protobufjs": "^7.5.9"
+    "protobufjs": "^7.5.9",
+    "@grpc/grpc-js": "^1.14.4"
   },
   "private": true
 }
