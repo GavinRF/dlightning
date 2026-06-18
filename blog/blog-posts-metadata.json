@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "worse-in-real-time",
+      "title": "Worse in Real Time",
+      "date": "June 18, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "What swimming taught me about running a business that working without a break never could.",
+      "image": "img/anna-tarazevich-QAEmvpS9gdw-unsplash.jpg",
+      "img-credit": "Anna Tarazevich",
+      "credit-link": "https://unsplash.com/photos/QAEmvpS9gdw",
+      "tags": [
+        "Reflection",
+        "Process",
+        "Human Limitations",
+        "Systems Thinking"
+      ],
+      "category": "Psychology"
+    },
+    {
       "id": "the-slow-thing",
       "title": "The Slow Thing",
       "date": "June 16, 2026",
