@@ -9,13 +9,6 @@ $.each(['owlCarousel', 'magnificPopup', 'niceSelect', 'slicknav'], function (i, 
 		$.fn[name] = function () { return this; };
 	}
 });
-if (typeof $.fn.imagesLoaded !== 'function') {
-	$.fn.imagesLoaded = function () {
-		var chain = { always: cb, done: cb, fail: cb, progress: cb };
-		function cb(fn) { if (typeof fn === 'function') { fn(); } return chain; }
-		return chain;
-	};
-}
 if (typeof $.scrollIt !== 'function') { $.scrollIt = function () {}; }
 if (typeof $.scrollUp !== 'function') { $.scrollUp = function () {}; }
 
@@ -162,10 +155,6 @@ center: true,
     event.preventDefault();
 	});
   
-  $('#container').imagesLoaded().always( function( instance ) {
-    console.log('ALWAYS - all images have been loaded');
-  });
-
     // AOS animations now handled per-page
     
   // counter 
