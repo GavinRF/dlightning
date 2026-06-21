@@ -26,6 +26,217 @@
 
 <p>For anyone building the interface in front of one of these models, the frame is the first design decision, and it gets made in the copy long before it gets made in the architecture. A loading state that says "Thinking" installs the oracle. One that says "Searching your files" installs the archive. The latency is identical. The relationship is not.</p>
 
+<style>
+  .nm-widget {
+    margin: 40px auto;
+    max-width: 560px;
+    font-family: inherit;
+  }
+  .nm-chat {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    background: #fff;
+  }
+  .nm-user {
+    margin-left: auto;
+    max-width: 80%;
+    background: #1159e9;
+    color: #fff;
+    font-size: 0.82rem;
+    padding: 9px 13px;
+    border-radius: 14px 14px 3px 14px;
+    margin-bottom: 14px;
+    width: fit-content;
+  }
+  .nm-assistant { min-height: 44px; }
+  .nm-status {
+    display: none;
+    align-items: center;
+    gap: 9px;
+    color: #64748b;
+    font-size: 0.82rem;
+  }
+  .nm-status.nm-on { display: flex; }
+  .nm-spinner {
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(17, 89, 233, 0.25);
+    border-top-color: #1159e9;
+    border-radius: 50%;
+    animation: nm-spin 0.7s linear infinite;
+    flex: none;
+  }
+  @keyframes nm-spin { to { transform: rotate(360deg); } }
+  .nm-verb-live { font-weight: 600; color: #0f172a; }
+  .nm-dots::after {
+    content: '';
+    animation: nm-dots 1.2s steps(4, end) infinite;
+  }
+  @keyframes nm-dots {
+    0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; }
+  }
+  .nm-time { margin-left: auto; font-variant-numeric: tabular-nums; color: #94a3b8; font-size: 0.74rem; }
+  .nm-answer { display: none; }
+  .nm-answer.nm-on { display: block; }
+  .nm-meta {
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 6px;
+  }
+  .nm-answer-text {
+    font-size: 0.86rem;
+    color: #334155;
+    line-height: 1.5;
+  }
+  .nm-verbs-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 8px;
+  }
+  .nm-verbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0 0 14px;
+  }
+  .nm-chip {
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #475569;
+    font-size: 0.74rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+  .nm-chip:hover { border-color: #94a3b8; }
+  .nm-chip.nm-active {
+    background: #0f172a;
+    border-color: #0f172a;
+    color: #fff;
+  }
+  .nm-run {
+    margin-top: 12px;
+    display: block;
+    margin-left: auto;
+    border: none;
+    background: #1159e9;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 9px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s ease;
+  }
+  .nm-run:hover { background: #0d47c4; }
+  .nm-run:disabled { opacity: 0.5; cursor: default; }
+  .nm-caption {
+    margin: 16px 0 0;
+    font-size: 0.82rem;
+    color: #64748b;
+    text-align: center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nm-spinner { animation-duration: 2s; }
+    .nm-dots::after { animation: none; content: '...'; }
+  }
+</style>
+
+<div class="nm-widget" aria-hidden="true">
+  <div class="nm-verbs-label">The spinner will say:</div>
+  <div class="nm-verbs" id="nm-verbs">
+    <button type="button" class="nm-chip nm-active" data-v="Thinking">Thinking</button>
+    <button type="button" class="nm-chip" data-v="Searching your files">Searching your files</button>
+    <button type="button" class="nm-chip" data-v="Drafting">Drafting</button>
+    <button type="button" class="nm-chip" data-v="">(no verb)</button>
+  </div>
+  <div class="nm-chat">
+    <div class="nm-user">How do I make a slow wait feel shorter?</div>
+    <div class="nm-assistant">
+      <div class="nm-status" id="nm-status">
+        <span class="nm-spinner"></span>
+        <span class="nm-verb-live" id="nm-verb-live">Thinking</span><span class="nm-dots" id="nm-dots"></span>
+        <span class="nm-time" id="nm-time">0.0s</span>
+      </div>
+      <div class="nm-answer" id="nm-answer">
+        <div class="nm-meta" id="nm-meta"></div>
+        <div class="nm-answer-text">Give people something to do while they wait. Empty time feels long; the same wait feels short when it's full.</div>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="nm-run" id="nm-run">Ask</button>
+  <p class="nm-caption">Same 2.2 seconds, same answer, every time. Only the verb changes.</p>
+</div>
+
+<script>
+  (function () {
+    var DURATION = 2200;
+    var verb = 'Thinking';
+    var status = document.getElementById('nm-status');
+    var verbLive = document.getElementById('nm-verb-live');
+    var dots = document.getElementById('nm-dots');
+    var timeEl = document.getElementById('nm-time');
+    var spinner = status.querySelector('.nm-spinner');
+
+    // Each verb strips away more theater: full → word only → nothing
+    var modes = {
+      'Thinking':             { spinner: true,  dots: true,  timer: true },
+      'Searching your files': { spinner: true,  dots: true,  timer: true },
+      'Drafting':             { spinner: false, dots: false, timer: false },
+      '':                     { spinner: false, dots: false, timer: false }
+    };
+    var answer = document.getElementById('nm-answer');
+    var meta = document.getElementById('nm-meta');
+    var runBtn = document.getElementById('nm-run');
+    var chips = document.querySelectorAll('.nm-chip');
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.classList.remove('nm-active'); });
+        chip.classList.add('nm-active');
+        verb = chip.getAttribute('data-v');
+      });
+    });
+
+    runBtn.addEventListener('click', function () {
+      answer.classList.remove('nm-on');
+      var m = modes[verb] || modes[''];
+      verbLive.textContent = verb;
+      verbLive.style.display = verb ? '' : 'none';
+      dots.style.display = m.dots ? '' : 'none';
+      spinner.style.display = m.spinner ? '' : 'none';
+      timeEl.style.display = m.timer ? '' : 'none';
+      status.classList.add('nm-on');
+      runBtn.disabled = true;
+      chips.forEach(function (c) { c.disabled = true; });
+
+      var start = performance.now();
+      var tick = setInterval(function () {
+        var s = Math.min(DURATION, performance.now() - start) / 1000;
+        timeEl.textContent = s.toFixed(1) + 's';
+      }, 60);
+
+      setTimeout(function () {
+        clearInterval(tick);
+        timeEl.textContent = '2.2s';
+        status.classList.remove('nm-on');
+        meta.textContent = (verb || 'no verb') + ' · 2.2s';
+        answer.classList.add('nm-on');
+        runBtn.disabled = false;
+        chips.forEach(function (c) { c.disabled = false; });
+      }, DURATION);
+    });
+  })();
+</script>
+
 <p>Every verb on the screen teaches the user what kind of thing they're talking to. A verb like "understand" sets an expectation the software can't meet, and the user feels the gap as disappointment, or worse, trusts the output past the point where they should. A verb like "draft" sets an expectation it can keep. You aren't describing the system to the user. You're deciding how they'll treat it.</p>
 
 <hr>

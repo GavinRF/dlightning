@@ -106,6 +106,218 @@
 
 <p>Watch how a three-tier pricing page actually works. The middle plan sells, not because anyone audited its features, but because it sits between a cheap one that feels insufficient and an expensive one that feels indulgent. Move the prices and the "right" choice moves with them. Nothing about the product changed. The frame did, and the frame is most of the decision.</p>
 
+<style>
+  .pd-widget {
+    margin: 40px auto;
+    max-width: 640px;
+    font-family: inherit;
+  }
+  .pd-cards {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .pd-card {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 18px 14px 16px;
+    background: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .pd-card.pd-leader {
+    border-color: #1159e9;
+    box-shadow: 0 10px 30px rgba(17, 89, 233, 0.16);
+    transform: translateY(-4px);
+  }
+  .pd-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1159e9;
+    color: #fff;
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+  .pd-card.pd-leader .pd-badge { opacity: 1; }
+  .pd-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+  .pd-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px;
+    flex: 1;
+  }
+  .pd-features li {
+    font-size: 0.74rem;
+    color: #64748b;
+    padding: 2px 0 2px 14px;
+    position: relative;
+    line-height: 1.35;
+  }
+  .pd-features li::before {
+    content: "·";
+    position: absolute;
+    left: 2px;
+    color: #94a3b8;
+  }
+  .pd-price {
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+  .pd-amt {
+    font-size: 1.55rem;
+    font-weight: 700;
+  }
+  .pd-per {
+    font-size: 0.72rem;
+    color: #94a3b8;
+  }
+  .pd-slider {
+    width: 100%;
+    accent-color: #1159e9;
+    cursor: pointer;
+    margin: 0 0 14px;
+  }
+  .pd-share {
+    height: 6px;
+    background: rgba(17, 89, 233, 0.12);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .pd-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #00c6ff 0%, #1159e9 100%);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+  .pd-share-label {
+    font-size: 0.68rem;
+    color: #64748b;
+    margin-top: 6px;
+  }
+  .pd-caption {
+    margin: 18px 0 0;
+    font-size: 0.82rem;
+    color: #64748b;
+    min-height: 1.2em;
+    text-align: center;
+    transition: color 0.2s ease;
+  }
+  @media (max-width: 520px) {
+    .pd-cards { flex-direction: column; }
+    .pd-card.pd-leader { transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pd-card, .pd-bar, .pd-badge { transition: none; }
+  }
+</style>
+
+<div class="pd-widget" aria-hidden="true">
+  <div class="pd-cards" id="pd-cards"></div>
+  <p class="pd-caption" id="pd-caption">Same three products. Only the prices move — drag them and watch the &ldquo;right&rdquo; choice follow.</p>
+</div>
+
+<script>
+  (function () {
+    var plans = [
+      { name: 'Basic', value: 10, min: 4, max: 20, price: 6,
+        features: ['1 project', 'Community support', 'Basic export'] },
+      { name: 'Plus', value: 18, min: 10, max: 40, price: 12,
+        features: ['10 projects', 'Priority support', 'Full export', 'Team seats'] },
+      { name: 'Pro', value: 24, min: 16, max: 80, price: 24,
+        features: ['Unlimited projects', 'Dedicated support', 'Full export', 'SSO & audit log'] }
+    ];
+
+    var cardsEl = document.getElementById('pd-cards');
+    var caption = document.getElementById('pd-caption');
+    var cards = [];
+
+    plans.forEach(function (p, i) {
+      var card = document.createElement('div');
+      card.className = 'pd-card';
+      card.innerHTML =
+        '<div class="pd-badge">Most popular</div>' +
+        '<div class="pd-name">' + p.name + '</div>' +
+        '<ul class="pd-features">' + p.features.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' +
+        '<div class="pd-price"><span class="pd-amt"></span><span class="pd-per">/mo</span></div>' +
+        '<input type="range" class="pd-slider" min="' + p.min + '" max="' + p.max + '" step="1" value="' + p.price + '" aria-label="' + p.name + ' price">' +
+        '<div class="pd-share"><div class="pd-bar"></div></div>' +
+        '<div class="pd-share-label"></div>';
+      cardsEl.appendChild(card);
+      var refs = {
+        card: card,
+        amt: card.querySelector('.pd-amt'),
+        slider: card.querySelector('.pd-slider'),
+        bar: card.querySelector('.pd-bar'),
+        label: card.querySelector('.pd-share-label')
+      };
+      refs.slider.addEventListener('input', function () {
+        plans[i].price = parseInt(refs.slider.value, 10);
+        update();
+      });
+      cards.push(refs);
+    });
+
+    function update() {
+      var prices = plans.map(function (p) { return p.price; });
+      // Value for money, relative to the best deal on offer
+      var vfm = plans.map(function (p) { return p.value / p.price; });
+      var maxVfm = Math.max.apply(null, vfm);
+      vfm = vfm.map(function (v) { return v / maxVfm; });
+      // The compromise effect: people avoid the price extremes, favor the median
+      var sorted = prices.slice().sort(function (a, b) { return a - b; });
+      var median = sorted[1];
+      var compromise = prices.map(function (pr) { return pr === median ? 1 : 0; });
+      // Combine into a choice utility, then softmax into shares
+      var util = plans.map(function (_, i) { return 2.2 * vfm[i] + 0.9 * compromise[i]; });
+      var exps = util.map(function (u) { return Math.exp(u / 0.6); });
+      var sum = exps.reduce(function (a, b) { return a + b; }, 0);
+      var shares = exps.map(function (e) { return e / sum; });
+
+      var lead = shares.indexOf(Math.max.apply(null, shares));
+
+      cards.forEach(function (c, i) {
+        c.amt.textContent = '$' + plans[i].price;
+        c.bar.style.width = Math.round(shares[i] * 100) + '%';
+        c.label.textContent = Math.round(shares[i] * 100) + '% choose this';
+        c.card.classList.toggle('pd-leader', i === lead);
+      });
+
+      var msg;
+      if (lead === 1) {
+        msg = 'The middle wins, sitting between a basic that feels thin and a pro that feels indulgent.';
+      } else if (lead === 0) {
+        msg = 'Now Basic looks like the smart buy. Price the middle too high and it loses its edge.';
+      } else {
+        msg = 'Pro is pulling ahead. The cheaper anchors made the top tier look reasonable.';
+      }
+      caption.textContent = msg + ' Nothing about the products changed.';
+      caption.style.color = lead === 1 ? '#1159e9' : '#64748b';
+    }
+
+    update();
+  })();
+</script>
+
 <p>An economist would call that irrational. The customer paid more because of a number sitting next to another number. But there's nothing broken about it. It's how perception works. We don't read value off an absolute scale. We read it off whatever happens to be standing nearby.</p>
 
 <hr>

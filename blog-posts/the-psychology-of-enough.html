@@ -98,6 +98,157 @@
 
 <p>Most apps are designed to prevent that closing. The next video starts before you chose to watch it. The feed has no bottom. The notification arrives the moment you've put the phone down. The appetite stays open. Low-grade wanting that never quite becomes rest.</p>
 
+<style>
+  .en-widget {
+    margin: 40px auto;
+    max-width: 600px;
+    font-family: inherit;
+  }
+  .en-tasks {
+    display: flex;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .en-card {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 18px 16px 16px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .en-card.en-settled {
+    border-color: #16a34a;
+    box-shadow: 0 8px 26px rgba(22, 163, 74, 0.14);
+  }
+  .en-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 14px;
+  }
+  .en-bar {
+    height: 10px;
+    background: rgba(15, 23, 42, 0.07);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .en-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #00c6ff 0%, #1159e9 100%);
+    border-radius: 5px;
+    transition: width 0.35s ease;
+  }
+  .en-card.en-settled .en-fill {
+    background: linear-gradient(90deg, #4ade80 0%, #16a34a 100%);
+  }
+  .en-btn {
+    align-self: flex-start;
+    border: none;
+    background: #1159e9;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.2s ease;
+  }
+  .en-btn:hover { background: #0d47c4; }
+  .en-btn:disabled {
+    background: #16a34a;
+    cursor: default;
+    opacity: 1;
+  }
+  .en-note {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    margin-top: 12px;
+    min-height: 1.1em;
+    transition: color 0.2s ease;
+  }
+  .en-card.en-settled .en-note { color: #16a34a; }
+  .en-caption {
+    margin: 18px 0 0;
+    font-size: 0.82rem;
+    color: #64748b;
+    text-align: center;
+  }
+  @media (max-width: 480px) {
+    .en-tasks { flex-direction: column; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .en-fill, .en-card, .en-btn { transition: none; }
+  }
+</style>
+
+<div class="en-widget" aria-hidden="true">
+  <div class="en-tasks">
+    <div class="en-card" id="en-close">
+      <div class="en-title">A task that ends</div>
+      <div class="en-bar"><div class="en-fill"></div></div>
+      <button class="en-btn" type="button">Continue</button>
+      <div class="en-note"></div>
+    </div>
+    <div class="en-card" id="en-open">
+      <div class="en-title">A task that doesn't</div>
+      <div class="en-bar"><div class="en-fill"></div></div>
+      <button class="en-btn" type="button">Continue</button>
+      <div class="en-note"></div>
+    </div>
+  </div>
+  <p class="en-caption">Both start the same. One lets the loop close. The other keeps the appetite open, and leaves the stopping to you.</p>
+</div>
+
+<script>
+  (function () {
+    // The task that ends — three steps and it's done, then it goes still
+    var closeCard = document.getElementById('en-close');
+    var closeFill = closeCard.querySelector('.en-fill');
+    var closeBtn = closeCard.querySelector('.en-btn');
+    var closeNote = closeCard.querySelector('.en-note');
+    var closeProg = 0;
+
+    closeBtn.addEventListener('click', function () {
+      closeProg = Math.min(100, closeProg + 34);
+      closeFill.style.width = closeProg + '%';
+      if (closeProg >= 100) {
+        closeCard.classList.add('en-settled');
+        closeBtn.textContent = 'Done';
+        closeBtn.disabled = true;
+        closeNote.textContent = 'Finished. Nothing more to do.';
+      } else {
+        closeNote.textContent = 'Keep going.';
+      }
+    });
+
+    // The task that doesn't — it climbs, then more arrives, and it never closes
+    var openCard = document.getElementById('en-open');
+    var openFill = openCard.querySelector('.en-fill');
+    var openBtn = openCard.querySelector('.en-btn');
+    var openNote = openCard.querySelector('.en-note');
+    var openProg = 0;
+    var added = 0;
+    var lines = ['Almost there.', 'Just one more.', 'A little further.', 'And another.'];
+    var li = 0;
+
+    openBtn.addEventListener('click', function () {
+      openProg = openProg + (100 - openProg) * 0.45;
+      added += Math.floor(Math.random() * 3) + 1;
+      // Any gap in attention gets filled — it recedes before it can close
+      if (openProg > 86) openProg = 78 + Math.random() * 7;
+      openFill.style.width = openProg + '%';
+      openNote.textContent = lines[li % lines.length] + '  +' + added + ' added since you started.';
+      li++;
+    });
+  })();
+</script>
+
 <hr>
 
 <p>What would it look like to design for enough?</p>

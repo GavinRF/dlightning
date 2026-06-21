@@ -96,6 +96,352 @@
 
 <p>A hospital registration form at a 9 a.m. scheduled visit and the same form at 2 a.m. in an emergency department, are not the same. The person the form was designed for, a calm and attentive person, with a few minutes to spare doesn't exist in that room. The environment hasn't made that persona available. What's there instead: fluorescent lights, a muffled PA system, a crying child, a triage wristband. The form lands on top of all of that.</p>
 
+<!-- Background photo: Alex Radelich — https://unsplash.com/photos/Evo4wmtRaPI -->
+<style>
+  .ei-widget { margin: 40px auto; max-width: 560px; font-family: inherit; }
+  .ei-stage {
+    position: relative;
+    height: 340px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #eef2f7;
+  }
+  .ei-bg {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: url('../blog/img/env-crowd.jpg') center/cover no-repeat;
+    filter: brightness(0.55) saturate(1.1);
+    z-index: 1;
+  }
+  .ei-screen {
+    display: none;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 2;
+  }
+  .ei-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 18px 16px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 12px 34px rgba(15, 23, 42, 0.2);
+  }
+  .ei-card-title { font-weight: 700; font-size: 0.95rem; color: #0f172a; margin-bottom: 4px; }
+  .ei-card-text { font-size: 0.76rem; color: #64748b; margin-bottom: 16px; }
+  .ei-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ei-opt {
+    flex: 1 1 45%;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #475569;
+    font-size: 0.78rem;
+    padding: 9px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  /* the target button looks identical to the rest — you have to read to find it */
+  .ei-shake { animation: ei-shake 0.3s ease; }
+  @keyframes ei-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  .ei-banner {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background: #dc2626;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 6px;
+    z-index: 4;
+    animation: ei-flash 0.6s steps(2, end) infinite;
+  }
+  @keyframes ei-flash { 0% { background: #dc2626; } 50% { background: #7f1d1d; } }
+  .ei-countdown {
+    display: none;
+    position: absolute;
+    top: 6px; right: 12px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    z-index: 5;
+  }
+  .ei-modal {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 6;
+  }
+  .ei-modal-box {
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
+    padding: 22px 20px 18px;
+    width: 240px;
+    text-align: center;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+  }
+  .ei-modal-x {
+    position: absolute;
+    top: 6px; right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: #94a3b8;
+    cursor: pointer;
+  }
+  .ei-modal-text { font-size: 0.82rem; color: #334155; margin-bottom: 14px; }
+  .ei-modal-go {
+    border: none;
+    background: #16a34a;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 8px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .ei-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(238, 242, 247, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 8;
+  }
+  .ei-msg { font-size: 0.86rem; color: #334155; text-align: center; line-height: 1.5; }
+  .ei-controls { display: flex; gap: 10px; margin-top: 14px; }
+  .ei-run {
+    flex: 1;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #0f172a;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 11px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s ease;
+  }
+  .ei-run:hover { background: #f1f5f9; }
+  .ei-run-chaos { border-color: #dc2626; color: #dc2626; }
+  .ei-run-chaos:hover { background: #fef2f2; }
+  .ei-run:disabled { opacity: 0.5; cursor: default; }
+  .ei-results { margin-top: 12px; }
+  .ei-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #475569;
+    padding: 5px 2px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .ei-caption {
+    margin: 14px 0 0;
+    font-size: 0.82rem;
+    color: #64748b;
+    text-align: center;
+    line-height: 1.5;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ei-banner { animation: none; background: #dc2626; }
+    .ei-shake { animation: none; }
+  }
+</style>
+
+<div class="ei-widget" aria-hidden="true">
+  <div class="ei-stage" id="ei-stage">
+    <div class="ei-bg" id="ei-bg"></div>
+    <div class="ei-banner" id="ei-banner">⚠ SESSION EXPIRING — ACT NOW</div>
+    <div class="ei-countdown" id="ei-countdown">6.0</div>
+    <div class="ei-screen" id="ei-screen">
+      <div class="ei-card">
+        <div class="ei-card-title">Patient check-in</div>
+        <div class="ei-card-text">Confirm your details to register for your visit.</div>
+        <div class="ei-buttons">
+          <button type="button" class="ei-opt" data-role="d">Edit details</button>
+          <button type="button" class="ei-opt" data-role="d">Add insurance</button>
+          <button type="button" class="ei-opt" data-role="d">Cancel</button>
+          <button type="button" class="ei-opt ei-target" data-role="t">Check in</button>
+        </div>
+      </div>
+    </div>
+    <div class="ei-modal" id="ei-modal">
+      <div class="ei-modal-box">
+        <button type="button" class="ei-modal-x" id="ei-modal-x" aria-label="Close">×</button>
+        <div class="ei-modal-text">Verify it's you to keep your session.</div>
+        <button type="button" class="ei-modal-go" id="ei-modal-go">Verify</button>
+      </div>
+    </div>
+    <div class="ei-overlay" id="ei-overlay">
+      <div class="ei-msg" id="ei-msg">Same form, two environments. Find and click <b>Check in</b> as fast as you can. Try the 9 a.m. clinic first.</div>
+    </div>
+  </div>
+  <div class="ei-controls">
+    <button type="button" class="ei-run" id="ei-calm">9 a.m. clinic</button>
+    <button type="button" class="ei-run ei-run-chaos" id="ei-rush">2 a.m. in the ER</button>
+  </div>
+  <div class="ei-results" id="ei-results"></div>
+  <p class="ei-caption" id="ei-caption">Same page, same button. The only thing that changes is what surrounds it.</p>
+</div>
+
+<script>
+  (function () {
+    var stage = document.getElementById('ei-stage');
+    var bg = document.getElementById('ei-bg');
+    var banner = document.getElementById('ei-banner');
+    var cd = document.getElementById('ei-countdown');
+    var screenEl = document.getElementById('ei-screen');
+    var card = screenEl.querySelector('.ei-card');
+    var modal = document.getElementById('ei-modal');
+    var overlay = document.getElementById('ei-overlay');
+    var msg = document.getElementById('ei-msg');
+    var calmBtn = document.getElementById('ei-calm');
+    var rushBtn = document.getElementById('ei-rush');
+    var resultsEl = document.getElementById('ei-results');
+    var caption = document.getElementById('ei-caption');
+    var opts = screenEl.querySelectorAll('.ei-opt');
+
+    var DURATION = 6000;
+    var active = false, mode = null, startTime = 0, cdTimer = null, modalOpen = false;
+    var times = { calm: null, rush: null };
+
+    function label(m) { return m === 'calm' ? '9 a.m. clinic' : '2 a.m. in the ER'; }
+
+    function shuffleButtons() {
+      var c = screenEl.querySelector('.ei-buttons');
+      var kids = Array.prototype.slice.call(c.children);
+      for (var i = kids.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+      }
+      kids.forEach(function (k) { c.appendChild(k); });
+    }
+
+    function reset() {
+      active = false;
+      clearInterval(cdTimer); cdTimer = null;
+      modalOpen = false;
+      screenEl.style.display = 'none';
+      bg.style.display = 'none';
+      banner.style.display = 'none';
+      cd.style.display = 'none';
+      modal.style.display = 'none';
+    }
+
+    function startRound(m) {
+      if (active) return;
+      mode = m;
+      reset();
+      calmBtn.disabled = true; rushBtn.disabled = true;
+      overlay.style.display = 'flex';
+      msg.textContent = 'Ready…';
+      setTimeout(function () {
+        shuffleButtons();
+        overlay.style.display = 'none';
+        screenEl.style.display = 'flex';
+        if (m === 'rush') {
+          bg.style.display = 'block';
+          banner.style.display = 'block';
+          cd.style.display = 'block';
+          cd.textContent = (DURATION / 1000).toFixed(1);
+          modal.style.display = 'flex';
+          modalOpen = true;
+        }
+        active = true;
+        startTime = performance.now();
+        if (m === 'rush') {
+          cdTimer = setInterval(function () {
+            var rem = DURATION - (performance.now() - startTime);
+            if (rem <= 0) { cd.textContent = '0.0'; fail(); return; }
+            cd.textContent = (rem / 1000).toFixed(1);
+          }, 80);
+        }
+      }, 800);
+    }
+
+    function done(value, message) {
+      active = false;
+      clearInterval(cdTimer);
+      times[mode] = value;
+      reset();
+      overlay.style.display = 'flex';
+      msg.innerHTML = message;
+      calmBtn.disabled = false; rushBtn.disabled = false;
+      render();
+    }
+
+    function finish() {
+      var t = performance.now() - startTime;
+      done(t, label(mode) + ': <b>' + (t / 1000).toFixed(2) + 's</b>');
+    }
+
+    function fail() {
+      done('missed', 'The moment passed before you reached it.');
+    }
+
+    function render() {
+      var rows = '';
+      ['calm', 'rush'].forEach(function (m) {
+        if (times[m] == null) return;
+        var v = times[m] === 'missed' ? 'missed it' : (times[m] / 1000).toFixed(2) + 's';
+        rows += '<div class="ei-row"><span>' + label(m) + '</span><span>' + v + '</span></div>';
+      });
+      resultsEl.innerHTML = rows;
+
+      if (times.calm != null && times.rush != null) {
+        if (times.rush === 'missed') {
+          caption.textContent = 'Same form. In the 9 a.m. clinic you found it in ' + (times.calm / 1000).toFixed(1) + 's. In the ER, the moment passed before you could. The environment decided what was possible.';
+        } else {
+          var ratio = times.rush / times.calm;
+          caption.textContent = 'Same form, same button. ' + (times.rush / 1000).toFixed(1) + 's in the ER against ' + (times.calm / 1000).toFixed(1) + 's in the clinic, about ' + ratio.toFixed(1) + '× slower. The context did the work.';
+        }
+        caption.style.color = '#0f172a';
+      }
+    }
+
+    opts.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (!active || modalOpen) return;
+        if (b.classList.contains('ei-target')) {
+          finish();
+        } else {
+          card.classList.remove('ei-shake');
+          void card.offsetWidth;
+          card.classList.add('ei-shake');
+        }
+      });
+    });
+
+    function closeModal() { modal.style.display = 'none'; modalOpen = false; }
+    document.getElementById('ei-modal-x').addEventListener('click', closeModal);
+    document.getElementById('ei-modal-go').addEventListener('click', closeModal);
+    calmBtn.addEventListener('click', function () { startRound('calm'); });
+    rushBtn.addEventListener('click', function () { startRound('rush'); });
+  })();
+</script>
+
 <hr>
 
 <p>Casinos figured this out early. No windows, no clocks. Carpet patterns designed to push the eye toward the floor and back up toward the machines. The slot machine itself is almost incidental. The real interface is the building.</p>
