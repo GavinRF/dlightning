@@ -98,6 +98,236 @@
 
 <p>I watched this play out on a checkout page everyone agreed was clean. Squint at it and the heaviest thing on the screen was a green promo banner. The button that actually took your money was a thin outline, polite, easy to skate past. Nobody had decided that. It was what the screen said when you stopped reading it and started seeing it. The fix took ten minutes. Finding it took the squint.</p>
 
+<style>
+  .sq-widget {
+    margin: 40px auto;
+    max-width: 600px;
+    font-family: inherit;
+  }
+  .sq-stage {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(31, 38, 135, 0.12);
+    background: #fff;
+  }
+  .sq-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .sq-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .sq-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    white-space: nowrap;
+  }
+  .sq-range {
+    flex: 1;
+    accent-color: #1159e9;
+    cursor: pointer;
+  }
+  .sq-caption {
+    margin-top: 12px;
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    color: #64748b;
+    min-height: 1.2em;
+    transition: color 0.2s ease;
+  }
+</style>
+
+<div class="sq-widget">
+  <div class="sq-stage">
+    <canvas id="sq-canvas" class="sq-canvas" width="600" height="520"></canvas>
+  </div>
+  <div class="sq-controls">
+    <span class="sq-label">See</span>
+    <input type="range" id="sq-range" class="sq-range" min="0" max="100" value="0" aria-label="Squint">
+    <span class="sq-label">Squint</span>
+  </div>
+  <p id="sq-caption" class="sq-caption">A checkout page everyone agreed was clean. Drag right to stop reading it and start seeing it.</p>
+</div>
+
+<script>
+  (function () {
+    var W = 600, H = 520;
+    var canvas = document.getElementById('sq-canvas');
+    var ctx = canvas.getContext('2d');
+    var range = document.getElementById('sq-range');
+    var caption = document.getElementById('sq-caption');
+
+    // Offscreen full-detail render of the mock checkout
+    var src = document.createElement('canvas');
+    src.width = W; src.height = H;
+    var sctx = src.getContext('2d');
+    var tmp = document.createElement('canvas');
+    var tctx = tmp.getContext('2d');
+
+    function roundRect(c, x, y, w, h, r) {
+      c.beginPath();
+      c.moveTo(x + r, y);
+      c.arcTo(x + w, y, x + w, y + h, r);
+      c.arcTo(x + w, y + h, x, y + h, r);
+      c.arcTo(x, y + h, x, y, r);
+      c.arcTo(x, y, x + w, y, r);
+      c.closePath();
+    }
+
+    function drawUI(c) {
+      c.clearRect(0, 0, W, H);
+      c.fillStyle = '#ffffff';
+      c.fillRect(0, 0, W, H);
+
+      // Header
+      c.fillStyle = '#0f172a';
+      c.font = '700 22px Helvetica, Arial, sans-serif';
+      c.textBaseline = 'middle';
+      c.fillText('NORTHWIND', 24, 32);
+      c.fillStyle = '#94a3b8';
+      c.font = '14px Helvetica, Arial, sans-serif';
+      c.textAlign = 'right';
+      c.fillText('Cart (3)', W - 24, 32);
+      c.textAlign = 'left';
+      c.strokeStyle = '#eef2f7';
+      c.lineWidth = 1;
+      c.beginPath(); c.moveTo(0, 58); c.lineTo(W, 58); c.stroke();
+
+      // The promo banner — heaviest thing on the screen
+      c.fillStyle = '#16a34a';
+      roundRect(c, 24, 74, W - 48, 62, 8);
+      c.fill();
+      c.fillStyle = '#ffffff';
+      c.font = '700 19px Helvetica, Arial, sans-serif';
+      c.textAlign = 'center';
+      c.fillText('★  FREE SHIPPING — TODAY ONLY', W / 2, 106);
+      c.textAlign = 'left';
+
+      // Order summary
+      c.fillStyle = '#94a3b8';
+      c.font = '12px Helvetica, Arial, sans-serif';
+      c.fillText('ORDER SUMMARY', 24, 164);
+
+      var items = [
+        ['Field notebook, A5', '$18.00'],
+        ['Walnut pen, fine nib', '$42.00'],
+        ['Refill ink, midnight', '$9.00']
+      ];
+      var y = 190;
+      c.font = '15px Helvetica, Arial, sans-serif';
+      for (var i = 0; i < items.length; i++) {
+        c.fillStyle = '#475569';
+        c.fillText(items[i][0], 24, y);
+        c.textAlign = 'right';
+        c.fillStyle = '#64748b';
+        c.fillText(items[i][1], W - 24, y);
+        c.textAlign = 'left';
+        c.strokeStyle = '#f1f5f9';
+        c.beginPath(); c.moveTo(24, y + 15); c.lineTo(W - 24, y + 15); c.stroke();
+        y += 32;
+      }
+
+      // Coupon row — a field and an Apply chip
+      c.strokeStyle = '#dbe2ea';
+      c.lineWidth = 1;
+      roundRect(c, 24, 282, 446, 40, 7);
+      c.stroke();
+      c.fillStyle = '#b6c0cd';
+      c.font = '14px Helvetica, Arial, sans-serif';
+      c.fillText('Coupon code', 38, 303);
+      c.strokeStyle = '#cbd5e1';
+      roundRect(c, 482, 282, W - 24 - 482, 40, 7);
+      c.stroke();
+      c.fillStyle = '#aab6c6';
+      c.textAlign = 'center';
+      c.fillText('Apply', (482 + W - 24) / 2, 303);
+      c.textAlign = 'left';
+
+      // Totals
+      c.font = '14px Helvetica, Arial, sans-serif';
+      c.fillStyle = '#64748b';
+      c.fillText('Subtotal', 24, 350);
+      c.textAlign = 'right';
+      c.fillText('$69.00', W - 24, 350);
+      c.textAlign = 'left';
+      c.fillStyle = '#64748b';
+      c.fillText('Shipping', 24, 374);
+      c.textAlign = 'right';
+      c.fillStyle = '#16a34a';
+      c.fillText('FREE', W - 24, 374);
+      c.textAlign = 'left';
+      c.fillStyle = '#0f172a';
+      c.font = '700 16px Helvetica, Arial, sans-serif';
+      c.fillText('Total', 24, 402);
+      c.textAlign = 'right';
+      c.fillText('$84.00', W - 24, 402);
+      c.textAlign = 'left';
+
+      // The button that actually takes your money — a thin, polite outline
+      c.strokeStyle = '#cbd5e1';
+      c.lineWidth = 1.5;
+      roundRect(c, 24, 424, W - 48, 52, 8);
+      c.stroke();
+      c.fillStyle = '#aab6c6';
+      c.font = '15px Helvetica, Arial, sans-serif';
+      c.textAlign = 'center';
+      c.fillText('Pay $84.00', W / 2, 451);
+
+      // Continue shopping — a light afterthought of a link
+      c.fillStyle = '#b6c0cd';
+      c.font = '14px Helvetica, Arial, sans-serif';
+      c.fillText('←  Continue shopping', W / 2, 498);
+      c.textAlign = 'left';
+    }
+
+    drawUI(sctx);
+
+    function render(blocks) {
+      if (blocks >= W) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.clearRect(0, 0, W, H);
+        ctx.drawImage(src, 0, 0);
+        return;
+      }
+      var sw = Math.max(2, blocks);
+      var sh = Math.max(2, Math.round(blocks * H / W));
+      tmp.width = sw; tmp.height = sh;
+      // Downsample: average into a tiny canvas...
+      tctx.imageSmoothingEnabled = true;
+      tctx.clearRect(0, 0, sw, sh);
+      tctx.drawImage(src, 0, 0, W, H, 0, 0, sw, sh);
+      // ...then blow it back up with no smoothing — blocks, not blur
+      ctx.imageSmoothingEnabled = false;
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(tmp, 0, 0, sw, sh, 0, 0, W, H);
+    }
+
+    function update() {
+      var t = range.value / 100;
+      // Curve down from full detail to a heavy squint of ~7 blocks wide
+      var blocks = Math.round(7 + (W - 7) * Math.pow(1 - t, 3));
+      render(blocks);
+      if (blocks < 30) {
+        caption.textContent = 'The promo banner is the heaviest thing here. The Pay button has all but vanished.';
+        caption.style.color = '#16a34a';
+      } else {
+        caption.textContent = 'A checkout page everyone agreed was clean. Drag right to stop reading it and start seeing it.';
+        caption.style.color = '#64748b';
+      }
+    }
+
+    range.addEventListener('input', update);
+    update();
+  })();
+</script>
+
 <hr>
 
 <p>The strange part is that you can keep going. There's always another way to look. By color. By alignment. By what a tired person at the end of a long day would notice first, or by what isn't there at all. The patterns don't run out. You don't arrive at the reading so much as run out of time, or decide the readings you've found agree well enough to ship.</p>
