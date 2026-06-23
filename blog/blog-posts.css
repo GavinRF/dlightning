@@ -60,12 +60,12 @@ body {
         .post-content p:first-of-type:first-child:first-letter,
         .post-content .first-pgh::first-letter {
             text-transform: capitalize;
-            font-size: 4.2rem;
+            font-size: 4.32rem;
             font-weight: bold;
             color: #05126a;
             margin-right: 0.2rem;
-            margin-bottom: 0.2rem;
-            margin-top: 0.04rem;
+            margin-bottom: -0.2rem;
+            margin-top: 0.4rem;
             font-family: 'Rubik', sans-serif;
             float: left;
         }

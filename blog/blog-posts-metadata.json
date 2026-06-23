@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "the-whole-city-is-the-interface",
+      "title": "The Whole City Is the Interface",
+      "date": "June 21, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "The environment shapes what you want, the screen feeds it back, and the loop tightens.",
+      "image": "img/james-chan-9PZpzDZqhyM-unsplash.jpg",
+      "img-credit": "James Chan",
+      "credit-link": "https://unsplash.com/photos/9PZpzDZqhyM",
+      "tags": [
+        "Design Philosophy",
+        "Systems Thinking",
+        "Experiential Design",
+        "Psychology"
+      ],
+      "category": "Systems"
+    },
+    {
       "id": "worse-in-real-time",
       "title": "Worse in Real Time",
       "date": "June 18, 2026",

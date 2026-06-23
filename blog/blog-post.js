@@ -42,9 +42,31 @@
     function renderRelatedPosts(posts, current) {
         const container = document.querySelector('#moreRelatedPosts .row');
         if (!container || !current) return;
-        const related = posts
-            .filter(p => p.category === current.category && p.id !== currentId)
-            .slice(0, 4);
+
+        const LIMIT = 6;
+        const candidates = posts.filter(p => p.id !== currentId);
+
+        // Primary match: same category. When a category is thin (or has only
+        // this post), fall back to posts that share the most tags, so the
+        // section never renders empty.
+        const sameCategory = candidates.filter(p => p.category === current.category);
+        const related = sameCategory.slice(0, LIMIT);
+
+        if (related.length < LIMIT) {
+            const currentTags = new Set(current.tags || []);
+            const chosen = new Set(related.map(p => p.id));
+            const byTags = candidates
+                .filter(p => !chosen.has(p.id))
+                .map(p => ({ post: p, shared: (p.tags || []).filter(t => currentTags.has(t)).length }))
+                .filter(x => x.shared > 0)
+                .sort((a, b) => b.shared - a.shared);
+            for (const { post } of byTags) {
+                if (related.length >= LIMIT) break;
+                related.push(post);
+            }
+        }
+
+        if (!related.length) return;
         container.innerHTML = related.map(post => `
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="related-post">
