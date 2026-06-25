@@ -6,7 +6,20 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 06:14:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 18:40:48 +0000</lastBuildDate>
+    <item>
+      <title>Fifteen Stones</title>
+      <link>https://dlightning.org/blog-posts/fifteen-stones.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/fifteen-stones.html</guid>
+      <pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[A garden in Kyoto is built around the one stone you're never allowed to see.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/noren.jpg" type="image/jpeg" />
+      <category>Perception</category>
+      <category>Craft</category>
+      <category>Design Philosophy</category>
+      <category>Observation</category>
+    </item>
     <item>
       <title>The Whole City Is the Interface</title>
       <link>https://dlightning.org/blog-posts/the-whole-city-is-the-interface.html</link>

@@ -32,6 +32,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
     <link rel="manifest" href="/site.webmanifest">
+    <!-- RSS feed -->
+    <link rel="alternate" type="application/rss+xml" title="Sparks — Dlightning" href="/blog/feed.xml">
 </head>
 <body>
     <header id="header"></header>
@@ -429,8 +431,8 @@ Experience the AI-powered cliff notes for <i>Your Cup of Tea</i> with the <i>Dee
     
     <script>	
         $(document).ready(function() {
-            $('#footer').load("../../footer.html");
-            $('#header').load("../../header.html", function(response, status, xhr) {
+            $('#footer').load("../footer.html");
+            $('#header').load("../header.html", function(response, status, xhr) {
                 if (status == "error") {
                     var msg = "Sorry but there was an error: ";
                     $("#error").html(msg + xhr.status + " " + xhr.statusText);

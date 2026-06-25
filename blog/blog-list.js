@@ -105,11 +105,11 @@ function updateArchivePosts() {
         const postElement = document.createElement('div');
         postElement.className = 'media post_item';
         postElement.innerHTML = `
-            <a href="blog-posts/${post.id}.html">
+            <a href="../blog-posts/${post.id}.html">
                 <img src="${post.image}" alt="${post.title}" loading="lazy">
             </a>
             <div class="media-body ms-3">
-                <a href="blog-posts/${post.id}.html"><h3>${post.title}</h3></a>
+                <a href="../blog-posts/${post.id}.html"><h3>${post.title}</h3></a>
                 <small>${post.date}</small>
             </div>
         `;

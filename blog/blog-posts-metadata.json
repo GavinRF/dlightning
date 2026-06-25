@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "fifteen-stones",
+      "title": "Fifteen Stones",
+      "date": "June 25, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "A garden in Kyoto is built around the one stone you're never allowed to see.",
+      "image": "img/noren.jpg",
+      "img-credit": "Dlightning",
+      "credit-link": "https://dlightning.org",
+      "tags": [
+        "Perception",
+        "Craft",
+        "Design Philosophy",
+        "Observation"
+      ],
+      "category": "Philosophy"
+    },
+    {
       "id": "the-whole-city-is-the-interface",
       "title": "The Whole City Is the Interface",
       "date": "June 21, 2026",
