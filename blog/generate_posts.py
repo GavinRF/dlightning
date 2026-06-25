@@ -1,6 +1,8 @@
 import json
 import os
 
+from generate_feed import write_feed
+
 def load_metadata():
     with open('blog/blog-posts-metadata.json', 'r') as f:
         return json.load(f)
@@ -60,6 +62,10 @@ if __name__ == "__main__":
     print(f"Done. {len(changed)} updated, {len(unchanged)} unchanged.")
     for pid in changed:
         print(f"  updated: {pid}")
+
+    # Rebuild the RSS feed from the same metadata so it never goes stale.
+    count = write_feed(metadata)
+    print(f"Wrote blog/feed.xml with {count} items.")
 
 
 # RUN COMMAND to Generate Posts from MetaData

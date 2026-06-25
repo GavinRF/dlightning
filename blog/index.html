@@ -27,6 +27,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
     <link rel="manifest" href="/site.webmanifest">
+    <!-- RSS feed -->
+    <link rel="alternate" type="application/rss+xml" title="Sparks — Dlightning" href="/blog/feed.xml">
 </head>
 
 <body>
@@ -93,6 +95,8 @@
                         </div>
                     </aside>
 
+                    <a href="https://dlightning.org/blog/feed.xml" class="about_widget_link" id="rssCopyLink" onclick="copyRssLink(event, this)"><i class="fas fa-rss me-1"></i>&nbsp;Copy RSS feed link</a>
+
                     <!-- <aside class="single_sidebar_widget newsletter_widget">
                         <h4 class="widget_title">Newsletter</h4>
                         <form action="#">
@@ -114,7 +118,26 @@
     <div class="footer" id="footer"></div>
     <!--/ footer end  -->
 
-    <script>	
+    <script>
+     // Copy the RSS feed URL to the clipboard so visitors can paste it into
+     // their feed reader, rather than navigating to the raw XML page.
+     function copyRssLink(event, link) {
+        event.preventDefault();
+        var url = link.getAttribute('href');
+        var label = '<i class="fas fa-rss me-1"></i>&nbsp;Copy RSS feed link';
+        function showCopied() {
+            link.innerHTML = '<i class="fas fa-check me-1"></i>&nbsp;Link copied — paste into your reader';
+            setTimeout(function() { link.innerHTML = label; }, 2500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(showCopied, function() { window.prompt('Copy this feed URL:', url); });
+        } else {
+            window.prompt('Copy this feed URL:', url);
+        }
+     }
+    </script>
+
+    <script>
      $(document).ready(function() {
         $('#footer').load("../footer.html");
         $('#header').load("../header.html", function( response, status, xhr ) {

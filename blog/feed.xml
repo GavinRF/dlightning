@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Sparks &#8212; Dlightning</title>
+    <link>https://dlightning.org/blog/</link>
+    <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Insights on experience design, customer psychology, and building products that connect.</description>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jun 2026 06:14:58 +0000</lastBuildDate>
+    <item>
+      <title>The Whole City Is the Interface</title>
+      <link>https://dlightning.org/blog-posts/the-whole-city-is-the-interface.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/the-whole-city-is-the-interface.html</guid>
+      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[The environment shapes what you want, the screen feeds it back, and the loop tightens.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/james-chan-9PZpzDZqhyM-unsplash.jpg" type="image/jpeg" />
+      <category>Design Philosophy</category>
+      <category>Systems Thinking</category>
+      <category>Experiential Design</category>
+      <category>Psychology</category>
+    </item>
+    <item>
+      <title>Worse in Real Time</title>
+      <link>https://dlightning.org/blog-posts/worse-in-real-time.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/worse-in-real-time.html</guid>
+      <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[What swimming taught me about running a business that working without a break never could.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/anna-tarazevich-QAEmvpS9gdw-unsplash.jpg" type="image/jpeg" />
+      <category>Reflection</category>
+      <category>Process</category>
+      <category>Human Limitations</category>
+      <category>Systems Thinking</category>
+    </item>
+    <item>
+      <title>The Slow Thing</title>
+      <link>https://dlightning.org/blog-posts/the-slow-thing.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/the-slow-thing.html</guid>
+      <pubDate>Tue, 16 Jun 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[There are two ways to leave a mark on the world. One of them grows back.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/julian-santa-ana-R6YZhThU-NU-unsplash.jpg" type="image/jpeg" />
+      <category>Nature</category>
+      <category>Systems Thinking</category>
+      <category>Philosophy</category>
+      <category>Culture</category>
+    </item>
+    <item>
+      <title>Naming the Machine</title>
+      <link>https://dlightning.org/blog-posts/naming-the-machine.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/naming-the-machine.html</guid>
+      <pubDate>Thu, 04 Jun 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[The name you give a machine is the first design decision, made before any code.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/brad-pearson-hSh8WKyA7vU-unsplash.jpg" type="image/jpeg" />
+      <category>AI</category>
+      <category>Perception</category>
+      <category>Psychology</category>
+      <category>Design Philosophy</category>
+    </item>
+    <item>
+      <title>The Meaning Layer</title>
+      <link>https://dlightning.org/blog-posts/the-meaning-layer.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/the-meaning-layer.html</guid>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[On what design tools take when they hand you the finished thing instead of the skill to make it.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/sergi-viladesau-dttmeqFUDSU-unsplash.jpg" type="image/jpeg" />
+      <category>Craft</category>
+      <category>Process</category>
+      <category>Design Philosophy</category>
+      <category>Design Systems</category>
+    </item>
+    <item>
+      <title>Designing for the Irrational Majority</title>
+      <link>https://dlightning.org/blog-posts/designing-for-the-irrational-majority.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/designing-for-the-irrational-majority.html</guid>
+      <pubDate>Tue, 12 May 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Most UX research assumes a user who weighs every option and knows their own mind. That user doesn't exist.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/sasha-matveeva-oDCwxiVOzVs-unsplash.jpg" type="image/jpeg" />
+      <category>Psychology</category>
+      <category>UX Design</category>
+      <category>Perception</category>
+      <category>Human Limitations</category>
+    </item>
+    <item>
+      <title>Squint</title>
+      <link>https://dlightning.org/blog-posts/squint.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/squint.html</guid>
+      <pubDate>Tue, 14 Apr 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[A screen always looks finished before anyone has actually seen it.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/toomas-tartes-zuIbCmY19Kw-unsplash.jpg" type="image/jpeg" />
+      <category>Perception</category>
+      <category>Observation</category>
+      <category>Design Philosophy</category>
+      <category>Craft</category>
+    </item>
+    <item>
+      <title>Solar-punk Has No Soil</title>
+      <link>https://dlightning.org/blog-posts/solar-punk-has-no-soil.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/solar-punk-has-no-soil.html</guid>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Every optimistic green-future render crops out the same thing: the soil, the part that rots and feeds what comes next.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/sandie-clarke-q13Zq1Jufks-unsplash.jpg" type="image/jpeg" />
+      <category>Design Philosophy</category>
+      <category>Systems Thinking</category>
+      <category>Nature</category>
+      <category>Process</category>
+    </item>
+    <item>
+      <title>Outvoted</title>
+      <link>https://dlightning.org/blog-posts/outvoted.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/outvoted.html</guid>
+      <pubDate>Sun, 22 Feb 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[The intellect runs the numbers and usually wins. What it means when the chest refuses to tighten and you act anyway.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/marcos-paulo-prado-GAI_kOUIc8U-unsplash.jpg" type="image/jpeg" />
+      <category>Psychology</category>
+      <category>Reflection</category>
+      <category>Perception</category>
+      <category>Human Limitations</category>
+    </item>
+    <item>
+      <title>The Environment Is the Interface</title>
+      <link>https://dlightning.org/blog-posts/the-environment-is-the-interface.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/the-environment-is-the-interface.html</guid>
+      <pubDate>Sun, 04 Jan 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Every interface lives inside a context that's doing more design work than the interface itself.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/etienne-boulanger-iYcuJQaVTvg-unsplash.jpg" type="image/jpeg" />
+      <category>Design Philosophy</category>
+      <category>UX Design</category>
+      <category>Psychology</category>
+      <category>Systems Thinking</category>
+      <category>Observation</category>
+    </item>
+    <item>
+      <title>What the Hands Know</title>
+      <link>https://dlightning.org/blog-posts/what-the-hands-know.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/what-the-hands-know.html</guid>
+      <pubDate>Sun, 30 Nov 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[We are building more intelligence. The question worth asking is what kind.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/zetong-li-iFTqbA-TGhs-unsplash.jpg" type="image/jpeg" />
+      <category>AI</category>
+      <category>Design Philosophy</category>
+      <category>Human Limitations</category>
+      <category>Systems Thinking</category>
+      <category>Nature</category>
+    </item>
+    <item>
+      <title>The Psychology of "Enough"</title>
+      <link>https://dlightning.org/blog-posts/the-psychology-of-enough.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/the-psychology-of-enough.html</guid>
+      <pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Most digital products don't know the word enough. That's not an accident, it's architecture.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/hanna-lazar-cY_tQ10NNyk-unsplash.jpg" type="image/jpeg" />
+      <category>Psychology</category>
+      <category>Design Philosophy</category>
+      <category>UX Design</category>
+      <category>Human Limitations</category>
+      <category>Process</category>
+    </item>
+    <item>
+      <title>Instant Bonsai</title>
+      <link>https://dlightning.org/blog-posts/instant-bonsai.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/instant-bonsai.html</guid>
+      <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[What it means to work with something living, something that remembers every decision you make.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/dario-bertolino-GSTYwxJGaMM-unsplash.jpg" type="image/jpeg" />
+      <category>Craft</category>
+      <category>Process</category>
+      <category>Nature</category>
+      <category>Reflection</category>
+    </item>
+    <item>
+      <title>The Competition Design Pattern</title>
+      <link>https://dlightning.org/blog-posts/competition-design-pattern.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/competition-design-pattern.html</guid>
+      <pubDate>Thu, 24 Jul 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[How platform constraints become cultural evolution engines, shaping which ideas survive and spread.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/joachim-lesne-mcrj2CkV0PE-unsplash.jpg" type="image/jpeg" />
+      <category>Design Systems</category>
+      <category>Culture</category>
+      <category>Platform Design</category>
+      <category>Information Architecture</category>
+      <category>Psychology</category>
+    </item>
+    <item>
+      <title>The Bison, The Wolf, and The Designer</title>
+      <link>https://dlightning.org/blog-posts/bison-wolf-and-the-designer.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/bison-wolf-and-the-designer.html</guid>
+      <pubDate>Sun, 20 Jul 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Observation, connection, and the hidden networks that shape experience.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/pepe-estrada-brightscenespix-maoJqJV1GW4-unsplash.jpg" type="image/jpeg" />
+      <category>Systems Thinking</category>
+      <category>Observation</category>
+      <category>UX Design</category>
+      <category>Nature</category>
+      <category>Psychology</category>
+      <category>Design Philosophy</category>
+    </item>
+    <item>
+      <title>The Narrow Window</title>
+      <link>https://dlightning.org/blog-posts/narrow-window.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/narrow-window.html</guid>
+      <pubDate>Mon, 14 Jul 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Human perception is woefully limited. What does this mean for how we design experiences?]]></description>
+      <enclosure url="https://dlightning.org/blog/img/balint-mendlik-aLw9A_-XgPY-unsplash.jpg" type="image/jpeg" />
+      <category>Perception</category>
+      <category>Philosophy</category>
+      <category>Design Thinking</category>
+      <category>Human Limitations</category>
+      <category>Systems Thinking</category>
+    </item>
+    <item>
+      <title>Logic &amp; Pixels</title>
+      <link>https://dlightning.org/blog-posts/logic-and-pixels.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/logic-and-pixels.html</guid>
+      <pubDate>Mon, 16 Jun 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[The developer mindsets that can transform how designers approach complex systems and decision-making.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/francesco-la-corte-QK1DmRmej6k-unsplash.jpg" type="image/jpeg" />
+      <category>Design</category>
+      <category>Development</category>
+      <category>Process</category>
+      <category>Systems Thinking</category>
+      <category>Logic</category>
+    </item>
+    <item>
+      <title>Failing Forward</title>
+      <link>https://dlightning.org/blog-posts/time-well-wasted.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/time-well-wasted.html</guid>
+      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Gavin Fiorina</dc:creator>
+      <description><![CDATA[I spent four years building an app no one wanted and I consider it a success.<br> Let me explain.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/blake-cheek-mYQDJKWqlww-unsplash.jpg" type="image/jpeg" />
+      <category>Process</category>
+      <category>Engineering</category>
+      <category>Motivation</category>
+      <category>Creative Journey</category>
+    </item>
+    <item>
+      <title>Dr. Frankenstein's AI</title>
+      <link>https://dlightning.org/blog-posts/dr-frankensteins-ai.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/dr-frankensteins-ai.html</guid>
+      <pubDate>Sat, 10 May 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Ben Almen</dc:creator>
+      <description><![CDATA[How we almost replaced ourselves with AI and why that would have violated everything we stand for.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/frankenstein-ai.jpg" type="image/jpeg" />
+      <category>AI</category>
+      <category>Ethics</category>
+      <category>Writing</category>
+      <category>UX Design</category>
+      <category>Humanity</category>
+    </item>
+    <item>
+      <title>I Handed My Book to AI, and It Gave Me a Podcast. Here’s How It Went.</title>
+      <link>https://dlightning.org/blog-posts/cup-of-tea-pod.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/cup-of-tea-pod.html</guid>
+      <pubDate>Thu, 10 Oct 2024 00:00:00 +0000</pubDate>
+      <dc:creator>Gavin Fiorina</dc:creator>
+      <description><![CDATA[When I let AI do a deep dive into <i>Your Cup of Tea</i>, the result was surprisingly human.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/podcast-booth.jpg" type="image/jpeg" />
+      <category>AI</category>
+      <category>Process</category>
+      <category>Storytelling</category>
+    </item>
+    <item>
+      <title>Sailing with the User Interface</title>
+      <link>https://dlightning.org/blog-posts/ui-sailboat.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/ui-sailboat.html</guid>
+      <pubDate>Sat, 21 Sep 2024 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[The surprising first moments of an encounter with new technology.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/sail-ui.jpg" type="image/jpeg" />
+      <category>Psychology</category>
+      <category>Process</category>
+      <category>Theory</category>
+    </item>
+    <item>
+      <title>Decision Theories &amp; Models</title>
+      <link>https://dlightning.org/blog-posts/decision-theories-models.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/decision-theories-models.html</guid>
+      <pubDate>Sun, 31 Mar 2024 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Design for the mental pathways used to make decisions.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/dog-cat.jpg" type="image/jpeg" />
+      <category>Psychology</category>
+      <category>Process</category>
+      <category>Theory</category>
+    </item>
+    <item>
+      <title>Cherry Tree Buck</title>
+      <link>https://dlightning.org/blog-posts/cherry-tree-buck.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/cherry-tree-buck.html</guid>
+      <pubDate>Sat, 16 Mar 2024 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Building emotional connection through storytelling.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/cc-buck.jpg" type="image/jpeg" />
+      <category>Storytelling</category>
+      <category>Nature</category>
+      <category>Community</category>
+      <category>Experiential Design</category>
+    </item>
+    <item>
+      <title>The Gumball Machine</title>
+      <link>https://dlightning.org/blog-posts/gumball-machine.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/gumball-machine.html</guid>
+      <pubDate>Mon, 04 Mar 2024 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[How the seamless integration of design & engineering shapes customer experience driving emotional engagement.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/autoshop.jpg" type="image/jpeg" />
+      <category>Design</category>
+      <category>Engineering</category>
+      <category>Ethics in Tech</category>
+      <category>Experiential Design</category>
+    </item>
+    <item>
+      <title>Missed Deadlines</title>
+      <link>https://dlightning.org/blog-posts/missed-deadlines.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/missed-deadlines.html</guid>
+      <pubDate>Sun, 04 Feb 2024 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[How setting a due date and repeatedly missing it got me to the finish line.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/contact-sheet.png" type="image/jpeg" />
+      <category>Writing</category>
+      <category>Motivation</category>
+      <category>Time Management</category>
+      <category>Creative Journey</category>
+      <category>Process</category>
+      <category>Experience</category>
+    </item>
+  </channel>
+</rss>
