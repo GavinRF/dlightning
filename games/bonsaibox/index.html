@@ -27,6 +27,11 @@
 
   <link rel="stylesheet" href="app.min.css">
 
+  <!-- PWA: installability. The manifest is harmless in dev (manifests aren't cached);
+       only the service worker is gated to production — see the script at end of body. -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#764ba2">
+
   <link rel="icon" href="assets/img/favicon/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
@@ -70,6 +75,7 @@
   <div id="settingsDrawer">
     <div class="settings-header">
       <h2>Settings</h2>
+      <button type="button" id="collapseAllSections" class="settings-collapse-all">Collapse all</button>
       <span class="close-button" onclick="toggleSettings()">&times;</span>
     </div>
     <div class="settings-section">
@@ -427,6 +433,30 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script type="module" src="app.min.js"></script>
+
+  <!-- Service worker registration — PRODUCTION ONLY, by design.
+       On localhost/127.0.0.1 (dev + local testing) we do the OPPOSITE of register:
+       unregister any worker and wipe its caches, so a SW can never serve stale files
+       locally. Combined with sw.js only existing in dist/ builds, dev is SW-free. -->
+  <script>
+    (function () {
+      if (!('serviceWorker' in navigator)) return;
+      var h = location.hostname;
+      var isLocal = h === 'localhost' || h === '127.0.0.1' || h === '[::1]' || h === '';
+      if (isLocal) {
+        navigator.serviceWorker.getRegistrations().then(function (rs) {
+          rs.forEach(function (r) { r.unregister(); });
+        });
+        if (window.caches) caches.keys().then(function (ks) {
+          ks.forEach(function (k) { caches.delete(k); });
+        });
+        return;
+      }
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () {});
+      });
+    })();
+  </script>
 
 </body>
 </html>
