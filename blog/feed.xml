@@ -6,7 +6,20 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 17:38:28 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 22:25:48 +0000</lastBuildDate>
+    <item>
+      <title>Where It Wore Thin</title>
+      <link>https://dlightning.org/blog-posts/where-it-wore-thin.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/where-it-wore-thin.html</guid>
+      <pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[A system takes the shape of whatever's been flowing through it.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/mert-atakan-chc-oAL0gBU-unsplash.jpg" type="image/jpeg" />
+      <category>Systems Thinking</category>
+      <category>Nature</category>
+      <category>Observation</category>
+      <category>Design Philosophy</category>
+    </item>
     <item>
       <title>Fifteen Stones</title>
       <link>https://dlightning.org/blog-posts/fifteen-stones.html</link>
@@ -76,7 +89,7 @@
       <title>The Meaning Layer</title>
       <link>https://dlightning.org/blog-posts/the-meaning-layer.html</link>
       <guid isPermaLink="true">https://dlightning.org/blog-posts/the-meaning-layer.html</guid>
-      <pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 May 2026 00:00:00 +0000</pubDate>
       <dc:creator>Dlightning</dc:creator>
       <description><![CDATA[On what design tools take when they hand you the finished thing instead of the skill to make it.]]></description>
       <enclosure url="https://dlightning.org/blog/img/sergi-viladesau-dttmeqFUDSU-unsplash.jpg" type="image/jpeg" />

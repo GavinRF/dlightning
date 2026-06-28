@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "where-it-wore-thin",
+      "title": "Where It Wore Thin",
+      "date": "June 28, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "A system takes the shape of whatever's been flowing through it.",
+      "image": "img/mert-atakan-chc-oAL0gBU-unsplash.jpg",
+      "img-credit": "Mert Atakan",
+      "credit-link": "https://unsplash.com/photos/oAL0gBU",
+      "tags": [
+        "Systems Thinking",
+        "Nature",
+        "Observation",
+        "Design Philosophy"
+      ],
+      "category": "Systems"
+    },
+    {
       "id": "fifteen-stones",
       "title": "Fifteen Stones",
       "date": "June 25, 2026",
@@ -93,7 +111,7 @@
     {
       "id": "the-meaning-layer",
       "title": "The Meaning Layer",
-      "date": "June 1, 2026",
+      "date": "May 20, 2026",
       "author": "Dlightning",
       "authorImage": "img/author.png",
       "excerpt": "On what design tools take when they hand you the finished thing instead of the skill to make it.",
