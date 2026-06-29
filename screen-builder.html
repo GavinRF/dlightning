@@ -4,34 +4,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Screen Builder - Free UI & Screen Mockup Tool | Dlightning</title>
-<meta name="description" content="Create beautiful UI mockups in minutes with Screen Builder. Drag-and-drop interface with component library for rapid prototyping. Export designs as images instantly.">
-<meta name="keywords" content="UI mockup tool, rapid prototyping, wireframe builder, screen designer, drag and drop UI, mobile mockup, design tool, UI components">
-<link rel="canonical" href="https://dlightning.org/screen-builder.html">
+<title>D⚡ | Screen Builder</title>
+<meta name="description" content="Interactive mobile device mockup with draggable interface and component library including buttons, inputs, checkboxes, radio buttons, dropdowns, cards, navigation bars, and modals. Features a realistic device frame with status bar. Quickly prototype your design and export it as an image.">
+<meta name="keywords" content="mobile mockup, UI components, device prototype, interactive interface, drag and drop, UI design, button component, input field, checkbox, radio button, dropdown menu, card component, navigation bar, modal window, mobile status bar, UX mockup tool, faster than Figma, Figma killer, wireframe builder, screen creator, Modern Wireframe Generator">
 <meta name="author" content="Dlightning">
-<meta name="robots" content="index, follow">
-<!-- ux-mobile-mock-tool.html  Dlightning.org 2025-->
+<!-- screen-builder.html  Dlightning.org 2025-->
 <meta http-equiv="Content-Security-Policy-Report-Only" content="">
 <!-- opengraph  -->
-<meta property="og:url" content="https://dlightning.org/screen-builder.html">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Dlightning">
 <meta property="og:image" content="https://dlightning.org/img/opengraph/mock-gen.png"/>
-<meta property="og:title" content="Screen Builder - Free UI & Screen Mockup Tool | Dlightning"/>
-<meta property="og:description" content="Create beautiful UI mockups in minutes with drag-and-drop components. Rapid prototyping tool for designers."/>
+<meta property="og:title" content="Dlightning - Screen Builder"/>
+<meta property="og:description" content="Dedicated to creating a better world through design."/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Screen Builder - Free UI & Screen Mockup Tool | Dlightning">
-<meta name="twitter:description" content="Create beautiful UI mockups in minutes with drag-and-drop components.">
-<meta name="twitter:image" content="https://dlightning.org/img/opengraph/mock-gen.png">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
 <link id="google-fonts" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Condensed:ital,wght@0,600;1,600|Open+Sans:400,700|Lato:400,700|Montserrat:400,700|Poppins:400,700|Raleway:400,700|Nunito:400,700|Playfair+Display:ital,wght@400,700|Source+Sans+Pro:400,700|Rubik:400,700&display=swap">
-
-<link rel="stylesheet" href="dist/css/styles.min.css">
+<link rel="stylesheet" href="css/ux-mock-bldr.css">
+<link rel="stylesheet" href="css/componentVariants.css">
+<link rel="stylesheet" href="css/fontselect.css">
+<!-- <link rel="stylesheet" href="dist/css/styles.min.css"> -->
 
 <script src=" https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/dist/html2canvas-pro.min.js "></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
@@ -48,12 +42,6 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
-    <link rel="manifest" href="/site.webmanifest">
 </head>
 
 
@@ -301,6 +289,15 @@
                 <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
+            <!-- <div class="comp-btn-wrap">
+                <button class="component-btn" data-component="formGroup">
+                    <i title="form group" class="fa-solid fa-object-group"></i> 
+                    Form Group
+                    <span></span>
+                </button>
+                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div> -->
+
             <div class="comp-btn-wrap">
                 <button class="component-btn" data-component="dropdown">
                     <i title="dropdown" class="fa-solid fa-chevron-down"></i> 
@@ -503,6 +500,7 @@
                 Modal Pop-up
                 <span>dialog</span>
             </button>
+            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <div class="comp-btn-wrap">
@@ -570,14 +568,17 @@
                 Keyboard
                 <span>keys</span>
             </button>
+            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <div class="comp-btn-wrap">
             <button class="component-btn" data-component="bottomSheet">
+                <!-- fa-circle-half-stroke fa-rotate-270 -->
                 <i title="bottom sheet" class="fa-solid fa-arrow-up-from-bracket"></i> 
                 Bottom Sheet
                 <span>menu</span>
             </button>
+            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;">
@@ -661,7 +662,7 @@
     <div class="btn-group-spacer"></div>
     <div class="btn-group-spacer"></div>
         <div class="font-class-group">
-
+           <!--  <label class="groupLabel">Fonts</label> -->
             <div class="btn-group-spacer"></div>
             <div style="display: flex; margin: 0 0 -4px 4px;">
                 <i class="fa-solid fa-p"></i>&thinsp;
@@ -669,7 +670,9 @@
                 <span style="color:darkgray;">Primary Font</span>
             </div>
             <div class="font-control-group">
-
+                <!-- <button title="upload font" id="uploadFontBtn" class="upload-font-btn">
+                    <i class="fas fa-file-arrow-up"></i>
+                  </button> -->
                 <input type="select" id="fontPicker1">
             </div>
             
@@ -679,6 +682,9 @@
                 <span style="color:darkgray;">Secondary Font</span>
             </div>
             <div class="font-control-group">
+                <!-- <button title="upload font" id="uploadFontBtn2" class="upload-font-btn">
+                    <i class="fas fa-file-arrow-up"></i>
+                  </button> -->
                 <input type="select" id="fontPicker2">
             </div>
         </div>
@@ -700,8 +706,8 @@
                     <div>
                         <label>H1 Font</label><br>
                         <div class="font-level-btns">
-                        <button data-level="h1" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
-                        <button data-level="h1"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
+                        <button title="primary font" data-level="h1" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
+                        <button title="secondary font" data-level="h1"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -798,8 +804,8 @@
                     <div>
                         <label>H2 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h2" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
-                            <button data-level="h2"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
+                            <button title="primary font" data-level="h2" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
+                            <button title="secondary font" data-level="h2"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -896,8 +902,8 @@
                     <div>
                         <label>H3 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h3" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
-                            <button data-level="h3"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
+                            <button title="primary font" data-level="h3" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
+                            <button title="secondary font" data-level="h3"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -994,8 +1000,8 @@
                     <div>
                         <label>H4 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h4"><i class="fas fa-p"></i>&thinsp;<i class="fas fa-f"></i></button>
-                            <button data-level="h4" class="selected"><i class="fas fa-s">&thinsp;</i><i class="fas fa-f"></i></button>
+                            <button title="primary font" data-level="h4"><i class="fas fa-p"></i>&thinsp;<i class="fas fa-f"></i></button>
+                            <button title="secondary font" data-level="h4" class="selected"><i class="fas fa-s">&thinsp;</i><i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1092,8 +1098,8 @@
                     <div>
                         <label>H5 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h5" class="selected"><i class="fas fa-p"></i>&thinsp;<i class="fas fa-f"></i></button>
-                            <button data-level="h5"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
+                            <button title="primary font" data-level="h5" class="selected"><i class="fas fa-p"></i>&thinsp;<i class="fas fa-f"></i></button>
+                            <button title="secondary font" data-level="h5"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1190,8 +1196,8 @@
                     <div>
                         <label>H6 Font</label><br>
                         <div class="font-level-btns">
-                            <button data-level="h6" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
-                            <button data-level="h6"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
+                            <button title="primary font" data-level="h6" class="selected"><i class="fas fa-p">&thinsp;</i><i class="fas fa-f"></i></button>
+                            <button title="secondary font" data-level="h6"><i class="fas fa-s"></i>&thinsp;<i class="fas fa-f"></i></button>
                         </div>
                     </div>
                     <div>
@@ -1201,6 +1207,12 @@
                             <button data-level="h6" class="selected" title="bold"><i class="fas fa-bold"></i></button>
                         </div>
                     </div>
+                    <!-- <div>
+                        <label>Italic</label><br>
+                        <div class="font-level-btns">
+                            <button data-level="h6" class="selected"><i class="fas fa-italic"></i></button>
+                        </div>
+                    </div> -->
                     <div>
                         <label>Text Transform</label><br>
                         <select class="heading-text-transform text-transform-select" data-level="h6">
@@ -1653,9 +1665,38 @@ $(document).on('mouseenter', '.previewInnerCon', function() {
 
  </script>
 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
-<script src="dist/js/bundle.min.js"></script>
+<!-- <script src="dist/js/bundle.min.js"></script> -->
+<!-- Component registry modules (window.Components.*) — load before ux-mock-bldr.js -->
+<script src="js/components/progressBar.js"></script>
+<script src="js/components/chipGroup.js"></script>
+<script src="js/components/notificationBanner.js"></script>
+<script src="js/components/tabs.js"></script>
+<script src="js/components/checkbox.js"></script>
+<script src="js/components/radio.js"></script>
+<script src="js/components/dropdown.js"></script>
+<script src="js/components/divider.js"></script>
+<script src="js/components/video.js"></script>
+<script src="js/components/modal.js"></script>
+<script src="js/components/keyboard.js"></script>
+<script src="js/components/chat.js"></script>
+<script src="js/imgGallerySetup.js"></script>
+<script src="js/extra-func.js"></script>
+<script src="js/ux-mock-bldr.js"></script>
+<script src="js/variants.js"></script>
+<script src="js/projectSys.js"></script>
+<!-- Collaboration (steps 2-4). Off by default; flip to true to test. See docs/*-spec.md -->
+<script>window.COLLAB_PRESENCE_ENABLED = false; window.COLLAB_SYNC_ENABLED = false; window.COLLAB_ACCESS_ENABLED = false;</script>
+<script src="js/collab-presence.js"></script>
+<script src="js/collab-sync.js"></script>
+<script src="js/collab-sys.js"></script>
+<script src="js/new-Stripe.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/fontselect.js"></script> 
+
 <script type="module" src="functions/index.js"></script>
 
+<!-- <script src="js/collab-sys.js"></script> -->
 </body>
 </html>
