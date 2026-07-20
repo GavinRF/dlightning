@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "no-one-hears-their-own-accent",
+      "title": "No One Hears Their Own Accent",
+      "date": "July 9, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "The frame you think through is the one thing it can't show you.",
+      "image": "img/laurenz-kleinheider-OsC8HauR0e0-unsplash.jpg",
+      "img-credit": "Laurenz Kleinheider",
+      "credit-link": "https://unsplash.com/photos/OsC8HauR0e0",
+      "tags": [
+        "Perception",
+        "Philosophy",
+        "Observation",
+        "Human Limitations"
+      ],
+      "category": "Philosophy"
+    },
+    {
       "id": "where-it-wore-thin",
       "title": "Where It Wore Thin",
       "date": "June 28, 2026",

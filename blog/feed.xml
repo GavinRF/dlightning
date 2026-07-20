@@ -6,7 +6,20 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 22:25:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jul 2026 11:05:12 +0000</lastBuildDate>
+    <item>
+      <title>No One Hears Their Own Accent</title>
+      <link>https://dlightning.org/blog-posts/no-one-hears-their-own-accent.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/no-one-hears-their-own-accent.html</guid>
+      <pubDate>Mon, 20 Jul 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[The frame you think through is the one thing it can't show you.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/laurenz-kleinheider-OsC8HauR0e0-unsplash.jpg" type="image/jpeg" />
+      <category>Perception</category>
+      <category>Philosophy</category>
+      <category>Observation</category>
+      <category>Human Limitations</category>
+    </item>
     <item>
       <title>Where It Wore Thin</title>
       <link>https://dlightning.org/blog-posts/where-it-wore-thin.html</link>
