@@ -378,15 +378,20 @@ color: #767676;
 .tag-cloud-item {
     transition: all 0.15s ease;
 }
+.tag-cloud-item:hover {
+    background-color: #e7f0ff;
+    border-color: #1a73ff;
+    color: #0a5cf0;
+}
 .tag-cloud-item.active {
-    background-color: #05126a;
-    border-color: #05126a;
+    background-color: #1a73ff;
+    border-color: #1a73ff;
     color: #fff;
-    box-shadow: 0 0.1rem 0.25rem rgba(5, 18, 106, 0.35);
+    box-shadow: 0 0.1rem 0.25rem rgba(26, 115, 255, 0.4);
 }
 .tag-cloud-item.active:hover {
-    background-color: #030d4d;
-    border-color: #030d4d;
+    background-color: #0a5cf0;
+    border-color: #0a5cf0;
     color: #fff;
 }
 
@@ -399,15 +404,18 @@ color: #767676;
     transition: all 0.15s ease;
 }
 .cat-link:hover {
-    color: #05126a;
+    color: #1a73ff;
 }
 .cat-link.active {
-    background-color: #eef0fb;
-    color: #05126a;
+    background-color: #e7f0ff;
+    color: #0a5cf0;
     font-weight: 600;
 }
+.cat-link p {
+    margin: 4px 0;
+}
 .cat-link.active p {
-    color: #05126a;
+    color: #0a5cf0;
 }
 
 /* ---- Active filters bar ---- */
@@ -416,7 +424,7 @@ color: #767676;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.6rem;
-    margin: 0 18px 1.25rem 18px;
+    margin: 0 0 1.25rem 0;
     padding: 0.75rem 1rem;
     background: #fff;
     border: 1px solid #e6e6ea;
@@ -438,9 +446,9 @@ color: #767676;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    border: 1px solid #05126a;
-    background: #eef0fb;
-    color: #05126a;
+    border: 1px solid #1a73ff;
+    background: #e7f0ff;
+    color: #0a5cf0;
     font-size: 0.78rem;
     line-height: 1;
     padding: 0.3rem 0.55rem;
@@ -449,7 +457,7 @@ color: #767676;
     transition: all 0.15s ease;
 }
 .filter-chip:hover {
-    background: #05126a;
+    background: #1a73ff;
     color: #fff;
 }
 .filter-chip-x {
