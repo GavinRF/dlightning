@@ -374,3 +374,115 @@ color: #767676;
     margin-bottom: 2rem;
 }
 
+/* ---- Tag cloud selected state ---- */
+.tag-cloud-item {
+    transition: all 0.15s ease;
+}
+.tag-cloud-item.active {
+    background-color: #05126a;
+    border-color: #05126a;
+    color: #fff;
+    box-shadow: 0 0.1rem 0.25rem rgba(5, 18, 106, 0.35);
+}
+.tag-cloud-item.active:hover {
+    background-color: #030d4d;
+    border-color: #030d4d;
+    color: #fff;
+}
+
+/* ---- Category selected state ---- */
+.cat-link {
+    text-decoration: none;
+    color: #495057;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease;
+}
+.cat-link:hover {
+    color: #05126a;
+}
+.cat-link.active {
+    background-color: #eef0fb;
+    color: #05126a;
+    font-weight: 600;
+}
+.cat-link.active p {
+    color: #05126a;
+}
+
+/* ---- Active filters bar ---- */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 18px 1.25rem 18px;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid #e6e6ea;
+    border-radius: 0.5rem;
+}
+.active-filters-count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #05126a;
+    white-space: nowrap;
+}
+.active-filters-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    flex: 1 1 auto;
+}
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid #05126a;
+    background: #eef0fb;
+    color: #05126a;
+    font-size: 0.78rem;
+    line-height: 1;
+    padding: 0.3rem 0.55rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.filter-chip:hover {
+    background: #05126a;
+    color: #fff;
+}
+.filter-chip-x {
+    font-size: 1rem;
+    line-height: 0.7;
+}
+.clear-all-btn {
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    font-size: 0.82rem;
+    text-decoration: underline;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 0.2rem 0.3rem;
+}
+.clear-all-btn:hover {
+    color: #05126a;
+}
+
+/* ---- No results ---- */
+.no-results {
+    margin: 1rem 18px 2rem 18px;
+    color: #6c757d;
+    font-size: 1rem;
+}
+.no-results .link-btn {
+    border: none;
+    background: transparent;
+    color: #05126a;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+    padding: 0;
+}
+

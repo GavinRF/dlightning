@@ -59,7 +59,9 @@
                 <search class="single_sidebar_widget search_widget">
                     <div class="search_widget"></div>
                 </search>
+                <div id="activeFilters" class="active-filters" hidden></div>
                 <div id="blogPosts" class="row"></div>
+                <p id="noResults" class="no-results" hidden>No posts match these filters. <button type="button" class="link-btn" onclick="clearFilters()">Clear filters</button></p>
                 <button id="loadMoreBtn" class="btn btn-primary mt-4" onclick="loadMorePosts()">Load More</button>
             </div>
             <div class="col-lg-4">
