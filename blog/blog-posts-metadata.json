@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "leave-it-richer",
+      "title": "Leave It Richer",
+      "date": "July 21, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "The richest forests on earth were made by people, not spared from them.",
+      "image": "img/elise-wilcox-Nzxpo-3mgT0-unsplash.jpg",
+      "img-credit": "Elise Wilcox",
+      "credit-link": "https://unsplash.com/photos/Nzxpo-3mgT0",
+      "tags": [
+        "Nature",
+        "Systems Thinking",
+        "Culture",
+        "Reflection"
+      ],
+      "category": "Nature"
+    },
+    {
       "id": "no-one-hears-their-own-accent",
       "title": "No One Hears Their Own Accent",
       "date": "July 9, 2026",

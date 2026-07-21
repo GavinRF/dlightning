@@ -6,12 +6,25 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Jul 2026 11:05:12 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jul 2026 12:04:25 +0000</lastBuildDate>
+    <item>
+      <title>Leave It Richer</title>
+      <link>https://dlightning.org/blog-posts/leave-it-richer.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/leave-it-richer.html</guid>
+      <pubDate>Tue, 21 Jul 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[The richest forests on earth were made by people, not spared from them.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/elise-wilcox-Nzxpo-3mgT0-unsplash.jpg" type="image/jpeg" />
+      <category>Nature</category>
+      <category>Systems Thinking</category>
+      <category>Culture</category>
+      <category>Reflection</category>
+    </item>
     <item>
       <title>No One Hears Their Own Accent</title>
       <link>https://dlightning.org/blog-posts/no-one-hears-their-own-accent.html</link>
       <guid isPermaLink="true">https://dlightning.org/blog-posts/no-one-hears-their-own-accent.html</guid>
-      <pubDate>Mon, 20 Jul 2026 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 09 Jul 2026 00:00:00 +0000</pubDate>
       <dc:creator>Dlightning</dc:creator>
       <description><![CDATA[The frame you think through is the one thing it can't show you.]]></description>
       <enclosure url="https://dlightning.org/blog/img/laurenz-kleinheider-OsC8HauR0e0-unsplash.jpg" type="image/jpeg" />
