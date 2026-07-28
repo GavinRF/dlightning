@@ -334,4 +334,10 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://dlightning.org/blog-posts/every-contact-leaves-a-trace.html</loc>
+    <lastmod>2026-07-27</lastmod>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>

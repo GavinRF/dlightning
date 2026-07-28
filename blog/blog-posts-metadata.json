@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "every-contact-leaves-a-trace",
+      "title": "Every Contact Leaves a Trace",
+      "date": "July 27, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Every thing you finish hands you a slightly altered person going forward.",
+      "image": "img/finde-zukunft-v6zDdTmC9yI-unsplash.jpg",
+      "img-credit": "Finde Zukunft",
+      "credit-link": "https://unsplash.com/photos/v6zDdTmC9yI",
+      "tags": [
+        "Psychology",
+        "Reflection",
+        "Perception",
+        "Process"
+      ],
+      "category": "Psychology"
+    },
+    {
       "id": "leave-it-richer",
       "title": "Leave It Richer",
       "date": "July 21, 2026",

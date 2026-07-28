@@ -6,7 +6,20 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jul 2026 12:47:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2026 06:01:55 +0000</lastBuildDate>
+    <item>
+      <title>Every Contact Leaves a Trace</title>
+      <link>https://dlightning.org/blog-posts/every-contact-leaves-a-trace.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/every-contact-leaves-a-trace.html</guid>
+      <pubDate>Mon, 27 Jul 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Every thing you finish hands you a slightly altered person going forward.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/finde-zukunft-v6zDdTmC9yI-unsplash.jpg" type="image/jpeg" />
+      <category>Psychology</category>
+      <category>Reflection</category>
+      <category>Perception</category>
+      <category>Process</category>
+    </item>
     <item>
       <title>Leave It Richer</title>
       <link>https://dlightning.org/blog-posts/leave-it-richer.html</link>
