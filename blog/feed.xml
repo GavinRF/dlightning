@@ -6,7 +6,20 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Jul 2026 06:08:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2026 05:28:42 +0000</lastBuildDate>
+    <item>
+      <title>Nothing Valued Is Here</title>
+      <link>https://dlightning.org/blog-posts/nothing-valued-is-here.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/nothing-valued-is-here.html</guid>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[A sign for the year 12,000, and the one thing its designers couldn't draw.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/dmitriy-k-kKjUav191hg-unsplash.jpg" type="image/jpeg" />
+      <category>Perception</category>
+      <category>Culture</category>
+      <category>Community</category>
+      <category>Philosophy</category>
+    </item>
     <item>
       <title>Every Contact Leaves a Trace</title>
       <link>https://dlightning.org/blog-posts/every-contact-leaves-a-trace.html</link>

@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "nothing-valued-is-here",
+      "title": "Nothing Valued Is Here",
+      "date": "July 29, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "A sign for the year 12,000, and the one thing its designers couldn't draw.",
+      "image": "img/dmitriy-k-kKjUav191hg-unsplash.jpg",
+      "img-credit": "Dmitriy K.",
+      "credit-link": "https://unsplash.com/photos/kKjUav191hg",
+      "tags": [
+        "Perception",
+        "Culture",
+        "Community",
+        "Philosophy"
+      ],
+      "category": "Philosophy"
+    },
+    {
       "id": "every-contact-leaves-a-trace",
       "title": "Every Contact Leaves a Trace",
       "date": "July 27, 2026",
