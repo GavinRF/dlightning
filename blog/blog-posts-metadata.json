@@ -1,6 +1,22 @@
 {
   "posts": [
     {
+      "id": "everything-happens-in-the-doorway",
+      "title": "Everything Happens in the Doorway",
+      "date": "July 31, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Change doesn't happen in the room you left or the one you're entering.",
+      "image": "img/sq-he-nWvT5C-Ux0I-unsplash.jpg",
+      "img-credit": "Sq He",
+      "credit-link": "https://unsplash.com/photos/nWvT5C-Ux0I",
+      "tags": [
+        "Philosophy",
+        "Perception"
+      ],
+      "category": "Philosophy"
+    },
+    {
       "id": "nothing-valued-is-here",
       "title": "Nothing Valued Is Here",
       "date": "July 29, 2026",
