@@ -757,12 +757,18 @@ exports.stripeWebhook = onRequest({
 // runtime. Set them with:
 //   firebase functions:secrets:set TURNSTILE_SECRET_KEY
 //   firebase functions:secrets:set CONTACT_IP_SALT
+//   firebase functions:secrets:set RESEND_API_KEY
 const turnstileSecretKey = defineSecret("TURNSTILE_SECRET_KEY");
 
 // The salt is what keeps hashed IPs from being reversible. IPv4 is only ~4
 // billion addresses, so an unsalted hash is trivially brute-forced back to the
 // original address — this is a secret, not a config value.
 const contactIpSalt = defineSecret("CONTACT_IP_SALT");
+
+// Read by sendMail(). Every deploy from here now requires this secret to exist
+// in Secret Manager, even while email is otherwise unconfigured — a bound
+// secret with no value fails the deploy outright.
+const resendApiKey = defineSecret("RESEND_API_KEY");
 
 const CONTACT_ALLOWED_ORIGINS = [
   "https://dlightning.org",
@@ -956,6 +962,17 @@ async function sendMail({ to, subject, replyTo, text }) {
 }
 
 /**
+ * Deep link to a lead document in the Firestore console. Nothing reads the
+ * `leads` collection yet, so this link is the only practical way to reach a
+ * submission after the fact. The project id comes from the runtime rather than
+ * being hardcoded.
+ */
+function leadConsoleUrl(id) {
+  const project = process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
+  return `https://console.firebase.google.com/project/${project}/firestore/data/~2Fleads~2F${id}`;
+}
+
+/**
  * Contact form submission endpoint.
  *
  * Replaces the public Google Forms `formResponse` action, which accepted any
@@ -972,10 +989,14 @@ exports.submitContact = onRequest({
   region: "us-central1",
   memory: "256MiB",
   timeoutSeconds: 30,
+  // Stated explicitly so the allUsers invoker binding is reapplied on every
+  // deploy. A public contact endpoint needs it, and it does not weaken
+  // anything — the origin allowlist, Turnstile and rate limit below are what
+  // actually guard this function.
+  invoker: "public",
   // Binding a secret here is what injects it into process.env for this
-  // function. When email is set up, define a RESEND_API_KEY secret the same
-  // way and add it to this list.
-  secrets: [turnstileSecretKey, contactIpSalt]
+  // function.
+  secrets: [turnstileSecretKey, contactIpSalt, resendApiKey]
 }, async (req, res) => {
   const origin = req.headers.origin;
   const originAllowed = CONTACT_ALLOWED_ORIGINS.includes(origin);
@@ -1081,7 +1102,8 @@ exports.submitContact = onRequest({
         "",
         values.comments || "(no message)",
         "",
-        `Lead ID: ${lead.id}`
+        `Lead ID: ${lead.id}`,
+        leadConsoleUrl(lead.id)
       ].join("\n")
     });
 

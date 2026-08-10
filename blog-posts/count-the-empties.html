@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count the Empties | Dlightning</title>
+    <meta name="description" content="If your method can't come back empty, you might be seeing things that aren't there.">
+    <meta name="keywords" content="user research, design process, information architecture, prototyping, usability testing, user experience, Dlightning, UX, UI, digital product design">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/magnific-popup.css"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../blog/blog-posts.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="Count the Empties">
+    <meta property="og:description" content="If your method can't come back empty, you might be seeing things that aren't there.">
+    <meta property="og:image" content="../blog/img/isaac-davis-rzCi3mD-6ho-unsplash.jpg">
+    <meta property="og:url" content="https://dlightning.org/blog-posts/count-the-empties.html">
+    <meta property="og:type" content="article">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    <!-- RSS feed -->
+    <link rel="alternate" type="application/rss+xml" title="Sparks — Dlightning" href="/blog/feed.xml">
+</head>
+<body>
+    <header id="header"></header>
+    <div class="progress-container">
+        <div class="progress-bar" id="readingProgress"></div>
+    </div>
+
+        <!-- hero_area  -->
+        <div class="bradcam_area bradcam_bg_1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="bradcam_text">
+                        <h1>Count the Empties</h1>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>    
+
+    <div class="blog-header">
+        <div class="container">
+            <div style="max-width: 800px !important;">
+            <h2 class="blog-title">If your method can't come back empty, you might be seeing things that aren't there.</h2>
+            </div>
+            <div class="post-meta">
+                <span class="author ms-3">
+                    <img src="../blog/img/author.png" alt="Dlightning" class="author-image">
+                     Dlightning &emsp;
+                </span>
+                <div class="date-con">
+                <span class="date"><i class="far fa-calendar-alt me-2"></i> August 10, 2026</span>
+                </div>
+            </div>
+                <a href="../blog/"><i class="fa fa-arrow-left"></i> Sparks list</a>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <article id="blogPost">
+                    <img src="../blog/img/isaac-davis-rzCi3mD-6ho-unsplash.jpg" alt="Count the Empties" class="featured-image img-fluid rounded">
+                    <figcaption class="text-muted small mb-4 text-right">
+                        <a href="https://unsplash.com/photos/rzCi3mD-6ho" target="_blank">Isaac Davis</a>
+                    </figcaption>
+
+                    <div class="post-content mt-5">
+                        <style>
+  .cn-widget {
+    margin: 40px auto;
+    max-width: 620px;
+    font-family: inherit;
+  }
+  .cn-stage {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #0a0f1e;
+    box-shadow: 0 8px 28px rgba(10, 15, 30, 0.28);
+  }
+  .cn-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: crosshair;
+  }
+  .cn-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .cn-btn {
+    font-family: inherit;
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #475569;
+    background: transparent;
+    border: 1px solid #d7dee8;
+    border-radius: 999px;
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+  }
+  .cn-btn:hover:not([disabled]) {
+    border-color: #1159e9;
+    color: #1159e9;
+  }
+  .cn-btn[disabled] {
+    opacity: 0.4;
+    cursor: default;
+  }
+  .cn-btn.cn-primary {
+    border-color: #1159e9;
+    color: #fff;
+    background: #1159e9;
+  }
+  .cn-btn.cn-primary:hover:not([disabled]) {
+    color: #fff;
+    background: #0d47bd;
+    border-color: #0d47bd;
+  }
+  .cn-caption {
+    margin-top: 14px;
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #64748b;
+    min-height: 2.6em;
+  }
+  .cn-caption.cn-revealed {
+    color: #0f172a;
+  }
+</style>
+
+<p class="first-pgh">Pinned to the wall of a schoolroom at Greenwich was a pale disc with a scatter of irregular smudges on it and no lines anywhere, and the boys seated near the front copied it that way. The ones too far back to resolve the smudges joined them up, into a fine web of straight lines running clean across the face of the disc.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Edward_Walter_Maunder" target="_blank">Edward Maunder</a> and Joseph Evans ran that experiment in 1903 and published it in the <i>Monthly Notices of the Royal Astronomical Society</i>. Nobody had told the boys to look for lines. They'd been told to draw what they saw, which is where the trouble lives. Hand an eye a pattern slightly finer than it can resolve, then ask for a faithful record, and the eye supplies the joins.</p>
+
+<hr>
+
+<p><a href="https://en.wikipedia.org/wiki/Percival_Lowell" target="_blank">Percival Lowell</a> had spent nine years by then betting the other way. In 1894 he put an observatory on a mesa above Flagstaff, picked for its steady air, and aimed it at one planet. He mapped Mars until he died. Hundreds of <a href="https://en.wikipedia.org/wiki/Martian_canal" target="_blank">canals</a>, named and catalogued and redrawn each opposition, and three books arguing that what he was tracing was engineering: an old civilization on a drying world, running meltwater down from the poles to the equator.</p>
+
+<p>He was not careless. He had the better viewing site, a fine refractor, and more hours at the eyepiece than most of the men who doubted him. He had a method, and the method delivered. Each season returned more canals than the one before. Sharper technique, more of them. There was never a season when the careful looking came back holding nothing.</p>
+
+<div class="cn-widget">
+  <div class="cn-stage">
+    <canvas id="cn-canvas" class="cn-canvas" width="620" height="420" role="img"
+      aria-label="A field of thirteen randomly placed points of light. Connect them to trace a figure."></canvas>
+  </div>
+  <div class="cn-controls">
+    <button type="button" id="cn-show" class="cn-btn cn-primary" disabled>Show three more figures</button>
+    <button type="button" id="cn-auto" class="cn-btn">Trace one for me</button>
+    <button type="button" id="cn-clear" class="cn-btn">Clear</button>
+    <button type="button" id="cn-new" class="cn-btn">New sky</button>
+  </div>
+  <p id="cn-caption" class="cn-caption">Thirteen points of light. Tap them in order and trace the figure you see. Tap the last one again to take it back.</p>
+</div>
+
+<hr>
+
+<p>The same year, at the University of Nancy in eastern France, René Blondlot announced a new radiation, <a href="https://en.wikipedia.org/wiki/N_ray" target="_blank">N-rays</a>, detectable as a faint brightening of a spark held at the edge of vision in a darkened room. Something like three hundred papers followed over the next three years, from a hundred-odd scientists across France. In September 1904 the American physicist Robert Wood came to watch a demonstration, and in the dark he reached into the spectroscope and put the aluminium prism in his pocket. The prism was the instrument. Without it there was nothing to disperse and nothing to read. Blondlot's assistant read out the same spectrum he had read out before.</p>
+
+<p>Nobody at Nancy was lying. The signal sat at the limit of what an eye in a dark room can judge, the expectation was strong, and the reading was being made somewhere behind the retina rather than in front of it. Fraud would have been the easier problem. Fraud gets caught by an honest man repeating the work; this survives repetition, because repetition is what feeds it.</p>
+
+<hr>
+
+<p>I have a habit of drawing systems as loops. Give me an org chart, a signup flow, a family argument, a fishery, and I'll find the feedback in it, the thing that goes round and comes back changed. Sometimes there's a loop. Sometimes what's there is one lever, pulled once, years ago, by somebody who has left. I draw the loop anyway. Neatly, with all the confidence of good technique. A diagram with a loop in it looks like an insight. A diagram with a straight line in it looks like a note.</p>
+
+<p>Eighteen detection dog units, drugs and explosives, were walked through a set of clean rooms at <a href="https://escholarship.org/uc/item/0085c91c" target="_blank">UC Davis in 2011</a>. Nothing was hidden anywhere. The handlers had been told a slip of red paper might mark the spot. Across 164 searches the dogs alerted 225 times, and the alerts gathered where the paper was rather than where the decoys were. The dog was reading the handler. The handler was reading the paper. At the end of a chain like that, somebody gets searched.</p>
+
+<hr>
+
+<p>What finished the canals wasn't scepticism. It was aperture. At the 1909 opposition, <a href="https://en.wikipedia.org/wiki/Eug%C3%A8ne_Michel_Antoniadi" target="_blank">Eugène Antoniadi</a> turned the 83-centimetre refractor at Meudon on Mars through a night of unusually steady air, and the canals did not resolve into finer canals. They came apart. Irregular patches and knots of shading, with nothing joining anything to anything. The lines had been an eye's best guess at detail it couldn't quite hold, and better seeing dissolved them.</p>
+
+<p>The question worth asking is <em>what would have counted as nothing</em>. Answered in advance it gives you a method: describe the empty result before you look, in enough detail that you'd know it if it turned up. Run the same question backwards over your own record. Take the last ten times you used it, the audits, the reviews, the diagnoses, the research rounds, and count how many came back with nothing. No empties can read like a good record, but it's the symptom. Lowell's count, across twenty-two years, was zero.</p>
+
+<p>You don't get out of the canals by looking harder. Looking harder is how you get in.</p>
+
+<script>
+  (function () {
+    var W = 620, H = 420;
+    var canvas = document.getElementById('cn-canvas');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var caption = document.getElementById('cn-caption');
+    var btnShow = document.getElementById('cn-show');
+    var btnAuto = document.getElementById('cn-auto');
+    var btnClear = document.getElementById('cn-clear');
+    var btnNew = document.getElementById('cn-new');
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var NAMES = ['The Kite', 'The Hare', 'The Anvil', 'The Plough', 'The Heron',
+                 'The Ladder', 'The Bowman', 'The Cradle', 'The Reaper'];
+    var PROMPT = 'Thirteen points of light. Tap them in order and trace the figure you see. Tap the last one again to take it back.';
+    var REVEAL = 'Those thirteen points were dropped at random when this page loaded. Every figure in them arrived afterward, from whoever was doing the looking. Press "New sky" and you\'ll find one there too.';
+
+    var stars = [], dust = [], path = [], alternates = [], altAlpha = 0, revealed = false;
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+
+    function makeStars() {
+      var pts = [], guard = 0;
+      while (pts.length < 13 && guard < 4000) {
+        guard++;
+        var p = { x: rand(52, W - 52), y: rand(46, H - 46), r: rand(2.1, 3.4) };
+        var ok = true;
+        for (var i = 0; i < pts.length; i++) {
+          var dx = pts[i].x - p.x, dy = pts[i].y - p.y;
+          if (dx * dx + dy * dy < 74 * 74) { ok = false; break; }
+        }
+        if (ok) pts.push(p);
+      }
+      return pts;
+    }
+
+    function makeDust() {
+      var d = [];
+      for (var i = 0; i < 90; i++) {
+        d.push({ x: rand(0, W), y: rand(0, H), r: rand(0.3, 0.9), a: rand(0.12, 0.4) });
+      }
+      return d;
+    }
+
+    // A subset ordered by angle about its own centroid reads as a figure:
+    // the path rarely crosses itself, which is most of what "looks intentional" means.
+    function makeFigure(size) {
+      var idx = [], i;
+      for (i = 0; i < stars.length; i++) idx.push(i);
+      for (i = idx.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+      }
+      var pick = idx.slice(0, size);
+      var cx = 0, cy = 0;
+      for (i = 0; i < pick.length; i++) { cx += stars[pick[i]].x; cy += stars[pick[i]].y; }
+      cx /= pick.length; cy /= pick.length;
+      pick.sort(function (a, b) {
+        return Math.atan2(stars[a].y - cy, stars[a].x - cx) -
+               Math.atan2(stars[b].y - cy, stars[b].x - cx);
+      });
+      return pick;
+    }
+
+    function makeAlternates() {
+      var names = NAMES.slice();
+      var out = [], seen = {};
+      var guard = 0;
+      while (out.length < 3 && guard < 40) {
+        guard++;
+        var fig = makeFigure(Math.random() < 0.5 ? 5 : 6);
+        var key = fig.slice().sort(function (a, b) { return a - b; }).join(',');
+        if (seen[key]) continue;
+        seen[key] = true;
+        out.push({ pts: fig, name: names.splice(Math.floor(Math.random() * names.length), 1)[0] });
+      }
+      return out;
+    }
+
+    // Hang each name off a star of its own figure that no other name has claimed,
+    // so three overlapping figures don't stack their labels in one place.
+    function labelAnchor(fig, placed) {
+      var best = null;
+      for (var i = 0; i < fig.length; i++) {
+        var s = stars[fig[i]];
+        var right = s.x < W - 150;
+        var c = {
+          x: s.x + (right ? 11 : -11),
+          y: s.y - 12,
+          align: right ? 'left' : 'right'
+        };
+        var clear = true;
+        for (var j = 0; j < placed.length; j++) {
+          if (Math.abs(placed[j].x - c.x) < 88 && Math.abs(placed[j].y - c.y) < 18) {
+            clear = false;
+            break;
+          }
+        }
+        if (clear) return c;
+        if (!best) best = c;
+      }
+      return best;
+    }
+
+    function draw() {
+      var g = ctx.createRadialGradient(W * 0.5, H * 0.42, 40, W * 0.5, H * 0.5, W * 0.75);
+      g.addColorStop(0, '#141d36');
+      g.addColorStop(1, '#080c18');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+
+      for (var i = 0; i < dust.length; i++) {
+        ctx.globalAlpha = dust[i].a;
+        ctx.fillStyle = '#c9d4f0';
+        ctx.beginPath();
+        ctx.arc(dust[i].x, dust[i].y, dust[i].r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // Other people's figures, laid over the same stars
+      if (alternates.length) {
+        ctx.save();
+        ctx.globalAlpha = altAlpha;
+        ctx.lineWidth = 1.1;
+        ctx.setLineDash([5, 4]);
+        ctx.strokeStyle = 'rgba(200, 214, 245, 0.5)';
+        var placed = [];
+        for (i = 0; i < alternates.length; i++) {
+          var f = alternates[i].pts;
+          ctx.beginPath();
+          for (var k = 0; k < f.length; k++) {
+            var s = stars[f[k]];
+            if (k === 0) ctx.moveTo(s.x, s.y); else ctx.lineTo(s.x, s.y);
+          }
+          ctx.stroke();
+          var anchor = labelAnchor(f, placed);
+          placed.push(anchor);
+          ctx.setLineDash([]);
+          ctx.fillStyle = 'rgba(184, 199, 232, 0.9)';
+          ctx.font = '12px Helvetica, Arial, sans-serif';
+          ctx.textAlign = anchor.align;
+          ctx.fillText(alternates[i].name, anchor.x, anchor.y);
+          ctx.setLineDash([5, 4]);
+        }
+        ctx.restore();
+      }
+
+      // The reader's own figure
+      if (path.length > 1) {
+        ctx.save();
+        ctx.strokeStyle = '#e8b64c';
+        ctx.lineWidth = 1.7;
+        ctx.lineJoin = 'round';
+        ctx.shadowColor = 'rgba(232, 182, 76, 0.5)';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        for (i = 0; i < path.length; i++) {
+          var ps = stars[path[i]];
+          if (i === 0) ctx.moveTo(ps.x, ps.y); else ctx.lineTo(ps.x, ps.y);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      for (i = 0; i < stars.length; i++) {
+        var st = stars[i];
+        var on = path.indexOf(i) !== -1;
+        ctx.save();
+        ctx.shadowColor = on ? 'rgba(232, 182, 76, 0.9)' : 'rgba(214, 226, 255, 0.7)';
+        ctx.shadowBlur = on ? 14 : 9;
+        ctx.fillStyle = on ? '#f6d693' : '#e8eeff';
+        ctx.beginPath();
+        ctx.arc(st.x, st.y, on ? st.r + 1.1 : st.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function fadeAlternates() {
+      if (reduceMotion) { altAlpha = 1; draw(); return; }
+      altAlpha = 0;
+      var start = null;
+      function step(ts) {
+        if (start === null) start = ts;
+        altAlpha = Math.min(1, (ts - start) / 700);
+        draw();
+        if (altAlpha < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function hit(x, y) {
+      var best = -1, bestD = 34 * 34;
+      for (var i = 0; i < stars.length; i++) {
+        var dx = stars[i].x - x, dy = stars[i].y - y;
+        var d = dx * dx + dy * dy;
+        if (d < bestD) { bestD = d; best = i; }
+      }
+      return best;
+    }
+
+    function syncButtons() {
+      btnShow.disabled = path.length < 3 || revealed;
+    }
+
+    function reset(newSky) {
+      if (newSky) { stars = makeStars(); dust = makeDust(); }
+      path = [];
+      alternates = [];
+      altAlpha = 0;
+      revealed = false;
+      caption.textContent = PROMPT;
+      caption.className = 'cn-caption';
+      syncButtons();
+      draw();
+    }
+
+    canvas.addEventListener('pointerdown', function (e) {
+      var rect = canvas.getBoundingClientRect();
+      var x = (e.clientX - rect.left) * (W / rect.width);
+      var y = (e.clientY - rect.top) * (H / rect.height);
+      var i = hit(x, y);
+      if (i < 0) return;
+      if (path.length && path[path.length - 1] === i) path.pop();
+      else path.push(i);
+      syncButtons();
+      draw();
+    });
+
+    btnAuto.addEventListener('click', function () {
+      path = makeFigure(6);
+      syncButtons();
+      draw();
+    });
+
+    btnClear.addEventListener('click', function () { reset(false); });
+    btnNew.addEventListener('click', function () { reset(true); });
+
+    btnShow.addEventListener('click', function () {
+      alternates = makeAlternates();
+      revealed = true;
+      caption.textContent = REVEAL;
+      caption.className = 'cn-caption cn-revealed';
+      syncButtons();
+      fadeAlternates();
+    });
+
+    reset(true);
+  })();
+</script>
+
+                    </div>
+
+                    <div class="tags">
+                        <span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;Perception</span> <span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;Observation</span> <span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;Human Limitations</span> <span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;Philosophy</span>
+                    </div>
+
+                    <div class="social-sharing">
+                        <button class="btn btn-primary" onclick="shareOnFacebook()"><i class="fab fa-facebook-f me-2"></i> Share on Facebook</button>
+                        <button class="btn btn-info" onclick="shareOnTwitter()"><i class="fab fa-twitter me-2"></i> Share on Twitter</button>
+                        <button class="btn btn-secondary" onclick="shareOnLinkedIn()"><i class="fab fa-linkedin-in me-2"></i> Share on LinkedIn</button>
+                    </div>
+                </article>
+
+                <section id="comments" class="mt-5">
+                    <!-- Add your chosen commenting system here -->
+                </section>
+            </div>
+
+            <section id="recentPosts" class="mt-4 mt-lg-0">
+                <h4 class="mb-3" style="margin-top: -4px;">Recent Posts</h4>
+                <div class="recent-posts-container">
+                    <!-- populated client-side by blog-post.js from blog-posts-metadata.json -->
+                </div>
+            </section>
+
+
+            <div class="col-lg-12">
+                <section id="moreRelatedPosts" class="mt-5">
+                    <h4 class="mb-3">Related Posts</h4>
+                    <div class="row">
+                        <!-- populated client-side by blog-post.js from blog-posts-metadata.json -->
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <a href="../blog/"><i class="fa fa-arrow-left"></i> Sparks list</a>
+        </div>
+    </main>
+
+
+    <footer id="footer" class="mt-5"></footer>
+    
+    <script>	
+        $(document).ready(function() {
+            $('#footer').load("../footer.html");
+            $('#header').load("../header.html", function(response, status, xhr) {
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    $("#error").html(msg + xhr.status + " " + xhr.statusText);
+                } else {
+                    $('.blog').addClass('thisPage');
+                }
+            });
+            // Hide image credit if it's empty
+            if(!$.trim($('.image-credit a').text())) {
+                $('.image-credit').hide();
+            }
+        });
+
+        var $backToTop = $(".back-to-top");
+        $backToTop.hide();
+
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+        });
+
+        $backToTop.on('click', function(e) {
+            $("html, body").animate({scrollTop: 0}, 500);
+        });
+
+        // Reading progress bar
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            // footer height to remove from total height
+            var footerHeight = document.getElementById("footer").offsetHeight;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight - footerHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("readingProgress").style.width = scrolled + "%";
+        };
+
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`, '_blank');
+        }
+
+        function shareOnLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`, '_blank');
+        }
+
+               // Estimated reading time
+        $(document).ready(function() {
+            // Count prose only. jQuery .text() includes the contents of <script>
+            // and <style>, so posts carrying an embedded widget would otherwise
+            // have their CSS and data arrays counted as words. Widgets can also
+            // mark non-prose blocks (data tables and the like) with
+            // data-reading-time="skip" to keep them out of the estimate.
+            const $prose = $('.post-content').clone();
+            $prose.find('script, style, [data-reading-time="skip"]').remove();
+            const text = $prose.text();
+            const wpm = 225; // Average reading speed
+            const words = text.trim().split(/\s+/).length;
+            const time = Math.ceil(words / wpm);
+            
+            // Add reading time indicator
+            $('.post-meta').append(`
+                <span class="reading-time">
+                    <i class="far fa-clock"></i>
+                    <span>${time} min read</span>
+                </span>
+            `);
+        });
+    </script>
+
+    <script src="../blog/blog-post.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
+
+<!-- python3 blog/generate_posts.py  -->

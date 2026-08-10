@@ -6,7 +6,20 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Aug 2026 05:03:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2026 17:58:33 +0000</lastBuildDate>
+    <item>
+      <title>Count the Empties</title>
+      <link>https://dlightning.org/blog-posts/count-the-empties.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/count-the-empties.html</guid>
+      <pubDate>Mon, 10 Aug 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[If your method can't come back empty, you might be seeing things that aren't there.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/isaac-davis-rzCi3mD-6ho-unsplash.jpg" type="image/jpeg" />
+      <category>Perception</category>
+      <category>Observation</category>
+      <category>Human Limitations</category>
+      <category>Philosophy</category>
+    </item>
     <item>
       <title>The Shelf Life of Bad Math</title>
       <link>https://dlightning.org/blog-posts/the-shelf-life-of-bad-math.html</link>

@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "count-the-empties",
+      "title": "Count the Empties",
+      "date": "August 10, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "If your method can't come back empty, you might be seeing things that aren't there.",
+      "image": "img/isaac-davis-rzCi3mD-6ho-unsplash.jpg",
+      "img-credit": "Isaac Davis",
+      "credit-link": "https://unsplash.com/photos/rzCi3mD-6ho",
+      "tags": [
+        "Perception",
+        "Observation",
+        "Human Limitations",
+        "Philosophy"
+      ],
+      "category": "Philosophy"
+    },
+    {
       "id": "the-shelf-life-of-bad-math",
       "title": "The Shelf Life of Bad Math",
       "date": "August 3, 2026",
