@@ -215,7 +215,14 @@
 
                // Estimated reading time
         $(document).ready(function() {
-            const text = $('.post-content').text();
+            // Count prose only. jQuery .text() includes the contents of <script>
+            // and <style>, so posts carrying an embedded widget would otherwise
+            // have their CSS and data arrays counted as words. Widgets can also
+            // mark non-prose blocks (data tables and the like) with
+            // data-reading-time="skip" to keep them out of the estimate.
+            const $prose = $('.post-content').clone();
+            $prose.find('script, style, [data-reading-time="skip"]').remove();
+            const text = $prose.text();
             const wpm = 225; // Average reading speed
             const words = text.trim().split(/\s+/).length;
             const time = Math.ceil(words / wpm);

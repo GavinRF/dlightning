@@ -37,6 +37,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
     <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Cloudflare Turnstile (verified server-side by the submitContact function) -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
 <body>
@@ -67,35 +70,48 @@
                 <h2>We want to hear from you!</h2>
                 <div class="col-lg-8 col-md-10">
                     <br>
-                    <form id="contactForm" class="custom-contact-form" method="POST" action="https://docs.google.com/forms/d/e/1FAIpQLSf8XnYx0SkPNM-q9TfTozZzLVxt9LMtOMgQXt_h8F2REqw7uA/formResponse" target="hidden_iframe" onsubmit="return submitForm()">
+                    <form id="contactForm" class="custom-contact-form" method="POST" novalidate>
                         <p>Fill out the form below to get in touch. We'll get back to you as soon as possible.</p>
 
                         <div class="form-group">
                             <label for="name">Name <span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="name" name="entry.1709323460" placeholder="Your Name" required minlength="2">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required minlength="2" autocomplete="name">
                             <small class="error-message" id="nameError"></small>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email <span style="color: red;">*</span></label>
-                            <input type="email" class="form-control" id="email" name="entry.58281753" placeholder="your.email@example.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="your.email@example.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" autocomplete="email">
                             <small class="error-message" id="emailError"></small>
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Phone <span><small> (optional)</small></span></label>
-                            <input type="tel" class="form-control" id="phone" name="entry.710102933" placeholder="(555) 123-4567" maxlength="14">
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="(555) 123-4567" maxlength="14" autocomplete="tel">
                         </div>
 
                         <div class="form-group">
                             <label for="comments">Comments</label>
-                            <textarea class="form-control" id="comments" name="entry.1760989356" rows="6" placeholder="Tell us about your project or question..." maxlength="1000"></textarea>
+                            <textarea class="form-control" id="comments" name="comments" rows="6" placeholder="Tell us about your project or question..." maxlength="1000"></textarea>
                             <small class="char-counter" id="charCounter">0 / 1000 characters</small>
+                        </div>
+
+                        <!-- Honeypot: hidden from people, filled in by bots. Never submitted by a real user. -->
+                        <div class="hp-field" aria-hidden="true">
+                            <label for="website">Website</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <div class="form-group cf-turnstile-wrap">
+                            <div class="cf-turnstile" data-sitekey="0x4AAAAAAEMMFs4nu4Yxbyxd" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired"></div>
+                            <small class="error-message" id="captchaError"></small>
                         </div>
 
                         <div id="formSuccess" class="success-message" style="display: none;">
                             <strong>✓ Success!</strong> Thank you for reaching out. We'll get back to you soon!
                         </div>
+
+                        <div id="formError" class="error-banner" style="display: none;"></div>
 
                         <div class="text-center">
                             <button type="submit" class="boxed-btn3" id="submitBtn">
@@ -107,9 +123,6 @@
                         </div>
 
                     </form>
-
-                    <!-- Hidden iframe for form submission -->
-                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {document.getElementById('formSuccess').style.display='block'; document.getElementById('contactForm').reset();}"></iframe>
                 </div>
             </div>
 
@@ -176,6 +189,30 @@
                     color: var(--color-gray-400);
                     font-size: 13px;
                     margin-top: 5px;
+                }
+
+                /* Honeypot. Kept out of the layout and out of the tab order without
+                   using display:none, which some bots specifically skip. */
+                .custom-contact-form .hp-field {
+                    position: absolute;
+                    left: -9999px;
+                    width: 1px;
+                    height: 1px;
+                    overflow: hidden;
+                }
+
+                .custom-contact-form .cf-turnstile-wrap {
+                    margin-top: 8px;
+                }
+
+                .custom-contact-form .error-banner {
+                    background: #f8d7da;
+                    color: #842029;
+                    border: 1px solid #f5c2c7;
+                    border-radius: 6px;
+                    padding: 14px 16px;
+                    margin-bottom: 16px;
+                    font-size: 15px;
                 }
 
                 .custom-contact-form .char-counter {
@@ -339,78 +376,127 @@
                     }
                 }
 
-                // Form submission with loading state
-                function submitForm() {
-                    // Prevent double submission
-                    if (isSubmitting) {
-                        return false;
+                // Endpoint that replaced the public Google Forms action.
+                const CONTACT_ENDPOINT = 'https://us-central1-experience-builder-m-v-wxacv7.cloudfunctions.net/submitContact';
+
+                // Stamped when the page loads; the server rejects submissions that
+                // arrive faster than a person could plausibly type.
+                const renderedAt = Date.now();
+
+                const contactForm = document.getElementById('contactForm');
+                const submitBtn = document.getElementById('submitBtn');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnSpinner = submitBtn.querySelector('.btn-spinner');
+                const successMsg = document.getElementById('formSuccess');
+                const errorBanner = document.getElementById('formError');
+                const captchaError = document.getElementById('captchaError');
+
+                let turnstileToken = '';
+
+                // Turnstile invokes these by name from the data-* attributes.
+                window.onTurnstileSuccess = function(token) {
+                    turnstileToken = token;
+                    captchaError.textContent = '';
+                };
+
+                window.onTurnstileExpired = function() {
+                    turnstileToken = '';
+                };
+
+                function setLoading(loading) {
+                    isSubmitting = loading;
+                    submitBtn.disabled = loading;
+                    btnText.style.display = loading ? 'none' : 'inline';
+                    btnSpinner.style.display = loading ? 'inline-flex' : 'none';
+                }
+
+                function showError(message) {
+                    errorBanner.textContent = message;
+                    errorBanner.style.display = 'block';
+                    errorBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+
+                function showSuccess() {
+                    successMsg.style.display = 'block';
+                    contactForm.reset();
+
+                    document.querySelectorAll('.is-valid, .is-invalid').forEach(el => {
+                        el.classList.remove('is-valid', 'is-invalid');
+                    });
+
+                    charCounter.textContent = '0 / 1000 characters';
+
+                    // A token is single-use; get a fresh one for any further submission.
+                    turnstileToken = '';
+                    if (window.turnstile) {
+                        window.turnstile.reset();
                     }
 
-                    // Validate all fields
+                    setTimeout(function() {
+                        successMsg.classList.add('fade-out');
+                        setTimeout(function() {
+                            successMsg.style.display = 'none';
+                            successMsg.classList.remove('fade-out');
+                        }, 500);
+                    }, 5000);
+
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+
+                contactForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+
+                    if (isSubmitting) {
+                        return;
+                    }
+
+                    errorBanner.style.display = 'none';
+
                     const isNameValid = validateName();
                     const isEmailValid = validateEmail();
 
                     if (!isNameValid || !isEmailValid) {
-                        return false;
+                        return;
                     }
 
-                    // Show loading state
-                    isSubmitting = true;
-                    const submitBtn = document.getElementById('submitBtn');
-                    const btnText = submitBtn.querySelector('.btn-text');
-                    const btnSpinner = submitBtn.querySelector('.btn-spinner');
+                    if (!turnstileToken) {
+                        captchaError.textContent = 'Please complete the verification above.';
+                        return;
+                    }
 
-                    submitBtn.disabled = true;
-                    btnText.style.display = 'none';
-                    btnSpinner.style.display = 'inline-flex';
-
+                    setLoading(true);
                     submitted = true;
-                    return true;
-                }
 
-                // Handle successful submission
-                const hiddenIframe = document.getElementById('hidden_iframe');
-                hiddenIframe.addEventListener('load', function() {
-                    if (submitted) {
-                        // Reset button state
-                        const submitBtn = document.getElementById('submitBtn');
-                        const btnText = submitBtn.querySelector('.btn-text');
-                        const btnSpinner = submitBtn.querySelector('.btn-spinner');
-
-                        setTimeout(function() {
-                            submitBtn.disabled = false;
-                            btnText.style.display = 'inline';
-                            btnSpinner.style.display = 'none';
-                            isSubmitting = false;
-                        }, 500);
-
-                        // Show success message
-                        const successMsg = document.getElementById('formSuccess');
-                        successMsg.style.display = 'block';
-
-                        // Reset form
-                        document.getElementById('contactForm').reset();
-
-                        // Clear validation classes
-                        document.querySelectorAll('.is-valid, .is-invalid').forEach(el => {
-                            el.classList.remove('is-valid', 'is-invalid');
+                    try {
+                        const response = await fetch(CONTACT_ENDPOINT, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: document.getElementById('name').value,
+                                email: document.getElementById('email').value,
+                                phone: document.getElementById('phone').value,
+                                comments: document.getElementById('comments').value,
+                                website: document.getElementById('website').value,
+                                turnstileToken: turnstileToken,
+                                renderedAt: renderedAt
+                            })
                         });
 
-                        // Reset character counter
-                        charCounter.textContent = '0 / 1000 characters';
+                        const result = await response.json().catch(() => ({}));
 
-                        // Auto-hide success message after 5 seconds
-                        setTimeout(function() {
-                            successMsg.classList.add('fade-out');
-                            setTimeout(function() {
-                                successMsg.style.display = 'none';
-                                successMsg.classList.remove('fade-out');
-                            }, 500);
-                        }, 5000);
-
-                        // Scroll to success message
-                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
+                        if (response.ok && result.success) {
+                            showSuccess();
+                        } else {
+                            showError(result.error || 'Something went wrong. Please email info@dlightning.org.');
+                            turnstileToken = '';
+                            if (window.turnstile) {
+                                window.turnstile.reset();
+                            }
+                        }
+                    } catch (error) {
+                        showError('We could not reach the server. Please check your connection, or email info@dlightning.org.');
+                    } finally {
+                        setLoading(false);
                         submitted = false;
                     }
                 });

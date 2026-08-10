@@ -1,5 +1,7 @@
 const { onRequest, onCall, HttpsError } = require("firebase-functions/v2/https");
+const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
+const crypto = require("crypto");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const express = require("express");
 const cors = require("cors");
@@ -10,10 +12,16 @@ admin.initializeApp();
 const db = admin.firestore();
 const app = express();
 
-// Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI lazily. Constructing the client eagerly throws when
+// OPENAI_API_KEY is absent, which fails source analysis for the whole codebase
+// and blocks deploying functions that have nothing to do with OpenAI.
+let openaiClient = null;
+function getOpenAI() {
+  if (!openaiClient) {
+    openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  return openaiClient;
+}
 
 // CORS setup
 app.use(cors({ origin: true }));
@@ -35,7 +43,7 @@ exports.createClientIntakeSession = onCall({ cors: true }, async (data, context)
     }
 
     // Create OpenAI Assistant thread
-    const thread = await openai.beta.threads.create();
+    const thread = await getOpenAI().beta.threads.create();
 
     // Generate session ID
     const sessionId = `intake_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -75,7 +83,7 @@ Tone rules:
 - Ask ONE question, then stop. Don't stack multiple questions.
 - Keep it short (1-3 sentences). No bullet-point agendas, no listing topics you'll cover.`;
 
-    await openai.beta.threads.messages.create(thread.id, {
+    await getOpenAI().beta.threads.messages.create(thread.id, {
       role: "user",
       content: initialPrompt
     });
@@ -113,13 +121,13 @@ exports.sendIntakeMessage = onCall({ cors: true }, async (data, context) => {
     const threadId = intakeData.threadId;
 
     // Send user message to OpenAI thread
-    await openai.beta.threads.messages.create(threadId, {
+    await getOpenAI().beta.threads.messages.create(threadId, {
       role: "user",
       content: message
     });
 
     // Create and run assistant
-    const run = await openai.beta.threads.runs.create(threadId, {
+    const run = await getOpenAI().beta.threads.runs.create(threadId, {
       assistant_id: process.env.OPENAI_ASSISTANT_ID, // You'll need to create this
       instructions: `You're having a relaxed, natural conversation with a prospective client — your job is to get them talking and feeling heard, NOT to interrogate them or run through a checklist.
 
@@ -135,15 +143,15 @@ exports.sendIntakeMessage = onCall({ cors: true }, async (data, context) => {
     });
 
     // Wait for completion
-    let runStatus = await openai.beta.threads.runs.retrieve(threadId, run.id);
+    let runStatus = await getOpenAI().beta.threads.runs.retrieve(threadId, run.id);
     while (runStatus.status === "in_progress" || runStatus.status === "queued") {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      runStatus = await openai.beta.threads.runs.retrieve(threadId, run.id);
+      runStatus = await getOpenAI().beta.threads.runs.retrieve(threadId, run.id);
     }
 
     if (runStatus.status === "completed") {
       // Get the assistant's response
-      const messages = await openai.beta.threads.messages.list(threadId, {
+      const messages = await getOpenAI().beta.threads.messages.list(threadId, {
         order: "desc",
         limit: 1
       });
@@ -222,7 +230,7 @@ Format as a professional client brief that the Dlightning team can use for proje
 Client: ${intakeData.clientInfo.name} (${intakeData.clientInfo.email})
 Company: ${intakeData.clientInfo.company || 'Not provided'}`;
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: "gpt-4",
       messages: [
         { role: "system", content: "You are a UX consultant creating client intake summaries." },
@@ -735,6 +743,370 @@ exports.stripeWebhook = onRequest({
       received: true,
       eventId: event.id,
       error: `Processing error: ${error.message}`
+    });
+  }
+});
+
+// ============================================================================
+// CONTACT FORM
+// ============================================================================
+
+// Secrets live in Google Secret Manager, not in .env — .env values are baked
+// into the deployment as plaintext and are readable from the Cloud console.
+// Bound to submitContact below, which is what exposes them to process.env at
+// runtime. Set them with:
+//   firebase functions:secrets:set TURNSTILE_SECRET_KEY
+//   firebase functions:secrets:set CONTACT_IP_SALT
+const turnstileSecretKey = defineSecret("TURNSTILE_SECRET_KEY");
+
+// The salt is what keeps hashed IPs from being reversible. IPv4 is only ~4
+// billion addresses, so an unsalted hash is trivially brute-forced back to the
+// original address — this is a secret, not a config value.
+const contactIpSalt = defineSecret("CONTACT_IP_SALT");
+
+const CONTACT_ALLOWED_ORIGINS = [
+  "https://dlightning.org",
+  "https://www.dlightning.org",
+  "https://dlightning.io",
+  "https://www.dlightning.io"
+];
+
+// Rate limiting: submissions allowed per IP per rolling window
+const CONTACT_RATE_LIMIT_MAX = 5;
+const CONTACT_RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+
+// A real person needs at least a few seconds to fill the form in. Anything
+// faster is scripted. The upper bound rejects stale/replayed page loads.
+const CONTACT_MIN_FILL_MS = 3000;
+const CONTACT_MAX_FILL_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Hash an IP so rate-limit records never store the raw address.
+ */
+function hashIp(ip) {
+  return crypto
+    .createHash("sha256")
+    .update(`${ip}|${process.env.CONTACT_IP_SALT || "dlightning"}`)
+    .digest("hex")
+    .slice(0, 32);
+}
+
+function clientIp(req) {
+  const forwarded = req.headers["x-forwarded-for"];
+  if (typeof forwarded === "string" && forwarded.length) {
+    return forwarded.split(",")[0].trim();
+  }
+  return req.ip || "unknown";
+}
+
+/**
+ * Verify a Cloudflare Turnstile token with Cloudflare's API.
+ *
+ * This is the check a direct POST cannot forge: the token is issued to a real
+ * browser session and can only be redeemed once, server-side, with our secret.
+ */
+async function verifyTurnstile(token, ip) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+
+  if (!secret) {
+    // Fail closed. Accepting unverified submissions would recreate exactly the
+    // open endpoint this function exists to replace.
+    console.error("TURNSTILE_SECRET_KEY is not set - rejecting contact submission");
+    return { ok: false, reason: "captcha_not_configured" };
+  }
+
+  if (!token) {
+    return { ok: false, reason: "captcha_missing" };
+  }
+
+  try {
+    const response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ secret, response: token, remoteip: ip })
+      }
+    );
+
+    const outcome = await response.json();
+
+    if (!outcome.success) {
+      console.warn("Turnstile rejected token:", outcome["error-codes"]);
+      return { ok: false, reason: "captcha_failed" };
+    }
+
+    return { ok: true };
+  } catch (error) {
+    console.error("Turnstile verification error:", error.message);
+    return { ok: false, reason: "captcha_unavailable" };
+  }
+}
+
+/**
+ * Consume one slot from this IP's rate-limit window.
+ * Returns false when the caller has exhausted the window.
+ */
+async function consumeRateLimit(ipHash) {
+  const ref = db.collection("rate_limits").doc(`contact_${ipHash}`);
+
+  return db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    const now = Date.now();
+
+    if (!snap.exists) {
+      tx.set(ref, { count: 1, windowStart: now });
+      return true;
+    }
+
+    const data = snap.data();
+
+    if (now - data.windowStart > CONTACT_RATE_LIMIT_WINDOW_MS) {
+      tx.set(ref, { count: 1, windowStart: now });
+      return true;
+    }
+
+    if (data.count >= CONTACT_RATE_LIMIT_MAX) {
+      return false;
+    }
+
+    tx.update(ref, { count: data.count + 1 });
+    return true;
+  });
+}
+
+/**
+ * Server-side field validation. The browser runs its own checks for UX, but
+ * these are the ones that actually hold - a scripted POST skips the page.
+ */
+function validateContactFields({ name, email, phone, comments }) {
+  const errors = [];
+
+  const cleanName = typeof name === "string" ? name.trim() : "";
+  const cleanEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
+  const cleanPhone = typeof phone === "string" ? phone.trim() : "";
+  const cleanComments = typeof comments === "string" ? comments.trim() : "";
+
+  if (cleanName.length < 2 || cleanName.length > 100) {
+    errors.push("Please enter your name.");
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(cleanEmail) || cleanEmail.length > 254) {
+    errors.push("Please enter a valid email address.");
+  }
+
+  const phoneDigits = cleanPhone.replace(/\D/g, "");
+  if (phoneDigits.length && (phoneDigits.length < 7 || phoneDigits.length > 15)) {
+    errors.push("Please enter a valid phone number.");
+  }
+
+  if (cleanComments.length > 1000) {
+    errors.push("Please keep your message under 1000 characters.");
+  }
+
+  return {
+    errors,
+    values: {
+      name: cleanName,
+      email: cleanEmail,
+      phone: cleanPhone || null,
+      comments: cleanComments || null
+    }
+  };
+}
+
+/**
+ * Send mail through Resend. No-ops when unconfigured so the endpoint keeps
+ * working (and still stores the lead) before email is set up.
+ */
+async function sendMail({ to, subject, replyTo, text }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.CONTACT_FROM_EMAIL;
+
+  if (!apiKey || !from || !to) {
+    return false;
+  }
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        subject,
+        text,
+        ...(replyTo ? { reply_to: replyTo } : {})
+      })
+    });
+
+    if (!response.ok) {
+      console.error("Resend error:", response.status, await response.text());
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Resend request failed:", error.message);
+    return false;
+  }
+}
+
+/**
+ * Contact form submission endpoint.
+ *
+ * Replaces the public Google Forms `formResponse` action, which accepted any
+ * POST from anywhere. Layers, cheapest first:
+ *   1. Origin allowlist
+ *   2. Honeypot field + minimum fill time (silently accepted, never stored)
+ *   3. Cloudflare Turnstile, verified server-side
+ *   4. Per-IP rate limit
+ *   5. Field validation
+ * Survivors land in the `leads` collection alongside intake-portal leads.
+ */
+exports.submitContact = onRequest({
+  cors: false,
+  region: "us-central1",
+  memory: "256MiB",
+  timeoutSeconds: 30,
+  // Binding a secret here is what injects it into process.env for this
+  // function. When email is set up, define a RESEND_API_KEY secret the same
+  // way and add it to this list.
+  secrets: [turnstileSecretKey, contactIpSalt]
+}, async (req, res) => {
+  const origin = req.headers.origin;
+  const originAllowed = CONTACT_ALLOWED_ORIGINS.includes(origin);
+
+  if (originAllowed) {
+    res.set("Access-Control-Allow-Origin", origin);
+  }
+  res.set("Vary", "Origin");
+  res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.status(204).send("");
+  }
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false, error: "Method Not Allowed" });
+  }
+
+  if (!originAllowed) {
+    console.warn("Contact submission from disallowed origin:", origin);
+    return res.status(403).json({ success: false, error: "Forbidden" });
+  }
+
+  try {
+    const body = req.body || {};
+    const { name, email, phone, comments, turnstileToken, renderedAt } = body;
+
+    // --- Trap 1: honeypot. Hidden from users, irresistible to form fillers. ---
+    // Respond 200 so the bot records a success and doesn't probe for the real rule.
+    if (typeof body.website === "string" && body.website.trim().length > 0) {
+      console.info("Contact submission caught by honeypot");
+      return res.status(200).json({ success: true });
+    }
+
+    // --- Trap 2: fill time ---
+    const startedAt = Number(renderedAt);
+    if (Number.isFinite(startedAt)) {
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < CONTACT_MIN_FILL_MS || elapsed > CONTACT_MAX_FILL_MS) {
+        console.info(`Contact submission rejected on fill time: ${elapsed}ms`);
+        return res.status(200).json({ success: true });
+      }
+    }
+
+    const ip = clientIp(req);
+
+    // --- Turnstile ---
+    const captcha = await verifyTurnstile(turnstileToken, ip);
+    if (!captcha.ok) {
+      const message = captcha.reason === "captcha_not_configured"
+        ? "The contact form is temporarily unavailable. Please email info@dlightning.org."
+        : "We couldn't verify that you're human. Please refresh the page and try again.";
+      return res.status(403).json({ success: false, error: message });
+    }
+
+    // --- Rate limit ---
+    const ipHash = hashIp(ip);
+    const withinLimit = await consumeRateLimit(ipHash);
+    if (!withinLimit) {
+      return res.status(429).json({
+        success: false,
+        error: "You've sent several messages already. Please try again later, or email info@dlightning.org."
+      });
+    }
+
+    // --- Validation ---
+    const { errors, values } = validateContactFields({ name, email, phone, comments });
+    if (errors.length) {
+      return res.status(400).json({ success: false, error: errors.join(" ") });
+    }
+
+    // --- Store as a lead, matching the intake-portal lead shape ---
+    const leadData = {
+      clientInfo: {
+        name: values.name,
+        email: values.email,
+        company: null,
+        phone: values.phone
+      },
+      source: "contact_form",
+      message: values.comments,
+      status: "new_lead",
+      meta: {
+        ipHash,
+        userAgent: (req.headers["user-agent"] || "").slice(0, 300),
+        origin
+      },
+      createdAt: admin.firestore.FieldValue.serverTimestamp()
+    };
+
+    const lead = await db.collection("leads").add(leadData);
+
+    // --- Notify (best effort - a mail failure must not lose the lead) ---
+    await sendMail({
+      to: process.env.CONTACT_NOTIFY_TO,
+      subject: `New contact form submission from ${values.name}`,
+      replyTo: values.email,
+      text: [
+        `Name: ${values.name}`,
+        `Email: ${values.email}`,
+        `Phone: ${values.phone || "-"}`,
+        "",
+        values.comments || "(no message)",
+        "",
+        `Lead ID: ${lead.id}`
+      ].join("\n")
+    });
+
+    if (process.env.CONTACT_AUTOREPLY === "true") {
+      await sendMail({
+        to: values.email,
+        subject: "Thanks for reaching out to Dlightning",
+        text: [
+          `Hi ${values.name},`,
+          "",
+          "Thanks for getting in touch. Your message reached us and we'll reply personally within one business day.",
+          "",
+          "If it's easier, you're welcome to book a time directly: https://dlightning.org/contact.html",
+          "",
+          "- Dlightning"
+        ].join("\n")
+      });
+    }
+
+    return res.status(200).json({ success: true, id: lead.id });
+  } catch (error) {
+    console.error("Contact submission error:", error);
+    return res.status(500).json({
+      success: false,
+      error: "Something went wrong on our end. Please email info@dlightning.org."
     });
   }
 });

@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "the-shelf-life-of-bad-math",
+      "title": "The Shelf Life of Bad Math",
+      "date": "August 3, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Nobody has ever felt a rate. What reaches you is the level, and it tells you what you were doing, not what you are.",
+      "image": "img/adam-kotrec-o0-RFiXmUvs-unsplash.jpg",
+      "img-credit": "Adam Kotrec",
+      "credit-link": "https://unsplash.com/photos/o0-RFiXmUvs",
+      "tags": [
+        "Systems Thinking",
+        "Observation",
+        "Nature",
+        "Perception"
+      ],
+      "category": "Systems"
+    },
+    {
       "id": "everything-happens-in-the-doorway",
       "title": "Everything Happens in the Doorway",
       "date": "July 31, 2026",

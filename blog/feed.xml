@@ -6,7 +6,20 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Jul 2026 10:36:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2026 05:03:45 +0000</lastBuildDate>
+    <item>
+      <title>The Shelf Life of Bad Math</title>
+      <link>https://dlightning.org/blog-posts/the-shelf-life-of-bad-math.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/the-shelf-life-of-bad-math.html</guid>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[Nobody has ever felt a rate. What reaches you is the level, and it tells you what you were doing, not what you are.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/adam-kotrec-o0-RFiXmUvs-unsplash.jpg" type="image/jpeg" />
+      <category>Systems Thinking</category>
+      <category>Observation</category>
+      <category>Nature</category>
+      <category>Perception</category>
+    </item>
     <item>
       <title>Everything Happens in the Doorway</title>
       <link>https://dlightning.org/blog-posts/everything-happens-in-the-doorway.html</link>

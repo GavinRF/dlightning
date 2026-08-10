@@ -82,7 +82,7 @@
                     </figcaption>
 
                     <div class="post-content mt-5">
-                        <p class="first-pgh">Count the birds a hundred paces inside a wood. Then count them a hundred paces out in the open field beside it. Then count the strip where the two meet. The strip wins, and it isn't close.</p>
+                        <p class="first-pgh">Count the birds a hundred paces into the woods. Then count them a hundred paces out in the open field beside it. Then count the strip where the two meet. The strip wins, and it isn't close.</p>
 
 <p><a href="https://en.wikipedia.org/wiki/Aldo_Leopold" target="_blank">Aldo Leopold</a> put this in writing in 1933, in a textbook on managing game. Animals collect where the food they need and the cover they need sit next to each other, so the productive ground is rarely the middle of anything. It's the band where one kind of place ends and another starts. He called it the law of interspersion. Ecologists call the band an <em>ecotone</em>.</p>
 
@@ -94,9 +94,9 @@
 
 <hr>
 
-<p>We do this with time as well. In 1909 Arnold van Gennep read through the ceremonies of dozens of societies and found the same three-part shape in all of them. The person is pulled out of their ordinary place. They're held at the boundary between the two, no longer what they were and not yet what they'll be. Then they're handed back to everyone as someone with a different standing: the child returns an adult, the outsider returns a member, and the whole group treats them accordingly from that day on. His word for the transitional stage came from <em>limen</em>, Latin for the sill of a door. <a href="https://en.wikipedia.org/wiki/Liminality" target="_blank">Liminal</a>.</p>
+<p>In 1909 Arnold van Gennep read through the ceremonies of dozens of societies and found the same three-part shape in all of them. The person is pulled out of their ordinary place. They're held at the boundary between the two, no longer what they were and not yet what they'll be. Then they return as someone with a different standing: the child returns an adult, the outsider returns a member, and the whole group treats them accordingly from that day on. His word for the transitional stage came from <em>limen</em>, Latin for the sill of a door. <a href="https://en.wikipedia.org/wiki/Liminality" target="_blank">Liminal</a>.</p>
 
-<p>Notice where he put the change. Not in the old status, not in the new one. In the interval, which those cultures went to real trouble to stretch out and make uncomfortable: the fast, the vigil, the shaved head, the night alone in the dark. A person is traversing the sill as the change takes place.</p>
+<p>Notice where the change is. Not in the old status, not in the new one. In the interval, which those cultures went to real trouble to stretch out and make uncomfortable: the fast, the vigil, the shaved head, the night alone in the dark. A person is traversing the sill as the change takes place.</p>
 
 <hr>
 
@@ -106,7 +106,7 @@
 
 <hr>
 
-<p>Which makes the past century of removing thresholds a stranger trade than it looked. Consider what happened when a lot of people stopped commuting. The forty minutes had always read as the tax on the job, and it turned out they were doing the conversion: the walk to the platform, the standing, the last few streets, all of it turning one person into another one. Take it out and the two "rooms" run together. People who lost the commute started walking around the block before opening their laptop and calling it a fake commute, and it works, though the walk goes nowhere at all. Whatever the trip was doing for them, it wasn't simply transport.</p>
+<p>Which makes the past century of removing "thresholds" a strange undertaking. Consider what happened when a lot of people stopped commuting. The forty minutes of travel had always read as the tax on the job, and it turned out was doing a conversion: the walk to the platform, the standing, the last few streets, all of it turning one person into another. Take it out and the two "rooms" run together. People who lost the commute started walking around the block before opening their laptop and calling it a fake commute, and it works, though the walk goes nowhere at all. Whatever the trip was doing for them, it wasn't simply transport.</p>
 
 <hr>
 
@@ -219,7 +219,14 @@
 
                // Estimated reading time
         $(document).ready(function() {
-            const text = $('.post-content').text();
+            // Count prose only. jQuery .text() includes the contents of <script>
+            // and <style>, so posts carrying an embedded widget would otherwise
+            // have their CSS and data arrays counted as words. Widgets can also
+            // mark non-prose blocks (data tables and the like) with
+            // data-reading-time="skip" to keep them out of the estimate.
+            const $prose = $('.post-content').clone();
+            $prose.find('script, style, [data-reading-time="skip"]').remove();
+            const text = $prose.text();
             const wpm = 225; // Average reading speed
             const words = text.trim().split(/\s+/).length;
             const time = Math.ceil(words / wpm);

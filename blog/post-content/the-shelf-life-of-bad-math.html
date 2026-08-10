@@ -1,0 +1,369 @@
+<p class="first-pgh">In November 1922, seven states met at a lodge outside Santa Fe, NM and divided a river between them. Upstream, Colorado, Wyoming, Utah and New Mexico would take 7.5 million acre-feet of water a year. Downstream, Arizona, Nevada and California would take the same.</p>
+
+<p>Those figures came off a float in a pipe. A stilling well <a href="https://www.usgs.gov/special-topics/water-science-school/science/how-streamflow-measured" target="_blank">stream gauge</a> is a shaft sunk beside the channel and joined to the river underwater so the surface inside stands level with the surface outside. A float rides that height and a recorder writes it down. Height is the only quantity the instrument knows. Turning a height into a volume takes a second step: crews measure the river's flow at a range of heights, fit a curve to the pairs, and from then on every mark the float leaves runs back through that curve to produce a rate.</p>
+
+<p>Most of the gauges feeding the <a href="https://www.watereducation.org/aquapedia-background/colorado-river-compact" target="_blank">Colorado River Commission</a> had only started reading in 1905. Seventeen years of marks on a river that turns wet and dry on cycles longer than a career, and they fell inside one of the wettest stretches the basin had seen in five hundred years.</p>
+
+<p>Someone said so at the time. E.C. LaRue, a Geological Survey hydrologist who had spent a decade on the river measuring discharge and surveying dam sites, worked the numbers back to 1895 and got 15.0 million acre-feet a year at Lee Ferry, the point the commission would use to divide the river. In 1916 he published the conclusion that the basin held less water than the land people intended to irrigate with it. He wrote to Herbert Hoover, who chaired the commission, and offered to brief the delegates. They divided fifteen million acre-feet without him, the whole of his average, leaving nothing for evaporation, nothing for Mexico, and nothing for a dry decade. Mexico was promised another one and a half million acre-feet twenty-two years later.</p>
+
+<p>On the first of February 1935 a crew at Hoover Dam lowered a steel gate weighing more than a thousand tons over the mouth of diversion tunnel number four. Four tunnels had carried the Colorado around the construction site. Three were already sealed with concrete plugs four hundred feet thick. With the fourth shut, the river had nowhere to go but up, and Lake Mead began to form behind the dam. Glen Canyon closed its own tunnel in March 1963, and Lake Powell took seventeen years to fill.</p>
+
+<p>Storage absorbs the difference between what arrives and what leaves. Any year the river brings in less than the canals take out, the shortfall comes out of the water already standing there.</p>
+
+<p>The promises ran ahead of the river almost from the start, and for decades that cost nobody anything. The upstream states had no way to use their full share, and never have, running closer to four and a half million acre-feet than seven and a half. The downstream states took everything they were owed and then some, and whatever the river failed to deliver came out of the water standing in the lakes. No allotment was ever cut. The ledger looked fine because the tap still ran.</p>
+
+<p>Nothing appeared to be wrong for the better part of a century.</p>
+
+<p>On 27 July 2022 the surface of <a href="https://en.wikipedia.org/wiki/Lake_Mead" target="_blank">Lake Mead</a> touched 1,040.58 feet above sea level, down from 1,225 in the summer of 1983, a drop of a hundred and eighty-five feet. Above the waterline sits a band of bleached rock matching that height, calcium carbonate left on the canyon walls by water that used to be there.</p>
+
+<style>
+  .bt-widget {
+    margin: 44px auto;
+    max-width: 600px;
+    font-family: inherit;
+  }
+  .bt-stage {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(31, 38, 135, 0.12);
+    background: #fff;
+    padding: 18px 18px 14px 18px;
+  }
+  .bt-readout {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .bt-year {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #05126a;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .bt-store {
+    font-size: 0.9rem;
+    color: #495057;
+    font-variant-numeric: tabular-nums;
+  }
+  .bt-status {
+    margin-left: auto;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    white-space: nowrap;
+  }
+  .bt-status.is-dry { color: #d64545; font-weight: 600; }
+  .bt-plot {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    height: 190px;
+  }
+  .bt-tank { flex: 0 0 68px; }
+  .bt-trace { flex: 1 1 auto; min-width: 0; cursor: crosshair; }
+  .bt-tank svg, .bt-trace svg { display: block; width: 100%; height: 100%; }
+  .bt-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .bt-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    white-space: nowrap;
+  }
+  .bt-range { flex: 1; accent-color: #1159e9; cursor: pointer; min-width: 0; }
+  .bt-btn {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font: inherit;
+    font-size: 0.8rem;
+    color: #05126a;
+    cursor: pointer;
+  }
+  .bt-btn:hover { background: #e7f0ff; }
+  .bt-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-top: 4px;
+  }
+  /* .post-content p is white-space: pre on this site; the widget's own copy must wrap normally. */
+  .bt-widget p { white-space: normal; }
+  .bt-verdict {
+    margin: 14px 0 0 0;
+    font-size: 0.9rem;
+    color: #010009;
+    min-height: 2.6em;
+  }
+  .bt-caption {
+    margin: 10px 0 0 0;
+    font-size: 0.76rem;
+    line-height: 1.5;
+    color: #64748b;
+  }
+  .bt-caption a { color: #64748b; text-decoration: underline; }
+  .bt-details { margin-top: 10px; font-size: 0.76rem; color: #64748b; }
+  .bt-details summary { cursor: pointer; }
+  .bt-table-wrap { max-height: 220px; overflow: auto; margin-top: 8px; }
+  .bt-details table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  .bt-details th, .bt-details td { text-align: right; padding: 2px 8px; border-bottom: 1px solid #eee; }
+  .bt-details th:first-child, .bt-details td:first-child { text-align: left; }
+  @media (max-width: 520px) {
+    .bt-tank { flex-basis: 52px; }
+    .bt-year { font-size: 1.3rem; }
+    .bt-controls { flex-wrap: wrap; }
+    .bt-range { flex: 1 1 100%; order: 5; }
+  }
+</style>
+
+<div class="bt-widget">
+  <div class="bt-stage">
+    <div class="bt-readout">
+      <span class="bt-year" id="bt-year">1906</span>
+      <span class="bt-store" id="bt-store">nothing stored yet</span>
+      <span class="bt-status" id="bt-status">no dam yet</span>
+    </div>
+
+    <div class="bt-plot">
+      <div class="bt-tank">
+        <svg viewBox="0 0 68 190" role="img" aria-labelledby="bt-tank-t">
+          <title id="bt-tank-t">Water held behind the dams</title>
+          <rect x="2" y="2" width="64" height="186" rx="4" fill="#f8f9fa" stroke="#e9ecef"></rect>
+          <rect id="bt-cap" x="2" y="2" width="64" height="186" fill="none" stroke="#cbd5e1" stroke-dasharray="3 3"></rect>
+          <rect id="bt-water" x="4" y="186" width="60" height="0" fill="#1a73ff"></rect>
+        </svg>
+      </div>
+      <div class="bt-trace">
+        <svg id="bt-svg" viewBox="0 0 460 190" preserveAspectRatio="none" role="img" aria-labelledby="bt-trace-t">
+          <title id="bt-trace-t">Water in storage, 1906 to 2020, under the allotment you choose</title>
+          <g id="bt-grid"></g>
+          <polyline id="bt-line" fill="none" stroke="#0a5cf0" stroke-width="2" stroke-linejoin="round" points=""></polyline>
+          <line id="bt-cursor" x1="0" y1="6" x2="0" y2="172" stroke="#94a3b8" stroke-width="1" opacity="0"></line>
+          <circle id="bt-dot" r="4" fill="#0a5cf0" stroke="#fff" stroke-width="2" opacity="0"></circle>
+        </svg>
+      </div>
+    </div>
+
+    <div class="bt-controls">
+      <span class="bt-label">Allotment</span>
+      <input type="range" id="bt-range" class="bt-range" min="11" max="19" step="0.5" value="16.5"
+             aria-label="Annual allotment in million acre-feet">
+      <span class="bt-store" id="bt-alloc">16.5</span>
+      <button class="bt-btn" id="bt-play" type="button">Run the century</button>
+    </div>
+    <div class="bt-ticks">
+      <span>promised in 1922: 16.5</span><span>actually taken: about 13.5</span>
+    </div>
+
+    <p class="bt-verdict" id="bt-verdict"></p>
+  </div>
+
+  <p class="bt-caption">
+    Inflow is the real thing:
+    <a href="https://www.usbr.gov/lc/region/g4000/NaturalFlow/current.html" target="_blank">Reclamation's
+    natural-flow record</a> for the Colorado at Lees Ferry, 1906&ndash;2020. Everything else is a rough model. Storage capacity appears in 1935 (Mead) and
+    grows in 1963 (Powell); demand ramps from nothing in 1922 to your number by 1990, the way real
+    use actually grew; evaporation runs at 1.2 million acre-feet a year at full pool. Real river
+    operations are far more tangled than this.
+  </p>
+
+  <details class="bt-details" data-reading-time="skip">
+    <summary>The numbers</summary>
+    <div class="bt-table-wrap">
+      <table>
+        <thead><tr><th>Water year</th><th>River in</th><th>In storage</th></tr></thead>
+        <tbody id="bt-tbody"></tbody>
+      </table>
+    </div>
+  </details>
+</div>
+
+<script>
+(function () {
+  var FLOW = [18.2,21.2,11.8,21.8,14.7,15.1,19.1,14.5,21.1,14.1,19.2,23.8,15.8,13.0,21.9,22.7,18.5,18.3,14.7,13.5,16.2,18.7,17.8,21.8,15.1,8.9,17.8,12.3,6.6,12.2,14.5,14.2,17.9,11.7,9.4,18.3,19.3,13.6,15.4,14.0,11.0,15.9,15.8,16.7,13.1,12.4,20.9,11.2,8.3,9.7,11.6,20.2,16.9,9.2,12.0,9.2,17.8,9.1,10.4,18.4,11.1,11.7,13.3,14.5,15.1,14.7,12.4,19.1,13.0,16.5,11.2,5.5,14.9,17.6,17.3,8.7,16.7,23.7,24.2,21.1,22.4,16.6,11.7,9.6,9.0,12.3,11.1,18.6,10.6,19.8,14.1,21.1,17.0,16.4,10.6,11.0,5.9,10.5,9.6,16.9,12.6,12.6,16.2,14.3,12.3,20.2,8.5,9.1,14.0,13.4,13.4,16.4,8.6,17.7,9.9];
+  var Y0 = 1906, N = FLOW.length;
+  var el = function (id) { return document.getElementById(id); };
+  var range = el('bt-range'); if (!range) return;
+
+  function cap(y) { return y < 1935 ? 0 : (y < 1963 ? 26.1 : 50.4); }
+  function demand(y, t) {
+    if (y < 1922) return 0;
+    if (y >= 1990) return t;
+    return t * (y - 1922) / 68;
+  }
+
+  function simulate(t) {
+    var s = 0, out = [], firstDry = null;
+    for (var i = 0; i < N; i++) {
+      var y = Y0 + i, c = cap(y);
+      var evap = c > 0 ? 1.2 * (s / c) : 0;
+      s = s + FLOW[i] - demand(y, t) - evap;
+      var dry = s < 0 && c > 0;
+      if (dry && firstDry === null) firstDry = y;
+      if (s < 0) s = 0;
+      if (s > c) s = c;
+      out.push({ y: y, s: s, c: c, flow: FLOW[i], dry: dry });
+    }
+    return { rows: out, firstDry: firstDry };
+  }
+
+  var W = 460, H = 190, PAD_T = 6, PAD_B = 18, MAXS = 50.4;
+  function px(i) { return (i / (N - 1)) * W; }
+  function py(s) { return PAD_T + (1 - s / MAXS) * (H - PAD_T - PAD_B); }
+
+  var grid = el('bt-grid');
+  (function () {
+    var g = '';
+    [0, 25, 50].forEach(function (v) {
+      var yy = py(v);
+      g += '<line x1="0" y1="' + yy + '" x2="' + W + '" y2="' + yy + '" stroke="#e9ecef" stroke-width="1"/>';
+      g += '<text x="2" y="' + (v === 50 ? yy + 11 : yy - 3) + '" font-size="9" fill="#94a3b8">' +
+           (v === 50 ? '50 maf stored' : v) + '</text>';
+    });
+    [1935, 1963, 2000].forEach(function (yr) {
+      var xx = px(yr - Y0);
+      g += '<line x1="' + xx + '" y1="' + PAD_T + '" x2="' + xx + '" y2="' + (H - PAD_B) +
+           '" stroke="#e9ecef" stroke-width="1" stroke-dasharray="2 3"/>';
+      g += '<text x="' + (xx + 3) + '" y="' + (H - 6) + '" font-size="9" fill="#94a3b8">' + yr + '</text>';
+    });
+    grid.innerHTML = g;
+  })();
+
+  var state = null, playing = false, timer = null, idx = N - 1;
+
+  function paintTank(r) {
+    var full = r.c > 0 ? r.s / r.c : 0;
+    var h = Math.max(0, full * 182);
+    el('bt-water').setAttribute('y', String(2 + (182 - h) + 2));
+    el('bt-water').setAttribute('height', String(h));
+    el('bt-water').setAttribute('fill', r.s <= 0.05 && r.c > 0 ? '#d64545' : '#1a73ff');
+    el('bt-cap').setAttribute('opacity', r.c > 0 ? '1' : '0');
+  }
+
+  function paintAt(i) {
+    var r = state.rows[i];
+    idx = i;
+    el('bt-year').textContent = r.y;
+    if (r.c === 0) {
+      el('bt-store').textContent = 'no reservoir yet · river ran ' + r.flow.toFixed(1);
+      el('bt-status').textContent = 'no dam yet';
+      el('bt-status').className = 'bt-status';
+    } else {
+      el('bt-store').textContent = r.s.toFixed(1) + ' of ' + r.c.toFixed(1) +
+        ' maf held · river ran ' + r.flow.toFixed(1);
+      var dry = r.s <= 0.05;
+      el('bt-status').textContent = dry ? 'empty' : Math.round(100 * r.s / r.c) + '% full';
+      el('bt-status').className = 'bt-status' + (dry ? ' is-dry' : '');
+    }
+    paintTank(r);
+    el('bt-dot').setAttribute('cx', String(px(i)));
+    el('bt-dot').setAttribute('cy', String(py(r.s)));
+    el('bt-dot').setAttribute('opacity', '1');
+    el('bt-cursor').setAttribute('x1', String(px(i)));
+    el('bt-cursor').setAttribute('x2', String(px(i)));
+    el('bt-cursor').setAttribute('opacity', '0.7');
+  }
+
+  function verdict(t) {
+    var last = state.rows[N - 1], fd = state.firstDry;
+    var pct = Math.round(100 * last.s / last.c);
+    if (fd === null) {
+      return 'At ' + t.toFixed(1) + ' million acre-feet a year the lakes never run dry, ending 2020 about ' +
+        pct + '% full. Nothing about the first sixty years would have told you which way it was going.';
+    }
+    var quiet = fd - 1935;
+    return 'At ' + t.toFixed(1) + ' million acre-feet a year the water runs out in ' + fd +
+      '. That is ' + quiet + ' years of storage doing the work before anything shows, and the ' +
+      'arithmetic was wrong the entire time.';
+  }
+
+  function fillTable() {
+    var h = '';
+    for (var i = 0; i < N; i++) {
+      var r = state.rows[i];
+      h += '<tr><td>' + r.y + '</td><td>' + r.flow.toFixed(1) + '</td><td>' +
+           (r.c > 0 ? r.s.toFixed(1) : '—') + '</td></tr>';
+    }
+    el('bt-tbody').innerHTML = h;
+  }
+
+  function rebuild() {
+    var t = parseFloat(range.value);
+    el('bt-alloc').textContent = t.toFixed(1);
+    range.setAttribute('aria-valuetext', t.toFixed(1) + ' million acre-feet a year');
+    state = simulate(t);
+    var pts = state.rows.map(function (r, i) { return px(i) + ',' + py(r.s); }).join(' ');
+    el('bt-line').setAttribute('points', pts);
+    el('bt-verdict').textContent = verdict(t);
+    fillTable();
+    paintAt(Math.min(idx, N - 1));
+  }
+
+  function stop() {
+    playing = false;
+    if (timer) { clearInterval(timer); timer = null; }
+    el('bt-play').textContent = 'Run the century';
+  }
+
+  el('bt-play').addEventListener('click', function () {
+    if (playing) { stop(); return; }
+    playing = true;
+    el('bt-play').textContent = 'Pause';
+    var i = 0;
+    paintAt(0);
+    timer = setInterval(function () {
+      i++;
+      if (i >= N) { stop(); return; }
+      paintAt(i);
+    }, 90);
+  });
+
+  range.addEventListener('input', function () { rebuild(); });
+
+  var svg = el('bt-svg');
+  function scrub(ev) {
+    stop();
+    var box = svg.getBoundingClientRect();
+    var cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - box.left;
+    var i = Math.round((cx / box.width) * (N - 1));
+    paintAt(Math.max(0, Math.min(N - 1, i)));
+  }
+  svg.addEventListener('mousemove', scrub);
+  svg.addEventListener('touchmove', function (ev) { scrub(ev); ev.preventDefault(); }, { passive: false });
+
+  rebuild();
+  // Open on the fullest year, so the tank reads as full water rather than an empty box.
+  var peak = 0;
+  for (var k = 0; k < N; k++) if (state.rows[k].s > state.rows[peak].s) peak = k;
+  paintAt(peak);
+})();
+</script>
+
+<hr>
+
+<p>An adult skeleton <a href="https://en.wikipedia.org/wiki/Bone_remodeling" target="_blank">rebuilds</a> about a tenth of itself each year, so the bone holding you up is on average a decade old. Osteoclasts dig out the old material and osteoblasts pack the cavity with fresh collagen that hardens with calcium. You finish filling the reserve somewhere around thirty. After that the digging runs slightly ahead of the packing, and keeps running ahead for the rest of your life. None of that carries a sensation. Osteoporosis gets called the silent disease because most people find out from a wrist that breaks on an icy step, or a hip that goes on a kitchen floor after a stumble that should have been nothing.</p>
+
+<p>The fracture is not the event. The event ran for thirty years before the fall.</p>
+
+<hr>
+
+<p>A rate can't be felt. What reaches anyone is the level, the sum of every rate nobody was watching. Read it and you learn what you were doing, not what you are. The present rate, the thing you would actually want to know, is not in there. By the time the level reads differently, whatever changed it has been running for years.</p>
+
+<p>Almost everything we count is a flow. Revenue per quarter, hours per week, steps per day, tons per year. A rate fits inside a window short enough to watch, so you can start counting on Monday and have a number by Friday. Levels don't cooperate. Groundwater, topsoil, muscle, savings, the patience of the person you live with, all of them move so slowly against their own size that across any span you'd sit still for, the needle holds.</p>
+
+<p>So the flow gets managed and the level gets assumed. A product team's standing with the people who use what it makes runs on similar rates. Every release either adds to that standing or draws on it, and the release is the part that gets measured. The account itself sits unopened, covering years of small withdrawals without a word, until an ordinary update lands against a balance that isn't there and the reaction runs wildly out of scale with the change.</p>
+
+<p>Every man in that lodge outside Santa Fe was dead before the white band appeared on the canyon wall. Their arithmetic outlived them by decades, spending down a level none of them ever had to look at. A buffer that large isn't a margin of safety but a delay between a decision and its evidence, long enough that being wrong costs the people who were wrong nothing at all.</p>
+
+<p>The lake kept the books through every year no one thought to check. Four years after that 2022 low, the surface is still within a foot of it, and Reclamation projects another thirty feet gone by 2028. The white band is getting taller. Ninety feet lower the turbines stop. Fifty-five feet below that, nothing leaves the dam at all. The year that takes it there will look like the one before it, and the water that decides it has already gone downriver.</p>
