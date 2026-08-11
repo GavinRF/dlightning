@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teaching a Machine to Sound Like Me | Dlightning</title>
+    <title>Teaching a Machine to Sound Human | Dlightning</title>
     <meta name="description" content="Building a human-in-the-loop publishing system for the Dlightning blog, and discovering the hard part wasn't generation.">
     <meta name="keywords" content="case study, design systems, editorial workflow, AI writing, human in the loop, content pipeline, UX, Dlightning">
     <link rel="canonical" href="https://dlightning.org/blog-pipeline-case-study.html">
@@ -125,7 +125,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="bradcam_text">
-                        <h1>Teaching a Machine to Sound Like Me</h1>
+                        <h1>Teaching a Machine to Sound Human</h1>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
     <div class="blog-header">
         <div class="container">
             <div class="cs-wrap">
-                <h2 class="blog-title">A publishing system where the hard engineering wasn't generation. It was writing down what "good" meant.</h2>
+                <h2 class="blog-title">A publishing system where the hard engineering was defining what "good" meant.</h2>
             </div>
             <div class="post-meta">
                 <span class="author ms-3">Case Study &emsp;</span>
@@ -182,11 +182,11 @@
 
 <p>My first attempt was a good prompt. Write a blog post in this voice, here are three examples, go.</p>
 
-<p>The output was fine. That was the problem. Fine prose has a texture to it, and once you've seen it you can't stop seeing it: every sentence the same length, an image followed immediately by a sentence explaining the image, three examples where two would do, an ending that resolves into uplift. I could feel what was wrong before I could name any of it, and naming it took months.</p>
+<p>The output was fine. That was the problem. Fine prose has a texture to it, and once you've seen it you can't stop seeing it: every sentence the same length, an image followed immediately by a sentence explaining the image, three examples where two would do, an ending that resolves into uplift. I could feel what was wrong before I could name any of it.</p>
 
 <p>The realization that reorganized the whole project: <strong>generation is the cheap part. The judgment is the product.</strong></p>
 
-<p>Any model can produce 800 words on a theme. What it can't do is know that "quiet" is a word I've overused into meaninglessness, or that opening every post with a sensory scene turns a voice into a genre. That knowledge lived in my head as taste. To hand off the drafting, I had to write the taste down.</p>
+<p>Any model can produce 800 words on a theme. What it can't do is know that "quiet" is overused, or that opening every post with a sensory scene turns a voice into a genre. That knowledge lived in my head as taste. To hand off the drafting, I had to write the taste down.</p>
 
 <p>So the system I built is mostly constraints. The prompt is a small part of it.</p>
 
@@ -205,15 +205,15 @@
 
 <h3>Inspiration is a lens, never a source</h3>
 
-<p>A folder of transcripts feeds thematic input. The rule on them is absolute: never quote, never mirror an argument's structure, never reference the speaker. The test I wrote for myself is a deletion test. If the transcript vanished, would the post still stand on its own? It has to.</p>
+<p>A folder of transcripts feeds thematic input. The rule on them is absolute: never quote, never mirror an argument's structure, never reference the speaker. The test I wrote for myself is a deletion test. If the transcript vanished, would the post still stand on its own?</p>
 
 <h3>Ideas are seeds, not headlines</h3>
 
-<p>A running backlog, unchecked for unused and checked for published, currently 44 lines with 23 still open. One rule here matters more than the rest: the idea is not the title. Titles have to surface from the finished writing. If a title could have been written before the post existed, it's the wrong title, and it always reads that way.</p>
+<p>A running backlog, unchecked for unused and checked for published, currently 44 lines with 23 still open. One rule here matters more than the rest: the idea is not the title. Titles have to surface from the finished writing. If a title could have been written before the post existed, it's the wrong title.</p>
 
 <h3>The agent drafts and stops</h3>
 
-<p>This is the load-bearing part. The drafting agent writes two files to a drafts folder and is explicitly forbidden from touching live content, the build script, or git. Approval is a word I say, not a status flag anything can set. I've never removed that gate and I don't intend to.</p>
+<p>This is the load-bearing part. The drafting agent writes two files to a drafts folder and is explicitly forbidden from touching live content, the build script, or git. Approval is given fully to the human in the loop.</p>
 
 <h3>The build is boring on purpose</h3>
 
@@ -260,8 +260,6 @@
     <div><span class="tag">Before</span><p>The seam isn't a comfortable address. Break a forest into parcels and you manufacture edge, and edge brings wind, heat, and the nest predators that work margins.</p></div>
     <div><span class="tag">After</span><p>Break a forest into parcels and you manufacture edge, and edge brings wind, heat, and the nest predators that work margins.</p></div>
 </div>
-
-<p>Underneath all of it sits one question, the only rule I apply by feel: would a senior designer say this to a colleague over a cup of tea, or does it sound like a LinkedIn post?</p>
 
 <hr>
 
