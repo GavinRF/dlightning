@@ -925,7 +925,7 @@ function validateContactFields({ name, email, phone, comments }) {
  * Send mail through Resend. No-ops when unconfigured so the endpoint keeps
  * working (and still stores the lead) before email is set up.
  */
-async function sendMail({ to, subject, replyTo, text }) {
+async function sendMail({ to, subject, replyTo, text, html }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM_EMAIL;
 
@@ -945,6 +945,7 @@ async function sendMail({ to, subject, replyTo, text }) {
         to: [to],
         subject,
         text,
+        ...(html ? { html } : {}),
         ...(replyTo ? { reply_to: replyTo } : {})
       })
     });
@@ -959,6 +960,81 @@ async function sendMail({ to, subject, replyTo, text }) {
     console.error("Resend request failed:", error.message);
     return false;
   }
+}
+
+// Straight to the scheduler rather than back to contact.html — sending someone
+// to the page they just submitted from is a dead end.
+const BOOKING_URL = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ1c2Ui9MTkZEcu97MepuTZnO2HjTkt_4mCeJK19OAbDeXT9sTH57Z-GEKZVnKjjxcO33KsGlO8F?gv=true";
+const BLOG_URL = "https://dlightning.org/blog/";
+
+/**
+ * Anything typed into the form is untrusted and goes into an HTML email body,
+ * so it has to be escaped.
+ */
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+/**
+ * Autoreply body, as matching text and HTML parts.
+ *
+ * Does three things the old one-liner didn't: quotes their message back so they
+ * have a record of what they sent, sets a concrete expectation, and offers the
+ * two things a waiting lead can actually use — a booking slot and something to
+ * read. First name only, because people type all sorts into a name field and
+ * "Hi Jane Smith-Watson," reads like a mail merge.
+ */
+function buildAutoreply({ name, comments }) {
+  const firstName = name.split(/\s+/)[0];
+
+  const text = [
+    `Hi ${firstName},`,
+    "",
+    "Thanks for reaching out — your message is with us."
+  ];
+
+  if (comments) {
+    text.push("", "Here's what you sent, for your records:", "");
+    comments.split("\n").forEach((line) => text.push(`  ${line}`));
+  }
+
+  text.push(
+    "",
+    "Someone will read it properly and reply within one business day.",
+    "",
+    "If you'd rather skip the back-and-forth, book a time directly:",
+    BOOKING_URL,
+    "",
+    "And if you're in a reading mood, we write about design and product",
+    `validation here: ${BLOG_URL}`,
+    "",
+    "— Dlightning"
+  );
+
+  const quoted = comments
+    ? `<blockquote style="margin:24px 0;padding:4px 0 4px 16px;border-left:3px solid #5db2ff;color:#555">${escapeHtml(comments).replace(/\n/g, "<br>")}</blockquote>`
+    : "";
+
+  // Deliberately plain: no images, no background colours, no table scaffolding.
+  // It reads as a person's email rather than a campaign, which is both more
+  // honest and better for deliverability, and it degrades cleanly in dark mode.
+  const html = `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;max-width:560px">
+  <p>Hi ${escapeHtml(firstName)},</p>
+  <p>Thanks for reaching out — your message is with us.</p>
+  ${quoted}
+  <p>Someone will read it properly and reply within one business day.</p>
+  <p>If you'd rather skip the back-and-forth, <a href="${BOOKING_URL}" style="color:#0a7cd4">book a time directly</a>.</p>
+  <p>And if you're in a reading mood, we write about design and product validation <a href="${BLOG_URL}" style="color:#0a7cd4">on the blog</a>.</p>
+  <p style="margin-top:32px;color:#666">— Dlightning</p>
+</div>`;
+
+  return { text: text.join("\n"), html };
 }
 
 /**
@@ -1108,18 +1184,12 @@ exports.submitContact = onRequest({
     });
 
     if (process.env.CONTACT_AUTOREPLY === "true") {
+      const autoreply = buildAutoreply(values);
       await sendMail({
         to: values.email,
-        subject: "Thanks for reaching out to Dlightning",
-        text: [
-          `Hi ${values.name},`,
-          "",
-          "Thanks for getting in touch. Your message reached us and we'll reply personally within one business day.",
-          "",
-          "If it's easier, you're welcome to book a time directly: https://dlightning.org/contact.html",
-          "",
-          "- Dlightning"
-        ].join("\n")
+        subject: "We've got your message",
+        text: autoreply.text,
+        html: autoreply.html
       });
     }
 
