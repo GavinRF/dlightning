@@ -1019,6 +1019,15 @@ h3 {
   font-size: 9px;
 }
 
+/* The 9px above is meant for the "Offerings" chevron, but the selector also
+   catches the submenu's label icons. At 9px against a 14px label they read as
+   sitting below the baseline, because a small glyph's optical centre sits much
+   closer to the baseline than the text's does. Match the label size instead. */
+.header-area .main-header-area .main-menu ul li .submenu li a i {
+  font-size: 12px;
+  margin-right: 3px;
+}
+
 @media (max-width: 767px) {
   .header-area .main-header-area .main-menu ul li a i {
     display: none !important;
@@ -2980,7 +2989,14 @@ h6 {
   bottom: 2%;
   border-radius: 50%;
   cursor: pointer;
-  padding: 3px 0 0 8px;
+  /* Centre the glyph rather than nudging it with padding. The old
+     `padding: 3px 0 0 8px` was tuned to the advance width of FA4's arrow-up;
+     FA6's is narrower, which pulled the arrow off to the left. text-align +
+     line-height centre whatever glyph the icon font supplies.
+     line-height is 31px = 35px box - 2x2px border (box-sizing: border-box). */
+  padding: 0;
+  text-align: center;
+  line-height: 31px;
 }
 
 .produt-title{
