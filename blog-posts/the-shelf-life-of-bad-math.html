@@ -6,9 +6,13 @@
     <title>The Shelf Life of Bad Math | Dlightning</title>
     <meta name="description" content="Nobody has ever felt a rate. What reaches you is the level, and it tells you what you were doing, not what you are.">
     <meta name="keywords" content="user research, design process, information architecture, prototyping, usability testing, user experience, Dlightning, UX, UI, digital product design">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/magnific-popup.css"> 
+    <!-- Bootstrap first, then style.css. Bootstrap 4's reboot sets
+         `a:hover { text-decoration: underline }`, which beat style.css's
+         `a:hover { text-decoration: none }` when the order was reversed and put a
+         second line under the header nav links on top of their border-bottom. -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../blog/blog-posts.css">
