@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "credit-the-lizard",
+      "title": "Credit the Lizard",
+      "date": "August 13, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Nature is a verified artist, and the royalties are real. The lizard behind the GLP-1 drugs has never seen a cent.",
+      "image": "img/neom-8Ln8oMv_LLI-unsplash.jpg",
+      "img-credit": "NEOM",
+      "credit-link": "https://unsplash.com/photos/8Ln8oMv_LLI",
+      "tags": [
+        "Systems",
+        "Nature",
+        "Incentives",
+        "Design"
+      ],
+      "category": "Systems"
+    },
+    {
       "id": "count-the-empties",
       "title": "Count the Empties",
       "date": "August 10, 2026",

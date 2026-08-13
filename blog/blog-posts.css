@@ -57,6 +57,40 @@ body {
             font-family: 'inter';
             margin-bottom: 13px !important;
         }
+        /* The "Sparks list" back-links above and below the article, same
+           #1F1F1F problem as the body links below. Kept underline-free at rest —
+           the arrow already reads as navigation — and set in the same blue so
+           every link on the page comes from one palette. */
+        .back-link {
+            color: #0a5cf0;
+            font-weight: 500;
+        }
+        .back-link:hover,
+        .back-link:focus {
+            color: #05126a;
+            text-decoration: underline;
+        }
+        .back-link i {
+            margin-right: 4px;
+            font-size: 0.9em;
+        }
+
+        /* style.css sets a global `a { color: #1F1F1F }`, near enough to the
+           #010009 body copy to be indistinguishable, and strips the underline on
+           hover. That rule only started applying here once the head's stylesheet
+           paths were corrected from ../../css to ../css; before that style.css
+           404'd and in-body links fell back to the browser's blue. The blue
+           alone carries them at rest; the underline is reserved for hover. */
+        .post-content a {
+            color: #0a5cf0;
+            text-decoration: none;
+        }
+        .post-content a:hover,
+        .post-content a:focus {
+            color: #05126a;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
         .post-content p:first-of-type:first-child:first-letter,
         .post-content .first-pgh::first-letter {
             text-transform: capitalize;
