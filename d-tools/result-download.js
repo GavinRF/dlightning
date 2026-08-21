@@ -34,8 +34,8 @@
 
     var LOGO_SRC = '../img/logo-spelled-out-white.png';
     var SITE = 'dlightning.org';
-    var CONTACT = 'dlightningexperience@gmail.com';
-    var TAGLINE = 'UX & Experience Design';
+    var CONTACT = 'experience@dlightning.org';
+    var TAGLINE = 'Experience Design';
 
     var HTML2CANVAS_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
     var JSPDF_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
