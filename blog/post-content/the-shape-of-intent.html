@@ -1,0 +1,655 @@
+<style>
+  .bx-figure {
+    margin: 2.4rem auto;
+    max-width: 620px;
+    text-align: center;
+  }
+  .bx-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .bx-caption {
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #888;
+  }
+  .sq-widget {
+    margin: 40px auto;
+    max-width: 620px;
+    font-family: inherit;
+  }
+  .sq-stage {
+    border: 1px solid #e2e5ea;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fdfdfb;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+  }
+  .sq-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: crosshair;
+    touch-action: none;
+  }
+  .sq-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .sq-tools {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+  }
+  .sq-weights {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px;
+    border: 1px solid #e6eaf0;
+    border-radius: 999px;
+    background: #fff;
+  }
+  .sq-w {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 26px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .sq-w i {
+    display: block;
+    width: 18px;
+    background: #94a3b8;
+    border-radius: 2px;
+  }
+  .sq-w:hover i { background: #475569; }
+  .sq-w[aria-pressed="true"] { background: #eef3fe; }
+  .sq-w[aria-pressed="true"] i { background: #1159e9; }
+  .sq-btn {
+    font-family: inherit;
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #475569;
+    background: transparent;
+    border: 1px solid #d7dee8;
+    border-radius: 999px;
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+  }
+  .sq-btn:hover:not([disabled]) {
+    border-color: #1159e9;
+    color: #1159e9;
+  }
+  .sq-btn[disabled] {
+    opacity: 0.4;
+    cursor: default;
+  }
+  .sq-btn.sq-primary {
+    border-color: #1159e9;
+    color: #fff;
+    background: #1159e9;
+  }
+  .sq-btn.sq-primary:hover:not([disabled]) {
+    color: #fff;
+    background: #0d47bd;
+    border-color: #0d47bd;
+  }
+  .sq-btn.sq-primary[disabled] { background: #1159e9; }
+  .sq-clear {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #0f172a;
+    border-color: #0f172a;
+  }
+  .sq-clear i {
+    font-size: 0.86rem;
+    line-height: 1;
+  }
+  .sq-clear:hover:not([disabled]) {
+    color: #fff;
+    background: #0f172a;
+    border-color: #0f172a;
+  }
+  .sq-caption {
+    margin-top: 14px;
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #64748b;
+    min-height: 3.2em;
+  }
+  .sq-caption.sq-revealed { color: #0f172a; }
+  .sq-others {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .sq-others.sq-open {
+    display: grid;
+    animation: sq-fade 0.5s ease both;
+  }
+  @keyframes sq-fade { from { opacity: 0; } to { opacity: 1; } }
+  .sq-panel {
+    border: 1px solid #e8ebf0;
+    border-radius: 8px;
+    background: #fdfdfb;
+    overflow: hidden;
+  }
+  .sq-panel canvas { display: block; width: 100%; height: auto; }
+  .sq-note {
+    margin: 12px 0 0;
+    font-size: 0.74rem;
+    line-height: 1.5;
+    color: #94a3b8;
+  }
+  @media (max-width: 520px) {
+    .sq-clear { margin-left: 0; }
+    .sq-others { gap: 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sq-others.sq-open { animation: none; }
+    .sq-btn { transition: none; }
+  }
+</style>
+
+
+<p class="first-pgh">For years I opened my design class the same way. Draw three squares. Paper or screen, your choice.</p>
+
+<p>Follow along. Seriously, draw three squares.</p>
+
+<div class="sq-widget">
+  <div class="sq-tools">
+    <div class="sq-weights" role="group" aria-label="Line weight">
+      <button type="button" class="sq-w" data-w="1.2" aria-pressed="false" aria-label="Fine line" title="Fine line"><i style="height:1px"></i></button>
+      <button type="button" class="sq-w" data-w="2.4" aria-pressed="true" aria-label="Medium line" title="Medium line"><i style="height:2px"></i></button>
+      <button type="button" class="sq-w" data-w="4.5" aria-pressed="false" aria-label="Heavy line" title="Heavy line"><i style="height:4px"></i></button>
+    </div>
+  </div>
+  <div class="sq-stage">
+    <canvas id="sq-canvas" class="sq-canvas" width="620" height="400" role="img"
+      aria-label="A blank sheet. Drag to draw three squares on it."></canvas>
+  </div>
+  <div class="sq-controls">
+    <button type="button" id="sq-read" class="sq-btn sq-primary" disabled>Read back what you chose</button>
+    <button type="button" id="sq-auto" class="sq-btn">Draw a set for me</button>
+    <button type="button" id="sq-undo" class="sq-btn" disabled>Undo</button>
+    <button type="button" id="sq-clear" class="sq-btn sq-clear" title="Clear the sheet" disabled><i class="fas fa-trash" aria-hidden="true"></i>Clear</button>
+  </div>
+  <p id="sq-caption" class="sq-caption">Drag on the paper. Three of them.</p>
+  <div id="sq-others" class="sq-others">
+    <div class="sq-panel"><canvas id="sq-p0" width="300" height="200" role="img" aria-label="Three small squares in the top left corner of the sheet."></canvas></div>
+    <div class="sq-panel"><canvas id="sq-p1" width="300" height="200" role="img" aria-label="Three squares the width of a hand, touching at the sides so the row reads as one shape."></canvas></div>
+    <div class="sq-panel"><canvas id="sq-p2" width="300" height="200" role="img" aria-label="Three squares ruled against a straightedge, corners overshooting like a surveyor's mark."></canvas></div>
+    <div class="sq-panel"><canvas id="sq-p3" width="300" height="200" role="img" aria-label="Three freehand squares, the last larger than the first two."></canvas></div>
+    <div class="sq-panel"><canvas id="sq-p4" width="300" height="200" role="img" aria-label="Three squares stacked in a column down the middle of the sheet."></canvas></div>
+    <div class="sq-panel"><canvas id="sq-p5" width="300" height="200" role="img" aria-label="Three squares nested one inside another around a shared centre."></canvas></div>
+  </div>
+  <p id="sq-note" class="sq-note" hidden>Six more answers to the same instruction. Nothing you drew was recorded or sent anywhere.</p>
+</div>
+
+<p>What came back was three the size of postage stamps in the top left corner of an otherwise empty page. Three the width of a hand, butted against each other so the row read as one shape. Three ruled against a straightedge with the corners overshooting like a surveyor's mark. Three freehand, the last one larger than the first two because by then the wrist had loosened up.</p>
+
+<p>Stroke weight. The gap between them. Whether they sat on a shared baseline or floated. Whether the corners were sharp or rounded. Whether the three matched or made a family. Every one of those options settled inside a minute. Thirty people in the room and not one of them ever asked how big.</p>
+
+<p>A fair number of them were rectangles. Wider than tall, about the proportion of a business card.</p>
+
+<p>English has never been that strict about four equal sides, even if mathematics is, and when designs are converted into code a square becomes a box: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_box_model/Introduction_to_the_CSS_box_model" target="_blank">the box model</a> calls every element on a page a box whatever its proportions.</p>
+
+<p>Four concentric boxes make that one box. Content in the middle, padding around it, a border around that, and margin holding the neighbours off. Every choice in the exercise expanded to reveal a technical reality.</p>
+
+<figure class="bx-figure">
+  <svg class="bx-svg" viewBox="0 0 620 320" width="620" role="img" aria-labelledby="bx-t bx-d">
+    <title id="bx-t">The CSS box model, with each layer named for the choice it settles</title>
+    <desc id="bx-d">Four nested rectangles. The outermost is margin, the gap left between the squares. Inside it a border, the weight of the drawn line. Inside that padding, the room between the line and the content. At the centre the content box, the square itself.</desc>
+    <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+      <rect x="8" y="8" width="604" height="304" rx="6" fill="#f7f9fc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="5 4"></rect>
+      <rect x="46" y="46" width="528" height="228" rx="3" fill="#0f172a"></rect>
+      <rect x="68" y="68" width="484" height="184" rx="2" fill="#eef3fe"></rect>
+      <rect x="100" y="100" width="420" height="120" fill="#ffffff" stroke="#c9d6ea" stroke-width="1"></rect>
+      <text x="22" y="32" font-size="11" letter-spacing="1.4" fill="#64748b">MARGIN<tspan letter-spacing="0" fill="#94a3b8" font-size="11.5"> · the gap between items</tspan></text>
+      <text x="60" y="62" font-size="11" letter-spacing="1.4" fill="#ffffff">BORDER<tspan letter-spacing="0" fill="#cbd5e1" font-size="11.5"> · the weight of the line you drew</tspan></text>
+      <text x="82" y="92" font-size="11" letter-spacing="1.4" fill="#1159e9">PADDING<tspan letter-spacing="0" fill="#7f9dd4" font-size="11.5"> · the room between the border line and the content</tspan></text>
+      <text x="114" y="126" font-size="11" letter-spacing="1.4" fill="#0f172a">CONTENT<tspan letter-spacing="0" fill="#64748b" font-size="11.5"> · the square itself</tspan></text>
+      <text x="310" y="182" font-size="12.5" text-anchor="middle" fill="#94a3b8">every element on the page, whatever it looks like</text>
+    </g>
+  </svg>
+  <figcaption class="bx-caption">fig 1: box model</figcaption>
+</figure>
+
+<p>Boxes on endless boxes make up everything we see on a screen. Padding and margin take that variation further again, so that a page is a few properties and a handful of numbers arranged in one way out of millions. This is the essence of design: a small set of parts, configured in endless variation. The trick is making every one of those choices on purpose.</p>
+
+<hr>
+
+<p>In 1841 a toolmaker in Manchester, in the north of England, went around collecting screws. A bolt cut in one workshop wouldn't take a nut cut in the shop across the road. Every firm had a house thread, arrived at through the master's habit, the gearing on the lathe, whatever the last man had done. They cut what the shop cut.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Joseph_Whitworth" target="_blank">Joseph Whitworth</a> proposed <a href="https://en.wikipedia.org/wiki/British_Standard_Whitworth" target="_blank">one system</a>: 55 degrees between the flanks, rounded at crest and root, a table fixing the threads per inch for every diameter. The railways took the system, then the dockyards, and within a generation it held as firmly as if Parliament had passed it.</p>
+
+<p>He <a href="https://www.gracesguide.co.uk/Joseph_Whitworth" target="_blank">measured what the country was already cutting and laid down a compromise</a>. The first national screw thread standard is an average of everybody's unexamined habits, written down and given a number.</p>
+
+<hr>
+
+<p>France has tried to get that kind of consistency with bread.</p>
+
+<p>The <a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000727617/" target="_blank">Décret 93-1074</a>, September 1993, reserves the words <i>pain de tradition française</i> for a loaf of wheat flour, water, salt, and yeast. Three additives are permitted and each is capped by weight: fava bean flour at 2 percent, soy at half a percent, wheat malt at three tenths.</p>
+
+<p>Paris narrows it further. To enter the city's <a href="https://en.wikipedia.org/wiki/Concours_de_la_meilleure_baguette_de_Paris" target="_blank">annual baguette competition</a> a loaf has to run 55 to 65 centimeters, weigh 250 to 300 grams, and carry 18 grams of salt per kilo of flour. Anything outside those bands leaves the table before anyone tastes it.</p>
+
+<p>In February 2026, <a href="https://www.paris.fr/pages/la-meilleure-baguette-de-paris-2026-se-deguste-dans-le-14e-arrondissement-34064" target="_blank">143 baguettes</a> cleared that check and went out across three tables, scored zero to four on doneness, crumb, taste, smell and appearance, the top ten from each table sent to a second round. Sithamparappillai Jegatheepan of Fournil Didot, in the 14th arrondissement, won, and bakes for the French president for a year.</p>
+
+<p>Four ingredients, three capped additives, a length, a weight, and the salt fixed to the gram, and a jury still needs two rounds to separate 143 of them. The law reaches the composition of the dough and stops. Hydration, how long it sits and how cold, how hard the hands work it, when it goes in the oven and how dark it comes out: all of that sits downstream of the decree.</p>
+
+<p>Specification bottoms out in the face of reality.</p>
+
+<hr>
+
+<p>Consider a one line ticket: "Add a confirmation step before delete." By the time anyone thinks to ask, the design is decided — a confirmation modal with inline cancel, the wording naming the thing being destroyed. Then the questions start. Which side does the destructive button sit on? Does it stay disabled for a beat so it isn't tapped as the modal pops up? Arguing costs time before deployment. If we don't consider it now it will come out in the first round of user feedback.</p>
+
+<hr>
+
+<p>Take the last task you were handed. The brief, the ticket written late on a Friday, the message that said make the empty state friendlier. <i>Draw three squares</i>. Ask yourself what was left unanswered to find what the request left open. That's inches you ever so slightly closer to the intention. Because whatever is left unsaid is being settled downstream, by somebody working from the same few words.</p>
+
+<p>Even with expanded specifications settling it well takes looking at what is already there, trying it several ways, and being able to say why the one that shipped beat the others. That is where the time goes, and it is the reason the variables are worth naming.</p>
+
+<p>Everyone will see the boxes a little differently. Nobody hands back a wrong square. Everybody hands back their square.</p>
+
+<p>I drew my own three squares at the board while the class worked. I knew what was coming, mine went up as one more set anyway.</p>
+
+<script>
+  (function () {
+    var W = 620, H = 400;
+    var canvas = document.getElementById('sq-canvas');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var caption = document.getElementById('sq-caption');
+    var btnRead = document.getElementById('sq-read');
+    var btnAuto = document.getElementById('sq-auto');
+    var btnUndo = document.getElementById('sq-undo');
+    var btnClear = document.getElementById('sq-clear');
+    var others = document.getElementById('sq-others');
+    var note = document.getElementById('sq-note');
+    var weights = document.querySelectorAll('.sq-w');
+
+    var INK = '#0f172a', ACCENT = '#1159e9', PAPER = '#fdfdfb';
+    var PROMPT = 'Drag on the paper. Three of them.';
+    var NAMES = { '1.2': 'fine', '2.4': 'medium', '4.5': 'heavy' };
+
+    var rects = [], drag = null, lw = 2.4, lwTouched = false, mine = true, stage = 0;
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    function paint() {
+      ctx.fillStyle = PAPER;
+      ctx.fillRect(0, 0, W, H);
+      ctx.lineJoin = 'miter';
+      ctx.strokeStyle = INK;
+      for (var i = 0; i < rects.length; i++) {
+        ctx.lineWidth = rects[i].lw;
+        ctx.strokeRect(rects[i].x, rects[i].y, rects[i].w, rects[i].h);
+      }
+      if (drag) {
+        var d = norm(drag);
+        ctx.save();
+        ctx.strokeStyle = ACCENT;
+        ctx.lineWidth = lw;
+        ctx.setLineDash([5, 4]);
+        ctx.strokeRect(d.x, d.y, d.w, d.h);
+        ctx.restore();
+      }
+    }
+
+    function norm(d) {
+      return {
+        x: Math.min(d.x0, d.x1), y: Math.min(d.y0, d.y1),
+        w: Math.abs(d.x1 - d.x0), h: Math.abs(d.y1 - d.y0), lw: lw
+      };
+    }
+
+    function pos(e) {
+      var b = canvas.getBoundingClientRect();
+      return { x: (e.clientX - b.left) * (W / b.width), y: (e.clientY - b.top) * (H / b.height) };
+    }
+
+    function update() {
+      btnRead.disabled = rects.length !== 3;
+      btnUndo.disabled = rects.length === 0 || stage > 0;
+      btnClear.disabled = rects.length === 0;
+      if (stage > 0) return;
+      caption.className = 'sq-caption';
+      caption.textContent = rects.length === 0 ? PROMPT :
+        rects.length === 1 ? 'Two to go.' :
+        rects.length === 2 ? 'One to go.' :
+        'Three. Read them back when you\'re ready.';
+    }
+
+    for (var wi = 0; wi < weights.length; wi++) {
+      weights[wi].addEventListener('click', function () {
+        if (stage > 0) return;
+        lw = parseFloat(this.getAttribute('data-w'));
+        lwTouched = true;
+        for (var k = 0; k < weights.length; k++) {
+          weights[k].setAttribute('aria-pressed', weights[k] === this ? 'true' : 'false');
+        }
+      });
+    }
+
+    canvas.addEventListener('pointerdown', function (e) {
+      if (stage > 0 || rects.length >= 3) return;
+      e.preventDefault();
+      var p = pos(e);
+      drag = { x0: p.x, y0: p.y, x1: p.x, y1: p.y };
+      if (canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId);
+      paint();
+    });
+
+    canvas.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var p = pos(e);
+      drag.x1 = p.x; drag.y1 = p.y;
+      paint();
+    });
+
+    canvas.addEventListener('pointerup', function () {
+      if (!drag) return;
+      var d = norm(drag);
+      drag = null;
+      if (d.w >= 12 && d.h >= 12) rects.push(d);
+      paint();
+      update();
+    });
+
+    canvas.addEventListener('pointercancel', function () { drag = null; paint(); });
+
+    btnUndo.addEventListener('click', function () {
+      rects.pop();
+      if (!rects.length) mine = true;
+      paint();
+      update();
+    });
+
+    btnClear.addEventListener('click', function () {
+      rects = []; drag = null; mine = true; stage = 0;
+      others.className = 'sq-others';
+      note.hidden = true;
+      btnRead.textContent = 'Read back what you chose';
+      btnAuto.disabled = false;
+      paint();
+      update();
+    });
+
+    btnAuto.addEventListener('click', function () {
+      if (stage > 0) return;
+      rects = autoSet();
+      mine = false;
+      paint();
+      update();
+      caption.textContent = 'Three, drawn without you. The same instruction, answered another way.';
+    });
+
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+
+    function autoSet() {
+      var base = rnd(58, 108);
+      var vary = Math.random() < 0.55;
+      var square = Math.random() < 0.6;
+      var baseline = Math.random() < 0.5;
+      var gap = rnd(6, 60);
+      var out = [], i, sizes = [];
+      for (i = 0; i < 3; i++) sizes.push(vary ? base * rnd(0.7, 1.45) : base);
+      var total = sizes[0] + sizes[1] + sizes[2] + gap * 2;
+      var x = rnd(30, Math.max(32, W - total - 30));
+      var top = rnd(50, H - base * 1.6 - 40);
+      for (i = 0; i < 3; i++) {
+        var w = sizes[i];
+        var h = square ? w : w * rnd(0.55, 0.8);
+        var y = baseline ? top + (base * 1.45 - h) : rnd(40, H - h - 40);
+        out.push({ x: x, y: y, w: w, h: h, lw: lw });
+        x += w + gap;
+      }
+      return out;
+    }
+
+    function spread(a) { return Math.max.apply(null, a) - Math.min.apply(null, a); }
+
+    function overlaps(a, b) {
+      return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+    }
+
+    function readback() {
+      var r = rects.slice().sort(function (a, b) { return a.x - b.x; });
+      var s = [], i;
+
+      var dims = [];
+      for (i = 0; i < 3; i++) dims.push(Math.round(r[i].w) + ' by ' + Math.round(r[i].h));
+      s.push((mine ? 'You drew them ' : 'They came out ') + dims[0] + ', ' + dims[1] +
+             ' and ' + dims[2] + ', left to right.');
+
+      var sq = 0, wider = 0, taller = 0;
+      for (i = 0; i < 3; i++) {
+        var ratio = Math.min(r[i].w, r[i].h) / Math.max(r[i].w, r[i].h);
+        if (ratio >= 0.93) sq++;
+        else if (r[i].w > r[i].h) wider++;
+        else taller++;
+      }
+      var lean = wider >= taller ? 'wider than tall' : 'taller than wide';
+      if (sq === 3) {
+        s.push('All three equilateral, to within a few pixels.');
+      } else if (sq === 0) {
+        s.push(wider === 3 ? 'Not one of the three is equilateral. All of them are wider than tall.' :
+               taller === 3 ? 'Not one of the three is equilateral. All of them are taller than wide.' :
+                              'Not one of the three is equilateral.');
+      } else if (sq === 1) {
+        s.push(wider === 2 || taller === 2
+          ? 'One is equilateral and the other two are ' + lean + '.'
+          : 'One is equilateral. The other two are not, and not in the same direction.');
+      } else {
+        s.push('Two are equilateral and one is ' + lean + '.');
+      }
+
+      var areas = [], ws = [], hs = [];
+      for (i = 0; i < 3; i++) { areas.push(r[i].w * r[i].h); ws.push(r[i].w); hs.push(r[i].h); }
+      var ratioOf = function (a) { return Math.max.apply(null, a) / Math.min.apply(null, a); };
+      if (ratioOf(ws) < 1.12 && ratioOf(hs) < 1.12) s.push('All three the same size.');
+      else if (ratioOf(areas) >= 1.25) s.push('The largest covers ' + ratioOf(areas).toFixed(1) + ' times the area of the smallest.');
+      else s.push('The three are close in size without being equal.');
+
+      var wn = [];
+      for (i = 0; i < 3; i++) wn.push(NAMES[String(r[i].lw)] || 'medium');
+      if (wn[0] === wn[1] && wn[1] === wn[2]) {
+        s.push(lwTouched ? 'All three drawn ' + wn[0] + '.'
+                         : 'All three at the line weight the page opened with.');
+      } else {
+        s.push('Their lines are ' + wn[0] + ', ' + wn[1] + ' and ' + wn[2] + ', left to right.');
+      }
+
+      var bottoms = [], tops = [], mids = [];
+      for (i = 0; i < 3; i++) {
+        bottoms.push(r[i].y + r[i].h);
+        tops.push(r[i].y);
+        mids.push(r[i].y + r[i].h / 2);
+      }
+      if (spread(bottoms) <= 6) s.push('They sit on a shared baseline.');
+      else if (spread(tops) <= 6) s.push('Their top edges line up.');
+      else if (spread(mids) <= 8) s.push('They line up through their centres.');
+      else s.push('They sit at three different heights.');
+
+      var any = overlaps(r[0], r[1]) || overlaps(r[1], r[2]) || overlaps(r[0], r[2]);
+      var g1 = r[1].x - (r[0].x + r[0].w), g2 = r[2].x - (r[1].x + r[1].w);
+      if (any) {
+        s.push('Two of them overlap. Nothing said they couldn\'t.');
+      } else if (g1 >= -0.5 && g2 >= -0.5) {
+        if (g1 < 3 && g2 < 3) s.push('They touch, so the row reads as one shape.');
+        else if (Math.abs(g1 - g2) <= 6) s.push('The gaps are even, about ' + Math.round((g1 + g2) / 2) + ' pixels.');
+        else s.push('The gaps are ' + Math.round(g1) + ' and ' + Math.round(g2) + ' pixels.');
+      } else {
+        s.push('You didn\'t put them in a row.');
+      }
+
+      // Only the ink that landed on the sheet counts toward the coverage.
+      var area = 0, cx = 0, cy = 0, off = 0;
+      for (i = 0; i < 3; i++) {
+        var iw = Math.max(0, Math.min(r[i].x + r[i].w, W) - Math.max(r[i].x, 0));
+        var ih = Math.max(0, Math.min(r[i].y + r[i].h, H) - Math.max(r[i].y, 0));
+        area += iw * ih;
+        cx += r[i].x + r[i].w / 2;
+        cy += r[i].y + r[i].h / 2;
+        if (r[i].x < -0.5 || r[i].y < -0.5 || r[i].x + r[i].w > W + 0.5 || r[i].y + r[i].h > H + 0.5) off++;
+      }
+      cx /= 3; cy /= 3;
+      var h3 = cx < W * 0.38 ? 'left' : cx > W * 0.62 ? 'right' : 'centre';
+      var v3 = cy < H * 0.38 ? 'upper' : cy > H * 0.62 ? 'lower' : 'middle';
+      var where = h3 === 'centre'
+        ? (v3 === 'middle' ? 'in the middle of the sheet'
+                           : 'across the ' + (v3 === 'upper' ? 'top' : 'bottom') + ' of the sheet')
+        : (v3 === 'middle' ? 'along the ' + h3 + ' edge'
+                           : 'in the ' + v3 + ' ' + h3);
+      s.push('Together they cover about ' + Math.max(1, Math.round(area / (W * H) * 100)) +
+             ' percent of the paper, ' + where + '.');
+
+      if (off) {
+        s.push((off === 1 ? 'One of them runs off the edge of the paper.' :
+                off === 2 ? 'Two of them run off the edge of the paper.' :
+                            'All three run off the edge of the paper.') +
+               ' Interesting choice, why not.');
+      }
+
+      return s.join(' ');
+    }
+
+    btnRead.addEventListener('click', function () {
+      if (stage === 0) {
+        stage = 1;
+        caption.textContent = readback();
+        caption.className = 'sq-caption sq-revealed';
+        btnRead.textContent = 'Show six more answers';
+        btnAuto.disabled = true;
+        btnUndo.disabled = true;
+        return;
+      }
+      if (stage === 1) {
+        stage = 2;
+        drawOthers();
+        others.className = 'sq-others sq-open';
+        note.hidden = false;
+        btnRead.disabled = true;
+      }
+    });
+
+    function seeded(s) {
+      return function () { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; };
+    }
+
+    function panel(id) {
+      var c = document.getElementById(id);
+      if (!c || !c.getContext) return null;
+      var g = c.getContext('2d');
+      c.width = 300 * dpr; c.height = 200 * dpr;
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.fillStyle = PAPER;
+      g.fillRect(0, 0, 300, 200);
+      g.strokeStyle = INK;
+      g.lineJoin = 'miter';
+      return g;
+    }
+
+    function wobblyRect(g, x, y, s, seed) {
+      var rn = seeded(seed);
+      var j = function () { return (rn() - 0.5) * 3.2; };
+      var pts = [
+        [x + j(), y + j()], [x + s + j(), y + j()],
+        [x + s + j(), y + s + j()], [x + j(), y + s + j()]
+      ];
+      g.beginPath();
+      g.moveTo(pts[0][0], pts[0][1]);
+      for (var i = 1; i <= 4; i++) {
+        var a = pts[i - 1], b = pts[i % 4];
+        g.quadraticCurveTo((a[0] + b[0]) / 2 + j(), (a[1] + b[1]) / 2 + j(), b[0], b[1]);
+      }
+      g.stroke();
+    }
+
+    function drawOthers() {
+      var g, i;
+
+      // Postage stamps in the top left corner of an otherwise empty sheet.
+      g = panel('sq-p0');
+      if (g) {
+        g.lineWidth = 2;
+        for (i = 0; i < 3; i++) g.strokeRect(22 + i * 25, 20, 19, 19);
+      }
+
+      // The width of a hand, touching, so the row reads as one shape.
+      g = panel('sq-p1');
+      if (g) {
+        g.lineWidth = 3;
+        var s1 = 56, x1 = (300 - s1 * 3) / 2, y1 = (200 - s1) / 2;
+        for (i = 0; i < 3; i++) g.strokeRect(x1 + i * s1, y1, s1, s1);
+      }
+
+      // Ruled against a straightedge, corners overshooting like a surveyor's mark.
+      g = panel('sq-p2');
+      if (g) {
+        g.lineWidth = 1.8;
+        var s2 = 48, gp = 26, o = 9;
+        var x2 = (300 - (s2 * 3 + gp * 2)) / 2, y2 = (200 - s2) / 2;
+        for (i = 0; i < 3; i++) {
+          var x = x2 + i * (s2 + gp);
+          g.beginPath();
+          g.moveTo(x - o, y2); g.lineTo(x + s2 + o, y2);
+          g.moveTo(x - o, y2 + s2); g.lineTo(x + s2 + o, y2 + s2);
+          g.moveTo(x, y2 - o); g.lineTo(x, y2 + s2 + o);
+          g.moveTo(x + s2, y2 - o); g.lineTo(x + s2, y2 + s2 + o);
+          g.stroke();
+        }
+      }
+
+      // Freehand, the last one larger because by then the wrist had loosened up.
+      g = panel('sq-p3');
+      if (g) {
+        g.lineWidth = 3.2;
+        var sizes = [40, 48, 62], base = 150, x3 = 44;
+        for (i = 0; i < 3; i++) {
+          wobblyRect(g, x3, base - sizes[i], sizes[i], 97 + i * 5417);
+          x3 += sizes[i] + 22;
+        }
+      }
+
+      // A column. Nobody said a row.
+      g = panel('sq-p4');
+      if (g) {
+        g.lineWidth = 2.4;
+        var s4 = 44, gp4 = 14, y4 = (200 - (s4 * 3 + gp4 * 2)) / 2;
+        for (i = 0; i < 3; i++) g.strokeRect((300 - s4) / 2, y4 + i * (s4 + gp4), s4, s4);
+      }
+
+      // Nested, around one centre. Nobody said three separate things.
+      g = panel('sq-p5');
+      if (g) {
+        g.lineWidth = 2.4;
+        var n = [128, 78, 32];
+        for (i = 0; i < 3; i++) g.strokeRect(150 - n[i] / 2, 100 - n[i] / 2, n[i], n[i]);
+      }
+    }
+
+    paint();
+    update();
+  })();
+</script>

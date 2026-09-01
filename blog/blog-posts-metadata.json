@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "the-shape-of-intent",
+      "title": "The Shape of Intent",
+      "date": "September 1, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "A small set of parts, set a million ways. Everything left unsaid still gets decided.",
+      "image": "img/martino-pietropoli-pirWeToS2mA-unsplash.jpg",
+      "img-credit": "Martino Pietropoli",
+      "credit-link": "https://unsplash.com/photos/pirWeToS2mA",
+      "tags": [
+        "Design Philosophy",
+        "Process",
+        "Craft",
+        "Observation"
+      ],
+      "category": "Design"
+    },
+    {
       "id": "credit-the-lizard",
       "title": "Credit the Lizard",
       "date": "August 13, 2026",

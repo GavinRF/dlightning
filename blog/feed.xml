@@ -6,7 +6,20 @@
     <atom:link href="https://dlightning.org/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Insights on experience design, customer psychology, and building products that connect.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Aug 2026 02:39:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 01 Sep 2026 06:17:24 +0000</lastBuildDate>
+    <item>
+      <title>The Shape of Intent</title>
+      <link>https://dlightning.org/blog-posts/the-shape-of-intent.html</link>
+      <guid isPermaLink="true">https://dlightning.org/blog-posts/the-shape-of-intent.html</guid>
+      <pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dlightning</dc:creator>
+      <description><![CDATA[A small set of parts, set a million ways. Everything left unsaid still gets decided.]]></description>
+      <enclosure url="https://dlightning.org/blog/img/martino-pietropoli-pirWeToS2mA-unsplash.jpg" type="image/jpeg" />
+      <category>Design Philosophy</category>
+      <category>Process</category>
+      <category>Craft</category>
+      <category>Observation</category>
+    </item>
     <item>
       <title>Credit the Lizard</title>
       <link>https://dlightning.org/blog-posts/credit-the-lizard.html</link>

@@ -23,12 +23,19 @@
     
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
+    <!-- The one address this post answers to, so share links carrying ?utm_source
+         or ?fbclid aren't treated as competing duplicates. -->
+    <link rel="canonical" href="{URL}">
+
     <!-- Open Graph tags -->
     <meta property="og:title" content="{TITLE}">
     <meta property="og:description" content="{EXCERPT}">
     <meta property="og:image" content="../blog/{IMAGE}">
     <meta property="og:url" content="{URL}">
     <meta property="og:type" content="article">
+
+    <!-- Marks the page as a dated article rather than a generic page. -->
+    {JSONLD}
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
@@ -117,7 +124,7 @@
                 <section id="moreRelatedPosts" class="mt-5">
                     <h4 class="mb-3">Related Posts</h4>
                     <div class="row">
-                        <!-- populated client-side by blog-post.js from blog-posts-metadata.json -->
+                        {RELATED_POSTS}
                     </div>
                 </section>
             </div>

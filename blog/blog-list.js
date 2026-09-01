@@ -26,7 +26,16 @@ function initializeBlog() {
     updateCategories();
     updateTagCloud();
     updateArchivePosts();
-    renderPosts();
+
+    // The first page of cards is already visible in the served HTML. Pick the
+    // pagination cursor up from the DOM rather than calling renderPosts(),
+    // which would hide and re-reveal them and replay the fade-in.
+    currentIndex = 0;
+    allPosts.forEach(post => {
+        const card = cardsById.get(post.id);
+        if (card && !card.hidden) currentIndex++;
+    });
+    syncLoadMoreBtn();
 }
 
 // True when any filter is narrowing the feed.
@@ -47,33 +56,25 @@ function postMatches(post) {
     return true;
 }
 
-// Build a single blog-post card element (with lazy-image shimmer reveal).
-function createPostCard(post) {
-    const postElement = document.createElement('div');
-    postElement.className = 'mb-2 blog-item';
-    postElement.setAttribute('data-category', post.category);
-    postElement.setAttribute('data-tags', post.tags.join(' '));
-    postElement.innerHTML = `
-        <article class="blog-post">
-            <a href="../blog-posts/${post.id}.html">
-                <div class="blog-post-thumb">
-                    <img src="${post.image}" alt="${post.title}" class="img-fluid" loading="lazy">
-                </div>
-                <div class="blog-post-content">
-                        <h2>${post.title}</h2>
-                    <p class="date"><i class="far fa-calendar-alt me-2"></i> ${post.date}</p>
-                    <p>${post.excerpt}</p>
-                    <div class="tags">
-                        ${post.tags.map(tag => `<span class="tag"><i class="fas fa-tag me-1"></i>&nbsp;${tag}</span>`).join('')}
-                    </div>
-                </div>
-            </a>
-        </article>
-    `;
+// The cards are baked into index.html by blog/generate_index.py so that every
+// post link is present in the served HTML — building them here meant the page
+// shipped with no links to any post, which is what left them "Discovered -
+// currently not indexed" in Search Console. This file adopts those nodes
+// instead: filtering and pagination toggle `hidden` on cards that already exist.
+const cardsById = new Map();
 
-    // Reveal the image (and stop the shimmer) once it loads.
-    const thumb = postElement.querySelector('.blog-post-thumb');
-    const img = thumb.querySelector('img');
+function indexCards() {
+    document.querySelectorAll('#blogPosts .blog-item').forEach(card => {
+        cardsById.set(card.dataset.id, card);
+        initThumb(card);
+    });
+}
+
+// Reveal the image (and stop the shimmer) once it loads.
+function initThumb(card) {
+    const thumb = card.querySelector('.blog-post-thumb');
+    const img = thumb && thumb.querySelector('img');
+    if (!img) return;
     const reveal = () => thumb.classList.add('loaded');
     if (img.complete) {
         reveal();
@@ -81,14 +82,28 @@ function createPostCard(post) {
         img.addEventListener('load', reveal);
         img.addEventListener('error', reveal); // don't shimmer forever on a broken image
     }
-    return postElement;
+}
+
+// This script tag sits below #blogPosts, so the cards are already parsed.
+indexCards();
+
+// Show or hide a post's card. Missing cards are ignored, which is what happens
+// to a post added to the metadata before generate_posts.py has been run.
+function setCardVisible(post, visible) {
+    const card = cardsById.get(post.id);
+    if (card) card.hidden = !visible;
+    return !!card;
+}
+
+// The button disappears once the whole feed is revealed.
+function syncLoadMoreBtn() {
+    document.getElementById('loadMoreBtn').style.display =
+        currentIndex >= allPosts.length ? 'none' : 'block';
 }
 
 // Render the feed for the current filter state. When filtering, every matching
 // post is shown at once (no pagination). When not, we paginate as before.
 function renderPosts() {
-    const container = document.getElementById('blogPosts');
-    container.innerHTML = '';
     currentIndex = 0;
 
     updateActiveFilters();
@@ -98,34 +113,33 @@ function renderPosts() {
     const loadMoreBtn = document.getElementById('loadMoreBtn');
 
     if (isFiltering()) {
-        const matches = allPosts.filter(postMatches);
-        matches.forEach(post => container.appendChild(createPostCard(post)));
+        let matches = 0;
+        allPosts.forEach(post => {
+            const shown = postMatches(post);
+            if (setCardVisible(post, shown) && shown) matches++;
+        });
         loadMoreBtn.style.display = 'none';
-        noResults.hidden = matches.length !== 0;
+        noResults.hidden = matches !== 0;
     } else {
         noResults.hidden = true;
+        allPosts.forEach(post => setCardVisible(post, false));
         loadMorePosts(); // restores the paginated, unfiltered feed
     }
 }
 
-// Append the next page of the unfiltered feed. No-op while filtering (the
-// filtered view already renders all matches).
+// Reveal the next page of the unfiltered feed. No-op while filtering (the
+// filtered view already shows all matches).
 function loadMorePosts() {
     if (isLoading || isFiltering()) return;
     isLoading = true;
 
     const postsToLoad = allPosts.slice(currentIndex, currentIndex + postsPerLoad);
-
-    if (postsToLoad.length > 0) {
-        const container = document.getElementById('blogPosts');
-        postsToLoad.forEach(post => container.appendChild(createPostCard(post)));
-        currentIndex += postsToLoad.length;
-    }
+    postsToLoad.forEach(post => setCardVisible(post, true));
+    currentIndex += postsToLoad.length;
 
     isLoading = false;
 
-    document.getElementById('loadMoreBtn').style.display =
-        currentIndex >= allPosts.length ? 'none' : 'block';
+    syncLoadMoreBtn();
 }
 
 // ---- Filter controls -------------------------------------------------------
