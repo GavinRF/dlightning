@@ -26,6 +26,12 @@
   </url>
 
   <url>
+    <loc>https://dlightning.org/practice.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://dlightning.org/downloads.html</loc>
     <lastmod>2026-08-11</lastmod>
     <priority>0.8</priority>
@@ -372,6 +378,10 @@
     <loc>https://dlightning.org/blog-posts/credit-the-lizard.html</loc>
     <lastmod>2026-08-31</lastmod>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dlightning.org/blog-posts/written-for-someone-else.html</loc>
+    <lastmod>2026-09-04</lastmod>
   </url>
 
 </urlset>

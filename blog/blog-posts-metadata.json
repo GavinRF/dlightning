@@ -37,6 +37,24 @@
       "category": "Systems"
     },
     {
+      "id": "written-for-someone-else",
+      "title": "Written for Someone Else",
+      "date": "August 12, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "An extra clause written for someone else. Why include it then? Who's it for?",
+      "image": "img/jack-finnigan-jb4qYmaVF_I-unsplash.jpg",
+      "img-credit": "Jack Finnigan",
+      "credit-link": "https://unsplash.com/photos/jb4qYmaVF_I",
+      "tags": [
+        "Design Philosophy",
+        "Culture",
+        "Psychology",
+        "Ethics"
+      ],
+      "category": "Design"
+    },
+    {
       "id": "count-the-empties",
       "title": "Count the Empties",
       "date": "August 10, 2026",
