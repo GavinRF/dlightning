@@ -163,15 +163,15 @@
 
         .practice_creed {
             margin: 30px 0 6px 0;
-            padding: 24px 26px;
+            padding: 24px 6px;
             background: #f6f7fb;
             border-radius: 10px;
         }
         .practice_creed p {
             margin-bottom: 8px;
             color: #112685;
-            font-weight: 600;
-            font-size: 1.06rem;
+            font-weight: 400;
+            font-size: 2.06rem;
         }
         .practice_creed p:last-child {
             margin-bottom: 0;
@@ -189,13 +189,13 @@
             line-height: 0;
         }
         .cycle_img {
-            margin: 26px 0 0 0;
+            margin: 6px 0 20px 0;
             line-height: 0;
         }
         .cycle_img img {
             display: block;
             width: 100%;
-            max-width: 400px;
+            max-width: 300px;
             height: auto;
             margin: 0 auto;
         }
@@ -215,6 +215,69 @@
             display: block;
             width: 100%;
             height: auto;
+        }
+
+        /* the next-step card sitting beside the creed */
+        .creed_next h4 {
+            color: #112685;
+            margin-bottom: 14px;
+        }
+        @media (max-width: 767px) {
+            .creed_next {
+                margin-top: 24px;
+            }
+        }
+
+        /* closing call to action */
+        .practice_cta {
+            background-color: #0337a8;
+            padding: 56px 0;
+        }
+        .practice_cta h3 {
+            font-size: 40px;
+            font-weight: 300;
+            color: #ffffff;
+            line-height: 52px;
+            margin-bottom: 14px;
+        }
+        .practice_cta p {
+            color: #cfe0ff;
+            font-size: 1.02rem;
+            line-height: 1.7;
+            max-width: 470px;
+            margin-bottom: 0;
+        }
+        .practice_cta .cta_btns {
+            text-align: right;
+        }
+        .practice_cta .cta_btns .boxed-btn4 {
+            min-width: 272px;
+            margin: 6px 0;
+        }
+        /* the designer door: outlined, so the client button stays primary */
+        .practice_cta .btn_secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+        }
+        .practice_cta .btn_secondary:hover {
+            background: #ffffff;
+            color: #0337a8 !important;
+            border-color: #ffffff;
+        }
+        @media (max-width: 991px) {
+            .practice_cta h3 {
+                font-size: 30px;
+                line-height: 38px;
+                text-align: center;
+            }
+            .practice_cta p {
+                text-align: center;
+                max-width: none;
+                margin-bottom: 26px;
+            }
+            .practice_cta .cta_btns {
+                text-align: center;
+            }
         }
 
         @media (max-width: 575px) {
@@ -352,9 +415,16 @@
                             <p class="lede">
                                 How we work on anything, including this page.
                             </p>
-                            <p>
-                                These are four named stages run in order. They are a practice rather than a framework, which mostly means we perform them on our own work instead of selling them to anyone.
-                            </p>
+                            <div class="row align-items-center">
+                                <div class="cycle_img col-lg-4" data-aos="fade-up" data-aos-duration="650">
+                                    <img src="img/ilstrator/cycle.png" alt="Diagram of the water cycle as a loop of four: heat rising from the sun, cloud, a storm raining with a lightning bolt in it, and water among mountains, each arrow leading to the next and the last returning to the first." loading="lazy">
+                                </div>
+                                <div class="col-lg-8 aligh-items-center">
+                                <p>
+                                    These are four named stages run in order. They are a practice rather than a framework, which mostly means we perform them on our own work instead of selling them to anyone.
+                                </p>
+                                </div>
+                            </div>
 
                             <div class="pass">
                                 <h3><span class="pass_num">1.</span>The Orientation Pass</h3>
@@ -399,10 +469,6 @@
                                     Nothing here is finished. It is composted.
                                 </p>
                             </div>
-
-                            <div class="cycle_img" data-aos="fade-up" data-aos-duration="650">
-                                <img src="img/ilstrator/cycle.png" alt="Diagram of the water cycle as a loop of four: heat rising from the sun, cloud, a storm raining with a lightning bolt in it, and water among mountains, each arrow leading to the next and the last returning to the first." loading="lazy">
-                            </div>
                         </div>
 
                         <div class="practice_block" id="toward" data-aos="fade-up" data-aos-duration="650">
@@ -420,11 +486,21 @@
                                 We do not have all of this working yet, and we would rather say where it breaks than claim otherwise. The costs currently left off the invoice are going to get priced, by regulation or by physics, and the businesses built on their staying free will find that out together.
                             </p>
 
-                            <div class="practice_creed">
-                                <p>Orient before interpreting.</p>
-                                <p>Perform before believing.</p>
-                                <p>Share before concluding.</p>
-                                <p>Listen to what remains.</p>
+                            <div class="row align-items-center">
+                                <div class="col-lg-8 col-md-8">
+                                    <div class="practice_creed">
+                                        <p>Orient before interpreting.</p>
+                                        <p>Perform before believing.</p>
+                                        <p>Share before concluding.</p>
+                                        <p>Listen to what remains.</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 creed_next">
+                                    <h4 data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">Still charging up?</h4>
+                                    <div
+                                        class="about_btn" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400"><a class="boxed-btn4" href="Pricing.html">Our Services &emsp;<i class="fa fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -437,11 +513,52 @@
             <img src="img/ilstrator/eco-city.png" alt="Flat illustration of a green city skyline behind an elevated commuter train, a road carrying a van, a car and a minibus, and hills planted with wind turbines and solar panels." loading="lazy">
         </div>
 
-        <div class="footer" id="footer">
-                <!-- Replaced by footer.html on load. Static so the blog is reachable
-                     without JavaScript; same link, same anchor text as the real footer. -->
-                <a href="/blog/" class="sparks">Sparks Blog</a>
+        <!-- closing call to action  -->
+        <div class="practice_cta">
+            <div class="container">
+                <div class="row align-items-baseline">
+                    <div class="col-xl-7 col-lg-6 col-md-12">
+                        <h3 data-aos="fade-down" data-aos-duration="800">Hold it against<br>our work</h3>
+                        <p data-aos="fade-down" data-aos-duration="800" data-aos-delay="100">
+                            Bring us a project &mdash; or, if you build things yourself, bring us an argument.
+                        </p>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 col-md-12">
+                        <div class="cta_btns" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+                            <a class="boxed-btn4" href="contact.html">Start a project &emsp;<i class="fa fa-arrow-right"></i></a>
+                            <br>
+                            <a class="boxed-btn4 btn_secondary" href="collective-info.html">See the collective &emsp;<i class="fa fa-bolt"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <!--/ closing call to action  -->
+
+        <div class="footer" id="footer">
+            <!-- Replaced by footer.html on load. Static so every page in the nav is
+                 reachable without JavaScript; same links, same anchor text as the
+                 real header and footer. -->
+            <a href="/" class="home">Home</a>
+            <a href="/Process.html" class="process">Process</a>
+            <a href="/practice.html" class="practice">Practice</a>
+            <a href="/Pricing.html" class="pricing">Services</a>
+            <a href="/collective-info.html" class="collective">Collective</a>
+            <a href="/blog/" class="sparks">Sparks Blog</a>
+            <a href="/downloads.html" class="downloads">Offerings</a>
+            <a href="/intake/product-validation-offer.html" class="concierge">Concierge Service</a>
+            <a href="/experience-builder.html" class="expBuilder">Experience Builder</a>
+            <a href="/screen-builder/" class="screenBuilder">Screen Builder</a>
+            <a href="/tea-landing.html" class="teaLanding">Your Cup of Tea</a>
+            <a href="/gum-templates.html" class="gumTemplates">Design Templates</a>
+            <a href="/games/" class="games">Games</a>
+            <a href="/d-tools/decision-tools.html" class="decision-tools">Decision Tools</a>
+            <a href="/privacy-policy.html" class="privacyPolicyPage">Privacy Policy</a>
+            <a href="/tos.html" class="tos">Terms of Service</a>
+            <a href="/delete-account.html" class="delete">Delete Account</a>
+            <a href="/careers/careers-list.html" class="careers">Careers</a>
+            <a href="/contact.html" class="contact2">Contact Us</a>
+        </div>
 
         <script>
         AOS.init({

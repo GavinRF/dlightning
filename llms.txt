@@ -62,6 +62,25 @@ An intuitive drag-and-drop design tool for rapid prototyping and interface mocku
 5. **AI Integration & Opportunity Assessment** — Identifying where intelligent automation adds genuine user value
 6. **Scalable Brand Style** — Cohesive visual identity and design systems built to grow with the product
 
+## Our Practice
+
+Alongside the project process, Dlightning publishes the practice it holds itself to at dlightning.org/practice.html — stated openly so it can be pointed at, argued with, and held against the work.
+
+**Empathy. Autonomy. Unity.** Three held terms, and the last two are in genuine tension rather than parallel virtues:
+
+- **Empathy** is a procedure, not a feeling — interviews, observation, and the discipline of recording what people do rather than what they say they do. Rules out deciding what someone needs without asking them.
+- **Autonomy** means the person using a product acts from their own volition, and can stop, leave, and take what belongs to them. Their goals outrank our metrics. Rules out manufactured urgency, obstructed exits, and defaults chosen against the person who has to live with them.
+- **Unity** means a product is answerable to more than the person who bought it. Rules out designing for a segment and treating the spillover as somebody else's problem.
+
+**The four passes**, run in order on every piece of work:
+
+1. **The Orientation Pass** — the first deliberate encounter with something, before analysis or judgment. Before you walk the path, learn which way you are facing.
+2. **The Unperformed Cognition** — a thought is unverified potential until it is tested, said, built, or taught. The most expensive product is a good build of the wrong thing.
+3. **The Peer Test** — let another mind meet your reasoning without carrying it across for them. Share before concluding.
+4. **The Knowing Tail** — attend to what the mind knows before it knows how to say it. Listen to what remains.
+
+The fourth pass returns to the first, which makes the practice a cycle rather than a checklist. Dlightning frames its research as decomposition — breaking down assumptions, failed launches, and raw notes into what the next thing can grow from — and its commercial aim as proving a business can pay for itself and pay back what it takes.
+
 ## The Dlightning Collective
 
 The Dlightning Collective is an open community of designers and builders from every discipline. We share ideas, tools, and methods to help each other build better products. We believe great design happens when people work together — and that the design community grows stronger when knowledge flows freely.
