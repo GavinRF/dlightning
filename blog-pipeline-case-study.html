@@ -54,7 +54,6 @@
         .post-content p { white-space: normal; overflow-wrap: break-word; }
         .post-content h2 { margin-top: 48px; margin-bottom: 14px; color: #05126a; }
         .post-content h3 { font-size: 1.12rem; margin-top: 26px; margin-bottom: 6px; font-weight: 600; color: #010009; }
-        .post-content hr { margin: 42px 0; border: 0; border-top: 1px solid #d9dade; }
         .cs-lede { font-size: 1.18rem; color: #3c4048; font-style: italic; margin-bottom: 6px; }
 
         /* KPI row */
@@ -109,6 +108,32 @@
         .cs-ba > div { flex: 1 1 260px; background: #fff; border: 1px solid #e3e4e8; border-radius: 10px; padding: 14px 16px; }
         .cs-ba .tag { display: inline-block; font-size: .7rem; letter-spacing: .09em; text-transform: uppercase; color: #767c85; margin-bottom: 7px; background: none; padding: 0; }
         .cs-ba p { font-size: .93rem; line-height: 1.6; margin: 0 !important; white-space: normal !important; }
+
+
+        /* concept model: authority */
+        .cs-model { padding: 22px 0 16px; }
+        .cs-model .cs-fig-title, .cs-model .cs-fig-sub, .cs-model .cs-legend, .cs-model .cs-note { padding: 0 16px; }
+        .cs-model svg { display: block; width: 100%; height: auto; min-width: 700px; }
+        .cs-model text { font-family: inherit; }
+        .cs-k-agent { background: #fff; border: 1.5px solid #065cad; }
+        .cs-k-human { background: #05126a; }
+        .cs-k-rule { width: 8px; height: 15px; border-radius: 2px; background: #fff; border: 1.5px dashed #05126a; }
+        .cs-k-wall { width: 8px; height: 15px; border-radius: 2px; background: #05126a; }
+        .cs-k-rel  { border-radius: 50%; background: #fff; border: 1.5px solid #065cad; }
+        .cs-model .bl  { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; fill: #767c85; }
+        .cs-model .ct  { font-size: 12.5px; font-weight: 600; fill: #010009; }
+        .cs-model .cb  { font-size: 11px; fill: #3c4048; }
+        .cs-model .cap { font-size: 11.5px; fill: #5d626b; }
+        .cs-model .ln  { font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+        .cs-model .bn  { font-size: 10px; letter-spacing: .09em; fill: #767c85; }
+        .cs-model .bt  { font-size: 12.5px; font-weight: 600; fill: #010009; }
+        .cs-model .bb  { font-size: 10.5px; fill: #3c4048; }
+        .cs-model .hbn { fill: #9fb4e8; }
+        .cs-model .hbt { fill: #fff; }
+        .cs-model .hbb { fill: #cfd9f2; }
+        .cs-model .an  { font-size: 12px; fill: #3c4048; }
+        .cs-model .anb { font-weight: 600; fill: #05126a; }
+        .cs-model .sum { font-size: 12px; font-weight: 600; fill: #05126a; }
 
         @media (max-width: 575px) {
             .cs-kpi .v { font-size: 1.6rem; }
@@ -264,6 +289,148 @@
     <div><span class="tag">Before</span><p>The seam isn't a comfortable address. Break a forest into parcels and you manufacture edge, and edge brings wind, heat, and the nest predators that work margins.</p></div>
     <div><span class="tag">After</span><p>Break a forest into parcels and you manufacture edge, and edge brings wind, heat, and the nest predators that work margins.</p></div>
 </div>
+
+<hr>
+
+<h2>Where the authority sits</h2>
+
+<p>The six boxes above say what happens and in what order. They don't say who is allowed to do what. For a system that writes in my name, the second question is the one that matters. Here is the same pipeline with authority as the vertical axis.</p>
+
+<div class="cs-fig cs-model" data-reading-time="skip">
+    <div class="cs-fig-title">Where the authority sits</div>
+    <div class="cs-fig-sub">The same pipeline, organized by who is allowed to act rather than by what happens next.</div>
+    <div class="cs-legend">
+        <span><i class="cs-key cs-k-agent"></i> The agent acts</span>
+        <span><i class="cs-key cs-k-human"></i> Only I can act</span>
+        <span><i class="cs-key cs-k-rule"></i> Stop held by an instruction</span>
+        <span><i class="cs-key cs-k-wall"></i> Stop held by a capability the agent doesn't have</span>
+        <span><i class="cs-key cs-k-rel"></i> I release it forward</span>
+    </div>
+
+    <div class="cs-scroll">
+    <svg viewBox="0 0 800 550" role="img" aria-labelledby="cmTitle cmDesc">
+        <title id="cmTitle">Where authority sits in the blog pipeline</title>
+        <desc id="cmDesc">A constraint layer sits above the whole system and is read at the start of every run. Below it, a lane of five steps the agent performs and a lane of three actions only the human performs, divided by a boundary the work crosses three times. Two of the three stops are held by written instruction. The third is held by the absence of any social media credential.</desc>
+
+        <defs>
+            <marker id="cmArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0 0 L8 4 L0 8 Z" fill="#065cad"/>
+            </marker>
+        </defs>
+
+        <!-- constraint layer -->
+        <text class="bl" x="12" y="11">Constraint layer</text>
+        <rect x="0" y="18" width="800" height="110" rx="10" fill="#f2f5fc" stroke="#d5ddf2"/>
+
+        <rect x="12" y="32" width="148" height="82" rx="8" fill="#fff" stroke="#dde3f3"/>
+        <text class="ct" x="26" y="54">Operating brief</text>
+        <text class="cb" x="26" y="74"><tspan x="26">Six steps in order,</tspan><tspan x="26" dy="14">ending at a stop.</tspan></text>
+
+        <rect x="169" y="32" width="148" height="82" rx="8" fill="#fff" stroke="#dde3f3"/>
+        <text class="ct" x="183" y="54">Styleguide</text>
+        <text class="cb" x="183" y="74"><tspan x="183">Voice, banned words</tspan><tspan x="183" dy="14">with their reasons,</tspan><tspan x="183" dy="14">Do and Don't pairs.</tspan></text>
+
+        <rect x="326" y="32" width="148" height="82" rx="8" fill="#fff" stroke="#dde3f3"/>
+        <text class="ct" x="340" y="54">Humanizer skill</text>
+        <text class="cb" x="340" y="74"><tspan x="340">Versioned at 2.5.1.</tspan><tspan x="340" dy="14">Named AI tells, each</tspan><tspan x="340" dy="14">with a fix.</tspan></text>
+
+        <rect x="483" y="32" width="148" height="82" rx="8" fill="#fff" stroke="#dde3f3"/>
+        <text class="ct" x="497" y="54">The deletion test</text>
+        <text class="cb" x="497" y="74"><tspan x="497">If the source were</tspan><tspan x="497" dy="14">deleted, would the</tspan><tspan x="497" dy="14">post still stand?</tspan></text>
+
+        <rect x="640" y="32" width="148" height="82" rx="8" fill="#fff" stroke="#dde3f3"/>
+        <text class="ct" x="654" y="54">Live voice sample</text>
+        <text class="cb" x="654" y="74"><tspan x="654">Read two or three</tspan><tspan x="654" dy="14">published posts</tspan><tspan x="654" dy="14">first. Every run.</tspan></text>
+
+        <g stroke="#c2cce6" stroke-width="1">
+            <path d="M64 128 V139"/><path d="M176 128 V139"/><path d="M288 128 V139"/><path d="M512 128 V139"/><path d="M736 128 V139"/>
+        </g>
+        <text class="cap" x="12" y="156">Read at the start of every run, not configured once. Every box below is written against them.</text>
+
+        <!-- agent lane -->
+        <text class="ln" x="12" y="180" fill="#065cad">The agent</text>
+        <text class="cap" x="104" y="180">everything it writes is a file I can still delete</text>
+
+        <g fill="#fff" stroke="#065cad" stroke-width="1.5">
+            <rect x="12" y="190" width="104" height="92" rx="9"/>
+            <rect x="124" y="190" width="104" height="92" rx="9"/>
+            <rect x="236" y="190" width="104" height="92" rx="9"/>
+            <rect x="460" y="190" width="104" height="92" rx="9"/>
+            <rect x="684" y="190" width="104" height="92" rx="9"/>
+        </g>
+
+        <text class="bn" x="21" y="209">01</text>
+        <text class="bt" x="21" y="228">Inspiration</text>
+        <text class="bb" x="21" y="246"><tspan x="21">Transcripts as</tspan><tspan x="21" dy="13">a lens, never</tspan><tspan x="21" dy="13">a source.</tspan></text>
+
+        <text class="bn" x="133" y="209">02</text>
+        <text class="bt" x="133" y="228">Backlog</text>
+        <text class="bb" x="133" y="246"><tspan x="133">Pull an unused</tspan><tspan x="133" dy="13">idea. A seed,</tspan><tspan x="133" dy="13">not a headline.</tspan></text>
+
+        <text class="bn" x="245" y="209">03</text>
+        <text class="bt" x="245" y="228">Draft</text>
+        <text class="bb" x="245" y="246"><tspan x="245">Writes into the</tspan><tspan x="245" dy="13">drafts folder.</tspan><tspan x="245" dy="13">Nothing else.</tspan></text>
+
+        <text class="bn" x="469" y="209">05</text>
+        <text class="bt" x="469" y="228">Build</text>
+        <text class="bb" x="469" y="246"><tspan x="469">Copy to source,</tspan><tspan x="469" dy="13">generate, add</tspan><tspan x="469" dy="13">the sitemap.</tspan></text>
+
+        <text class="bn" x="693" y="209">07</text>
+        <text class="bt" x="693" y="228">Social draft</text>
+        <text class="bb" x="693" y="246"><tspan x="693">The post and</tspan><tspan x="693" dy="13">first comment,</tspan><tspan x="693" dy="13">once final.</tspan></text>
+
+        <!-- crossings -->
+        <g fill="none" stroke="#065cad" stroke-width="1.75" stroke-linejoin="round" marker-end="url(#cmArrow)">
+            <path d="M288 282 V293 H400 V320"/>
+            <path d="M436 326 V238 H454"/>
+            <path d="M512 282 V293 H624 V320"/>
+            <path d="M660 326 V238 H678"/>
+            <path d="M736 282 V320"/>
+        </g>
+
+        <!-- the boundary -->
+        <line x1="0" y1="304" x2="800" y2="304" stroke="#05126a" stroke-width="1.5"/>
+        <rect x="392" y="290" width="16" height="28" rx="4" fill="#fff" stroke="#05126a" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <rect x="616" y="290" width="16" height="28" rx="4" fill="#fff" stroke="#05126a" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <rect x="728" y="290" width="16" height="28" rx="4" fill="#05126a"/>
+        <circle cx="436" cy="304" r="6" fill="#fff" stroke="#065cad" stroke-width="1.5"/>
+        <circle cx="660" cy="304" r="6" fill="#fff" stroke="#065cad" stroke-width="1.5"/>
+
+        <!-- human lane -->
+        <g fill="#05126a">
+            <rect x="348" y="326" width="104" height="92" rx="9"/>
+            <rect x="572" y="326" width="104" height="92" rx="9"/>
+            <rect x="684" y="326" width="104" height="92" rx="9"/>
+        </g>
+
+        <text class="ln" x="12" y="356" fill="#05126a">Only me</text>
+        <text class="cap" x="12" y="376"><tspan x="12">The three actions that make</tspan><tspan x="12" dy="15">something public.</tspan></text>
+
+        <text class="bn hbn" x="357" y="345">04</text>
+        <text class="bt hbt" x="357" y="364">Approve</text>
+        <text class="bb hbb" x="357" y="382"><tspan x="357">Read it, edit</tspan><tspan x="357" dy="13">it, say the</tspan><tspan x="357" dy="13">word.</tspan></text>
+
+        <text class="bn hbn" x="581" y="345">06</text>
+        <text class="bt hbt" x="581" y="364">Push</text>
+        <text class="bb hbb" x="581" y="382"><tspan x="581">Commit and</tspan><tspan x="581" dy="13">push. The agent</tspan><tspan x="581" dy="13">never sees git.</tspan></text>
+
+        <text class="bn hbn" x="693" y="345">08</text>
+        <text class="bt hbt" x="693" y="364">Post</text>
+        <text class="bb hbb" x="693" y="382"><tspan x="693">Post it. Add</tspan><tspan x="693" dy="13">the link in the</tspan><tspan x="693" dy="13">first comment.</tspan></text>
+
+        <!-- annotations -->
+        <line x1="0" y1="444" x2="800" y2="444" stroke="#e3e4e8"/>
+        <text class="an" x="12" y="466"><tspan class="anb">Before approval</tspan><tspan>&#160; the agent stops because it is told to. It writes to a drafts folder and goes no further.</tspan></text>
+        <text class="an" x="12" y="488"><tspan class="anb">Before git</tspan><tspan>&#160; the same kind of stop. Both of these hold because the agent follows what it reads.</tspan></text>
+        <text class="an" x="12" y="510"><tspan class="anb">Before posting</tspan><tspan>&#160; a different kind. No social credential exists in the system, so there is nothing to disable or forget.</tspan></text>
+        <text class="sum" x="12" y="538">Drawn as a process, the three stops look alike. Only the third one survives an agent that stops behaving.</text>
+    </svg>
+    </div>
+
+    <div class="cs-note">The same run as the six boxes above. The human gate is drawn as a boundary rather than a step, and the last box is opened up into what it holds.</div>
+</div>
+
+<p>I'd rather not oversell the stops. Two of them are sentences in a document. An agent that ignores its instructions walks through both, and the only reason that hasn't happened is that this one does what it reads. The third stop is a different kind of thing. There is no LinkedIn credential anywhere in the system, and getting a bot approved to post through the API is a stack of hoops I haven't gone through. So the social post sits in a file until I move it by hand. That started as an obstacle and I've left it in place.</p>
 
 <hr>
 

@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "id": "a-bounty-or-a-gym",
+      "title": "A Bounty or a Gym",
+      "date": "September 13, 2026",
+      "author": "Dlightning",
+      "authorImage": "img/author.png",
+      "excerpt": "Somebody has to mess around so everyone else can find out.",
+      "image": "img/kevin-jarrett-t3d22GqvUqs-unsplash.jpg",
+      "img-credit": "Kevin Jarrett",
+      "credit-link": "https://unsplash.com/@kjarrett",
+      "tags": [
+        "Systems Thinking",
+        "Process",
+        "Design Philosophy",
+        "Nature"
+      ],
+      "category": "Systems"
+    },
+    {
       "id": "let-a-thousand-paisleys-bloom",
       "title": "Let a Thousand Paisleys Bloom",
       "date": "September 9, 2026",
