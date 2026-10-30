@@ -1,300 +1,464 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Interactive Project Validation Method Selector. Get personalized recommendations for validating your project idea with the right methodology. Perfect for entrepreneurs and product managers.">
-  <meta name="keywords" content="project validation, validation methods, product validation, MVP validation, lean startup, validation framework, business validation">
-  <link rel="canonical" href="https://dlightning.org/d-tools/project-validation-methods.html">
-  <meta name="author" content="Dlightning">
-  <meta name="robots" content="index, follow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Interactive Project Validation Method Selector. Get personalized recommendations for validating your project idea with the right methodology. Perfect for entrepreneurs and product managers.">
+<meta name="keywords" content="project validation, validation methods, product validation, MVP validation, lean startup, validation framework, business validation">
+<link rel="canonical" href="https://dlightning.org/d-tools/project-validation-methods.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow">
 
-  <title>Project Validation Method Selector | Dlightning</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/style.css">
-  
-  <meta property="og:url" content="https://dlightning.org/d-tools/project-validation-methods.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Dlightning">
-  <meta property="og:image" content="https://dlightning.org/img/products/PVMS.png"/>
-  <meta property="og:title" content="Project Validation Method Selector | Dlightning"/>
-  <meta property="og:description" content="Find the perfect validation method for your project. Interactive tool for entrepreneurs and product managers."/>
-  <meta property="og:image:width" content="824"/>
-  <meta property="og:image:height" content="551"/>
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Project Validation Method Selector | Dlightning">
-  <meta name="twitter:description" content="Find the perfect validation method for your project.">
-  <meta name="twitter:image" content="https://dlightning.org/img/products/PVMS.png">
-  
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  
-  <style>
-    header{
-      z-index: 999;
-    }
+<title>Project Validation Method Selector | Dlightning</title>
 
-    .featureBgImg {
-      position: relative;
-      overflow: hidden;
-    }
+<meta property="og:url" content="https://dlightning.org/d-tools/project-validation-methods.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:image" content="https://dlightning.org/img/products/PVMS.png"/>
+<meta property="og:title" content="Project Validation Method Selector | Dlightning"/>
+<meta property="og:description" content="Find the perfect validation method for your project. Interactive tool for entrepreneurs and product managers."/>
+<meta property="og:image:width" content="824"/>
+<meta property="og:image:height" content="551"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Project Validation Method Selector | Dlightning">
+<meta name="twitter:description" content="Find the perfect validation method for your project.">
+<meta name="twitter:image" content="https://dlightning.org/img/products/PVMS.png">
 
-    .featureBgImg-bg {
-      object-position: center calc(50% + 42px);
-      transition: transform 0.42s ease-in-out;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    .featureBgImg:hover .featureBgImg-bg {
-      transform: scale(1.1);
-    }
-
-    .featureBgImg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
-      z-index: -1;
-      transition: opacity 0.3s ease-in-out;
-      mix-blend-mode: soft-light;
-    }
-
-    .featureBgImg:hover::after {
-      opacity: 0.8;
-    }
-
-    .featureBgImg h4,
-    .featureBgImg button {
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .featureBgImg:hover h4 {
-      transform: translateY(-5px);
-    }
-
-    .decision-level {
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .decision-level.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .option-btn {
-      background-color: #0889e0;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin: 5px;
-      font-size: 16px;
-      min-width: 180px;
-    }
-
-    .option-btn:hover {
-      background-color: #03609e;
-      transform: translateY(-2px);
-    }
-
-    .option-btn.selected {
-      background-color: #0c9a47;
-      transform: translateY(-2px);
-    }
-
-    .custom-tooltip{
-      position: relative;
-      display: inline-block;
-      cursor: help;
-    }
-
-    .custom-tooltip .tooltiptext {
-      visibility: hidden;
-      width: 280px;
-      background-color: #484848;
-      color: #fff;
-      text-align: left;
-      border-radius: 6px;
-      padding: 12px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      margin-left: -140px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      font-size: 14px;
-      line-height: 1.4;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .custom-tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
-    }
-
-      .custom-tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #484848 transparent transparent transparent;
+<style>
+  /* The test bench: an idea is a hypothesis, a method is an experiment, the result is a protocol. */
+  :root {
+    --ink: #0a1430;
+    --ink-2: #111f4a;
+    --sky: #009dff;
+    --blue: #0181f5;
+    --blue-deep: #065cad;
+    --bolt: #ffd700;
+    --bolt-deep: #b89b00;
+    --paper: #f4f7fb;
+    --grid: rgba(1, 129, 245, .07);
+    --card: #ffffff;
+    --text: #17203a;
+    --muted: #5b6680;
+    --line: #dbe4ef;
+    --pass: #0f9a63;
+    --pass-soft: #e3f6ee;
+    --kill: #d9433a;
+    --kill-soft: #fdeceb;
+    --display: 'Bricolage Grotesque', 'Rubik', sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --body: 'Rubik', sans-serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
   }
 
-    .score-display {
-      background: linear-gradient(135deg, #1f1d79 0%, #2b0c9a 100%);
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    }
+  body {
+    color: var(--text); font-family: var(--body); font-weight: 400;
+    background-color: var(--paper);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  header { z-index: 999; }
+  .pvm-hidden { display: none !important; }
+  .pvm-wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .pvm-mono { font-family: var(--mono); }
 
-    .score-title {
-      font-size: 32px;
-      /* font-weight: bold; */
-      margin-bottom: 10px;
-    }
+  /* ---------- hero: blueprint paper with the whole bench laid out ---------- */
+  .pvm-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 124px 0 140px;
+    background:
+      linear-gradient(rgba(141, 196, 255, .07) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(90deg, rgba(141, 196, 255, .07) 1px, transparent 1px) 0 0 / 24px 24px,
+      radial-gradient(760px 420px at 82% 40%, rgba(0, 157, 255, .2), transparent 65%),
+      linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+  }
+  .pvm-hero-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .pvm-eyebrow {
+    display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: .78rem; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--bolt); margin-bottom: 20px;
+  }
+  .pvm-hero h1 {
+    font-family: var(--display); font-weight: 750; font-size: clamp(2.6rem, 5.4vw, 4.3rem); line-height: .98;
+    letter-spacing: -.035em; color: #fff; margin: 0 0 22px;
+  }
+  .pvm-hero h1 em { font-style: normal; color: var(--sky); }
+  .pvm-lede { font-size: 1.16rem; line-height: 1.6; color: rgba(255, 255, 255, .76); max-width: 500px; margin: 0 0 30px; font-weight: 300; }
+  .pvm-lede strong { color: #fff; font-weight: 500; }
+  .pvm-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .88rem; color: rgba(255, 255, 255, .6); }
+  .pvm-meta i { color: var(--sky); margin-right: 6px; }
 
-    .score-description {
-      font-size: 16px;
-      opacity: 0.9;
-    }
+  .pvm-btn {
+    font: inherit; font-weight: 500; border: none; border-radius: 10px; padding: 13px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease;
+  }
+  .pvm-btn:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+  .pvm-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 var(--bolt-deep); }
+  .pvm-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--bolt-deep); color: var(--ink); text-decoration: none; }
+  .pvm-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--bolt-deep); }
+  .pvm-btn-ghost { background: transparent; color: var(--muted); padding: 10px 14px; }
+  .pvm-btn-ghost:hover { color: var(--ink); background: #e8eef6; }
 
-    .method-details {
-      background-color: #f8f9fa;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 20px 0;
-    }
+  /* ---------- the bench map: five questions, eight methods, ordered by effort ---------- */
+  .pvm-map { --lane-h: 50px; font-family: var(--mono); }
+  .pvm-map-title { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+  .pvm-lane { display: grid; grid-template-columns: 92px 1fr; align-items: center; height: var(--lane-h); }
+  .pvm-lane-name { font-size: .72rem; font-weight: 500; letter-spacing: .04em; }
+  .pvm-track { position: relative; height: 100%; border-bottom: 1px dashed; }
+  .pvm-dot { position: absolute; top: 50%; width: 0; height: 0; }
+  .pvm-dot i {
+    position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%;
+    border: 2px solid; background: transparent; transition: transform .3s var(--ease);
+  }
+  .pvm-dot em {
+    position: absolute; left: 0; transform: translateX(-50%); white-space: nowrap; font-style: normal;
+    font-size: .68rem; font-weight: 500; letter-spacing: .02em;
+  }
+  .pvm-dot em.up { bottom: 10px; }
+  .pvm-dot em.down { top: 10px; }
+  .pvm-axis { display: grid; grid-template-columns: 92px 1fr; margin-top: 8px; }
+  .pvm-ticks { position: relative; height: 16px; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; }
+  .pvm-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+  .pvm-ticks span:first-child { transform: none; }
+  .pvm-ticks span:last-child { transform: translateX(-100%); }
 
-    .method-details h4 {
-      color: #2c3e50;
-      margin-bottom: 15px;
-    }
+  /* dark (hero) */
+  .pvm-map-dark .pvm-map-title { color: rgba(255, 255, 255, .5); }
+  .pvm-map-dark .pvm-lane-name { color: rgba(255, 255, 255, .62); }
+  .pvm-map-dark .pvm-track { border-color: rgba(141, 196, 255, .22); }
+  .pvm-map-dark .pvm-dot i { border-color: var(--sky); background: var(--ink); }
+  .pvm-map-dark .pvm-dot em { color: rgba(255, 255, 255, .82); }
+  .pvm-map-dark .pvm-ticks { color: rgba(255, 255, 255, .42); }
+  .pvm-map-dark .pvm-dot { animation: pvm-pop .5s var(--ease) both; }
+  .pvm-map-dark .pvm-dot.is-pulse i { background: var(--bolt); border-color: var(--bolt); box-shadow: 0 0 0 0 rgba(255, 215, 0, .5); animation: pvm-pulse 2.4s ease-out infinite 1.2s; }
+  @keyframes pvm-pop { from { opacity: 0; transform: translateY(6px); } }
+  @keyframes pvm-pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, .55); } 70%, 100% { box-shadow: 0 0 0 12px rgba(255, 215, 0, 0); } }
 
-    .action-list {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0;
-    }
+  /* light (result) */
+  .pvm-map-light .pvm-map-title { color: var(--muted); }
+  .pvm-map-light .pvm-lane-name { color: var(--muted); }
+  .pvm-map-light .pvm-track { border-color: var(--line); }
+  .pvm-map-light .pvm-dot i { border-color: #b7c6d8; background: #fff; }
+  .pvm-map-light .pvm-dot em { color: #8592a8; }
+  .pvm-map-light .pvm-ticks { color: var(--muted); }
+  .pvm-map-light .pvm-lane.is-you .pvm-lane-name { color: var(--ink); font-weight: 600; }
+  .pvm-map-light .pvm-dot.is-you i { width: 18px; height: 18px; left: -9px; top: -9px; border-color: var(--ink); background: var(--bolt); box-shadow: 0 0 0 5px rgba(255, 215, 0, .28); }
+  .pvm-map-light .pvm-dot.is-you em { color: var(--ink); font-weight: 600; font-size: .74rem; }
+  .pvm-map-light .pvm-dot.is-next i { border-color: var(--blue); background: #cfe6ff; }
+  .pvm-map-light .pvm-dot.is-next em { color: var(--blue); }
 
-    .action-list li {
-      margin: 10px 0;
-      padding: 12px;
-      background-color: #e8f4fd;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-    }
+  /* ---------- the bench (tool) ---------- */
+  .pvm-bench {
+    position: relative; z-index: 5; margin-top: -84px; background: var(--card); border-radius: 18px;
+    box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 30px 60px -24px rgba(10, 20, 48, .32);
+    overflow: hidden;
+  }
+  .pvm-bench-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 28px;
+    border-bottom: 1px solid var(--line); background: #f8fafd; font-family: var(--mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  }
+  .pvm-bench-bar b { color: var(--ink); font-weight: 600; }
+  .pvm-vials { display: flex; gap: 6px; }
+  .pvm-vials i { width: 28px; height: 8px; border-radius: 4px; background: var(--line); transition: background .3s ease; }
+  .pvm-vials i.on { background: var(--blue); }
+  .pvm-vials i.now { background: var(--ink); }
+  .pvm-vials i.done { background: var(--bolt); }
 
-    .action-list li i {
-      margin-right: 12px;
-      color: #0889e0;
-      font-size: 16px;
-    }
+  .pvm-bench-body { padding: 30px 36px 34px; }
 
-    .tools-section {
-      margin-top: 20px;
-    }
+  /* lab log: what you've recorded so far */
+  .pvm-log { list-style: none; margin: 0 0 22px; padding: 0; }
+  .pvm-log:empty { display: none; }
+  .pvm-log li {
+    display: grid; grid-template-columns: 44px 150px 1fr auto; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px dashed var(--line); animation: pvm-in .4s var(--ease) both;
+  }
+  .pvm-log-n { font-family: var(--mono); font-size: .76rem; font-weight: 600; color: var(--blue); }
+  .pvm-log-k { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .pvm-log-v { font-weight: 500; color: var(--ink); }
+  .pvm-log-v i { color: var(--pass); margin-right: 8px; font-size: .85rem; }
+  .pvm-log-edit { font: inherit; font-size: .82rem; font-weight: 500; color: var(--blue); background: none; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
+  .pvm-log-edit:hover { background: #e3f0ff; }
+  .pvm-log-edit:focus-visible { outline: 2px solid var(--blue); }
 
-    .tool-tag {
-      display: inline-block;
-      background-color: #e3e3ff;
-      color: #1f1d79;
-      padding: 6px 12px;
-      border-radius: 16px;
-      font-size: 14px;
-      margin: 4px;
-    }
+  /* the current question */
+  .pvm-q-wrap.is-entering { animation: pvm-in .45s var(--ease) both; }
+  @keyframes pvm-in { from { opacity: 0; transform: translateY(10px); } }
+  .pvm-q-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .76rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .pvm-q { font-family: var(--display); font-size: clamp(1.5rem, 2.8vw, 2rem); font-weight: 700; line-height: 1.15; letter-spacing: -.025em; color: var(--ink); margin: 0 0 6px; }
+  .pvm-q-hint { color: var(--muted); font-size: .92rem; margin: 0 0 22px; }
+  .pvm-q-hint kbd { font-family: var(--mono); font-size: .76rem; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--text); box-shadow: none; }
 
-    .text-yellow {
-      color: gold;
-    }
+  .pvm-opts { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 14px; }
+  .pvm-opt {
+    all: unset; box-sizing: border-box; cursor: pointer; position: relative; display: flex; flex-direction: column; gap: 6px;
+    padding: 20px 18px 18px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; min-height: 168px;
+    transition: border-color .2s ease, background .2s ease, transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .pvm-opt:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 14px 28px -16px rgba(1, 129, 245, .45); }
+  .pvm-opt:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .pvm-opt-ico {
+    width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 8px;
+    background: #e8f3ff; color: var(--blue); font-size: 1.1rem; transition: background .2s ease, color .2s ease;
+  }
+  .pvm-opt-key { position: absolute; top: 16px; right: 16px; font-family: var(--mono); font-size: .72rem; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 1px 7px; }
+  .pvm-opt-title { font-family: var(--display); font-weight: 650; font-size: 1.12rem; letter-spacing: -.01em; color: var(--ink); line-height: 1.2; }
+  .pvm-opt-desc { font-size: .9rem; line-height: 1.45; color: var(--muted); }
+  .pvm-opt[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); transform: translateY(-3px); }
+  .pvm-opt[aria-pressed="true"] .pvm-opt-title { color: #fff; }
+  .pvm-opt[aria-pressed="true"] .pvm-opt-desc { color: rgba(255, 255, 255, .7); }
+  .pvm-opt[aria-pressed="true"] .pvm-opt-ico { background: var(--bolt); color: var(--ink); }
+  .pvm-opt[aria-pressed="true"] .pvm-opt-key { color: var(--bolt); border-color: rgba(255, 255, 255, .25); }
 
-    footer{padding: 44px 34px;}
+  /* finished bench state */
+  .pvm-done { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; border-radius: 12px; background: var(--pass-soft); color: var(--ink); }
+  .pvm-done i { color: var(--pass); margin-right: 8px; }
 
-    @media (max-width: 567px) {
-      .featureBgImg-bg {
-        object-position: center;
-      }
-      
-      .option-btn {
-        min-width: 140px;
-        font-size: 14px;
-        padding: 10px 16px;
-      }
+  /* ---------- result: the protocol ---------- */
+  .pvm-result { padding-top: 48px; scroll-margin-top: 80px; }
+  .pvm-result:focus { outline: none; }
+  .pvm-protocol {
+    position: relative; background: var(--card); border-radius: 18px; padding: 34px 38px; overflow: hidden;
+    box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 24px 50px -28px rgba(10, 20, 48, .3);
+    border-top: 6px solid var(--bolt);
+  }
+  .pvm-proto-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; font-family: var(--mono); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .pvm-proto-top b { color: var(--blue); font-weight: 600; }
+  .pvm-proto-name { font-family: var(--display); font-weight: 750; font-size: clamp(2rem, 4.4vw, 3.1rem); letter-spacing: -.035em; line-height: 1; color: var(--ink); margin: 0 0 14px; }
+  .pvm-proto-asks { font-family: var(--display); font-weight: 500; font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.3; color: var(--blue-deep); margin: 0 0 14px; }
+  .pvm-proto-asks::before { content: '\201C'; color: var(--bolt-deep); margin-right: 2px; }
+  .pvm-proto-asks::after { content: '\201D'; color: var(--bolt-deep); margin-left: 2px; }
+  .pvm-proto-desc { color: var(--text); line-height: 1.6; margin: 0 0 20px; max-width: 700px; }
+  .pvm-specs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .pvm-spec { background: #fafcfe; padding: 14px 16px; }
+  .pvm-spec-k { display: block; font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .pvm-spec-v { display: block; font-weight: 500; color: var(--ink); line-height: 1.35; font-size: .95rem; }
+  .pvm-conditions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
+  .pvm-conditions > span:first-child { font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+  .pvm-chip { font-size: .84rem; background: var(--paper); border: 1px solid var(--line); color: var(--text); padding: 4px 11px; border-radius: 999px; }
 
-      footer{padding: 64px 8px;}
-    }
-  </style>
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
-    <link rel="manifest" href="/site.webmanifest">
+  .pvm-grid2 { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; margin-top: 22px; align-items: start; }
+  .pvm-panel { background: var(--card); border-radius: 16px; padding: 28px 30px; border: 1px solid var(--line); }
+  .pvm-panel h2 { font-family: var(--display); font-size: 1.32rem; font-weight: 700; letter-spacing: -.02em; color: var(--ink); margin: 0 0 4px; }
+  .pvm-panel-sub { color: var(--muted); font-size: .9rem; margin: 0 0 20px; }
+
+  .pvm-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .pvm-steps li { counter-increment: step; position: relative; padding: 0 0 16px 46px; line-height: 1.5; }
+  .pvm-steps li:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 32px; bottom: 2px; width: 2px; background: var(--line); }
+  .pvm-steps li::before {
+    content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: -2px; width: 32px; height: 32px; border-radius: 8px;
+    background: var(--ink); color: var(--bolt); display: grid; place-items: center; font-family: var(--mono); font-weight: 600; font-size: .78rem;
+  }
+  .pvm-traits { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; padding-top: 18px; border-top: 1px dashed var(--line); }
+  .pvm-trait { font-size: .82rem; color: var(--blue-deep); background: #e8f3ff; padding: 4px 10px; border-radius: 6px; }
+
+  .pvm-signal { border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
+  .pvm-signal:last-of-type { margin-bottom: 0; }
+  .pvm-signal-k { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+  .pvm-signal p { margin: 0; line-height: 1.5; color: var(--text); font-size: .95rem; }
+  .pvm-signal-pass { background: var(--pass-soft); }
+  .pvm-signal-pass .pvm-signal-k { color: var(--pass); }
+  .pvm-signal-kill { background: var(--kill-soft); }
+  .pvm-signal-kill .pvm-signal-k { color: var(--kill); }
+  .pvm-tools { margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line); }
+  .pvm-tools h3 { font-family: var(--mono); font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .pvm-tag { display: inline-block; font-size: .84rem; border: 1px solid var(--line); color: var(--text); padding: 4px 11px; border-radius: 6px; margin: 0 6px 6px 0; background: #fff; }
+
+  /* hypothesis card */
+  .pvm-hyp { margin-top: 22px; }
+  .pvm-hyp-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .pvm-field label { display: block; font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .pvm-field input {
+    width: 100%; font: inherit; font-size: .95rem; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink);
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .pvm-field input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(1, 129, 245, .14); }
+  .pvm-hyp-card {
+    position: relative; padding: 22px 24px 22px 28px; border-radius: 12px; background: var(--ink); color: rgba(255, 255, 255, .78);
+    font-family: var(--display); font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.5; font-weight: 450;
+  }
+  .pvm-hyp-card::before { content: ''; position: absolute; left: 0; top: 14px; bottom: 14px; width: 4px; border-radius: 0 4px 4px 0; background: var(--bolt); }
+  .pvm-hyp-card b { color: #fff; font-weight: 650; border-bottom: 2px solid var(--sky); }
+  .pvm-hyp-card b.is-empty { color: rgba(255, 255, 255, .45); font-weight: 450; border-bottom: 2px dashed rgba(255, 255, 255, .3); }
+  .pvm-hyp-note { margin: 10px 0 0; font-size: .86rem; color: var(--muted); }
+
+  .pvm-where { margin-top: 22px; }
+  .pvm-next { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 18px 0 0; padding: 14px 16px; border-radius: 10px; background: var(--paper); font-size: .93rem; line-height: 1.5; }
+  .pvm-next i { color: var(--blue); }
+  .pvm-next b { color: var(--ink); }
+
+  .pvm-after { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
+
+  /* Experience Builder CTA */
+  .pvm-cta { position: relative; overflow: hidden; border-radius: 18px; margin-top: 40px; min-height: 220px; display: flex; align-items: flex-end; padding: 32px 36px; isolation: isolate; text-decoration: none; }
+  .pvm-cta:hover { text-decoration: none; }
+  .pvm-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .6s var(--ease); }
+  .pvm-cta::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(100deg, rgba(10, 20, 48, .92) 0%, rgba(10, 20, 48, .55) 50%, rgba(10, 20, 48, .1) 100%); }
+  .pvm-cta:hover img { transform: scale(1.05); }
+  .pvm-cta h2 { font-family: var(--display); font-weight: 750; font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.03em; line-height: 1.05; color: #fff; margin: 0 0 8px; }
+  .pvm-cta p { color: rgba(255, 255, 255, .78); margin: 0 0 18px; max-width: 440px; }
+
+  /* ---------- FAQ ---------- */
+  .pvm-seo { max-width: 860px; margin: 100px auto 0; padding: 0 20px; line-height: 1.65; }
+  .pvm-seo h2 { font-family: var(--display); font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; color: var(--ink); margin: 0 0 16px; }
+  .pvm-seo details { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; margin-bottom: 10px; }
+  .pvm-seo summary { cursor: pointer; color: var(--ink); font-weight: 500; padding: 16px 0; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .pvm-seo summary::-webkit-details-marker { display: none; }
+  .pvm-seo summary::after { content: "+"; color: var(--blue); font-family: var(--mono); font-size: 1.3rem; margin-left: 12px; }
+  .pvm-seo details[open] summary::after { content: "\2013"; }
+  .pvm-seo details p { padding: 0 0 16px; margin: 0; color: var(--muted); }
+  .pvm-seo a { color: var(--blue); }
+
+  /* ---------- footer ---------- */
+  footer.pvm-footer { margin-top: 90px; width: 100%; background: var(--ink); color: #fff; padding: 56px 34px; }
+  footer.pvm-footer h3 { font-family: var(--display); font-size: 1.6rem; font-weight: 750; letter-spacing: -.02em; color: #fff; margin-bottom: 16px; }
+  footer.pvm-footer ol { padding-left: 22px; color: rgba(255, 255, 255, .85); }
+  footer.pvm-footer li { margin-bottom: 9px; line-height: 1.5; }
+  footer.pvm-footer p { color: rgba(255, 255, 255, .55); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    .pvm-hero { padding: 104px 0 130px; }
+    .pvm-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .pvm-grid2 { grid-template-columns: 1fr; }
+    .pvm-hyp-fields { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    .pvm-opts { grid-template-columns: 1fr; }
+    .pvm-opt { min-height: 0; flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 14px; padding: 16px; }
+    .pvm-opt-ico { margin: 0; }
+    .pvm-opt-title { flex: 1; padding-right: 30px; }
+    .pvm-opt-desc { flex-basis: 100%; }
+    .pvm-log li { grid-template-columns: 34px 1fr auto; }
+    .pvm-log-k { grid-column: 2; grid-row: 1; }
+    .pvm-log-v { grid-column: 2; grid-row: 2; }
+    .pvm-log-edit { grid-column: 3; grid-row: 1 / span 2; }
+    .pvm-log-n { grid-row: 1 / span 2; }
+    .pvm-specs { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 567px) {
+    .pvm-bench-body { padding: 24px 18px 26px; }
+    .pvm-bench-bar { padding: 12px 18px; }
+    .pvm-protocol, .pvm-panel { padding: 24px 20px; }
+    .pvm-map { --lane-h: 46px; }
+    .pvm-lane, .pvm-axis { grid-template-columns: 70px 1fr; }
+    .pvm-dot em { font-size: .62rem; }
+    .pvm-cta { padding: 24px 20px; }
+    footer.pvm-footer { padding: 64px 8px; }
+  }
+  @media (hover: none) { .pvm-keys, .pvm-opt-key { display: none; } }
+
+  /* the saved PDF/PNG is 760px wide: stack the panels */
+  .dl-artifact .pvm-result { padding-top: 0; }
+  .dl-artifact .pvm-protocol, .dl-artifact .pvm-panel { box-shadow: none; border: 1px solid var(--line); }
+  .dl-artifact .pvm-protocol { border-top: 6px solid var(--bolt); }
+  .dl-artifact .pvm-grid2 { grid-template-columns: 1fr; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
 </head>
 
-<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
-<header id='header'></header>
+<body>
+<header id="header"></header>
 
-<div class="h-14 bg-blue-800 w-full"></div>
-<div class="mx-2 container">
-<div class="container mt-12 sm:p-8 pt-8 pb-8 bg-white rounded-xl shadow-2xl max-w-4xl">
-  <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Project Validation Method Selector</h1>
-  <p class="text-center text-gray-600 mb-8">Answer a few questions to discover the perfect validation method for your project</p>
-  
-  <div id="decision-tree">
-    <div id="history"></div>
-    <div id="current-node"></div>
-    <div id="result" class="hidden"></div>
-  </div>
-
-  <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
-    <img src="../img/exp-builder/immersive-experience.png" alt="Background silhouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
-    <div class="relative z-10">
-      <h4 class="text-2xl text-white mb-2 px-2 font-bold drop-shadow">Take your validation<br>to the next level</h4>
-      <a href="experience-builder.html">
-        <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-          Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
-        </button>
-      </a>
+<section class="pvm-hero">
+  <div class="pvm-wrap pvm-hero-grid">
+    <div>
+      <div class="pvm-eyebrow"><i class="fas fa-flask" aria-hidden="true"></i> Validation Method Selector</div>
+      <h1>Pick the cheapest test that <em>could prove you wrong.</em></h1>
+      <p class="pvm-lede">Two or three questions about where your project is. You get <strong>one validation method</strong>, the steps to run it, and the result that should tell you to stop.</p>
+      <button type="button" class="pvm-btn pvm-btn-bolt" id="pvmStart">Set up the experiment <i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+      <div class="pvm-meta">
+        <span><i class="far fa-clock" aria-hidden="true"></i>Under a minute</span>
+        <span><i class="fas fa-lock-open" aria-hidden="true"></i>No signup</span>
+        <span><i class="fas fa-download" aria-hidden="true"></i>Save your protocol as PDF</span>
+      </div>
     </div>
+    <div class="pvm-map pvm-map-dark" id="pvmHeroMap" role="img" aria-label="Eight validation methods grouped by the question they answer, ordered from days to months of effort."></div>
   </div>
-  
-  <button id="resetBtn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-6 hidden">
-    <i class="fas fa-redo mr-2" aria-hidden="true"></i> Start Over
-  </button>
-</div>
-</div>
+</section>
+
+<main class="pvm-wrap">
+  <section class="pvm-bench" id="pvmBench" aria-label="Validation method selector">
+    <div class="pvm-bench-bar">
+      <span id="pvmStatus" aria-live="polite"><b>Variable 01</b> · recording</span>
+      <span class="pvm-vials" id="pvmVials" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+    <div class="pvm-bench-body">
+      <ol class="pvm-log" id="history" aria-label="Your answers"></ol>
+      <div class="pvm-q-wrap" id="current-node"></div>
+    </div>
+  </section>
+
+  <section id="result" class="pvm-result pvm-hidden" aria-live="polite" tabindex="-1"></section>
+
+  <div class="pvm-after pvm-hidden" id="pvmAfter">
+    <button type="button" class="pvm-btn pvm-btn-ghost" id="resetBtn"><i class="fas fa-redo" aria-hidden="true"></i> Run a different experiment</button>
+  </div>
+
+  <a class="pvm-cta pvm-hidden" id="expBld" href="../experience-builder.html">
+    <img src="../img/exp-builder/immersive-experience.png" alt="" loading="lazy">
+    <div>
+      <h2>Want a lab partner for this?</h2>
+      <p>Experience Builder runs the research, prototypes and tests with you, so the result is evidence, not opinion.</p>
+      <span class="pvm-btn pvm-btn-bolt">Explore Experience Builder <i class="fas fa-bolt" aria-hidden="true"></i></span>
+    </div>
+  </a>
+</main>
 
 <div id="error"></div>
+
+<!-- SEO content: sits BELOW the tool so it never gets in the way of using it -->
+<section class="pvm-seo" aria-label="About project validation methods">
+  <h2>Frequently asked questions</h2>
+  <details>
+    <summary>What's the difference between a proof of concept, a prototype and an MVP?</summary>
+    <p>A proof of concept asks whether something can be built. A prototype asks how it should work, and is tested with people but not shipped. An MVP is released to real users to find out whether they'll use and value it.</p>
+  </details>
+  <details>
+    <summary>Which validation method is cheapest?</summary>
+    <p>A landing page test or concept interviews, usually days of work. Start there when demand is the unknown, and only build once the cheap test has failed to prove you wrong.</p>
+  </details>
+  <details>
+    <summary>What is a kill criterion?</summary>
+    <p>The result, decided before you run the test, that means you stop or change course. Writing it down first stops you from reading a weak result as a promising one.</p>
+  </details>
+  <details>
+    <summary>Is the tool free?</summary>
+    <p>Yes. No signup, and your answers stay in your browser. If you want help running the test, our <a href="../experience-builder.html">Experience Builder</a> does exactly that.</p>
+  </details>
+</section>
 
 <!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
 <div id="related-tools-con"></div>
 
-<footer class="mt-24 w-full bg-blue-950 text-white py-8">
-  <div class="container mx-auto px-4">
+<footer class="pvm-footer">
+  <div class="container">
     <div class="row">
       <div class="col-lg-7">
-        <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
-        <ol class="list-decimal pl-6 space-y-2 instruct-list">
-          <li>Answer questions about your project stage, type, and goals.</li>
-          <li>Get personalized validation method recommendations.</li>
-          <li>Learn about implementation timelines and resource requirements.</li>
-          <li>Discover tools and techniques for your chosen method.</li>
-          <li>Follow step-by-step guidance for validation success.</li>
+        <h3>How it works</h3>
+        <ol>
+          <li>Tell us what stage your project is at.</li>
+          <li>Answer one or two follow-ups about what you most need to find out.</li>
+          <li>Get one validation method, how long it takes, and the steps to run it.</li>
+          <li>Set your pass and kill signals and write the hypothesis you're testing.</li>
+          <li>Save the protocol as a PDF or PNG and go run it.</li>
         </ol>
-        <p class="mt-4 text-gray-400 max-w-screen-lg">Our validation selector analyzes your project characteristics and recommends the most appropriate validation methods based on industry best practices and proven methodologies.</p>
+        <p class="mt-3">The selector covers concept testing, landing page tests, concierge MVPs, MVPs, prototypes, usability testing, proofs of concept and A/B tests. Your answers stay in your browser.</p>
       </div>
       <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
     </div>
@@ -302,13 +466,25 @@
 </footer>
 
 <script>
-  let userInteractionData = "";
-  let currentNode = null;
-  let history = [];
+(function () {
+  var userInteractionData = "";
+  var currentNode = null;
+  var history = [];   // { node, option }
 
-  const validationMethods = {
+  // lanes on the bench map, top to bottom
+  var LANES = [
+    { key: "want",   name: "Want it?" },
+    { key: "value",  name: "Worth it?" },
+    { key: "use",    name: "Usable?" },
+    { key: "build",  name: "Buildable?" },
+    { key: "better", name: "Better?" }
+  ];
+
+  // x: effort on a 0-100 scale (days -> 3 months). lp: label above or below the dot.
+  var validationMethods = {
     poc: {
-      name: "Proof of Concept (POC)",
+      name: "Proof of Concept (POC)", short: "Proof of concept", lane: "build", x: 42, lp: "up",
+      asks: "Can this be built at all?",
       timeInvestment: "1-4 weeks",
       bestFor: "Validating technical feasibility of novel approaches",
       description: "Focuses on core technical functionality to answer 'Can this be built at all?'",
@@ -320,10 +496,15 @@
         "Decide whether to proceed with full development"
       ],
       tools: ["Your preferred development environment", "Cloud platforms for testing", "Documentation tools"],
-      characteristics: ["Throwaway code acceptable", "Isolated from other systems", "Pure technical focus"]
+      characteristics: ["Throwaway code acceptable", "Isolated from other systems", "Pure technical focus"],
+      pass: "The hard part works under realistic conditions, at a cost per use the business can carry.",
+      kill: "It only works with hand-holding, or the cost per use breaks the business model.",
+      next: "prototype",
+      hyp: ["our matching engine", "return results in under 2 seconds", "it holds at 10,000 records"]
     },
     mvp: {
-      name: "Minimum Viable Product (MVP)",
+      name: "Minimum Viable Product (MVP)", short: "MVP", lane: "value", x: 86, lp: "down",
+      asks: "Will people use and value this?",
       timeInvestment: "1-3 months",
       bestFor: "Testing market demand with minimal investment",
       description: "Simplest version that delivers core value to answer 'Will people use and value this?'",
@@ -335,10 +516,15 @@
         "Iterate based on user behavior"
       ],
       tools: ["No-code platforms", "Analytics tools", "User feedback systems", "A/B testing tools"],
-      characteristics: ["Released to actual users", "Designed for feedback collection", "Market-focused validation"]
+      characteristics: ["Released to actual users", "Designed for feedback collection", "Market-focused validation"],
+      pass: "People come back in week two without being nudged, or pay without a discount.",
+      kill: "Plenty of signups but little repeat use: people tried it once and moved on.",
+      next: "ab",
+      hyp: ["first-time landlords", "log rent payments weekly", "30% are still active after 4 weeks"]
     },
     prototype: {
-      name: "Interactive Prototype",
+      name: "Interactive Prototype", short: "Prototype", lane: "use", x: 50, lp: "up",
+      asks: "How will this work in practice?",
       timeInvestment: "1-6 weeks",
       bestFor: "Testing user experience and interactions",
       description: "Working version demonstrating workflow and interactions to answer 'How will this work in practice?'",
@@ -350,10 +536,15 @@
         "Refine design based on feedback"
       ],
       tools: ["Figma", "Adobe XD", "InVision", "Principle", "Framer"],
-      characteristics: ["Interactive but not fully functional", "Focus on user experience", "Quick iteration possible"]
+      characteristics: ["Interactive but not fully functional", "Focus on user experience", "Quick iteration possible"],
+      pass: "Four of five testers finish the core task unaided and can say in their own words what it's for.",
+      kill: "Testers finish but can't say why they'd use it. That's a value problem, and no redesign fixes it.",
+      next: "mvp",
+      hyp: ["clinic receptionists", "book a repeat appointment in one go", "4 of 5 do it without help"]
     },
     concierge: {
-      name: "Concierge MVP",
+      name: "Concierge MVP", short: "Concierge", lane: "value", x: 66, lp: "up",
+      asks: "Is the outcome worth automating?",
       timeInvestment: "1-2 months",
       bestFor: "Service-based ideas or complex automated systems",
       description: "Manual processes replace automation to answer 'Is the outcome valuable enough to justify building the system?'",
@@ -365,10 +556,15 @@
         "Decide whether to build automated system"
       ],
       tools: ["Manual processes", "Customer communication tools", "Time tracking", "Feedback collection"],
-      characteristics: ["Highly personalized service", "Manual processes", "Focus on outcome value"]
+      characteristics: ["Highly personalized service", "Manual processes", "Focus on outcome value"],
+      pass: "Customers pay for the hand-delivered result and ask for it again.",
+      kill: "They like it free but won't pay, or delivery takes so long automation can't recover the margin.",
+      next: "mvp",
+      hyp: ["busy restaurant owners", "pay for a weekly menu-costing report", "5 of 10 renew for month two"]
     },
     concept: {
-      name: "Concept Testing",
+      name: "Concept Testing", short: "Concept test", lane: "want", x: 24, lp: "down",
+      asks: "Does this solve a problem people care about?",
       timeInvestment: "Days to weeks",
       bestFor: "Gathering feedback before building anything",
       description: "Present concept through descriptions and mockups to answer 'Does this solve a real problem people care about?'",
@@ -380,10 +576,15 @@
         "Validate solution approach"
       ],
       tools: ["Survey tools", "Interview platforms", "Mockup tools", "Landing pages"],
-      characteristics: ["No building required", "Focus on problem-solution fit", "Interview-based feedback"]
+      characteristics: ["No building required", "Focus on problem-solution fit", "Interview-based feedback"],
+      pass: "People raise the problem before you do, and can tell you what they do about it today and what it costs them.",
+      kill: "Polite interest: \"I'd use that\" with no current workaround, spending or pain behind it.",
+      next: "landing",
+      hyp: ["freelance bookkeepers", "describe chasing late invoices as a weekly pain", "7 of 10 interviews raise it unprompted"]
     },
     landing: {
-      name: "Landing Page Test",
+      name: "Landing Page Test", short: "Landing page", lane: "want", x: 8, lp: "up",
+      asks: "Is there real interest in this idea?",
       timeInvestment: "Days",
       bestFor: "Testing market interest with minimal investment",
       description: "Create page describing product before it exists to answer 'Is there initial interest in this idea?'",
@@ -395,10 +596,15 @@
         "Analyze interest level and feedback"
       ],
       tools: ["Website builders", "Google Analytics", "Email capture tools", "A/B testing platforms"],
-      characteristics: ["Very fast to implement", "Quantifiable interest metrics", "Can test pricing"]
+      characteristics: ["Very fast to implement", "Quantifiable interest metrics", "Can test pricing"],
+      pass: "Visitors from a cold channel sign up or pre-order at the rate you wrote down before launch.",
+      kill: "Traffic arrives and leaves. The only signups are people who already know you.",
+      next: "concierge",
+      hyp: ["parents of new drivers", "join the waitlist", "8% of visitors sign up in two weeks"]
     },
     usability: {
-      name: "Usability Testing",
+      name: "Usability Testing", short: "Usability test", lane: "use", x: 26, lp: "down",
+      asks: "Can people actually use this?",
       timeInvestment: "Days to weeks",
       bestFor: "Evaluating ease of use",
       description: "Observe real users completing tasks to answer 'Can users effectively use this?'",
@@ -410,10 +616,15 @@
         "Iterate design based on findings"
       ],
       tools: ["Screen recording software", "User testing platforms", "Analytics tools", "Survey tools"],
-      characteristics: ["Real user observation", "Task-focused testing", "Identifies usability issues"]
+      characteristics: ["Real user observation", "Task-focused testing", "Identifies usability issues"],
+      pass: "People complete the key tasks without help, and what trips them up is wording, not the model.",
+      kill: "Several people stall at the same step. Fix that and retest before adding anything new.",
+      next: "ab",
+      hyp: ["new team admins", "invite a teammate on their first visit", "5 of 6 do it in under a minute"]
     },
     ab: {
-      name: "A/B Testing",
+      name: "A/B Testing", short: "A/B test", lane: "better", x: 30, lp: "up",
+      asks: "Which version performs better?",
       timeInvestment: "Days to weeks",
       bestFor: "Optimizing specific elements",
       description: "Compare versions with controlled variables to answer 'Which option performs better?'",
@@ -425,276 +636,406 @@
         "Implement winning variation"
       ],
       tools: ["A/B testing platforms", "Analytics tools", "Statistical analysis tools"],
-      characteristics: ["Data-driven decisions", "Requires existing traffic", "Incremental improvements"]
+      characteristics: ["Data-driven decisions", "Requires existing traffic", "Incremental improvements"],
+      pass: "One version wins on the metric you chose before starting, at the sample size you planned.",
+      kill: "No real difference at the planned sample. Stop, keep the simpler version, try a bolder change.",
+      next: "usability",
+      hyp: ["trial users", "upgrade from the shorter pricing page", "upgrades rise 10% at 2,000 visitors each"]
     }
   };
 
-  const decisionTree = {
+  var decisionTree = {
+    label: "Stage",
     question: "What stage is your project in?",
     options: [
       {
-        text: "Idea Stage",
-        tooltip: "You have an idea but haven't built anything yet. Early stages.",
+        text: "Idea Stage", icon: "fa-lightbulb",
+        tooltip: "You have an idea but haven't built anything yet.",
         next: {
+          label: "Project type",
           question: "What type of project are you working on?",
           options: [
             {
-              text: "Software/App",
+              text: "Software/App", icon: "fa-laptop-code",
+              tooltip: "An app, platform or tool people use on a screen.",
               next: {
+                label: "Main unknown",
                 question: "What's your primary concern?",
                 options: [
-                  {
-                    text: "Will people want this?",
-                    result: "concept"
-                  },
-                  {
-                    text: "Can this be built?",
-                    result: "poc"
-                  },
-                  {
-                    text: "How should it work?",
-                    result: "prototype"
-                  }
+                  { text: "Will people want this?", icon: "fa-heart", tooltip: "Demand is the biggest unknown.", result: "concept" },
+                  { text: "Can this be built?", icon: "fa-microchip", tooltip: "The technology is new or unproven.", result: "poc" },
+                  { text: "How should it work?", icon: "fa-route", tooltip: "The flow and interactions are still unclear.", result: "prototype" }
                 ]
               }
             },
             {
-              text: "Service/Business",
+              text: "Service/Business", icon: "fa-handshake",
+              tooltip: "Something you deliver: a service, agency, marketplace or offer.",
               next: {
+                label: "Complexity",
                 question: "How complex is the service?",
                 options: [
-                  {
-                    text: "Simple service",
-                    result: "landing"
-                  },
-                  {
-                    text: "Complex/automated service",
-                    result: "concierge"
-                  }
+                  { text: "Simple service", icon: "fa-circle", tooltip: "Easy to explain and deliver. The question is whether people bite.", result: "landing" },
+                  { text: "Complex/automated service", icon: "fa-cogs", tooltip: "Lots of moving parts, or something you'd eventually automate.", result: "concierge" }
                 ]
               }
             },
-            {
-              text: "Physical Product",
-              result: "concept"
-            }
+            { text: "Physical Product", icon: "fa-box-open", tooltip: "Something people hold, wear or put on a shelf.", result: "concept" }
           ]
         }
       },
       {
-        text: "Built Something",
-        tooltip: "You have a working version or prototype. Mid stages.",
+        text: "Built Something", icon: "fa-tools",
+        tooltip: "A working version or prototype exists, but it isn't really out there yet.",
         next: {
+          label: "To validate",
           question: "What do you need to validate?",
           options: [
-            {
-              text: "Market demand",
-              result: "mvp"
-            },
-            {
-              text: "User experience",
-              result: "usability"
-            },
-            {
-              text: "Performance/features",
-              result: "ab"
-            }
+            { text: "Market demand", icon: "fa-users", tooltip: "Do enough people want it to keep going?", result: "mvp" },
+            { text: "User experience", icon: "fa-hand-pointer", tooltip: "Can people find their way through it?", result: "usability" },
+            { text: "Performance/features", icon: "fa-sliders-h", tooltip: "Which version of a page or feature works better?", result: "ab" }
           ]
         }
       },
       {
-        text: "Launched Product",
-        tooltip: "You have users but want to improve. Later stages.",
+        text: "Launched Product", icon: "fa-rocket",
+        tooltip: "Real people are using it and you want to improve it.",
         next: {
+          label: "Goal",
           question: "What's your optimization goal?",
           options: [
-            {
-              text: "Improve conversions",
-              result: "ab"
-            },
-            {
-              text: "Better user experience",
-              result: "usability"
-            },
-            {
-              text: "New feature validation",
-              result: "prototype"
-            }
+            { text: "Improve conversions", icon: "fa-chart-line", tooltip: "More signups, purchases or upgrades from the traffic you have.", result: "ab" },
+            { text: "Better user experience", icon: "fa-smile", tooltip: "Fewer drop-offs, support tickets and confused users.", result: "usability" },
+            { text: "New feature validation", icon: "fa-puzzle-piece", tooltip: "Test a new idea before you build it into the product.", result: "prototype" }
           ]
         }
       }
     ]
   };
 
+  function $id(id) { return document.getElementById(id); }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function reduced() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+  // longest path from a node to a result, so the vial count matches this branch
+  function depth(node) {
+    return 1 + Math.max.apply(null, node.options.map(function (o) { return o.next ? depth(o.next) : 0; }));
+  }
+
   function updateInteractionData() {
-    const pathSummary = history.map(step => `${step.question}: ${step.answer}`).join('\n');
-    userInteractionData = `Validation Path:\n${pathSummary}`;
+    var pathSummary = history.map(function (step) { return step.node.question + ': ' + step.option.text; }).join('\n');
+    userInteractionData = 'Validation Path:\n' + pathSummary;
     window.userInteractionData = userInteractionData;
   }
 
-  function renderNode(node) {
-    const currentNodeElement = document.getElementById('current-node');
-    currentNodeElement.innerHTML = '';
-
-    const levelDiv = document.createElement('div');
-    levelDiv.className = 'decision-level';
-
-    const questionElement = document.createElement('div');
-    questionElement.className = 'text-xl font-medium text-gray-700 mb-6 text-center';
-    questionElement.textContent = node.question;
-    levelDiv.appendChild(questionElement);
-
-    const optionsElement = document.createElement('div');
-    optionsElement.className = 'flex flex-wrap justify-center gap-4';
-
-    node.options.forEach(option => {
-      const button = document.createElement('button');
-      button.className = 'option-btn';
-      button.textContent = option.text;
-      
-      if (option.tooltip) {
-        const tooltipWrapper = document.createElement('div');
-        tooltipWrapper.className = 'custom-tooltip inline-block';
-        
-        const tooltipText = document.createElement('span');
-        tooltipText.className = 'tooltiptext';
-        tooltipText.textContent = option.tooltip;
-        
-        tooltipWrapper.appendChild(button);
-        tooltipWrapper.appendChild(tooltipText);
-        optionsElement.appendChild(tooltipWrapper);
-      } else {
-        optionsElement.appendChild(button);
-      }
-
-      button.addEventListener('click', () => handleOption(option));
+  /* ---------- bench map ---------- */
+  function renderMap(el, opts) {
+    opts = opts || {};
+    var you = opts.you ? validationMethods[opts.you] : null;
+    var html = '<div class="pvm-map-title"><span>' + (opts.title || 'The validation bench') + '</span><span>Effort &rarr;</span></div>';
+    var delay = 0;
+    LANES.forEach(function (lane) {
+      var isYouLane = you && you.lane === lane.key;
+      html += '<div class="pvm-lane' + (isYouLane ? ' is-you' : '') + '"><span class="pvm-lane-name">' + lane.name + '</span><div class="pvm-track">';
+      Object.keys(validationMethods).forEach(function (k) {
+        var m = validationMethods[k];
+        if (m.lane !== lane.key) return;
+        var cls = 'pvm-dot';
+        if (opts.you === k) cls += ' is-you';
+        if (opts.next === k) cls += ' is-next';
+        if (opts.pulse === k) cls += ' is-pulse';
+        delay += 0.08;
+        html += '<span class="' + cls + '" style="left:' + m.x + '%;animation-delay:' + delay.toFixed(2) + 's"><i></i><em class="' + m.lp + '">' + m.short + '</em></span>';
+      });
+      html += '</div></div>';
     });
-
-    levelDiv.appendChild(optionsElement);
-    currentNodeElement.appendChild(levelDiv);
-
-    setTimeout(() => {
-      levelDiv.classList.add('show');
-    }, 100);
+    html += '<div class="pvm-axis"><span></span><div class="pvm-ticks"><span style="left:0">Days</span><span style="left:35%">Weeks</span><span style="left:62%">1 month</span><span style="left:100%">3 months</span></div></div>';
+    el.innerHTML = html;
   }
 
-  function handleOption(option) {
-    // Mark selection visually
-    const buttons = document.querySelectorAll('.option-btn');
-    buttons.forEach(btn => {
-      btn.classList.remove('selected');
-      if (btn.textContent === option.text) {
-        btn.classList.add('selected');
-      }
-    });
+  /* ---------- bench status ---------- */
+  function renderStatus(finished) {
+    var total = finished ? history.length : history.length + depth(currentNode);
+    var vials = '';
+    for (var i = 0; i < total; i++) {
+      var cls = finished ? 'done' : (i < history.length ? 'on' : (i === history.length ? 'now' : ''));
+      vials += '<i class="' + cls + '"></i>';
+    }
+    $id('pvmVials').innerHTML = vials;
+    $id('pvmStatus').innerHTML = finished
+      ? '<b>Experiment selected</b> · protocol below'
+      : '<b>Variable ' + pad(history.length + 1) + '</b> · recording';
+  }
 
-    // Add to history
-    history.push({
-      question: currentNode.question,
-      answer: option.text
-    });
+  /* ---------- lab log ---------- */
+  function renderHistory() {
+    var log = $id('history');
+    log.innerHTML = history.map(function (step, i) {
+      return '<li><span class="pvm-log-n">' + pad(i + 1) + '</span>' +
+        '<span class="pvm-log-k">' + esc(step.node.label) + '</span>' +
+        '<span class="pvm-log-v"><i class="fas fa-check" aria-hidden="true"></i>' + esc(step.option.text) + '</span>' +
+        '<button type="button" class="pvm-log-edit" data-step="' + i + '" aria-label="Change answer to: ' + esc(step.node.question) + '">Change</button></li>';
+    }).join('');
+  }
 
+  // rewind to an earlier question
+  $id('history').addEventListener('click', function (e) {
+    var btn = e.target.closest('.pvm-log-edit');
+    if (!btn) return;
+    var i = +btn.dataset.step;
+    currentNode = history[i].node;
+    history = history.slice(0, i);
+    updateInteractionData();
+    hideResult();
+    renderHistory();
+    renderNode(currentNode, true);
+  });
+
+  /* ---------- the question ---------- */
+  function renderNode(node, focus) {
+    var wrap = $id('current-node');
+    var cols = node.options.length;
+    var html = '<div class="pvm-q-tag"><i class="fas fa-vial" aria-hidden="true"></i> ' + esc(node.label) + '</div>' +
+      '<h2 class="pvm-q" id="pvmQ">' + esc(node.question) + '</h2>' +
+      '<p class="pvm-q-hint">Pick the one that fits best<span class="pvm-keys">, or press <kbd>1</kbd>&ndash;<kbd>' + cols + '</kbd></span>.</p>' +
+      '<div class="pvm-opts" role="group" aria-labelledby="pvmQ" style="--cols:' + cols + '">';
+    node.options.forEach(function (o, i) {
+      html += '<button type="button" class="pvm-opt" aria-pressed="false" data-i="' + i + '">' +
+        '<span class="pvm-opt-key" aria-hidden="true">' + (i + 1) + '</span>' +
+        '<span class="pvm-opt-ico" aria-hidden="true"><i class="fas ' + o.icon + '"></i></span>' +
+        '<span class="pvm-opt-title">' + esc(o.text) + '</span>' +
+        (o.tooltip ? '<span class="pvm-opt-desc">' + esc(o.tooltip) + '</span>' : '') +
+        '</button>';
+    });
+    html += '</div>';
+    wrap.innerHTML = html;
+    wrap.classList.remove('is-entering');
+    void wrap.offsetWidth;
+    wrap.classList.add('is-entering');
+    renderStatus(false);
+    if (focus) wrap.querySelector('.pvm-opt').focus({ preventScroll: true });
+  }
+
+  var busy = false;
+  $id('current-node').addEventListener('click', function (e) {
+    var btn = e.target.closest('.pvm-opt');
+    if (btn) choose(+btn.dataset.i);
+  });
+
+  function choose(i) {
+    if (busy || !currentNode) return;
+    var option = currentNode.options[i];
+    if (!option) return;
+    busy = true;
+    var btns = $id('current-node').querySelectorAll('.pvm-opt');
+    btns.forEach(function (b, j) { b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+
+    history.push({ node: currentNode, option: option });
     updateInteractionData();
 
-    setTimeout(() => {
+    setTimeout(function () {
+      busy = false;
+      renderHistory();
       if (option.result) {
         showResult(option.result);
       } else {
         currentNode = option.next;
-        renderHistory();
-        renderNode(currentNode);
+        renderNode(currentNode, true);
       }
-    }, 300);
+    }, reduced() ? 0 : 280);
   }
 
-  function renderHistory() {
-    const historyElement = document.getElementById('history');
-    historyElement.innerHTML = '';
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (!$id('current-node').querySelector('.pvm-opt')) return;
+    var n = parseInt(e.key, 10);
+    if (n >= 1 && n <= currentNode.options.length) { e.preventDefault(); choose(n - 1); }
+  });
 
-    history.forEach((step, index) => {
-      const stepElement = document.createElement('div');
-      stepElement.className = 'mb-4 p-4 bg-gray-50 rounded-lg';
-      stepElement.innerHTML = `
-        <div class="font-medium text-gray-700">${step.question}</div>
-        <div class="text-green-600 font-medium mt-1">✓ ${step.answer}</div>
-      `;
-      historyElement.appendChild(stepElement);
-    });
-  }
-
+  /* ---------- result: the protocol ---------- */
   function showResult(methodKey) {
-    const method = validationMethods[methodKey];
-    const resultElement = document.getElementById('result');
-    
-    let resultHTML = `
-      <div class="score-display">
-        <div class="score-description">Recommended for your project type and stage</div>
-        <div class="score-title">${method.name}</div>
-      </div>
-      
-      <div class="method-details">
-        <h4><strong>Best for:</strong> ${method.bestFor}</h4>
-        <p><strong>Time Investment:</strong> ${method.timeInvestment}</p>
-        <p><strong>Description:</strong> ${method.description}</p>
-        
-        <h4 class="mt-4">Key Characteristics:</h4>
-        <ul class="list-disc pl-6">
-          ${method.characteristics.map(char => `<li>${char}</li>`).join('')}
-        </ul>
-        
-        <h4 class="mt-4">Implementation Steps:</h4>
-        <ul class="action-list">
-          ${method.steps.map(step => `<li><i class="fas fa-arrow-right"></i> ${step}</li>`).join('')}
-        </ul>
-        
-        <div class="tools-section">
-          <h4>Recommended Tools:</h4>
-          <div class="mt-2">
-            ${method.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
-          </div>
-        </div>
-      </div>
-    `;
+    var m = validationMethods[methodKey];
+    var next = m.next ? validationMethods[m.next] : null;
+    var lane = LANES.filter(function (l) { return l.key === m.lane; })[0];
+    var el = $id('result');
 
-    resultElement.innerHTML = resultHTML;
-    resultElement.classList.remove('hidden');
-    document.getElementById('expBld').classList.remove('hidden');
-    document.getElementById('resetBtn').classList.remove('hidden');
-    
-    renderHistory();
-    document.getElementById('current-node').innerHTML = '';
+    currentNode = null;
+    $id('current-node').innerHTML = '<div class="pvm-done"><span><i class="fas fa-check-circle" aria-hidden="true"></i>Your method is <b>' + esc(m.short) + '</b>. Change any answer above to compare.</span></div>';
+    renderStatus(true);
+
+    el.innerHTML =
+      '<div class="pvm-protocol">' +
+        '<div class="pvm-proto-top"><span>Your validation protocol</span><span>Answers <b>' + esc(lane.name) + '</b></span></div>' +
+        '<h2 class="pvm-proto-name">' + esc(m.name) + '</h2>' +
+        '<p class="pvm-proto-asks">' + esc(m.asks) + '</p>' +
+        // the question is already quoted above, so drop the description's own "to answer '...'" tail
+        '<p class="pvm-proto-desc">' + esc(m.description.replace(/ to answer '.*'$/, '.')) + '</p>' +
+        '<div class="pvm-specs">' +
+          '<div class="pvm-spec"><span class="pvm-spec-k">Time to run</span><span class="pvm-spec-v">' + esc(m.timeInvestment) + '</span></div>' +
+          '<div class="pvm-spec"><span class="pvm-spec-k">Best for</span><span class="pvm-spec-v">' + esc(m.bestFor) + '</span></div>' +
+          '<div class="pvm-spec"><span class="pvm-spec-k">If it passes</span><span class="pvm-spec-v">' + (next ? 'Next test: ' + esc(next.short) : 'Ship it') + '</span></div>' +
+        '</div>' +
+        '<div class="pvm-conditions"><span>Conditions</span>' +
+          history.map(function (s) { return '<span class="pvm-chip">' + esc(s.option.text) + '</span>'; }).join('') +
+        '</div>' +
+      '</div>' +
+
+      '<div class="pvm-grid2">' +
+        '<div class="pvm-panel">' +
+          '<h2>Run it</h2>' +
+          '<p class="pvm-panel-sub">Five steps, in order.</p>' +
+          '<ol class="pvm-steps">' + m.steps.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol>' +
+          '<div class="pvm-traits">' + m.characteristics.map(function (c) { return '<span class="pvm-trait">' + esc(c) + '</span>'; }).join('') + '</div>' +
+        '</div>' +
+        '<div class="pvm-panel">' +
+          '<h2>Read the result</h2>' +
+          '<p class="pvm-panel-sub">Write your own versions of these down before you start.</p>' +
+          '<div class="pvm-signal pvm-signal-pass"><div class="pvm-signal-k"><i class="fas fa-check" aria-hidden="true"></i> Pass signal</div><p>' + esc(m.pass) + '</p></div>' +
+          '<div class="pvm-signal pvm-signal-kill"><div class="pvm-signal-k"><i class="fas fa-times" aria-hidden="true"></i> Kill signal</div><p>' + esc(m.kill) + '</p></div>' +
+          '<div class="pvm-tools"><h3>Tools for the job</h3>' + m.tools.map(function (t) { return '<span class="pvm-tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="pvm-panel pvm-hyp">' +
+        '<h2>Write your hypothesis</h2>' +
+        '<p class="pvm-panel-sub">A test without a number to beat is a demo. Fill in the blanks and it lands in your saved protocol.</p>' +
+        '<div class="pvm-hyp-fields" data-dl-ignore>' +
+          field('hypWho', 'Who', m.hyp[0]) +
+          field('hypDo', 'Will do what', m.hyp[1]) +
+          field('hypSignal', 'Right if', m.hyp[2]) +
+        '</div>' +
+        '<div class="pvm-hyp-card" id="pvmHypCard"></div>' +
+        '<p class="pvm-hyp-note" data-dl-ignore>The grey text is an example. Replace it with yours.</p>' +
+      '</div>' +
+
+      '<div class="pvm-panel pvm-where">' +
+        '<h2>Where this sits on the bench</h2>' +
+        '<p class="pvm-panel-sub">Every method answers one question. Start at the cheapest one that answers yours.</p>' +
+        '<div class="pvm-map pvm-map-light" id="pvmResultMap"></div>' +
+        (next ? '<p class="pvm-next"><i class="fas fa-arrow-right" aria-hidden="true"></i><span>When this passes, the next test is <b>' + esc(next.name) + '</b>: ' + esc(next.asks.charAt(0).toLowerCase() + next.asks.slice(1)) + '</span></p>' : '') +
+      '</div>';
+
+    renderMap($id('pvmResultMap'), { you: methodKey, next: m.next, title: 'Your method' + (next ? ' and the next one' : '') });
+    ['hypWho', 'hypDo', 'hypSignal'].forEach(function (id) { $id(id).addEventListener('input', function () { renderHyp(m); }); });
+    renderHyp(m);
+
+    el.classList.remove('pvm-hidden');
+    $id('pvmAfter').classList.remove('pvm-hidden');
+    $id('expBld').classList.remove('pvm-hidden');
+    el.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+    el.focus({ preventScroll: true });
+  }
+
+  function field(id, label, example) {
+    return '<div class="pvm-field"><label for="' + id + '">' + label + '</label><input type="text" id="' + id + '" placeholder="' + esc(example) + '" autocomplete="off"></div>';
+  }
+
+  function renderHyp(m) {
+    function part(id, i) {
+      var v = $id(id).value.trim();
+      return '<b class="' + (v ? '' : 'is-empty') + '">' + esc(v || m.hyp[i]) + '</b>';
+    }
+    $id('pvmHypCard').innerHTML = 'We believe ' + part('hypWho', 0) + ' will ' + part('hypDo', 1) + '. We’ll know we’re right if ' + part('hypSignal', 2) + '.';
+  }
+
+  function hideResult() {
+    $id('result').classList.add('pvm-hidden');
+    $id('result').innerHTML = '';
+    $id('pvmAfter').classList.add('pvm-hidden');
+    $id('expBld').classList.add('pvm-hidden');
   }
 
   function resetTree() {
     currentNode = decisionTree;
     history = [];
     userInteractionData = "";
-    
-    document.getElementById('history').innerHTML = '';
-    document.getElementById('result').classList.add('hidden');
-    document.getElementById('expBld').classList.add('hidden');
-    document.getElementById('resetBtn').classList.add('hidden');
-    
-    renderNode(currentNode);
+    window.userInteractionData = "";
+    hideResult();
+    renderHistory();
+    renderNode(currentNode, true);
+    $id('pvmBench').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
   }
 
-  $(document).ready(function() {
+  $id('resetBtn').addEventListener('click', resetTree);
+  $id('pvmStart').addEventListener('click', function () {
+    $id('pvmBench').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+    var first = $id('current-node').querySelector('.pvm-opt');
+    if (first) first.focus({ preventScroll: true });
+  });
+
+  $(document).ready(function () {
     $('#email-form-con').load("email-capture.html");
     $('#related-tools-con').load("related-tools.html");
-    $('#header').load("../header.html", function(response, status, xhr) {
+    $('#header').load("../header.html", function (response, status, xhr) {
       if (status == "error") {
-        var msg = "Sorry but there was an error: ";
-        $("#error").html(msg + xhr.status + " " + xhr.statusText);
+        $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
       } else {
         $('.business-gen').addClass('thisPage');
       }
     });
 
+    renderMap($id('pvmHeroMap'), { pulse: 'landing' });
     currentNode = decisionTree;
-    renderNode(currentNode);
+    renderNode(currentNode, false);
   });
+})();
+</script>
 
-  document.getElementById('resetBtn').addEventListener('click', resetTree);
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Project Validation Method Selector",
+  "url": "https://dlightning.org/d-tools/project-validation-methods.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "description": "A free interactive tool that recommends the right validation method for your project (concept test, landing page, concierge MVP, MVP, prototype, usability test, proof of concept or A/B test) with steps, pass and kill signals, and a hypothesis template.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@type": "Organization", "name": "Dlightning", "url": "https://dlightning.org" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between a proof of concept, a prototype and an MVP?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A proof of concept asks whether something can be built. A prototype asks how it should work, and is tested with people but not shipped. An MVP is released to real users to find out whether they'll use and value it." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which validation method is cheapest?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A landing page test or concept interviews, usually days of work. Start there when demand is the unknown, and only build once the cheap test has failed to prove you wrong." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a kill criterion?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The result, decided before you run the test, that means you stop or change course. Writing it down first stops you from reading a weak result as a promising one." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the tool free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. No signup, and your answers stay in your browser." }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dlightning.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Decision Tools", "item": "https://dlightning.org/d-tools/decision-tools.html" },
+    { "@type": "ListItem", "position": 3, "name": "Project Validation Method Selector", "item": "https://dlightning.org/d-tools/project-validation-methods.html" }
+  ]
+}
 </script>
 
 <!-- Branded result download (PNG / PDF) -->

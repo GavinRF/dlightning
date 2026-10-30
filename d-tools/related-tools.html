@@ -10,30 +10,58 @@
   Pages not in the map fall back to the first three other tools.
 -->
 <section class="dtools-related" aria-label="More free design and startup tools">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
   <style>
-    .dtools-related{max-width:1024px;margin:148px auto 0;padding:0 16px;font-family:inherit;}
-    .dtools-related h2{font-size:1.46rem;font-weight:500;color:#425b7d;margin:0 0 6px;text-align:center;}
-    .dtools-related .dtools-sub{text-align:center;color:#6b7280;margin:0 0 28px;font-size:1rem;}
+    .dtools-related{max-width:1120px;margin:120px auto 80px;padding:0 20px;font-family:'Rubik',sans-serif;}
+    .dtools-related .dtools-panel{position:relative;overflow:hidden;isolation:isolate;border-radius:24px;padding:44px 40px 34px;color:#fff;
+      background:radial-gradient(700px 340px at 100% 0%,rgba(0,157,255,.28),transparent 60%),radial-gradient(520px 300px at 0% 100%,rgba(36,84,230,.32),transparent 60%),#0a1430;
+      box-shadow:0 40px 70px -40px rgba(10,20,48,.7);}
+    .dtools-related .dtools-panel::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+      background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:44px 44px;
+      -webkit-mask-image:radial-gradient(ellipse at 80% 10%,#000,transparent 70%);mask-image:radial-gradient(ellipse at 80% 10%,#000,transparent 70%);}
+    .dtools-related .dtools-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 24px;margin-bottom:28px;}
+    .dtools-related .dtools-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#ffd23f;margin-bottom:10px;}
+    .dtools-related h2{font-family:'Archivo','Rubik',sans-serif;font-stretch:105%;font-weight:780;font-size:clamp(1.7rem,3.4vw,2.35rem);line-height:1.04;letter-spacing:-.02em;color:#fff;margin:0;}
+    .dtools-related h2 em{font-style:normal;color:#ffd23f;}
+    .dtools-related .dtools-sub{color:rgba(255,255,255,.68);margin:10px 0 0;font-size:1rem;line-height:1.5;max-width:520px;}
     .dtools-related .dtools-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
-    @media (max-width:640px){.dtools-related .dtools-grid{grid-template-columns:1fr;}}
-    .dtools-related .dtools-card{display:block;background:#ffffff87;border:1px solid #e5e7eb;border-radius:14px;padding:20px;
-      text-decoration:none;color:inherit;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;height:100%;}
-    .dtools-related .dtools-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(8,137,224,.15);border-color:#009DFF;}
-    .dtools-related .dtools-card .dtools-ico{font-size:1.5rem;color:#009DFF;margin-bottom:10px;}
-    .dtools-related .dtools-card h3{font-size:1.05rem;font-weight:700;color:#111827;margin:0 0 6px;}
-    .dtools-related .dtools-card p{font-size:.9rem;color:#6b7280;margin:0;line-height:1.45;}
-    .dtools-related .dtools-alllink{text-align:center;margin-top:24px;}
-    .dtools-related .dtools-alllink a{color:#009DFF;text-decoration:none;}
-    .dtools-related .dtools-alllink a:hover{text-decoration:underline;}
+    @media (max-width:820px){.dtools-related .dtools-grid{grid-template-columns:1fr;}}
+    .dtools-related .dtools-card{position:relative;display:flex;flex-direction:column;height:100%;padding:22px 22px 18px;border-radius:16px;text-decoration:none;color:#fff;
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);
+      transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s ease,background .3s ease,box-shadow .3s ease;}
+    .dtools-related .dtools-card:hover,.dtools-related .dtools-card:focus-visible{transform:translateY(-5px);border-color:rgba(255,210,63,.55);text-decoration:none;color:#fff;
+      background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05));box-shadow:0 24px 40px -22px rgba(0,0,0,.8),0 0 0 1px rgba(255,210,63,.15),0 0 40px -10px rgba(255,210,63,.25);}
+    .dtools-related .dtools-card:focus-visible{outline:3px solid #ffd23f;outline-offset:3px;}
+    .dtools-related .dtools-ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;margin-bottom:18px;font-size:1.3rem;
+      color:#4dbbff;background:rgba(0,157,255,.14);box-shadow:inset 0 0 0 1px rgba(0,157,255,.3);
+      transition:transform .35s cubic-bezier(.2,.8,.2,1),background .25s ease,color .25s ease,box-shadow .25s ease;}
+    .dtools-related .dtools-ico i{line-height:1!important;}
+    .dtools-related .dtools-card:hover .dtools-ico,.dtools-related .dtools-card:focus-visible .dtools-ico{background:#ffd23f;color:#0a1430;box-shadow:0 8px 20px -6px rgba(255,210,63,.6);transform:rotate(-6deg) scale(1.05);}
+    .dtools-related .dtools-card h3{font-family:'Archivo','Rubik',sans-serif;font-stretch:105%;font-weight:720;font-size:1.18rem;line-height:1.2;letter-spacing:-.01em;color:#fff;margin:0 0 8px;}
+    .dtools-related .dtools-card p{font-size:.93rem;color:rgba(255,255,255,.66);margin:0 0 18px;line-height:1.5;}
+    .dtools-related .dtools-go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600;color:#ffd23f;}
+    .dtools-related .dtools-go i{transition:transform .25s cubic-bezier(.2,.8,.2,1);}
+    .dtools-related .dtools-card:hover .dtools-go i{transform:translateX(4px);}
+    .dtools-related .dtools-alllink a{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;font-weight:600;font-size:.95rem;color:#fff;text-decoration:none;
+      padding:11px 18px;border-radius:12px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3);transition:box-shadow .2s ease,color .2s ease;}
+    .dtools-related .dtools-alllink a:hover,.dtools-related .dtools-alllink a:focus-visible{color:#ffd23f;box-shadow:inset 0 0 0 1.5px #ffd23f;text-decoration:none;}
+    @media (max-width:560px){.dtools-related{margin:90px auto 60px;padding:0 12px;}.dtools-related .dtools-panel{padding:32px 20px 22px;border-radius:20px;}}
+    @media (prefers-reduced-motion:reduce){.dtools-related *{transition:none!important;}}
   </style>
 
-  <h2>More free design &amp; startup tools</h2>
-  <p class="dtools-sub">Interactive, no-signup tools to help you research, validate, and build better products.</p>
+  <div class="dtools-panel">
+    <div class="dtools-head">
+      <div>
+        <div class="dtools-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i> Keep going</div>
+        <h2>More free design &amp; <em>startup tools</em></h2>
+        <p class="dtools-sub">Interactive, no-signup tools to help you research, validate, and build better products.</p>
+      </div>
+      <div class="dtools-alllink">
+        <a href="decision-tools.html">Browse all decision tools <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </div>
 
-  <div class="dtools-grid" id="dtools-grid"></div>
-
-  <div class="dtools-alllink">
-    <a href="decision-tools.html">Browse all decision tools <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+    <div class="dtools-grid" id="dtools-grid"></div>
   </div>
 
   <script>
@@ -78,6 +106,7 @@
                  '<div class="dtools-ico"><i class="fas ' + t.icon + '" aria-hidden="true"></i></div>' +
                  '<h3>' + t.title + '</h3>' +
                  '<p>' + t.desc + '</p>' +
+                 '<span class="dtools-go">Open tool <i class="fas fa-arrow-right" aria-hidden="true"></i></span>' +
                '</a>';
       }).join("");
     })();

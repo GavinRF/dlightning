@@ -1,355 +1,397 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning</title>
-        <meta name="description" content="Use the Entrepreneur's Decision Tree to guide your startup journey. Answer key questions to determine readiness, validate ideas, explore funding options, and build a successful business.">
-        <meta name="keywords" content="entrepreneur decision tree, startup guidance, business validation, startup roadmap, business planning, funding options, startup tools">
-        <link rel="canonical" href="https://dlightning.org/d-tools/entrepreneur-decision-tree.html">
-        <meta name="author" content="Dlightning">
-        <meta name="robots" content="index, follow">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning</title>
+<meta name="description" content="Use the Entrepreneur's Decision Tree to guide your startup journey. Answer key questions to determine readiness, validate ideas, explore funding options, and build a successful business.">
+<meta name="keywords" content="entrepreneur decision tree, startup guidance, business validation, startup roadmap, business planning, funding options, startup tools">
+<link rel="canonical" href="https://dlightning.org/d-tools/entrepreneur-decision-tree.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow">
 
-        <!-- opengraph  -->
-        <meta property="og:url" content="https://dlightning.org/d-tools/entrepreneur-decision-tree.html">
-        <meta property="og:type" content="website">
-        <meta property="og:site_name" content="Dlightning">
-        <meta property="og:image" content="https://dlightning.org/img/products/EDT.png"/>
-        <meta property="og:title" content="Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning"/>
-        <meta property="og:description" content="Interactive decision tree to guide your startup journey. Determine readiness, validate ideas, and explore funding options."/>
-        <meta property="og:image:width" content="824"/>
-        <meta property="og:image:height" content="551"/>
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning">
-        <meta name="twitter:description" content="Interactive decision tree to guide your startup journey.">
-        <meta name="twitter:image" content="https://dlightning.org/img/products/EDT.png">
+<!-- opengraph  -->
+<meta property="og:url" content="https://dlightning.org/d-tools/entrepreneur-decision-tree.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:image" content="https://dlightning.org/img/products/EDT.png"/>
+<meta property="og:title" content="Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning"/>
+<meta property="og:description" content="Interactive decision tree to guide your startup journey. Determine readiness, validate ideas, and explore funding options."/>
+<meta property="og:image:width" content="824"/>
+<meta property="og:image:height" content="551"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Entrepreneur Decision Tree - Startup Guidance Tool | Dlightning">
+<meta name="twitter:description" content="Interactive decision tree to guide your startup journey.">
+<meta name="twitter:image" content="https://dlightning.org/img/products/EDT.png">
 
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/style.css">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <style>
-      body, html {
-        min-height: 100vh;
-        margin: 0;
-        background: linear-gradient(135deg, #f6faff 0%, #c8d8f1 100%);
-      }
-      .container {
-        margin: 0 auto;
-        padding: 20px;
-      }
-      h1 {
-        text-align: center;
-        color: #2c3e50;
-      }
-      #decision-tree {
-        background-color: white;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      .node {
-        margin-bottom: 20px;
-        position: relative;
-      }
-      .question {
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #34495e;
-      }
-      .options {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-      .option {
-        background-color: #0889e0;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-      .option:hover {
-        background-color: #03609e;
-      }
-      .option.selected {
-        background-color: #0c9a47;
-      }
-      .option.selected.no {
-        background-color: #ce3221;
-      }
-      #result {
-        font-weight: 500;
-        /* text-align: center; */
-        color: #03441e;
-      }
-      #result:not(:empty) {
-        margin-top: 20px;
-        padding: 16px;
-        background-color: #eff3f9;
-        border-radius: 12px;
-      }
-      #reset {
-        display: block;
-        margin: 20px auto 0;
-        background-color: #ce3221;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-      #reset:hover {
-        background-color: #b51f0f;
-      }
-      #expBld{
-        display: none;
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-        background-image: linear-gradient(to right, #100147 , #0b0a6c, #331691, #6744ff);
-        border-radius: 8px;
-        margin-top: 28px;
-        padding: 16px 16px 22px 16px;
-        transform: translateY(-20px);
-        transition: opacity 0.8s ease, transform 0.8s ease allow-discrete;
-    }
-    #email-form-con {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    
-    .text-yellow{
-        color: gold;
-    }
-    i, .fa, .fa-brands {
-        line-height: 2 !important;
-    }
-    .action-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-  }
-  
-  .action-list li {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .action-list li i {
-    margin-right: 10px;
-    color: #3498db;
-  }
-  
-  .builder-prompt {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e8f4fd;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .builder-prompt i {
-    font-size: 24px;
-    color: #3498db;
-    margin-right: 15px;
-  }
-  
-  .builder-prompt p {
-    margin: 0;
-    color: #2c3e50;
-  }
-  
-  #result h3 {
-    color: #2c3e50;
-    margin-bottom: 20px;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<style>
+  /* Trail map: every answer is a waypoint, the result is where the trail ends. */
+  :root {
+    --ink: #0a1430;
+    --ink-2: #12204a;
+    --sky: #009dff;
+    --blue: #2454e6;
+    --bolt: #ffd23f;
+    --bolt-deep: #c99e12;
+    --map: #e9efec;
+    --card: #ffffff;
+    --text: #1b2236;
+    --muted: #5b6578;
+    --line: #d3ddd9;
+    --display: 'Archivo', 'Rubik', sans-serif;
+    --sign: 84%;   /* condensed, like trail-sign lettering */
+    --body: 'Rubik', sans-serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
   }
 
-  .custom-tooltip{
-    position: relative;
-    display: inline-block;
-  }
-  
-  .custom-tooltip .tooltiptext {
-    visibility: hidden;
-    width: 280px;
-    background-color: #484848;
-    color: #fff;
-    text-align: left;
-    border-radius: 6px;
-    padding: 10px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -140px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 14px;
-    line-height: 1.4;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-  
-  .custom-tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #484848 transparent transparent transparent;
-  }
-  
-  .custom-tooltip:hover .tooltiptext {
-    visibility: visible !important;
-    opacity: 1 !important;
+  body { background: var(--map); color: var(--text); font-family: var(--body); font-weight: 380; }
+  header { z-index: 999; }
+  .edt-wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .is-hidden { display: none !important; }
+  #edtTool { scroll-margin-top: 90px; }
+
+  /* contour lines, reused on the hero (light on dark) and the map (dark on light) */
+  .edt-topo { position: relative; }
+  .edt-topo::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      repeating-radial-gradient(ellipse 60% 48% at 18% 30%, transparent 0 26px, var(--topo) 26px 27px),
+      repeating-radial-gradient(ellipse 50% 60% at 88% 78%, transparent 0 30px, var(--topo) 30px 31px);
   }
 
-  .score-display {
-    background: #1f1d79;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  /* ---------- hero ---------- */
+  .edt-hero { --topo: rgba(255, 255, 255, .07); overflow: hidden; color: #fff; padding: 128px 0 96px; background: radial-gradient(800px 420px at 80% 0%, rgba(0, 157, 255, .22), transparent 60%), var(--ink); }
+  .edt-hero-grid { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+  .edt-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 550; letter-spacing: .14em; text-transform: uppercase; color: var(--bolt); margin-bottom: 18px; }
+  .edt-hero h1 {
+    font-family: var(--display); font-stretch: var(--sign); font-weight: 820; font-size: clamp(2.3rem, 6.4vw, 5.2rem); line-height: .94;
+    letter-spacing: -.02em; text-transform: uppercase; color: #fff; margin: 0 0 22px;
   }
-  
-  .score-number {
-    font-size: 42px;
-    font-weight: bold;
-    margin: 8px 0;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
-  
-  .score-label {
-    font-size: 18px;
-    margin-bottom: 5px;
-    opacity: 0.9;
-  }
-  
-  .score-description {
-    font-size: 14px;
-    opacity: 0.8;
-  }
+  .edt-hero h1 em { font-style: normal; color: var(--bolt); }
+  .edt-lede { font-size: 1.18rem; line-height: 1.55; color: rgba(255, 255, 255, .78); max-width: 540px; text-wrap: pretty; margin: 0 0 30px; font-weight: 340; }
+  .edt-lede strong { color: #fff; font-weight: 560; }
+  .edt-hero-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .9rem; color: rgba(255, 255, 255, .6); }
+  .edt-hero-meta i { color: var(--sky); margin-right: 6px; }
 
-  .link{
-    color: #038de9;
+  .edt-btn {
+    font: inherit; font-weight: 600; border: none; border-radius: 12px; padding: 13px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease;
   }
-  .link:hover{
-    color: #0b0a6c;
-    text-decoration: underline;
+  .edt-btn:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+  .edt-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 6px 0 var(--bolt-deep); }
+  .edt-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--bolt-deep); color: var(--ink); text-decoration: none; }
+  .edt-btn-bolt:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--bolt-deep); }
+  .edt-btn-ink { background: var(--ink); color: #fff; }
+  .edt-btn-ink:hover { background: var(--blue); color: #fff; text-decoration: none; }
+  .edt-btn-ink i { color: var(--bolt); }
+  .edt-btn-soft { background: #dde6e2; color: var(--ink); }
+  .edt-btn-soft:hover { background: #cfdad5; color: var(--ink); }
+
+  /* the tree that draws itself */
+  .edt-sketch { width: 100%; max-width: 420px; justify-self: center; overflow: visible; }
+  .edt-sketch .br { fill: none; stroke: rgba(255, 255, 255, .22); stroke-width: 2; stroke-linecap: round; }
+  .edt-sketch .lit { fill: none; stroke: var(--bolt); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 400; stroke-dashoffset: 400; animation: edt-draw 2.4s var(--ease) .4s forwards; }
+  .edt-sketch .nd { fill: var(--ink); stroke: rgba(255, 255, 255, .4); stroke-width: 2; }
+  .edt-sketch .nd-lit { fill: var(--bolt); stroke: none; opacity: 0; animation: edt-pop .4s var(--ease) forwards; }
+  .edt-sketch .end { fill: var(--bolt); stroke: none; opacity: 0; animation: edt-pop .5s var(--ease) 2.3s forwards; transform-box: fill-box; transform-origin: center; }
+  .edt-sketch text { font-family: var(--display); font-stretch: var(--sign); font-weight: 700; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; fill: rgba(255, 255, 255, .55); }
+  @keyframes edt-draw { to { stroke-dashoffset: 0; } }
+  @keyframes edt-pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
+
+  /* ---------- the map ---------- */
+  .edt-map { --topo: rgba(10, 20, 48, .045); padding: 56px 0 30px; }
+  .edt-board { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 32px; align-items: start; }
+  @media (max-width: 960px) { .edt-board { grid-template-columns: minmax(0, 1fr); } }
+
+  .edt-tool-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 18px; }
+  .edt-tool-head h2 { font-family: var(--display); font-stretch: var(--sign); font-weight: 800; font-size: 1.55rem; letter-spacing: -.01em; text-transform: uppercase; color: var(--ink); margin: 0; }
+  .edt-tool-head p { margin: 0; font-size: .93rem; color: var(--muted); }
+
+  /* trail of answered waypoints */
+  .edt-trail { list-style: none; margin: 0; padding: 0; position: relative; }
+  .edt-trail::before { content: ''; position: absolute; left: 19px; top: 8px; bottom: -28px; border-left: 3px dashed var(--blue); opacity: .45; }
+  .edt-trail:empty::before { display: none; }
+  .edt-wp { position: relative; padding: 0 0 18px 58px; animation: edt-in .45s var(--ease) both; }
+  .edt-wp-dot {
+    position: absolute; left: 0; top: 0; width: 41px; height: 41px; border-radius: 50%; background: var(--ink); color: var(--bolt);
+    display: grid; place-items: center; font-family: var(--display); font-stretch: var(--sign); font-weight: 800; font-size: .95rem;
+    box-shadow: 0 0 0 5px var(--map);
   }
-    </style>
-        <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
-    <link rel="manifest" href="/site.webmanifest">
+  .edt-wp-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; background: rgba(255, 255, 255, .72); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px 9px 16px; }
+  .edt-wp-q { flex: 1 1 260px; font-size: .9rem; color: var(--muted); line-height: 1.4; }
+  .edt-wp-a { font-family: var(--display); font-stretch: var(--sign); font-weight: 750; font-size: 1.02rem; color: var(--ink); white-space: nowrap; }
+  .edt-wp-a i { color: var(--blue); font-size: .8rem; margin-right: 6px; }
+  .edt-wp-edit { font: inherit; font-size: .82rem; font-weight: 600; color: var(--blue); background: none; border: none; padding: 4px 6px; border-radius: 6px; cursor: pointer; }
+  .edt-wp-edit:hover { background: #e3ebff; }
+  .edt-wp-edit:focus-visible { outline: 2px solid var(--blue); }
+
+  /* the question you're standing at */
+  .edt-step { position: relative; padding-left: 58px; animation: edt-in .5s var(--ease) both; }
+  .edt-step-dot {
+    position: absolute; left: 0; top: 18px; width: 41px; height: 41px; border-radius: 50%; background: var(--bolt); color: var(--ink);
+    display: grid; place-items: center; font-size: 1rem; box-shadow: 0 0 0 5px var(--map);
+  }
+  .edt-step-dot::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--bolt); animation: edt-ping 1.8s ease-out infinite; }
+  @keyframes edt-ping { from { transform: scale(.9); opacity: .9; } to { transform: scale(1.6); opacity: 0; } }
+  .edt-card { background: var(--card); border-radius: 18px; padding: 24px 26px 22px; box-shadow: 0 1px 0 rgba(10, 20, 48, .05), 0 26px 50px -26px rgba(10, 20, 48, .38); }
+  .edt-kicker { font-size: .74rem; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+  .edt-card h3 { font-family: var(--display); font-weight: 760; font-size: clamp(1.4rem, 3.4vw, 1.9rem); line-height: 1.12; letter-spacing: -.015em; color: var(--ink); margin: 6px 0 18px; outline: none; }
+  .edt-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+  .edt-opts.is-stacked { grid-template-columns: 1fr; }
+  .edt-opt {
+    font: inherit; text-align: left; display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 13px; cursor: pointer;
+    border: 1.5px solid var(--line); background: #f7faf9; color: var(--ink);
+    transition: border-color .15s ease, background .15s ease, transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .edt-opt:hover { border-color: var(--blue); background: #fff; transform: translateY(-2px); box-shadow: 0 10px 20px -14px rgba(36, 84, 230, .6); }
+  .edt-opt:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+  .edt-opt:active { transform: translateY(1px); }
+  .edt-opt-key {
+    flex: none; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
+    font-family: var(--display); font-weight: 750; font-size: .85rem; color: var(--muted); background: #e4ebe8;
+    transition: background .15s ease, color .15s ease;
+  }
+  .edt-opt:hover .edt-opt-key { background: var(--ink); color: var(--bolt); }
+  .edt-opt-body { flex: 1; min-width: 0; }
+  .edt-opt-text { display: block; font-weight: 600; font-size: 1.05rem; line-height: 1.25; }
+  .edt-opt-desc { display: block; font-size: .88rem; line-height: 1.45; color: var(--muted); margin-top: 4px; }
+  .edt-opt > i { color: var(--blue); opacity: 0; transform: translateX(-6px); transition: opacity .15s ease, transform .2s var(--ease); }
+  .edt-opt:hover > i { opacity: 1; transform: none; }
+  .edt-card-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 16px; font-size: .84rem; color: var(--muted); }
+  .edt-back { font: inherit; font-weight: 600; color: var(--muted); background: none; border: none; padding: 4px 0; cursor: pointer; }
+  .edt-back:hover { color: var(--ink); }
+  .edt-keys kbd { font: inherit; font-size: .78rem; font-weight: 650; background: #e4ebe8; color: var(--ink); border-radius: 5px; padding: 1px 6px; box-shadow: none; }
+  @media (hover: none) { .edt-keys, .edt-opt-key { display: none; } }
+  @keyframes edt-in { from { opacity: 0; transform: translateY(14px); } }
+
+  /* ---------- destination (also the downloadable keepsake, so class-styled) ---------- */
+  .edt-result:empty { display: none; }
+  .edt-result { padding-left: 58px; position: relative; animation: edt-in .55s var(--ease) both; }
+  .edt-flag { position: absolute; left: 0; top: 22px; width: 41px; height: 41px; border-radius: 10px; background: var(--bolt); color: var(--ink); display: grid; place-items: center; transform: rotate(-6deg); box-shadow: 0 0 0 5px var(--map); }
+  .edt-dest { background: var(--card); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 60px -28px rgba(10, 20, 48, .45); }
+  .edt-dest-head { position: relative; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; padding: 26px 28px; background: var(--ink); color: #fff; }
+  .edt-ring { position: relative; width: 116px; height: 116px; }
+  .edt-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .edt-ring circle { fill: none; stroke-width: 10; }
+  .edt-ring .track { stroke: rgba(255, 255, 255, .14); }
+  .edt-ring .fill { stroke: var(--bolt); stroke-linecap: round; transition: stroke-dashoffset 1.2s var(--ease); }
+  .edt-ring-num { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+  .edt-ring-num b { font-family: var(--display); font-weight: 800; font-size: 2.1rem; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+  .edt-ring-num span { font-size: .66rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .6); margin-top: 3px; }
+  .edt-dest-kicker { font-size: .74rem; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; color: var(--bolt); }
+  .edt-dest-head h2 { font-family: var(--display); font-stretch: var(--sign); font-weight: 820; font-size: clamp(1.6rem, 3.6vw, 2.2rem); line-height: 1.02; text-transform: uppercase; color: #fff; margin: 6px 0 8px; outline: none; }
+  .edt-dest-head p { margin: 0; color: rgba(255, 255, 255, .75); line-height: 1.5; }
+  .edt-dest-body { padding: 24px 28px 26px; }
+  .edt-dest-body h3 { font-family: var(--display); font-weight: 720; font-size: 1.3rem; letter-spacing: -.01em; color: var(--ink); margin: 0 0 14px; }
+  .edt-actions { list-style: none; margin: 0; padding: 0; counter-reset: act; }
+  .edt-actions li { counter-increment: act; position: relative; padding: 11px 0 11px 46px; border-top: 1px solid var(--line); font-size: 1.02rem; line-height: 1.5; }
+  .edt-actions li:first-child { border-top: none; }
+  .edt-actions li::before {
+    content: counter(act); position: absolute; left: 0; top: 9px; width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--blue); color: var(--blue); display: grid; place-items: center;
+    font-family: var(--display); font-weight: 750; font-size: .9rem;
+  }
+  .edt-context { margin: 18px 0 0; padding: 14px 16px; border-radius: 12px; background: #eef3ff; font-size: .95rem; line-height: 1.55; color: var(--text); }
+  .edt-context b { display: block; font-size: .72rem; font-weight: 650; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; }
+  .edt-builder { display: flex; gap: 12px; align-items: flex-start; margin: 12px 0 0; padding: 14px 16px; border-radius: 12px; background: #fff7d6; font-size: .95rem; line-height: 1.55; }
+  .edt-builder i { color: var(--bolt-deep); margin-top: 3px; }
+  .edt-result a, .edt-aside a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+
+  .edt-after { padding-left: 58px; margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .edt-cta {
+    position: relative; overflow: hidden; margin: 30px 0 0 58px; border-radius: 18px; padding: 26px 28px; background: var(--ink); color: #fff;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center;
+  }
+  .edt-cta::after { content: ''; position: absolute; right: -90px; top: -120px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(0, 157, 255, .35), transparent 70%); pointer-events: none; }
+  .edt-cta-bolt { width: 54px; height: 54px; border-radius: 14px; background: var(--bolt); color: var(--ink); display: grid; place-items: center; font-size: 1.4rem; transform: rotate(-6deg); }
+  .edt-cta h2 { font-family: var(--display); font-weight: 750; font-size: 1.35rem; letter-spacing: -.015em; color: #fff; margin: 0 0 4px; }
+  .edt-cta p { margin: 0; color: rgba(255, 255, 255, .72); line-height: 1.5; }
+  .edt-cta .edt-btn { position: relative; z-index: 1; white-space: nowrap; }
+  @media (max-width: 760px) { .edt-cta { grid-template-columns: 1fr; } }
+
+  /* ---------- sidebar: what the tree weighs ---------- */
+  .edt-aside { background: rgba(255, 255, 255, .6); border: 1px solid var(--line); border-radius: 16px; padding: 20px 20px 10px; }
+  .edt-aside h2 { font-family: var(--display); font-stretch: var(--sign); font-weight: 800; font-size: 1.05rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); margin: 0 0 4px; }
+  .edt-aside > p { font-size: .88rem; color: var(--muted); margin: 0 0 12px; line-height: 1.45; }
+  .edt-weights { list-style: none; margin: 0; padding: 0; }
+  .edt-weights li { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 0; border-top: 1px solid var(--line); font-size: .93rem; }
+  .edt-weights li span { color: var(--muted); font-size: .82rem; grid-column: 1 / -1; line-height: 1.4; }
+  .edt-weights b { font-weight: 600; color: var(--ink); }
+  .edt-pips { display: inline-flex; gap: 3px; align-items: center; }
+  .edt-pips i { width: 9px; height: 9px; border-radius: 2px; background: #cfd9d5; }
+  .edt-pips i.on { background: var(--blue); }
+
+  #email-form-con { margin-top: 40px; }
+
+  @media (max-width: 900px) {
+    .edt-hero { padding: 110px 0 70px; }
+    .edt-hero-grid { grid-template-columns: 1fr; }
+    .edt-sketch { display: none; }
+  }
+  @media (max-width: 560px) {
+    .edt-trail::before { left: 14px; }
+    .edt-wp, .edt-step, .edt-result, .edt-after { padding-left: 44px; }
+    .edt-wp-dot, .edt-step-dot, .edt-flag { width: 31px; height: 31px; font-size: .8rem; }
+    .edt-card { padding: 20px 18px 18px; }
+    .edt-dest-head { grid-template-columns: 1fr; padding: 22px 20px; }
+    .edt-dest-body { padding: 20px; }
+    .edt-cta { margin-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .edt-sketch .lit { stroke-dashoffset: 0; }
+    .edt-sketch .nd-lit, .edt-sketch .end { opacity: 1; }
+  }
+</style>
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
 </head>
-    <body>
-    <header id='header'></header>
-        <div class="bradcam_area bradcam_bg_1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="bradcam_text">
-                            <h1>Entrepreneur's Decision Tree</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<body>
+<header id="header"></header>
 
-    <div class="container" style="margin: 44px auto 222px auto; max-width: 800px;">
-        <h2>Evaluate Your Business Readiness</h2>
-        <p>This interactive decision tree will guide you through critical questions to determine your business readiness. Answer honestly to receive a readiness score and actionable next steps.</p>
-        <br>
-        <div id="decision-tree">
-          <div id="history"></div>
-          <div id="current-node"></div>
-          <div id="result"></div>
-          <div id="expBld" class="shadow-lg border-bottom">
-            <a href="experience-builder.html">
-                <div>
-                <h3 class="text-white">Discover the Full Power of&nbsp;Your&nbsp;Product</h3>
-                <button class="btn btn-primary">
-                    Experience Builder&emsp; <i class="fa fa-bolt text-yellow" aria-hidden="true"></i>
-                </button>
-                </div>
-            </a>
+<section class="edt-hero edt-topo">
+  <div class="edt-wrap edt-hero-grid">
+    <div>
+      <div class="edt-eyebrow"><i class="fas fa-code-branch" aria-hidden="true"></i> Free tool &middot; No signup</div>
+      <h1>Entrepreneur's Decision <em>Tree</em></h1>
+      <p class="edt-lede">Answer up to ten questions about your experience, runway, customers and team. <strong>Each answer picks a branch</strong>, and the trail ends with a readiness score and the next four things to do.</p>
+      <button type="button" class="edt-btn edt-btn-bolt" id="edtStart"><i class="fas fa-location-arrow" aria-hidden="true"></i> Start at the root</button>
+      <div class="edt-hero-meta">
+        <span><i class="fas fa-stopwatch" aria-hidden="true"></i>About 2 minutes</span>
+        <span><i class="fas fa-route" aria-hidden="true"></i>17 possible destinations</span>
+        <span><i class="fas fa-download" aria-hidden="true"></i>Save your result</span>
+      </div>
+    </div>
+    <svg class="edt-sketch" viewBox="0 0 360 330" aria-hidden="true">
+      <!-- every branch, dim -->
+      <path class="br" d="M180 34 C180 72 80 72 80 112"/>
+      <path class="br" d="M180 34 C180 72 180 72 180 112"/>
+      <path class="br" d="M180 34 C180 72 280 72 280 112"/>
+      <path class="br" d="M80 112 C80 152 40 152 40 192"/>
+      <path class="br" d="M80 112 C80 152 120 152 120 192"/>
+      <path class="br" d="M180 112 C180 152 230 152 230 192"/>
+      <path class="br" d="M280 112 C280 152 320 152 320 192"/>
+      <path class="br" d="M120 192 C120 232 100 232 100 272"/>
+      <path class="br" d="M230 192 C230 232 200 232 200 272"/>
+      <path class="br" d="M230 192 C230 232 280 232 280 272"/>
+      <!-- the trail you take, lit -->
+      <path class="lit" d="M180 34 C180 72 180 72 180 112 C180 152 230 152 230 192 C230 232 280 232 280 272"/>
+      <circle class="nd" cx="80" cy="112" r="7"/><circle class="nd" cx="280" cy="112" r="7"/>
+      <circle class="nd" cx="40" cy="192" r="6"/><circle class="nd" cx="120" cy="192" r="6"/><circle class="nd" cx="320" cy="192" r="6"/>
+      <circle class="nd" cx="100" cy="272" r="6"/><circle class="nd" cx="200" cy="272" r="6"/>
+      <circle class="nd-lit" cx="180" cy="34" r="9" style="animation-delay:.3s"/>
+      <circle class="nd-lit" cx="180" cy="112" r="8" style="animation-delay:.9s"/>
+      <circle class="nd-lit" cx="230" cy="192" r="8" style="animation-delay:1.5s"/>
+      <rect class="end" x="266" y="258" width="28" height="28" rx="7" transform="rotate(-6 280 272)"/>
+      <text x="180" y="16" text-anchor="middle">Start</text>
+      <text x="280" y="312" text-anchor="middle">You</text>
+    </svg>
+  </div>
+</section>
+
+<main class="edt-map edt-topo">
+  <div class="edt-wrap edt-board">
+    <section id="edtTool" aria-labelledby="edtToolTitle">
+      <div class="edt-tool-head">
+        <h2 id="edtToolTitle">Your trail</h2>
+        <p id="edtProgress" aria-live="polite"></p>
+      </div>
+      <ol class="edt-trail" id="history" aria-label="Your answers so far"></ol>
+      <div id="current-node"></div>
+      <div class="edt-result" id="result"></div>
+      <div class="edt-after is-hidden" id="edtAfter">
+        <button type="button" class="edt-btn edt-btn-ink" id="reset"><i class="fas fa-rotate-left" aria-hidden="true"></i> Start over</button>
+        <button type="button" class="edt-btn edt-btn-soft" id="edtUndo"><i class="fas fa-arrow-left" aria-hidden="true"></i> Change my last answer</button>
+      </div>
+      <section class="edt-cta is-hidden" id="expBld">
+        <div class="edt-cta-bolt" aria-hidden="true"><i class="fas fa-bolt"></i></div>
+        <div>
+          <h2>Map the next stretch</h2>
+          <p>Experience Builder turns your next steps into customer journeys, experiments and a plan you can work from.</p>
         </div>
-        </div>
-        <br>
+        <a class="edt-btn edt-btn-bolt" href="/experience-builder.html">Open Experience Builder <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+      </section>
+      <div id="email-form-con" class="is-hidden"><!-- Filled with email-capture.html --></div>
+    </section>
+
+    <aside class="edt-aside" aria-labelledby="edtWeighsTitle">
+      <h2 id="edtWeighsTitle">What the tree weighs</h2>
+      <p>Some answers count more than others toward your score.</p>
+      <ul class="edt-weights">
+        <li><b>Customer validation</b><span class="edt-pips" aria-label="Weight up to 3 of 3"><i class="on"></i><i class="on"></i><i class="on"></i></span><span>Has anyone outside your circle shown they want it?</span></li>
+        <li><b>Financial runway</b><span class="edt-pips" aria-label="Weight 2 of 3"><i class="on"></i><i class="on"></i><i></i></span><span>Can you go 12 months without income from it?</span></li>
+        <li><b>Skills &amp; team</b><span class="edt-pips" aria-label="Weight 2 of 3"><i class="on"></i><i class="on"></i><i></i></span><span>Can you, or the people with you, build and sell it?</span></li>
+        <li><b>Differentiation</b><span class="edt-pips" aria-label="Weight 2 of 3"><i class="on"></i><i class="on"></i><i></i></span><span>In a crowded market, what makes yours the one people pick?</span></li>
+        <li><b>Funding</b><span class="edt-pips" aria-label="Weight up to 2 of 3"><i class="on"></i><i class="on"></i><i></i></span><span>Savings for a small business, investors for a startup.</span></li>
+        <li><b>Experience &amp; stage</b><span class="edt-pips" aria-label="Weight 1 of 3"><i class="on"></i><i></i><i></i></span><span>Where you're starting from, and how far along the idea is.</span></li>
+      </ul>
+    </aside>
+  </div>
+</main>
 
 <!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
 <div id="related-tools-con"></div>
-        <div id="email-form-con"><!-- Filled with email-capture.html --></div>
 
-        <button id="reset" style="display: none;">Start Over</button>
-    </div>
-    
-    <div id="footer">
-        <!-- Replaced by footer.html on load. Static so every page in the nav is
-             reachable without JavaScript; same links, same anchor text as the
-             real header and footer. -->
-        <a href="/" class="home">Home</a>
-        <a href="/Process.html" class="process">Process</a>
-        <a href="/practice.html" class="practice">Practice</a>
-        <a href="/Pricing.html" class="pricing">Services</a>
-        <a href="/collective-info.html" class="collective">Collective</a>
-        <a href="/blog/" class="sparks">Sparks Blog</a>
-        <a href="/downloads.html" class="downloads">Offerings</a>
-        <a href="/intake/product-validation-offer.html" class="concierge">Concierge Service</a>
-        <a href="/experience-builder.html" class="expBuilder">Experience Builder</a>
-        <a href="/screen-builder/" class="screenBuilder">Screen Builder</a>
-        <a href="/tea-landing.html" class="teaLanding">Your Cup of Tea</a>
-        <a href="/figma-templates.html" class="figmaTemplates">Figma Templates</a>
-        <a href="/games/" class="games">Games</a>
-        <a href="/d-tools/decision-tools.html" class="decision-tools">Decision Tools</a>
-        <a href="/privacy-policy.html" class="privacyPolicyPage">Privacy Policy</a>
-        <a href="/tos.html" class="tos">Terms of Service</a>
-        <a href="/delete-account.html" class="delete">Delete Account</a>
-        <a href="/careers/careers-list.html" class="careers">Careers</a>
-        <a href="/contact.html" class="contact2">Contact Us</a>
-    </div>
+<div id="footer">
+    <!-- Replaced by footer.html on load. Static so every page in the nav is
+         reachable without JavaScript; same links, same anchor text as the
+         real header and footer. -->
+    <a href="/" class="home">Home</a>
+    <a href="/Process.html" class="process">Process</a>
+    <a href="/practice.html" class="practice">Practice</a>
+    <a href="/Pricing.html" class="pricing">Services</a>
+    <a href="/collective-info.html" class="collective">Collective</a>
+    <a href="/blog/" class="sparks">Sparks Blog</a>
+    <a href="/downloads.html" class="downloads">Offerings</a>
+    <a href="/intake/product-validation-offer.html" class="concierge">Concierge Service</a>
+    <a href="/experience-builder.html" class="expBuilder">Experience Builder</a>
+    <a href="/screen-builder/" class="screenBuilder">Screen Builder</a>
+    <a href="/tea-landing.html" class="teaLanding">Your Cup of Tea</a>
+    <a href="/figma-templates.html" class="figmaTemplates">Figma Templates</a>
+    <a href="/games/" class="games">Games</a>
+    <a href="/d-tools/decision-tools.html" class="decision-tools">Decision Tools</a>
+    <a href="/privacy-policy.html" class="privacyPolicyPage">Privacy Policy</a>
+    <a href="/tos.html" class="tos">Terms of Service</a>
+    <a href="/delete-account.html" class="delete">Delete Account</a>
+    <a href="/careers/careers-list.html" class="careers">Careers</a>
+    <a href="/contact.html" class="contact2">Contact Us</a>
+</div>
 
-    <script>
-      let userInteractionData = ""; 
-      
-      function updateInteractionData() {
-        const pathSummary = history.map(step => `${step.question}: ${step.answer}`).join('\n');
-        const finalScore = totalScore > 0 ? `\nScore: ${totalScore}/${maxPossibleScore}` : '';
-        userInteractionData = `Decision Path:\n${pathSummary}${finalScore}`;
-    }
+<div id="error"></div>
 
-
-    //Header + Footer
-    $(document).ready(function() {
+<!-- Site-wide behaviors, including the sticky nav every main page has -->
+<script src="../js/main.js"></script>
+<script>
+  //Header + Footer
+  $(document).ready(function() {
     $('#email-form-con').load("email-capture.html");
     $('#related-tools-con').load("related-tools.html");
     $('#footer').load("../footer.html");
     $('#header').load("../header.html", function( response, status, xhr ) {
-        if ( status == "error" ) {
-            var msg = "Sorry but there was an error: ";
-            $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
-        } else {
-            $('.business-gen').addClass('thisPage');
-        }
-    })
+      if ( status == "error" ) {
+        var msg = "Sorry but there was an error: ";
+        $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+      } else {
+        $('.business-gen').addClass('thisPage');
+      }
     });
-    // Decision Tree
+  });
+
+  // Decision Tree
          const decisionTree = {
         question: "What's your experience level with business?",
         weight: 1,
@@ -511,7 +553,7 @@
                                         "Build a strong local or niche customer base",
                                         "Focus on work-life balance and sustainable growth"
                                       ],
-                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to design sustainable business operations and customer acquisition.",
+                                      useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to design sustainable business operations and customer acquisition.",
                                       scoreLabel: "Lifestyle Business Ready!",
                                       scoreDescription: "You're well-positioned to build a profitable, sustainable business that fits your lifestyle."
                                     }
@@ -527,7 +569,7 @@
                                         "Look into small business loans or microfinancing",
                                         "Explore revenue-generating activities while planning"
                                       ],
-                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to plan a financial runway and side-business strategy.",
+                                      useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to plan a financial runway and side-business strategy.",
                                       scoreLabel: "Lifestyle Business - Build Savings",
                                       scoreDescription: "Great lifestyle business potential. Focus on building financial runway first."
                                     }
@@ -546,7 +588,7 @@
                                   "Join industry groups and find mentors",
                                   "Start small and learn as you grow"
                                 ],
-                                useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to map out skill development and resource needs.",
+                                useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to map out skill development and resource needs.",
                                 scoreLabel: "Lifestyle Business - Skill Building",
                                 scoreDescription: "Validated idea with good financial runway. Focus on building execution skills."
                               }
@@ -565,7 +607,7 @@
                             "Research local market demand and competition",
                             "Create a simple MVP to gather feedback"
                           ],
-                          useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to design customer validation experiments.",
+                          useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to design customer validation experiments.",
                           scoreLabel: "Lifestyle Business - Validate Idea",
                           scoreDescription: "Good financial foundation. Now validate your business idea with real customers."
                         }
@@ -620,7 +662,7 @@
                                                     "Assemble a strong founding team and advisory board",
                                                     "Create a go-to-market strategy for scale"
                                                   ],
-                                                  useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create detailed growth strategies and investor presentations.",
+                                                  useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to create detailed growth strategies and investor presentations.",
                                                   scoreLabel: "Startup Launch Ready!",
                                                   scoreDescription: "You have all elements for a successful scalable startup. Time to execute!"
                                                 }
@@ -636,7 +678,7 @@
                                                     "Consider startup accelerators and incubators",
                                                     "Build traction to attract investment interest"
                                                   ],
-                                                  useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create investor-ready materials and funding strategy.",
+                                                  useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to create investor-ready materials and funding strategy.",
                                                   scoreLabel: "Startup Ready - Need Funding",
                                                   scoreDescription: "Strong startup foundation. Focus on securing growth capital to scale."
                                                 }
@@ -655,7 +697,7 @@
                                               "Build relationships with technical and business mentors",
                                               "Consider joining startup accelerators for support"
                                             ],
-                                            useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to define team structure and recruitment strategy.",
+                                            useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to define team structure and recruitment strategy.",
                                             scoreLabel: "Startup Potential - Build Team",
                                             scoreDescription: "Validated startup idea with market opportunity. Focus on building execution team."
                                           }
@@ -674,7 +716,7 @@
                                         "Consider targeting an underserved market segment",
                                         "Build proprietary technology or unique partnerships"
                                       ],
-                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to analyze competition and develop differentiation strategy.",
+                                      useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to analyze competition and develop differentiation strategy.",
                                       scoreLabel: "Startup Challenge - Need Differentiation",
                                       scoreDescription: "Validated market but need stronger competitive positioning for startup success."
                                     }
@@ -707,7 +749,7 @@
                                               "Scale team and operations rapidly",
                                               "Plan for market expansion and competition response"
                                             ],
-                                            useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create rapid scaling and market domination strategy.",
+                                            useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to create rapid scaling and market domination strategy.",
                                             scoreLabel: "First-Mover Startup Advantage!",
                                             scoreDescription: "Perfect storm: validated idea, no competition, funding, and team. Move fast!"
                                           }
@@ -723,7 +765,7 @@
                                               "Consider strategic partnerships for faster funding",
                                               "Bootstrap initially while raising to maintain momentum"
                                             ],
-                                            useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create time-sensitive funding strategy.",
+                                            useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to create time-sensitive funding strategy.",
                                             scoreLabel: "First-Mover - Get Funding Fast",
                                             scoreDescription: "Exceptional opportunity with validated idea and no competition. Secure funding quickly!"
                                           }
@@ -742,7 +784,7 @@
                                         "Join accelerators with strong networks and resources",
                                         "Hire key talent and consultants to fill critical gaps"
                                       ],
-                                      useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create rapid team building and partnership strategy.",
+                                      useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to create rapid team building and partnership strategy.",
                                       scoreLabel: "First-Mover - Build Team Fast",
                                       scoreDescription: "Huge market opportunity with no competition. Build execution capabilities quickly!"
                                     }
@@ -764,7 +806,7 @@
                             "Analyze total addressable market (TAM)",
                             "Study successful companies in adjacent markets"
                           ],
-                          useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to design comprehensive validation experiments.",
+                          useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to design comprehensive validation experiments.",
                           scoreLabel: "Startup Idea - Validate for Scale",
                           scoreDescription: "Good startup ambition and financial runway. Validate your idea for scalable growth."
                         }
@@ -793,7 +835,7 @@
                       "Keep your day job until business generates steady income",
                       "Reinvest profits to gradually grow the business"
                     ],
-                    useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create a side-business transition plan.",
+                    useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to create a side-business transition plan.",
                     scoreLabel: "Bootstrap Business Ready",
                     scoreDescription: "Validated idea with smart risk management. Perfect for side-business approach."
                   }
@@ -809,7 +851,7 @@
                       "Start with a simple version to test market demand",
                       "Keep your current income while exploring"
                     ],
-                    useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to design low-risk validation experiments.",
+                    useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to design low-risk validation experiments.",
                     scoreLabel: "Side Business - Validate First",
                     scoreDescription: "Good risk management approach. Validate your idea while maintaining income security."
                   }
@@ -842,7 +884,7 @@
                       "Identify problems you're passionate about solving",
                       "Network with entrepreneurs and potential mentors"
                     ],
-                    useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to explore market opportunities and generate business ideas.",
+                    useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to explore market opportunities and generate business ideas.",
                     scoreLabel: "Exploration Phase - Well Funded",
                     scoreDescription: "You have financial runway to explore. Take time to find the right opportunity."
                   }
@@ -858,7 +900,7 @@
                       "Consulting or advising for startups",
                       "Building skills and network for future opportunities"
                     ],
-                    useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to explore investment and leadership opportunities.",
+                    useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to explore investment and leadership opportunities.",
                     scoreLabel: "Alternative Paths - Investor Track",
                     scoreDescription: "Strong financial position opens doors to investing, advising, and leadership roles."
                   }
@@ -877,260 +919,250 @@
                 "Start networking and learning about entrepreneurship",
                 "Consider side hustles to increase income and experience"
               ],
-              useBuilder: "Use our <a href='experience-builder.html' class='link'>Experience Builder</a> to create a financial and skill-building roadmap.",
+              useBuilder: "Use our <a href='/experience-builder.html' class='link'>Experience Builder</a> to create a financial and skill-building roadmap.",
               scoreLabel: "Foundation Building Phase",
               scoreDescription: "Focus on financial stability and skill building before entrepreneurship."
             }
           }
         ]
       };
-    
-    
-let currentNode = decisionTree;
-let history = [];
-let totalScore = 0;
-let maxPossibleScore = 0;
-let userExperienceLevel = "";
-let userBusinessStage = "";
-let experienceNote = "";
-let stageNote = "";
 
-function calculateMaxScore(node, currentMax = 0) {
-    if (!node || node.result) {
-        return currentMax;
-    }
-    
-    // Handle string references
-    if (typeof node === 'string') {
-        return currentMax;
-    }
-    
-    if (!node.options) {
-        return currentMax;
-    }
-    
-    let maxFromOptions = currentMax;
-    node.options.forEach(option => {
-        let nextNode = option.next;
-        
-        // Handle string references to other trees
-        if (nextNode === "businessStageTree") {
-            nextNode = businessStageTree;
-        } else if (nextNode === "mainTree") {
-            nextNode = mainTreeAffordability;
-        } else if (nextNode === "noIdeaTree") {
-            nextNode = noIdeaTree;
-        }
-        
-        if (nextNode) {
-            const scoreFromThisPath = calculateMaxScore(nextNode, currentMax + (option.points || 0) * (node.weight || 1));
-            maxFromOptions = Math.max(maxFromOptions, scoreFromThisPath);
-        } else {
-            // If no next node, just add the points from this option
-            maxFromOptions = Math.max(maxFromOptions, currentMax + (option.points || 0) * (node.weight || 1));
-        }
+
+  const SUBTREES = { businessStageTree: businessStageTree, mainTree: mainTreeAffordability, noIdeaTree: noIdeaTree };
+  function resolveNext(next) { return typeof next === 'string' ? SUBTREES[next] : next; }
+
+  let currentNode = decisionTree;
+  let trail = [];            // [{ node, option, points }]
+  let currentResult = null;
+  let totalScore = 0;
+  let maxPossibleScore = 0;
+  let userInteractionData = "";
+
+  function calculateMaxScore(node, currentMax) {
+    if (!node || !node.options) return currentMax;
+    let best = currentMax;
+    node.options.forEach(function (option) {
+      const here = currentMax + (option.points || 0) * (node.weight || 1);
+      const next = resolveNext(option.next);
+      best = Math.max(best, next ? calculateMaxScore(next, here) : here);
     });
-    
-    return maxFromOptions;
-}
+    return best;
+  }
 
-function handleOption(option) {
-    // Add points weighted by the question importance
-    const points = (option.points || 0) * (currentNode.weight || 1);
-    totalScore += points;
-    
-    // Capture experience level and business stage
-    if (option.experienceLevel) {
-        userExperienceLevel = option.experienceLevel;
-        experienceNote = option.experienceNote;
-    }
-    if (option.businessStage) {
-        userBusinessStage = option.businessStage;
-        stageNote = option.stageNote;
-    }
-    
-    // Add the current selection to history
-    history.push({ 
-        question: currentNode.question, 
-        answer: option.text,
-        points: points
-    });
-
-    updateInteractionData();
+  function updateInteractionData() {
+    const pathSummary = trail.map(function (step) { return step.node.question + ': ' + step.option.text; }).join('\n');
+    const finalScore = currentResult ? '\nScore: ' + totalScore + '/' + maxPossibleScore : '';
+    userInteractionData = 'Decision Path:\n' + pathSummary + finalScore;
     window.userInteractionData = userInteractionData;
-    
+  }
+
+  function trailValue(key) {
+    let value = '';
+    trail.forEach(function (step) { if (step.option[key]) value = step.option[key]; });
+    return value;
+  }
+
+  function choose(option) {
+    const points = (option.points || 0) * (currentNode.weight || 1);
+    trail.push({ node: currentNode, option: option, points: points });
+    totalScore += points;
     if (option.result) {
-        showResult(option.result);
+      currentResult = option.result;
     } else {
-        // Handle special navigation cases
-        if (option.next === "businessStageTree") {
-            currentNode = businessStageTree;
-        } else if (option.next === "mainTree") {
-            currentNode = mainTreeAffordability;
-        } else if (option.next === "noIdeaTree") {
-            currentNode = noIdeaTree;
-        } else {
-            currentNode = option.next;
-        }
-        renderHistory();
-        renderNode(currentNode);
+      currentNode = resolveNext(option.next);
     }
-}
+    render(true);
+  }
 
-function renderNode(node) {
-    const currentNodeElement = document.getElementById('current-node');
-    currentNodeElement.innerHTML = '';
+  // Walk back to waypoint i and stand at its question again.
+  function rewindTo(i) {
+    currentNode = trail[i].node;
+    trail = trail.slice(0, i);
+    totalScore = trail.reduce(function (sum, step) { return sum + step.points; }, 0);
+    currentResult = null;
+    render(true);
+  }
 
-    const questionElement = document.createElement('div');
-    questionElement.className = 'question';
-    questionElement.textContent = node.question;
-    currentNodeElement.appendChild(questionElement);
+  function isNo(text) { return text.toLowerCase() === 'no'; }
 
-    const optionsElement = document.createElement('div');
-    optionsElement.className = 'options';
-    
-    node.options.forEach(option => {
-        const button = document.createElement('button');
-        button.className = 'option';
-        const icon = option.text.toLowerCase() === 'no' ? 
-            'fa-circle-xmark' : 'fa-check-circle';
-        
-        if (option.tooltip) {
-            // Create tooltip wrapper
-            const tooltipWrapper = document.createElement('div');
-            tooltipWrapper.className = 'custom-tooltip';
-            
-            button.innerHTML = `<i class="fas ${icon}"></i>&nbsp; ${option.text}`;
-            
-            // Create tooltip text
-            const tooltipText = document.createElement('span');
-            tooltipText.className = 'tooltiptext';
-            tooltipText.textContent = option.tooltip;
-            
-            tooltipWrapper.appendChild(button);
-            tooltipWrapper.appendChild(tooltipText);
-            
-            button.addEventListener('click', () => handleOption(option));
-            optionsElement.appendChild(tooltipWrapper);
-        } else {
-            button.innerHTML = `<i class="fas ${icon}"></i>&nbsp; ${option.text}`;
-            button.addEventListener('click', () => handleOption(option));
-            optionsElement.appendChild(button);
-        }
+  function renderTrail() {
+    const list = document.getElementById('history');
+    list.innerHTML = '';
+    trail.forEach(function (step, i) {
+      const li = document.createElement('li');
+      li.className = 'edt-wp';
+      li.innerHTML =
+        '<span class="edt-wp-dot" aria-hidden="true">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<div class="edt-wp-row">' +
+          '<span class="edt-wp-q"></span>' +
+          '<span class="edt-wp-a"><i class="fas ' + (isNo(step.option.text) ? 'fa-xmark' : 'fa-check') + '" aria-hidden="true"></i></span>' +
+          '<button type="button" class="edt-wp-edit">Change</button>' +
+        '</div>';
+      li.querySelector('.edt-wp-q').textContent = step.node.question;
+      li.querySelector('.edt-wp-a').appendChild(document.createTextNode(step.option.text));
+      const edit = li.querySelector('.edt-wp-edit');
+      edit.setAttribute('aria-label', 'Change your answer to: ' + step.node.question);
+      edit.addEventListener('click', function () { rewindTo(i); });
+      list.appendChild(li);
+    });
+  }
+
+  function renderQuestion(node, moveFocus) {
+    const holder = document.getElementById('current-node');
+    const stepNo = trail.length + 1;
+    const hasDesc = node.options.some(function (o) { return o.tooltip; });
+    holder.innerHTML =
+      '<div class="edt-step">' +
+        '<span class="edt-step-dot" aria-hidden="true"><i class="fas fa-location-dot"></i></span>' +
+        '<div class="edt-card">' +
+          '<div class="edt-kicker">Waypoint ' + String(stepNo).padStart(2, '0') + '</div>' +
+          '<h3 id="edtQ" tabindex="-1"></h3>' +
+          '<div class="edt-opts' + (hasDesc && node.options.length < 4 ? ' is-stacked' : '') + '" role="group" aria-labelledby="edtQ"></div>' +
+          '<div class="edt-card-foot">' +
+            (trail.length ? '<button type="button" class="edt-back"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</button>' : '<span></span>') +
+            '<span class="edt-keys">Press <kbd>1</kbd>–<kbd>' + node.options.length + '</kbd> to answer</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    holder.querySelector('h3').textContent = node.question;
+
+    const opts = holder.querySelector('.edt-opts');
+    node.options.forEach(function (option, i) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'edt-opt';
+      b.innerHTML =
+        '<span class="edt-opt-key" aria-hidden="true">' + (i + 1) + '</span>' +
+        '<span class="edt-opt-body"><span class="edt-opt-text"></span>' + (option.tooltip ? '<span class="edt-opt-desc"></span>' : '') + '</span>' +
+        '<i class="fas fa-arrow-right" aria-hidden="true"></i>';
+      b.querySelector('.edt-opt-text').textContent = option.text;
+      if (option.tooltip) b.querySelector('.edt-opt-desc').textContent = option.tooltip;
+      b.addEventListener('click', function () { choose(option); });
+      opts.appendChild(b);
     });
 
-    currentNodeElement.appendChild(optionsElement);
-}
+    const back = holder.querySelector('.edt-back');
+    if (back) back.addEventListener('click', function () { rewindTo(trail.length - 1); });
+    if (moveFocus) holder.querySelector('h3').focus({ preventScroll: true });
+  }
 
-function renderHistory() {
-    const historyElement = document.getElementById('history');
-    historyElement.innerHTML = '';
-
-    history.forEach((step) => {
-        const stepElement = document.createElement('div');
-        stepElement.className = 'node';
-        const icon = step.answer.toLowerCase() === 'no' ? 
-            'fa-circle-xmark' : 'fa-check-circle';
-        stepElement.innerHTML = `
-            <div class="question">${step.question}</div>
-            <div class="options">
-                <button class="option selected ${step.answer.toLowerCase() === 'no' ? 'no' : ''}">
-                    <i class="fas ${icon}"></i>&nbsp; ${step.answer}
-                </button>
-            </div>
-        `;
-
-        historyElement.appendChild(stepElement);
-    });
-}
-
-function getExperienceMessage() {
+  function getExperienceMessage() {
     const levelMessages = {
-        "beginner": "As a complete beginner, expect to learn through trial and error - every successful entrepreneur started somewhere!",
-        "intermediate": "With some business experience, you have valuable insights to leverage while staying adaptable to new challenges.",
-        "experienced": "Your entrepreneurial experience is a significant advantage - trust your instincts while remaining open to evolving markets."
+      "beginner": "As a complete beginner, expect to learn through trial and error - every successful entrepreneur started somewhere!",
+      "intermediate": "With some business experience, you have valuable insights to leverage while staying adaptable to new challenges.",
+      "experienced": "Your entrepreneurial experience is a significant advantage - trust your instincts while remaining open to evolving markets."
     };
-    
     const stageMessages = {
-        "discovery": "Being in the research phase means you're building a solid foundation - take time to thoroughly understand your market before moving forward.",
-        "prototyping": "Active prototyping puts you ahead of most entrepreneurs - use this phase to learn fast and fail cheap. Try our <a href='/screen-builder/' class='link'>Screen Builder</a> to quickly prototype your idea.",
-        "prelaunch": "Launch preparation is critical - ensure you have strong fundamentals before going to market.",
-        "live": "Being live in the market gives you real customer feedback - use this invaluable data to optimize and grow.",
-        "scaling": "Operating in growth mode requires balancing expansion with operational excellence and team development."
+      "discovery": "Being in the research phase means you're building a solid foundation - take time to thoroughly understand your market before moving forward.",
+      "prototyping": "Active prototyping puts you ahead of most entrepreneurs - use this phase to learn fast and fail cheap. Try our <a href='/screen-builder/' class='link'>Screen Builder</a> to quickly prototype your idea.",
+      "prelaunch": "Launch preparation is critical - ensure you have strong fundamentals before going to market.",
+      "live": "Being live in the market gives you real customer feedback - use this invaluable data to optimize and grow.",
+      "scaling": "Operating in growth mode requires balancing expansion with operational excellence and team development."
     };
-    
-    let message = "";
-    if (userExperienceLevel && levelMessages[userExperienceLevel]) {
-        message += levelMessages[userExperienceLevel];
-    }
-    if (userBusinessStage && stageMessages[userBusinessStage]) {
-        if (message) message += " ";
-        message += stageMessages[userBusinessStage];
-    }
-    
-    return message;
-}
+    return [levelMessages[trailValue('experienceLevel')], stageMessages[trailValue('businessStage')]].filter(Boolean).join(' ');
+  }
 
-function showResult(result) {
-    const currentNodeElement = document.getElementById('current-node');
-    currentNodeElement.innerHTML = '';
-
-    // Calculate percentage score
+  function renderResult(result, moveFocus) {
     const percentage = Math.round((totalScore / maxPossibleScore) * 100);
-    
-    const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `
-        <div class="score-display">
-            <div class="score-label">${result.scoreLabel}</div>
-            <div class="score-number">${percentage}/100</div>
-            <div class="score-description">${result.scoreDescription}</div>
-        </div>
-        <h3>${result.message}</h3>
-        <ul class="action-list">
-            ${result.actions.map(action => `<li><i class="fas fa-arrow-right"></i> ${action}</li>`).join('')}
-        </ul>
-        <div class="builder-prompt">
-            <i class="fas fa-bolt"></i>
-            <p>${result.useBuilder}</p>
-        </div>
-    `;
+    const circumference = 2 * Math.PI * 50;
+    const context = getExperienceMessage();
+    const el = document.getElementById('result');
+    el.innerHTML =
+      '<span class="edt-flag" aria-hidden="true"><i class="fas fa-flag"></i></span>' +
+      '<div class="edt-dest">' +
+        '<div class="edt-dest-head">' +
+          '<div class="edt-ring" role="img" aria-label="Readiness score ' + percentage + ' out of 100">' +
+            '<svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="50"/>' +
+            '<circle class="fill" cx="60" cy="60" r="50" stroke-dasharray="' + circumference + '" stroke-dashoffset="' + circumference + '"/></svg>' +
+            '<div class="edt-ring-num"><b>' + percentage + '</b><span>of 100</span></div>' +
+          '</div>' +
+          '<div>' +
+            '<div class="edt-dest-kicker">Where your trail ends</div>' +
+            '<h2 id="edtDest" tabindex="-1">' + result.scoreLabel + '</h2>' +
+            '<p>' + result.scoreDescription + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<div class="edt-dest-body">' +
+          '<h3>' + result.message + '</h3>' +
+          '<ol class="edt-actions">' + result.actions.map(function (a) { return '<li>' + a + '</li>'; }).join('') + '</ol>' +
+          (context ? '<p class="edt-context"><b>For where you are now</b>' + context + '</p>' : '') +
+          '<p class="edt-builder"><i class="fas fa-bolt" aria-hidden="true"></i><span>' + result.useBuilder + '</span></p>' +
+        '</div>' +
+      '</div>';
 
-    renderHistory();
+    // let the ring sweep in from empty
+    const fill = el.querySelector('.fill');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { fill.style.strokeDashoffset = circumference * (1 - percentage / 100); });
+    });
+    if (moveFocus) el.querySelector('h2').focus({ preventScroll: true });
+  }
 
-    document.getElementById('reset').style.display = 'block';
-    document.getElementById('expBld').style.display = 'block';
-    document.getElementById('email-form-con').style.display = 'block';
-}
+  function render(moveFocus) {
+    const done = !!currentResult;
+    renderTrail();
+    updateInteractionData();
 
-function resetTree() {
+    document.getElementById('edtProgress').textContent = done
+      ? 'Arrived after ' + trail.length + ' questions'
+      : (trail.length ? trail.length + ' answered, keep going' : 'Pick the answer that fits best');
+
+    if (done) {
+      document.getElementById('current-node').innerHTML = '';
+      renderResult(currentResult, moveFocus);
+    } else {
+      document.getElementById('result').innerHTML = '';
+      renderQuestion(currentNode, moveFocus);
+    }
+    ['edtAfter', 'expBld', 'email-form-con'].forEach(function (id) {
+      document.getElementById(id).classList.toggle('is-hidden', !done);
+    });
+
+    if (moveFocus) {
+      const target = done ? document.getElementById('result') : document.getElementById('current-node');
+      const rect = target.getBoundingClientRect();
+      if (rect.top < 90 || rect.top > window.innerHeight * .6) {
+        window.scrollTo({ top: window.scrollY + rect.top - 120, behavior: 'smooth' });
+      }
+    }
+  }
+
+  function resetTree() {
     currentNode = decisionTree;
-    history = [];
+    trail = [];
     totalScore = 0;
-    userExperienceLevel = "";
-    userBusinessStage = "";
-    experienceNote = "";
-    stageNote = "";
-    renderNode(currentNode);
-    document.getElementById('history').innerHTML = '';
-    document.getElementById('result').textContent = '';
-    document.getElementById('reset').style.display = 'none';
-    document.getElementById('expBld').style.display = 'none';
-    document.getElementById('email-form-con').style.display = 'none';
+    currentResult = null;
+    render(true);
+  }
 
-   document.getElementById('header').scrollIntoView({ behavior: 'smooth' });
-}
+  document.getElementById('reset').addEventListener('click', resetTree);
+  document.getElementById('edtUndo').addEventListener('click', function () { rewindTo(trail.length - 1); });
+  document.getElementById('edtStart').addEventListener('click', function () {
+    document.getElementById('edtTool').scrollIntoView({ behavior: 'smooth' });
+    const first = document.querySelector('.edt-opt');
+    if (first) first.focus({ preventScroll: true });
+  });
 
-document.getElementById('reset').addEventListener('click', resetTree);
+  // number keys pick an answer
+  document.addEventListener('keydown', function (e) {
+    if (currentResult || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+    const n = parseInt(e.key, 10);
+    if (n >= 1 && n <= currentNode.options.length) {
+      e.preventDefault();
+      choose(currentNode.options[n - 1]);
+    }
+  });
 
-// Calculate max possible score on page load
-maxPossibleScore = calculateMaxScore(decisionTree);
-renderNode(currentNode);
-    </script>
+  maxPossibleScore = calculateMaxScore(decisionTree, 0);
+  render(false);
+</script>
 
-    <!-- Branded result download (PNG / PDF) -->
-    <script src="result-download.js"
-            data-dl-container="#result"
-            data-dl-title="Entrepreneur Decision Tree"
-            data-dl-filename="dlightning-entrepreneur-readiness"></script>
+<!-- Branded result download (PNG / PDF) -->
+<script src="result-download.js"
+        data-dl-container="#result"
+        data-dl-title="Entrepreneur Decision Tree"
+        data-dl-filename="dlightning-entrepreneur-readiness"></script>
 
-    </body></html>
+</body>
+</html>

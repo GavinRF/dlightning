@@ -69,6 +69,8 @@
   body { background: var(--paper); color: var(--text); font-family: var(--body); font-weight: 380; }
   header { z-index: 999; }
   .is-hidden { display: none !important; }
+  /* keep in-page jumps clear of the sticky nav (main.js pins it after 350px of scroll) */
+  #bigTable, #bigPlanner, #bigPlanOut, #bigShortlist { scroll-margin-top: 90px; }
   .big-wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
 
   /* ---------- hero ---------- */
@@ -782,6 +784,8 @@
   </div>
 </footer>
 
+<!-- Site-wide behaviors, including the sticky nav every main page has -->
+<script src="../js/main.js"></script>
 <script src="business-ideas.js"></script>
 <script>
 (function () {

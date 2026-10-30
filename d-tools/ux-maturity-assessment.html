@@ -1,330 +1,434 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Assess your organization's UX design maturity level. Get personalized recommendations to improve your user experience design process and team capabilities.">
-    <meta name="keywords" content="UX maturity assessment, design maturity, UX team assessment, UX process evaluation, design operations, UX capability">
-    <link rel="canonical" href="https://dlightning.org/d-tools/ux-maturity-assessment.html">
-    <meta name="author" content="Dlightning">
-    <meta name="robots" content="index, follow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Assess your organization's UX design maturity level. Get personalized recommendations to improve your user experience design process and team capabilities.">
+<meta name="keywords" content="UX maturity assessment, design maturity, UX team assessment, UX process evaluation, design operations, UX capability">
+<link rel="canonical" href="https://dlightning.org/d-tools/ux-maturity-assessment.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow">
 
-    <title>UX Maturity Assessment - Evaluate Your Design Process | Dlightning</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    
-    <meta property="og:url" content="https://dlightning.org/d-tools/ux-maturity-assessment.html">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Dlightning">
-    <meta property="og:image" content="https://dlightning.org/img/products/DMA.png"/>
-    <meta property="og:title" content="UX Maturity Assessment - Evaluate Your Design Process | Dlightning"/>
-    <meta property="og:description" content="Assess your organization's UX design maturity level. Get personalized recommendations to improve your design process."/>
-    <meta property="og:image:width" content="824"/>
-    <meta property="og:image:height" content="551"/>
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="UX Maturity Assessment - Evaluate Your Design Process | Dlightning">
-    <meta name="twitter:description" content="Assess your organization's UX design maturity level and get personalized recommendations.">
-    <meta name="twitter:image" content="https://dlightning.org/img/products/DMA.png">
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
-    <style>
-        header {
-            z-index: 999;
-        }
+<title>UX Maturity Assessment - Evaluate Your Design Process | Dlightning</title>
 
-        .featureBgImg {
-            position: relative;
-            overflow: hidden;
-        }
+<meta property="og:url" content="https://dlightning.org/d-tools/ux-maturity-assessment.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:image" content="https://dlightning.org/img/products/DMA.png"/>
+<meta property="og:title" content="UX Maturity Assessment - Evaluate Your Design Process | Dlightning"/>
+<meta property="og:description" content="Assess your organization's UX design maturity level. Get personalized recommendations to improve your design process."/>
+<meta property="og:image:width" content="824"/>
+<meta property="og:image:height" content="551"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UX Maturity Assessment - Evaluate Your Design Process | Dlightning">
+<meta name="twitter:description" content="Assess your organization's UX design maturity level and get personalized recommendations.">
+<meta name="twitter:image" content="https://dlightning.org/img/products/DMA.png">
 
-        .featureBgImg-bg {
-            object-position: center calc(50% + 42px);
-            transition: transform 0.42s ease-in-out;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-        .featureBgImg:hover .featureBgImg-bg {
-            transform: scale(1.1);
-        }
+<style>
+  :root {
+    --ink: #0a1430;
+    --ink-2: #13224f;
+    --sky: #009dff;
+    --blue: #0181f5;
+    --blue-deep: #065cad;
+    --bolt: #ffd700;
+    --mist: #f3f8fe;
+    --card: #ffffff;
+    --track: #e2eaf4;
+    --text: #17203a;
+    --muted: #5b6680;
+    --line: #dbe4ef;
+    --display: 'Space Grotesk', 'Rubik', sans-serif;
+    --body: 'Rubik', sans-serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
 
-        .featureBgImg::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
-            z-index: -1;
-            transition: opacity 0.3s ease-in-out;
-            mix-blend-mode: soft-light;
-        }
+  body { background: var(--mist); color: var(--text); font-family: var(--body); font-weight: 400; }
+  header { z-index: 999; }
+  .uxm-hidden { display: none; }
+  .uxm-wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .uxm-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-        .featureBgImg:hover::after {
-            opacity: 0.8;
-        }
+  /* ---------- hero: a topographic map, because maturity is elevation ---------- */
+  .uxm-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 124px 0 150px;
+    background:
+      radial-gradient(800px 420px at 80% 30%, rgba(0, 157, 255, .22), transparent 65%),
+      linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+  }
+  .uxm-contours { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .uxm-contours path { fill: none; stroke: rgba(141, 196, 255, .13); stroke-width: 1; }
+  .uxm-contours path.is-index { stroke: rgba(141, 196, 255, .26); }
+  .uxm-hero-grid { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  .uxm-eyebrow {
+    display: inline-flex; align-items: center; gap: 9px; font-size: .8rem; font-weight: 500; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--bolt); margin-bottom: 20px;
+  }
+  .uxm-hero h1 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 5.6vw, 4.4rem); line-height: 1;
+    letter-spacing: -.035em; color: #fff; margin: 0 0 22px;
+  }
+  .uxm-hero h1 span { color: var(--sky); }
+  .uxm-lede { font-size: 1.16rem; line-height: 1.6; color: rgba(255, 255, 255, .76); max-width: 500px; margin: 0 0 30px; font-weight: 300; }
+  .uxm-lede strong { color: #fff; font-weight: 500; }
+  .uxm-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .88rem; color: rgba(255, 255, 255, .6); }
+  .uxm-meta i { color: var(--sky); margin-right: 6px; }
 
-        .featureBgImg h4,
-        .featureBgImg button {
-            transition: transform 0.3s ease-in-out;
-        }
+  .uxm-btn {
+    font: inherit; font-weight: 500; border: none; border-radius: 10px; padding: 13px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease;
+  }
+  .uxm-btn:focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; }
+  .uxm-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 #b89b00; }
+  .uxm-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #b89b00; color: var(--ink); text-decoration: none; }
+  .uxm-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 #b89b00; }
+  .uxm-btn-ghost { background: transparent; color: var(--muted); padding: 10px 14px; }
+  .uxm-btn-ghost:hover { color: var(--ink); background: var(--mist); }
+  .uxm-btn-ink { background: var(--ink); color: #fff; }
+  .uxm-btn-ink:hover { background: var(--blue-deep); color: #fff; text-decoration: none; }
+  .uxm-btn-ink i { color: var(--bolt); }
 
-        .featureBgImg:hover h4 {
-            transform: translateY(-5px);
-        }
+  /* the staircase: four stages, rising */
+  .uxm-stairs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; align-items: end; height: 300px; }
+  .uxm-stair {
+    position: relative; border-radius: 6px 6px 0 0; padding: 14px 12px;
+    background: linear-gradient(180deg, rgba(0, 157, 255, .2), rgba(0, 157, 255, .05));
+    border-top: 2px solid rgba(0, 157, 255, .7);
+    animation: uxm-rise .8s var(--ease) both;
+  }
+  .uxm-stair:nth-child(1) { height: 28%; animation-delay: .05s; }
+  .uxm-stair:nth-child(2) { height: 50%; animation-delay: .15s; }
+  .uxm-stair:nth-child(3) { height: 74%; animation-delay: .25s; }
+  .uxm-stair:nth-child(4) { height: 100%; animation-delay: .35s; }
+  .uxm-stair b { display: block; font-family: var(--display); font-size: .74rem; font-weight: 500; letter-spacing: .1em; color: var(--sky); }
+  .uxm-stair span { display: block; font-family: var(--display); font-size: .98rem; font-weight: 600; line-height: 1.15; margin-top: 4px; color: #fff; }
+  .uxm-stair .uxm-flag {
+    position: absolute; left: 12px; top: -46px; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--bolt); color: var(--ink); display: grid; place-items: center; font-size: .95rem;
+    box-shadow: 0 0 0 6px rgba(255, 215, 0, .18); animation: uxm-bob 2.6s ease-in-out infinite;
+  }
+  @keyframes uxm-rise { from { transform: scaleY(0); transform-origin: bottom; opacity: 0; } }
+  @keyframes uxm-bob { 50% { transform: translateY(-6px); } }
 
-        .progress-container {
-            background: #e2e8f0;
-            height: 8px;
-            border-radius: 4px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
+  /* ---------- the assessment console ---------- */
+  .uxm-console {
+    position: relative; z-index: 5; margin-top: -92px; background: var(--card); border-radius: 18px;
+    box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 30px 60px -24px rgba(10, 20, 48, .32);
+    display: grid; grid-template-columns: 270px 1fr; overflow: hidden; min-height: 560px;
+  }
 
-        .progress-bar {
-            background: linear-gradient(90deg, #3a791d, #0c9a47);
-            height: 100%;
-            width: 0%;
-            transition: width 0.4s ease;
-            border-radius: 4px;
-        }
+  /* the route: one waypoint per dimension */
+  .uxm-route { background: #f7fafd; border-right: 1px solid var(--line); padding: 28px 22px; }
+  .uxm-route-title { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+  .uxm-route-count { font-family: var(--display); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 0 0 18px; font-variant-numeric: tabular-nums; }
+  .uxm-route-count small { font-size: .95rem; color: var(--muted); font-weight: 400; }
+  .uxm-route ol { list-style: none; margin: 0; padding: 0; position: relative; }
+  .uxm-route ol::before { content: ''; position: absolute; left: 13px; top: 14px; bottom: 14px; width: 2px; background: var(--track); }
+  .uxm-route li { position: relative; }
+  .uxm-route li button {
+    all: unset; box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 12px; padding: 7px 6px 7px 0;
+    border-radius: 8px; cursor: default; color: var(--muted); font-size: .93rem;
+  }
+  .uxm-route li button:not(:disabled) { cursor: pointer; }
+  .uxm-route li button:not(:disabled):hover .uxm-wp-name { color: var(--blue); }
+  .uxm-route li button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .uxm-wp {
+    position: relative; flex: none; width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 2px solid var(--track);
+    display: grid; place-items: center; font-family: var(--display); font-size: .78rem; font-weight: 600; color: var(--muted);
+    transition: all .25s var(--ease);
+  }
+  .uxm-route li.is-done .uxm-wp { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .uxm-route li.is-done .uxm-wp-name { color: var(--text); }
+  .uxm-route li.is-current .uxm-wp { border-color: var(--ink); background: var(--ink); color: var(--bolt); box-shadow: 0 0 0 5px rgba(10, 20, 48, .1); }
+  .uxm-route li.is-current .uxm-wp-name { color: var(--ink); font-weight: 500; }
+  .uxm-wp-stage { margin-left: auto; font-family: var(--display); font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
-        .question-container {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
+  /* the question */
+  .uxm-stage { padding: 34px 40px 30px; display: flex; flex-direction: column; }
+  .uxm-q-dim { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .uxm-q { font-family: var(--display); font-size: clamp(1.45rem, 2.6vw, 1.9rem); font-weight: 600; line-height: 1.18; letter-spacing: -.02em; color: var(--ink); margin: 0 0 8px; }
+  .uxm-q-hint { color: var(--muted); font-size: .92rem; margin: 0 0 24px; }
+  .uxm-q-hint kbd { font-family: var(--display); font-size: .78rem; background: var(--mist); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--text); box-shadow: none; }
+  .uxm-q-wrap.is-entering { animation: uxm-in .45s var(--ease) both; }
+  @keyframes uxm-in { from { opacity: 0; transform: translateX(18px); } }
 
-        .question-container.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
+  /* answers climb: each option sits one step higher than the last */
+  .uxm-options { display: flex; flex-direction: column-reverse; gap: 10px; }
+  .uxm-opt {
+    all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 46px 1fr auto; gap: 16px; align-items: center;
+    padding: 15px 18px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff;
+    transition: border-color .2s ease, background .2s ease, transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  /* higher stage, longer card: the top answer reaches furthest */
+  .uxm-opt[data-stage="1"] { margin-right: 54px; }
+  .uxm-opt[data-stage="2"] { margin-right: 36px; }
+  .uxm-opt[data-stage="3"] { margin-right: 18px; }
+  .uxm-opt:hover { border-color: var(--blue); transform: translateX(4px); box-shadow: 0 8px 22px -10px rgba(1, 129, 245, .35); }
+  .uxm-opt:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .uxm-opt[aria-checked="true"] { border-color: var(--ink); background: var(--ink); color: #fff; box-shadow: 0 12px 26px -12px rgba(10, 20, 48, .6); }
+  .uxm-opt[aria-checked="true"] .uxm-opt-desc { color: rgba(255, 255, 255, .7); }
+  .uxm-opt[aria-checked="true"] .uxm-opt-title { color: #fff; }
+  .uxm-glyph { display: flex; align-items: flex-end; gap: 3px; height: 26px; }
+  .uxm-glyph i { width: 8px; border-radius: 2px 2px 0 0; background: var(--track); }
+  .uxm-glyph i:nth-child(1) { height: 25%; } .uxm-glyph i:nth-child(2) { height: 50%; }
+  .uxm-glyph i:nth-child(3) { height: 75%; } .uxm-glyph i:nth-child(4) { height: 100%; }
+  .uxm-glyph i.on { background: var(--blue); }
+  .uxm-opt[aria-checked="true"] .uxm-glyph i { background: rgba(255, 255, 255, .18); }
+  .uxm-opt[aria-checked="true"] .uxm-glyph i.on { background: var(--bolt); }
+  .uxm-opt-title { display: block; font-weight: 500; font-size: 1.02rem; color: var(--ink); margin-bottom: 2px; }
+  .uxm-opt-desc { display: block; font-size: .9rem; line-height: 1.4; color: var(--muted); }
+  .uxm-opt-key { font-family: var(--display); font-size: .78rem; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 2px 7px; }
+  .uxm-opt[aria-checked="true"] .uxm-opt-key { color: var(--bolt); border-color: rgba(255, 255, 255, .25); }
 
-        .option {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-        }
+  .uxm-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 26px; }
+  .uxm-nav .uxm-btn-ink:disabled { opacity: .35; cursor: not-allowed; }
 
-        .option:hover {
-            border-color: #0889e0;
-            background: #f0f8ff;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(8, 137, 224, 0.15);
-        }
+  /* ---------- results ---------- */
+  .uxm-results { padding: 56px 0 0; }
+  .uxm-summit {
+    background: var(--card); border-radius: 18px; padding: 36px 40px; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center;
+    box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 24px 50px -28px rgba(10, 20, 48, .3);
+  }
+  .uxm-score { text-align: center; padding-right: 40px; border-right: 1px solid var(--line); }
+  .uxm-score-num { font-family: var(--display); font-size: 5.4rem; font-weight: 700; line-height: .9; letter-spacing: -.05em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .uxm-score-num sup { font-size: 2rem; top: -1.6em; letter-spacing: 0; color: var(--blue); }
+  .uxm-score-label { font-size: .74rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+  .uxm-level-kicker { font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin: 0 0 6px; }
+  .uxm-level { font-family: var(--display); font-size: clamp(1.8rem, 3.4vw, 2.5rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.05; color: var(--ink); margin: 0 0 12px; }
+  .uxm-level-desc { color: var(--text); line-height: 1.6; margin: 0 0 22px; max-width: 620px; }
 
-        .option.selected {
-            border-color: #0c9a47;
-            background: #f0fff4;
-            box-shadow: 0 8px 25px rgba(12, 154, 71, 0.2);
-        }
+  /* the result staircase: same four stages, you're marked on one */
+  .uxm-ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; align-items: end; height: 76px; }
+  .uxm-rung { position: relative; background: var(--track); border-radius: 4px 4px 0 0; padding: 6px 8px; font-size: .72rem; line-height: 1.15; color: var(--muted); display: flex; align-items: flex-end; }
+  .uxm-rung:nth-child(1) { height: 34%; } .uxm-rung:nth-child(2) { height: 56%; }
+  .uxm-rung:nth-child(3) { height: 78%; } .uxm-rung:nth-child(4) { height: 100%; }
+  .uxm-rung.is-passed { background: #b9d9fb; color: var(--ink); }
+  .uxm-rung.is-you { background: var(--blue); color: #fff; font-weight: 500; }
+  .uxm-rung.is-you::before {
+    content: 'You'; position: absolute; left: 8px; top: -24px; font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    background: var(--ink); color: var(--bolt); padding: 2px 7px; border-radius: 4px;
+  }
 
-        .option-text {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-size: 16px;
-        }
+  .uxm-grid2 { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; margin-top: 22px; align-items: start; }
+  .uxm-panel { background: var(--card); border-radius: 16px; padding: 28px 30px; border: 1px solid var(--line); }
+  .uxm-panel h2 { font-family: var(--display); font-size: 1.3rem; font-weight: 600; letter-spacing: -.015em; color: var(--ink); margin: 0 0 4px; }
+  .uxm-panel-sub { color: var(--muted); font-size: .9rem; margin: 0 0 20px; }
 
-        .option-description {
-            font-size: 14px;
-            color: #6c757d;
-            line-height: 1.4;
-        }
+  /* the profile: one segmented meter per dimension, stages 1-4 */
+  .uxm-profile { list-style: none; margin: 0; padding: 0; }
+  .uxm-prow { display: grid; grid-template-columns: 150px 1fr; gap: 6px 16px; align-items: center; padding: 11px 0; border-bottom: 1px solid #edf1f6; }
+  .uxm-prow:last-child { border-bottom: none; }
+  .uxm-prow-name { font-weight: 500; font-size: .93rem; color: var(--ink); }
+  .uxm-meter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .uxm-meter i { height: 12px; background: var(--track); }
+  .uxm-meter i:first-child { border-radius: 4px 0 0 4px; }
+  .uxm-meter i:last-child { border-radius: 0 4px 4px 0; }
+  .uxm-meter i.on { background: var(--blue); }
+  .uxm-prow-ans { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: .84rem; color: var(--muted); }
+  .uxm-prow-ans b { font-family: var(--display); font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+  .uxm-tag { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; }
+  .uxm-tag-top { background: #e3f0ff; color: var(--blue-deep); }
+  .uxm-tag-lever { background: #fff3b0; color: #5c4b00; }
+  .uxm-meter-scale { display: grid; grid-template-columns: 150px 1fr; gap: 16px; margin-top: 8px; }
+  .uxm-meter-scale div { display: grid; grid-template-columns: repeat(4, 1fr); font-size: .7rem; color: var(--muted); letter-spacing: .04em; }
+  .uxm-insight { margin: 18px 0 0; padding: 14px 16px; border-radius: 10px; background: var(--mist); font-size: .92rem; line-height: 1.55; color: var(--text); }
+  .uxm-insight i { color: var(--blue); margin-right: 6px; }
 
-        .score-display {
-            background: linear-gradient(135deg, #1f1d79 0%, #0c4c9a 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
+  .uxm-moves { list-style: none; margin: 0; padding: 0; counter-reset: move; }
+  .uxm-move { counter-increment: move; position: relative; padding: 0 0 18px 44px; }
+  .uxm-move::before {
+    content: counter(move); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 8px; background: var(--ink); color: var(--bolt);
+    display: grid; place-items: center; font-family: var(--display); font-weight: 600; font-size: .9rem;
+  }
+  .uxm-move-dim { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin-bottom: 3px; }
+  .uxm-move p { margin: 0; line-height: 1.5; color: var(--text); }
+  .uxm-also { margin: 6px 0 0; padding: 18px 0 0; border-top: 1px dashed var(--line); }
+  .uxm-also h3 { font-size: .74rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .uxm-also ul { margin: 0; padding-left: 18px; }
+  .uxm-also li { font-size: .92rem; line-height: 1.5; color: var(--text); margin-bottom: 7px; }
+  .uxm-also li::marker { color: var(--blue); }
 
-        .score-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 700;
-            backdrop-filter: blur(10px);
-        }
+  .uxm-after { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
 
-        .maturity-level {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+  /* Experience Builder CTA */
+  .uxm-cta { position: relative; overflow: hidden; border-radius: 18px; margin-top: 40px; min-height: 220px; display: flex; align-items: flex-end; padding: 32px 36px; isolation: isolate; }
+  .uxm-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .6s var(--ease); }
+  .uxm-cta::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(100deg, rgba(10, 20, 48, .9) 0%, rgba(10, 20, 48, .55) 50%, rgba(10, 20, 48, .1) 100%); }
+  .uxm-cta:hover img { transform: scale(1.05); }
+  .uxm-cta h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.025em; line-height: 1.05; color: #fff; margin: 0 0 8px; }
+  .uxm-cta p { color: rgba(255, 255, 255, .78); margin: 0 0 18px; max-width: 440px; }
 
-        .level-description {
-            font-size: 1rem;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
+  /* ---------- FAQ ---------- */
+  .ux-seo { max-width: 860px; margin: 100px auto 0; padding: 0 20px; line-height: 1.65; }
+  .ux-seo h2 { font-family: var(--display); font-size: 1.6rem; font-weight: 600; letter-spacing: -.02em; color: var(--ink); margin: 0 0 16px; }
+  .ux-seo details { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; margin-bottom: 10px; }
+  .ux-seo summary { cursor: pointer; color: var(--ink); font-weight: 500; padding: 16px 0; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .ux-seo summary::-webkit-details-marker { display: none; }
+  .ux-seo summary::after { content: "+"; color: var(--blue); font-family: var(--display); font-size: 1.4rem; font-weight: 500; margin-left: 12px; }
+  .ux-seo details[open] summary::after { content: "\2013"; }
+  .ux-seo details p { padding: 0 0 16px; margin: 0; color: var(--muted); }
+  .ux-seo a { color: var(--blue); }
 
-        .recommendations {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 25px;
-        }
+  /* ---------- footer ---------- */
+  footer.uxm-footer { margin-top: 90px; width: 100%; background: var(--ink); color: #fff; padding: 56px 34px; }
+  footer.uxm-footer h3 { font-family: var(--display); font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; color: #fff; margin-bottom: 16px; }
+  footer.uxm-footer ol { padding-left: 22px; color: rgba(255, 255, 255, .85); }
+  footer.uxm-footer li { margin-bottom: 9px; line-height: 1.5; }
+  footer.uxm-footer p { color: rgba(255, 255, 255, .55); }
 
-        .recommendations h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    .uxm-hero { padding: 104px 0 140px; }
+    .uxm-hero-grid { grid-template-columns: 1fr; }
+    .uxm-stairs { height: 190px; }
+    .uxm-console { grid-template-columns: 1fr; }
+    .uxm-route { border-right: none; border-bottom: 1px solid var(--line); padding: 18px 20px; display: flex; align-items: center; gap: 18px; }
+    .uxm-route-title { display: none; }
+    .uxm-route-count { margin: 0; font-size: 1.2rem; white-space: nowrap; }
+    .uxm-route ol { display: flex; gap: 6px; flex: 1; justify-content: flex-end; }
+    .uxm-route ol::before { left: 14px; right: 14px; top: 50%; bottom: auto; width: auto; height: 2px; }
+    .uxm-route li button { padding: 0; }
+    .uxm-wp-name, .uxm-wp-stage { display: none; }
+    .uxm-grid2 { grid-template-columns: 1fr; }
+    .uxm-summit { grid-template-columns: 1fr; gap: 24px; }
+    .uxm-score { padding: 0 0 22px; border-right: none; border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 567px) {
+    .uxm-stage { padding: 26px 18px 22px; }
+    .uxm-opt { grid-template-columns: 34px 1fr; padding: 13px 14px; gap: 12px; }
+    .uxm-opt-key { display: none; }
+    .uxm-opt[data-stage="1"] { margin-right: 24px; } .uxm-opt[data-stage="2"] { margin-right: 16px; } .uxm-opt[data-stage="3"] { margin-right: 8px; }
+    .uxm-summit, .uxm-panel { padding: 24px 20px; }
+    .uxm-prow, .uxm-meter-scale { grid-template-columns: 1fr; }
+    .uxm-prow-ans, .uxm-meter-scale div { grid-column: 1; }
+    .uxm-meter-scale > span { display: none; }
+    .uxm-rung { font-size: 0; }
+    .uxm-cta { padding: 24px 20px; }
+    footer.uxm-footer { padding: 64px 8px; }
+  }
+  @media (hover: none) { .uxm-q-hint .uxm-keys { display: none; } }
 
-        .recommendations ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+  /* the saved PDF/PNG is 760px wide: stack the panels and drop what doesn't fit */
+  .dl-artifact .uxm-results { padding-top: 0; }
+  .dl-artifact .uxm-summit, .dl-artifact .uxm-panel { box-shadow: none; border: 1px solid var(--line); }
+  .dl-artifact .uxm-grid2 { grid-template-columns: 1fr; }
+  .dl-artifact .uxm-meter-scale { display: none; }
 
-        .recommendations li {
-            padding: 12px 0;
-            border-bottom: 1px solid #e9ecef;
-            position: relative;
-            padding-left: 30px;
-            color: #495057;
-            line-height: 1.5;
-        }
-
-        .recommendations li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #0889e0;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .recommendations li:last-child {
-            border-bottom: none;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
-        }
-
-        .text-yellow {
-            color: gold;
-        }
-
-        footer{padding: 44px 34px;}
-
-        @media (max-width: 567px) {
-            .featureBgImg-bg {
-                object-position: center;
-            }
-            
-            .option {
-                padding: 15px;
-            }
-            
-            .option-text {
-                font-size: 15px;
-            }
-            
-            .score-circle {
-                width: 100px;
-                height: 100px;
-                font-size: 2rem;
-            }
-
-            footer{padding: 64px 8px;}
-        }
-    </style>
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
-    <link rel="manifest" href="/site.webmanifest">
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
 </head>
 
-<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
-<header id='header'></header>
+<body>
+<header id="header"></header>
 
-<div class="h-14 bg-blue-800 w-full"></div>
-<div class="mx-2 container">
-<div class="container mt-12 sm:p-8 pt-8 pb-8 bg-white rounded-xl shadow-2xl max-w-4xl">
-    <h1 class="text-4xl font-bold mb-4 text-center text-gray-700">UX Design Maturity Assessment</h1>
-    <p class="text-center text-gray-600 mb-6">Discover where your organization stands in its journey toward human-centered design excellence</p>
-    
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
+<section class="uxm-hero">
+  <svg class="uxm-contours" id="uxmContours" aria-hidden="true" preserveAspectRatio="xMidYMid slice"></svg>
+  <div class="uxm-wrap uxm-hero-grid">
+    <div>
+      <div class="uxm-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i> UX Maturity Assessment</div>
+      <h1>How mature is your <span>UX practice?</span></h1>
+      <p class="uxm-lede">Seven questions, one for each dimension of design practice. You get <strong>a stage for every dimension</strong>, your strongest area, and the two moves that would lift you most.</p>
+      <button type="button" class="uxm-btn uxm-btn-bolt" id="uxmStart">Start the climb <i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+      <div class="uxm-meta">
+        <span><i class="far fa-clock" aria-hidden="true"></i>About 3 minutes</span>
+        <span><i class="fas fa-lock-open" aria-hidden="true"></i>No signup</span>
+        <span><i class="fas fa-download" aria-hidden="true"></i>Save results as PDF</span>
+      </div>
     </div>
-    
-    <div id="questionContainer">
-        <!-- Questions will be inserted here -->
+    <div class="uxm-stairs" aria-label="The four maturity stages">
+      <div class="uxm-stair"><span class="uxm-flag" aria-hidden="true"><i class="fas fa-bolt"></i></span><b>STAGE 1</b><span>Early Journey</span></div>
+      <div class="uxm-stair"><b>STAGE 2</b><span>Growing Foundation</span></div>
+      <div class="uxm-stair"><b>STAGE 3</b><span>Advanced Practitioner</span></div>
+      <div class="uxm-stair"><b>STAGE 4</b><span>Experience Design Leader</span></div>
     </div>
-    
-    <div id="results" class="hidden">
-        <div class="score-display">
-            <div class="score-circle" id="scoreCircle">85%</div>
-            <div class="maturity-level" id="maturityLevel">Advanced Practitioner</div>
-            <div class="level-description" id="levelDescription"></div>
-        </div>
-        
-        <div class="recommendations">
-            <h3>Recommended Next Steps</h3>
-            <ul id="recommendationsList"></ul>
-        </div>
+  </div>
+</section>
+
+<main class="uxm-wrap">
+  <section class="uxm-console" id="uxmConsole" aria-label="Assessment">
+    <nav class="uxm-route" aria-label="Assessment progress">
+      <p class="uxm-route-title">Your route</p>
+      <p class="uxm-route-count" id="uxmCount" aria-live="polite">1 <small>of 7</small></p>
+      <ol id="uxmRoute"></ol>
+    </nav>
+    <div class="uxm-stage">
+      <div class="uxm-q-wrap" id="questionContainer"></div>
+      <div class="uxm-nav">
+        <button type="button" class="uxm-btn uxm-btn-ghost" id="uxmBack"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</button>
+        <button type="button" class="uxm-btn uxm-btn-ink" id="uxmNext" disabled>Next <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="results" class="uxm-results uxm-hidden" aria-live="polite" tabindex="-1">
+    <div class="uxm-summit">
+      <div class="uxm-score">
+        <div class="uxm-score-num" id="scoreCircle">0<sup>%</sup></div>
+        <div class="uxm-score-label">Maturity score</div>
+      </div>
+      <div>
+        <p class="uxm-level-kicker" id="levelKicker">Stage 3 of 4</p>
+        <h2 class="uxm-level" id="maturityLevel">Advanced Practitioner</h2>
+        <p class="uxm-level-desc" id="levelDescription"></p>
+        <div class="uxm-ladder" id="uxmLadder" aria-hidden="true"></div>
+      </div>
     </div>
 
-    <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
-        <img src="../img/exp-builder/immersive-experience.png" alt="Background silhouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
-        <div class="relative z-10">
-            <h4 class="text-2xl text-white mb-2 px-2 drop-shadow">Enhance your UX<br>maturity journey</h4>
-            <a href="experience-builder.html">
-                <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                    Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
-                </button>
-            </a>
+    <div class="uxm-grid2">
+      <div class="uxm-panel">
+        <h2>Your maturity profile</h2>
+        <p class="uxm-panel-sub">The stage you reached on each dimension, out of four.</p>
+        <ul class="uxm-profile" id="uxmProfile"></ul>
+        <div class="uxm-meter-scale" aria-hidden="true"><span></span><div><span>Early</span><span>Growing</span><span>Advanced</span><span>Leader</span></div></div>
+        <p class="uxm-insight" id="uxmInsight"></p>
+      </div>
+      <div class="uxm-panel">
+        <h2>Your next moves</h2>
+        <p class="uxm-panel-sub">Start with the dimensions holding you back most.</p>
+        <ol class="uxm-moves" id="uxmMoves"></ol>
+        <div class="uxm-also">
+          <h3>At your stage, also</h3>
+          <ul id="recommendationsList"></ul>
         </div>
+      </div>
     </div>
-    
-    <button id="resetBtn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-6 hidden">
-        <i class="fas fa-redo mr-2" aria-hidden="true"></i> Start Over
-    </button>
-</div>
-</div>
+  </section>
+
+  <div class="uxm-after uxm-hidden" id="uxmAfter">
+    <button type="button" class="uxm-btn uxm-btn-ghost" id="resetBtn"><i class="fas fa-redo" aria-hidden="true"></i> Retake the assessment</button>
+  </div>
+
+  <a class="uxm-cta uxm-hidden" id="expBld" href="../experience-builder.html" style="text-decoration:none">
+    <img src="../img/exp-builder/immersive-experience.png" alt="" loading="lazy">
+    <div>
+      <h2>Ready to climb a stage?</h2>
+      <p>Experience Builder puts research, journeys and testing into one working practice for your team.</p>
+      <span class="uxm-btn uxm-btn-bolt">Explore Experience Builder <i class="fas fa-bolt" aria-hidden="true"></i></span>
+    </div>
+  </a>
+</main>
 
 <div id="error"></div>
 
 <!-- SEO content: sits BELOW the tool so it never gets in the way of using it -->
 <section class="ux-seo" aria-label="About the UX maturity assessment">
-  <style>
-    .ux-seo{max-width:1024px;width:100%;margin:64px auto 0;padding:0 66px;color:#1f2937;line-height:1.65;font-family:inherit;}
-    .ux-seo h2{font-size:1.25rem;font-weight:600;color:#111827;margin:0 0 10px;}
-    .ux-seo .ux-faq{margin:8px 0;}
-    .ux-seo details{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:0 18px;margin-bottom:12px;}
-    .ux-seo summary{cursor:pointer;color:#111827;padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;}
-    .ux-seo summary::-webkit-details-marker{display:none;}
-    .ux-seo summary::after{content:"+";color:#009DFF;font-size:1.3rem;font-weight:700;margin-left:12px;}
-    .ux-seo details[open] summary::after{content:"\2013";}
-    .ux-seo details p{padding:0 0 16px;margin:0;color:#374151;}
-    @media (max-width:640px){.ux-seo{padding:0 16px;}}
-  </style>
-
   <h2>Frequently asked questions</h2>
   <div class="ux-faq">
     <details>
@@ -345,7 +449,7 @@
     </details>
     <details>
       <summary>How can we improve our UX maturity?</summary>
-      <p>Start with the recommendations for your level, then advance one dimension at a time. Our <a href="experience-builder.html">Experience Builder</a> helps you put those practices into action.</p>
+      <p>Start with the recommendations for your level, then advance one dimension at a time. Our <a href="../experience-builder.html">Experience Builder</a> helps you put those practices into action.</p>
     </details>
   </div>
 </section>
@@ -353,323 +457,275 @@
 <!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
 <div id="related-tools-con"></div>
 
-<footer class="mt-24 w-full bg-blue-950 text-white py-8">
-    <div class="container mx-auto px-4">
-        <div class="row">
-            <div class="col-lg-7">
-                <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
-                <ol class="list-decimal pl-6 space-y-2 instruct-list">
-                    <li>Answer 7 questions about your organization's UX practices.</li>
-                    <li>Get a comprehensive maturity score and level assessment.</li>
-                    <li>Receive personalized recommendations for improvement.</li>
-                    <li>Learn specific next steps to advance your UX capabilities.</li>
-                    <li>Compare your progress against industry best practices.</li>
-                </ol>
-                <p class="mt-4 text-gray-400 max-w-screen-lg">Our assessment evaluates your organization across key dimensions of UX maturity including research practices, design processes, collaboration methods, and measurement approaches.</p>
-            </div>
-            <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
-        </div>
+<footer class="uxm-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <h3>How it works</h3>
+        <ol>
+          <li>Answer 7 questions, one for each dimension of UX practice.</li>
+          <li>Each answer places that dimension at one of four stages.</li>
+          <li>See your overall score, your stage and your full profile.</li>
+          <li>Get next steps aimed at your two weakest dimensions.</li>
+          <li>Save your results as a PDF or PNG and retake it next quarter.</li>
+        </ol>
+        <p class="mt-3">The assessment covers research practices, design decisions, journey thinking, measurement, collaboration, iteration and behavioral insight. Your answers stay in your browser.</p>
+      </div>
+      <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
     </div>
+  </div>
 </footer>
 
 <script>
-    let userInteractionData = "";
-    let currentQuestion = 0;
-    let answers = [];
+(function () {
+    var userInteractionData = "";
+    var currentQuestion = 0;
+    var answers = [];
 
-    const questions = [
+    var STAGES = ["Early Journey", "Growing Foundation", "Advanced Practitioner", "Experience Design Leader"];
+
+    // dim: short name shown on the route and profile
+    // next: the step up from stages 1, 2 and 3 (stage 4 has nowhere further to climb)
+    var questions = [
         {
+            dim: "User research",
             question: "How does your organization currently approach user research?",
             options: [
-                {
-                    text: "We conduct research reactively",
-                    description: "Research happens when problems arise or projects get stuck",
-                    score: 1
-                },
-                {
-                    text: "We have scheduled research cycles",
-                    description: "Regular research cadence with some stakeholder buy-in",
-                    score: 2
-                },
-                {
-                    text: "Research informs strategic decisions",
-                    description: "User insights directly influence product and business strategy",
-                    score: 3
-                },
-                {
-                    text: "We have embedded research culture",
-                    description: "Everyone understands and contributes to user understanding",
-                    score: 4
-                }
+                { text: "We conduct research reactively", description: "Research happens when problems arise or projects get stuck", score: 1 },
+                { text: "We have scheduled research cycles", description: "Regular research cadence with some stakeholder buy-in", score: 2 },
+                { text: "Research informs strategic decisions", description: "User insights directly influence product and business strategy", score: 3 },
+                { text: "We have embedded research culture", description: "Everyone understands and contributes to user understanding", score: 4 }
+            ],
+            next: [
+                "Book five customer conversations this month around one live decision, and share the notes with whoever makes that call.",
+                "Bring one research finding into every roadmap review, so insights change priorities instead of sitting in a deck.",
+                "Invite people outside design to sit in on sessions and log what they hear in a shared insight library."
             ]
         },
         {
+            dim: "Decision-making",
             question: "How are design decisions typically made in your organization?",
             options: [
-                {
-                    text: "Based on personal preferences or assumptions",
-                    description: "Decisions rely heavily on gut feelings or hierarchy",
-                    score: 1
-                },
-                {
-                    text: "Using basic usability principles",
-                    description: "Some design guidelines but inconsistent application",
-                    score: 2
-                },
-                {
-                    text: "Through validated design systems",
-                    description: "Consistent patterns backed by user testing and data",
-                    score: 3
-                },
-                {
-                    text: "Via systematic experimentation",
-                    description: "Every decision is a hypothesis that gets tested and refined",
-                    score: 4
-                }
+                { text: "Based on personal preferences or assumptions", description: "Decisions rely heavily on gut feelings or hierarchy", score: 1 },
+                { text: "Using basic usability principles", description: "Some design guidelines but inconsistent application", score: 2 },
+                { text: "Through validated design systems", description: "Consistent patterns backed by user testing and data", score: 3 },
+                { text: "Via systematic experimentation", description: "Every decision is a hypothesis that gets tested and refined", score: 4 }
+            ],
+            next: [
+                "Write down the assumption behind your next design call, then test it with five users before it ships.",
+                "Turn your most-repeated patterns into documented components, with the evidence for why each one works.",
+                "Frame every significant change as a hypothesis with a success metric, and run it as an experiment."
             ]
         },
         {
+            dim: "Journey thinking",
             question: "How well does your team understand the customer journey?",
             options: [
-                {
-                    text: "We focus on individual touchpoints",
-                    description: "Each interaction is designed in isolation",
-                    score: 1
-                },
-                {
-                    text: "We map key user flows",
-                    description: "Some journey mapping for critical paths",
-                    score: 2
-                },
-                {
-                    text: "We design end-to-end experiences",
-                    description: "Holistic view of user experience across touchpoints",
-                    score: 3
-                },
-                {
-                    text: "We orchestrate ecosystem experiences",
-                    description: "Consider broader context including emotional and temporal dimensions",
-                    score: 4
-                }
+                { text: "We focus on individual touchpoints", description: "Each interaction is designed in isolation", score: 1 },
+                { text: "We map key user flows", description: "Some journey mapping for critical paths", score: 2 },
+                { text: "We design end-to-end experiences", description: "Holistic view of user experience across touchpoints", score: 3 },
+                { text: "We orchestrate ecosystem experiences", description: "Consider broader context including emotional and temporal dimensions", score: 4 }
+            ],
+            next: [
+                "Map one critical journey end to end, from first hearing about you to getting value, with the owner of each step in the room.",
+                "Find the worst handoff on that map and give it a single owner. Users fall through the gaps between teams.",
+                "Add what happens outside your product to your journey maps: the before, the after and the in-between."
             ]
         },
         {
+            dim: "Measuring success",
             question: "How does your organization measure design success?",
             options: [
-                {
-                    text: "Completion of deliverables",
-                    description: "Success measured by output and meeting deadlines",
-                    score: 1
-                },
-                {
-                    text: "Basic usability metrics",
-                    description: "Task completion rates, error rates, satisfaction scores",
-                    score: 2
-                },
-                {
-                    text: "Business impact metrics",
-                    description: "Conversion, retention, and revenue tied to design changes",
-                    score: 3
-                },
-                {
-                    text: "Holistic value creation",
-                    description: "Long-term user value, brand equity, and systemic impact",
-                    score: 4
-                }
+                { text: "Completion of deliverables", description: "Success measured by output and meeting deadlines", score: 1 },
+                { text: "Basic usability metrics", description: "Task completion rates, error rates, satisfaction scores", score: 2 },
+                { text: "Business impact metrics", description: "Conversion, retention, and revenue tied to design changes", score: 3 },
+                { text: "Holistic value creation", description: "Long-term user value, brand equity, and systemic impact", score: 4 }
+            ],
+            next: [
+                "Pick one task users must complete and track its completion rate before and after your next change.",
+                "Tie one design metric to a number leadership already watches, like conversion or churn.",
+                "Track a long-horizon signal, like retention cohorts or repeat use, next to short-term conversion."
             ]
         },
         {
+            dim: "Collaboration",
             question: "How do different teams collaborate on experience design?",
             options: [
-                {
-                    text: "Work in departmental silos",
-                    description: "Limited communication between design, development, and business",
-                    score: 1
-                },
-                {
-                    text: "Regular cross-functional meetings",
-                    description: "Scheduled check-ins and handoffs between teams",
-                    score: 2
-                },
-                {
-                    text: "Integrated project teams",
-                    description: "Cross-functional squads working toward shared goals",
-                    score: 3
-                },
-                {
-                    text: "Shared design ownership",
-                    description: "Everyone understands their role in creating user value",
-                    score: 4
-                }
+                { text: "Work in departmental silos", description: "Limited communication between design, development, and business", score: 1 },
+                { text: "Regular cross-functional meetings", description: "Scheduled check-ins and handoffs between teams", score: 2 },
+                { text: "Integrated project teams", description: "Cross-functional squads working toward shared goals", score: 3 },
+                { text: "Shared design ownership", description: "Everyone understands their role in creating user value", score: 4 }
+            ],
+            next: [
+                "Invite an engineer and a product owner to your next design critique, while the work is still rough.",
+                "Form one cross-functional squad around a user outcome rather than a feature list.",
+                "Write user outcomes into every team's goals, not only design's."
             ]
         },
         {
+            dim: "Iteration & learning",
             question: "How does your organization handle design iteration and learning?",
             options: [
-                {
-                    text: "Design is finalized before development",
-                    description: "Waterfall approach with limited iteration post-launch",
-                    score: 1
-                },
-                {
-                    text: "Some post-launch optimization",
-                    description: "Minor adjustments based on basic feedback",
-                    score: 2
-                },
-                {
-                    text: "Continuous improvement cycles",
-                    description: "Regular testing and iteration based on user data",
-                    score: 3
-                },
-                {
-                    text: "Learning-driven evolution",
-                    description: "Each iteration builds organizational design intelligence",
-                    score: 4
-                }
+                { text: "Design is finalized before development", description: "Waterfall approach with limited iteration post-launch", score: 1 },
+                { text: "Some post-launch optimization", description: "Minor adjustments based on basic feedback", score: 2 },
+                { text: "Continuous improvement cycles", description: "Regular testing and iteration based on user data", score: 3 },
+                { text: "Learning-driven evolution", description: "Each iteration builds organizational design intelligence", score: 4 }
+            ],
+            next: [
+                "Schedule a post-launch review for your next release now, with a date and the data you'll look at.",
+                "Put one core flow on a fixed test-and-iterate cadence, such as every two weeks.",
+                "Keep a running log of what each experiment taught you, so the next team starts from there."
             ]
         },
         {
+            dim: "Behavioral insight",
             question: "How well do you understand the psychological aspects of user behavior?",
             options: [
-                {
-                    text: "We focus primarily on functional needs",
-                    description: "Features and capabilities take priority over emotional factors",
-                    score: 1
-                },
-                {
-                    text: "We consider basic user motivations",
-                    description: "Some awareness of why users make certain choices",
-                    score: 2
-                },
-                {
-                    text: "We design for decision-making patterns",
-                    description: "Understanding of cognitive biases and mental models",
-                    score: 3
-                },
-                {
-                    text: "We design for human complexity",
-                    description: "Deep integration of behavioral psychology and systems thinking",
-                    score: 4
-                }
+                { text: "We focus primarily on functional needs", description: "Features and capabilities take priority over emotional factors", score: 1 },
+                { text: "We consider basic user motivations", description: "Some awareness of why users make certain choices", score: 2 },
+                { text: "We design for decision-making patterns", description: "Understanding of cognitive biases and mental models", score: 3 },
+                { text: "We design for human complexity", description: "Deep integration of behavioral psychology and systems thinking", score: 4 }
+            ],
+            next: [
+                "In your next research round, ask people why they chose what they chose, not only what they did.",
+                "Audit one key flow for cognitive load, defaults and choice overload.",
+                "Study how motivation and habit change across a customer's whole lifetime, not just at sign-up."
             ]
         }
     ];
 
-    function updateInteractionData() {
-        const answeredQuestions = answers.map((score, index) => {
-            if (score !== undefined) {
-                const q = questions[index];
-                const selectedOption = q.options.find(opt => opt.score === score);
-                return `Q${index + 1}: ${selectedOption.text} (${score}/4)`;
+    var byId = function (id) { return document.getElementById(id); };
+
+    /* ---------- topographic contours, drawn once ---------- */
+    function drawContours() {
+        var svg = byId('uxmContours');
+        var W = 1400, H = 700, cx = 1010, cy = 330, out = '';
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        for (var k = 1; k <= 16; k++) {
+            var r = k * 46, d = '';
+            for (var a = 0; a <= 360; a += 6) {
+                var t = a * Math.PI / 180;
+                var wob = 1 + .09 * Math.sin(3 * t + k * .5) + .05 * Math.sin(5 * t - k * .3);
+                var x = cx + Math.cos(t) * r * 1.35 * wob, y = cy + Math.sin(t) * r * .8 * wob;
+                d += (a ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
             }
-            return null;
+            out += '<path d="' + d + 'Z"' + (k % 4 === 0 ? ' class="is-index"' : '') + '/>';
+        }
+        svg.innerHTML = out;
+    }
+
+    /* ---------- state helpers ---------- */
+    function updateInteractionData() {
+        var answeredQuestions = answers.map(function (score, index) {
+            if (score === undefined) return null;
+            var opt = questions[index].options[score - 1];
+            return 'Q' + (index + 1) + ': ' + opt.text + ' (' + score + '/4)';
         }).filter(Boolean);
-        
-        const currentScore = answers.filter(a => a !== undefined).reduce((sum, score) => sum + score, 0);
-        const maxPossible = answers.filter(a => a !== undefined).length * 4;
-        const currentPercentage = maxPossible > 0 ? Math.round((currentScore / maxPossible) * 100) : 0;
-        
-        userInteractionData = `UX Maturity Assessment:\n${answeredQuestions.join('\n')}\nCurrent Score: ${currentScore}/${maxPossible} (${currentPercentage}%)`;
+        var done = answers.filter(function (a) { return a !== undefined; });
+        var currentScore = done.reduce(function (s, x) { return s + x; }, 0);
+        var maxPossible = done.length * 4;
+        var pct = maxPossible > 0 ? Math.round((currentScore / maxPossible) * 100) : 0;
+        userInteractionData = 'UX Maturity Assessment:\n' + answeredQuestions.join('\n') + '\nCurrent Score: ' + currentScore + '/' + maxPossible + ' (' + pct + '%)';
         window.userInteractionData = userInteractionData;
     }
 
-    function initQuiz() {
-        renderQuestion();
-        updateProgress();
+    function glyph(stage) {
+        var s = '';
+        for (var i = 1; i <= 4; i++) s += '<i' + (i <= stage ? ' class="on"' : '') + '></i>';
+        return '<span class="uxm-glyph" aria-hidden="true">' + s + '</span>';
     }
 
-    function renderQuestion() {
-        const container = document.getElementById('questionContainer');
-        
-        if (currentQuestion >= questions.length) {
-            showResults();
-            return;
-        }
-
-        const q = questions[currentQuestion];
-        const html = `
-            <div class="question-container active">
-                <div class="text-sm text-blue-600 font-medium mb-3">Question ${currentQuestion + 1} of ${questions.length}</div>
-                <div class="text-xl font-semibold text-gray-800 mb-6">${q.question}</div>
-                <div class="options">
-                    ${q.options.map((option, index) => `
-                        <div class="option" onclick="selectOption(${index})" data-option="${index}">
-                            <div class="option-text">${option.text}</div>
-                            <div class="option-description">${option.description}</div>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="navigation">
-                    <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300" onclick="previousQuestion()" ${currentQuestion === 0 ? 'style="visibility: hidden"' : ''}>
-                        <i class="fas fa-arrow-left mr-2"></i> Previous
-                    </button>
-                    <button class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300 transform hover:-translate-y-1" id="nextBtn" onclick="nextQuestion()" disabled>
-                        Next <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        container.innerHTML = html;
-        
-        // If there's a previous answer, select it
-        if (answers[currentQuestion] !== undefined) {
-            const selectedScore = answers[currentQuestion];
-            const optionIndex = q.options.findIndex(opt => opt.score === selectedScore);
-            if (optionIndex !== -1) {
-                document.querySelector(`[data-option="${optionIndex}"]`).classList.add('selected');
-                document.getElementById('nextBtn').disabled = false;
-            }
-        }
+    /* ---------- the route rail ---------- */
+    function renderRoute() {
+        var html = questions.map(function (q, i) {
+            var done = answers[i] !== undefined;
+            var state = i === currentQuestion ? 'is-current' : (done ? 'is-done' : '');
+            var reachable = done || i === currentQuestion || answers[i - 1] !== undefined;
+            return '<li class="' + state + '"><button type="button" data-jump="' + i + '"' + (reachable ? '' : ' disabled') +
+                ' aria-label="' + q.dim + (done ? ', stage ' + answers[i] : '') + (i === currentQuestion ? ', current' : '') + '"' +
+                (i === currentQuestion ? ' aria-current="step"' : '') + '>' +
+                '<span class="uxm-wp">' + (done && i !== currentQuestion ? '<i class="fas fa-check" aria-hidden="true"></i>' : i + 1) + '</span>' +
+                '<span class="uxm-wp-name">' + q.dim + '</span>' +
+                (done ? '<span class="uxm-wp-stage">' + answers[i] + '/4</span>' : '') +
+                '</button></li>';
+        }).join('');
+        byId('uxmRoute').innerHTML = html;
+        var n = Math.min(currentQuestion + 1, questions.length);
+        byId('uxmCount').innerHTML = n + ' <small>of ' + questions.length + '</small>';
     }
 
-    function selectOption(optionIndex) {
-        // Remove previous selection
-        document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-        
-        // Add selection to clicked option
-        document.querySelector(`[data-option="${optionIndex}"]`).classList.add('selected');
-        
-        // Store answer
-        answers[currentQuestion] = questions[currentQuestion].options[optionIndex].score;
-        
-        // Enable next button
-        document.getElementById('nextBtn').disabled = false;
-        
-        // Update interaction data
+    /* ---------- the question ---------- */
+    function renderQuestion(animate) {
+        var q = questions[currentQuestion];
+        var wrap = byId('questionContainer');
+        wrap.innerHTML =
+            '<div class="uxm-q-dim">Dimension ' + (currentQuestion + 1) + ' · ' + q.dim + '</div>' +
+            '<h2 class="uxm-q" id="uxmQ">' + q.question + '</h2>' +
+            '<p class="uxm-q-hint">Pick the answer closest to how things work today, not how you\'d like them to.<span class="uxm-keys"> Keys <kbd>1</kbd>–<kbd>4</kbd> work too.</span></p>' +
+            '<div class="uxm-options" role="radiogroup" aria-labelledby="uxmQ">' +
+            q.options.map(function (o, i) {
+                var on = answers[currentQuestion] === o.score;
+                return '<button type="button" class="uxm-opt" role="radio" data-stage="' + o.score + '" data-index="' + i + '"' +
+                    ' aria-checked="' + on + '" tabindex="' + (on || (answers[currentQuestion] === undefined && i === 0) ? 0 : -1) + '">' +
+                    glyph(o.score) +
+                    '<span><span class="uxm-opt-title">' + o.text + '</span><span class="uxm-opt-desc">' + o.description + '</span></span>' +
+                    '<span class="uxm-opt-key" aria-hidden="true">' + o.score + '</span></button>';
+            }).join('') + '</div>';
+        if (animate) {
+            wrap.classList.remove('is-entering');
+            void wrap.offsetWidth;
+            wrap.classList.add('is-entering');
+        }
+        byId('uxmBack').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+        var last = currentQuestion === questions.length - 1;
+        byId('uxmNext').innerHTML = last ? 'See my profile <i class="fas fa-bolt" aria-hidden="true"></i>' : 'Next <i class="fas fa-arrow-right" aria-hidden="true"></i>';
+        byId('uxmNext').disabled = answers[currentQuestion] === undefined;
+        renderRoute();
+    }
+
+    var advanceTimer = null;
+    function selectOption(index) {
+        var score = questions[currentQuestion].options[index].score;
+        answers[currentQuestion] = score;
+        document.querySelectorAll('.uxm-opt').forEach(function (b, i) {
+            b.setAttribute('aria-checked', i === index);
+            b.tabIndex = i === index ? 0 : -1;
+        });
+        byId('uxmNext').disabled = false;
         updateInteractionData();
+        renderRoute();
+        // move on by itself, except on the last question, where the reveal should be a choice
+        clearTimeout(advanceTimer);
+        if (currentQuestion < questions.length - 1) advanceTimer = setTimeout(nextQuestion, 420);
     }
 
     function nextQuestion() {
+        clearTimeout(advanceTimer);
         if (answers[currentQuestion] === undefined) return;
-        
+        if (currentQuestion === questions.length - 1) { showResults(); return; }
         currentQuestion++;
-        renderQuestion();
-        updateProgress();
+        renderQuestion(true);
+        focusStage();
     }
 
     function previousQuestion() {
-        if (currentQuestion > 0) {
-            currentQuestion--;
-            renderQuestion();
-            updateProgress();
-        }
+        clearTimeout(advanceTimer);
+        if (currentQuestion > 0) { currentQuestion--; renderQuestion(true); focusStage(); }
     }
 
-    function updateProgress() {
-        const progress = ((currentQuestion) / questions.length) * 100;
-        document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
+    function focusStage() {
+        var sel = document.querySelector('.uxm-opt[tabindex="0"]');
+        if (sel && document.activeElement && document.activeElement.closest('.uxm-console')) sel.focus({ preventScroll: true });
     }
 
+    /* ---------- scoring ---------- */
     function calculateResults() {
-        const totalScore = answers.reduce((sum, score) => sum + score, 0);
-        const maxScore = questions.length * 4;
-        const percentage = Math.round((totalScore / maxScore) * 100);
-        
-        let level, description, recommendations;
-        
+        var totalScore = answers.reduce(function (s, x) { return s + x; }, 0);
+        var percentage = Math.round((totalScore / (questions.length * 4)) * 100);
+        var level, stage, description, recommendations;
+
         if (percentage >= 85) {
-            level = "Experience Design Leader";
+            stage = 4; level = "Experience Design Leader";
             description = "Your organization demonstrates sophisticated understanding of human-centered design. You're moving beyond individual optimization toward systemic thinking about user value.";
             recommendations = [
                 "Share your expertise through thought leadership and community building",
@@ -678,7 +734,7 @@
                 "Mentor other organizations in their design maturity journey"
             ];
         } else if (percentage >= 70) {
-            level = "Advanced Practitioner";
+            stage = 3; level = "Advanced Practitioner";
             description = "You have strong design foundations with good integration across teams. The next step is developing more systematic approaches to design decisions and measurement.";
             recommendations = [
                 "Implement more rigorous experimentation and learning cycles",
@@ -687,7 +743,7 @@
                 "Build stronger connections between design decisions and business outcomes"
             ];
         } else if (percentage >= 50) {
-            level = "Growing Foundation";
+            stage = 2; level = "Growing Foundation";
             description = "Your organization shows good awareness of design principles with some systematic application. Focus on building more consistent processes and cross-team collaboration.";
             recommendations = [
                 "Establish regular user research cadences and share insights broadly",
@@ -696,7 +752,7 @@
                 "Implement basic measurement to connect design changes to user behavior"
             ];
         } else {
-            level = "Early Journey";
+            stage = 1; level = "Early Journey";
             description = "You're beginning to recognize the value of user-centered design. The opportunity lies in building foundational processes and stakeholder understanding.";
             recommendations = [
                 "Start with basic user research to build empathy and understanding",
@@ -705,61 +761,140 @@
                 "Begin measuring basic usability metrics to demonstrate design impact"
             ];
         }
-        
-        return { percentage, level, description, recommendations };
+
+        // rank dimensions; ties keep question order so the result is stable
+        var ranked = questions.map(function (q, i) { return { i: i, s: answers[i] }; });
+        var low = ranked.slice().sort(function (a, b) { return a.s - b.s || a.i - b.i; });
+        var high = ranked.slice().sort(function (a, b) { return b.s - a.s || a.i - b.i; });
+        var levers = low.filter(function (d) { return d.s < 4; }).slice(0, 2);
+        var top = high[0].s > low[0].s ? high[0] : null;
+
+        return { percentage: percentage, level: level, stage: stage, description: description, recommendations: recommendations, levers: levers, top: top, spread: high[0].s - low[0].s };
     }
 
     function showResults() {
-        const results = calculateResults();
-        
-        // Update final interaction data
+        var r = calculateResults();
         updateInteractionData();
-        
-        document.getElementById('scoreCircle').textContent = `${results.percentage}%`;
-        document.getElementById('maturityLevel').textContent = results.level;
-        document.getElementById('levelDescription').textContent = results.description;
-        
-        const recommendationsList = document.getElementById('recommendationsList');
-        recommendationsList.innerHTML = results.recommendations.map(rec => `<li>${rec}</li>`).join('');
-        
-        document.getElementById('questionContainer').style.display = 'none';
-        document.getElementById('results').classList.remove('hidden');
-        document.getElementById('expBld').classList.remove('hidden');
-        document.getElementById('resetBtn').classList.remove('hidden');
-        
-        updateProgress(); // Set to 100%
+
+        byId('maturityLevel').textContent = r.level;
+        byId('levelKicker').textContent = 'Stage ' + r.stage + ' of 4';
+        byId('levelDescription').textContent = r.description;
+        byId('uxmLadder').innerHTML = STAGES.map(function (name, i) {
+            var cls = i + 1 === r.stage ? 'is-you' : (i + 1 < r.stage ? 'is-passed' : '');
+            return '<div class="uxm-rung ' + cls + '">' + name + '</div>';
+        }).join('');
+
+        var leverIdx = r.levers.map(function (d) { return d.i; });
+        byId('uxmProfile').innerHTML = questions.map(function (q, i) {
+            var s = answers[i], cells = '';
+            for (var c = 1; c <= 4; c++) cells += '<i' + (c <= s ? ' class="on"' : '') + '></i>';
+            var tag = '';
+            if (r.top && r.top.i === i) tag = '<span class="uxm-tag uxm-tag-top">Strongest</span>';
+            else if (leverIdx.indexOf(i) !== -1) tag = '<span class="uxm-tag uxm-tag-lever">Focus here</span>';
+            return '<li class="uxm-prow"><span class="uxm-prow-name">' + q.dim + '</span>' +
+                '<span class="uxm-meter" role="img" aria-label="' + q.dim + ': stage ' + s + ' of 4">' + cells + '</span>' +
+                '<span class="uxm-prow-ans"><b>' + s + '/4</b>' + q.options[s - 1].text + tag + '</span></li>';
+        }).join('');
+
+        var insight;
+        if (r.spread >= 2) {
+            insight = '<i class="fas fa-mountain" aria-hidden="true"></i>Your practice is uneven: <b>' + questions[r.top.i].dim + '</b> is ' + r.spread +
+                ' stages ahead of <b>' + questions[r.levers[0].i].dim + '</b>. Weak dimensions limit the strong ones, so raising your lowest one usually pays off fastest.';
+        } else if (r.levers.length === 0) {
+            insight = '<i class="fas fa-flag" aria-hidden="true"></i>Every dimension is at stage 4. The work now is keeping it there as the team and product grow.';
+        } else {
+            insight = '<i class="fas fa-mountain" aria-hidden="true"></i>Your dimensions sit within a stage of each other, so you can lift them together. The two marked <b>Focus here</b> are the place to start.';
+        }
+        byId('uxmInsight').innerHTML = insight;
+
+        byId('uxmMoves').innerHTML = r.levers.length ? r.levers.map(function (d) {
+            return '<li class="uxm-move"><div class="uxm-move-dim">' + questions[d.i].dim + ' · stage ' + d.s + ' → ' + (d.s + 1) + '</div><p>' + questions[d.i].next[d.s - 1] + '</p></li>';
+        }).join('') : '<li class="uxm-move"><div class="uxm-move-dim">Every dimension</div><p>Teach what you know. Write up how your team works so other teams, and the next hires, can reach the same stage.</p></li>';
+
+        byId('recommendationsList').innerHTML = r.recommendations.map(function (x) { return '<li>' + x + '</li>'; }).join('');
+
+        byId('uxmConsole').classList.add('uxm-hidden');
+        ['results', 'uxmAfter', 'expBld'].forEach(function (id) { byId(id).classList.remove('uxm-hidden'); });
+
+        // count the score up; the final value is set first so a save mid-count is still right
+        var el = byId('scoreCircle'), target = r.percentage, t0 = null;
+        el.innerHTML = target + '<sup>%</sup>';
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            requestAnimationFrame(function step(ts) {
+                if (!t0) t0 = ts;
+                var p = Math.min((ts - t0) / 900, 1);
+                el.innerHTML = Math.round(target * (1 - Math.pow(1 - p, 3))) + '<sup>%</sup>';
+                if (p < 1) requestAnimationFrame(step);
+            });
+        }
+        byId('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        byId('results').focus({ preventScroll: true });
     }
 
     function resetAssessment() {
         currentQuestion = 0;
         answers = [];
         userInteractionData = "";
-        
-        document.getElementById('questionContainer').style.display = 'block';
-        document.getElementById('results').classList.add('hidden');
-        document.getElementById('expBld').classList.add('hidden');
-        document.getElementById('resetBtn').classList.add('hidden');
-        
-        renderQuestion();
-        updateProgress();
+        window.userInteractionData = "";
+        byId('uxmConsole').classList.remove('uxm-hidden');
+        ['results', 'uxmAfter', 'expBld'].forEach(function (id) { byId(id).classList.add('uxm-hidden'); });
+        renderQuestion(true);
+        byId('uxmConsole').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    $(document).ready(function() {
-        $('#email-form-con').load("email-capture.html");
-        $('#related-tools-con').load("related-tools.html");
-        $('#header').load("../header.html", function(response, status, xhr) {
-            if (status == "error") {
-                var msg = "Sorry but there was an error: ";
-                $("#error").html(msg + xhr.status + " " + xhr.statusText);
-            } else {
-                $('.business-gen').addClass('thisPage');
-            }
-        });
-
-        initQuiz();
+    /* ---------- wiring ---------- */
+    byId('questionContainer').addEventListener('click', function (e) {
+        var b = e.target.closest('.uxm-opt');
+        if (b) selectOption(+b.dataset.index);
+    });
+    byId('uxmRoute').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-jump]');
+        if (!b || b.disabled) return;
+        clearTimeout(advanceTimer);
+        currentQuestion = +b.dataset.jump;
+        renderQuestion(true);
+    });
+    byId('uxmNext').addEventListener('click', nextQuestion);
+    byId('uxmBack').addEventListener('click', previousQuestion);
+    byId('resetBtn').addEventListener('click', resetAssessment);
+    byId('uxmStart').addEventListener('click', function () {
+        byId('uxmConsole').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var first = document.querySelector('.uxm-opt[tabindex="0"]');
+        if (first) first.focus({ preventScroll: true });
     });
 
-    document.getElementById('resetBtn').addEventListener('click', resetAssessment);
+    document.addEventListener('keydown', function (e) {
+        if (byId('uxmConsole').classList.contains('uxm-hidden') || e.metaKey || e.ctrlKey || e.altKey) return;
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        var inGroup = e.target.closest && e.target.closest('.uxm-options');
+        if (e.key >= '1' && e.key <= '4') {
+            var r = byId('uxmConsole').getBoundingClientRect();
+            if (r.bottom < 0 || r.top > window.innerHeight) return; // only when the tool is on screen
+            e.preventDefault();
+            selectOption(+e.key - 1);
+            document.querySelectorAll('.uxm-opt')[+e.key - 1].focus({ preventScroll: true });
+        } else if (inGroup && /^Arrow(Up|Down|Left|Right)$/.test(e.key)) {
+            // options are drawn bottom-up, so Up means a higher stage
+            e.preventDefault();
+            var opts = document.querySelectorAll('.uxm-opt');
+            var cur = +e.target.dataset.index, dir = (e.key === 'ArrowUp' || e.key === 'ArrowRight') ? 1 : -1;
+            var nxt = Math.max(0, Math.min(3, cur + dir));
+            opts[nxt].focus();
+        }
+    });
+
+    $(document).ready(function () {
+        $('#email-form-con').load("email-capture.html");
+        $('#related-tools-con').load("related-tools.html");
+        $('#header').load("../header.html", function (response, status, xhr) {
+            if (status == "error") {
+                $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
+            }
+        });
+        drawContours();
+        renderQuestion(false);
+    });
+})();
 </script>
 
 <script type="application/ld+json">

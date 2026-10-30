@@ -1,348 +1,380 @@
-<html><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UX Methods Tree - Interactive Design Decision Tool | Dlightning</title>
-    <meta name="description" content="Interactive UX Design Decision Tree helps designers and product managers make informed decisions about user research, interface design, and interaction design. Get personalized UX recommendations.">
-    <meta name="keywords" content="UX design decision tree, UX research methods, design methodology, UX tools, usability testing, information architecture, design thinking">
-    <link rel="canonical" href="https://dlightning.org/d-tools/ux-method-tree.html">
-    <meta name="author" content="Dlightning">
-    <meta name="robots" content="index, follow">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX Methods Tree - Interactive Design Decision Tool | Dlightning</title>
+<meta name="description" content="Interactive UX Design Decision Tree helps designers and product managers make informed decisions about user research, interface design, and interaction design. Get personalized UX recommendations.">
+<meta name="keywords" content="UX design decision tree, UX research methods, design methodology, UX tools, usability testing, information architecture, design thinking">
+<link rel="canonical" href="https://dlightning.org/d-tools/ux-method-tree.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow">
 
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+<meta property="og:url" content="https://dlightning.org/d-tools/ux-method-tree.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:image" content="https://dlightning.org/img/products/MDT.png"/>
+<meta property="og:title" content="UX Methods Tree - Interactive Design Decision Tool | Dlightning"/>
+<meta property="og:description" content="Interactive UX Design Decision Tree helps you choose the right research and design methods for your project."/>
+<meta property="og:image:width" content="824"/>
+<meta property="og:image:height" content="551"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UX Methods Tree - Interactive Design Decision Tool | Dlightning">
+<meta name="twitter:description" content="Interactive UX Design Decision Tree helps you choose the right methods for your project.">
+<meta name="twitter:image" content="https://dlightning.org/img/products/MDT.png">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- opengraph  -->
-    <meta property="og:url" content="https://dlightning.org/d-tools/ux-method-tree.html">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Dlightning">
-    <meta property="og:image" content="https://dlightning.org/img/products/MDT.png"/>
-    <meta property="og:title" content="UX Methods Tree - Interactive Design Decision Tool | Dlightning"/>
-    <meta property="og:description" content="Interactive UX Design Decision Tree helps you choose the right research and design methods for your project."/>
-    <meta property="og:image:width" content="824"/>
-    <meta property="og:image:height" content="551"/>
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="UX Methods Tree - Interactive Design Decision Tool | Dlightning">
-    <meta name="twitter:description" content="Interactive UX Design Decision Tree helps you choose the right methods for your project.">
-    <meta name="twitter:image" content="https://dlightning.org/img/products/MDT.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <style>
-    :root {
-        --primary-color: #0b3daa;
-        --secondary-color: #259928;
-        --accent-color: #b42525;
-        --text-color: #333;
-        --bg-color: #eaf8fd;
-        --hover-color: #10ac18;
-    }
+<style>
+  /* Strike map: lightning branches like a tree, so every method is the end of a fork. */
+  :root {
+    --ink: #0a1430;
+    --storm: #1c1650;
+    --sky: #009dff;
+    --sky-soft: #8dc4ff;
+    --blue: #0b5bd3;
+    --bolt: #ffd23f;
+    --bolt-deep: #c99e12;
+    --paper: #eef2f8;
+    --card: #ffffff;
+    --text: #1a2238;
+    --muted: #5b6680;
+    --line: #dbe2ee;
+    --display: 'Sora', 'Rubik', sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --body: 'Rubik', sans-serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
 
-    body {
-        font-family: 'Rubik', sans-serif;
-        line-height: 1.6;
-        color: var(--text-color);
-        margin: 0;
-        padding: 0;
-        background-color: var(--bg-color);
-        /* display: flex;
-        justify-content: center;
-        align-items: center;*/
-        min-height: 100vh; 
-    }
+  body {
+    color: var(--text); font-family: var(--body);
+    background: radial-gradient(rgba(10, 20, 48, .07) 1px, transparent 1.3px) 0 0 / 22px 22px, var(--paper);
+  }
+  header { z-index: 999; }
+  .umt-hidden { display: none !important; }
+  .umt-wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+  .umt-code { font-family: var(--mono); font-weight: 500; letter-spacing: .04em; }
 
-    /* .container {
-        width: 1000px; 
-        margin: 80px auto;
-        padding: 20px;
-    } */
+  /* ---------- hero: storm sky, a bolt forking into sixteen tips ---------- */
+  .umt-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 124px 0 150px;
+    background:
+      radial-gradient(700px 380px at 78% 18%, rgba(0, 157, 255, .2), transparent 65%),
+      radial-gradient(600px 420px at 10% 110%, rgba(120, 80, 230, .22), transparent 70%),
+      linear-gradient(170deg, var(--ink) 0%, var(--storm) 100%);
+  }
+  .umt-hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; }
+  .umt-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--bolt); margin-bottom: 20px; }
+  .umt-hero h1 {
+    font-family: var(--display); font-weight: 750; font-size: clamp(2.3rem, 4.8vw, 3.7rem); line-height: 1.04;
+    letter-spacing: -.028em; color: #fff; margin: 0 0 22px;
+  }
+  .umt-hero h1 em { font-style: normal; color: var(--bolt); }
+  .umt-lede { font-size: 1.15rem; line-height: 1.6; color: rgba(255, 255, 255, .76); max-width: 520px; margin: 0 0 30px; font-weight: 300; }
+  .umt-lede strong { color: #fff; font-weight: 500; }
+  .umt-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .88rem; color: rgba(255, 255, 255, .6); }
+  .umt-meta i { color: var(--sky); margin-right: 6px; }
 
-    #DTC{
-        margin: 60px auto 190px auto;
-    }
+  .umt-strike { width: 100%; max-width: 460px; justify-self: center; overflow: visible; }
+  .umt-strike .st { fill: none; stroke: rgba(141, 196, 255, .3); stroke-width: 1.5; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: umt-draw 1s var(--ease) forwards; }
+  .umt-strike .st.is-trunk { stroke-width: 2.4; }
+  .umt-strike .st-lit { fill: none; stroke: var(--bolt); stroke-width: 3.2; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 6px rgba(255, 210, 63, .85)); animation: umt-draw .7s var(--ease) 1.5s forwards; }
+  .umt-strike .tip { fill: rgba(141, 196, 255, .55); opacity: 0; animation: umt-pop .4s var(--ease) forwards; }
+  .umt-strike .tip-lit { fill: var(--bolt); opacity: 0; transform-box: fill-box; transform-origin: center; animation: umt-pop .4s var(--ease) 2.15s forwards, umt-pulse 2.4s ease-in-out 2.6s infinite; }
+  .umt-strike text { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: .14em; fill: rgba(255, 255, 255, .45); text-anchor: middle; }
+  @keyframes umt-draw { to { stroke-dashoffset: 0; } }
+  @keyframes umt-pop { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: scale(1); } }
+  @keyframes umt-pulse { 50% { filter: drop-shadow(0 0 8px rgba(255, 210, 63, .9)); transform: scale(1.35); } }
 
-    .decision-tree {
-        background-color: #fff;
-        padding: 1.5rem; 
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
+  .umt-btn {
+    font: inherit; font-weight: 500; border: none; border-radius: 10px; padding: 13px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease;
+  }
+  .umt-btn:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+  .umt-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 var(--bolt-deep); }
+  .umt-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--bolt-deep); color: var(--ink); text-decoration: none; }
+  .umt-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--bolt-deep); }
+  .umt-btn-ghost { background: transparent; color: var(--muted); padding: 10px 14px; }
+  .umt-btn-ghost:hover { color: var(--ink); background: var(--paper); }
+  .umt-btn-ink { background: var(--ink); color: #fff; }
+  .umt-btn-ink:hover { background: var(--blue); color: #fff; text-decoration: none; }
+  .umt-btn-ink i { color: var(--bolt); }
 
-    .decision-tree h2 {
-        color: var(--primary-color);
-        margin-bottom: 2rem;
-        text-align: center;
-        font-weight: 400;
-    }
+  /* ---------- the bench: question on white, tree on night sky ---------- */
+  #umtTool { scroll-margin-top: 90px; }
+  .umt-bench {
+    position: relative; z-index: 5; margin-top: -92px; border-radius: 18px; overflow: hidden;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+    box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 30px 60px -24px rgba(10, 20, 48, .38);
+  }
+  .umt-ask { background: var(--card); padding: 34px 38px 28px; display: flex; flex-direction: column; min-height: 560px; }
+  .umt-forks { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; font-family: var(--mono); font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .umt-fork { display: inline-flex; align-items: center; gap: 8px; }
+  .umt-fork b { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--line); font-weight: 600; color: var(--muted); }
+  .umt-fork.is-done b { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .umt-fork.is-current b { background: var(--ink); border-color: var(--ink); color: var(--bolt); }
+  .umt-fork.is-current { color: var(--ink); }
+  .umt-forks .umt-sep { flex: 0 0 26px; height: 0; border-top: 1.5px dashed var(--line); }
+  .umt-q-wrap.is-entering { animation: umt-in .4s var(--ease) both; }
+  @keyframes umt-in { from { opacity: 0; transform: translateX(16px); } }
+  .umt-q { font-family: var(--display); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.12; letter-spacing: -.025em; color: var(--ink); margin: 0 0 8px; outline: none; }
+  .umt-q-hint { color: var(--muted); font-size: .93rem; margin: 0 0 22px; }
+  .umt-q-hint kbd { font-family: var(--mono); font-size: .76rem; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--text); box-shadow: none; }
 
-    #tree-container {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        margin-bottom: 2rem;
-    }
+  .umt-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .umt-opt {
+    all: unset; box-sizing: border-box; cursor: pointer; position: relative; display: flex; flex-direction: column; gap: 6px;
+    padding: 16px 16px 18px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden;
+    transition: border-color .2s ease, transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease;
+  }
+  /* a fork of light runs along the top edge on hover */
+  .umt-opt::before { content: ''; position: absolute; left: 0; top: 0; height: 3px; width: 100%; background: var(--bolt); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
+  .umt-opt:hover { border-color: var(--sky); transform: translateY(-3px); box-shadow: 0 12px 24px -14px rgba(0, 92, 211, .45); }
+  .umt-opt:hover::before, .umt-opt[aria-checked="true"]::before { transform: scaleX(1); }
+  .umt-opt:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+  .umt-opt-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .umt-opt-code { font-family: var(--mono); font-size: .76rem; font-weight: 600; letter-spacing: .06em; color: var(--blue); }
+  .umt-opt-top i { color: var(--muted); font-size: .95rem; transition: color .2s ease; }
+  .umt-opt-title { font-family: var(--display); font-weight: 650; font-size: 1.1rem; line-height: 1.15; letter-spacing: -.01em; color: var(--ink); }
+  .umt-opt-when { font-size: .88rem; line-height: 1.4; color: var(--muted); }
+  .umt-opt[aria-checked="true"] { background: var(--ink); border-color: var(--ink); box-shadow: 0 14px 28px -14px rgba(10, 20, 48, .7); }
+  .umt-opt[aria-checked="true"] .umt-opt-code, .umt-opt[aria-checked="true"] .umt-opt-top i { color: var(--bolt); }
+  .umt-opt[aria-checked="true"] .umt-opt-title { color: #fff; }
+  .umt-opt[aria-checked="true"] .umt-opt-when { color: rgba(255, 255, 255, .7); }
 
-    #question-1, #question-2 {
-        font-size: 1.2rem;
-        margin-bottom: .5rem;
-    }
+  .umt-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 24px; }
+  .umt-trail { font-size: .88rem; color: var(--muted); }
+  .umt-trail b { color: var(--ink); font-weight: 500; }
 
-    .decision-level {
-        opacity: 0;
-        transform: translateY(-20px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+  /* the map */
+  .umt-map { position: relative; padding: 28px 26px 22px; color: #fff; background: radial-gradient(520px 340px at 0% 50%, rgba(0, 157, 255, .14), transparent 70%), linear-gradient(170deg, var(--ink), var(--storm)); }
+  .umt-map-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .umt-map-head h2 { font-family: var(--mono); font-size: .76rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--bolt); margin: 0; }
+  .umt-map-head p { font-size: .8rem; color: rgba(255, 255, 255, .5); margin: 0; }
+  .umt-tree { display: block; width: 100%; height: auto; }
+  .umt-tree .edge { fill: none; stroke: rgba(141, 196, 255, .24); stroke-width: 1.5; stroke-linejoin: round; transition: stroke .3s ease, opacity .3s ease; }
+  .umt-tree .edge.is-lit { stroke: var(--bolt); stroke-width: 3; filter: drop-shadow(0 0 5px rgba(255, 210, 63, .8)); stroke-dasharray: 1; animation: umt-strike-in .45s var(--ease) both; }
+  @keyframes umt-strike-in { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  .umt-tree .edge.is-dim { opacity: .35; }
+  .umt-tree .root { fill: var(--bolt); filter: drop-shadow(0 0 6px rgba(255, 210, 63, .7)); }
+  .umt-tree .node { cursor: pointer; outline: none; }
+  .umt-tree .node circle { fill: var(--ink); stroke: var(--sky-soft); stroke-width: 1.5; transition: fill .2s ease, stroke .2s ease; }
+  .umt-tree .node .hit { fill: transparent; stroke: none; }
+  .umt-tree .node text { transition: fill .2s ease, opacity .2s ease; }
+  .umt-tree .br-label { font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: .12em; fill: var(--sky-soft); text-anchor: middle; paint-order: stroke; stroke: var(--ink); stroke-width: 5px; stroke-linejoin: round; }
+  .umt-tree .lf-code { font-family: var(--mono); font-size: 11px; font-weight: 500; fill: var(--sky-soft); }
+  .umt-tree .lf-name { font-family: var(--body); font-size: 13.5px; fill: rgba(255, 255, 255, .78); }
+  .umt-tree .node:hover circle, .umt-tree .node:focus-visible circle { stroke: var(--bolt); }
+  .umt-tree .node:hover .lf-name, .umt-tree .node:focus-visible .lf-name { fill: #fff; }
+  .umt-tree .node:focus-visible .hit { stroke: var(--bolt); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .umt-tree .node.is-dim text { opacity: .4; }
+  .umt-tree .node.is-dim circle { stroke: rgba(141, 196, 255, .35); }
+  .umt-tree .node.is-lit circle { fill: var(--bolt); stroke: var(--bolt); }
+  .umt-tree .node.is-lit .lf-name { fill: var(--bolt); font-weight: 500; }
+  .umt-tree .node.is-lit .lf-code { fill: var(--bolt); }
 
-    .decision-level.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  /* ---------- result: where the strike lands ---------- */
+  #results { scroll-margin-top: 90px; outline: none; }
+  .umt-result { margin-top: 44px; background: var(--card); border-radius: 18px; overflow: hidden; box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 24px 50px -28px rgba(10, 20, 48, .32); }
+  .umt-result.is-landing { animation: umt-land .5s var(--ease) both; }
+  @keyframes umt-land { from { opacity: 0; transform: translateY(14px); } }
+  .umt-r-band { position: relative; overflow: hidden; padding: 34px 40px 30px; color: #fff; background: radial-gradient(500px 260px at 100% 0%, rgba(255, 210, 63, .16), transparent 70%), linear-gradient(170deg, var(--ink), var(--storm)); }
+  .umt-r-kicker { font-family: var(--mono); font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--bolt); margin: 0 0 8px; }
+  .umt-r-name { font-family: var(--display); font-weight: 750; font-size: clamp(2rem, 4.4vw, 3.2rem); line-height: 1.05; letter-spacing: -.022em; color: #fff; margin: 0 0 14px; outline: none; }
+  .umt-r-approach { font-size: 1.05rem; line-height: 1.6; color: rgba(255, 255, 255, .8); max-width: 760px; margin: 0; font-weight: 300; }
+  .umt-glance { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-top: 26px; background: rgba(255, 255, 255, .14); border-radius: 12px; overflow: hidden; }
+  .umt-glance div { background: rgba(10, 20, 48, .55); padding: 14px 16px; }
+  .umt-glance dt { font-family: var(--mono); font-size: .7rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--sky-soft); margin: 0 0 4px; }
+  .umt-glance dd { margin: 0; font-size: .98rem; line-height: 1.35; color: #fff; }
 
-    .decision-level-options {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: .6rem;
-    }
+  .umt-r-body { display: grid; grid-template-columns: 1.2fr .8fr; gap: 0; }
+  .umt-r-col { padding: 30px 40px 32px; }
+  .umt-r-col + .umt-r-col { border-left: 1px solid var(--line); background: #fafbfd; }
+  .umt-r-col h3 { font-family: var(--mono); font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
+  .umt-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .umt-steps li { counter-increment: step; position: relative; padding: 0 0 16px 46px; line-height: 1.55; color: var(--text); }
+  .umt-steps li::before {
+    content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: -1px; width: 32px; height: 26px; border-radius: 6px;
+    background: var(--ink); color: var(--bolt); display: grid; place-items: center; font-family: var(--mono); font-weight: 600; font-size: .78rem;
+  }
+  .umt-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
+  .umt-chip { display: inline-flex; align-items: center; gap: 6px; font-size: .88rem; padding: 6px 12px; border-radius: 8px; background: #fff; border: 1px solid var(--line); color: var(--ink); }
+  a.umt-chip-dl { background: var(--bolt); border-color: var(--bolt); color: var(--ink); font-weight: 500; text-decoration: none; transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+  a.umt-chip-dl:hover { transform: translateY(-2px); box-shadow: 0 6px 14px -6px rgba(201, 158, 18, .8); color: var(--ink); text-decoration: none; }
+  .umt-reads { list-style: none; margin: 0; padding: 0; }
+  .umt-reads li { margin-bottom: 10px; }
+  .umt-reads a { display: inline-flex; gap: 8px; align-items: baseline; color: var(--blue); text-decoration: none; line-height: 1.4; }
+  .umt-reads a:hover { text-decoration: underline; }
+  .umt-reads i { font-size: .72rem; color: var(--muted); }
 
-    .option-btn {
-        background-color: var(--secondary-color);
-        color: #fff;
-        border: none;
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: all 0.5s ease;
-        flex: 1;
-        min-width: 180px;
-        flex-shrink: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+  .umt-sibs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 18px 40px 22px; border-top: 1px solid var(--line); }
+  .umt-sibs span { font-family: var(--mono); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+  .umt-sib { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: 999px; border: 1.5px solid var(--line); font-size: .9rem; color: var(--ink); transition: border-color .2s ease, background .2s ease; }
+  .umt-sib b { font-family: var(--mono); font-weight: 500; font-size: .74rem; color: var(--blue); }
+  .umt-sib:hover { border-color: var(--sky); background: #f2f8ff; }
+  .umt-sib:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
 
-    .option-btn.selected {
-        background-color: var(--primary-color);
-        transform: translateY(-3px);
-        box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
-    }
+  .umt-after { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 8px; }
 
-    .option-btn.unselected {
-        background-color: #a5d6a7;
-        opacity: 0.7;
-    }
+  /* ---------- next: Experience Builder + email ---------- */
+  .umt-next { display: grid; grid-template-columns: 1.3fr 1fr; gap: 22px; margin-top: 40px; align-items: stretch; }
+  .umt-cta { position: relative; overflow: hidden; border-radius: 18px; min-height: 240px; display: flex; align-items: flex-end; padding: 30px 32px; isolation: isolate; text-decoration: none; }
+  .umt-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .6s var(--ease); }
+  .umt-cta::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(100deg, rgba(10, 20, 48, .92) 0%, rgba(28, 22, 80, .6) 55%, rgba(28, 22, 80, .15) 100%); }
+  .umt-cta:hover { text-decoration: none; }
+  .umt-cta:hover img { transform: scale(1.05); }
+  .umt-cta h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.45rem, 2.8vw, 2rem); letter-spacing: -.025em; line-height: 1.05; color: #fff; margin: 0 0 8px; }
+  .umt-cta p { color: rgba(255, 255, 255, .78); margin: 0 0 18px; max-width: 420px; }
+  .umt-mail { align-self: center; } /* email-capture.html brings its own panel */
 
-    .option-btn:hover {
-        background-color: var(--hover-color);
-        transform: translateY(-3px);
-        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
-    }
+  /* ---------- FAQ ---------- */
+  .umt-seo { max-width: 860px; margin: 100px auto 0; padding: 0 20px; line-height: 1.65; }
+  .umt-seo h2 { font-family: var(--display); font-size: 1.7rem; font-weight: 700; letter-spacing: -.025em; color: var(--ink); margin: 0 0 16px; }
+  .umt-seo details { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; margin-bottom: 10px; }
+  .umt-seo summary { cursor: pointer; color: var(--ink); font-weight: 500; padding: 16px 0; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .umt-seo summary::-webkit-details-marker { display: none; }
+  .umt-seo summary::after { content: "+"; color: var(--blue); font-family: var(--mono); font-size: 1.3rem; margin-left: 12px; }
+  .umt-seo details[open] summary::after { content: "\2013"; }
+  .umt-seo details p { padding: 0 0 16px; margin: 0; color: var(--muted); }
+  .umt-seo a { color: var(--blue); }
 
-    #result {
-        font-size: 1.1rem;
-        font-weight: 400;
-        margin-bottom: 1rem;
-        color: var(--primary-color);
-        text-align: left;
-        padding: 1.5rem;
-        background-color: #f0f8ff;
-        border-radius: 5px;
-        margin-top: 2rem;
-        opacity: 0;
-        transform: translateY(-20px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+  /* ---------- responsive ---------- */
+  @media (max-width: 960px) {
+    .umt-hero { padding: 104px 0 140px; }
+    .umt-hero-grid { grid-template-columns: 1fr; }
+    .umt-strike { max-width: 380px; }
+    .umt-bench { grid-template-columns: 1fr; }
+    .umt-ask { min-height: 0; }
+    .umt-r-body, .umt-next { grid-template-columns: 1fr; }
+    .umt-r-col + .umt-r-col { border-left: none; border-top: 1px solid var(--line); }
+  }
+  /* sixteen labels don't fit a phone; the trail line carries the path there */
+  @media (max-width: 680px) { .umt-map { display: none; } }
+  @media (max-width: 567px) {
+    .umt-strike { display: none; }
+    .umt-ask { padding: 26px 18px 22px; }
+    .umt-options { grid-template-columns: 1fr; }
+    .umt-r-band, .umt-r-col { padding-left: 20px; padding-right: 20px; }
+    .umt-sibs { padding: 16px 20px 20px; }
+    .umt-glance { grid-template-columns: 1fr; }
+    .umt-cta { padding: 24px 20px; }
+  }
+  @media (hover: none) { .umt-keys { display: none; } }
 
-    #result.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  /* the saved PDF/PNG is 760px wide: stack the columns */
+  .dl-artifact .umt-result { margin-top: 0; box-shadow: none; border: 1px solid var(--line); }
+  .dl-artifact .umt-r-body { grid-template-columns: 1fr; }
+  .dl-artifact .umt-r-col + .umt-r-col { border-left: none; border-top: 1px solid var(--line); }
 
-    #restart-tree {
-        background-color: var(--accent-color);
-        color: #fff;
-        border: none;
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-        border-radius: 50px;
-        cursor: pointer;
-        transition-delay: 2.2s;
-        transition: all .8s ease;
-        display: block;
-        margin: 0 auto;
-        margin-top: 2rem;
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    #restart-tree.show, #expBld2.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    #decision-path {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-        border-left: 4px solid var(--primary-color);
-    }
-
-    .path-step {
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .path-step.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .tooltip {
-        position: relative;
-        display: inline-block;
-        cursor: help;
-        margin-left: 5px;
-    }
-
-    .tooltip .tooltiptext {
-        visibility: hidden;
-        width: 250px;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 10px;
-        position: absolute;
-        z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        margin-left: -125px;
-        opacity: 0;
-        transition: opacity 0.3s, visibility 0.3s;
-        font-size: 0.9rem;
-        line-height: 1.4;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    .tooltip:hover .tooltiptext {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    #result ul {
-        list-style-type: none;
-        padding-left: 0;
-        margin: 12px 0 0 16px;
-    }
-
-    #result li {
-        position: relative;
-        padding-left: 1.5em;
-        margin-bottom: 0.5em;
-        color: #2e2e2e;
-        font-size: smaller;
-    }
-
-  #result li::before {
-        content: " ➔";
-        position: absolute;
-        left: 0;
-        color: var(--primary-color);
-    }
-
-    @media (max-width: 1040px) { 
-        .container {
-            width: 95%;
-            max-width: 1000px; 
-        }
-    }
-
-    #expBld2{
-        background-image: linear-gradient(to right, navy, indigo 52%, rgb(187, 103, 229) 84%, rgb(205, 149, 240) 98%);
-        border-radius: 8px;
-        margin-top: 14px;
-        padding: 16px;
-        opacity: 0;
-        transform: translateY(-20px);
-        transition: opacity 0.8s ease, transform 0.8s ease allow-discrete;
-    }
-
-    .text-yellow{
-        color: gold;
-    }
-
-    #colorBlock{
-        width: 100%;
-        height: 16px;
-        background-color: #0b3daa;
-    }
-
-    i, .fa, .fa-brands {
-        line-height: 2 !important;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .umt-strike .st, .umt-strike .st-lit, .umt-tree .edge.is-lit { stroke-dashoffset: 0; }
+    .umt-strike .tip, .umt-strike .tip-lit { opacity: 1; }
+  }
 </style>
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
-    <link rel="manifest" href="/site.webmanifest">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
 </head>
+
 <body>
+<header id="header"></header>
 
-    <header id='header'></header>
-    <div class="bradcam_area bradcam_bg_1">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="bradcam_text">
-                        <h1>UX Methods Decision Tree</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section class="umt-hero">
+  <div class="umt-wrap umt-hero-grid">
+    <div>
+      <div class="umt-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i> UX Methods Tree</div>
+      <h1>Which UX method <em>fits your project?</em></h1>
+      <p class="umt-lede">Two forks, sixteen methods. Say what you're working on, pick the method that matches, and get <strong>how to run it, what it takes, and the tools to use</strong>.</p>
+      <button type="button" class="umt-btn umt-btn-bolt" id="umtStart">Start at the trunk <i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+      <div class="umt-meta">
+        <span><i class="far fa-clock" aria-hidden="true"></i>Under a minute</span>
+        <span><i class="fas fa-code-branch" aria-hidden="true"></i>16 methods</span>
+        <span><i class="fas fa-lock-open" aria-hidden="true"></i>No signup</span>
+        <span><i class="fas fa-download" aria-hidden="true"></i>Save as PDF</span>
+      </div>
     </div>
-    
-    <div class="container" id="DTC">
-        <div class="row">
-            <div class="col-xl-12">
-        <section id="decision-tree" class="decision-tree">
-            <h2>Discover UX Methods for Your Project</h2>
-            <div id="tree-container"></div>
-            <!-- <div id="decision-path"></div> -->
-            <div id="result" style="display: none;"></div>
+    <svg class="umt-strike" id="umtStrike" viewBox="0 0 440 370" aria-hidden="true"></svg>
+  </div>
+</section>
 
-            <div class="row">
-                <div class="col-xl-7">
-            <a href="experience-builder.html">
-                <div id="expBld2">
-                    <h4 class="text-white">Unlock the Full Power of&nbsp;Your&nbsp;Product</h4>
-                    <div>
-                        <button type="button" class="btn btn-primary">
-                          Experience Builder&emsp; <i class="fa fa-bolt text-yellow" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-              </a>
-            <button id="restart-tree" style="display: none;">Start Over</button>
-        </div>
-        <div class="col-xl-5">
-            <div id="email-form-con"><!-- Filled with email-capture.html --></div>
-        </div>
-        </div>
-        
-        </section>
-        <br>
+<main class="umt-wrap">
+  <section class="umt-bench" id="umtTool" aria-label="UX methods tree">
+    <div class="umt-ask">
+      <div class="umt-forks" id="umtForks"></div>
+      <div class="umt-q-wrap" id="umtQ"></div>
+      <div class="umt-nav">
+        <button type="button" class="umt-btn umt-btn-ghost" id="umtBack"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</button>
+        <div class="umt-trail" id="umtTrail" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="umt-map">
+      <div class="umt-map-head">
+        <h2>The whole tree</h2>
+        <p>Click any method to jump to it</p>
+      </div>
+      <svg class="umt-tree" id="umtTree" role="group" aria-label="All sixteen methods, grouped by focus"></svg>
+    </div>
+  </section>
+
+  <section id="results" class="umt-result umt-hidden" aria-live="polite" tabindex="-1"></section>
+
+  <div class="umt-after umt-hidden" id="umtAfter">
+    <button type="button" class="umt-btn umt-btn-ghost" id="umtRestart"><i class="fas fa-redo" aria-hidden="true"></i> Start again</button>
+  </div>
+
+  <div class="umt-next umt-hidden" id="umtNext">
+    <a class="umt-cta" href="../experience-builder.html">
+      <img src="../img/exp-builder/immersive-experience.png" alt="" loading="lazy">
+      <div>
+        <h2>Run the method, keep the findings</h2>
+        <p>Experience Builder holds your interviews, personas, journeys and tests in one place your team can work from.</p>
+        <span class="umt-btn umt-btn-bolt">Explore Experience Builder <i class="fas fa-bolt" aria-hidden="true"></i></span>
+      </div>
+    </a>
+    <div class="umt-mail" id="email-form-con"><!-- Filled with email-capture.html --></div>
+  </div>
+</main>
+
+<div id="error"></div>
+
+<!-- SEO content: sits BELOW the tool so it never gets in the way of using it -->
+<section class="umt-seo" aria-label="About the UX methods tree">
+  <h2>Frequently asked questions</h2>
+  <details>
+    <summary>How does the UX Methods Tree work?</summary>
+    <p>You make two choices: what you're working on (research, design, testing or analytics), then the method that matches your situation. You get an approach, the steps to run it, what it takes in time and people, tools to use, and further reading.</p>
+  </details>
+  <details>
+    <summary>Which UX method should I start with?</summary>
+    <p>If you're not yet sure who your users are or what they need, start with interviews. Five to eight conversations usually surface the main patterns, and every other method works better once you have them.</p>
+  </details>
+  <details>
+    <summary>What's the difference between usability testing and A/B testing?</summary>
+    <p>Usability testing shows why people struggle, using a handful of participants. A/B testing shows which of two versions performs better, and needs enough traffic to reach statistical significance. Use the first to find problems and the second to choose between fixes.</p>
+  </details>
+  <details>
+    <summary>How many users do I need for a usability test?</summary>
+    <p>About five per round finds most of the major problems in a flow. Several small rounds with fixes in between teach you more than one large study.</p>
+  </details>
+  <details>
+    <summary>Is the tool free?</summary>
+    <p>Yes. No signup, and you can save any method card as a PDF or PNG. When you're ready to put a method to work, <a href="../experience-builder.html">Experience Builder</a> gives your team a place to run it.</p>
+  </details>
+</section>
 
 <!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
 <div id="related-tools-con"></div>
-
-        </div>
-    </div>
-
-</div>
 
 <footer id="footer">
     <!-- Replaced by footer.html on load. Static so every page in the nav is
@@ -370,490 +402,668 @@
 </footer>
 
 <script>
-    let userInteractionData = "";
+(function () {
+    /* ---------- the tree ---------- */
+    // Four branches, four methods each. `code` is the index shown on cards and the map.
+    var BRANCHES = [
+        { key: "research", code: "R", name: "User Research", short: "RESEARCH", icon: "fa-comments",
+          when: "You don't know enough yet about who you're building for.",
+          question: "What do you need to learn about your users?",
+          methods: ["interviews", "surveys", "personas", "journeyMap"] },
+        { key: "design", code: "D", name: "Design & Prototyping", short: "DESIGN", icon: "fa-object-group",
+          when: "You know the problem and need to shape the interface.",
+          question: "What does the interface need to handle?",
+          methods: ["mobilefirst", "responsive", "accessibility", "motion"] },
+        { key: "usability", code: "U", name: "Usability & Testing", short: "TESTING", icon: "fa-user-check",
+          when: "You have something to put in front of people.",
+          question: "How do you want to test it?",
+          methods: ["inperson", "remote", "ab", "guerrilla"] },
+        { key: "analytics", code: "A", name: "Analytics & Optimization", short: "ANALYTICS", icon: "fa-chart-line",
+          when: "It's live and you need to know what's working.",
+          question: "What do you want to measure?",
+          methods: ["cro", "behavior", "performance", "funnel"] }
+    ];
+
+    var METHODS = {
+        interviews: {
+            name: "Interviews", when: "You need the why behind what people do.",
+            glance: ["1–2 weeks", "5–8 participants", "Needs, motives, quotes"],
+            result: "Focus on conducting in-depth user interviews to gain qualitative insights. Use open-ended questions and active listening techniques to uncover user needs, motivations, and pain points.",
+            expanded: [
+                "Prepare a comprehensive interview guide with a mix of open-ended and probing questions.",
+                "Consider using the 'Jobs to be Done' framework to understand user motivations.",
+                "Conduct interviews in the user's natural environment when possible for contextual insights.",
+                "Use affinity mapping to analyze and categorize interview data.",
+                "Consider both one-on-one interviews and focus groups for diverse perspectives."
+            ],
+            tools: ["Zoom", "UserZoom", "Miro", "Dovetail", "Otter.ai", "Dlightning Experience Builder"],
+            resources: [
+                { title: "Interviewing Users", url: "https://www.nngroup.com/articles/interviewing-users/" },
+                { title: "Jobs To Be Done Framework", url: "https://jtbd.info/" }
+            ]
+        },
+        surveys: {
+            name: "Surveys", when: "You need to know how many people feel something.",
+            glance: ["1–3 weeks", "100+ responses", "Numbers you can segment"],
+            result: "Develop comprehensive online surveys to collect quantitative data from a large user base. Use a mix of multiple-choice, rating scales, and open-ended questions to gather diverse insights.",
+            expanded: [
+                "Use tools like SurveyMonkey or Google Forms for easy distribution and data collection.",
+                "Implement Likert scales for measuring attitudes and opinions.",
+                "Include Net Promoter Score (NPS) questions to gauge user satisfaction and loyalty.",
+                "Use branching logic to create personalized survey paths based on responses.",
+                "Pilot test your survey with a small group to refine questions and identify potential issues."
+            ],
+            tools: ["SurveyMonkey", "Google Forms", "Typeform", "Qualtrics", "SurveySparrow"],
+            resources: [
+                { title: "Writing Survey Questions", url: "https://www.pewresearch.org/writing-survey-questions/" },
+                { title: "Creating Good Survey Questions", url: "https://www.qualtrics.com/blog/good-survey-questions/" }
+            ]
+        },
+        personas: {
+            name: "Persona Creation", when: "Your team keeps arguing about who the user is.",
+            glance: ["1–2 weeks after research", "Built from your research", "2–4 shared archetypes"],
+            result: "Create detailed user personas based on research data. Include demographic information, goals, behaviors, and pain points to guide design decisions and feature prioritization.",
+            expanded: [
+                "Conduct surveys and interviews to gather diverse data for personas.",
+                "Regularly update personas as you gather new insights.",
+                "Utilize persona templates to ensure consistency.",
+                "Share personas with your team for collaborative design efforts.",
+                "Consider creating scenario descriptions to support each persona."
+            ],
+            tools: ["UXPressia", "Xtensio", "Figma", "Miro", "Smaply", "Dlightning Experience Builder"],
+            resources: [
+                { title: "Personas: A Simple Introduction", url: "https://www.interaction-design.org/literature/article/personas-why-and-how-you-should-use-them" },
+                { title: "Data-Driven Design", url: "https://www.uxmatters.com/mt/archives/2020/10/data-driven-design-an-integral-part-of-ux-design.php" }
+            ]
+        },
+        journeyMap: {
+            name: "Journey Mapping", when: "Problems hide between steps and between teams.",
+            glance: ["2–5 days of workshops", "A cross-functional team", "Pain points by stage"],
+            result: "Develop customer journey maps to visualize the user's experience across different touchpoints. Identify pain points and opportunities for improvement in the user's journey.",
+            expanded: [
+                "Involve cross-functional teams to enrich the mapping process.",
+                "Use insights gained from user interviews to inform the journey map.",
+                "Identify moments of truth – critical touchpoints that significantly impact the user experience.",
+                "Consider both online and offline interactions in your mapping.",
+                "Regularly revisit and update the journey map based on new findings."
+            ],
+            tools: ["Miro", "UXPressia", "Smaply", "Custellence", "LucidChart", "Dlightning"],
+            resources: [
+                { title: "How to Create a Customer Journey Map", url: "https://www.nngroup.com/articles/customer-journey-mapping/" },
+                { title: "The Complete Guide to Customer Journey Mapping", url: "https://cdp.com/articles/customer-journey-mapping-guide/" }
+            ]
+        },
+        mobilefirst: {
+            name: "Mobile-First Design", when: "Most of your traffic arrives on a phone.",
+            glance: ["From the first sprint", "Design + engineering", "A core flow that fits a phone"],
+            result: "Implement a mobile-first design approach, focusing on creating optimal experiences for small screens first, then scaling up for larger devices.",
+            expanded: [
+                "Start with a mobile prototype to visualize the core functionality.",
+                "Utilize responsive design frameworks to build your pages.",
+                "Test designs on real devices to ensure usability.",
+                "Prioritize fast loading times as mobile sites need to be optimized.",
+                "Use mobile analytics to track user behavior and inform further optimizations."
+            ],
+            tools: ["Figma", "Sketch", "Dlightning Screen Builder", "Bootstrap"],
+            resources: [
+                { title: "What is Mobile First Design?", url: "https://www.geeksforgeeks.org/mobile-first-design/" },
+                { title: "Design Process In The Responsive Age", url: "https://www.smashingmagazine.com/2012/05/design-process-responsive-age/" }
+            ]
+        },
+        responsive: {
+            name: "Responsive Web Design", when: "One product has to work on every screen size.",
+            glance: ["Ongoing, per layout", "Design + front-end", "Layouts that hold at any width"],
+            result: "Design responsive layouts that adapt seamlessly to various screen sizes and devices, ensuring a consistent user experience across platforms.",
+            expanded: [
+                "Utilize CSS Grid and Flexbox for effective layout management.",
+                "Conduct thorough testing on multiple devices to ensure responsiveness.",
+                "Optimize images and content delivery for different resolutions.",
+                "Consider implementing media queries for enhanced control over layout.",
+                "Embrace a mobile-first philosophy to guide your design process."
+            ],
+            tools: ["Bootstrap", "Tailwind CSS", "Browserstack", "Responsively", "Dlightning Screen Builder"],
+            resources: [
+                { title: "Responsive Web Design Fundamentals", url: "https://web.dev/responsive-web-design-basics/" },
+                { title: "The Complete Guide to Responsive Web Design", url: "https://kinsta.com/blog/responsive-web-design/" }
+            ]
+        },
+        accessibility: {
+            name: "Accessibility-Driven Design", when: "Everyone has to be able to use it.",
+            glance: ["1–3 day audit, then ongoing", "Include disabled users", "WCAG gaps, by priority"],
+            result: "Prioritize accessibility in your design process, following WCAG guidelines to create inclusive experiences for users with diverse abilities.",
+            expanded: [
+                "Incorporate accessible color contrasts to aid visibility.",
+                "Ensure keyboard navigability for all interactive elements.",
+                "Use ARIA landmarks to enhance screen reader support.",
+                "Conduct regular accessibility audits and usability tests.",
+                "Educate your team on accessibility best practices."
+            ],
+            tools: ["axe DevTools", "WAVE", "Stark", "Lighthouse", "VoiceOver / NVDA"],
+            resources: [
+                { title: "Introduction to Web Accessibility (W3C)", url: "https://www.w3.org/WAI/fundamentals/accessibility-intro/" },
+                { title: "Accessible Design vs. Inclusive Design", url: "https://www.toptal.com/designers/ui/inclusive-design-infographic" },
+                { title: "How To Design For Accessibility", url: "https://digital.accessibility.princeton.edu/how/design" }
+            ]
+        },
+        motion: {
+            name: "Motion Design", when: "Things change on screen and people lose track.",
+            glance: ["Days per interaction", "Designer + front-end", "Transitions that explain change"],
+            result: "Incorporate motion design principles to enhance user engagement and provide visual feedback. Use animations to guide users through interactions and transitions.",
+            expanded: [
+                "Utilize motion to convey information, like indicating loading status.",
+                "Ensure that animations do not distract from the main content.",
+                "Experiment with easing functions to create natural movements.",
+                "Provide options to disable animations for users who prefer it.",
+                "Test animations on various devices to ensure performance."
+            ],
+            tools: ["After Effects", "Principle", "Framer", "Lottie", "Figma (Smart Animate)"],
+            resources: [
+                { title: "Animation Principles in UX", url: "https://www.nngroup.com/articles/animation-purpose-ux/" },
+                { title: "Respecting reduced-motion preferences", url: "https://web.dev/articles/prefers-reduced-motion" }
+            ]
+        },
+        inperson: {
+            name: "In-person Testing", when: "You want to watch faces and ask follow-ups.",
+            glance: ["About a week with recruiting", "5 participants per round", "Observed friction, with reasons"],
+            result: "Conduct in-person usability testing sessions to observe users interacting with your product in a controlled environment. Gather rich qualitative data through direct observation and think-aloud protocols.",
+            expanded: [
+                "Prepare a testing environment that mimics real usage conditions.",
+                "Encourage users to talk through their thoughts as they interact.",
+                "Record sessions for later review and analysis.",
+                "Gather follow-up feedback through interviews post-testing.",
+                "Use findings to inform iterations and improve the product."
+            ],
+            tools: ["Dlightning", "Camtasia", "Morae", "UserTesting", "Loop11", "Optimal Workshop"],
+            resources: [
+                { title: "Usability Testing 101", url: "https://www.nngroup.com/articles/usability-testing-101/" },
+                { title: "How to run a moderated usability test", url: "https://contentsquare.com/guides/usability-testing/moderated/" }
+            ]
+        },
+        remote: {
+            name: "Remote Testing", when: "Your users are spread out, or time is short.",
+            glance: ["3–7 days", "5–8 participants, anywhere", "Recordings + task success"],
+            result: "Implement remote usability testing to reach a geographically diverse user base. Use screen sharing and video conferencing tools to observe and interact with users in their natural environment.",
+            expanded: [
+                "Select appropriate remote testing tools like Lookback or UserTesting.",
+                "Establish clear protocols for conducting remote sessions.",
+                "Use tasks that can be easily accomplished in a remote setting.",
+                "Encourage users to share screens and narrate their thought processes.",
+                "Analyze results collaboratively with your team to identify insights."
+            ],
+            tools: ["UserTesting", "Lookback", "Zoom", "Maze", "UserZoom", "Dlightning Experience Builder"],
+            resources: [
+                { title: "Remote Usability Testing Guide", url: "https://www.nngroup.com/articles/remote-usability-tests/" },
+                { title: "Remote Usability Testing 101: Definition, Process, and Tools", url: "https://userpilot.com/blog/remote-usability-testing/" }
+            ]
+        },
+        ab: {
+            name: "A/B Testing", when: "You have traffic and two credible options.",
+            glance: ["2+ weeks per test", "Thousands of visitors", "A winner, with confidence"],
+            result: "Set up A/B tests to compare different design variations and measure their impact on user behavior and conversions. Use statistical analysis to make data-driven design decisions.",
+            expanded: [
+                "Clearly define success metrics before starting A/B tests.",
+                "Ensure a large enough sample size to achieve statistical significance.",
+                "Run tests for an adequate duration to gather reliable data.",
+                "Analyze results and iterate on designs based on findings.",
+                "Document tests to refine future A/B testing strategies."
+            ],
+            tools: ["Optimizely", "VWO", "AB Tasty", "GrowthBook", "Split.io"],
+            resources: [
+                { title: "A/B Testing Guide", url: "https://www.optimizely.com/optimization-glossary/ab-testing/" },
+                { title: "What is A/B Testing? The Complete Guide: From Beginner to Pro", url: "https://cxl.com/blog/ab-testing-guide/" }
+            ]
+        },
+        guerrilla: {
+            name: "Guerrilla Testing", when: "You need a gut-check today, for next to nothing.",
+            glance: ["An afternoon", "5–10 passers-by", "Fast reactions to a rough idea"],
+            result: "Conduct quick, informal usability tests in public spaces to gather rapid feedback on your designs. This method is cost-effective and can provide valuable insights early in the design process.",
+            expanded: [
+                "Bring quick prototypes to test and get immediate reactions.",
+                "Engage with a diverse range of users for broader insights.",
+                "Be prepared to adapt and refine your approach as needed.",
+                "Use the feedback to inform your design process before further validation.",
+                "Aim for a blend of qualitative and quantitative feedback."
+            ],
+            tools: ["POP App", "Marvel", "Figma", "UserTesting.com", "Dlightning"],
+            resources: [
+                { title: "The Art of Guerrilla Usability Testing", url: "https://uxbooth.com/articles/the-art-of-guerrilla-usability-testing/" },
+                { title: "Guerrilla Usability Testing: How To Introduce It In Your Next UX Project", url: "https://usabilitygeek.com/guerrilla-usability-testing-how-to/" }
+            ]
+        },
+        cro: {
+            name: "Conversion Rate Optimization", when: "People arrive but don't take the action.",
+            glance: ["Ongoing, 2–6 week cycles", "Enough traffic to measure", "More of the right actions"],
+            result: "Focus on Conversion Rate Optimization (CRO) to improve the percentage of users who take desired actions. Analyze user flows, implement A/B tests, and optimize call-to-action elements.",
+            expanded: [
+                "Conduct heuristic evaluations to identify potential issues in the user flow.",
+                "Utilize analytics tools to track user behavior and conversion funnels.",
+                "A/B test critical pages and calls to action for optimization.",
+                "Iterate continuously based on user feedback and performance data.",
+                "Incorporate qualitative insights from user testing into your CRO efforts."
+            ],
+            tools: ["Google Analytics", "Hotjar", "Optimizely", "VWO", "Convert", "Dlightning"],
+            resources: [
+                { title: "The Definitive Guide to Conversion Rate Optimization", url: "https://www.crazyegg.com/blog/conversion-rate-optimization/" },
+                { title: "Conversion Rate Optimization UX: 7 Best Practices", url: "https://forgeandsmith.com/blog/conversion-rate-optimization-ux/" }
+            ]
+        },
+        behavior: {
+            name: "User Behavior Analysis", when: "A number dropped and you don't know why.",
+            glance: ["1–2 weeks of data", "Real sessions, no recruiting", "Where people stall, and how"],
+            result: "Use tools like heatmaps, session recordings, and event tracking to analyze user behavior on your site or app. Identify patterns and optimize the user experience based on actual usage data.",
+            expanded: [
+                "Utilize tools for heatmapping.",
+                "Analyze session recordings to see how users navigate.",
+                "Combine quantitative data with qualitative insights for a comprehensive view.",
+                "Regularly review and adjust based on new user behavior patterns.",
+                "Use user feedback to further clarify behavioral insights."
+            ],
+            tools: ["Hotjar", "Crazy Egg", "FullStory", "Mouseflow", "Smartlook"],
+            resources: [
+                { title: "User Behavior Analytics Guide", url: "https://www.ibm.com/think/topics/user-behavior-analytics" },
+                { title: "Analyzing User Behavior: Wikipedia", url: "https://en.wikipedia.org/wiki/User_behavior_analytics" }
+            ]
+        },
+        performance: {
+            name: "Performance Metrics", when: "Pages feel slow, or search rankings slipped.",
+            glance: ["A day to audit", "Lab + field data", "Core Web Vitals to fix"],
+            result: "Monitor key performance metrics such as page load times, time to interactive, and core web vitals. Optimize your site's performance to improve user experience and search engine rankings.",
+            expanded: [
+                "Leverage tools like Google Lighthouse for performance audits.",
+                "Use lazy loading techniques to improve initial load times.",
+                "Optimize images and scripts to ensure faster loading.",
+                "Regularly test performance on mobile devices.",
+                "Monitor performance metrics continuously for ongoing improvements."
+            ],
+            tools: ["Google Lighthouse", "WebPageTest", "GTmetrix", "Pingdom", "SpeedCurve"],
+            resources: [
+                { title: "Web Performance Optimization", url: "https://web.dev/performance-optimizing-content-efficiency/" },
+                { title: "Core Web Vitals", url: "https://web.dev/vitals/" }
+            ]
+        },
+        funnel: {
+            name: "Funnel Analysis", when: "You need to find the step where people quit.",
+            glance: ["A few days, once events are tracked", "Your event data", "The step people drop at"],
+            result: "Implement funnel analysis to track user progression through key conversion paths. Identify drop-off points and optimize each stage of the funnel to improve overall conversion rates.",
+            expanded: [
+                "Visualize your funnel to identify critical drop-off points.",
+                "Use segmentation to understand different user behaviors at each stage.",
+                "A/B test different strategies to retain users at each stage.",
+                "Gather qualitative feedback on user motivations to inform funnel optimizations.",
+                "Regularly revise funnels based on new insights and conversion patterns."
+            ],
+            tools: ["Google Analytics", "Mixpanel", "Amplitude", "Kissmetrics", "Heap"],
+            resources: [
+                { title: "Funnel Analysis Guide", url: "https://amplitude.com/blog/funnel-analysis" },
+                { title: "Conversion Funnels: Wikipedia", url: "https://en.wikipedia.org/wiki/Conversion_funnel" }
+            ]
+        }
+    };
+
+    // Dlightning's own products in the tool lists become links
+    var OWN_TOOLS = {
+        "Dlightning Experience Builder": "../experience-builder.html",
+        "Dlightning Screen Builder": "../screen-builder/",
+        "Dlightning": "../Pricing.html"
+    };
+
+    var branchOf = {};
+    BRANCHES.forEach(function (b, bi) {
+        b.methods.forEach(function (m, mi) { branchOf[m] = bi; METHODS[m].code = b.code + '·0' + (mi + 1); });
+    });
+
+    var state = { branch: null, method: null };
+    var byId = function (id) { return document.getElementById(id); };
+    var SVGNS = 'http://www.w3.org/2000/svg';
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------- lightning geometry ---------- */
+    function rnd(n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+    // a jagged line between two points, offset sideways at each step; same seed, same bolt
+    function jag(x1, y1, x2, y2, seed, segs, amp) {
+        var dx = x2 - x1, dy = y2 - y1, len = Math.sqrt(dx * dx + dy * dy) || 1;
+        var nx = -dy / len, ny = dx / len, d = 'M' + x1.toFixed(1) + ' ' + y1.toFixed(1);
+        for (var i = 1; i < segs; i++) {
+            var t = i / segs, off = (rnd(seed + i * 7.3) - .5) * 2 * amp;
+            d += 'L' + (x1 + dx * t + nx * off).toFixed(1) + ' ' + (y1 + dy * t + ny * off).toFixed(1);
+        }
+        return d + 'L' + x2.toFixed(1) + ' ' + y2.toFixed(1);
+    }
+
+    function drawStrike() {
+        var root = [220, 6], out = '', lit = '', delay;
+        BRANCHES.forEach(function (b, bi) {
+            var bx = 62 + bi * 105, by = 128 + (bi % 2 ? 14 : 0);
+            var trunk = jag(root[0], root[1], bx, by, bi + 1, 6, 11);
+            out += '<path class="st is-trunk" pathLength="1" style="animation-delay:' + (.1 + bi * .08) + 's" d="' + trunk + '"/>';
+            b.methods.forEach(function (m, mi) {
+                var tx = bx + (mi - 1.5) * 25, ty = 300 + rnd(bi * 4 + mi) * 26;
+                var limb = jag(bx, by, tx, ty, bi * 10 + mi + 3, 7, 7);
+                delay = .45 + bi * .08 + mi * .05;
+                out += '<path class="st" pathLength="1" style="animation-delay:' + delay + 's" d="' + limb + '"/>' +
+                       '<circle class="tip" style="animation-delay:' + (delay + .7) + 's" cx="' + tx.toFixed(1) + '" cy="' + ty.toFixed(1) + '" r="3"/>';
+                if (bi === 0 && mi === 0) {
+                    lit = '<path class="st-lit" pathLength="1" d="' + trunk + limb.replace(/^M[^L]+/, '') + '"/>' +
+                          '<circle class="tip-lit" cx="' + tx.toFixed(1) + '" cy="' + ty.toFixed(1) + '" r="5"/>';
+                }
+            });
+            out += '<text x="' + bx + '" y="358">' + b.short + '</text>';
+        });
+        byId('umtStrike').innerHTML = out + lit;
+    }
+
+    /* ---------- the map ---------- */
+    var MAP = { W: 580, pad: 20, row: 27, gap: 16, rootX: 16, brX: 150, lfX: 312 };
+
+    function drawMap() {
+        var svg = byId('umtTree'), M = MAP;
+        var H = M.pad * 2 + 16 * M.row + 3 * M.gap, rootY = H / 2;
+        svg.setAttribute('viewBox', '0 0 ' + M.W + ' ' + H);
+        var edges = '', nodes = '';
+        BRANCHES.forEach(function (b, bi) {
+            var ys = b.methods.map(function (m, mi) { var i = bi * 4 + mi; return M.pad + i * M.row + bi * M.gap + M.row / 2; });
+            var by = (ys[0] + ys[3]) / 2;
+            edges += '<path class="edge" pathLength="1" data-edge="' + b.key + '" d="' + jag(M.rootX, rootY, M.brX, by, bi + 11, 5, 6) + '"/>';
+            nodes += '<g class="node" data-branch="' + bi + '" tabindex="0" role="button" aria-label="' + b.name + ': show its four methods">' +
+                     '<rect class="hit" x="' + (M.brX - 48) + '" y="' + (by - 30) + '" width="96" height="44" rx="8"/>' +
+                     '<text class="br-label" x="' + M.brX + '" y="' + (by - 14) + '">' + b.short + '</text>' +
+                     '<circle cx="' + M.brX + '" cy="' + by + '" r="7"/></g>';
+            b.methods.forEach(function (m, mi) {
+                var y = ys[mi], meth = METHODS[m];
+                edges += '<path class="edge" pathLength="1" data-edge="' + m + '" d="' + jag(M.brX, by, M.lfX, y, bi * 10 + mi + 21, 5, 4) + '"/>';
+                nodes += '<g class="node" data-method="' + m + '" tabindex="0" role="button" aria-label="' + meth.name + ', ' + b.name + '">' +
+                         '<rect class="hit" x="' + (M.lfX - 10) + '" y="' + (y - M.row / 2 + 1) + '" width="' + (M.W - M.lfX + 6) + '" height="' + (M.row - 2) + '" rx="6"/>' +
+                         '<circle cx="' + M.lfX + '" cy="' + y + '" r="5"/>' +
+                         '<text class="lf-code" x="' + (M.lfX + 14) + '" y="' + (y + 4) + '">' + meth.code + '</text>' +
+                         '<text class="lf-name" x="' + (M.lfX + 56) + '" y="' + (y + 4.5) + '">' + meth.name + '</text></g>';
+            });
+        });
+        svg.innerHTML = edges + '<circle class="root" cx="' + M.rootX + '" cy="' + rootY + '" r="8"/>' + nodes;
+    }
+
+    function paintMap() {
+        var svg = byId('umtTree'), b = state.branch, m = state.method;
+        Array.prototype.forEach.call(svg.querySelectorAll('.edge'), function (p) {
+            var k = p.getAttribute('data-edge'), isBranch = branchOf[k] === undefined;
+            var lit = isBranch ? (b !== null && BRANCHES[b].key === k) : (k === m);
+            var dim = b !== null && !lit && (isBranch || branchOf[k] !== b);
+            p.classList.toggle('is-lit', lit);
+            p.classList.toggle('is-dim', dim);
+        });
+        Array.prototype.forEach.call(svg.querySelectorAll('.node'), function (g) {
+            var gm = g.getAttribute('data-method'), gb = g.getAttribute('data-branch');
+            var lit = gm ? gm === m : (+gb === b);
+            var dim = b !== null && (gm ? branchOf[gm] !== b : +gb !== b);
+            g.classList.toggle('is-lit', lit);
+            g.classList.toggle('is-dim', dim);
+            g.setAttribute('aria-pressed', lit ? 'true' : 'false');
+        });
+    }
+
+    /* ---------- the question panel ---------- */
+    function renderForks() {
+        var f1 = state.branch === null ? 'is-current' : 'is-done';
+        var f2 = state.branch === null ? '' : (state.method ? 'is-done' : 'is-current');
+        byId('umtForks').innerHTML =
+            '<span class="umt-fork ' + f1 + '"><b>' + (f1 === 'is-done' ? '<i class="fas fa-check" aria-hidden="true"></i>' : '1') + '</b>Focus</span>' +
+            '<span class="umt-sep" aria-hidden="true"></span>' +
+            '<span class="umt-fork ' + f2 + '"><b>' + (f2 === 'is-done' ? '<i class="fas fa-check" aria-hidden="true"></i>' : '2') + '</b>Method</span>';
+    }
+
+    function optionHTML(i, code, title, when, icon, checked) {
+        return '<button type="button" class="umt-opt" role="radio" data-index="' + i + '" aria-checked="' + checked + '" tabindex="' + (checked || i === 0 ? 0 : -1) + '">' +
+            '<span class="umt-opt-top"><span class="umt-opt-code">' + code + '</span><i class="fas ' + icon + '" aria-hidden="true"></i></span>' +
+            '<span class="umt-opt-title">' + title + '</span>' +
+            '<span class="umt-opt-when">' + when + '</span></button>';
+    }
+
+    function renderAsk(animate) {
+        var wrap = byId('umtQ'), html, b = state.branch;
+        var keys = '<span class="umt-keys"> Keys <kbd>1</kbd>–<kbd>4</kbd> work too.</span>';
+        if (b === null) {
+            html = '<h2 class="umt-q" id="umtQh" tabindex="-1">What are you working on?</h2>' +
+                '<p class="umt-q-hint">Pick the stage your project is in right now.' + keys + '</p>' +
+                '<div class="umt-options" role="radiogroup" aria-labelledby="umtQh">' +
+                BRANCHES.map(function (br, i) { return optionHTML(i, br.code + '·', br.name, br.when, br.icon, false); }).join('') + '</div>';
+        } else {
+            var br = BRANCHES[b];
+            html = '<h2 class="umt-q" id="umtQh" tabindex="-1">' + br.question + '</h2>' +
+                '<p class="umt-q-hint">Choose the line that sounds most like your situation.' + keys + '</p>' +
+                '<div class="umt-options" role="radiogroup" aria-labelledby="umtQh">' +
+                br.methods.map(function (k, i) { var m = METHODS[k]; return optionHTML(i, m.code, m.name, m.when, 'fa-bolt', state.method === k); }).join('') + '</div>';
+        }
+        wrap.innerHTML = html;
+        if (animate && !reduced) { wrap.classList.remove('is-entering'); void wrap.offsetWidth; wrap.classList.add('is-entering'); }
+        byId('umtBack').style.visibility = b === null ? 'hidden' : 'visible';
+        byId('umtTrail').innerHTML = b === null ? '' :
+            '<b>' + BRANCHES[b].name + '</b>' + (state.method ? ' → <b>' + METHODS[state.method].name + '</b>' : ' → …');
+        renderForks();
+        paintMap();
+    }
+
+    /* ---------- the result ---------- */
+    function renderResult(scroll) {
+        var k = state.method, m = METHODS[k], br = BRANCHES[branchOf[k]];
+        var labels = ['Takes', 'People', 'You get'];
+        var tools = m.tools.map(function (t) {
+            return OWN_TOOLS[t]
+                ? '<li><a class="umt-chip umt-chip-dl" href="' + OWN_TOOLS[t] + '"><i class="fas fa-bolt" aria-hidden="true"></i>' + t + '</a></li>'
+                : '<li><span class="umt-chip">' + t + '</span></li>';
+        }).join('');
+        var sibs = br.methods.filter(function (x) { return x !== k; }).map(function (x) {
+            return '<button type="button" class="umt-sib" data-method="' + x + '"><b>' + METHODS[x].code + '</b>' + METHODS[x].name + '</button>';
+        }).join('');
+
+        var el = byId('results');
+        el.innerHTML =
+            '<div class="umt-r-band">' +
+              '<p class="umt-r-kicker">' + m.code + ' · ' + br.name + '</p>' +
+              '<h2 class="umt-r-name" id="umtRname" tabindex="-1">' + m.name + '</h2>' +
+              '<p class="umt-r-approach">' + m.result + '</p>' +
+              '<dl class="umt-glance">' + m.glance.map(function (g, i) { return '<div><dt>' + labels[i] + '</dt><dd>' + g + '</dd></div>'; }).join('') + '</dl>' +
+            '</div>' +
+            '<div class="umt-r-body">' +
+              '<div class="umt-r-col"><h3>How to run it</h3><ol class="umt-steps">' + m.expanded.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol></div>' +
+              '<div class="umt-r-col"><h3>Tools to try</h3><ul class="umt-chips">' + tools + '</ul>' +
+                '<h3>Read more</h3><ul class="umt-reads">' + m.resources.map(function (r) {
+                    return '<li><a href="' + r.url + '" target="_blank" rel="noopener">' + r.title + ' <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></li>';
+                }).join('') + '</ul></div>' +
+            '</div>' +
+            '<div class="umt-sibs" data-dl-ignore><span>Same branch</span>' + sibs + '</div>';
+
+        ['results', 'umtAfter', 'umtNext'].forEach(function (id) { byId(id).classList.remove('umt-hidden'); });
+        if (!reduced) { el.classList.remove('is-landing'); void el.offsetWidth; el.classList.add('is-landing'); }
+        if (scroll) {
+            el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+            byId('umtRname').focus({ preventScroll: true });
+        }
+    }
+
+    function hideResult() {
+        ['results', 'umtAfter', 'umtNext'].forEach(function (id) { byId(id).classList.add('umt-hidden'); });
+    }
 
     function updateInteractionData() {
-        if (currentPath.length > 0) {
-            const pathSummary = currentPath
-                .filter(step => step.choice)
-                .map(step => `${step.label}: ${step.choice}`)
-                .join('\n');
-            userInteractionData = `UX Path:\n${pathSummary}`;
-            window.userInteractionData = userInteractionData;
+        var lines = [];
+        if (state.branch !== null) lines.push('Primary UX Focus: ' + BRANCHES[state.branch].name);
+        if (state.method) lines.push('Method: ' + METHODS[state.method].name);
+        window.userInteractionData = lines.length ? 'UX Path:\n' + lines.join('\n') : '';
+    }
+
+    function setHash() {
+        var url = location.pathname + location.search + (state.method ? '#' + state.method : '');
+        history.replaceState(null, '', url);
+    }
+
+    /* ---------- actions ---------- */
+    var advanceTimer = null;
+
+    function chooseBranch(bi, animate) {
+        clearTimeout(advanceTimer);
+        if (state.branch !== bi) { state.method = null; hideResult(); }
+        state.branch = bi;
+        updateInteractionData(); setHash();
+        renderAsk(animate);
+    }
+
+    function chooseMethod(k, scroll) {
+        clearTimeout(advanceTimer);
+        var bi = branchOf[k], animate = state.branch !== bi;
+        state.branch = bi; state.method = k;
+        updateInteractionData(); setHash();
+        renderAsk(animate);
+        renderResult(scroll);
+    }
+
+    function pick(index) {
+        var opts = document.querySelectorAll('.umt-opt');
+        if (!opts[index]) return;
+        opts.forEach(function (o, i) { o.setAttribute('aria-checked', i === index); o.tabIndex = i === index ? 0 : -1; });
+        if (state.branch === null) {
+            // let the selection register, then move to the second fork
+            advanceTimer = setTimeout(function () {
+                chooseBranch(index, true);
+                focusFirstOption();
+            }, reduced ? 0 : 280);
+        } else {
+            chooseMethod(BRANCHES[state.branch].methods[index], true);
         }
     }
-//Header + Footer
-$(document).ready(function() {
-  $('#email-form-con').load("email-capture.html");
-  $('#related-tools-con').load("related-tools.html");
-  $('#footer').load("../footer.html");
-  $('#header').load("../header.html", function( response, status, xhr ) {
-    if ( status == "error" ) {
-        var msg = "Sorry but there was an error: ";
-        $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
-    } else {
-        $('.business-gen').addClass('thisPage');
+
+    function focusFirstOption() {
+        var o = document.querySelector('.umt-opt[tabindex="0"]');
+        if (o && document.activeElement && document.activeElement.closest('.umt-bench')) o.focus({ preventScroll: true });
     }
-  })
-});
-  //START
-        const decisionTree = {
-            start: {
-                label: "Primary UX Focus",
-                question: "What's your primary UX focus?",
-                options: [
-                    { text: "User Research", next: "research" },
-                    { text: "Design & Prototyping", next: "design" },
-                    { text: "Usability & Testing", next: "usability" },
-                    { text: "Analytics & Optimization", next: "analytics" }
-                ]
-            },
-            research: {
-                label: "User Research Method",
-                question: "Which user research method do you want to prioritize?",
-                options: [
-                    { text: "Interviews", next: "interviews" },
-                    { text: "Surveys", next: "surveys" },
-                    { text: "Persona Creation", next: "personas" },
-                    { text: "Journey Mapping", next: "journeyMap" }
-                ]
-            },
-            design: {
-                label: "Design Approach",
-                question: "What design approach are you most interested in?",
-                options: [
-                    { text: "Mobile-First Design", next: "mobilefirst" },
-                    { text: "Responsive Web Design", next: "responsive" },
-                    { text: "Accessibility-Driven Design", next: "accessibility" },
-                    { text: "Motion Design", next: "motion" }
-                ]
-            },
-            usability: {
-                label: "Usability Testing Method",
-                question: "Which usability testing method do you prefer?",
-                options: [
-                    { text: "In-person Testing", next: "inperson" },
-                    { text: "Remote Testing", next: "remote" },
-                    { text: "A/B Testing", next: "ab" },
-                    { text: "Guerrilla Testing", next: "guerrilla" }
-                ]
-            },
-            analytics: {
-                label: "Analytics Focus",
-                question: "What's your main analytics focus?",
-                options: [
-                    { text: "Conversion Rate Optimization", next: "cro" },
-                    { text: "User Behavior Analysis", next: "behavior" },
-                    { text: "Performance Metrics", next: "performance" },
-                    { text: "Funnel Analysis", next: "funnel" }
-                ]
-            },
-            interviews: { 
-                result: "Focus on conducting in-depth user interviews to gain qualitative insights. Use open-ended questions and active listening techniques to uncover user needs, motivations, and pain points.",
-                expanded: [
-                    "Prepare a comprehensive interview guide with a mix of open-ended and probing questions.",
-                    "Consider using the 'Jobs to be Done' framework to understand user motivations.",
-                    "Conduct interviews in the user's natural environment when possible for contextual insights.",
-                    "Use affinity mapping to analyze and categorize interview data.",
-                    "Consider both one-on-one interviews and focus groups for diverse perspectives."
-                ],
-                tools: ["Zoom", "UserZoom", "Miro", "Dovetail", "Otter.ai", "Dlightning Experience Builder"],
-                resources: [
-                    {title: "Interviewing Users", url: "https://www.nngroup.com/articles/interviewing-users/"},
-                    {title: "Jobs To Be Done Framework", url: "https://jtbd.info/"}
-                ]
-            },
-            surveys: { 
-                result: "Develop comprehensive online surveys to collect quantitative data from a large user base. Use a mix of multiple-choice, rating scales, and open-ended questions to gather diverse insights.",
-                expanded: [
-                    "Use tools like SurveyMonkey or Google Forms for easy distribution and data collection.",
-                    "Implement Likert scales for measuring attitudes and opinions.",
-                    "Include Net Promoter Score (NPS) questions to gauge user satisfaction and loyalty.",
-                    "Use branching logic to create personalized survey paths based on responses.",
-                    "Pilot test your survey with a small group to refine questions and identify potential issues."
-                ],
-                tools: ["SurveyMonkey", "Google Forms", "Typeform", "Qualtrics", "SurveySparrow"],
-                resources: [
-                    {title: "Writing Survey Questions", url: "https://www.pewresearch.org/writing-survey-questions/"},
-                    {title: "Creating Good Survey Questions", url: "https://www.qualtrics.com/blog/good-survey-questions/"}
-                ]
-            },
-            personas: { 
-                result: "Create detailed user personas based on research data. Include demographic information, goals, behaviors, and pain points to guide design decisions and feature prioritization.",
-                expanded: [
-                    "Conduct surveys and interviews to gather diverse data for personas.",
-                    "Regularly update personas as you gather new insights.",
-                    "Utilize persona templates to ensure consistency.",
-                    "Share personas with your team for collaborative design efforts.",
-                    "Consider creating scenario descriptions to support each persona."
-                ],
-                tools: ["UXPressia", "Xtensio", "Figma", "Miro", "Smaply", "Dlightning Experience Builder"],
-                resources: [
-                    {title: "Personas: A Simple Introduction", url: "https://www.interaction-design.org/literature/article/personas-why-and-how-you-should-use-them"},
-                    {title: "Data-Driven Design", url: "https://www.uxmatters.com/mt/archives/2020/10/data-driven-design-an-integral-part-of-ux-design.php"}
-                ]
-            },
-            journeyMap: { 
-                result: "Develop customer journey maps to visualize the user's experience across different touchpoints. Identify pain points and opportunities for improvement in the user's journey.",
-                expanded: [
-                    "Involve cross-functional teams to enrich the mapping process.",
-                    "Use insights gained from user interviews to inform the journey map.",
-                    "Identify moments of truth – critical touchpoints that significantly impact the user experience.",
-                    "Consider both online and offline interactions in your mapping.",
-                    "Regularly revisit and update the journey map based on new findings."
-                ],
-                tools: ["Miro", "UXPressia", "Smaply", "Custellence", "LucidChart", "Dlightning"],
-                resources: [
-                    {title: "How to Create a Customer Journey Map", url: "https://www.nngroup.com/articles/customer-journey-mapping/"},
-                    {title: "The Complete Guide to Customer Journey Mapping", url: "https://cdp.com/articles/customer-journey-mapping-guide/"}
-                ]
-            },
-            mobilefirst: { 
-                result: "Implement a mobile-first design approach, focusing on creating optimal experiences for small screens first, then scaling up for larger devices.",
-                expanded: [
-                    "Start with a mobile prototype to visualize the core functionality.",
-                    "Utilize responsive design frameworks to build your pages.",
-                    "Test designs on real devices to ensure usability.",
-                    "Prioritize fast loading times as mobile sites need to be optimized.",
-                    "Use mobile analytics to track user behavior and inform further optimizations."
-                ],
-                tools: ["Figma", "Sketch",  "Dlightning Screen Builder", "Bootstrap"],
-                resources: [
-                    {title: "What is Mobile First Design?", url: "https://www.geeksforgeeks.org/mobile-first-design/"},
-                    {title: "Design Process In The Responsive Age", url: "https://www.smashingmagazine.com/2012/05/design-process-responsive-age/"}
-                ]
-            },
-            responsive: { 
-                result: "Design responsive layouts that adapt seamlessly to various screen sizes and devices, ensuring a consistent user experience across platforms.",
-                expanded: [
-                    "Utilize CSS Grid and Flexbox for effective layout management.",
-                    "Conduct thorough testing on multiple devices to ensure responsiveness.",
-                    "Optimize images and content delivery for different resolutions.",
-                    "Consider implementing media queries for enhanced control over layout.",
-                    "Embrace a mobile-first philosophy to guide your design process."
-                ],
-                tools: ["Bootstrap", "Tailwind CSS", "Browserstack", "Responsively", "Dlightning Screen Builder"],
-                resources: [
-                    {title: "Responsive Web Design Fundamentals", url: "https://web.dev/responsive-web-design-basics/"},
-                    {title: "The Complete Guide to Responsive Web Design", url: "https://kinsta.com/blog/responsive-web-design/"}
-                ]
-            },
-            accessibility: { 
-                result: "Prioritize accessibility in your design process, following WCAG guidelines to create inclusive experiences for users with diverse abilities.",
-                expanded: [
-                    "Incorporate accessible color contrasts to aid visibility.",
-                    "Ensure keyboard navigability for all interactive elements.",
-                    "Use ARIA landmarks to enhance screen reader support.",
-                    "Conduct regular accessibility audits and usability tests.",
-                    "Educate your team on accessibility best practices."
-                ],
-                tools: ["Camtasia", "Morae", "UserTesting", "Loop11", "Optimal Workshop"],
-                resources: [
-                    {title: "Accessible Design vs. Inclusive Design", url: "https://www.toptal.com/designers/ui/inclusive-design-infographic"},
-                    {title: "How To Design For Accessibility", url: "https://digital.accessibility.princeton.edu/how/design"}
-                ]
-            },
-            motion: { 
-                result: "Incorporate motion design principles to enhance user engagement and provide visual feedback. Use animations to guide users through interactions and transitions.",
-                expanded: [
-                    "Utilize motion to convey information, like indicating loading status.",
-                    "Ensure that animations do not distract from the main content.",
-                    "Experiment with easing functions to create natural movements.",
-                    "Provide options to disable animations for users who prefer it.",
-                    "Test animations on various devices to ensure performance."
-                ],
-                tools: ["After Effects", "Principle", "Framer", "Lottie", "Figma (Smart Animate)"],
-                resources: [
-                    {title: "Animation Principles in UX", url: "https://www.nngroup.com/articles/animation-purpose-ux/"},
-                    {title: "The UX of Animation", url: "https://www.smashingmagazine.com/2021/09/interactive-learning-tools-front-end-developers/"}
-                ]
-            },
-            inperson: { 
-                result: "Conduct in-person usability testing sessions to observe users interacting with your product in a controlled environment. Gather rich qualitative data through direct observation and think-aloud protocols.",
-                expanded: [
-                    "Prepare a testing environment that mimics real usage conditions.",
-                    "Encourage users to talk through their thoughts as they interact.",
-                    "Record sessions for later review and analysis.",
-                    "Gather follow-up feedback through interviews post-testing.",
-                    "Use findings to inform iterations and improve the product."
-                ],
-                tools: ["Dlightning", "Camtasia", "Morae", "UserTesting", "Loop11", "Optimal Workshop"],
-                resources: [
-                    {title: "Usability Testing 101", url: "https://www.nngroup.com/articles/usability-testing-101/"},
-                    {title: "How to run a moderated usability test", url: "https://contentsquare.com/guides/usability-testing/moderated/"}
-                ]
-            },
-            remote: { 
-                result: "Implement remote usability testing to reach a geographically diverse user base. Use screen sharing and video conferencing tools to observe and interact with users in their natural environment.",
-                expanded: [
-                    "Select appropriate remote testing tools like Lookback or UserTesting.",
-                    "Establish clear protocols for conducting remote sessions.",
-                    "Use tasks that can be easily accomplished in a remote setting.",
-                    "Encourage users to share screens and narrate their thought processes.",
-                    "Analyze results collaboratively with your team to identify insights."
-                ],
-                tools: ["UserTesting", "Lookback", "Zoom", "Maze", "UserZoom", "Dlightning Experience Builder"],
-                resources: [
-                    {title: "Remote Usability Testing Guide", url: "https://www.nngroup.com/articles/remote-usability-tests/"},
-                    {title: "Remote Usability Testing 101: Definition, Process, and Tools", url: "https://userpilot.com/blog/remote-usability-testing/"}
-                ]
-            },
-            ab: { 
-                result: "Set up A/B tests to compare different design variations and measure their impact on user behavior and conversions. Use statistical analysis to make data-driven design decisions.",
-                expanded: [
-                    "Clearly define success metrics before starting A/B tests.",
-                    "Ensure a large enough sample size to achieve statistical significance.",
-                    "Run tests for an adequate duration to gather reliable data.",
-                    "Analyze results and iterate on designs based on findings.",
-                    "Document tests to refine future A/B testing strategies."
-                ],
-                tools: ["Optimizely", "Google Optimize", "VWO", "AB Tasty", "Split.io"],
-                resources: [
-                    {title: "A/B Testing Guide", url: "https://www.optimizely.com/optimization-glossary/ab-testing/"},
-                    {title: "What is A/B Testing? The Complete Guide: From Beginner to Pro", url: "https://cxl.com/blog/ab-testing-guide/"}
-                ]
-            },
-            guerrilla: { 
-                result: "Conduct quick, informal usability tests in public spaces to gather rapid feedback on your designs. This method is cost-effective and can provide valuable insights early in the design process.",
-                expanded: [
-                    "Bring quick prototypes to test and get immediate reactions.",
-                    "Engage with a diverse range of users for broader insights.",
-                    "Be prepared to adapt and refine your approach as needed.",
-                    "Use the feedback to inform your design process before further validation.",
-                    "Aim for a blend of qualitative and quantitative feedback."
-                ],
-                tools: ["POP App", "Marvel", "Figma", "UserTesting.com", "Dlightning"],
-                resources: [
-                    {title: "The Art of Guerrilla Usability Testing", url: "https://uxbooth.com/articles/the-art-of-guerrilla-usability-testing/"},
-                    {title: "Guerrilla Usability Testing: How To Introduce It In Your Next UX Project", url: "https://usabilitygeek.com/guerrilla-usability-testing-how-to/"}
-                ]
-            },
-            cro: { 
-                result: "Focus on Conversion Rate Optimization (CRO) to improve the percentage of users who take desired actions. Analyze user flows, implement A/B tests, and optimize call-to-action elements.",
-                expanded: [
-                    "Conduct heuristic evaluations to identify potential issues in the user flow.",
-                    "Utilize analytics tools to track user behavior and conversion funnels.",
-                    "A/B test critical pages and calls to action for optimization.",
-                    "Iterate continuously based on user feedback and performance data.",
-                    "Incorporate qualitative insights from user testing into your CRO efforts."
-                ],
-                tools: ["Google Analytics", "Hotjar", "Optimizely", "VWO", "Convert", "Dlightning"],
-                resources: [
-                    {title: "The Definitive Guide to Conversion Rate Optimization", url: "https://www.crazyegg.com/blog/conversion-rate-optimization/"},
-                    {title: "Conversion Rate Optimization UX: 7 Best Practices", url: "https://forgeandsmith.com/blog/conversion-rate-optimization-ux/"}
-                ]
-            },
-            behavior: { 
-                result: "Use tools like heatmaps, session recordings, and event tracking to analyze user behavior on your site or app. Identify patterns and optimize the user experience based on actual usage data.",
-                expanded: [
-                    "Utilize tools for heatmapping.",
-                    "Analyze session recordings to see how users navigate.",
-                    "Combine quantitative data with qualitative insights for a comprehensive view.",
-                    "Regularly review and adjust based on new user behavior patterns.",
-                    "Use user feedback to further clarify behavioral insights."
-                ],
-                tools: ["Hotjar", "Crazy Egg", "FullStory", "Mouseflow", "Smartlook"],
-                resources: [
-                    {title: "User Behavior Analytics Guide", url: "https://www.ibm.com/think/topics/user-behavior-analytics"},
-                    {title: "Analyzing User Behavior: Wikipedia", url: "https://en.wikipedia.org/wiki/User_behavior_analytics"},
-                ]
-            },
-            performance: { 
-                result: "Monitor key performance metrics such as page load times, time to interactive, and core web vitals. Optimize your site's performance to improve user experience and search engine rankings.",
-                expanded: [
-                    "Leverage tools like Google Lighthouse for performance audits.",
-                    "Use lazy loading techniques to improve initial load times.",
-                    "Optimize images and scripts to ensure faster loading.",
-                    "Regularly test performance on mobile devices.",
-                    "Monitor performance metrics continuously for ongoing improvements."
-                ],
-                tools: ["Google Lighthouse", "WebPageTest", "GTmetrix", "Pingdom", "SpeedCurve"],
-                resources: [
-                    {title: "Web Performance Optimization", url: "https://web.dev/performance-optimizing-content-efficiency/"},
-                    {title: "Core Web Vitals", url: "https://web.dev/vitals/"}
-                ]
-            },
-            funnel: { 
-                result: "Implement funnel analysis to track user progression through key conversion paths. Identify drop-off points and optimize each stage of the funnel to improve overall conversion rates.",
-                expanded: [
-                    "Visualize your funnel to identify critical drop-off points.",
-                    "Use segmentation to understand different user behaviors at each stage.",
-                    "A/B test different strategies to retain users at each stage.",
-                    "Gather qualitative feedback on user motivations to inform funnel optimizations.",
-                    "Regularly revise funnels based on new insights and conversion patterns."
-                ],
-                tools: ["Google Analytics", "Mixpanel", "Amplitude", "Kissmetrics", "Heap"],
-                resources: [
-                    {title: "Funnel Analysis Guide", url: "https://amplitude.com/blog/funnel-analysis"},
-                    {title: "Conversion Funnels: Wikipedia", url: "https://en.wikipedia.org/wiki/Conversion_funnel"},
-                ]
-            }
-        };
 
-        let currentStep = 'start';
-        let currentPath = [];
-        let levels = [];
+    function back() {
+        clearTimeout(advanceTimer);
+        state.branch = null; state.method = null;
+        hideResult(); updateInteractionData(); setHash();
+        renderAsk(true);
+    }
 
-        function renderDecisionTree() {
-            const treeContainer = document.getElementById('tree-container');
-            const resultElement = document.getElementById('result');
-            const restartButton = document.getElementById('restart-tree');
-            const experienceBld = document.getElementById('expBld2');
-            const emailFormCont = document.getElementById('email-form-con');
-            
-            const step = decisionTree[currentStep];
+    function restart() {
+        back();
+        byId('umtTool').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        byId('umtQh').focus({ preventScroll: true });
+    }
 
-            if (step.question) {
-                const levelDiv = document.createElement('div');
-                levelDiv.classList.add('decision-level');
+    /* ---------- wiring ---------- */
+    byId('umtQ').addEventListener('click', function (e) {
+        var b = e.target.closest('.umt-opt');
+        if (b) pick(+b.dataset.index);
+    });
 
-                const questionElement = document.createElement('div');
-                questionElement.id = `question-${currentPath.length + 1}`;
-                questionElement.innerHTML = `${step.question} <span class="tooltip">ⓘ<span class="tooltiptext">${step.helpText}</span></span>`;
-                levelDiv.appendChild(questionElement);
+    function mapActivate(g) {
+        if (g.dataset.method) chooseMethod(g.dataset.method, true);
+        else chooseBranch(+g.dataset.branch, true);
+    }
+    byId('umtTree').addEventListener('click', function (e) {
+        var g = e.target.closest('.node');
+        if (g) mapActivate(g);
+    });
+    byId('umtTree').addEventListener('keydown', function (e) {
+        var g = e.target.closest('.node');
+        if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); mapActivate(g); }
+    });
 
-                const optionsElement = document.createElement('div');
-                optionsElement.classList.add('decision-level-options');
-                optionsElement.id = `options-${currentPath.length + 1}`;
+    byId('results').addEventListener('click', function (e) {
+        var s = e.target.closest('.umt-sib');
+        if (s) chooseMethod(s.dataset.method, false);
+    });
 
-                step.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.textContent = option.text;
-                    button.classList.add('option-btn');
-                    button.addEventListener('click', () => {
-                        selectOption(button, option);
-                    });
-                    optionsElement.appendChild(button);
-                });
+    byId('umtBack').addEventListener('click', function () { back(); byId('umtQh').focus({ preventScroll: true }); });
+    byId('umtRestart').addEventListener('click', restart);
+    byId('umtStart').addEventListener('click', function () {
+        byId('umtTool').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        var o = document.querySelector('.umt-opt[tabindex="0"]');
+        if (o) o.focus({ preventScroll: true });
+    });
 
-                levelDiv.appendChild(optionsElement);
-                treeContainer.appendChild(levelDiv);
-                levels.push(levelDiv);
-
-                setTimeout(() => {
-                    levelDiv.classList.add('show');
-                }, 100);
-
-                currentPath.push({ label: step.label, choice: null });
-                resultElement.style.display = 'none';
-                restartButton.style.display = 'none';
-                experienceBld.style.display = 'none';
-                emailFormCont.style.display = 'none';
-            } else if (step.result) {
-                // Build the result HTML including approach, tips, tools, and resources
-                let resultHTML = `<strong>Approach:</strong><br> ${step.result}<br>`;
-                
-                // Add expanded tips
-                if (step.expanded) {
-                    resultHTML += '<ul>';
-                    step.expanded.forEach(item => {
-                        resultHTML += `<li>${item}</li>`;
-                    });
-                    resultHTML += '</ul>';
-                }
-                
-                // Add Recommended Tools section
-                if (step.tools && step.tools.length > 0) {
-                    resultHTML += '<div class="tools-section" style="margin-top: 20px;">';
-                    resultHTML += '<strong>Recommended Tools:</strong>';
-                    resultHTML += '<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">';
-                    
-                    step.tools.forEach(tool => {
-                        resultHTML += `<span style="background-color: #e3e3ff; color: var(--primary-color); padding: 4px 10px; border-radius: 16px; font-size: 0.9rem;">${tool}</span>`;
-                    });
-                    
-                    resultHTML += '</div></div>';
-                }
-                
-                // Add Resources section
-                if (step.resources && step.resources.length > 0) {
-                    resultHTML += '<div class="resources-section" style="margin-top: 20px;">';
-                    resultHTML += '<strong>Learn More:</strong>';
-                    resultHTML += '<ul style="margin-top: 8px;">';
-                    
-                    step.resources.forEach(resource => {
-                        resultHTML += `<li><a href="${resource.url}" target="_blank" style="color: var(--primary-color); text-decoration: none; border-bottom: 1px dotted var(--primary-color);">${resource.title}</a></li>`;
-                    });
-                    
-                    resultHTML += '</ul></div>';
-                }
-                
-                resultElement.innerHTML = resultHTML;
-                resultElement.style.display = 'block';
-                restartButton.style.display = 'inline-block';
-                experienceBld.style.display = 'block';
-                emailFormCont.style.display = 'block';
-
-                setTimeout(() => {
-                    resultElement.classList.add('show');
-                    restartButton.classList.add('show');
-                    experienceBld.classList.add('show');
-                    emailFormCont.classList.add('show');
-                }, 100);
-            }
-
-            renderPath();
+    document.addEventListener('keydown', function (e) {
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        var inGroup = e.target.closest && e.target.closest('.umt-options');
+        if (e.key >= '1' && e.key <= '4') {
+            var r = byId('umtTool').getBoundingClientRect();
+            if (r.bottom < 0 || r.top > window.innerHeight) return; // only when the tool is on screen
+            e.preventDefault();
+            pick(+e.key - 1);
+        } else if (inGroup && /^Arrow(Up|Down|Left|Right)$/.test(e.key)) {
+            e.preventDefault();
+            var opts = document.querySelectorAll('.umt-opt'), cur = +e.target.dataset.index;
+            var step = (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 1;
+            opts[(cur + step + opts.length) % opts.length].focus();
         }
+    });
 
-        function selectOption(button, option) {
-            const currentLevelOptions = button.parentElement.children;
-            Array.from(currentLevelOptions).forEach(btn => {
-                btn.classList.remove('selected');
-                btn.classList.add('unselected');
-            });
-
-            button.classList.remove('unselected');
-            button.classList.add('selected');
-
-            const currentLevel = parseInt(button.parentElement.id.split('-')[1]);
-            currentPath = currentPath.slice(0, currentLevel);
-            currentPath[currentLevel - 1].choice = option.text;
-            updateInteractionData();
-            window.userInteractionData = userInteractionData;
-
-            currentStep = option.next;
-
-            while (levels.length > currentLevel) {
-                const lastLevel = levels.pop();
-                lastLevel.remove();
+    $(document).ready(function () {
+        $('#email-form-con').load("email-capture.html");
+        $('#related-tools-con').load("related-tools.html");
+        $('#footer').load("../footer.html");
+        $('#header').load("../header.html", function (response, status, xhr) {
+            if (status == "error") {
+                $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
             }
-
-            renderDecisionTree();
-        }
-
-        function renderPath() {
-            const pathElement = document.getElementById('decision-path');
-            pathElement.innerHTML = '';
-            currentPath.forEach((step, index) => {
-                const stepElement = document.createElement('div');
-                stepElement.classList.add('path-step');
-                stepElement.textContent = `${index + 1}. ${step.label}${step.choice ? ': ' + step.choice : ''}`;
-                pathElement.appendChild(stepElement);
-
-                setTimeout(() => {
-                    stepElement.classList.add('show');
-                }, 100 * (index + 1));
-            });
-        }
-
-        document.getElementById('restart-tree').addEventListener('click', () => {
-            currentStep = 'start';
-            currentPath = [];
-            levels = [];
-            document.getElementById('tree-container').innerHTML = '';
-            document.getElementById('result').classList.remove('show');
-            document.getElementById('restart-tree').classList.remove('show');
-            document.getElementById('expBld2').classList.remove('show');
-
-            renderDecisionTree();
         });
+        drawStrike();
+        drawMap();
+        // a shared link like #journeyMap opens straight to that method
+        var k = location.hash.slice(1);
+        if (METHODS[k]) chooseMethod(k, true); else renderAsk(false);
+    });
+})();
+</script>
 
-        renderDecisionTree();
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "UX Methods Tree",
+  "url": "https://dlightning.org/d-tools/ux-method-tree.html",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "description": "A free interactive decision tree that matches your project to one of sixteen UX research, design, testing and analytics methods, with steps, tools and further reading for each.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@type": "Organization", "name": "Dlightning", "url": "https://dlightning.org" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How does the UX Methods Tree work?",
+      "acceptedAnswer": { "@type": "Answer", "text": "You make two choices: what you're working on (research, design, testing or analytics), then the method that matches your situation. You get an approach, the steps to run it, what it takes in time and people, tools to use, and further reading." } },
+    { "@type": "Question", "name": "Which UX method should I start with?",
+      "acceptedAnswer": { "@type": "Answer", "text": "If you're not yet sure who your users are or what they need, start with interviews. Five to eight conversations usually surface the main patterns, and every other method works better once you have them." } },
+    { "@type": "Question", "name": "What's the difference between usability testing and A/B testing?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Usability testing shows why people struggle, using a handful of participants. A/B testing shows which of two versions performs better, and needs enough traffic to reach statistical significance. Use the first to find problems and the second to choose between fixes." } },
+    { "@type": "Question", "name": "How many users do I need for a usability test?",
+      "acceptedAnswer": { "@type": "Answer", "text": "About five per round finds most of the major problems in a flow. Several small rounds with fixes in between teach you more than one large study." } },
+    { "@type": "Question", "name": "Is the tool free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. No signup, and you can save any method card as a PDF or PNG. When you're ready to put a method to work, Experience Builder gives your team a place to run it." } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dlightning.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Decision Tools", "item": "https://dlightning.org/d-tools/decision-tools.html" },
+    { "@type": "ListItem", "position": 3, "name": "UX Methods Tree", "item": "https://dlightning.org/d-tools/ux-method-tree.html" }
+  ]
+}
+</script>
 
-    <!-- Branded result download (PNG / PDF) -->
-    <script src="result-download.js"
-            data-dl-container="#result"
-            data-dl-title="UX Methods Decision Tree"
-            data-dl-filename="dlightning-ux-methods"></script>
-</body></html>
+<!-- Branded result download (PNG / PDF) -->
+<script src="result-download.js"
+        data-dl-container="#results"
+        data-dl-title="UX Methods Tree"
+        data-dl-filename="dlightning-ux-methods"></script>
+
+</body>
+</html>
