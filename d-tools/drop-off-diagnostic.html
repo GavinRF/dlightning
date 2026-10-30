@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Where are users dropping off, and why? Five questions find the stage your product loses people, rank the likely causes, and give you a 10-minute check and a test with a number to beat.">
+<meta name="keywords" content="user drop-off, user retention, activation rate, onboarding drop-off, conversion funnel, churn diagnosis, why users leave, product analytics">
+<link rel="canonical" href="https://dlightning.org/d-tools/drop-off-diagnostic.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow">
+
+<title>Drop-Off Diagnostic - Find Where Users Leave Your Product | Dlightning</title>
+
+<meta property="og:url" content="https://dlightning.org/d-tools/drop-off-diagnostic.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:image" content="https://dlightning.org/img/products/DOD.png"/>
+<meta property="og:title" content="Drop-Off Diagnostic - Find Where Users Leave Your Product | Dlightning"/>
+<meta property="og:description" content="Find the stage where your product loses people and the most likely reason, in 3 minutes."/>
+<meta property="og:image:width" content="824"/>
+<meta property="og:image:height" content="551"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Drop-Off Diagnostic - Find Where Users Leave Your Product | Dlightning">
+<meta name="twitter:description" content="Find the stage where your product loses people and the most likely reason, in 3 minutes.">
+<meta name="twitter:image" content="https://dlightning.org/img/products/DOD.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --ink: #0a1430;
+    --ink-2: #16244f;
+    --cobalt: #0b4fe0;
+    --sky: #009dff;
+    --bolt: #ffd23f;
+    --bolt-deep: #c99e12;
+    --paper: #eef1f6;
+    --card: #ffffff;
+    --text: #141a2e;
+    --muted: #5a6378;
+    --line: #dce1ea;
+    --font: 'Hanken Grotesk', 'Rubik', sans-serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
+
+  body { background: var(--paper); color: var(--text); font-family: var(--font); }
+  header { z-index: 999; }
+  .dod-hidden { display: none !important; }
+  .dod-wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+  .dod-page h1, .dod-page h2, .dod-page h3, .dod-page legend { font-family: var(--font); }
+
+  /* ---------- hero: the funnel, with one stage leaking ---------- */
+  .dod-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 128px 0 156px;
+    background:
+      radial-gradient(620px 380px at 88% 30%, rgba(0, 157, 255, .32), transparent 65%),
+      linear-gradient(165deg, var(--ink-2) 0%, var(--ink) 100%);
+  }
+  .dod-hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .45;
+    background-image: linear-gradient(rgba(255, 255, 255, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: radial-gradient(ellipse at 80% 40%, #000, transparent 70%);
+            mask-image: radial-gradient(ellipse at 80% 40%, #000, transparent 70%);
+  }
+  .dod-hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .dod-eyebrow {
+    display: inline-flex; align-items: center; gap: 9px; font-size: .8rem; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--bolt); margin-bottom: 20px;
+  }
+  .dod-hero h1 {
+    font-weight: 900; font-size: clamp(2.6rem, 5.2vw, 3.9rem); line-height: .98; letter-spacing: -.04em;
+    color: #fff; margin: 0 0 24px;
+  }
+  .dod-hero h1 span { display: block; color: var(--bolt); }
+  .dod-lede { font-size: 1.17rem; line-height: 1.58; color: rgba(255, 255, 255, .82); max-width: 510px; margin: 0 0 32px; }
+  .dod-lede strong { color: #fff; font-weight: 700; }
+  .dod-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .9rem; color: rgba(255, 255, 255, .7); }
+  .dod-meta i { color: var(--bolt); margin-right: 6px; }
+
+  .dod-funnel { width: 100%; max-width: 470px; justify-self: end; overflow: visible; }
+  .dod-funnel .bar { fill: rgba(255, 255, 255, .1); stroke: rgba(255, 255, 255, .18); stroke-width: 1; }
+  .dod-funnel .bar-leak { fill: var(--cobalt); stroke: none; }
+  .dod-funnel .bar-num { fill: var(--bolt); font: 700 11px var(--font); letter-spacing: .14em; }
+  .dod-funnel .bar-name { fill: #fff; font: 800 18px var(--font); letter-spacing: -.01em; }
+  .dod-funnel .bar-dim { fill: rgba(255, 255, 255, .55); }
+  .dod-funnel .crack { fill: none; stroke: var(--bolt); stroke-width: 3.5; stroke-linejoin: miter; stroke-dasharray: 120; stroke-dashoffset: 120; animation: dod-draw .6s ease-out .3s forwards; filter: drop-shadow(0 0 6px rgba(255, 210, 63, .7)); }
+  .dod-funnel .drop { fill: var(--bolt); opacity: 0; animation: dod-drip 2.4s cubic-bezier(.5, 0, .9, .6) infinite; }
+  .dod-funnel .drop:nth-of-type(2) { animation-delay: .8s; }
+  .dod-funnel .drop:nth-of-type(3) { animation-delay: 1.6s; }
+  @keyframes dod-draw { to { stroke-dashoffset: 0; } }
+  @keyframes dod-drip { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(120px); } }
+
+  .dod-btn {
+    font: inherit; font-weight: 700; border: none; border-radius: 10px; padding: 13px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1.2;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease, opacity .2s ease;
+  }
+  .dod-btn:focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; }
+  .dod-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 var(--bolt-deep); }
+  .dod-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--bolt-deep); color: var(--ink); text-decoration: none; }
+  .dod-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--bolt-deep); }
+  .dod-btn-ink { background: var(--ink); color: #fff; }
+  .dod-btn-ink:hover:not(:disabled) { background: var(--cobalt); color: #fff; }
+  .dod-btn-ink i { color: var(--bolt); }
+  .dod-btn-ink:disabled { opacity: .35; cursor: not-allowed; }
+  .dod-btn-ghost { background: transparent; color: var(--muted); padding: 10px 14px; }
+  .dod-btn-ghost:hover { color: var(--ink); background: var(--paper); }
+
+  /* ---------- the bench: questions left, the leak map right ---------- */
+  .dod-bench { position: relative; z-index: 5; margin-top: -96px; display: grid; grid-template-columns: 1fr 340px; gap: 22px; align-items: start; }
+  .dod-stage {
+    background: var(--card); border-radius: 18px; padding: 30px 38px 28px;
+    box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 30px 60px -26px rgba(10, 20, 48, .35);
+  }
+
+  .dod-steps { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .dod-steps button {
+    all: unset; box-sizing: border-box; display: block; width: 100%; cursor: default;
+    font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #98a0b2;
+  }
+  .dod-steps button::before {
+    content: ''; display: block; height: 10px; border-radius: 3px; margin-bottom: 8px;
+    background: #e5e9f0; transition: background .3s ease, box-shadow .3s ease;
+  }
+  .dod-steps .is-done button { color: var(--ink); cursor: pointer; }
+  .dod-steps .is-done button::before { background: var(--ink); }
+  .dod-steps .is-current button { color: var(--cobalt); }
+  .dod-steps .is-current button::before { background: var(--bolt); box-shadow: 0 0 0 3px rgba(255, 210, 63, .28); }
+  .dod-steps button:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 4px; border-radius: 4px; }
+
+  .dod-q { border: 0; margin: 0; padding: 0; min-width: 0; animation: dod-in .4s var(--ease); }
+  @keyframes dod-in { from { opacity: 0; transform: translateY(12px); } }
+  .dod-q-kicker { font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--cobalt); margin: 0 0 8px; }
+  .dod-q legend {
+    float: left; width: 100%; padding: 0; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; line-height: 1.12;
+    letter-spacing: -.025em; color: var(--ink); margin: 0 0 12px;
+  }
+  .dod-q legend + * { clear: both; }
+  .dod-q-why { font-size: 1rem; line-height: 1.55; color: var(--muted); margin: 0 0 22px; max-width: 600px; }
+  .dod-q-why b { color: var(--ink); font-weight: 700; }
+
+  .dod-opts { display: grid; gap: 10px; }
+  .dod-opts.is-grid { grid-template-columns: 1fr 1fr; }
+  .dod-opt { position: relative; display: block; margin: 0; cursor: pointer; }
+  .dod-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .dod-opt-face {
+    display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; height: 100%;
+    padding: 15px 18px; border-radius: 12px; border: 2px solid var(--line); background: #fff;
+    transition: border-color .2s ease, background .2s ease, transform .2s var(--ease), box-shadow .2s ease;
+  }
+  .dod-opt-ico {
+    width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; font-size: 1.05rem;
+    background: #eaf1ff; color: var(--cobalt); transition: background .2s ease, color .2s ease, transform .3s var(--ease);
+  }
+  .dod-opt-title { display: block; font-size: 1.06rem; font-weight: 800; color: var(--ink); letter-spacing: -.01em; line-height: 1.25; }
+  .dod-opt-desc { display: block; font-size: .93rem; color: var(--muted); line-height: 1.45; margin-top: 3px; }
+  .dod-opt-key {
+    font-size: .78rem; font-weight: 700; color: #98a0b2; border: 1.5px solid var(--line); border-radius: 6px;
+    min-width: 26px; height: 26px; display: grid; place-items: center; font-variant-numeric: tabular-nums;
+  }
+  .dod-opt:hover .dod-opt-face { border-color: #b4c5ea; transform: translateX(3px); }
+  .dod-opt input:focus-visible + .dod-opt-face { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+  .dod-opt input:checked + .dod-opt-face { border-color: var(--ink); background: #fffbea; box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px, -2px); }
+  .dod-opt input:checked + .dod-opt-face .dod-opt-ico { background: var(--bolt); color: var(--ink); transform: rotate(-6deg); }
+  .dod-opt input:checked + .dod-opt-face .dod-opt-key { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  .dod-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .dod-nav-hint { font-size: .85rem; color: var(--muted); }
+  .dod-nav-hint kbd { font: inherit; font-weight: 700; font-size: .78rem; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; box-shadow: none; }
+
+  /* the leak map: a small funnel that marks your stage, then your answers */
+  .dod-sheet {
+    position: sticky; top: 96px; background: var(--ink); color: #fff; border-radius: 18px; padding: 26px 24px 22px;
+    box-shadow: 0 30px 60px -26px rgba(10, 20, 48, .55); overflow: hidden;
+  }
+  .dod-sheet::after {
+    content: ''; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 157, 255, .3), transparent 70%); pointer-events: none;
+  }
+  .dod-sheet-title { font-size: .76rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt); margin: 0 0 4px; }
+  .dod-sheet-sub { font-size: .92rem; color: rgba(255, 255, 255, .6); margin: 0 0 16px; line-height: 1.45; }
+  .dod-map { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 5px; }
+  .dod-map li {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 30px; padding: 0 10px; border-radius: 6px;
+    font-size: .8rem; font-weight: 700; color: rgba(255, 255, 255, .6); background: rgba(255, 255, 255, .08);
+    transition: background .3s ease, color .3s ease;
+  }
+  .dod-map li i { opacity: 0; color: var(--ink); transition: opacity .3s ease; }
+  .dod-map li.is-leak { background: var(--bolt); color: var(--ink); }
+  .dod-map li.is-leak i { opacity: 1; }
+  .dod-sheet dl { margin: 0; }
+  .dod-row { padding: 11px 0; border-top: 1px solid rgba(255, 255, 255, .1); }
+  .dod-row dt { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .5); margin-bottom: 3px; }
+  .dod-row dd { margin: 0; font-size: .98rem; font-weight: 600; line-height: 1.35; color: #fff; }
+  .dod-row dd.is-empty { color: rgba(255, 255, 255, .32); font-weight: 400; font-style: italic; }
+  .dod-row.is-new dd { animation: dod-flash 1s ease; }
+  @keyframes dod-flash { 0% { color: var(--bolt); transform: translateX(-4px); } 100% { color: #fff; transform: none; } }
+  .dod-sheet-foot { margin: 14px 0 0; font-size: .82rem; color: rgba(255, 255, 255, .45); }
+  .dod-sheet-foot i { color: var(--bolt); margin-right: 6px; }
+
+  /* ---------- results ---------- */
+  .dod-results:focus { outline: none; }
+  .dod-verdict {
+    position: relative; z-index: 5; margin-top: -96px; border-radius: 18px; overflow: hidden; color: #fff;
+    background: var(--ink); display: grid; grid-template-columns: 1.3fr 1fr;
+    box-shadow: 0 30px 60px -26px rgba(10, 20, 48, .5);
+  }
+  .dod-verdict-main { padding: 38px 40px 36px; }
+  .dod-kicker { font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt); margin: 0 0 10px; }
+  .dod-verdict h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); font-weight: 900; line-height: 1; letter-spacing: -.04em; color: #fff; margin: 0 0 16px; }
+  .dod-verdict-cause { font-size: 1.2rem; font-weight: 700; line-height: 1.35; color: #fff; margin: 0 0 6px; }
+  .dod-verdict-cause span { color: var(--bolt); }
+  .dod-verdict-tell { font-size: 1.08rem; line-height: 1.5; color: rgba(255, 255, 255, .8); margin: 0; max-width: 480px; }
+  .dod-verdict-side { padding: 38px 36px; background: linear-gradient(160deg, var(--cobalt) 0%, #0839a8 100%); display: flex; flex-direction: column; justify-content: center; }
+  .dod-conf-label { font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .7); margin: 0 0 8px; }
+  .dod-conf { font-size: 1.9rem; font-weight: 900; letter-spacing: -.03em; line-height: 1.05; color: #fff; margin: 0 0 8px; }
+  .dod-conf-desc { font-size: 1rem; line-height: 1.5; color: rgba(255, 255, 255, .84); margin: 0; }
+
+  .dod-res-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 22px; margin-top: 22px; align-items: start; }
+  .dod-panel { background: var(--card); border-radius: 18px; padding: 30px 32px; box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 20px 44px -28px rgba(10, 20, 48, .3); }
+  .dod-panel > h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; color: var(--ink); margin: 0 0 6px; }
+  .dod-panel-sub { font-size: .97rem; color: var(--muted); line-height: 1.5; margin: 0 0 20px; }
+
+  .dod-causes { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .dod-cause { border: 2px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .dod-cause.is-top { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); background: #fffbea; }
+  .dod-cause-head { display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center; margin-bottom: 10px; }
+  .dod-rank { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-weight: 800; font-size: .9rem; background: var(--paper); color: var(--ink); }
+  .dod-cause.is-top .dod-rank { background: var(--bolt); }
+  .dod-cause h3 { font-size: 1.12rem; font-weight: 800; letter-spacing: -.01em; line-height: 1.25; color: var(--ink); margin: 0; }
+  .dod-strength { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .dod-cause.is-top .dod-strength { color: var(--cobalt); }
+  .dod-meter { height: 6px; border-radius: 999px; background: var(--paper); overflow: hidden; margin-bottom: 12px; }
+  .dod-meter span { display: block; height: 100%; border-radius: 999px; background: var(--ink); }
+  .dod-cause.is-top .dod-meter span { background: var(--cobalt); }
+  .dod-cause p { font-size: .97rem; line-height: 1.5; color: var(--text); margin: 0 0 10px; }
+  .dod-cause p:last-child { margin-bottom: 0; }
+  .dod-cause-check { color: var(--muted) !important; }
+  .dod-cause-check b { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); margin-bottom: 2px; }
+
+  .dod-ticket { position: relative; border-radius: 16px; background: var(--bolt); color: var(--ink); padding: 24px 26px 22px; }
+  .dod-ticket::before, .dod-ticket::after {
+    content: ''; position: absolute; top: 58px; width: 22px; height: 22px; border-radius: 50%; background: var(--card);
+  }
+  .dod-ticket::before { left: -11px; }
+  .dod-ticket::after { right: -11px; }
+  .dod-ticket-label { font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 26px; display: flex; justify-content: space-between; gap: 10px; }
+  .dod-ticket-label span:last-child { opacity: .7; }
+  .dod-ticket-text { font-size: 1.12rem; font-weight: 800; line-height: 1.3; letter-spacing: -.015em; margin: 0; border-top: 2px dashed rgba(10, 20, 48, .3); padding-top: 16px; }
+  .dod-how { list-style: none; margin: 22px 0 0; padding: 0; counter-reset: how; }
+  .dod-how li { counter-increment: how; position: relative; padding: 0 0 14px 38px; font-size: .97rem; line-height: 1.5; color: var(--text); }
+  .dod-how li::before {
+    content: counter(how); position: absolute; left: 0; top: -1px; width: 26px; height: 26px; border-radius: 7px;
+    background: var(--ink); color: #fff; font-size: .8rem; font-weight: 700; display: grid; place-items: center;
+  }
+  .dod-how b { color: var(--ink); }
+
+  .dod-after { display: flex; justify-content: center; margin-top: 8px; }
+
+  .dod-cta {
+    position: relative; display: block; overflow: hidden; isolation: isolate; border-radius: 18px; margin-top: 28px;
+    padding: 36px 40px; color: #fff; background: var(--ink);
+  }
+  .dod-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: .5; transition: transform .5s var(--ease); }
+  .dod-cta::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(10, 20, 48, .94) 0%, rgba(10, 20, 48, .6) 60%, rgba(10, 20, 48, .25) 100%); }
+  .dod-cta:hover img { transform: scale(1.06); }
+  .dod-cta-kicker { font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt); margin: 0 0 8px; }
+  .dod-cta h2 { font-size: 1.8rem; font-weight: 900; letter-spacing: -.03em; color: #fff; margin: 0 0 8px; }
+  .dod-cta p { font-size: 1.04rem; color: rgba(255, 255, 255, .82); max-width: 520px; margin: 0 0 20px; line-height: 1.5; }
+  .dod-cta p b { color: #fff; }
+
+  footer.dod-footer { margin-top: 90px; width: 100%; background: var(--ink); color: #fff; padding: 56px 34px; font-family: var(--font); }
+  footer.dod-footer h3 { font-family: var(--font); font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; color: #fff; margin-bottom: 16px; }
+  footer.dod-footer ol { padding-left: 22px; color: rgba(255, 255, 255, .85); }
+  footer.dod-footer li { margin-bottom: 9px; line-height: 1.5; }
+  footer.dod-footer p { color: rgba(255, 255, 255, .55); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 991px) {
+    .dod-hero { padding: 108px 0 140px; }
+    .dod-hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .dod-funnel { justify-self: start; max-width: 380px; }
+    .dod-bench { grid-template-columns: 1fr; }
+    .dod-sheet { position: static; }
+    .dod-verdict, .dod-res-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .dod-stage { padding: 24px 18px 22px; }
+    .dod-steps button { font-size: 0; }
+    .dod-opts.is-grid { grid-template-columns: 1fr; }
+    .dod-opt-face { grid-template-columns: 38px 1fr; padding: 13px 14px; gap: 12px; }
+    .dod-opt-ico { width: 38px; height: 38px; }
+    .dod-opt-key, .dod-nav-hint { display: none; }
+    .dod-verdict-main, .dod-verdict-side, .dod-panel { padding: 26px 22px; }
+    .dod-cause-head { grid-template-columns: 30px 1fr; }
+    .dod-strength { grid-column: 2; }
+    .dod-cta { padding: 28px 22px; }
+    footer.dod-footer { padding: 64px 8px; }
+  }
+  @media (hover: none) { .dod-nav-hint { display: none; } }
+
+  /* the saved PDF/PNG is 760px wide: stack the panels and keep the ink */
+  .dl-artifact .dod-verdict { margin-top: 0; box-shadow: none; grid-template-columns: 1fr; }
+  .dl-artifact .dod-res-grid { grid-template-columns: 1fr; }
+  .dl-artifact .dod-panel { box-shadow: none; border: 1px solid var(--line); }
+  .dl-artifact .dod-panel-sub { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .dod-funnel .crack { stroke-dashoffset: 0; }
+    .dod-funnel .drop { opacity: 0; }
+  }
+</style>
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body class="dod-page">
+<header id="header"></header>
+
+<section class="dod-hero">
+  <div class="dod-wrap dod-hero-grid">
+    <div>
+      <div class="dod-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i> Drop-Off Diagnostic</div>
+      <h1>Find the leak. <span>Fix that one first.</span></h1>
+      <p class="dod-lede">Five questions about where people quit your product. You leave with <strong>the likely cause</strong>, a ten-minute check, and <strong>a test to fix it</strong>.</p>
+      <button type="button" class="dod-btn dod-btn-bolt" id="dodStart">Find my leak <i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+      <div class="dod-meta">
+        <span><i class="far fa-clock" aria-hidden="true"></i>About 3 minutes</span>
+        <span><i class="far fa-window-restore" aria-hidden="true"></i>Keep your product open in another tab</span>
+        <span><i class="fas fa-lock-open" aria-hidden="true"></i>No signup</span>
+      </div>
+    </div>
+
+    <!-- Five stages, narrowing. The third one cracks and drips. -->
+    <svg class="dod-funnel" viewBox="0 0 440 330" aria-hidden="true">
+      <rect class="bar" x="0" y="0" width="440" height="52" rx="8"/>
+      <rect class="bar" x="25" y="62" width="390" height="52" rx="8"/>
+      <rect class="bar bar-leak" x="50" y="124" width="340" height="52" rx="8"/>
+      <rect class="bar" x="75" y="186" width="290" height="52" rx="8"/>
+      <rect class="bar" x="100" y="248" width="240" height="52" rx="8"/>
+      <text class="bar-num" x="20" y="22">01</text><text class="bar-name bar-dim" x="20" y="42">Visit</text>
+      <text class="bar-num" x="45" y="84">02</text><text class="bar-name bar-dim" x="45" y="104">Sign up</text>
+      <text class="bar-num" x="70" y="146">03</text><text class="bar-name" x="70" y="166">First use</text>
+      <text class="bar-num" x="95" y="208">04</text><text class="bar-name bar-dim" x="95" y="228">Week two</text>
+      <text class="bar-num" x="120" y="270">05</text><text class="bar-name bar-dim" x="120" y="290">Paid</text>
+      <polyline class="crack" points="300,124 288,140 304,152 292,176"/>
+      <circle class="drop" cx="292" cy="182" r="4"/>
+      <circle class="drop" cx="292" cy="182" r="3"/>
+      <circle class="drop" cx="292" cy="182" r="4"/>
+    </svg>
+  </div>
+</section>
+
+<main class="dod-wrap">
+  <section class="dod-bench" id="dodBench" aria-label="Diagnostic">
+    <div class="dod-stage">
+      <ol class="dod-steps" id="dodSteps" aria-label="Progress"></ol>
+      <div id="dodQuestion"></div>
+      <div class="dod-nav">
+        <button type="button" class="dod-btn dod-btn-ghost" id="dodBack"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</button>
+        <span class="dod-nav-hint">Keys <kbd>1</kbd>–<kbd id="dodKeyMax">5</kbd> pick, <kbd>Enter</kbd> continues</span>
+        <button type="button" class="dod-btn dod-btn-ink" id="dodNext" disabled>Next <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <aside class="dod-sheet" aria-label="Your answers so far">
+      <p class="dod-sheet-title">Your leak map</p>
+      <p class="dod-sheet-sub">Fills in as you answer. Change anything by going back.</p>
+      <ol class="dod-map" id="dodMap"></ol>
+      <dl id="dodSheet"></dl>
+      <p class="dod-sheet-foot"><i class="fas fa-lock" aria-hidden="true"></i>Stays in your browser.</p>
+    </aside>
+  </section>
+
+  <section id="results" class="dod-results dod-hidden" tabindex="-1" aria-live="polite">
+    <div class="dod-verdict">
+      <div class="dod-verdict-main">
+        <p class="dod-kicker">Where you're losing people</p>
+        <h2 id="dodStage">First use</h2>
+        <p class="dod-verdict-cause">Most likely: <span id="dodCause"></span></p>
+        <p class="dod-verdict-tell" id="dodTell"></p>
+      </div>
+      <div class="dod-verdict-side">
+        <p class="dod-conf-label">How sure you can be</p>
+        <p class="dod-conf" id="dodConf">Observed</p>
+        <p class="dod-conf-desc" id="dodConfDesc"></p>
+      </div>
+    </div>
+
+    <div class="dod-res-grid">
+      <div class="dod-panel">
+        <h2>Likely causes, ranked</h2>
+        <p class="dod-panel-sub">Scored from your three answers. Rule out the top one before you move to the next.</p>
+        <ol class="dod-causes" id="dodCauses"></ol>
+      </div>
+
+      <div class="dod-panel">
+        <h2>This week</h2>
+        <p class="dod-panel-sub">One number to track, and the order to work in.</p>
+        <div class="dod-ticket">
+          <p class="dod-ticket-label"><span>The number to watch</span><span id="dodTicketStage"></span></p>
+          <p class="dod-ticket-text" id="dodMetric"></p>
+        </div>
+        <ol class="dod-how" id="dodHow"></ol>
+      </div>
+    </div>
+  </section>
+
+  <div class="dod-after dod-hidden" id="dodAfter">
+    <button type="button" class="dod-btn dod-btn-ghost" id="dodReset"><i class="fas fa-redo" aria-hidden="true"></i> Start over</button>
+  </div>
+
+  <a class="dod-cta dod-hidden" id="dodCta" href="../intake/product-validation-offer.html" style="text-decoration:none">
+    <img src="../img/exp-builder/immersive-experience.png" alt="" loading="lazy">
+    <p class="dod-cta-kicker">Research that confirms it</p>
+    <h2 id="dodResearchName">Moderated usability tests</h2>
+    <p><span id="dodResearchWhy"></span> <b>Dlightning runs it with your users and hands you what we found.</b></p>
+    <span class="dod-btn dod-btn-bolt">See the Concierge Service <i class="fas fa-bolt" aria-hidden="true"></i></span>
+  </a>
+</main>
+
+<div id="error"></div>
+
+<!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
+<div id="related-tools-con"></div>
+
+<footer class="dod-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <h3>How it works</h3>
+        <ol>
+          <li>Pick the stage where you lose the most people: visit, sign up, first use, coming back, or paying.</li>
+          <li>Say how you know. A hunch and a measured funnel lead to different first steps.</li>
+          <li>Answer three questions about that stage: what you see in the product, what users say, and what the numbers show.</li>
+          <li>Each answer points at one of four common causes for that stage. You get the top three, ranked, each with a check you can run in ten minutes.</li>
+          <li>Leave with the number to track, a test for the top cause, and the research that would confirm it. Save it all as a PDF or PNG.</li>
+        </ol>
+        <p class="mt-3">Most products don't lose people everywhere at once. They lose them at one stage, for one or two reasons. Finding which one before you redesign saves you fixing the parts that already work. Your answers stay in your browser.</p>
+      </div>
+      <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Site-wide behaviors, including the sticky nav every main page has -->
+<script src="../js/main.js"></script>
+<script>
+(function () {
+    /* ---------- content ----------
+       Five stages. Each has a metric, four causes, and three questions whose
+       options point at those causes. Weights add up per cause; the highest wins. */
+
+    var STAGES = {
+        visit: {
+            t: 'Visit → sign up', short: 'Visit', ico: 'fa-door-open',
+            d: 'People land, look around, and leave without signing up.',
+            metric: 'Visitor-to-signup rate: new signups ÷ unique visitors to the page they land on, counted weekly.',
+            causes: {
+                unclear: {
+                    t: "The headline doesn't say what it is",
+                    tell: "Visitors can't tell what the product does or who it's for in the few seconds before they decide to leave.",
+                    check: 'Show your page to someone for five seconds, hide it, and ask what the product does. If they guess wrong or say something vague like "some kind of platform", this is your leak.',
+                    test: 'Rewrite the headline as "[Product] helps [who] [do what]" and run it against the current one for two weeks. It passes if signups per visitor go up.',
+                    research: { name: 'Five-second tests', why: 'Twenty people from your audience see the page for five seconds and say what they remember. It shows whether the message lands before anyone scrolls.' }
+                },
+                audience: {
+                    t: 'The wrong people are arriving',
+                    tell: 'The page may be fine. Most of the traffic is people who were never going to need the product.',
+                    check: "Open your analytics and split visitors by source. If one channel brings most of the visits and converts far worse than the rest, the problem starts before the page.",
+                    test: 'Cut back the weakest source for two weeks and put the effort into the best one. It passes if signups hold steady while visits drop.',
+                    research: { name: 'Acquisition interviews', why: 'Five recent signups tell you where they heard of you and what they were looking for that day. Their words show which channels and phrases bring the right people.' }
+                },
+                trust: {
+                    t: "Nothing proves it's real",
+                    tell: "They understand what it does but don't believe it will work for them, or that you'll still be around next year.",
+                    check: 'Count the things on the page made by someone other than you: customer names, quotes, numbers, screenshots of the real product. If you count zero or one, this is likely.',
+                    test: 'Add one specific quote from a real user, with their name and role, next to the signup button. It passes if the signup rate rises over two weeks.',
+                    research: { name: 'Landing page interviews', why: "Five people from your audience read the page aloud and say what they'd need to see before signing up. You hear the doubt in their own words." }
+                },
+                ask: {
+                    t: 'Signing up asks too much, too soon',
+                    tell: 'Trying it costs more than their curiosity is worth: a long form, a credit card, or a sales call before they see anything.',
+                    check: "Count the fields and clicks between your homepage and a working account. Mark anything you ask for that you don't use in the first session.",
+                    test: "Remove every field you don't use on day one, or let people try it before making an account. It passes if signups per visitor rise.",
+                    research: { name: 'Usability tests of the signup flow', why: 'Five people sign up while thinking aloud. You see exactly which field or step makes them hesitate.' }
+                }
+            },
+            qs: [
+                {
+                    key: 'look', tab: 'Look', sheet: 'What you see',
+                    q: 'Open your landing page. What would a stranger notice first?',
+                    why: "Look at it as if you'd never heard of the product. <b>Pick what's on the screen</b>, not what you meant it to say.",
+                    opts: [
+                        { v: 'a', ico: 'fa-heading', t: 'A clever headline', d: "It sounds good but doesn't say what the product does or who it's for", w: { unclear: 2 } },
+                        { v: 'b', ico: 'fa-bullhorn', t: 'Only us talking', d: 'No customer names, quotes, numbers or real screenshots', w: { trust: 2 } },
+                        { v: 'c', ico: 'fa-file-signature', t: 'A big ask to get in', d: 'A long form, a card, or "book a demo" before they can try it', w: { ask: 2 } },
+                        { v: 'd', ico: 'fa-check', t: 'It looks fine to me', d: 'Clear message, some proof, easy signup', w: { audience: 1 } }
+                    ]
+                },
+                {
+                    key: 'listen', tab: 'Listen', sheet: 'What they say',
+                    q: 'When visitors do talk to you, what do they say?',
+                    why: 'Sales calls, replies, DMs, comments. <b>Pick the line you hear most.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-question', t: '“So what is it exactly?”', d: 'They ask what it does, or describe it wrong', w: { unclear: 2 } },
+                        { v: 'b', ico: 'fa-user-shield', t: '“Is this legit?”', d: 'They ask who else uses it, about security, or about the company', w: { trust: 2 } },
+                        { v: 'c', ico: 'fa-hourglass-half', t: '“I’ll try it later”', d: "They meant to sign up and didn't get around to it", w: { ask: 2 } },
+                        { v: 'd', ico: 'fa-user-times', t: '“Not really for me”', d: "They understand it. They just don't need it", w: { audience: 2 } }
+                    ]
+                },
+                {
+                    key: 'numbers', tab: 'Numbers', sheet: 'The numbers',
+                    q: 'Where does most of your traffic come from?',
+                    why: 'Check your analytics if you can. <b>The source often explains more than the page does.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-ad', t: 'One paid or viral source', d: 'Ads, one big post, or a directory listing', w: { audience: 2 } },
+                        { v: 'b', ico: 'fa-snowflake', t: "Strangers who don't know us", d: 'Cold outreach, social, or partners sending people over', w: { trust: 2 } },
+                        { v: 'c', ico: 'fa-mobile-alt', t: 'Mostly phones', d: 'Most visits are on mobile', w: { ask: 2 } },
+                        { v: 'd', ico: 'fa-search', t: 'Search and word of mouth', d: 'People already looking for something like this', w: { unclear: 2, trust: 1 } },
+                        { v: 'x', ico: 'fa-question-circle', t: "I don't know yet", d: "We're not tracking where visitors come from", w: {}, unsure: true }
+                    ]
+                }
+            ]
+        },
+
+        signup: {
+            t: 'Sign up → first use', short: 'Sign up', ico: 'fa-user-plus',
+            d: 'They make an account and never really start.',
+            metric: 'Start rate: the share of new accounts that complete the first meaningful action within 24 hours of signing up.',
+            causes: {
+                blank: {
+                    t: 'They land on an empty screen',
+                    tell: "After signup there's nothing in the product and no obvious first move, so they leave to come back later, and don't.",
+                    check: "Make a brand-new account in a private window and screenshot the first screen. If it's mostly empty space or a tour of features, this is your leak.",
+                    test: 'Pre-fill the first screen with an example or template, or reduce it to one obvious button for the first action. It passes if more new accounts complete that action within 24 hours.',
+                    research: { name: 'First-use usability tests', why: 'Five new people sign up and try to get started while you watch. You see where they stall and what they expected to find.' }
+                },
+                setup: {
+                    t: 'Setup stands between them and the product',
+                    tell: 'Connecting accounts, inviting a team, importing data or verifying an email all come before anything useful happens.',
+                    check: 'List every step between creating an account and the product doing something for them. Mark each one "needed now" or "could wait". Every "could wait" is a leak.',
+                    test: 'Move one setup step to after the first useful moment, or skip it with sample data. It passes if more new accounts complete the first action.',
+                    research: { name: 'Onboarding funnel review', why: 'Measure how many people each setup step loses, then watch five people go through the worst one.' }
+                },
+                why: {
+                    t: 'The product loses the thread from signup',
+                    tell: "An ad, a post or a friend made a promise. The first screen doesn't pick up where that left off, so they forget why they came.",
+                    check: 'Put your best-performing ad or landing page next to the first screen after signup. If they use different words or point at different things, people lose the thread.',
+                    test: 'Repeat the promise from the landing page on the first screen and point straight at the feature it was about. It passes if more new accounts take the first action.',
+                    research: { name: 'Signup intent survey', why: 'Ask one question at signup, "What brought you here today?", and read the answers for two weeks. It tells you what each person came to do so the first screen can meet them there.' }
+                },
+                timing: {
+                    t: 'They signed up at the wrong moment',
+                    tell: "They made an account on their phone, late at night or between meetings, meaning to try it properly later. Later didn't come.",
+                    check: 'Look at what device and time of day new accounts are created, and compare that to where the product actually works. Many mobile signups for a desktop product means this is it.',
+                    test: 'Send one email an hour after signup with a single link back to the first action, and a reminder the next morning. It passes if 24-hour starts rise.',
+                    research: { name: 'Follow-up interviews', why: 'Ask five people who signed up and never started what was going on that day. The answer is often about their schedule, not your product.' }
+                }
+            },
+            qs: [
+                {
+                    key: 'look', tab: 'Look', sheet: 'What you see',
+                    q: "Make a new account in a private window. What's on the first screen?",
+                    why: 'Do it now, in the other tab. <b>Pick what you actually see</b>, not what the onboarding was designed to show.',
+                    opts: [
+                        { v: 'a', ico: 'fa-border-none', t: 'Mostly empty', d: 'A blank dashboard, list or canvas waiting for content', w: { blank: 2 } },
+                        { v: 'b', ico: 'fa-plug', t: 'A setup step', d: 'Connect, import, invite or verify before anything else', w: { setup: 2 } },
+                        { v: 'c', ico: 'fa-hand-sparkles', t: 'A general welcome', d: "A tour or overview that doesn't mention why they came", w: { why: 2 } },
+                        { v: 'd', ico: 'fa-laptop', t: 'Looks fine on my laptop', d: 'Clear and ready, at least on a big screen', w: { timing: 1 } }
+                    ]
+                },
+                {
+                    key: 'listen', tab: 'Listen', sheet: 'What they say',
+                    q: 'What do people who never started tell you?',
+                    why: "Support replies, a cancellation note, a friend's honest answer. <b>Pick the closest.</b>",
+                    opts: [
+                        { v: 'a', ico: 'fa-map-signs', t: '“I didn’t know where to begin”', d: 'They looked around and found nothing to do', w: { blank: 2 } },
+                        { v: 'b', ico: 'fa-tools', t: '“I’ll set it up when I have time”', d: 'The setup felt like a job for another day', w: { setup: 2 } },
+                        { v: 'c', ico: 'fa-question', t: '“I forgot I signed up”', d: "They don't remember what they came for", w: { why: 2 } },
+                        { v: 'd', ico: 'fa-mobile-alt', t: '“I was on my phone”', d: 'They meant to come back to it at a desk', w: { timing: 2 } }
+                    ]
+                },
+                {
+                    key: 'numbers', tab: 'Numbers', sheet: 'The numbers',
+                    q: 'What do your numbers show about new accounts?',
+                    why: 'Look at the last month of signups if you can. <b>Where the drop happens narrows the cause.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-filter', t: 'They stop at one setup step', d: 'One onboarding step loses a big share', w: { setup: 2 } },
+                        { v: 'b', ico: 'fa-stopwatch', t: 'They log in, then do nothing', d: 'First sessions end within a minute or two', w: { blank: 2 } },
+                        { v: 'c', ico: 'fa-moon', t: 'Signups happen at odd moments', d: 'Mostly mobile, late at night or on weekends', w: { timing: 2 } },
+                        { v: 'd', ico: 'fa-random', t: 'It depends where they came from', d: 'Some sources start well, others barely at all', w: { why: 2 } },
+                        { v: 'x', ico: 'fa-question-circle', t: "I don't know yet", d: "We don't track what new accounts do", w: {}, unsure: true }
+                    ]
+                }
+            ]
+        },
+
+        activate: {
+            t: 'First use → value', short: 'First use', ico: 'fa-lightbulb',
+            d: "They try it, poke around, and don't see the point.",
+            metric: 'Activation rate: the share of new accounts that reach the first moment the product does its job for them, within their first session.',
+            causes: {
+                far: {
+                    t: 'The good part is too far in',
+                    tell: 'The product does its job eventually, but only after more work than a first-timer is willing to do.',
+                    check: 'Time yourself as a new user, from signup to the first result worth having. Then ask a friend to do it with no help. If either takes more than a few minutes, this is likely.',
+                    test: 'Cut the path to the first result in half: defaults instead of choices, an example instead of a blank form. It passes if more first sessions reach that result.',
+                    research: { name: 'Moderated usability tests', why: 'Five people try to reach the first result while thinking aloud. You find the steps that cost them the most.' }
+                },
+                model: {
+                    t: 'It works differently than they expect',
+                    tell: 'People bring habits from tools they already use. Your product asks them to think another way, and they read that as broken.',
+                    check: 'Write down the words users use for the main things in your product. Compare them to the labels in your interface. Different words for the same thing is a strong sign.',
+                    test: "Rename the main labels and buttons using your users' words. It passes if fewer people get stuck at the same step.",
+                    research: { name: 'Card sorting and interviews', why: 'People group and name your features in their own words. It shows how they expect the product to be organised.' }
+                },
+                value: {
+                    t: "They used it and didn't see what changed",
+                    tell: 'The product did its job, but nothing showed them that it worked or why it mattered.',
+                    check: "Finish the core action yourself. What does the screen say afterwards? If it's a plain confirmation with no result, number or next step, this is likely.",
+                    test: 'After the core action, show the result: what got done, the time saved, the thing they can now use. It passes if more people do the core action a second time.',
+                    research: { name: 'Post-task interviews', why: 'Right after someone finishes their first task, ask what they think just happened and whether it was worth it. You hear whether the value registered.' }
+                },
+                fit: {
+                    t: "It isn't for the people trying it",
+                    tell: "They understand it fine. It solves a problem they don't have, or don't have badly enough.",
+                    check: "Read your last ten support messages or cancellation notes. If people describe needs the product doesn't cover, the mismatch is in who arrives, not in the product.",
+                    test: 'Ask new users one question in their first session: "What are you hoping to do?" Sort the answers for two weeks. It passes if one group stands out that you can aim the product and marketing at.',
+                    research: { name: 'Jobs-to-be-done interviews', why: 'Talk to people who stayed and people who left about the job they hired the product to do. It shows which audience the product actually fits.' }
+                }
+            },
+            qs: [
+                {
+                    key: 'look', tab: 'Look', sheet: 'What you see',
+                    q: 'Do the core task as a brand-new user. What happens?',
+                    why: 'Use a fresh account in the other tab. <b>Count the screens and choices</b> before you get a real result.',
+                    opts: [
+                        { v: 'a', ico: 'fa-road', t: 'It takes a while', d: 'Several screens or decisions before a real result', w: { far: 2 } },
+                        { v: 'b', ico: 'fa-puzzle-piece', t: 'You have to know how it works', d: 'Labels and steps make sense once you understand our approach', w: { model: 2 } },
+                        { v: 'c', ico: 'fa-volume-mute', t: 'It finishes quietly', d: 'A confirmation, but no result or next step on screen', w: { value: 2 } },
+                        { v: 'd', ico: 'fa-check', t: 'It works well', d: 'Quick and clear, and the result is obvious', w: { fit: 1 } }
+                    ]
+                },
+                {
+                    key: 'listen', tab: 'Listen', sheet: 'What they say',
+                    q: 'What do new users ask or say?',
+                    why: 'Support tickets, chat, onboarding calls. <b>Pick the one that comes up most.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-life-ring', t: '“How do I get it to…?”', d: 'They ask for help reaching the first result', w: { far: 2 } },
+                        { v: 'b', ico: 'fa-map-marker-alt', t: '“Where is…?”', d: 'Questions about where things are or what words mean', w: { model: 2 } },
+                        { v: 'c', ico: 'fa-meh', t: '“OK, now what?”', d: "They did it and aren't sure what changed", w: { value: 2 } },
+                        { v: 'd', ico: 'fa-exchange-alt', t: '“Can it do this instead?”', d: 'They ask for features that belong to a different product', w: { fit: 2 } }
+                    ]
+                },
+                {
+                    key: 'numbers', tab: 'Numbers', sheet: 'The numbers',
+                    q: 'Where do first sessions end?',
+                    why: 'Session recordings or event data if you have them. <b>Where people stop says a lot about why.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-hourglass-start', t: 'Partway through the core task', d: 'They start and give up before finishing', w: { far: 2 } },
+                        { v: 'b', ico: 'fa-mouse-pointer', t: 'Clicking around', d: 'Lots of page views, no core action', w: { model: 2 } },
+                        { v: 'c', ico: 'fa-redo', t: 'Right after the core task', d: "They finish it once and don't do it again", w: { value: 2 } },
+                        { v: 'd', ico: 'fa-users', t: 'It depends who they are', d: "Some kinds of users do great, others don't", w: { fit: 2 } },
+                        { v: 'x', ico: 'fa-question-circle', t: "I don't know yet", d: "We can't see what people do in the product", w: {}, unsure: true }
+                    ]
+                }
+            ]
+        },
+
+        return: {
+            t: 'First week → coming back', short: 'Week two', ico: 'fa-redo',
+            d: "They get value once and don't come back.",
+            metric: 'Week-two return: of the people who signed up in a given week, the share who use the product again in the following week.',
+            causes: {
+                trigger: {
+                    t: 'Nothing brings them back',
+                    tell: "They liked it, then the week moved on. Nothing in their routine sends them back to it.",
+                    check: "Name the moment in a user's week when they should open your product. If you can't, or the product does nothing at that moment, this is your leak.",
+                    test: 'Pick one moment and add one prompt tied to it: a weekly summary, or a message when something new is waiting for them. It passes if week-two return rises.',
+                    research: { name: 'Diary studies', why: 'Five users note each time the problem comes up over two weeks. You learn when the need shows up and whether your product is there for it.' }
+                },
+                oneoff: {
+                    t: 'The problem only comes up now and then',
+                    tell: 'They got what they came for. The need is occasional, so a low weekly return may be normal for your product.',
+                    check: 'Write down how often the problem you solve really happens to a customer: daily, weekly, monthly, yearly. If it is rarer than weekly, measure return over that real cycle instead.',
+                    test: 'Change the return metric to match the real cycle, then look for a related task they do more often. It passes if you find one that some users would do weekly.',
+                    research: { name: 'Usage frequency interviews', why: 'Ask ten users when the problem last came up and when it will next. It tells you whether you have a retention problem or a measurement problem.' }
+                },
+                habit: {
+                    t: 'Their old way is still easier',
+                    tell: "They tried you, then went back to the spreadsheet, the email thread or the old tool, because that's where their work already lives.",
+                    check: 'Ask three people who stopped what they use instead. If it is the old tool or a manual workaround, this is it.',
+                    test: 'Build one bridge to the old way: an import, an export, an integration, or an email they can reply to. It passes if week-two return rises among people who use it.',
+                    research: { name: 'Churn interviews', why: "Five people who stopped coming back walk you through what they do now. It shows what you're really competing with day to day." }
+                },
+                shallow: {
+                    t: 'They only found one small piece',
+                    tell: 'They used one feature once and never found the part that would make it worth coming back.',
+                    check: "Compare which features returning users touch in their first week with what lapsed users touch. The feature the returners found is the one to steer everyone toward.",
+                    test: 'Point new users at that feature in their first week with one email or one in-product prompt. It passes if more of them return in week two.',
+                    research: { name: 'Cohort analysis with interviews', why: 'Compare what returning and lapsed users did in their first week, then ask a few of each why.' }
+                }
+            },
+            qs: [
+                {
+                    key: 'look', tab: 'Look', sheet: 'What you see',
+                    q: "Think about a user's second week. What reaches them from your product?",
+                    why: 'Check your email tool and notification settings. <b>Pick what a real user receives</b>, not what is planned.',
+                    opts: [
+                        { v: 'a', ico: 'fa-bell-slash', t: 'Nothing', d: 'No emails, notifications or reasons to open it', w: { trigger: 2 } },
+                        { v: 'b', ico: 'fa-newspaper', t: 'Generic updates', d: 'Newsletters or announcements, nothing about their own work', w: { shallow: 2 } },
+                        { v: 'c', ico: 'fa-envelope-open-text', t: 'Reminders to log in', d: 'Nudges to come back, while their work lives in another tool', w: { habit: 2 } },
+                        { v: 'd', ico: 'fa-calendar-check', t: 'Nothing, and that’s fine', d: "They don't need it again until the problem comes back", w: { oneoff: 2 } }
+                    ]
+                },
+                {
+                    key: 'listen', tab: 'Listen', sheet: 'What they say',
+                    q: 'When people who stopped tell you why, what do they say?',
+                    why: 'If nobody has told you, ask three of them today. <b>Pick the answer you hear most.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-brain', t: '“I just forgot about it”', d: 'No complaint, it slipped out of their week', w: { trigger: 2 } },
+                        { v: 'b', ico: 'fa-table', t: '“I went back to my spreadsheet”', d: 'Or email, or the tool they had before', w: { habit: 2 } },
+                        { v: 'c', ico: 'fa-flag-checkered', t: '“I got what I needed”', d: 'Happy, finished, gone', w: { oneoff: 2 } },
+                        { v: 'd', ico: 'fa-compress-alt', t: '“It was nice, but limited”', d: "They didn't see the rest of what it does", w: { shallow: 2 } }
+                    ]
+                },
+                {
+                    key: 'numbers', tab: 'Numbers', sheet: 'The numbers',
+                    q: 'What do your returning users have in common?',
+                    why: 'Compare people who came back with people who did not. <b>The difference is usually the fix.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-star', t: 'They found one feature', d: 'People who use it come back far more often', w: { shallow: 2 } },
+                        { v: 'b', ico: 'fa-link', t: 'They connected another tool', d: 'Or imported their data in week one', w: { habit: 2 } },
+                        { v: 'c', ico: 'fa-sync-alt', t: 'Their need comes in cycles', d: 'Monthly, seasonal or per project', w: { oneoff: 2 } },
+                        { v: 'd', ico: 'fa-bell', t: 'They opened a message from us', d: 'Returns follow the emails or notifications we send', w: { trigger: 2 } },
+                        { v: 'x', ico: 'fa-question-circle', t: "I don't know yet", d: "We can't tell returning users apart from new ones", w: {}, unsure: true }
+                    ]
+                }
+            ]
+        },
+
+        pay: {
+            t: 'Free → paid', short: 'Paid', ico: 'fa-credit-card',
+            d: "They use it but won't pay for it.",
+            metric: 'Paid conversion: the share of active free users or trials who start paying within 30 days.',
+            causes: {
+                free: {
+                    t: 'The free version is enough',
+                    tell: 'They get everything they need for free, so paying buys them nothing they want.',
+                    check: 'List what your paid plan adds. Next to each line, write how many free users hit that limit this month. If the numbers are tiny, free is too generous or the paid extras are not what people want.',
+                    test: 'Move one feature that heavy free users rely on into the paid plan, for new signups only. It passes if paid conversion rises without signups collapsing.',
+                    research: { name: 'Pricing interviews', why: 'Talk to your most active free users about what they would pay for. You find the line between nice to have and worth money.' }
+                },
+                price: {
+                    t: "The price doesn't match the value they feel",
+                    tell: "They'd pay something, just not this yet. The value they've felt so far looks smaller than the price.",
+                    check: "Write the price next to the result a customer gets in a month: hours saved, money made, a problem avoided. If your pricing page doesn't make that comparison, neither do they.",
+                    test: 'Put that comparison on the pricing page and in the upgrade prompt. It passes if more people who view pricing go on to pay.',
+                    research: { name: 'Willingness-to-pay research', why: 'Structured interviews or a price-sensitivity survey with your users. It gives you a price range from their answers instead of a guess.' }
+                },
+                moment: {
+                    t: 'You ask at the wrong time',
+                    tell: "The upgrade prompt appears on day one, before they care, or never appears at the moment they'd say yes.",
+                    check: 'Find the moment users get the most from the product. Then find where your upgrade prompt appears. If they are in different places, this is likely.',
+                    test: 'Show the upgrade prompt right after that moment instead. It passes if upgrades per active user rise.',
+                    research: { name: 'Journey mapping', why: 'Map where users feel the most value and where they hit friction, then place the ask where the value peaks.' }
+                },
+                buyer: {
+                    t: "The user isn't the buyer",
+                    tell: "The person using it likes it but can't pay. A manager, a client or finance has to approve, and nothing helps the user make the case.",
+                    check: 'Ask five active free users who would have to approve the purchase. If it is someone other than them, this is your leak.',
+                    test: 'Give users something to forward: a one-page summary of what the product did for them this month, with the price on it. It passes if more upgrade requests come in.',
+                    research: { name: 'Buyer interviews', why: 'Talk to the people who sign off on purchases like yours about what they need to see. You learn what the user has to bring them.' }
+                }
+            },
+            qs: [
+                {
+                    key: 'look', tab: 'Look', sheet: 'What you see',
+                    q: 'Open your pricing page and upgrade prompt. What do you see?',
+                    why: 'Look at them as a free user would. <b>Pick what stands out most.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-gift', t: 'A generous free plan', d: 'Most of what people use is free', w: { free: 2 } },
+                        { v: 'b', ico: 'fa-list', t: 'A list of features', d: 'Prices and features, but nothing about what the customer gets out of it', w: { price: 2 } },
+                        { v: 'c', ico: 'fa-clock', t: 'A prompt at the wrong time', d: 'It shows up early, or only on the pricing page', w: { moment: 2 } },
+                        { v: 'd', ico: 'fa-building', t: 'Team or company plans', d: 'Pricing for a team, used by one person', w: { buyer: 2 } }
+                    ]
+                },
+                {
+                    key: 'listen', tab: 'Listen', sheet: 'What they say',
+                    q: "What do people say when they don't upgrade?",
+                    why: 'Sales calls, support, an exit survey. <b>Pick the one you hear most.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-thumbs-up', t: '“Free does what I need”', d: 'Happy users who see no reason to pay', w: { free: 2 } },
+                        { v: 'b', ico: 'fa-tag', t: '“It’s too expensive”', d: 'Or they ask for a discount', w: { price: 2 } },
+                        { v: 'c', ico: 'fa-hourglass-half', t: '“Maybe later”', d: "They like it but aren't ready yet", w: { moment: 2 } },
+                        { v: 'd', ico: 'fa-user-tie', t: '“I’d have to ask my boss”', d: 'Or their client, or finance', w: { buyer: 2 } }
+                    ]
+                },
+                {
+                    key: 'numbers', tab: 'Numbers', sheet: 'The numbers',
+                    q: 'What do your numbers show about who pays?',
+                    why: 'Billing data and product events, side by side. <b>Look at who pays and when.</b>',
+                    opts: [
+                        { v: 'a', ico: 'fa-infinity', t: 'Heavy free users never hit a limit', d: 'The most active people stay free', w: { free: 2 } },
+                        { v: 'b', ico: 'fa-eye', t: 'Many pricing views, few purchases', d: 'People look at the price and leave', w: { price: 2 } },
+                        { v: 'c', ico: 'fa-bullseye', t: 'Upgrades cluster around one moment', d: 'People who pay did it right after a particular action', w: { moment: 2 } },
+                        { v: 'd', ico: 'fa-briefcase', t: 'Work emails convert slowly', d: 'Company addresses sign up, but purchases stall', w: { buyer: 2 } },
+                        { v: 'x', ico: 'fa-question-circle', t: "I don't know yet", d: "We can't connect product use to who pays", w: {}, unsure: true }
+                    ]
+                }
+            ]
+        }
+    };
+    var STAGE_ORDER = ['visit', 'signup', 'activate', 'return', 'pay'];
+
+    var STEP_STAGE = {
+        key: 'stage', tab: 'Leak', sheet: 'The leak',
+        q: 'Where do you lose the most people?',
+        why: 'Most products lose people at one stage more than the others. <b>Pick the one that worries you most</b>, even if you are not sure yet.',
+        opts: STAGE_ORDER.map(function (k) { return { v: k, ico: STAGES[k].ico, t: STAGES[k].t, d: STAGES[k].d }; })
+    };
+
+    var EVIDENCE = {
+        numbers: { name: 'Measured', desc: "You know where people leave. The numbers can't tell you why, which is what the checks below are for." },
+        told: { name: 'Reported', desc: 'The people who complain are the ones who cared enough to write. Check the numbers to see how many quietly left for the same reason.' },
+        watched: { name: 'Observed', desc: 'Watching people use the product is the strongest evidence there is. A few more sessions focused on this stage will confirm the cause.' },
+        hunch: { name: 'A hunch', desc: 'Measure this stage for one week before you change anything. Fixing the wrong stage costs the most of anything on this page.' }
+    };
+    var STEP_EVIDENCE = {
+        key: 'evidence', tab: 'Evidence', sheet: 'How you know', grid: true,
+        q: 'How do you know people leave there?',
+        why: 'Any answer works. <b>It changes what you should do first</b>, not the diagnosis.',
+        opts: [
+            { v: 'numbers', ico: 'fa-chart-bar', t: 'I have the numbers', d: 'Analytics or a funnel shows the drop' },
+            { v: 'told', ico: 'fa-comment-dots', t: 'Users have told me', d: 'Support tickets, reviews, emails, calls' },
+            { v: 'watched', ico: 'fa-eye', t: "I've watched people use it", d: 'Usability sessions, demos, recordings' },
+            { v: 'hunch', ico: 'fa-feather-alt', t: "It's a hunch", d: 'Something feels off, but I have not checked' }
+        ]
+    };
+
+    /* ---------- state ---------- */
+    var answers = {};
+    var cur = 0;
+    var $q = document.getElementById('dodQuestion');
+    var $steps = document.getElementById('dodSteps');
+    var $sheet = document.getElementById('dodSheet');
+    var $map = document.getElementById('dodMap');
+    var $next = document.getElementById('dodNext');
+    var $back = document.getElementById('dodBack');
+
+    // Steps 3-5 depend on the stage. Before one is picked, show the visit stage's
+    // labels as placeholders (they are the same for every stage).
+    function steps() {
+        var stage = STAGES[answers.stage] || STAGES.visit;
+        return [STEP_STAGE, STEP_EVIDENCE].concat(stage.qs);
+    }
+
+    function optFor(step, v) {
+        for (var i = 0; i < step.opts.length; i++) if (step.opts[i].v === v) return step.opts[i];
+        return null;
+    }
+
+    function renderSteps() {
+        var S = steps();
+        $steps.innerHTML = S.map(function (s, i) {
+            var cls = i === cur ? 'is-current' : (answers[s.key] ? 'is-done' : '');
+            var label = s.tab + (answers[s.key] ? ', answered' : '') + (i === cur ? ', current step' : '');
+            return '<li class="' + cls + '"><button type="button" data-step="' + i + '" aria-label="Step ' + (i + 1) + ': ' + label + '"' +
+                (i === cur ? ' aria-current="step"' : '') + '>' + s.tab + '</button></li>';
+        }).join('');
+    }
+
+    function renderSheet(changedKey) {
+        $map.innerHTML = STAGE_ORDER.map(function (k, i) {
+            var w = 100 - i * 11;
+            return '<li class="' + (answers.stage === k ? 'is-leak' : '') + '" style="width:' + w + '%;margin:0 auto">' +
+                '<span>' + STAGES[k].short + '</span><i class="fas fa-tint" aria-hidden="true"></i></li>';
+        }).join('');
+        $sheet.innerHTML = steps().slice(1).map(function (s) {
+            var o = optFor(s, answers[s.key]);
+            return '<div class="dod-row' + (s.key === changedKey ? ' is-new' : '') + '"><dt>' + s.sheet + '</dt>' +
+                (o ? '<dd>' + o.t + '</dd>' : '<dd class="is-empty">Not picked yet</dd>') + '</div>';
+        }).join('');
+    }
+
+    function renderQuestion(focus) {
+        var S = steps();
+        var s = S[cur];
+        var html = '<fieldset class="dod-q">' +
+            '<p class="dod-q-kicker">Question ' + (cur + 1) + ' of ' + S.length +
+            (cur > 1 ? ' · ' + STAGES[answers.stage].t : '') + '</p>' +
+            '<legend>' + s.q + '</legend>' +
+            '<p class="dod-q-why">' + s.why + '</p>' +
+            '<div class="dod-opts' + (s.grid ? ' is-grid' : '') + '">' +
+            s.opts.map(function (o, i) {
+                var checked = answers[s.key] === o.v ? ' checked' : '';
+                return '<label class="dod-opt"><input type="radio" name="dod-' + s.key + '" value="' + o.v + '"' + checked + '>' +
+                    '<span class="dod-opt-face"><span class="dod-opt-ico"><i class="fas ' + o.ico + '" aria-hidden="true"></i></span>' +
+                    '<span><span class="dod-opt-title">' + o.t + '</span><span class="dod-opt-desc">' + o.d + '</span></span>' +
+                    '<span class="dod-opt-key" aria-hidden="true">' + (i + 1) + '</span></span></label>';
+            }).join('') +
+            '</div></fieldset>';
+        $q.innerHTML = html;
+        document.getElementById('dodKeyMax').textContent = s.opts.length;
+        $next.disabled = !answers[s.key];
+        $next.innerHTML = cur === S.length - 1
+            ? 'Find my leak <i class="fas fa-bolt" aria-hidden="true"></i>'
+            : 'Next <i class="fas fa-arrow-right" aria-hidden="true"></i>';
+        $back.style.visibility = cur === 0 ? 'hidden' : 'visible';
+        renderSteps();
+        if (focus) {
+            var target = $q.querySelector('input:checked') || $q.querySelector('input');
+            if (target) target.focus({ preventScroll: true });
+        }
+    }
+
+    function go(i) {
+        cur = Math.max(0, Math.min(steps().length - 1, i));
+        renderQuestion(true);
+        var top = document.getElementById('dodBench').getBoundingClientRect().top + window.pageYOffset - 90;
+        if (window.pageYOffset > top) window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
+    function advance() {
+        var S = steps();
+        if (!answers[S[cur].key]) return;
+        if (cur < S.length - 1) go(cur + 1); else showResults();
+    }
+
+    $q.addEventListener('change', function (e) {
+        if (e.target.type !== 'radio') return;
+        var key = steps()[cur].key;
+        // A new stage means new questions, so the stage-specific answers no longer apply
+        if (key === 'stage' && answers.stage !== e.target.value) {
+            delete answers.look; delete answers.listen; delete answers.numbers;
+        }
+        answers[key] = e.target.value;
+        $next.disabled = false;
+        renderSheet(key);
+        renderSteps();
+    });
+
+    $steps.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-step]');
+        if (!b) return;
+        var i = +b.dataset.step;
+        // only jump to steps whose earlier questions are all answered
+        if (i <= cur || steps().slice(0, i).every(function (s) { return answers[s.key]; })) go(i);
+    });
+
+    $next.addEventListener('click', advance);
+    $back.addEventListener('click', function () { go(cur - 1); });
+
+    document.addEventListener('keydown', function (e) {
+        if (document.getElementById('dodBench').classList.contains('dod-hidden')) return;
+        if (e.target.matches('input[type="text"], textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
+        var n = parseInt(e.key, 10);
+        var radios = $q.querySelectorAll('input[type="radio"]');
+        if (n >= 1 && n <= radios.length) {
+            radios[n - 1].checked = true;
+            radios[n - 1].focus({ preventScroll: true });
+            radios[n - 1].dispatchEvent(new Event('change', { bubbles: true }));
+        } else if (e.key === 'Enter' && !e.target.matches('button, a')) {
+            e.preventDefault();
+            advance();
+        }
+    });
+
+    document.getElementById('dodStart').addEventListener('click', function () {
+        var top = document.getElementById('dodBench').getBoundingClientRect().top + window.pageYOffset - 90;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        var first = $q.querySelector('input:checked') || $q.querySelector('input');
+        if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, 400);
+    });
+
+    /* ---------- results ---------- */
+    // Score each cause from the three stage questions. Ties go to the cause the
+    // numbers pointed at, then what users said, then what the page shows.
+    function rank(stage) {
+        var keys = Object.keys(stage.causes);
+        var score = {}, tie = {};
+        keys.forEach(function (k) { score[k] = 0; tie[k] = 0; });
+        stage.qs.forEach(function (q, qi) {
+            var o = optFor(q, answers[q.key]);
+            if (!o) return;
+            Object.keys(o.w).forEach(function (k) {
+                score[k] += o.w[k];
+                tie[k] = Math.max(tie[k], qi + 1);
+            });
+        });
+        return keys.map(function (k) { return { key: k, score: score[k], tie: tie[k], c: stage.causes[k] }; })
+            .sort(function (a, b) { return (b.score - a.score) || (b.tie - a.tie) || (keys.indexOf(a.key) - keys.indexOf(b.key)); });
+    }
+
+    function strength(score) {
+        if (score >= 4) return 'Strong signal';
+        if (score >= 2) return 'Some signal';
+        return 'Worth ruling out';
+    }
+
+    function showResults() {
+        var stage = STAGES[answers.stage];
+        var ev = EVIDENCE[answers.evidence];
+        var ranked = rank(stage);
+        var top = ranked[0], second = ranked[1];
+        var numbersOpt = optFor(stage.qs[2], answers.numbers);
+        var measureFirst = answers.evidence === 'hunch' || (numbersOpt && numbersOpt.unsure);
+
+        document.getElementById('dodStage').textContent = stage.t;
+        document.getElementById('dodCause').textContent = top.c.t;
+        document.getElementById('dodTell').textContent = top.c.tell;
+        document.getElementById('dodConf').textContent = ev.name;
+        document.getElementById('dodConfDesc').textContent = ev.desc;
+
+        // 6 points is the most any cause can score from three answers
+        document.getElementById('dodCauses').innerHTML = ranked.slice(0, 3).map(function (r, i) {
+            var pct = Math.max(6, Math.round(r.score / 6 * 100));
+            return '<li class="dod-cause' + (i === 0 ? ' is-top' : '') + '">' +
+                '<div class="dod-cause-head"><span class="dod-rank">' + (i + 1) + '</span><h3>' + r.c.t + '</h3>' +
+                '<span class="dod-strength">' + strength(r.score) + '</span></div>' +
+                '<div class="dod-meter" aria-hidden="true"><span style="width:' + pct + '%"></span></div>' +
+                '<p>' + r.c.tell + '</p>' +
+                '<p class="dod-cause-check"><b>10-minute check</b>' + r.c.check + '</p></li>';
+        }).join('');
+
+        document.getElementById('dodTicketStage').textContent = stage.short;
+        document.getElementById('dodMetric').textContent = stage.metric;
+        var how = [
+            measureFirst
+                ? '<b>Measure before you change anything.</b> Track the number above for one week so you can confirm this is the stage, and tell later whether the fix worked.'
+                : "<b>Write down this week's number.</b> Without it you won't know whether the fix worked.",
+            '<b>Run the check for “' + top.c.t + '”.</b> If it doesn\'t hold up, check “' + second.c.t + '” next.',
+            '<b>If it holds up, run the test.</b> ' + top.c.test
+        ];
+        document.getElementById('dodHow').innerHTML = how.map(function (h) { return '<li>' + h + '</li>'; }).join('');
+
+        document.getElementById('dodResearchName').textContent = top.c.research.name;
+        document.getElementById('dodResearchWhy').textContent = top.c.research.why;
+
+        // Make the diagnosis available to the shared email-capture module
+        window.userInteractionData = [
+            'Leaking stage: ' + stage.t,
+            'Evidence: ' + optFor(STEP_EVIDENCE, answers.evidence).t + ' (' + ev.name + ')',
+            stage.qs.map(function (q) { return q.sheet + ': ' + optFor(q, answers[q.key]).t; }).join('\n'),
+            'Ranked causes: ' + ranked.slice(0, 3).map(function (r, i) { return (i + 1) + '. ' + r.c.t + ' (' + r.score + ')'; }).join('; '),
+            'Metric: ' + stage.metric,
+            'Suggested research: ' + top.c.research.name
+        ].join('\n');
+
+        document.getElementById('dodBench').classList.add('dod-hidden');
+        ['results', 'dodAfter', 'dodCta'].forEach(function (id) { document.getElementById(id).classList.remove('dod-hidden'); });
+        window.scrollTo({ top: 0 });
+        document.getElementById('results').focus({ preventScroll: true });
+    }
+
+    document.getElementById('dodReset').addEventListener('click', function () {
+        answers = {};
+        ['results', 'dodAfter', 'dodCta'].forEach(function (id) { document.getElementById(id).classList.add('dod-hidden'); });
+        document.getElementById('dodBench').classList.remove('dod-hidden');
+        window.userInteractionData = '';
+        renderSheet();
+        go(0);
+        window.scrollTo({ top: 0 });
+    });
+
+    $(document).ready(function () {
+        $('#email-form-con').load("email-capture.html");
+        $('#related-tools-con').load("related-tools.html");
+        $('#header').load("../header.html", function (response, status, xhr) {
+            if (status == "error") {
+                $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
+            }
+        });
+        renderSheet();
+        renderQuestion(false);
+    });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Drop-Off Diagnostic",
+  "url": "https://dlightning.org/d-tools/drop-off-diagnostic.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "description": "A free interactive tool that finds the stage where a product loses users (visit, signup, first use, retention or paid conversion), ranks the likely causes, and gives a 10-minute check, a metric to track and a test for the top cause.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@type": "Organization", "name": "Dlightning", "url": "https://dlightning.org" }
+}
+</script>
+
+<!-- Branded result download (PNG / PDF) -->
+<script src="result-download.js"
+        data-dl-container="#results"
+        data-dl-title="Drop-Off Diagnostic"
+        data-dl-filename="dlightning-drop-off-diagnostic"></script>
+</body>
+</html>

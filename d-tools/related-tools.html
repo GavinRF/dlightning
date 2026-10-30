@@ -75,19 +75,21 @@
         "business-idea-generator.html": { icon: "fa-lightbulb",   title: "Business Idea Generator",        desc: "Filter 170+ business ideas by budget and skills, each with a test to run this week." },
         "entrepreneur-decision-tree.html": { icon: "fa-code-branch", title: "Entrepreneur Decision Tree",  desc: "Work through the key startup decisions one question at a time." },
         "founder-block.html":           { icon: "fa-hand-rock",   title: "Founder Blockers Diagnostic",    desc: "Find what's holding you back as a founder and get a concrete next step." },
-        "AI-agent-idea-validation.html":{ icon: "fa-robot",       title: "AI Agent Idea Validation",       desc: "Reality-check your AI agent concept across user, market, and problem fit." }
+        "AI-agent-idea-validation.html":{ icon: "fa-robot",       title: "AI Agent Idea Validation",       desc: "Reality-check your AI agent concept across user, market, and problem fit." },
+        "drop-off-diagnostic.html":     { icon: "fa-filter",      title: "Drop-Off Diagnostic",            desc: "Find the stage where your product loses people and the most likely reason." }
       };
 
       // Curated, max-3 related set per page. Edit freely.
       var RELATED = {
-        "ux-maturity-assessment.html":     ["ux-method-tree.html", "design-system-readiness.html", "project-validation-methods.html"],
-        "ux-method-tree.html":             ["ux-maturity-assessment.html", "design-system-readiness.html", "project-validation-methods.html"],
+        "ux-maturity-assessment.html":     ["ux-method-tree.html", "drop-off-diagnostic.html", "design-system-readiness.html"],
+        "ux-method-tree.html":             ["drop-off-diagnostic.html", "ux-maturity-assessment.html", "project-validation-methods.html"],
         "design-system-readiness.html":    ["ux-maturity-assessment.html", "ux-method-tree.html", "project-validation-methods.html"],
-        "project-validation-methods.html": ["ux-method-tree.html", "ux-maturity-assessment.html", "business-idea-generator.html"],
+        "project-validation-methods.html": ["ux-method-tree.html", "drop-off-diagnostic.html", "business-idea-generator.html"],
         "business-idea-generator.html":    ["entrepreneur-decision-tree.html", "AI-agent-idea-validation.html", "founder-block.html"],
         "entrepreneur-decision-tree.html": ["business-idea-generator.html", "founder-block.html", "project-validation-methods.html"],
         "founder-block.html":              ["entrepreneur-decision-tree.html", "business-idea-generator.html", "AI-agent-idea-validation.html"],
-        "AI-agent-idea-validation.html":   ["business-idea-generator.html", "project-validation-methods.html", "entrepreneur-decision-tree.html"]
+        "AI-agent-idea-validation.html":   ["business-idea-generator.html", "project-validation-methods.html", "entrepreneur-decision-tree.html"],
+        "drop-off-diagnostic.html":        ["ux-method-tree.html", "ux-maturity-assessment.html", "project-validation-methods.html"]
       };
 
       var current = location.pathname.split("/").pop();

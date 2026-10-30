@@ -57,13 +57,19 @@
 
   <url>
     <loc>https://dlightning.org/games/</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://dlightning.org/games/bonsaibox/</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/games/startup-sim/</loc>
+    <lastmod>2026-06-29</lastmod>
     <priority>0.7</priority>
   </url>
 
@@ -142,6 +148,12 @@
   <url>
     <loc>https://dlightning.org/d-tools/founder-block.html</loc>
     <lastmod>2026-06-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/d-tools/drop-off-diagnostic.html</loc>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
   </url>
 
