@@ -71,3 +71,6 @@ functions/lib/
 
 # Blog content pipeline (transcripts, drafts, ideas — kept local only)
 blog-pipeline/
+
+# /brag launch-video output (renders, intermediates)
+brag-output*/
