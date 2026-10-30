@@ -1,887 +1,1028 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Assess your team's readiness for implementing a design system. Get personalized recommendations and implementation roadmap based on your team size, product complexity, and design maturity.">
-    <meta name="keywords" content="design system readiness, design system assessment, design system implementation, design ops, design tokens, component library">
-    <link rel="canonical" href="https://dlightning.org/d-tools/design-system-readiness.html">
-    <meta name="author" content="Dlightning">
-    <meta name="robots" content="index, follow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Is your team ready for a design system? Seven questions plot how much you need one against whether your team can keep one running. Get a verdict, the first thing to fix, and a phased roadmap.">
+<meta name="keywords" content="design system readiness, design system assessment, design system implementation, design ops, design tokens, component library">
+<link rel="canonical" href="https://dlightning.org/d-tools/design-system-readiness.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow">
 
-    <title>Design System Readiness Assessment | Dlightning</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    
-    <meta property="og:url" content="https://dlightning.org/d-tools/design-system-readiness.html">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Dlightning">
-    <meta property="og:image" content="https://dlightning.org/img/products/DSRA.png"/>
-    <meta property="og:title" content="Design System Readiness Assessment | Dlightning"/>
-    <meta property="og:description" content="Assess your team's readiness for implementing a design system. Get personalized recommendations and implementation roadmap."/>
-    <meta property="og:image:width" content="824"/>
-    <meta property="og:image:height" content="551"/>
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Design System Readiness Assessment | Dlightning">
-    <meta name="twitter:description" content="Discover if your team is ready for a design system implementation.">
-    <meta name="twitter:image" content="https://dlightning.org/img/products/DSRA.png">
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
-    <style>
-        header {
-            z-index: 999;
-        }
+<title>Design System Readiness Assessment | Dlightning</title>
 
-        .featureBgImg {
-            position: relative;
-            overflow: hidden;
-        }
+<meta property="og:url" content="https://dlightning.org/d-tools/design-system-readiness.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:image" content="https://dlightning.org/img/products/DSRA.png"/>
+<meta property="og:title" content="Design System Readiness Assessment | Dlightning"/>
+<meta property="og:description" content="Seven questions plot your need for a design system against your team's capacity to run one. Get a verdict, the first thing to fix, and a roadmap."/>
+<meta property="og:image:width" content="824"/>
+<meta property="og:image:height" content="551"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Design System Readiness Assessment | Dlightning">
+<meta name="twitter:description" content="Build the system, or build the case? Find out in three minutes.">
+<meta name="twitter:image" content="https://dlightning.org/img/products/DSRA.png">
 
-        .featureBgImg-bg {
-            object-position: center calc(50% + 42px);
-            transition: transform 0.42s ease-in-out;
-        }
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-        .featureBgImg:hover .featureBgImg-bg {
-            transform: scale(1.1);
-        }
+<style>
+  :root {
+    --ink: #0a1430;
+    --ink-2: #111d44;
+    --sky: #009dff;
+    --sky-soft: #e5f4ff;
+    --cobalt: #0b4fe0;
+    --bolt: #ffd700;
+    --bolt-deep: #b89b00;
+    --redline: #ff3d7f;
+    --redline-soft: #fff0f5;
+    --canvas: #eef1f6;
+    --card: #ffffff;
+    --text: #141a2e;
+    --muted: #5a627a;
+    --line: #dde2ec;
+    --font: 'Rubik', sans-serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
 
-        .featureBgImg::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
-            z-index: -1;
-            transition: opacity 0.3s ease-in-out;
-            mix-blend-mode: soft-light;
-        }
+  body { background: var(--canvas); color: var(--text); font-family: var(--font); }
+  header { z-index: 999; }
+  .dsr-page h1, .dsr-page h2, .dsr-page h3, .dsr-page legend { font-family: var(--font); }
+  .dsr-hidden { display: none !important; }
+  .dsr-wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-        .featureBgImg:hover::after {
-            opacity: 0.8;
-        }
+  /* ---------- hero: a canvas, with the system being assembled on an artboard ---------- */
+  .dsr-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 128px 0 160px;
+    background:
+      radial-gradient(600px 360px at 80% 30%, rgba(0, 157, 255, .22), transparent 70%),
+      var(--ink);
+  }
+  .dsr-hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, .16) 1px, transparent 1.3px);
+    background-size: 20px 20px;
+  }
+  .dsr-hero-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .dsr-eyebrow {
+    display: inline-flex; align-items: center; gap: 9px; font-size: .8rem; font-weight: 600; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--bolt); margin-bottom: 20px;
+  }
+  .dsr-hero h1 {
+    font-weight: 700; font-size: clamp(2.5rem, 5.2vw, 4rem); line-height: 1; letter-spacing: -.035em;
+    color: #fff; margin: 0 0 24px;
+  }
+  .dsr-hero h1 span { color: var(--sky); }
+  .dsr-lede { font-size: 1.15rem; line-height: 1.6; color: rgba(255, 255, 255, .8); max-width: 500px; margin: 0 0 32px; font-weight: 400; }
+  .dsr-lede strong { color: #fff; font-weight: 600; }
+  .dsr-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .9rem; color: rgba(255, 255, 255, .7); }
+  .dsr-meta i { color: var(--sky); margin-right: 6px; }
 
-        .featureBgImg h4,
-        .featureBgImg button {
-            transition: transform 0.3s ease-in-out;
-        }
+  /* the artboard: four layers, tokens at the bottom, rising into a system */
+  .dsr-board { position: relative; justify-self: end; width: 100%; max-width: 470px; }
+  .dsr-board-label { display: flex; justify-content: space-between; font-size: .78rem; color: rgba(255, 255, 255, .55); margin: 0 0 8px 2px; }
+  .dsr-board-label b { color: var(--sky); font-weight: 500; }
+  .dsr-board-frame {
+    position: relative; background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 4px; padding: 16px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .dsr-layer {
+    position: relative; display: grid; grid-template-columns: 112px 1fr; align-items: center; gap: 14px;
+    background: var(--ink-2); border: 1px solid rgba(255, 255, 255, .1); border-radius: 10px; padding: 14px 16px; min-height: 66px;
+    animation: dsr-rise .7s var(--ease) both;
+  }
+  .dsr-layer:nth-child(4) { animation-delay: .1s; }
+  .dsr-layer:nth-child(3) { animation-delay: .35s; }
+  .dsr-layer:nth-child(2) { animation-delay: .6s; }
+  .dsr-layer:nth-child(1) { animation-delay: .85s; }
+  @keyframes dsr-rise { from { opacity: 0; transform: translateY(18px); } }
+  .dsr-layer-name b { display: block; font-size: .7rem; font-weight: 500; letter-spacing: .12em; color: var(--sky); }
+  .dsr-layer-name span { display: block; font-size: 1rem; font-weight: 600; color: #fff; margin-top: 2px; }
+  .dsr-layer-art { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .dsr-sw { width: 26px; height: 26px; border-radius: 6px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18); }
+  .dsr-aa { font-size: 1.4rem; font-weight: 600; color: #fff; margin: 0 4px 0 6px; line-height: 1; }
+  .dsr-sp { display: flex; align-items: flex-end; gap: 3px; height: 26px; }
+  .dsr-sp i { display: block; width: 6px; background: var(--redline); border-radius: 1px; opacity: .85; }
+  .dsr-mini-btn { font-size: .78rem; font-weight: 600; color: var(--ink); background: var(--bolt); border-radius: 6px; padding: 6px 11px; }
+  .dsr-mini-input { width: 84px; height: 28px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, .25); }
+  .dsr-mini-toggle { width: 38px; height: 22px; border-radius: 11px; background: var(--sky); position: relative; }
+  .dsr-mini-toggle::after { content: ''; position: absolute; right: 3px; top: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; }
+  .dsr-mini-card { display: grid; grid-template-columns: 30px 1fr; gap: 8px; align-items: center; padding: 7px 9px; border-radius: 7px; background: rgba(255, 255, 255, .07); width: 132px; }
+  .dsr-mini-card i { display: block; height: 30px; border-radius: 5px; background: rgba(0, 157, 255, .4); }
+  .dsr-mini-card span { display: block; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .35); margin: 4px 0; }
+  .dsr-mini-card span + span { width: 60%; background: rgba(255, 255, 255, .18); }
+  .dsr-ver { font-size: .76rem; font-weight: 600; color: var(--ink); background: var(--sky); border-radius: 20px; padding: 4px 10px; }
+  .dsr-avatars { display: flex; }
+  .dsr-avatars i { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--ink-2); margin-left: -7px; }
+  .dsr-avatars i:first-child { margin-left: 0; }
+  .dsr-gov-note { font-size: .78rem; color: rgba(255, 255, 255, .55); }
 
-        .featureBgImg:hover h4 {
-            transform: translateY(-5px);
-        }
+  /* the selection: the layer most teams start with */
+  .dsr-select { position: absolute; inset: -5px; border: 1.5px solid var(--sky); border-radius: 12px; pointer-events: none; animation: dsr-fade .4s ease 1.4s both; }
+  .dsr-select i { position: absolute; width: 8px; height: 8px; background: #fff; border: 1.5px solid var(--sky); }
+  .dsr-select i:nth-child(1) { left: -5px; top: -5px; }
+  .dsr-select i:nth-child(2) { right: -5px; top: -5px; }
+  .dsr-select i:nth-child(3) { left: -5px; bottom: -5px; }
+  .dsr-select i:nth-child(4) { right: -5px; bottom: -5px; }
+  .dsr-select em { position: absolute; left: 50%; bottom: -26px; transform: translateX(-50%); font-style: normal; font-size: .7rem; font-weight: 500; white-space: nowrap; color: #fff; background: var(--sky); border-radius: 4px; padding: 2px 7px; }
+  /* redline spacing markers between layers */
+  .dsr-gap { position: absolute; right: -30px; width: 12px; border-top: 1px solid var(--redline); border-bottom: 1px solid var(--redline); animation: dsr-fade .4s ease 1.7s both; }
+  .dsr-gap::before { content: ''; position: absolute; left: 5.5px; top: 0; bottom: 0; border-left: 1px solid var(--redline); }
+  .dsr-gap::after { content: attr(data-v); position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: .68rem; font-weight: 500; color: var(--redline); }
+  @keyframes dsr-fade { from { opacity: 0; } }
 
-        .progress-container {
-            background: #e2e8f0;
-            height: 8px;
-            border-radius: 4px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
+  /* ---------- buttons ---------- */
+  .dsr-btn {
+    font: inherit; font-weight: 600; border: none; border-radius: 10px; padding: 13px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1.2;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease, opacity .2s ease;
+  }
+  .dsr-btn:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+  .dsr-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 var(--bolt-deep); }
+  .dsr-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--bolt-deep); color: var(--ink); text-decoration: none; }
+  .dsr-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--bolt-deep); }
+  .dsr-btn-ink { background: var(--ink); color: #fff; }
+  .dsr-btn-ink:hover:not(:disabled) { background: var(--cobalt); color: #fff; }
+  .dsr-btn-ink i { color: var(--bolt); }
+  .dsr-btn-ink:disabled { opacity: .35; cursor: not-allowed; }
+  .dsr-btn-ghost { background: transparent; color: var(--muted); padding: 10px 14px; }
+  .dsr-btn-ghost:hover { color: var(--ink); background: var(--canvas); }
 
-        .progress-bar {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            height: 100%;
-            width: 0%;
-            transition: width 0.4s ease;
-            border-radius: 4px;
-        }
+  /* ---------- the audit: questions left, the readiness map right ---------- */
+  .dsr-bench { position: relative; z-index: 5; margin-top: -100px; display: grid; grid-template-columns: 1fr 330px; gap: 22px; align-items: start; }
+  .dsr-stage {
+    background: var(--card); border-radius: 18px; padding: 30px 38px 28px;
+    box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 30px 60px -26px rgba(10, 20, 48, .35);
+  }
 
-        .question-container {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
+  /* progress in two groups: need, then capacity */
+  .dsr-steps { display: grid; grid-template-columns: 3fr 4fr; gap: 18px; margin: 0 0 28px; }
+  .dsr-steps-group p { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #9aa1b3; margin: 0 0 8px; transition: color .2s ease; }
+  .dsr-steps-group.is-active p { color: var(--ink); }
+  .dsr-steps-group ol { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 5px; }
+  .dsr-steps button { all: unset; box-sizing: border-box; display: block; width: 100%; height: 8px; border-radius: 3px; background: #e6e9f0; cursor: default; transition: background .3s ease, box-shadow .3s ease; }
+  .dsr-steps .is-done button { background: var(--ink); cursor: pointer; }
+  .dsr-steps .is-current button { background: var(--sky); box-shadow: 0 0 0 3px rgba(0, 157, 255, .22); }
+  .dsr-steps button:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
 
-        .question-container.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
+  .dsr-q { border: 0; margin: 0; padding: 0; min-width: 0; animation: dsr-in .4s var(--ease); }
+  @keyframes dsr-in { from { opacity: 0; transform: translateY(12px); } }
+  .dsr-q-kicker { display: flex; align-items: center; gap: 10px; font-size: .8rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .dsr-q-kicker b { font-weight: 600; color: var(--cobalt); }
+  .dsr-q-token { font-size: .76rem; letter-spacing: 0; text-transform: none; color: var(--redline); background: var(--redline-soft); border-radius: 5px; padding: 2px 7px; }
+  .dsr-q legend {
+    float: left; width: 100%; padding: 0; font-size: clamp(1.5rem, 2.8vw, 1.95rem); font-weight: 600; line-height: 1.15;
+    letter-spacing: -.022em; color: var(--ink); margin: 0 0 10px;
+  }
+  .dsr-q legend + * { clear: both; }
+  .dsr-q-why { font-size: 1rem; line-height: 1.55; color: var(--muted); margin: 0 0 22px; max-width: 600px; }
 
-        .option {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-        }
+  .dsr-opts { display: grid; gap: 12px; }
+  .dsr-opt { position: relative; display: block; margin: 0; cursor: pointer; }
+  .dsr-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .dsr-opt-face {
+    position: relative; display: grid; grid-template-columns: 22px 1fr auto; gap: 16px; align-items: center;
+    padding: 15px 18px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff;
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .dsr-opt-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #c3c9d6; display: grid; place-items: center; transition: all .2s ease; }
+  .dsr-opt-dot::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; transform: scale(0); transition: transform .2s var(--ease); }
+  .dsr-opt-title { display: block; font-size: 1.05rem; font-weight: 600; color: var(--ink); line-height: 1.3; }
+  .dsr-opt-desc { display: block; font-size: .93rem; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+  .dsr-opt-key {
+    font-size: .76rem; font-weight: 500; color: #9aa1b3; border: 1.5px solid var(--line); border-radius: 6px;
+    min-width: 26px; height: 26px; display: grid; place-items: center; font-variant-numeric: tabular-nums;
+  }
+  /* selected = a Figma selection: sky outline, four handles */
+  .dsr-opt-face::before, .dsr-opt-face::after,
+  .dsr-opt-h::before, .dsr-opt-h::after {
+    content: ''; position: absolute; width: 8px; height: 8px; background: #fff; border: 1.5px solid var(--sky);
+    opacity: 0; transform: scale(.4); transition: opacity .15s ease, transform .2s var(--ease);
+  }
+  .dsr-opt-h { position: absolute; inset: 0; pointer-events: none; }
+  .dsr-opt-face::before { left: -5px; top: -5px; }
+  .dsr-opt-face::after { right: -5px; top: -5px; }
+  .dsr-opt-h::before { left: -5px; bottom: -5px; }
+  .dsr-opt-h::after { right: -5px; bottom: -5px; }
+  .dsr-opt:hover .dsr-opt-face { border-color: #a9cdf0; background: #fbfdff; }
+  .dsr-opt input:focus-visible + .dsr-opt-face { outline: 3px solid rgba(0, 157, 255, .45); outline-offset: 3px; }
+  .dsr-opt input:checked + .dsr-opt-face { border-color: var(--sky); background: var(--sky-soft); box-shadow: 0 0 0 1px var(--sky); }
+  .dsr-opt input:checked + .dsr-opt-face::before, .dsr-opt input:checked + .dsr-opt-face::after,
+  .dsr-opt input:checked + .dsr-opt-face .dsr-opt-h::before, .dsr-opt input:checked + .dsr-opt-face .dsr-opt-h::after { opacity: 1; transform: none; }
+  .dsr-opt input:checked + .dsr-opt-face .dsr-opt-dot { border-color: var(--sky); background: var(--sky); }
+  .dsr-opt input:checked + .dsr-opt-face .dsr-opt-dot::after { transform: scale(1); }
+  .dsr-opt input:checked + .dsr-opt-face .dsr-opt-key { background: var(--sky); border-color: var(--sky); color: #fff; }
 
-        .option:hover {
-            border-color: #667eea;
-            background: #f0f8ff;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
-        }
+  .dsr-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .dsr-nav-hint { font-size: .85rem; color: var(--muted); }
+  .dsr-nav-hint kbd { font: inherit; font-weight: 600; font-size: .78rem; color: var(--ink); background: var(--canvas); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; box-shadow: none; }
 
-        .option.selected {
-            border-color: #667eea;
-            background: #f0f8ff;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-        }
+  /* the readiness map: the dot moves as you answer */
+  .dsr-side {
+    position: sticky; top: 96px; background: var(--ink); color: #fff; border-radius: 18px; padding: 24px 22px 20px;
+    box-shadow: 0 30px 60px -26px rgba(10, 20, 48, .55);
+  }
+  .dsr-side-title { font-size: .76rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt); margin: 0 0 4px; }
+  .dsr-side-sub { font-size: .9rem; color: rgba(255, 255, 255, .6); margin: 0 0 16px; line-height: 1.45; }
+  .dsr-side-map { margin: 0 0 6px; }
+  .dsr-spec { margin: 12px 0 0; }
+  .dsr-spec-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 8px 0; border-top: 1px solid rgba(255, 255, 255, .09); font-size: .86rem; }
+  .dsr-spec-row dt { font-weight: 400; color: var(--redline); white-space: nowrap; }
+  .dsr-spec-row dd { margin: 0; text-align: right; color: #fff; font-weight: 500; }
+  .dsr-spec-row dd.is-empty { color: rgba(255, 255, 255, .3); font-weight: 400; }
+  .dsr-spec-row.is-new dd { animation: dsr-flash 1s ease; }
+  @keyframes dsr-flash { 0% { color: var(--sky); transform: translateX(-4px); } 100% { color: #fff; transform: none; } }
+  .dsr-side-foot { margin: 12px 0 0; font-size: .8rem; color: rgba(255, 255, 255, .45); }
+  .dsr-side-foot i { color: var(--bolt); margin-right: 6px; }
 
-        .option-text {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-size: 16px;
-        }
+  /* map svg, shared by the sidebar and the results */
+  .dsr-map { display: block; width: 100%; height: auto; overflow: visible; }
+  .dsr-map .q-bg { fill: rgba(255, 255, 255, .04); }
+  .dsr-map .q-on { fill: rgba(0, 157, 255, .16); }
+  .dsr-map .q-line { stroke: rgba(255, 255, 255, .22); stroke-width: 1; stroke-dasharray: 3 4; }
+  .dsr-map .q-frame { fill: none; stroke: rgba(255, 255, 255, .18); }
+  .dsr-map .q-label { fill: rgba(255, 255, 255, .5); font: 500 11px var(--font); }
+  .dsr-map .q-label.is-on { fill: #fff; font-weight: 600; }
+  .dsr-map .q-axis { fill: rgba(255, 255, 255, .55); font: 500 10px var(--font); letter-spacing: .12em; text-transform: uppercase; }
+  .dsr-map .q-dot { fill: var(--bolt); stroke: var(--ink); stroke-width: 3; transition: cx .5s var(--ease), cy .5s var(--ease); }
+  .dsr-map .q-halo { fill: rgba(255, 215, 0, .22); transition: cx .5s var(--ease), cy .5s var(--ease); }
+  .dsr-map.is-ghost .q-dot { fill: transparent; stroke: rgba(255, 255, 255, .45); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .dsr-map.is-ghost .q-halo { fill: none; }
 
-        .option-description {
-            font-size: 14px;
-            color: #6c757d;
-            line-height: 1.4;
-        }
+  /* ---------- results ---------- */
+  .dsr-results:focus { outline: none; }
+  .dsr-verdict {
+    position: relative; z-index: 5; margin-top: -100px; border-radius: 18px; overflow: hidden; color: #fff;
+    background: var(--ink); display: grid; grid-template-columns: 1.25fr 1fr;
+    box-shadow: 0 30px 60px -26px rgba(10, 20, 48, .5);
+  }
+  .dsr-verdict-main { padding: 38px 40px 34px; }
+  .dsr-kicker { font-size: .78rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt); margin: 0 0 10px; }
+  .dsr-verdict h2 { font-size: clamp(2.2rem, 4.6vw, 3.3rem); font-weight: 700; line-height: 1; letter-spacing: -.035em; color: #fff; margin: 0 0 14px; }
+  .dsr-verdict-desc { font-size: 1.1rem; line-height: 1.55; color: rgba(255, 255, 255, .82); margin: 0 0 26px; max-width: 480px; }
+  .dsr-scores { display: grid; gap: 14px; max-width: 440px; }
+  .dsr-score-top { display: flex; justify-content: space-between; align-items: baseline; font-size: .82rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .65); margin-bottom: 6px; }
+  .dsr-score-top b { font-size: 1.15rem; letter-spacing: 0; color: #fff; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .dsr-score-top b small { font-size: .78rem; color: rgba(255, 255, 255, .5); font-weight: 400; }
+  .dsr-bar { height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+  .dsr-bar i { display: block; height: 100%; border-radius: 4px; background: var(--sky); }
+  .dsr-bar.is-cap i { background: var(--bolt); }
+  .dsr-verdict-side { padding: 30px 36px; background: var(--ink-2); border-left: 1px solid rgba(255, 255, 255, .08); display: flex; align-items: center; justify-content: center; }
+  .dsr-verdict-side .dsr-map { max-width: 320px; }
 
-        .score-display {
-            background: linear-gradient(135deg, #052e75 0%, #21108d 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
+  .dsr-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; align-items: stretch; }
+  .dsr-panel { background: var(--card); border-radius: 18px; padding: 30px 32px; box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 20px 44px -28px rgba(10, 20, 48, .3); }
+  .dsr-panel h2 { font-size: 1.45rem; font-weight: 600; letter-spacing: -.02em; color: var(--ink); margin: 0 0 6px; }
+  .dsr-panel-sub { font-size: .97rem; color: var(--muted); line-height: 1.5; margin: 0 0 20px; }
 
-        .score-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 700;
-            backdrop-filter: blur(10px);
-        }
+  /* fix first: a redline annotation */
+  .dsr-fix { position: relative; border: 1.5px dashed var(--redline); background: var(--redline-soft); border-radius: 12px; padding: 22px 22px 20px; margin-top: 16px; }
+  .dsr-fix-tag { position: absolute; top: -12px; left: 18px; font-size: .74rem; font-weight: 600; color: #fff; background: var(--redline); border-radius: 5px; padding: 3px 9px; }
+  .dsr-fix-name { font-size: 1.25rem; font-weight: 600; color: var(--ink); margin: 4px 0 8px; letter-spacing: -.01em; }
+  .dsr-fix-text { font-size: 1rem; line-height: 1.55; color: var(--text); margin: 0; }
 
-        .readiness-level {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+  .dsr-approach { display: grid; gap: 12px; margin-top: 16px; }
+  .dsr-approach-row { display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: baseline; padding: 12px 0; border-top: 1px solid var(--line); }
+  .dsr-approach-row:first-child { border-top: 0; padding-top: 0; }
+  .dsr-approach-row dt { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .dsr-approach-row dd { margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--ink); line-height: 1.35; }
 
-        .level-description {
-            font-size: 1rem;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
+  /* the roadmap reads like a release history: v0.1 to v1.0 */
+  .dsr-road { margin-top: 22px; }
+  .dsr-road ol { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; position: relative; }
+  .dsr-road ol::before { content: ''; position: absolute; left: 12px; right: 12px; top: 12px; height: 2px; background: var(--line); }
+  .dsr-road li { position: relative; padding-top: 38px; }
+  .dsr-road li::before {
+    content: ''; position: absolute; left: 4px; top: 4px; width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--ink);
+  }
+  .dsr-road li:last-child::before { background: var(--bolt); border-color: var(--ink); }
+  .dsr-ver-tag { display: inline-block; font-size: .74rem; font-weight: 600; color: var(--cobalt); background: #e8efff; border-radius: 20px; padding: 2px 9px; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+  .dsr-road h3 { font-size: 1.05rem; font-weight: 600; color: var(--ink); margin: 0 0 4px; line-height: 1.3; }
+  .dsr-road-dur { font-size: .82rem; font-weight: 500; color: var(--redline); margin: 0 0 6px; }
+  .dsr-road-desc { font-size: .93rem; color: var(--muted); line-height: 1.5; margin: 0; }
 
-        .recommendations {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 25px;
-        }
+  .dsr-checks { list-style: none; margin: 0; padding: 0; }
+  .dsr-checks li { position: relative; padding: 0 0 12px 32px; font-size: .98rem; line-height: 1.5; color: var(--text); }
+  .dsr-checks li::before {
+    content: ''; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 5px; border: 2px solid var(--line);
+  }
+  .dsr-needs { margin: 0; }
+  .dsr-needs div { display: grid; grid-template-columns: 22px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: .98rem; line-height: 1.45; color: var(--text); }
+  .dsr-needs div:first-child { border-top: 0; padding-top: 0; }
+  .dsr-needs i { color: var(--sky); margin-top: 3px; text-align: center; }
 
-        .recommendations h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
+  .dsr-after { display: flex; justify-content: center; margin-top: 8px; }
 
-        .recommendation-section {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: white;
-            border-radius:8px;
-        }
+  .dsr-cta {
+    position: relative; display: block; overflow: hidden; isolation: isolate; border-radius: 18px; margin-top: 28px;
+    padding: 36px 40px; color: #fff; background: var(--ink);
+  }
+  .dsr-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: .55; transition: transform .5s var(--ease); }
+  .dsr-cta::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(10, 20, 48, .92) 0%, rgba(10, 20, 48, .55) 60%, rgba(10, 20, 48, .2) 100%); }
+  .dsr-cta:hover img { transform: scale(1.06); }
+  .dsr-cta h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -.03em; color: #fff; margin: 0 0 8px; }
+  .dsr-cta p { font-size: 1.04rem; color: rgba(255, 255, 255, .8); max-width: 460px; margin: 0 0 20px; line-height: 1.5; }
 
-        .recommendation-section h4 {
-            color: #052e75;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
+  footer.dsr-footer { margin-top: 90px; width: 100%; background: var(--ink); color: #fff; padding: 56px 34px; font-family: var(--font); }
+  footer.dsr-footer h3 { font-family: var(--font); font-size: 1.6rem; font-weight: 600; letter-spacing: -.02em; color: #fff; margin-bottom: 16px; }
+  footer.dsr-footer ol { padding-left: 22px; color: rgba(255, 255, 255, .85); }
+  footer.dsr-footer li { margin-bottom: 9px; line-height: 1.5; }
+  footer.dsr-footer p { color: rgba(255, 255, 255, .55); }
 
-        .recommendations ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+  /* ---------- responsive ---------- */
+  @media (max-width: 991px) {
+    .dsr-hero { padding: 108px 0 140px; }
+    .dsr-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .dsr-board { justify-self: start; max-width: 420px; }
+    .dsr-bench { grid-template-columns: 1fr; }
+    .dsr-side { position: static; }
+    .dsr-side-map { max-width: 300px; }
+    .dsr-verdict, .dsr-res-grid { grid-template-columns: 1fr; }
+    .dsr-verdict-side { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .08); }
+    .dsr-road ol { grid-template-columns: 1fr 1fr; row-gap: 24px; }
+    .dsr-road ol::before { display: none; }
+  }
+  @media (max-width: 600px) {
+    .dsr-stage { padding: 24px 18px 22px; }
+    .dsr-board { display: none; }
+    .dsr-opt-face { grid-template-columns: 22px 1fr; padding: 13px 14px; gap: 12px; }
+    .dsr-opt-key, .dsr-nav-hint { display: none; }
+    .dsr-steps { gap: 10px; }
+    .dsr-verdict-main, .dsr-verdict-side, .dsr-panel { padding: 26px 22px; }
+    .dsr-road ol { grid-template-columns: 1fr; }
+    .dsr-approach-row { grid-template-columns: 1fr; gap: 4px; }
+    .dsr-cta { padding: 28px 22px; }
+    footer.dsr-footer { padding: 64px 8px; }
+  }
+  @media (hover: none) { .dsr-nav-hint { display: none; } }
 
-        .recommendations li {
-            padding: 8px 0;
-            position: relative;
-            padding-left: 25px;
-            color: #495057;
-            line-height: 1.5;
-        }
+  /* the saved PDF/PNG is 760px wide: stack the panels, keep the ink */
+  .dl-artifact .dsr-results { font-family: var(--font); }
+  .dl-artifact .dsr-verdict { margin-top: 0; box-shadow: none; grid-template-columns: 1.2fr 1fr; }
+  .dl-artifact .dsr-verdict-main { padding: 30px 30px 28px; }
+  .dl-artifact .dsr-verdict-side { padding: 24px; }
+  .dl-artifact .dsr-res-grid { grid-template-columns: 1fr; }
+  .dl-artifact .dsr-panel { box-shadow: none; border: 1px solid var(--line); }
+  .dl-artifact .dsr-panel-sub { display: none; }
+  .dl-artifact .dsr-map .q-dot, .dl-artifact .dsr-map .q-halo { transition: none; }
 
-        .recommendations li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #052e75;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .phase-timeline {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .phase {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .phase:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .phase-number {
-            background: #052e75;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .phase-content {
-            flex-grow: 1;
-        }
-
-        .phase-title {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-
-        .phase-duration {
-            font-size: 0.9rem;
-            color: #6c757d;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
-        }
-
-        .text-yellow {
-            color: gold;
-        }
-
-        footer{padding: 44px 34px;}
-
-        @media (max-width: 567px) {
-            .featureBgImg-bg {
-                object-position: center;
-            }
-            
-            .option {
-                padding: 15px;
-            }
-            
-            .option-text {
-                font-size: 15px;
-            }
-            
-            .score-circle {
-                width: 100px;
-                height: 100px;
-                font-size: 2rem;
-            }
-
-            footer{padding: 64px 8px;}
-        }
-    </style>
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
-    <link rel="manifest" href="/site.webmanifest">
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
 </head>
 
-<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center justify-center">
-<header id='header'></header>
+<body class="dsr-page">
+<header id="header"></header>
 
-<div class="h-14 bg-blue-800 w-full"></div>
-<div class="mx-2 container">
-<div class="container mt-12 sm:p-8 pt-8 pb-8 bg-white rounded-xl shadow-2xl max-w-4xl">
-    <h1 class="text-4xl font-bold mb-4 text-center text-gray-700">Design System Readiness Assessment</h1>
-    <p class="text-center text-gray-600 mb-6">Evaluate your team's readiness for implementing a design system and get a personalized roadmap</p>
-    
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-    
-    <div id="questionContainer">
-        <!-- Questions will be inserted here -->
-    </div>
-    
-    <div id="results" class="hidden">
-        <div class="score-display">
-            <div class="score-circle" id="scoreCircle">85%</div>
-            <div class="readiness-level" id="readinessLevel">System Ready</div>
-            <div class="level-description" id="levelDescription"></div>
-        </div>
-        
-        <div class="recommendations">
-            <h3>Personalized Design System Strategy</h3>
-            <div id="recommendationsContent"></div>
-        </div>
+<section class="dsr-hero">
+  <div class="dsr-wrap dsr-hero-grid">
+    <div>
+      <div class="dsr-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i> Design System Readiness</div>
+      <h1>Is your team ready for a <span>design system?</span></h1>
+      <p class="dsr-lede">Seven questions in two parts: <strong>how much you need a system</strong>, and <strong>whether your team can keep one running</strong>. You get a verdict, the one thing to fix first, and a roadmap sized to your team.</p>
+      <button type="button" class="dsr-btn dsr-btn-bolt" id="dsrStart">Start the audit <i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+      <div class="dsr-meta">
+        <span><i class="far fa-clock" aria-hidden="true"></i>About 3 minutes</span>
+        <span><i class="fas fa-lock-open" aria-hidden="true"></i>No signup</span>
+        <span><i class="fas fa-download" aria-hidden="true"></i>Save results as PDF</span>
+      </div>
     </div>
 
-    <div id="expBld" class="mt-8 p-6 rounded-lg shadow-inner featureBgImg relative overflow-hidden hidden">
-        <img src="../img/banner/hero.jpg" alt="lightning bolt in a cloudy sky." class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
-        <div class="relative z-10">
-            <h4 class="text-2xl text-white mb-2 px-2 font-bold drop-shadow">Fast track your design<br>system strategy</h4>
-            <a href="/screen-builder/">
-                <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                    Screen Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
-                </button>
-            </a>
+    <!-- An artboard: tokens at the bottom, governance on top -->
+    <div class="dsr-board" aria-hidden="true">
+      <div class="dsr-board-label"><span><b>#</b> your-design-system</span><span>4 layers</span></div>
+      <div class="dsr-board-frame">
+        <div class="dsr-layer">
+          <div class="dsr-layer-name"><b>04</b><span>Governance</span></div>
+          <div class="dsr-layer-art">
+            <span class="dsr-ver">v1.0</span>
+            <span class="dsr-avatars"><i style="background:#ffd700"></i><i style="background:#009dff"></i><i style="background:#ff3d7f"></i></span>
+            <span class="dsr-gov-note">owners · roadmap</span>
+          </div>
+          <span class="dsr-gap" style="bottom:-15px;height:14px" data-v="16"></span>
         </div>
+        <div class="dsr-layer">
+          <div class="dsr-layer-name"><b>03</b><span>Patterns</span></div>
+          <div class="dsr-layer-art">
+            <span class="dsr-mini-card"><i></i><span><span></span><span></span></span></span>
+            <span class="dsr-mini-card"><i></i><span><span></span><span></span></span></span>
+          </div>
+          <span class="dsr-gap" style="bottom:-15px;height:14px" data-v="16"></span>
+        </div>
+        <div class="dsr-layer">
+          <div class="dsr-layer-name"><b>02</b><span>Components</span></div>
+          <div class="dsr-layer-art">
+            <span class="dsr-mini-btn">Button</span>
+            <span class="dsr-mini-input"></span>
+            <span class="dsr-mini-toggle"></span>
+          </div>
+          <span class="dsr-gap" style="bottom:-15px;height:14px" data-v="16"></span>
+        </div>
+        <div class="dsr-layer">
+          <div class="dsr-layer-name"><b>01</b><span>Tokens</span></div>
+          <div class="dsr-layer-art">
+            <span class="dsr-sw" style="background:#0a1430"></span>
+            <span class="dsr-sw" style="background:#009dff"></span>
+            <span class="dsr-sw" style="background:#ffd700"></span>
+            <span class="dsr-sw" style="background:#ff3d7f"></span>
+            <span class="dsr-aa">Aa</span>
+            <span class="dsr-sp"><i style="height:8px"></i><i style="height:14px"></i><i style="height:20px"></i><i style="height:26px"></i></span>
+          </div>
+          <span class="dsr-select"><i></i><i></i><i></i><i></i><em>Start here</em></span>
+        </div>
+      </div>
     </div>
-    
-    <button id="resetBtn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-6 hidden">
-        <i class="fas fa-redo mr-2" aria-hidden="true"></i> Start Over
-    </button>
-</div>
-</div>
+  </div>
+</section>
+
+<main class="dsr-wrap">
+  <section class="dsr-bench" id="dsrBench" aria-label="Readiness audit">
+    <div class="dsr-stage">
+      <div class="dsr-steps" id="dsrSteps"></div>
+      <div id="dsrQuestion"></div>
+      <div class="dsr-nav">
+        <button type="button" class="dsr-btn dsr-btn-ghost" id="dsrBack"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</button>
+        <span class="dsr-nav-hint">Keys <kbd>1</kbd>–<kbd>4</kbd> pick, <kbd>Enter</kbd> continues</span>
+        <button type="button" class="dsr-btn dsr-btn-ink" id="dsrNext" disabled>Next <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <aside class="dsr-side" aria-label="Your readiness map so far">
+      <p class="dsr-side-title">Readiness map</p>
+      <p class="dsr-side-sub">Need runs up, capacity runs across. Your dot moves as you answer.</p>
+      <div class="dsr-side-map" id="dsrSideMap"></div>
+      <dl class="dsr-spec" id="dsrSpec"></dl>
+      <p class="dsr-side-foot"><i class="fas fa-lock" aria-hidden="true"></i>Stays in your browser.</p>
+    </aside>
+  </section>
+
+  <section id="results" class="dsr-results dsr-hidden" tabindex="-1" aria-live="polite">
+    <div class="dsr-verdict">
+      <div class="dsr-verdict-main">
+        <p class="dsr-kicker">Your verdict</p>
+        <h2 class="dsr-v-name">Build it</h2>
+        <p class="dsr-verdict-desc dsr-v-desc"></p>
+        <div class="dsr-scores">
+          <div>
+            <div class="dsr-score-top"><span>Need</span><b class="dsr-v-need">0<small> / 100</small></b></div>
+            <div class="dsr-bar"><i class="dsr-v-need-bar"></i></div>
+          </div>
+          <div>
+            <div class="dsr-score-top"><span>Capacity</span><b class="dsr-v-cap">0<small> / 100</small></b></div>
+            <div class="dsr-bar is-cap"><i class="dsr-v-cap-bar"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="dsr-verdict-side dsr-v-map"></div>
+    </div>
+
+    <div class="dsr-res-grid">
+      <div class="dsr-panel">
+        <h2>Fix this first</h2>
+        <p class="dsr-panel-sub">Your lowest capacity answer. A system rests on all four, so the weakest one sets the pace.</p>
+        <div class="dsr-fix">
+          <span class="dsr-fix-tag dsr-v-fix-tag">Weakest link</span>
+          <p class="dsr-fix-name dsr-v-fix-name"></p>
+          <p class="dsr-fix-text dsr-v-fix-text"></p>
+        </div>
+      </div>
+      <div class="dsr-panel">
+        <h2>Your approach</h2>
+        <p class="dsr-panel-sub">What to build, and how long it usually takes a team in your spot.</p>
+        <dl class="dsr-approach">
+          <div class="dsr-approach-row"><dt>Build</dt><dd class="dsr-v-approach"></dd></div>
+          <div class="dsr-approach-row"><dt>Timeline</dt><dd class="dsr-v-timeline"></dd></div>
+          <div class="dsr-approach-row"><dt>Revisit when</dt><dd class="dsr-v-revisit"></dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="dsr-panel dsr-road">
+      <h2>Your roadmap</h2>
+      <p class="dsr-panel-sub">Four releases. Ship each one before you start the next.</p>
+      <ol class="dsr-v-road"></ol>
+    </div>
+
+    <div class="dsr-res-grid">
+      <div class="dsr-panel">
+        <h2>Priorities</h2>
+        <p class="dsr-panel-sub">In order. Tick them off as you go.</p>
+        <ul class="dsr-checks dsr-v-priorities"></ul>
+      </div>
+      <div class="dsr-panel">
+        <h2>What you'll need</h2>
+        <p class="dsr-panel-sub">People, tools and support to plan for.</p>
+        <div class="dsr-needs dsr-v-needs"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dsr-after dsr-hidden" id="dsrAfter">
+    <button type="button" class="dsr-btn dsr-btn-ghost" id="dsrReset"><i class="fas fa-redo" aria-hidden="true"></i> Start over</button>
+  </div>
+
+  <a class="dsr-cta dsr-hidden" id="dsrCta" href="/screen-builder/" style="text-decoration:none">
+    <img src="../img/banner/hero.jpg" alt="" loading="lazy">
+    <h2>Put your first components on screen</h2>
+    <p>Screen Builder turns your tokens and components into working screens you can test with users.</p>
+    <span class="dsr-btn dsr-btn-bolt">Open Screen Builder <i class="fas fa-bolt" aria-hidden="true"></i></span>
+  </a>
+</main>
 
 <div id="error"></div>
 
 <!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
 <div id="related-tools-con"></div>
 
-
-<footer class="mt-24 w-full bg-blue-950 text-white py-8">
-    <div class="container mx-auto px-4">
-        <div class="row">
-            <div class="col-lg-7 mb-8 mt-8">
-                <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
-                <ol class="list-decimal pl-6 space-y-2 instruct-list">
-                    <li>Answer questions about your team size, product complexity, and design maturity.</li>
-                    <li>Get a comprehensive readiness score and implementation recommendation.</li>
-                    <li>Receive a detailed roadmap with specific phases and timelines.</li>
-                    <li>Learn about tools, resources, and team structure needed for success.</li>
-                    <li>Get actionable next steps tailored to your current situation.</li>
-                </ol>
-                <p class="mt-4 text-gray-400 max-w-screen-lg">Our assessment evaluates your organization's design system readiness across team structure, product complexity, design consistency needs, and resource availability to provide targeted recommendations.</p>
-            </div>
-            <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
-        </div>
+<footer class="dsr-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <h3>How it works</h3>
+        <ol>
+          <li>Answer three questions about need: team size, product surface, and how far your UI has drifted.</li>
+          <li>Answer four about capacity: process, design–dev partnership, time and ownership, and leadership support.</li>
+          <li>See where you land on the readiness map, with a score for each part.</li>
+          <li>Get the one capacity gap to close first, and an approach and timeline sized to your team.</li>
+          <li>Follow a four-release roadmap from v0.1 to v1.0, and save it all as a PDF or PNG.</li>
+        </ol>
+        <p class="mt-3">Most design systems that fail were needed. They fail because nobody had the time, the process or the backing to keep them current. This assessment scores need and capacity separately so you can see which one is holding you back. Your answers stay in your browser.</p>
+      </div>
+      <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
     </div>
+  </div>
 </footer>
 
+<!-- Site-wide behaviors, including the sticky nav every main page has -->
+<script src="../js/main.js"></script>
 <script>
-    let userInteractionData = "";
-    let currentQuestion = 0;
-    let answers = [];
-
-    const questions = [
+(function () {
+    // part: 'need' answers raise the case for a system; 'cap' answers raise the ability to run one
+    var QUESTIONS = [
         {
-            question: "What's your current team size and structure?",
-            options: [
-                {
-                    text: "Solo designer or very small team (1-2 people)",
-                    description: "Working independently or with minimal design support",
-                    score: 1
-                },
-                {
-                    text: "Small design team (3-5 people)",
-                    description: "Multiple designers working on shared products",
-                    score: 2
-                },
-                {
-                    text: "Medium design team (6-15 people)",
-                    description: "Established design team with some specialization",
-                    score: 3
-                },
-                {
-                    text: "Large design organization (15+ people)",
-                    description: "Multiple teams working across different products",
-                    score: 4
-                }
+            part: 'need', key: 'team', token: 'team.size',
+            q: 'How many designers work on your product?',
+            why: 'One designer can hold a product in their head. Past a handful, decisions start to fork.',
+            opts: [
+                { t: 'Just one or two', d: 'A solo designer or a very small team', short: '1–2', s: 1 },
+                { t: 'Three to five', d: 'Several designers sharing the same product', short: '3–5', s: 2 },
+                { t: 'Six to fifteen', d: 'An established team with some specialists', short: '6–15', s: 3 },
+                { t: 'More than fifteen', d: 'Several teams across different products', short: '15+', s: 4 }
             ]
         },
         {
-            question: "How complex is your product ecosystem?",
-            options: [
-                {
-                    text: "Single product with simple interface",
-                    description: "One main product with straightforward user flows",
-                    score: 1
-                },
-                {
-                    text: "Single product with complex features",
-                    description: "One product but with multiple complex user journeys",
-                    score: 2
-                },
-                {
-                    text: "Multiple related products",
-                    description: "Several products that share users and branding",
-                    score: 3
-                },
-                {
-                    text: "Complex product ecosystem",
-                    description: "Many products across different platforms and user types",
-                    score: 4
-                }
+            part: 'need', key: 'surface', token: 'product.surface',
+            q: 'How much product are you designing for?',
+            why: 'Every extra product, platform or user type is another place a pattern gets rebuilt from scratch.',
+            opts: [
+                { t: 'One product, simple flows', d: 'A single product with straightforward screens', short: 'One, simple', s: 1 },
+                { t: 'One product, many features', d: 'A single product with several complex journeys', short: 'One, complex', s: 2 },
+                { t: 'A few related products', d: 'Several products that share users and branding', short: 'A few', s: 3 },
+                { t: 'A whole ecosystem', d: 'Many products across platforms and user types', short: 'Ecosystem', s: 4 }
             ]
         },
         {
-            question: "What's your current design consistency situation?",
-            options: [
-                {
-                    text: "Significant inconsistency across interfaces",
-                    description: "Different patterns, colors, and components everywhere",
-                    score: 4
-                },
-                {
-                    text: "Some consistency but many variations",
-                    description: "Basic patterns exist but implemented differently",
-                    score: 3
-                },
-                {
-                    text: "Mostly consistent with some gaps",
-                    description: "Good foundations but missing some standardization",
-                    score: 2
-                },
-                {
-                    text: "Very consistent already",
-                    description: "Strong consistency across most interfaces",
-                    score: 1
-                }
+            part: 'need', key: 'drift', token: 'ui.drift',
+            q: 'Open three screens side by side. How alike are they?',
+            why: 'Drift is the clearest sign you need a system. It is the cost a system pays back.',
+            opts: [
+                { t: 'They look like one product', d: 'Shared colors, type and components almost everywhere', short: 'Tight', s: 1 },
+                { t: 'Mostly alike, a few odd ones', d: 'Good foundations with some gaps', short: 'Minor', s: 2 },
+                { t: 'Same idea, built differently', d: 'Basic patterns exist but each team made its own', short: 'Noticeable', s: 3 },
+                { t: 'Like three different products', d: 'Different buttons, colors and spacing everywhere', short: 'Severe', s: 4 }
             ]
         },
         {
-            question: "How mature are your current design processes?",
-            options: [
-                {
-                    text: "Ad hoc design with minimal process",
-                    description: "Designers work independently with little standardization",
-                    score: 1
-                },
-                {
-                    text: "Basic design reviews and handoffs",
-                    description: "Some process but not well documented or consistent",
-                    score: 2
-                },
-                {
-                    text: "Established design workflow with documentation",
-                    description: "Clear processes with some documentation and guidelines",
-                    score: 3
-                },
-                {
-                    text: "Mature design operations with governance",
-                    description: "Well-documented processes with design ops support",
-                    score: 4
-                }
+            part: 'cap', key: 'process', token: 'process.maturity',
+            fix: { name: 'Design process', text: 'Write down how a design goes from idea to shipped, then run your next three projects through it. A system needs a process to plug into, or nobody knows when to use it.' },
+            q: 'How does a design get from idea to shipped?',
+            why: 'A system needs a process to plug into: reviews, handoff, a place where decisions get written down.',
+            opts: [
+                { t: 'Everyone does it their own way', d: 'Little shared process or documentation', short: 'Ad hoc', s: 1 },
+                { t: 'Some reviews and handoffs', d: 'There is a process, but it is loose and undocumented', short: 'Loose', s: 2 },
+                { t: 'A written workflow we follow', d: 'Clear steps with some guidelines and documentation', short: 'Written', s: 3 },
+                { t: 'Design ops with governance', d: 'Documented process with people who maintain it', short: 'Governed', s: 4 }
             ]
         },
         {
-            question: "What's your development team's relationship with design?",
-            options: [
-                {
-                    text: "Developers build from mockups with minimal collaboration",
-                    description: "Traditional handoff model with limited interaction",
-                    score: 1
-                },
-                {
-                    text: "Regular collaboration but inconsistent implementation",
-                    description: "Good communication but variable design fidelity",
-                    score: 2
-                },
-                {
-                    text: "Strong design-dev partnership with shared tools",
-                    description: "Collaborative process with good implementation quality",
-                    score: 3
-                },
-                {
-                    text: "Integrated team with design system mindset",
-                    description: "Developers actively contribute to design consistency",
-                    score: 4
-                }
+            part: 'cap', key: 'dev', token: 'dev.partnership',
+            fix: { name: 'Design–dev partnership', text: 'Pair one designer and one developer on your next feature and have them agree on a name for every component they touch. Shared names come before shared code.' },
+            q: 'How do your developers work with design?',
+            why: 'A design system lives in code as much as in Figma. If developers aren\'t in, it\'s a sticker sheet.',
+            opts: [
+                { t: 'They build from mockups', d: 'A handoff with little back and forth', short: 'Handoff', s: 1 },
+                { t: 'We talk, results vary', d: 'Good communication, uneven fidelity in the build', short: 'Uneven', s: 2 },
+                { t: 'We share tools and reviews', d: 'A real partnership with good build quality', short: 'Shared tools', s: 3 },
+                { t: 'They help own consistency', d: 'Developers contribute components and catch drift', short: 'Co-owners', s: 4 }
             ]
         },
         {
-            question: "What resources can you dedicate to design system work?",
-            options: [
-                {
-                    text: "Very limited time and budget",
-                    description: "Can only work on this occasionally between other priorities",
-                    score: 1
-                },
-                {
-                    text: "Some dedicated time but competing priorities",
-                    description: "Can allocate time but other work often takes precedence",
-                    score: 2
-                },
-                {
-                    text: "Dedicated resources for design system initiatives",
-                    description: "Have budget and time specifically for this work",
-                    score: 3
-                },
-                {
-                    text: "Full-time design system team or strong commitment",
-                    description: "Dedicated personnel or significant organizational support",
-                    score: 4
-                }
+            part: 'cap', key: 'time', token: 'budget.time',
+            fix: { name: 'Time and ownership', text: 'Name one person who owns the system and protect a fixed slice of their week for it, even one day. A system with no owner drifts back into the mess it replaced.' },
+            q: 'Who has time to build and maintain it?',
+            why: 'Launching a system takes months. Keeping it current takes forever. Someone has to own both.',
+            opts: [
+                { t: 'Nobody, really', d: 'It would happen between other priorities', short: 'Nobody', s: 1 },
+                { t: 'Someone, when things are quiet', d: 'Time exists but other work usually wins', short: 'Sometimes', s: 2 },
+                { t: 'A protected share of someone\'s week', d: 'Budget and time set aside for this work', short: 'Protected', s: 3 },
+                { t: 'A dedicated system team', d: 'People whose job is the design system', short: 'Dedicated', s: 4 }
             ]
         },
         {
-            question: "How supportive is leadership of design standardization?",
-            options: [
-                {
-                    text: "Leadership doesn't see the value yet",
-                    description: "Need to build a business case and gain buy-in",
-                    score: 1
-                },
-                {
-                    text: "Some interest but not a priority",
-                    description: "Supportive in principle but not actively promoting it",
-                    score: 2
-                },
-                {
-                    text: "Supportive and willing to invest",
-                    description: "Leadership understands value and supports investment",
-                    score: 3
-                },
-                {
-                    text: "Strong champion and strategic priority",
-                    description: "Design system work is seen as critical to success",
-                    score: 4
-                }
+            part: 'cap', key: 'leaders', token: 'leadership.support',
+            fix: { name: 'Leadership support', text: 'Count the hours your team spent rebuilding the same UI last quarter and put a dollar figure on it. Bring leadership that number, not a pitch for a design system.' },
+            q: 'How does leadership see design consistency?',
+            why: 'A system competes with features for time. Without backing, features win every sprint.',
+            opts: [
+                { t: 'They don\'t see the value yet', d: 'You would need to build the case from scratch', short: 'Unconvinced', s: 1 },
+                { t: 'Nice to have, not a priority', d: 'Supportive in principle, not in the roadmap', short: 'Lukewarm', s: 2 },
+                { t: 'Willing to invest', d: 'They understand the value and will fund it', short: 'Willing', s: 3 },
+                { t: 'A strategic priority', d: 'Leadership champions it as critical', short: 'Champion', s: 4 }
             ]
         }
     ];
 
-    function updateInteractionData() {
-        const answeredQuestions = answers.map((score, index) => {
-            if (score !== undefined) {
-                const q = questions[index];
-                const selectedOption = q.options.find(opt => opt.score === score);
-                return `Q${index + 1}: ${selectedOption.text} (${score}/4)`;
-            }
-            return null;
-        }).filter(Boolean);
-        
-        const currentScore = answers.filter(a => a !== undefined).reduce((sum, score) => sum + score, 0);
-        const maxPossible = answers.filter(a => a !== undefined).length * 4;
-        const currentPercentage = maxPossible > 0 ? Math.round((currentScore / maxPossible) * 100) : 0;
-        
-        userInteractionData = `Design System Readiness Assessment:\n${answeredQuestions.join('\n')}\nCurrent Score: ${currentScore}/${maxPossible} (${currentPercentage}%)`;
-        window.userInteractionData = userInteractionData;
-    }
+    var NEED_N = QUESTIONS.filter(function (q) { return q.part === 'need'; }).length;
 
-    function initAssessment() {
-        renderQuestion();
-        updateProgress();
-    }
-
-    function renderQuestion() {
-        const container = document.getElementById('questionContainer');
-        
-        if (currentQuestion >= questions.length) {
-            showResults();
-            return;
+    // the four verdicts, one per quadrant of the map
+    var VERDICTS = {
+        build: {
+            name: 'Build it',
+            desc: 'You need a system and you have the people, process and backing to keep one running. Start now, and staff it like a product.',
+            approach: 'A full design system: tokens, components, patterns and governance',
+            timeline: '6–12 months to v1.0',
+            revisit: 'Adoption stalls below half your teams',
+            road: [
+                { v: 'v0.1', t: 'Foundations', dur: '4–6 weeks', d: 'Set up governance, audit what exists, and extract the core tokens.' },
+                { v: 'v0.3', t: 'Component library', dur: '8–12 weeks', d: 'Build and document the components your products use most.' },
+                { v: 'v0.6', t: 'Team rollout', dur: '6–8 weeks', d: 'Move teams onto the system with training and office hours.' },
+                { v: 'v1.0', t: 'Scale and iterate', dur: 'Ongoing', d: 'Expand from real usage. Retire what nobody uses.' }
+            ],
+            priorities: [
+                'Agree who decides what goes into the system, and how',
+                'Audit production UI and extract color, type and spacing tokens',
+                'Build the library with usage docs for every component',
+                'Train every team and hold weekly office hours',
+                'Add visual regression tests so drift gets caught in review'
+            ],
+            needs: [
+                ['fa-users', 'A dedicated system team, two or three people at minimum'],
+                ['fa-tools', 'Figma, Storybook and a documentation site'],
+                ['fa-code', 'Developer partners in every product team'],
+                ['fa-flag', 'An executive sponsor who protects the roadmap']
+            ]
+        },
+        caseFirst: {
+            name: 'Build the case first',
+            desc: 'The need is real but your team can\'t keep a full system running yet. Launch one now and it drifts. Prove the value small, then get it funded.',
+            approach: 'A starter kit plus a business case for leadership',
+            timeline: '2–4 months to a funded system',
+            revisit: 'Someone owns the system and has protected time for it',
+            road: [
+                { v: 'v0.1', t: 'UI audit', dur: '1–2 weeks', d: 'Screenshot every button, form and color in production. Put them all on one board.' },
+                { v: 'v0.2', t: 'Business case', dur: '2–3 weeks', d: 'Turn the audit into hours and dollars lost to rework.' },
+                { v: 'v0.5', t: 'Starter kit', dur: '4–6 weeks', d: 'Tokens plus the five most-used components, shipped in one product.' },
+                { v: 'v1.0', t: 'Fund an owner', dur: '2–4 weeks', d: 'Use the starter kit\'s results to secure a dedicated owner and budget.' }
+            ],
+            priorities: [
+                'Run the UI audit and count the duplicates',
+                'Put a cost on the rework the audit uncovers',
+                'Ship a starter kit in one product to prove the value',
+                'Recruit one developer as a co-owner',
+                'Take the numbers to leadership and ask for an owner'
+            ],
+            needs: [
+                ['fa-user', 'One advocate with a day or two a week'],
+                ['fa-th-large', 'A Figma library and a single documentation page'],
+                ['fa-code', 'A developer partner for the starter kit'],
+                ['fa-calendar-check', 'Time on leadership\'s agenda for the case']
+            ]
+        },
+        small: {
+            name: 'Start small',
+            desc: 'You could build a full system, but your product doesn\'t need one yet. A shared library will do the job. Grow it when a second product or team arrives.',
+            approach: 'A shared library, grown as you go',
+            timeline: '1–3 months to a working library',
+            revisit: 'You add a second product, a second team or a rebrand',
+            road: [
+                { v: 'v0.1', t: 'Tokens', dur: '1–2 weeks', d: 'Name your colors, type and spacing as variables in design and code.' },
+                { v: 'v0.2', t: 'Shared library', dur: '3–4 weeks', d: 'Add the components you\'ve built more than twice. Nothing else.' },
+                { v: 'v0.5', t: 'Docs as you go', dur: 'Ongoing', d: 'One short page per component, written when it\'s built.' },
+                { v: 'v1.0', t: 'Set the trigger', dur: '1 meeting', d: 'Agree what will make you scale up, and who calls it.' }
+            ],
+            priorities: [
+                'Move hard-coded colors and sizes into tokens',
+                'Only add a component the second time you need it',
+                'Keep the docs next to the code, not in a separate site',
+                'Review the library once a quarter and cut what\'s unused',
+                'Write down the trigger for building a full system'
+            ],
+            needs: [
+                ['fa-user-clock', 'A few hours a week from one designer and one developer'],
+                ['fa-th-large', 'A Figma library synced with a code package'],
+                ['fa-book', 'A README per component'],
+                ['fa-calendar-alt', 'A quarterly library review on the calendar']
+            ]
+        },
+        notYet: {
+            name: 'Not yet',
+            desc: 'A design system would cost more than it saves right now. A simple style guide and a habit of reuse will get you most of the benefit.',
+            approach: 'A style guide and reuse habits',
+            timeline: '2–4 months to solid foundations',
+            revisit: 'Your team grows past three designers or your UI starts to drift',
+            road: [
+                { v: 'v0.1', t: 'Set the goal', dur: '1–2 weeks', d: 'Write down what better consistency would get you, in your team\'s words.' },
+                { v: 'v0.2', t: 'Process basics', dur: '3–4 weeks', d: 'Start a weekly design review and a simple handoff checklist.' },
+                { v: 'v0.5', t: 'Style guide', dur: '3–4 weeks', d: 'One page: colors, type, spacing and your three most common components.' },
+                { v: 'v1.0', t: 'Small wins', dur: '4–6 weeks', d: 'Share the assets, reuse them on purpose, and show what time they saved.' }
+            ],
+            priorities: [
+                'Start a weekly design review, even a 30-minute one',
+                'Write a one-page style guide with colors, type and spacing',
+                'Keep a shared Figma file of the components you reuse',
+                'Invite a developer to design reviews',
+                'Track time spent rebuilding UI, for the case you\'ll make later'
+            ],
+            needs: [
+                ['fa-chalkboard-teacher', 'Time for team skill-building'],
+                ['fa-th-large', 'A shared Figma file'],
+                ['fa-comments', 'A regular slot for design reviews'],
+                ['fa-file-alt', 'One page to hold the style guide']
+            ]
         }
+    };
 
-        const q = questions[currentQuestion];
-        const html = `
-            <div class="question-container active">
-                <div class="text-sm text-blue-600 font-medium mb-3">Question ${currentQuestion + 1} of ${questions.length}</div>
-                <div class="text-xl font-semibold text-gray-800 mb-6">${q.question}</div>
-                <div class="options">
-                    ${q.options.map((option, index) => `
-                        <div class="option" onclick="selectOption(${index})" data-option="${index}">
-                            <div class="option-text">${option.text}</div>
-                            <div class="option-description">${option.description}</div>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="navigation">
-                    <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300" onclick="previousQuestion()" ${currentQuestion === 0 ? 'style="visibility: hidden"' : ''}>
-                        <i class="fas fa-arrow-left mr-2"></i> Previous
-                    </button>
-                    <button class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300 transform hover:-translate-y-1" id="nextBtn" onclick="nextQuestion()" disabled>
-                        Next <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        container.innerHTML = html;
-        
-        // If there's a previous answer, select it
-        if (answers[currentQuestion] !== undefined) {
-            const selectedScore = answers[currentQuestion];
-            const optionIndex = q.options.findIndex(opt => opt.score === selectedScore);
-            if (optionIndex !== -1) {
-                document.querySelector(`[data-option="${optionIndex}"]`).classList.add('selected');
-                document.getElementById('nextBtn').disabled = false;
-            }
+    var answers = {};
+    var cur = 0;
+    var $q = document.getElementById('dsrQuestion');
+    var $steps = document.getElementById('dsrSteps');
+    var $spec = document.getElementById('dsrSpec');
+    var $sideMap = document.getElementById('dsrSideMap');
+    var $next = document.getElementById('dsrNext');
+    var $back = document.getElementById('dsrBack');
+
+    function optFor(q) {
+        var s = answers[q.key];
+        for (var i = 0; i < q.opts.length; i++) if (q.opts[i].s === s) return q.opts[i];
+        return null;
+    }
+
+    // 0–100 for one part; null if nothing in that part is answered yet
+    function partScore(part) {
+        var qs = QUESTIONS.filter(function (q) { return q.part === part && answers[q.key]; });
+        if (!qs.length) return null;
+        var sum = qs.reduce(function (n, q) { return n + answers[q.key] - 1; }, 0);
+        return Math.round(sum / (qs.length * 3) * 100);
+    }
+
+    function quadrant(need, cap) {
+        if (need >= 50) return cap >= 50 ? 'build' : 'caseFirst';
+        return cap >= 50 ? 'small' : 'notYet';
+    }
+
+    // the readiness map: capacity across, need up
+    function mapSvg(need, cap, ghost) {
+        var P = 26, S = 220, H = S / 2, x0 = P, y0 = 6;
+        var on = ghost ? null : quadrant(need, cap);
+        var cx = x0 + S * cap / 100, cy = y0 + S * (1 - need / 100);
+        var cells = [
+            { k: 'caseFirst', x: x0, y: y0, label: 'Build the case' },
+            { k: 'build', x: x0 + H, y: y0, label: 'Build it' },
+            { k: 'notYet', x: x0, y: y0 + H, label: 'Not yet' },
+            { k: 'small', x: x0 + H, y: y0 + H, label: 'Start small' }
+        ];
+        var out = '<svg class="dsr-map' + (ghost ? ' is-ghost' : '') + '" viewBox="0 0 ' + (S + P + 8) + ' ' + (S + y0 + 30) + '" role="img" aria-label="' +
+            (ghost ? 'Readiness map, not enough answers yet' : 'Readiness map: need ' + need + ', capacity ' + cap + ', ' + VERDICTS[on].name) + '">';
+        cells.forEach(function (c) {
+            out += '<rect class="' + (c.k === on ? 'q-on' : 'q-bg') + '" x="' + c.x + '" y="' + c.y + '" width="' + H + '" height="' + H + '"/>';
+            out += '<text class="q-label' + (c.k === on ? ' is-on' : '') + '" x="' + (c.x + 10) + '" y="' + (c.y + 20) + '">' + c.label + '</text>';
+        });
+        out += '<line class="q-line" x1="' + (x0 + H) + '" y1="' + y0 + '" x2="' + (x0 + H) + '" y2="' + (y0 + S) + '"/>';
+        out += '<line class="q-line" x1="' + x0 + '" y1="' + (y0 + H) + '" x2="' + (x0 + S) + '" y2="' + (y0 + H) + '"/>';
+        out += '<rect class="q-frame" x="' + x0 + '" y="' + y0 + '" width="' + S + '" height="' + S + '"/>';
+        out += '<text class="q-axis" x="' + (x0 + S / 2) + '" y="' + (y0 + S + 22) + '" text-anchor="middle">Capacity →</text>';
+        out += '<text class="q-axis" transform="translate(' + (x0 - 12) + ' ' + (y0 + S / 2) + ') rotate(-90)" text-anchor="middle">Need →</text>';
+        out += '<circle class="q-halo" cx="' + cx + '" cy="' + cy + '" r="18"/>';
+        out += '<circle class="q-dot" cx="' + cx + '" cy="' + cy + '" r="8"/>';
+        return out + '</svg>';
+    }
+
+    function renderSide(changedKey) {
+        var need = partScore('need'), cap = partScore('cap');
+        var ghost = need === null || cap === null;
+        $sideMap.innerHTML = mapSvg(need === null ? 50 : need, cap === null ? 50 : cap, ghost);
+        $spec.innerHTML = QUESTIONS.map(function (q) {
+            var o = optFor(q);
+            return '<div class="dsr-spec-row' + (q.key === changedKey ? ' is-new' : '') + '"><dt>' + q.token + '</dt>' +
+                (o ? '<dd>' + o.short + '</dd>' : '<dd class="is-empty">—</dd>') + '</div>';
+        }).join('');
+    }
+
+    function renderSteps() {
+        var groups = [['need', 'Part 1 · Need'], ['cap', 'Part 2 · Capacity']];
+        $steps.innerHTML = groups.map(function (g) {
+            var active = QUESTIONS[cur].part === g[0];
+            return '<div class="dsr-steps-group' + (active ? ' is-active' : '') + '"><p>' + g[1] + '</p><ol>' +
+                QUESTIONS.map(function (q, i) {
+                    if (q.part !== g[0]) return '';
+                    var cls = i === cur ? 'is-current' : (answers[q.key] ? 'is-done' : '');
+                    return '<li class="' + cls + '"><button type="button" data-step="' + i + '" aria-label="Question ' + (i + 1) +
+                        (answers[q.key] ? ', answered' : '') + (i === cur ? ', current' : '') + '"' + (i === cur ? ' aria-current="step"' : '') + '></button></li>';
+                }).join('') + '</ol></div>';
+        }).join('');
+    }
+
+    function renderQuestion(focus) {
+        var q = QUESTIONS[cur];
+        var partLabel = q.part === 'need' ? 'Need' : 'Capacity';
+        $q.innerHTML = '<fieldset class="dsr-q">' +
+            '<p class="dsr-q-kicker"><b>' + partLabel + '</b> Question ' + (cur + 1) + ' of ' + QUESTIONS.length +
+            ' <span class="dsr-q-token">' + q.token + '</span></p>' +
+            '<legend>' + q.q + '</legend>' +
+            '<p class="dsr-q-why">' + q.why + '</p>' +
+            '<div class="dsr-opts">' +
+            q.opts.map(function (o, i) {
+                var checked = answers[q.key] === o.s ? ' checked' : '';
+                return '<label class="dsr-opt"><input type="radio" name="dsr-' + q.key + '" value="' + o.s + '"' + checked + '>' +
+                    '<span class="dsr-opt-face"><span class="dsr-opt-h" aria-hidden="true"></span><span class="dsr-opt-dot" aria-hidden="true"></span>' +
+                    '<span><span class="dsr-opt-title">' + o.t + '</span><span class="dsr-opt-desc">' + o.d + '</span></span>' +
+                    '<span class="dsr-opt-key" aria-hidden="true">' + (i + 1) + '</span></span></label>';
+            }).join('') +
+            '</div></fieldset>';
+        $next.disabled = !answers[q.key];
+        $next.innerHTML = cur === QUESTIONS.length - 1
+            ? 'See my verdict <i class="fas fa-bolt" aria-hidden="true"></i>'
+            : 'Next <i class="fas fa-arrow-right" aria-hidden="true"></i>';
+        $back.style.visibility = cur === 0 ? 'hidden' : 'visible';
+        renderSteps();
+        if (focus) {
+            var target = $q.querySelector('input:checked') || $q.querySelector('input');
+            if (target) target.focus({ preventScroll: true });
         }
     }
 
-    function selectOption(optionIndex) {
-        // Remove previous selection
-        document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-        
-        // Add selection to clicked option
-        document.querySelector(`[data-option="${optionIndex}"]`).classList.add('selected');
-        
-        // Store answer
-        answers[currentQuestion] = questions[currentQuestion].options[optionIndex].score;
-        
-        // Enable next button
-        document.getElementById('nextBtn').disabled = false;
-        
-        // Update interaction data
-        updateInteractionData();
+    function benchTop() {
+        return document.getElementById('dsrBench').getBoundingClientRect().top + window.pageYOffset - 90;
     }
 
-    function nextQuestion() {
-        if (answers[currentQuestion] === undefined) return;
-        
-        currentQuestion++;
-        renderQuestion();
-        updateProgress();
+    function go(i) {
+        cur = Math.max(0, Math.min(QUESTIONS.length - 1, i));
+        renderQuestion(true);
+        var top = benchTop();
+        if (window.pageYOffset > top) window.scrollTo({ top: top, behavior: 'smooth' });
     }
 
-    function previousQuestion() {
-        if (currentQuestion > 0) {
-            currentQuestion--;
-            renderQuestion();
-            updateProgress();
+    function advance() {
+        if (!answers[QUESTIONS[cur].key]) return;
+        if (cur < QUESTIONS.length - 1) go(cur + 1); else showResults();
+    }
+
+    function syncInteractionData() {
+        var lines = QUESTIONS.filter(function (q) { return answers[q.key]; }).map(function (q, i) {
+            return 'Q' + (QUESTIONS.indexOf(q) + 1) + ' (' + q.token + '): ' + optFor(q).t + ' (' + answers[q.key] + '/4)';
+        });
+        var need = partScore('need'), cap = partScore('cap');
+        if (need !== null) lines.push('Need: ' + need + '/100');
+        if (cap !== null) lines.push('Capacity: ' + cap + '/100');
+        if (need !== null && cap !== null && Object.keys(answers).length === QUESTIONS.length) lines.push('Verdict: ' + VERDICTS[quadrant(need, cap)].name);
+        window.userInteractionData = 'Design System Readiness Assessment:\n' + lines.join('\n');
+    }
+
+    $q.addEventListener('change', function (e) {
+        if (e.target.type !== 'radio') return;
+        var key = QUESTIONS[cur].key;
+        answers[key] = +e.target.value;
+        $next.disabled = false;
+        renderSide(key);
+        renderSteps();
+        syncInteractionData();
+    });
+
+    $steps.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-step]');
+        if (!b) return;
+        var i = +b.dataset.step;
+        // only jump to questions whose earlier questions are all answered
+        if (i <= cur || QUESTIONS.slice(0, i).every(function (q) { return answers[q.key]; })) go(i);
+    });
+
+    $next.addEventListener('click', advance);
+    $back.addEventListener('click', function () { go(cur - 1); });
+
+    document.addEventListener('keydown', function (e) {
+        if (document.getElementById('dsrBench').classList.contains('dsr-hidden')) return;
+        if (e.target.matches('input[type="text"], input[type="email"], textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
+        var n = parseInt(e.key, 10);
+        var radios = $q.querySelectorAll('input[type="radio"]');
+        if (n >= 1 && n <= radios.length) {
+            radios[n - 1].checked = true;
+            radios[n - 1].focus({ preventScroll: true });
+            radios[n - 1].dispatchEvent(new Event('change', { bubbles: true }));
+        } else if (e.key === 'Enter' && !e.target.matches('button, a')) {
+            e.preventDefault();
+            advance();
+        }
+    });
+
+    document.getElementById('dsrStart').addEventListener('click', function () {
+        window.scrollTo({ top: benchTop(), behavior: 'smooth' });
+        var first = $q.querySelector('input:checked') || $q.querySelector('input');
+        if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, 400);
+    });
+
+    /* ---------- results ---------- */
+    // ties go to the gap that sinks systems most often: no owner, then no backing
+    var FIX_ORDER = ['time', 'leaders', 'process', 'dev'];
+
+    function weakestLink() {
+        var caps = QUESTIONS.filter(function (q) { return q.part === 'cap'; });
+        var low = Math.min.apply(null, caps.map(function (q) { return answers[q.key]; }));
+        if (low === 4) return null;
+        for (var i = 0; i < FIX_ORDER.length; i++) {
+            var q = caps.filter(function (c) { return c.key === FIX_ORDER[i]; })[0];
+            if (answers[q.key] === low) return q;
         }
     }
 
-    function updateProgress() {
-        const progress = ((currentQuestion) / questions.length) * 100;
-        document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
-    }
-
-    function calculateResults() {
-        const totalScore = answers.reduce((sum, score) => sum + score, 0);
-        const maxScore = questions.length * 4;
-        const percentage = Math.round((totalScore / maxScore) * 100);
-        
-        let level, description, recommendations;
-        
-        if (percentage >= 80) {
-            level = "System Ready";
-            description = "Your organization is well-positioned to implement a comprehensive design system. You have the team structure, processes, and support needed for success.";
-            recommendations = {
-                approach: "Comprehensive Design System",
-                timeline: "6-12 months",
-                phases: [
-                    { title: "Foundation Setup", duration: "4-6 weeks", description: "Establish governance, audit existing components, create core tokens" },
-                    { title: "Component Library", duration: "8-12 weeks", description: "Build comprehensive component library with documentation" },
-                    { title: "Team Adoption", duration: "6-8 weeks", description: "Roll out to teams with training and support systems" },
-                    { title: "Iteration & Scale", duration: "Ongoing", description: "Continuous improvement and expansion based on usage" }
-                ],
-                priorities: [
-                    "Establish design system governance structure",
-                    "Conduct comprehensive design audit and token extraction",
-                    "Build robust component library with extensive documentation",
-                    "Create adoption training program for all teams",
-                    "Set up automated testing and quality assurance processes"
-                ],
-                resources: [
-                    "Dedicated design system team (2-3 people minimum)",
-                    "Design system tools (Figma, Storybook, documentation platform)",
-                    "Strong development partnerships for implementation",
-                    "Executive sponsorship and change management support"
-                ]
-            };
-        } else if (percentage >= 60) {
-            level = "Foundation Ready";
-            description = "You have good fundamentals in place. Focus on building strong foundations before scaling to a full design system.";
-            recommendations = {
-                approach: "Phased Foundation Building",
-                timeline: "4-8 months",
-                phases: [
-                    { title: "Process Strengthening", duration: "3-4 weeks", description: "Improve design processes and team collaboration" },
-                    { title: "Core Components", duration: "6-8 weeks", description: "Create foundational component library" },
-                    { title: "Documentation & Guidelines", duration: "4-6 weeks", description: "Build comprehensive usage documentation" },
-                    { title: "Gradual Adoption", duration: "8-10 weeks", description: "Pilot with key teams and iterate based on feedback" }
-                ],
-                priorities: [
-                    "Strengthen design review and approval processes",
-                    "Create core component library focusing on most-used patterns",
-                    "Develop comprehensive style guide and usage documentation",
-                    "Improve designer-developer collaboration workflows",
-                    "Build business case for expanded design system investment"
-                ],
-                resources: [
-                    "Part-time design system champion (50% allocation)",
-                    "Basic design system tools and documentation platform",
-                    "Cross-functional working group for governance decisions",
-                    "Training budget for team capability building"
-                ]
-            };
-        } else if (percentage >= 40) {
-            level = "Building Readiness";
-            description = "You're making progress but need to strengthen team processes and gain more organizational support before implementing a design system.";
-            recommendations = {
-                approach: "Capability Building Focus",
-                timeline: "3-6 months",
-                phases: [
-                    { title: "Team Alignment", duration: "2-3 weeks", description: "Align team on design system vision and benefits" },
-                    { title: "Process Improvement", duration: "4-6 weeks", description: "Establish better design and development workflows" },
-                    { title: "Pilot Components", duration: "6-8 weeks", description: "Create small set of reusable components" },
-                    { title: "Stakeholder Buy-in", duration: "4-6 weeks", description: "Build business case and secure leadership support" }
-                ],
-                priorities: [
-                    "Establish consistent design review processes",
-                    "Create shared design principles and basic style guide",
-                    "Build small pilot component library to demonstrate value",
-                    "Improve designer-developer communication and handoffs",
-                    "Document business case for design system investment"
-                ],
-                resources: [
-                    "Design system advocate (20-30% time allocation)",
-                    "Basic component library tools (Figma libraries, simple documentation)",
-                    "Regular cross-team meetings for alignment",
-                    "Small budget for tools and training"
-                ]
-            };
-        } else {
-            level = "Early Preparation";
-            description = "Focus on building team capabilities and organizational readiness before attempting a design system implementation.";
-            recommendations = {
-                approach: "Foundation & Culture Building",
-                timeline: "2-4 months",
-                phases: [
-                    { title: "Vision Setting", duration: "1-2 weeks", description: "Define design system goals and expected benefits" },
-                    { title: "Skill Building", duration: "4-6 weeks", description: "Improve team design and collaboration skills" },
-                    { title: "Process Basics", duration: "3-4 weeks", description: "Establish fundamental design and review processes" },
-                    { title: "Small Wins", duration: "4-6 weeks", description: "Create simple shared assets to build momentum" }
-                ],
-                priorities: [
-                    "Build design team skills and standardize basic workflows",
-                    "Create simple style guide with colors, typography, and basic patterns",
-                    "Establish regular design reviews and feedback processes",
-                    "Improve designer-developer communication and understanding",
-                    "Begin educating stakeholders on design system value"
-                ],
-                resources: [
-                    "Design team training and skill development",
-                    "Basic design tools and shared libraries",
-                    "Regular team meetings and collaboration time",
-                    "Simple documentation and sharing platforms"
-                ]
-            };
-        }
-        
-        return { percentage, level, description, recommendations };
-    }
+    function set(sel, html) { document.querySelector('#results ' + sel).innerHTML = html; }
 
     function showResults() {
-        const results = calculateResults();
-        
-        // Update final interaction data
-        updateInteractionData();
-        
-        document.getElementById('scoreCircle').textContent = `${results.percentage}%`;
-        document.getElementById('readinessLevel').textContent = results.level;
-        document.getElementById('levelDescription').textContent = results.description;
-        
-        const recommendationsContent = document.getElementById('recommendationsContent');
-        recommendationsContent.innerHTML = `
-            <div class="recommendation-section">
-                <h4>Recommended Approach: ${results.recommendations.approach}</h4>
-                <p><strong>Estimated Timeline:</strong> ${results.recommendations.timeline}</p>
-            </div>
-            
-            <div class="recommendation-section">
-                <h4>Implementation Roadmap</h4>
-                <div class="phase-timeline">
-                    ${results.recommendations.phases.map((phase, index) => `
-                        <div class="phase">
-                            <div class="phase-number">${index + 1}</div>
-                            <div class="phase-content">
-                                <div class="phase-title">${phase.title}</div>
-                                <div class="phase-duration">${phase.duration} • ${phase.description}</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-            
-            <div class="recommendation-section">
-                <h4>Key Priorities</h4>
-                <ul>
-                    ${results.recommendations.priorities.map(priority => `<li>${priority}</li>`).join('')}
-                </ul>
-            </div>
-            
-            <div class="recommendation-section">
-                <h4>Required Resources</h4>
-                <ul>
-                    ${results.recommendations.resources.map(resource => `<li>${resource}</li>`).join('')}
-                </ul>
-            </div>
-        `;
-        
-        document.getElementById('questionContainer').style.display = 'none';
-        document.getElementById('results').classList.remove('hidden');
-        document.getElementById('expBld').classList.remove('hidden');
-        document.getElementById('resetBtn').classList.remove('hidden');
-        
-        updateProgress(); // Set to 100%
+        var need = partScore('need'), cap = partScore('cap');
+        var v = VERDICTS[quadrant(need, cap)];
+        var weak = weakestLink();
+
+        set('.dsr-v-name', v.name);
+        set('.dsr-v-desc', v.desc);
+        set('.dsr-v-need', need + '<small> / 100</small>');
+        set('.dsr-v-cap', cap + '<small> / 100</small>');
+        document.querySelector('#results .dsr-v-need-bar').style.width = Math.max(need, 2) + '%';
+        document.querySelector('#results .dsr-v-cap-bar').style.width = Math.max(cap, 2) + '%';
+        set('.dsr-v-map', mapSvg(need, cap, false));
+
+        if (weak) {
+            set('.dsr-v-fix-tag', 'Weakest link · ' + weak.token);
+            set('.dsr-v-fix-name', weak.fix.name);
+            set('.dsr-v-fix-text', weak.fix.text);
+        } else {
+            set('.dsr-v-fix-tag', 'No weak link');
+            set('.dsr-v-fix-name', 'Keep it that way');
+            set('.dsr-v-fix-text', 'All four capacity answers are as strong as they get. Keep the owner named, the roadmap public and the docs current.');
+        }
+
+        set('.dsr-v-approach', v.approach);
+        set('.dsr-v-timeline', v.timeline);
+        set('.dsr-v-revisit', v.revisit);
+        set('.dsr-v-road', v.road.map(function (r) {
+            return '<li><span class="dsr-ver-tag">' + r.v + '</span><h3>' + r.t + '</h3><p class="dsr-road-dur">' + r.dur + '</p><p class="dsr-road-desc">' + r.d + '</p></li>';
+        }).join(''));
+        set('.dsr-v-priorities', v.priorities.map(function (p) { return '<li>' + p + '</li>'; }).join(''));
+        set('.dsr-v-needs', v.needs.map(function (n) {
+            return '<div><i class="fas ' + n[0] + '" aria-hidden="true"></i><span>' + n[1] + '</span></div>';
+        }).join(''));
+
+        syncInteractionData();
+        document.getElementById('dsrBench').classList.add('dsr-hidden');
+        ['results', 'dsrAfter', 'dsrCta'].forEach(function (id) { document.getElementById(id).classList.remove('dsr-hidden'); });
+        window.scrollTo({ top: 0 });
+        document.getElementById('results').focus({ preventScroll: true });
     }
 
-    function resetAssessment() {
-        currentQuestion = 0;
-        answers = [];
-        userInteractionData = "";
-        
-        document.getElementById('questionContainer').style.display = 'block';
-        document.getElementById('results').classList.add('hidden');
-        document.getElementById('expBld').classList.add('hidden');
-        document.getElementById('resetBtn').classList.add('hidden');
-        
-        renderQuestion();
-        updateProgress();
-    }
+    document.getElementById('dsrReset').addEventListener('click', function () {
+        answers = {};
+        ['results', 'dsrAfter', 'dsrCta'].forEach(function (id) { document.getElementById(id).classList.add('dsr-hidden'); });
+        document.getElementById('dsrBench').classList.remove('dsr-hidden');
+        window.userInteractionData = '';
+        renderSide();
+        go(0);
+        window.scrollTo({ top: 0 });
+    });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#email-form-con').load("email-capture.html");
         $('#related-tools-con').load("related-tools.html");
-        $('#header').load("../header.html", function(response, status, xhr) {
+        $('#header').load("../header.html", function (response, status, xhr) {
             if (status == "error") {
-                var msg = "Sorry but there was an error: ";
-                $("#error").html(msg + xhr.status + " " + xhr.statusText);
+                $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
             } else {
                 $('.design-system').addClass('thisPage');
             }
         });
-
-        initAssessment();
+        renderSide();
+        renderQuestion(false);
     });
-
-    document.getElementById('resetBtn').addEventListener('click', resetAssessment);
+})();
 </script>
 
 <!-- Branded result download (PNG / PDF) -->
@@ -889,6 +1030,5 @@
         data-dl-container="#results"
         data-dl-title="Design System Readiness Assessment"
         data-dl-filename="dlightning-design-system-readiness"></script>
-
 </body>
 </html>

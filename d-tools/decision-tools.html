@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="../css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/animate.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -32,132 +35,129 @@
     <meta name="twitter:description" content="Free interactive decision tools to guide your business and UX design journey.">
 
     <style>
-        /* Tool Recommendation Quiz Styles */
-        .quiz-container {
-            /* background: linear-gradient(135deg, #243ca4 0%, #5e1aa1 100%); */
-            color: white;
-            padding: 40px 0;
-            margin-bottom: 60px;
+        /* ---------- Tool finder quiz (same system as the redesigned tool pages) ---------- */
+        :root {
+            --dq-ink: #0a1430;
+            --dq-sky: #009dff;
+            --dq-blue: #2454e6;
+            --dq-bolt: #ffd23f;
+            --dq-bolt-deep: #c99e12;
+            --dq-display: 'Archivo', 'Rubik', sans-serif;
+            --dq-ease: cubic-bezier(.2, .8, .2, 1);
         }
-        
-        .quiz-box {
-            background: rgba(18, 0, 137, 0.253);
-            background: linear-gradient(135deg, #016de0f2 0%, #003ca4bf 100%);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid rgba(4, 0, 36, 0.2);
+        .dq { padding: 48px 0 0; margin-bottom: 70px; font-family: 'Rubik', sans-serif; }
+        .dq-panel {
+            position: relative; overflow: hidden; isolation: isolate; max-width: 980px; margin: 0 auto;
+            border-radius: 24px; padding: 40px 44px 38px; color: #fff;
+            background:
+                radial-gradient(700px 340px at 100% 0%, rgba(0, 157, 255, .28), transparent 60%),
+                radial-gradient(520px 300px at 0% 100%, rgba(36, 84, 230, .32), transparent 60%),
+                var(--dq-ink);
+            box-shadow: 0 40px 70px -40px rgba(10, 20, 48, .7);
         }
-        
-        .quiz-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            text-align: center;
-            color: white;
+        .dq-panel::before {
+            content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+            background-image: linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px);
+            background-size: 44px 44px;
+            -webkit-mask-image: radial-gradient(ellipse at 80% 10%, #000, transparent 70%);
+            mask-image: radial-gradient(ellipse at 80% 10%, #000, transparent 70%);
         }
-        
-        .quiz-subtitle {
-            text-align: center;
-            opacity: 0.9;
-            margin-bottom: 25px;
-            color: white;
-            font-weight: 300;
+
+        .dq-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 28px; margin-bottom: 30px; }
+        .dq-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--dq-bolt); margin-bottom: 10px; }
+        .dq h2 { font-family: var(--dq-display); font-stretch: 105%; font-weight: 780; font-size: clamp(1.7rem, 3.4vw, 2.35rem); line-height: 1.04; letter-spacing: -.02em; color: #fff; margin: 0; }
+        .dq h2 em { font-style: normal; color: var(--dq-bolt); }
+
+        .dq-progress { min-width: 180px; }
+        .dq-step { display: block; font-size: .85rem; color: rgba(255, 255, 255, .66); margin-bottom: 8px; text-align: right; font-variant-numeric: tabular-nums; }
+        .dq-bar { height: 5px; border-radius: 999px; background: rgba(255, 255, 255, .12); overflow: hidden; }
+        .dq-bar span { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--dq-bolt); transition: width .4s var(--dq-ease); }
+
+        .dq-stage { animation: dq-in .4s var(--dq-ease) both; }
+        @keyframes dq-in { from { opacity: 0; transform: translateY(10px); } }
+        .dq-q { font-family: var(--dq-display); font-stretch: 105%; font-weight: 700; font-size: 1.3rem; letter-spacing: -.01em; color: #fff; margin: 0 0 16px; outline: none; }
+        .dq-q small { display: block; font-family: 'Rubik', sans-serif; font-size: .9rem; font-weight: 400; letter-spacing: 0; color: rgba(255, 255, 255, .6); margin-top: 6px; }
+
+        .dq-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .dq-opt {
+            font: inherit; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 14px;
+            padding: 16px 18px; border-radius: 16px; color: #fff;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .03));
+            border: 1px solid rgba(255, 255, 255, .14);
+            transition: transform .25s var(--dq-ease), border-color .25s ease, background .25s ease, box-shadow .25s ease;
         }
-        
-        .quiz-question {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-            text-align: center;
-            display: none;
+        .dq-opt:hover, .dq-opt:focus-visible {
+            transform: translateY(-3px); border-color: rgba(255, 210, 63, .55);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .05));
+            box-shadow: 0 20px 34px -22px rgba(0, 0, 0, .8), 0 0 36px -12px rgba(255, 210, 63, .25);
         }
-        
-        .quiz-question.active {
-            display: block;
+        .dq-opt:focus-visible { outline: 3px solid var(--dq-bolt); outline-offset: 3px; }
+        .dq-opt[aria-pressed="true"] { background: var(--dq-bolt); border-color: var(--dq-bolt); color: var(--dq-ink); transform: none; }
+        .dq-ico {
+            flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 1.1rem;
+            color: #4dbbff; background: rgba(0, 157, 255, .14); box-shadow: inset 0 0 0 1px rgba(0, 157, 255, .3);
+            transition: transform .3s var(--dq-ease), background .25s ease, color .25s ease;
         }
-        
-        .quiz-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 20px;
+        .dq-ico i { line-height: 1 !important; }
+        .dq-opt:hover .dq-ico, .dq-opt:focus-visible .dq-ico { background: var(--dq-bolt); color: var(--dq-ink); box-shadow: none; transform: rotate(-6deg); }
+        .dq-opt[aria-pressed="true"] .dq-ico { background: var(--dq-ink); color: var(--dq-bolt); box-shadow: none; }
+        .dq-opt-text { display: block; min-width: 0; }
+        .dq-opt-label { display: block; font-weight: 600; font-size: 1.04rem; line-height: 1.25; }
+        .dq-opt-sub { display: block; font-size: .88rem; line-height: 1.35; margin-top: 3px; color: rgba(255, 255, 255, .6); }
+        .dq-opt[aria-pressed="true"] .dq-opt-sub { color: rgba(10, 20, 48, .7); }
+        .dq-opt-go { margin-left: auto; color: rgba(255, 255, 255, .35); transition: transform .25s var(--dq-ease), color .25s ease; }
+        .dq-opt:hover .dq-opt-go, .dq-opt:focus-visible .dq-opt-go { color: var(--dq-bolt); transform: translateX(3px); }
+        .dq-opt[aria-pressed="true"] .dq-opt-go { color: var(--dq-ink); }
+
+        .dq-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 22px; }
+        .dq-link {
+            font: inherit; font-weight: 600; font-size: .95rem; color: rgba(255, 255, 255, .72); background: none; border: none; padding: 6px 0; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px; transition: color .2s ease;
         }
-        
-        .quiz-option {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+        .dq-link:hover, .dq-link:focus-visible { color: var(--dq-bolt); }
+        .dq-link:focus-visible { outline: 2px solid var(--dq-bolt); outline-offset: 4px; border-radius: 4px; }
+        .dq-trail { font-size: .9rem; color: rgba(255, 255, 255, .55); }
+        .dq-trail b { font-weight: 500; color: rgba(255, 255, 255, .85); }
+
+        /* result */
+        .dq-result {
+            display: grid; grid-template-columns: auto 1fr; gap: 6px 22px; align-items: start;
+            padding: 26px 26px 24px; border-radius: 18px; background: #fff; color: #1b2236;
+            box-shadow: 0 30px 50px -28px rgba(0, 0, 0, .7);
         }
-        
-        .quiz-option:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
+        .dq-result .dq-ico { width: 60px; height: 60px; border-radius: 16px; font-size: 1.5rem; color: var(--dq-ink); background: var(--dq-bolt); box-shadow: 0 8px 20px -6px rgba(255, 210, 63, .6); transform: rotate(-6deg); grid-row: span 3; }
+        .dq-kicker { font-size: .72rem; font-weight: 650; letter-spacing: .12em; text-transform: uppercase; color: var(--dq-blue); }
+        .dq-result h3 { font-family: var(--dq-display); font-stretch: 105%; font-weight: 760; font-size: clamp(1.45rem, 3vw, 1.9rem); line-height: 1.1; letter-spacing: -.02em; color: var(--dq-ink); margin: 2px 0 6px; outline: none; }
+        .dq-result p { font-size: 1.02rem; line-height: 1.55; color: #5e6679; margin: 0 0 18px; max-width: 560px; }
+        .dq-result-actions { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+        .dq-cta {
+            font-weight: 600; border-radius: 12px; padding: 13px 22px; display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+            background: var(--dq-bolt); color: var(--dq-ink); box-shadow: 0 6px 0 var(--dq-bolt-deep);
+            transition: transform .2s var(--dq-ease), box-shadow .2s var(--dq-ease);
         }
-        
-        .quiz-option.selected {
-            background: rgba(255,255,255,0.9);
-            color: #003ca4bf;
-            border-color: whitesmoke;
-            opacity: .88;
+        .dq-cta:hover, .dq-cta:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 0 var(--dq-bolt-deep); color: var(--dq-ink); text-decoration: none; }
+        .dq-cta:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--dq-bolt-deep); }
+        .dq-cta:focus-visible { outline: 3px solid var(--dq-blue); outline-offset: 4px; }
+        .dq-cta i { transition: transform .25s var(--dq-ease); }
+        .dq-cta:hover i { transform: translateX(3px); }
+        .dq-result .dq-link { color: #5e6679; }
+        .dq-result .dq-link:hover, .dq-result .dq-link:focus-visible { color: var(--dq-blue); }
+        .dq-result .dq-link:focus-visible { outline-color: var(--dq-blue); }
+
+        @media (max-width: 767px) {
+            .dq { padding-top: 28px; }
+            .dq-panel { padding: 30px 20px 24px; border-radius: 20px; }
+            .dq-head { margin-bottom: 22px; }
+            .dq-progress { width: 100%; }
+            .dq-step { text-align: left; }
+            .dq-opts { grid-template-columns: 1fr; }
+            .dq-result { grid-template-columns: 1fr; padding: 22px 20px; }
+            .dq-result .dq-ico { grid-row: auto; margin-bottom: 8px; }
+            .dq-result-actions { grid-column: 1; }
         }
-        
-        .quiz-result {
-            display: none;
-            text-align: center;
-            padding: 4px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 10px;
-            margin-top: 38px;
-            outline: 8px solid rgba(255,255,255,0.15);
+        @media (prefers-reduced-motion: reduce) {
+            .dq *, .dq *::before { animation: none !important; transition: none !important; }
         }
-        
-        .quiz-result.show {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .quiz-recommendation h3 {
-            font-size: 1.68rem;
-            font-weight: 600;
-            margin-bottom: -12px;
-            /* line-height: 1.22; */
-            letter-spacing: .04rem;
-            color: white;
-            margin-top: 14px;
-            text-shadow: 0 2px 6px rgba(4, 20, 88, 0.2);
-        }
-        
-        .quiz-btn {
-            background: white;
-            color: #033488e8;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 28px;
-            font-weight: 500;
-            letter-spacing: .04rem;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            margin: 14px 0;
-            text-transform: uppercase;
-        }
-        
-        .quiz-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            color: #1b38b7;
-            text-decoration: none;
-        }
-        
         /* Category Header Styles */
         .category-header {
             text-align: center;
@@ -222,48 +222,26 @@
     <!-- /bradcam_area  -->
 
     <div class="Process_area ">
-        <!-- Tool Recommendation Quiz -->
-        <div class="quiz-container">
+        <!-- Tool finder quiz: rendered by the script at the bottom of the page -->
+        <section class="dq" aria-labelledby="dq-title">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-8 col-lg-10">
-                        <div class="quiz-box">
-                            <!-- <h3 class="quiz-title">Where to Start</h3> -->
-                            <h4 class="quiz-subtitle">Take a two question quiz to match a decision tool to your specific&nbsp;needs</h4>
-                            
-                            <div id="quiz-content">
-                                <!-- Question 1 -->
-                                <div class="quiz-question active" id="q1">
-                                    What's your primary goal?
-                                </div>
-                                <div class="quiz-options" id="q1-options">
-                                    <button class="quiz-option" data-q="1" data-value="business-idea">Generate a business idea</button>
-                                    <button class="quiz-option" data-q="1" data-value="validate-idea">Validate an existing idea</button>
-                                    <button class="quiz-option" data-q="1" data-value="assess-readiness">Check if I'm ready to start</button>
-                                    <button class="quiz-option" data-q="1" data-value="improve-ux">Improve my product's UX</button>
-                                </div>
-                                
-                                <!-- Question 2 (dynamically populated) -->
-                                <div class="quiz-question" id="q2">
-                                </div>
-                                <div class="quiz-options" id="q2-options" style="display: none;">
-                                </div>
-                                
-                                <!-- Results -->
-                                <div class="quiz-result" id="quiz-result">
-                                    <div class="quiz-recommendation" id="recommendation-text"></div>
-                                    <a href="#" class="quiz-btn" id="recommendation-link">Try This Tool</a>
-                                    <div style="margin-top: 15px;">
-                                        <button class="quiz-option" onclick="resetQuiz()" style="background: transparent; border: 1px solid white; color: white;">Reset Quiz</button>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="dq-panel">
+                    <div class="dq-head">
+                        <div>
+                            <div class="dq-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i> Not sure where to start?</div>
+                            <h2 id="dq-title">Find your tool in <em>two questions</em></h2>
                         </div>
+                        <div class="dq-progress">
+                            <span class="dq-step" id="dq-step">Question 1 of 2</span>
+                            <div class="dq-bar" aria-hidden="true"><span id="dq-bar"></span></div>
+                        </div>
+                    </div>
+                    <div id="dq-stage">
+                        <noscript><p class="dq-trail">The quiz needs JavaScript. Every tool is listed below.</p></noscript>
                     </div>
                 </div>
             </div>
-        </div>
-
+        </section>
         <!-- Tool #1: Business Idea Generator -->
         <div class="section-top-border">
             <div class="container">
@@ -510,17 +488,17 @@
                                 <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
                                     Design System Readiness Assessment 
                                 </h2>
-                                <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Evaluate your team's readiness for implementing a design system. Get a personalized implementation roadmap based on your team size, product complexity, and design maturity.</p>
+                                <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Seven questions in two parts: how much you need a design system, and whether your team can keep one running. You get a verdict, the one thing to fix first, and a roadmap sized to your team.</p>
                                 </a>
                                 <ul>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
-                                    Comprehensive readiness evaluation
+                                    Need vs. capacity readiness map
                                     </li>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="250">
-                                    Phased implementation roadmap
+                                    The weakest link to fix first
                                     </li>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
-                                    Resource and timeline planning
+                                    A four-release roadmap from v0.1 to v1.0
                                     </li>
                                 </ul>
                             </div>
@@ -528,7 +506,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
                             <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
                                 <a href="design-system-readiness.html">
-                                    <img style="width: 84%; margin-bottom: 14px; border: 3px solid #eee" src="../img/products/DSRA.png" alt="Design System Readiness Assessment tool screenshot">
+                                    <img style="width: 84%; margin-bottom: 14px;" src="../img/products/DSRA.png" alt="Design System Readiness Assessment tool screenshot">
                                 </a>
                             </div>
                         </div>
@@ -537,7 +515,7 @@
                         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
                             <div class="about_btn" data-aos="fade-up" data-aos-duration="900" data-aos-delay="350" >
                                 <a class="boxed-btn4" href="design-system-readiness.html">
-                                    <i class="fas fa-cogs mr-2"></i>Check Readiness
+                                    <i class="fas fa-cubes mr-2"></i>Start the audit
                                 </a>
                             </div>
                         </div>
@@ -557,17 +535,17 @@
                                 <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
                                     AI Agent Idea Validation
                                 </h2>
-                                <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Will your AI agent idea actually work? Take the 3-minute reality check. Score your target user, market signal, and problem-solution fit before you build.</p>
+                                <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Ten questions, and your agent's job spec writes itself as you answer. You get a hire verdict out of 100, a score for who it's for, problem fit and market proof, and the next move for the weakest one.</p>
                                 </a>
                                 <ul>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
-                                    10-question validation quiz
+                                    A live job spec for your agent
                                     </li>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="250">
-                                    Problem-solution fit scoring
+                                    Red flags pulled from your answers
                                     </li>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
-                                    Clear build-or-research next step
+                                    Save your verdict as a PDF
                                     </li>
                                 </ul>
                             </div>
@@ -575,7 +553,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
                             <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
                                 <a href="AI-agent-idea-validation.html">
-                                    <img style="width: 84%; margin-bottom: 14px; border: 3px solid #eee" src="../img/products/AAV.png" alt="AI Agent Idea Validation tool screenshot">
+                                    <img style="width: 84%; margin-bottom: 14px;" src="../img/products/AAV.png" alt="AI Agent Idea Validation tool screenshot">
                                 </a>
                             </div>
                         </div>
@@ -584,7 +562,7 @@
                         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
                             <div class="about_btn" data-aos="fade-up" data-aos-duration="900" data-aos-delay="350" >
                                 <a class="boxed-btn4" href="AI-agent-idea-validation.html">
-                                    <i class="fas fa-robot mr-2"></i>Validate Idea
+                                    <i class="fas fa-robot mr-2"></i>Write the job spec
                                 </a>
                             </div>
                         </div>
@@ -604,17 +582,17 @@
                                 <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
                                     Founder Blockers Diagnostic
                                 </h2>
-                                <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Find what's blocking you—and fix it in 2 minutes. Pinpoint whether you're over-optimizing, over-planning, or over-protecting, then turn it into a concrete next step.</p>
+                                <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Five questions about the habit stalling you, what it costs, and the problem you know from the inside. You leave with a positioning line you finish yourself and one move due a week from today.</p>
                                 </a>
                                 <ul>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
-                                    Founder tendency diagnosis
+                                    Your block, what it's costing you, and the fix
                                     </li>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="250">
-                                    Draft positioning framework
+                                    A Pain → Mechanism → Outcome line to copy
                                     </li>
                                     <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
-                                    A this-week commitment
+                                    A dated commitment, saved as a PDF
                                     </li>
                                 </ul>
                             </div>
@@ -622,7 +600,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
                             <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
                                 <a href="founder-block.html">
-                                    <img style="width: 84%; margin-bottom: 14px; border: 3px solid #eee" src="../img/products/FBD.png" alt="Founder Blockers Diagnostic tool screenshot">
+                                    <img style="width: 84%; margin-bottom: 14px;" src="../img/products/FBD.png" alt="Founder Blockers Diagnostic tool screenshot">
                                 </a>
                             </div>
                         </div>
@@ -631,7 +609,7 @@
                         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
                             <div class="about_btn" data-aos="fade-up" data-aos-duration="900" data-aos-delay="350" >
                                 <a class="boxed-btn4" href="founder-block.html">
-                                    <i class="fas fa-unlock mr-2"></i>Find My Blocker
+                                    <i class="fas fa-bolt mr-2"></i>Find my block
                                 </a>
                             </div>
                         </div>
@@ -681,223 +659,174 @@
         });
     });
 
-    // Tool Recommendation Quiz Logic
-    let quizAnswers = {};
+    // ---------- Tool finder quiz ----------
+    (function () {
+        var GOALS = [
+            { value: 'business-idea',    icon: 'fa-lightbulb', label: 'Find a business idea',       sub: 'Starting from nothing yet' },
+            { value: 'validate-idea',    icon: 'fa-flask',     label: 'Test an idea I already have', sub: 'Before I spend money building it' },
+            { value: 'assess-readiness', icon: 'fa-route',     label: 'Check if I\'m ready',         sub: 'Myself, my team or my market' },
+            { value: 'improve-ux',       icon: 'fa-sitemap',   label: 'Improve my product\'s UX',    sub: 'It exists and people use it' }
+        ];
 
-    // Enhanced configuration for question 2 based on question 1 answer
-    const q2Config = {
-        'business-idea': {
-            question: "What's your biggest constraint right now?",
-            options: [
-                {value: 'time', label: 'Limited time'},
-                {value: 'skills', label: 'Limited skills'},
-                {value: 'budget', label: 'Limited budget'}
-            ]
-        },
-        'validate-idea': {
-            question: "What's most important for your validation?",
-            options: [
-                {value: 'fast-feedback', label: 'Fast feedback'},
-                {value: 'low-cost', label: 'Low cost'},
-                {value: 'deep-insight', label: 'Deep research'},
-                {value: 'ai-agent', label: 'It\'s an AI agent or AI product'}
-            ]
-        },
-        'assess-readiness': {
-            question: "Which readiness are you most concerned about?",
-            options: [
-                {value: 'personal', label: 'Personal readiness'},
-                {value: 'team', label: 'Team readiness'},
-                {value: 'market', label: 'Market readiness'},
-                {value: 'stuck', label: 'I feel stuck or blocked'}
-            ]
-        },
-        'improve-ux': {
-            question: "What's your biggest challenge right now?",
-            options: [
-                {value: 'ux-approach', label: 'Finding the right UX approach'},
-                {value: 'design-processes', label: 'Improving team design processes'},
-                {value: 'product-market-fit', label: 'Validating product-market fit'}
-            ]
-        }
-    };
-
-    // Enhanced quiz recommendations with more specific paths
-    const quizRecommendations = {
-        // Business Idea paths
-        'business-idea_time': {
-            tool: 'Business Idea Generator',
-            description: 'Idea generation with automated business plan.',
-            link: 'business-idea-generator.html'
-        },
-        'business-idea_skills': {
-            tool: 'Business Idea Generator',
-            description: 'Generate ideas that match your existing skills and interests.',
-            link: 'business-idea-generator.html'
-        },
-        'business-idea_budget': {
-            tool: 'Business Idea Generator',
-            description: 'Focus on low-cost business models and bootstrapping strategies.',
-            link: 'business-idea-generator.html'
-        },
-
-        // Validate Idea paths
-        'validate-idea_fast-feedback': {
-            tool: 'Project Validation Method Selector',
-            description: 'Learn rapid validation methods.',
-            link: 'project-validation-methods.html'
-        },
-        'validate-idea_low-cost': {
-            tool: 'Project Validation Method Selector',
-            description: 'Discover budget-friendly validation approaches.',
-            link: 'project-validation-methods.html'
-        },
-        'validate-idea_deep-insight': {
-            tool: 'Project Validation Method Selector',
-            description: 'Comprehensive validation methods.',
-            link: 'project-validation-methods.html'
-        },
-        'validate-idea_ai-agent': {
-            tool: 'AI Agent Idea Validation',
-            description: 'Score your target user, market signal, and problem-solution fit before you build.',
-            link: 'AI-agent-idea-validation.html'
-        },
-
-        // Assess Readiness paths
-        'assess-readiness_personal': {
-            tool: 'Entrepreneur Decision Tree',
-            description: 'Evaluate your entrepreneurial readiness and get actionable next steps.',
-            link: 'entrepreneur-decision-tree.html'
-        },
-        'assess-readiness_team': {
-            tool: 'Design System Readiness Assessment',
-            description: 'Assess your team\'s readiness for systematic product development.',
-            link: 'design-system-readiness.html'
-        },
-        'assess-readiness_market': {
-            tool: 'Entrepreneur Decision Tree',
-            description: 'Comprehensive business readiness assessment with strategic guidance.',
-            link: 'entrepreneur-decision-tree.html'
-        },
-        'assess-readiness_stuck': {
-            tool: 'Founder Blockers Diagnostic',
-            description: 'Pinpoint whether you\'re over-optimizing, over-planning, or over-protecting—then turn it into a next step.',
-            link: 'founder-block.html'
-        },
-
-        // Improve UX paths
-        'improve-ux_ux-approach': {
-            tool: 'UX Methods Tree',
-            description: 'Match your project to one of sixteen UX methods, with the steps to run it.',
-            link: 'ux-method-tree.html'
-        },
-        'improve-ux_design-processes': {
-            tool: 'UX Maturity Assessment',
-            description: 'Evaluate and improve your team\'s design processes and collaboration.',
-            link: 'ux-maturity-assessment.html'
-        },
-        'improve-ux_product-market-fit': {
-            tool: 'Project Validation Method Selector',
-            description: 'Validate your product-market fit with user research and testing.',
-            link: 'project-validation-methods.html'
-        }
-    };
-
-    function populateQ2For(q1Value) {
-        const cfg = q2Config[q1Value];
-        $('#q2').text(cfg.question);
-        const $container = $('#q2-options').empty();
-        cfg.options.forEach(opt => {
-            $container.append(`<button class="quiz-option" data-q="2" data-value="${opt.value}">${opt.label}</button>`);
-        });
-        $('#q2-options').show();
-        $('#q2').addClass('active');
-    }
-
-    // Quiz option click handler
-    $(document).on('click', '.quiz-option', function() {
-        const question = $(this).data('q');
-        const value = $(this).data('value');
-        
-        // Remove selected class from siblings
-        $(this).siblings().removeClass('selected');
-        $(this).addClass('selected');
-
-        // hide quiz-subtitle
-        $('.quiz-subtitle').hide(450);
-        
-        // Store answer
-        quizAnswers[question] = value;
-        
-        if (question === 1) {
-            // Hide non-selected Q1 options and show question 2
-            setTimeout(() => {
-                $('#q1-options').find('.quiz-option').not('.selected').hide(320);
-                // make selected option disabled with disabled attribute
-                $('#q1-options').find('.quiz-option.selected').attr('disabled', true);
-
-                populateQ2For(value);
-            }, 300);
-        } else if (question === 2) {
-            // Hide non-selected Q2 options and show results
-            setTimeout(() => {
-                $('#q2-options').find('.quiz-option').not('.selected').hide(320);
-                // make selected option disabled with disabled attribute
-                $('#q2-options').find('.quiz-option.selected').attr('disabled', true);
-                showQuizResults();
-            }, 300);
-        }
-    });
-
-    function showQuizResults() {
-        // Hide non-selected question 2 options (not the entire container)
-        $('#q2-options').find('.quiz-option').not('.selected').hide(320);
-        
-        // Generate recommendation key
-        const recommendationKey = `${quizAnswers[1]}_${quizAnswers[2]}`;
-        const recommendation = quizRecommendations[recommendationKey];
-        
-        if (recommendation) {
-            $('#recommendation-text').append(`<h3>${recommendation.tool}</h3>`);
-            $('#recommendation-link').attr('href', recommendation.link);
-            
-            // Add description if available
-            if (recommendation.description) {
-                $('#recommendation-text').append(`<br><span style="font-size: 1.22em; opacity: 0.9; line-height: .08rem; font-weight: 300; margin-top: 4px;">${recommendation.description}</span>`);
+        var FOLLOW_UPS = {
+            'business-idea': {
+                question: 'What\'s your tightest constraint?',
+                options: [
+                    { value: 'time',   icon: 'fa-clock',          label: 'Time',   sub: 'Evenings and weekends only' },
+                    { value: 'budget', icon: 'fa-wallet',         label: 'Money',  sub: 'A few hundred dollars, tops' },
+                    { value: 'skills', icon: 'fa-screwdriver-wrench', label: 'Skills', sub: 'I\'m not sure what I\'m good at' }
+                ]
+            },
+            'validate-idea': {
+                question: 'What matters most in how you test it?',
+                options: [
+                    { value: 'fast-feedback', icon: 'fa-bolt',         label: 'Speed',      sub: 'An answer in days, not months' },
+                    { value: 'low-cost',      icon: 'fa-wallet',       label: 'Cost',       sub: 'As close to free as possible' },
+                    { value: 'deep-insight',  icon: 'fa-magnifying-glass', label: 'Depth', sub: 'I want to understand why' },
+                    { value: 'ai-agent',      icon: 'fa-robot',        label: 'It\'s an AI product', sub: 'An agent, assistant or AI feature' }
+                ]
+            },
+            'assess-readiness': {
+                question: 'Which kind of ready?',
+                options: [
+                    { value: 'personal', icon: 'fa-user',      label: 'Me',        sub: 'Money, time, experience' },
+                    { value: 'team',     icon: 'fa-users',     label: 'My team',   sub: 'Ready for a design system?' },
+                    { value: 'market',   icon: 'fa-store',     label: 'The market', sub: 'Will anyone buy this?' },
+                    { value: 'stuck',    icon: 'fa-hand',      label: 'I\'m stuck', sub: 'I keep not starting' }
+                ]
+            },
+            'improve-ux': {
+                question: 'What\'s getting in the way?',
+                options: [
+                    { value: 'ux-approach',        icon: 'fa-compass',     label: 'Picking a method',   sub: 'Which research or design approach fits' },
+                    { value: 'design-processes',   icon: 'fa-gears',       label: 'How the team works', sub: 'Our design process is ad hoc' },
+                    { value: 'product-market-fit', icon: 'fa-bullseye',    label: 'Product-market fit', sub: 'Not sure we built the right thing' }
+                ]
             }
-        } else {
-            // Fallback recommendation
-            $('#recommendation-text').text('Business Idea Generator');
-            $('#recommendation-link').attr('href', 'business-idea-generator.html');
+        };
+
+        var TOOLS = {
+            big:  { icon: 'fa-lightbulb',   name: 'Business Idea Generator',             link: 'business-idea-generator.html' },
+            pvms: { icon: 'fa-flask',       name: 'Project Validation Method Selector',  link: 'project-validation-methods.html' },
+            ai:   { icon: 'fa-robot',       name: 'AI Agent Idea Validation',            link: 'AI-agent-idea-validation.html' },
+            edt:  { icon: 'fa-code-branch', name: 'Entrepreneur Decision Tree',          link: 'entrepreneur-decision-tree.html' },
+            dsr:  { icon: 'fa-cubes',       name: 'Design System Readiness Assessment',  link: 'design-system-readiness.html' },
+            fbd:  { icon: 'fa-hand-rock',   name: 'Founder Blockers Diagnostic',         link: 'founder-block.html' },
+            umt:  { icon: 'fa-sitemap',     name: 'UX Methods Tree',                     link: 'ux-method-tree.html' },
+            uma:  { icon: 'fa-chart-line',  name: 'UX Maturity Assessment',              link: 'ux-maturity-assessment.html' }
+        };
+
+        // tool, why it fits, and an optional query string that opens the tool pre-filtered
+        var MATCHES = {
+            'business-idea_time':   { tool: 'big', why: 'We\'ve set it to ideas you can run on evenings and weekends. Each one shows what you need to begin and a cheap test to run this week.', query: '?time=side' },
+            'business-idea_budget': { tool: 'big', why: 'We\'ve set it to ideas you can start for under $500. Each one comes with a cheap test to see if anyone will pay.', query: '?budget=1' },
+            'business-idea_skills': { tool: 'big', why: 'Take its 60-second quiz or tick the skills you do have. 170+ ideas narrow to the ones that use them.' },
+
+            'validate-idea_fast-feedback': { tool: 'pvms', why: 'Two or three questions about where your project is. You get one method, the steps to run it, and the result that should tell you to stop.' },
+            'validate-idea_low-cost':      { tool: 'pvms', why: 'It matches your project stage to one validation method, with pass and kill signals, so you don\'t pay for research you don\'t need.' },
+            'validate-idea_deep-insight':  { tool: 'pvms', why: 'It picks the method that answers your biggest unknown and gives you a hypothesis with a number to beat.' },
+            'validate-idea_ai-agent':      { tool: 'ai',   why: 'Write your agent\'s job spec in ten questions and get a hire verdict before you build.' },
+
+            'assess-readiness_personal': { tool: 'edt', why: 'Up to ten questions about your experience, runway, customers and team. You end with a readiness score and the next four things to do.' },
+            'assess-readiness_team':     { tool: 'dsr', why: 'Seven questions plot how much you need a design system against whether your team can keep one running. You get a verdict and the first gap to close.' },
+            'assess-readiness_market':   { tool: 'edt', why: 'Its branches cover customers and competition as well as you. The trail ends with a readiness score and concrete next steps.' },
+            'assess-readiness_stuck':    { tool: 'fbd', why: 'Pinpoint whether you\'re over-optimizing, over-planning or over-protecting, then turn it into a next step.' },
+
+            'improve-ux_ux-approach':        { tool: 'umt',  why: 'Match your project to one of sixteen UX methods, with the steps to run it.' },
+            'improve-ux_design-processes':   { tool: 'uma',  why: 'Seven questions, one per dimension of design practice. See where your team is strongest and the two moves that would lift you most.' },
+            'improve-ux_product-market-fit': { tool: 'pvms', why: 'Pick a validation method for a product that already exists, with the signal that says keep going or change course.' }
+        };
+
+        var answers = { goal: null, need: null };
+        var stage = document.getElementById('dq-stage');
+
+        function esc(s) {
+            return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
         }
-        
-        // Show results
-        $('#quiz-result').addClass('show');
-    }
+        function labelOf(list, value) {
+            for (var i = 0; i < list.length; i++) if (list[i].value === value) return list[i].label;
+            return '';
+        }
+        function optionsHtml(list, selected) {
+            return '<div class="dq-opts">' + list.map(function (o) {
+                return '<button type="button" class="dq-opt" data-value="' + esc(o.value) + '" aria-pressed="' + (o.value === selected) + '">' +
+                         '<span class="dq-ico"><i class="fas ' + o.icon + '" aria-hidden="true"></i></span>' +
+                         '<span class="dq-opt-text"><span class="dq-opt-label">' + esc(o.label) + '</span><span class="dq-opt-sub">' + esc(o.sub) + '</span></span>' +
+                         '<i class="fas fa-arrow-right dq-opt-go" aria-hidden="true"></i>' +
+                       '</button>';
+            }).join('') + '</div>';
+        }
+        function progress(step, label) {
+            document.getElementById('dq-step').textContent = label;
+            document.getElementById('dq-bar').style.width = (step / 2 * 100) + '%';
+        }
 
-    function resetQuiz() {
-        // Reset answers
-        quizAnswers = {}; 
-        //remove all content from #recommendation-text
-        $('#recommendation-text').empty();
+        function render(moveFocus) {
+            var html;
+            if (!answers.goal) {
+                progress(0, 'Question 1 of 2');
+                html = '<h3 class="dq-q" tabindex="-1">What are you trying to do?</h3>' + optionsHtml(GOALS, null);
+            } else if (!answers.need) {
+                var f = FOLLOW_UPS[answers.goal];
+                progress(1, 'Question 2 of 2');
+                html = '<h3 class="dq-q" tabindex="-1">' + esc(f.question) + '</h3>' + optionsHtml(f.options, null) +
+                       '<div class="dq-foot">' +
+                         '<button type="button" class="dq-link" data-action="back"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</button>' +
+                         '<span class="dq-trail">Your goal: <b>' + esc(labelOf(GOALS, answers.goal)) + '</b></span>' +
+                       '</div>';
+            } else {
+                var m = MATCHES[answers.goal + '_' + answers.need] || { tool: 'big', why: '' };
+                var t = TOOLS[m.tool];
+                progress(2, 'Your match');
+                html = '<div class="dq-result">' +
+                         '<span class="dq-ico"><i class="fas ' + t.icon + '" aria-hidden="true"></i></span>' +
+                         '<span class="dq-kicker">Start with</span>' +
+                         '<h3 tabindex="-1">' + esc(t.name) + '</h3>' +
+                         '<p>' + esc(m.why) + '</p>' +
+                         '<div class="dq-result-actions">' +
+                           '<a class="dq-cta" href="' + t.link + (m.query || '') + '">Open the tool <i class="fas fa-arrow-right" aria-hidden="true"></i></a>' +
+                           '<button type="button" class="dq-link" data-action="back"><i class="fas fa-arrow-left" aria-hidden="true"></i> Change my answer</button>' +
+                           '<button type="button" class="dq-link" data-action="restart"><i class="fas fa-rotate-left" aria-hidden="true"></i> Start over</button>' +
+                         '</div>' +
+                       '</div>' +
+                       '<div class="dq-foot"><span class="dq-trail"><b>' + esc(labelOf(GOALS, answers.goal)) + '</b> &middot; ' +
+                         esc(labelOf(FOLLOW_UPS[answers.goal].options, answers.need)) + '</span></div>';
+            }
+            stage.className = '';
+            stage.innerHTML = html;
+            void stage.offsetWidth;          // restart the entrance animation
+            stage.className = 'dq-stage';
+            if (moveFocus) {
+                var h = stage.querySelector('[tabindex="-1"]');
+                if (h) h.focus({ preventScroll: true });
+            }
+        }
 
-        $('#q2-options').find('.quiz-option.selected').attr('disabled', false);
-        $('#q1-options').find('.quiz-option.selected').attr('disabled', false);
-        
-        // Remove all selected states
-        $('.quiz-option').removeClass('selected');
-        
-        // Hide results and question 2
-        $('#quiz-result').removeClass('show');
-        $('#q2').removeClass('active').text('');
-        $('#q2-options').hide().empty();
-        
-        // Show all Q1 options and reset visibility
-        $('#q1-options .quiz-option').show();
-        $('#q1').addClass('active');
-        $('#q1-options').show();
-       
-    }
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        stage.addEventListener('click', function (e) {
+            var opt = e.target.closest('.dq-opt');
+            var action = e.target.closest('[data-action]');
+            if (opt) {
+                if (stage.dataset.busy) return;
+                opt.setAttribute('aria-pressed', 'true');   // brief confirmation before the next step slides in
+                stage.dataset.busy = '1';
+                setTimeout(function () {
+                    delete stage.dataset.busy;
+                    if (!answers.goal) answers.goal = opt.dataset.value;
+                    else answers.need = opt.dataset.value;
+                    render(true);
+                }, reduceMotion ? 0 : 220);
+            } else if (action) {
+                if (action.dataset.action === 'restart') answers = { goal: null, need: null };
+                else if (answers.need) answers.need = null;
+                else answers.goal = null;
+                render(true);
+            }
+        });
+
+        render(false);
+    })();
 
     </script>
     <!--/ footer + header add end  -->

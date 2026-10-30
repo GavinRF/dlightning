@@ -1,455 +1,324 @@
+<!--
+  Shared contact card for the d-tools pages, loaded with
+      $('#email-form-con').load("email-capture.html");
+  Sits in a dark footer on most tools and on a light page on a few, so it is a
+  light card that carries its own colors. Everything is scoped under #dl-ec so
+  footer rules (footer p, footer li...) and Bootstrap's .modal-* can't reach in.
+  Sends window.userInteractionData with the message, if the tool set it.
+-->
+<div id="dl-ec">
+  <style>
+    #dl-ec {
+      --ec-ink: #0a1430; --ec-text: #141a2e; --ec-muted: #5a627a; --ec-line: #dde2ec; --ec-field: #f6f8fb;
+      --ec-sky: #009dff; --ec-cobalt: #0b4fe0; --ec-bolt: #ffd700; --ec-bolt-deep: #b89b00; --ec-error: #d6204e;
+      font-family: 'Rubik', sans-serif; color: var(--ec-text); text-align: left;
+    }
+    #dl-ec *, #dl-ec *::before, #dl-ec *::after { box-sizing: border-box; }
 
+    #dl-ec .ec-card {
+      position: relative; max-width: 420px; margin: 12px auto 20px; padding: 30px 28px 26px;
+      background: #fff; border: 2px solid var(--ec-ink); border-radius: 20px;
+      box-shadow: 8px 8px 0 var(--ec-bolt), 0 30px 60px -30px rgba(10, 20, 48, .55);
+    }
+    #dl-ec .ec-badge {
+      position: absolute; top: -18px; right: 24px; width: 40px; height: 40px; border-radius: 12px;
+      display: grid; place-items: center; background: var(--ec-bolt); color: var(--ec-ink);
+      border: 2px solid var(--ec-ink); font-size: 1rem; transform: rotate(-8deg);
+    }
+    #dl-ec .ec-eyebrow {
+      display: block; font-size: .74rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--ec-cobalt); margin: 0 0 10px;
+    }
+    #dl-ec .ec-title {
+      font-family: 'Rubik', sans-serif; font-size: 1.85rem; font-weight: 700; line-height: 1.08; letter-spacing: -.03em;
+      color: var(--ec-ink); margin: 0 0 10px;
+    }
+    #dl-ec .ec-title mark { background: linear-gradient(transparent 60%, rgba(255, 215, 0, .75) 60%); color: inherit; padding: 0 2px; }
+    #dl-ec .ec-sub { font-size: .98rem; line-height: 1.5; color: var(--ec-muted); margin: 0 0 22px; }
 
-<head>
+    #dl-ec label { display: block; font-size: .86rem; font-weight: 500; color: var(--ec-ink); margin: 0 0 6px; }
+    #dl-ec label span { font-weight: 400; color: var(--ec-muted); }
+    #dl-ec input, #dl-ec textarea {
+      display: block; width: 100%; margin: 0 0 6px; padding: 11px 14px; font: inherit; font-size: 16px; color: var(--ec-text);
+      background: var(--ec-field); border: 2px solid var(--ec-line); border-radius: 10px;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    #dl-ec input::placeholder, #dl-ec textarea::placeholder { color: #9aa1b3; }
+    #dl-ec input:hover, #dl-ec textarea:hover { border-color: #c3cad8; }
+    #dl-ec input:focus, #dl-ec textarea:focus { outline: none; background: #fff; border-color: var(--ec-sky); box-shadow: 0 0 0 4px rgba(0, 157, 255, .16); }
+    #dl-ec input.is-invalid { border-color: var(--ec-error); background: #fff5f7; }
+    #dl-ec input.is-valid { border-color: #1f9d63; }
+    #dl-ec textarea { resize: vertical; min-height: 88px; }
+    #dl-ec .ec-field { margin-bottom: 14px; }
+    #dl-ec .error-message { display: none; font-size: .85rem; color: var(--ec-error); margin: 2px 0 0; }
+    #dl-ec .error-message.show { display: block; }
+    #dl-ec .char-counter { font-size: .78rem; color: var(--ec-muted); text-align: right; font-variant-numeric: tabular-nums; }
 
-    <style>
-        .email-capture {
-            max-width: 394px;
-            margin: 12px auto;
-            padding: 28px 22px 20px 22px;
-            border-radius: 8px;
-            background: #f7fafc;
-            text-align: left;
-        }
+    #dl-ec .ec-submit {
+      width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 4px;
+      padding: 14px 22px; font: inherit; font-size: 1.02rem; font-weight: 600; color: var(--ec-ink);
+      background: var(--ec-bolt); border: none; border-radius: 10px; cursor: pointer; box-shadow: 0 5px 0 var(--ec-bolt-deep);
+      transition: transform .2s cubic-bezier(.2, .8, .2, 1), box-shadow .2s cubic-bezier(.2, .8, .2, 1), opacity .2s ease;
+    }
+    #dl-ec .ec-submit:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--ec-bolt-deep); }
+    #dl-ec .ec-submit:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--ec-bolt-deep); }
+    #dl-ec .ec-submit:focus-visible { outline: 3px solid var(--ec-sky); outline-offset: 3px; }
+    #dl-ec .ec-submit:disabled { opacity: .6; cursor: wait; transform: none; box-shadow: 0 5px 0 var(--ec-bolt-deep); }
+    #dl-ec .btn-spinner {
+      display: none; width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(10, 20, 48, .25); border-top-color: var(--ec-ink); animation: ec-spin .8s linear infinite;
+    }
+    @keyframes ec-spin { to { transform: rotate(360deg); } }
 
-        .email-capture input,
-        .email-capture textarea {
-            width: 100%;
-            padding: 8px 14px;
-            margin-bottom: 6px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: inherit;
-            color: #333;
-            transition: all 0.2s ease;
-            box-sizing: border-box;
-            background: white;
-        }
+    #dl-ec .ec-privacy { font-size: .8rem; line-height: 1.45; color: var(--ec-muted); margin: 14px 0 0; text-align: center; }
+    #dl-ec .ec-link { all: unset; cursor: pointer; color: var(--ec-cobalt); font-weight: 500; text-decoration: underline; text-underline-offset: 2px; }
+    #dl-ec .ec-link:hover { color: var(--ec-ink); }
+    #dl-ec .ec-link:focus-visible { outline: 2px solid var(--ec-sky); outline-offset: 2px; border-radius: 3px; }
 
-        .email-capture input:focus,
-        .email-capture textarea:focus {
-            outline: none;
-            border-color: #0066cc;
-            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-        }
+    #dl-ec .success-message {
+      display: none; gap: 12px; align-items: flex-start; margin: 0 0 18px; padding: 14px 16px; border-radius: 12px;
+      background: #e9f8f0; border: 1.5px solid #9fdcbc; color: #0f5132; font-size: .95rem; line-height: 1.45;
+    }
+    #dl-ec .success-message i { color: #1f9d63; margin-top: 3px; }
+    #dl-ec .success-message b { display: block; color: #0b3d26; font-weight: 600; }
+    #dl-ec .success-message.show { display: flex; animation: ec-drop .3s ease-out; }
+    @keyframes ec-drop { from { opacity: 0; transform: translateY(-8px); } }
 
-        .email-capture input.is-invalid {
-            border-color: #dc3545;
-        }
+    /* privacy details: moved to <body> on load so no footer stacking context traps it under the header */
+    #privacyModal {
+      --ec-ink: #0a1430; --ec-text: #141a2e; --ec-muted: #5a627a; --ec-line: #dde2ec; --ec-field: #f6f8fb; --ec-sky: #009dff;
+      position: fixed; inset: 0; z-index: 100000; display: none; align-items: center; justify-content: center;
+      padding: 20px; background: rgba(10, 20, 48, .6); font-family: 'Rubik', sans-serif; text-align: left;
+    }
+    #privacyModal.is-open { display: flex; }
+    #privacyModal .ec-modal-box {
+      position: relative; width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto; padding: 30px 28px 24px;
+      background: #fff; border-radius: 18px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .6); color: var(--ec-text);
+    }
+    #privacyModal h3 { font-family: 'Rubik', sans-serif; font-size: 1.4rem; font-weight: 700; letter-spacing: -.02em; color: var(--ec-ink); margin: 0 36px 14px 0; }
+    #privacyModal p { font-size: .95rem; line-height: 1.55; color: var(--ec-text); margin: 0 0 10px; }
+    #privacyModal ul { margin: 0 0 14px; padding-left: 20px; color: var(--ec-text); }
+    #privacyModal ul ul { margin-top: 6px; }
+    #privacyModal li { list-style: disc; font-size: .93rem; line-height: 1.55; margin: 0 0 6px; color: var(--ec-text); }
+    #privacyModal ul ul li { list-style: circle; }
+    #privacyModal .ec-why { font-size: .88rem; color: var(--ec-muted); margin-top: 16px; }
+    #privacyModal .ec-modal-close {
+      position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 10px; border: none; cursor: pointer;
+      background: var(--ec-field); color: var(--ec-ink); font-size: 1.2rem; line-height: 1; display: grid; place-items: center;
+    }
+    #privacyModal .ec-modal-close:hover { background: var(--ec-line); }
+    #privacyModal .ec-modal-close:focus-visible { outline: 3px solid var(--ec-sky); outline-offset: 2px; }
 
-        .email-capture input.is-valid {
-            border-color: #28a745;
-        }
+    @media (max-width: 480px) {
+      #dl-ec .ec-card { padding: 28px 20px 22px; box-shadow: 6px 6px 0 var(--ec-bolt), 0 24px 50px -30px rgba(10, 20, 48, .55); margin-right: 6px; }
+      #dl-ec .ec-title { font-size: 1.6rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #dl-ec *, #dl-ec *::before, #dl-ec *::after, #privacyModal * { animation: none !important; transition: none !important; }
+    }
+  </style>
 
-        .email-capture textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
+  <div class="ec-card">
+    <span class="ec-badge" aria-hidden="true"><i class="fas fa-bolt"></i></span>
+    <span class="ec-eyebrow">Work with Dlightning</span>
+    <h2 class="ec-title">Have a business <mark>design challenge?</mark></h2>
+    <p class="ec-sub">Tell us what you're working on. Your answers from this tool come with your message, so you won't have to explain twice.</p>
 
-        .email-capture .error-message {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: -4px;
-            margin-bottom: 8px;
-            display: none;
-        }
-
-        .email-capture .error-message.show {
-            display: block;
-        }
-
-        .email-capture .char-counter {
-            font-size: 12px;
-            color: #6c757d;
-            text-align: right;
-            margin-top: -4px;
-            margin-bottom: 8px;
-        }
-
-        .email-capture label {
-            display: block;
-            margin-bottom: 2px;
-            text-align: left;
-        }
-
-        .privacy-notice {
-            font-size: 12px;
-            color: #6c757d;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .privacy-notice a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .email-capture button {
-            width: 100%;
-            padding: 12px 24px;
-            background: #0066cc;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .email-capture button:hover {
-            background: #0052a3;
-            transform: translateY(-1px);
-        }
-
-        .email-capture button:active {
-            transform: translateY(0);
-        }
-
-        .email-capture button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .email-capture button .btn-spinner {
-            display: none;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 8px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Success message styling */
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            display: none;
-            font-weight: 500;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Placeholder styling */
-        .email-capture input::placeholder,
-        .email-capture textarea::placeholder {
-            color: #6c757d;
-        }
-
-        .modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-        
-        .modal-content {
-            background: white;
-            padding: 24px;
-            border-radius: 8px;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
-        }
-        
-        .description {
-            background: white;
-            padding: 20px;
-            margin: 20px;
-            border-left: 4px solid #0066cc;
-        }
-        
-    </style>
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
-    <link rel="manifest" href="/site.webmanifest">
-</head>
-<body>
-    <div class="email-capture">
-        <div class="success-message" id="success-message">
-            Thanks! We'll be in touch soon.
-        </div>
-
-        <!-- <h4>Contact Dlightning</h4> -->
-        <h2 style="color:#0052a3; font-size: 32px; margin-bottom: 8px; text-align: left;">Have a business<br>design challenge?</h2>
-        <h5>Let's discuss how <i>Dlightning</i>⚡can help.</h5>
-        <br>
-        <form id="email-form">
-            <label for="email-input">Your Email</label>
-            <input
-                type="email"
-                id="email-input"
-                required
-            >
-            <div class="error-message" id="email-error"></div>
-
-            <label for="message-input">Message (optional)</label>
-            <textarea
-                id="message-input"
-                rows="2"
-                maxlength="500"
-            ></textarea>
-            <div class="char-counter" id="char-counter">0 / 500 characters</div>
-
-            <div class="privacy-notice">
-            We collect basic analytics (browser info, referrer) to improve our service.
-            <a href="#" onclick="openModal();">See details</a>
-            </div>
-            <button type="submit" id="submit-btn">
-                <span class="btn-spinner"></span>
-                <span class="btn-text">Send</span>
-            </button>
-        </form>
+    <div class="success-message" id="success-message" role="status" aria-live="polite">
+      <i class="fas fa-check-circle" aria-hidden="true"></i>
+      <span><b>Thanks, it's sent.</b>We'll be in touch soon.</span>
     </div>
 
-    <div class="modal-backdrop" id="privacyModal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">×</button>
-            <h3 style="color: #0052a3; font-size: 1.48rem;">Data Collection Transparency</h3>
-            <p><strong>What we collect when you submit this form:</strong></p>
-            <ul style="line-height: 1.8; color: #333;">
-                <li><strong>Your email and message</strong> - Obviously needed to contact you</li>
-                <li><strong>Tool name</strong> - Which of our tools you're contacting us from</li>
-                <li><strong>Interaction data</strong> - Any inputs or choices entered in our tool</li>
-                <li style="margin-top: 8px;"><strong>Technical info:</strong>
-                    <ul style="margin-top: 8px; color: #333">
-                        <li>Referrer (where you came from)</li>
-                        <li>Browser type (Helps us fix compatibility issues)</li>
-                        <li>Screen size and viewport (Improves our responsive design)</li>
-                        <li>Platform (Windows, Mac, etc.)</li>
-                        <li>Time spent on page</li>
-                        <li>URL parameters</li>
-                    </ul>
-                </li>
-            </ul>
-            <p style="font-size: 14px; color: #666; margin-top: 20px;">
-                <strong>Why?</strong> This context helps us provide better support and improve our tools based on how they're actually being used. We never sell your data or use it for advertising.
-            </p>
-        </div>
+    <form id="email-form" novalidate>
+      <div class="ec-field">
+        <label for="email-input">Your email</label>
+        <input type="email" id="email-input" placeholder="you@company.com" autocomplete="email" required aria-describedby="email-error">
+        <div class="error-message" id="email-error"></div>
+      </div>
+
+      <div class="ec-field">
+        <label for="message-input">Message <span>(optional)</span></label>
+        <textarea id="message-input" rows="3" maxlength="500" placeholder="What are you building, and where are you stuck?" aria-describedby="char-counter"></textarea>
+        <div class="char-counter" id="char-counter">0 / 500</div>
+      </div>
+
+      <button type="submit" class="ec-submit" id="submit-btn">
+        <span class="btn-spinner"></span>
+        <span class="btn-text">Send message <i class="fas fa-paper-plane" aria-hidden="true"></i></span>
+      </button>
+
+      <p class="ec-privacy">
+        We also send basic analytics, like your browser and referrer.
+        <button type="button" class="ec-link" id="ec-privacy-open">See what's sent</button>
+      </p>
+    </form>
+  </div>
+
+  <div class="ec-modal" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="ec-modal-title">
+    <div class="ec-modal-box">
+      <button type="button" class="ec-modal-close" id="ec-privacy-close" aria-label="Close">×</button>
+      <h3 id="ec-modal-title">What this form sends</h3>
+      <p><strong>When you press send, we receive:</strong></p>
+      <ul>
+        <li><strong>Your email and message</strong>, so we can reply</li>
+        <li><strong>Tool name</strong>: which tool you wrote from</li>
+        <li><strong>Interaction data</strong>: the answers and choices you made in the tool</li>
+        <li><strong>Technical info:</strong>
+          <ul>
+            <li>Referrer (where you came from)</li>
+            <li>Browser type, to fix compatibility issues</li>
+            <li>Screen size and viewport, to improve the layout</li>
+            <li>Platform (Windows, Mac, etc.)</li>
+            <li>Time spent on the page</li>
+            <li>URL parameters</li>
+          </ul>
+        </li>
+      </ul>
+      <p class="ec-why"><strong>Why?</strong> This context helps us give better support and improve the tools based on how they're used. We never sell your data or use it for advertising.</p>
     </div>
+  </div>
 
-    <script>
-        // const tool = document.getElementById('tool').value;
-        // const infoDump = document.getElementById('infoDump').value;
+  <script>
+  (function () {
+      function getToolName() {
+          return document.querySelector('[data-tool-name]')?.dataset.toolName ||
+              document.title ||
+              window.location.pathname.split('/').pop() ||
+              'Unknown Tool';
+      }
 
-        function getToolName() {
-            // You can customize this based on your needs
-            const toolName = document.querySelector('[data-tool-name]')?.dataset.toolName || 
-                            document.title || 
-                            window.location.pathname.split('/').pop() || 
-                            'Unknown Tool';
-            return toolName;
-        }
-        
-        function getInfoDump() {
-             const interactionData = window.userInteractionData || '';
+      function getTimeOnPage() {
+          return Math.round(performance.now() / 1000) + 's';
+      }
 
-            // Collect useful data about the page/tool
-            const info = {
-                referrer: document.referrer || 'Direct',
-                userAgent: navigator.userAgent.substring(0, 100), // First 100 chars
-                screenSize: `${screen.width}x${screen.height}`,
-                viewport: `${window.innerWidth}x${window.innerHeight}`,
-                platform: navigator.platform,
-                scrollDepth: Math.round((window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100) + '%',
-                timeOnPage: getTimeOnPage(),
-                urlParams: new URLSearchParams(window.location.search).toString()
-            };
-            
-            // Convert to readable string
-            return Object.entries(info)
-                .map(([key, value]) => `${key}: ${value}`)
-                .join('\n');
-        }
+      function getInfoDump() {
+          const info = {
+              referrer: document.referrer || 'Direct',
+              userAgent: navigator.userAgent.substring(0, 100),
+              screenSize: `${screen.width}x${screen.height}`,
+              viewport: `${window.innerWidth}x${window.innerHeight}`,
+              platform: navigator.platform,
+              scrollDepth: Math.round((window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100) + '%',
+              timeOnPage: getTimeOnPage(),
+              urlParams: new URLSearchParams(window.location.search).toString()
+          };
+          return Object.entries(info).map(([key, value]) => `${key}: ${value}`).join('\n');
+      }
 
-        function getTimeOnPage() {
-            const start = performance.now();
-            return Math.round(start / 1000) + 's';
-        }
+      const form = document.getElementById('email-form');
+      const emailField = document.getElementById('email-input');
+      const messageField = document.getElementById('message-input');
+      const emailError = document.getElementById('email-error');
+      const charCounter = document.getElementById('char-counter');
+      const submitBtn = document.getElementById('submit-btn');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const btnSpinner = submitBtn.querySelector('.btn-spinner');
+      const successMsg = document.getElementById('success-message');
+      const modal = document.getElementById('privacyModal');
+      const openBtn = document.getElementById('ec-privacy-open');
+      document.body.appendChild(modal);
+      let isSubmitting = false;
 
-        // Form validation and submission
-        const emailField = document.getElementById('email-input');
-        const messageField = document.getElementById('message-input');
-        const emailError = document.getElementById('email-error');
-        const charCounter = document.getElementById('char-counter');
-        let isSubmitting = false;
+      function validateEmail() {
+          const email = emailField.value.trim();
+          const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
 
-        // Real-time email validation
-        emailField.addEventListener('blur', function() {
-            validateEmail();
-        });
+          if (email === '') {
+              emailField.classList.remove('is-valid', 'is-invalid');
+              emailError.classList.remove('show');
+              return false;
+          }
+          if (!emailPattern.test(email)) {
+              emailField.classList.remove('is-valid');
+              emailField.classList.add('is-invalid');
+              emailField.setAttribute('aria-invalid', 'true');
+              emailError.textContent = 'Please enter a valid email address';
+              emailError.classList.add('show');
+              return false;
+          }
+          emailField.classList.remove('is-invalid');
+          emailField.classList.add('is-valid');
+          emailField.removeAttribute('aria-invalid');
+          emailError.classList.remove('show');
+          return true;
+      }
 
-        emailField.addEventListener('input', function() {
-            if (this.classList.contains('is-invalid')) {
-                validateEmail();
-            }
-        });
+      function setLoading(on) {
+          submitBtn.disabled = on;
+          btnText.style.display = on ? 'none' : 'inline';
+          btnSpinner.style.display = on ? 'inline-block' : 'none';
+      }
 
-        function validateEmail() {
-            const email = emailField.value.trim();
-            const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+      emailField.addEventListener('blur', validateEmail);
+      emailField.addEventListener('input', function () {
+          if (this.classList.contains('is-invalid')) validateEmail();
+      });
 
-            if (email === '') {
-                emailField.classList.remove('is-valid', 'is-invalid');
-                emailError.classList.remove('show');
-                return false;
-            }
+      messageField.addEventListener('input', function () {
+          const length = this.value.length;
+          charCounter.textContent = length + ' / 500';
+          charCounter.style.color = length > 450 ? '#d6204e' : '';
+      });
 
-            if (!emailPattern.test(email)) {
-                emailField.classList.remove('is-valid');
-                emailField.classList.add('is-invalid');
-                emailError.textContent = 'Please enter a valid email address';
-                emailError.classList.add('show');
-                return false;
-            }
+      form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (isSubmitting) return;
 
-            emailField.classList.remove('is-invalid');
-            emailField.classList.add('is-valid');
-            emailError.classList.remove('show');
-            return true;
-        }
+          if (!validateEmail()) {
+              if (!emailField.value.trim()) {
+                  emailField.classList.add('is-invalid');
+                  emailError.textContent = 'Add your email so we can reply';
+                  emailError.classList.add('show');
+              }
+              emailField.focus();
+              return;
+          }
 
-        // Character counter for message
-        messageField.addEventListener('input', function() {
-            const length = this.value.length;
-            charCounter.textContent = length + ' / 500 characters';
-            if (length > 450) {
-                charCounter.style.color = '#dc3545';
-            } else {
-                charCounter.style.color = '#6c757d';
-            }
-        });
+          isSubmitting = true;
+          setLoading(true);
 
-        document.getElementById('email-form').addEventListener('submit', function(e) {
-            e.preventDefault();
+          const formData = new FormData();
+          formData.append('entry.1246979305', emailField.value.trim());
+          formData.append('entry.544528883', messageField.value.trim());
+          formData.append('entry.2116565090', getToolName());
+          formData.append('entry.2069635273', window.userInteractionData || '');
+          formData.append('entry.1823501667', getInfoDump());
 
-            // Prevent double submission
-            if (isSubmitting) return;
+          fetch('https://docs.google.com/forms/d/e/1FAIpQLSea1ckrv5cOMpnCu5huK-Dyc2zBnuX6vRaOSq_uacYykWJoZg/formResponse', {
+              method: 'POST',
+              mode: 'no-cors',
+              body: formData
+          }).then(() => {
+              successMsg.classList.add('show');
+              form.reset();
+              emailField.classList.remove('is-valid', 'is-invalid');
+              charCounter.textContent = '0 / 500';
+              charCounter.style.color = '';
+              setLoading(false);
+              isSubmitting = false;
+              setTimeout(() => successMsg.classList.remove('show'), 6000);
+          }).catch(err => {
+              console.error('Error:', err);
+              setLoading(false);
+              isSubmitting = false;
+              alert('Something went wrong. Please try again.');
+          });
+      });
 
-            // Validate email before submission
-            if (!validateEmail()) {
-                emailField.focus();
-                return;
-            }
+      function openModal() {
+          modal.classList.add('is-open');
+          document.getElementById('ec-privacy-close').focus();
+      }
+      function closeModal() {
+          if (!modal.classList.contains('is-open')) return;
+          modal.classList.remove('is-open');
+          openBtn.focus();
+      }
 
-            isSubmitting = true;
-
-            const email = emailField.value.trim();
-            const message = messageField.value.trim();
-            const submitBtn = document.getElementById('submit-btn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const btnSpinner = submitBtn.querySelector('.btn-spinner');
-            const successMsg = document.getElementById('success-message');
-
-            // Show loading state
-            submitBtn.disabled = true;
-            btnText.style.display = 'none';
-            btnSpinner.style.display = 'inline-flex';
-            const interactionData = window.userInteractionData || '';
-
-            // Replace with your actual Google Form details
-            const formData = new FormData();
-            formData.append('entry.1246979305', email);
-            formData.append('entry.544528883', message);
-            formData.append('entry.2116565090', getToolName());
-            formData.append('entry.2069635273', interactionData);
-            formData.append('entry.1823501667', getInfoDump());
-
-            fetch('https://docs.google.com/forms/d/e/1FAIpQLSea1ckrv5cOMpnCu5huK-Dyc2zBnuX6vRaOSq_uacYykWJoZg/formResponse', {
-                method: 'POST',
-                mode: 'no-cors',
-                body: formData
-            }).then(() => {
-                // Show success message with animation
-                successMsg.classList.add('show');
-                this.reset();
-
-                // Reset validation states
-                emailField.classList.remove('is-valid', 'is-invalid');
-                charCounter.textContent = '0 / 500 characters';
-                charCounter.style.color = '#6c757d';
-
-                // Reset button
-                submitBtn.disabled = false;
-                btnText.style.display = 'inline';
-                btnSpinner.style.display = 'none';
-                isSubmitting = false;
-
-                // Hide success message after 5 seconds
-                setTimeout(() => {
-                    successMsg.classList.remove('show');
-                }, 5000);
-
-            }).catch(err => {
-                console.error('Error:', err);
-                submitBtn.disabled = false;
-                btnText.style.display = 'inline';
-                btnSpinner.style.display = 'none';
-                isSubmitting = false;
-                alert('Something went wrong. Please try again.');
-            });
-        });
-
-        function openModal() {
-            document.getElementById('privacyModal').style.display = 'flex';
-        }
-        
-        function closeModal() {
-            document.getElementById('privacyModal').style.display = 'none';
-        }
-        
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-    </script>
-</body>
-</html>
+      openBtn.addEventListener('click', openModal);
+      document.getElementById('ec-privacy-close').addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+  })();
+  </script>
+</div>

@@ -1,822 +1,1130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Will your AI agent idea actually work? Take Dlightning's 3-minute reality check to validate your AI agent concept across target user, market, and problem-solution fit.">
-  <meta name="keywords" content="AI agent validation, AI startup idea, validate AI agent, AI product validation, AI agent quiz, startup validation tool">
-  <link rel="canonical" href="https://dlightning.org/d-tools/AI-agent-idea-validation.html">
-  <meta name="author" content="Dlightning">
-  <meta name="robots" content="index, follow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Will your AI agent idea actually work? Take Dlightning's 3-minute reality check to validate your AI agent concept across target user, problem fit, and market proof.">
+<meta name="keywords" content="AI agent validation, AI startup idea, validate AI agent, AI product validation, AI agent quiz, startup validation tool">
+<link rel="canonical" href="https://dlightning.org/d-tools/AI-agent-idea-validation.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow">
 
-  <title>AI Agent Idea Validation - 3-Minute Reality Check | Dlightning</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/style.css">
+<title>AI Agent Idea Validation - 3-Minute Reality Check | Dlightning</title>
 
-  <meta property="og:url" content="https://dlightning.org/d-tools/AI-agent-idea-validation.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Dlightning">
-  <meta property="og:title" content="AI Agent Idea Validation - 3-Minute Reality Check | Dlightning"/>
-  <meta property="og:description" content="Will your AI agent idea actually work? Take the 3-minute reality check to validate your concept."/>
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="AI Agent Idea Validation - 3-Minute Reality Check | Dlightning">
-  <meta name="twitter:description" content="Will your AI agent idea actually work? Take the 3-minute reality check.">
+<meta property="og:url" content="https://dlightning.org/d-tools/AI-agent-idea-validation.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:image" content="https://dlightning.org/img/products/AAV.png"/>
+<meta property="og:title" content="AI Agent Idea Validation - 3-Minute Reality Check | Dlightning"/>
+<meta property="og:description" content="Would anyone hire your AI agent? Write its job spec in ten questions and get a hire verdict before you build."/>
+<meta property="og:image:width" content="824"/>
+<meta property="og:image:height" content="551"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Agent Idea Validation - 3-Minute Reality Check | Dlightning">
+<meta name="twitter:description" content="Would anyone hire your AI agent? Write its job spec in ten questions and get a hire verdict before you build.">
+<meta name="twitter:image" content="https://dlightning.org/img/products/AAV.png">
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <style>
-    header {
-      z-index: 999;
-    }
-    .quiz-container {
-      width: 100%;
-      max-width: 920px;
-      margin: 3rem auto 0;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
-      overflow: hidden;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wdth,wght@0,75..125,200..900;1,75..125,200..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    .quiz-header {
-      background: linear-gradient(135deg, #016de0 0%, #003ca4 100%);
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
+<style>
+  :root {
+    --ink: #080f26;
+    --ink-2: #111b42;
+    --ink-3: #1a2756;
+    --sky: #19a4ff;
+    --blue: #0181f5;
+    --blue-deep: #065cad;
+    --bolt: #ffd700;
+    --who: #19a4ff;      /* pillar: who it's for */
+    --fit: #9b7bff;      /* pillar: problem fit */
+    --mkt: #2fd9a0;      /* pillar: market proof */
+    --who-dk: #0569b8;
+    --fit-dk: #5b3fd1;
+    --mkt-dk: #0b8a60;
+    --warn: #ff8a3d;
+    --paper: #f4f6fb;
+    --card: #ffffff;
+    --text: #151c33;
+    --muted: #5a6480;
+    --line: #dde3ee;
+    --mona: 'Mona Sans', 'Rubik', system-ui, sans-serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
 
-    .quiz-header h1,
-    .quiz-header p {
-      color: white;
-    }
-    
-    .progress-bar {
-      height: 6px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-top: 1rem;
-    }
-    
-    .progress-fill {
-      height: 100%;
-      background: white;
-      transition: width 0.3s ease;
-      border-radius: 3px;
-    }
-    
-    .question-container {
-      padding: 3rem 2rem;
-      min-height: 400px;
-    }
-    
-    .question-text {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #2d3748;
-      margin-bottom: 0.5rem;
-    }
-    
-    .question-subtext {
-      color: #718096;
-      font-size: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .option-grid {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-    
-    .option-btn {
-      background: #f7fafc;
-      border: 2px solid #e2e8f0;
-      padding: 1.25rem;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: left;
-      display: flex;
-      align-items: start;
-      gap: 0.75rem;
-    }
-    
-    .option-btn:hover {
-      border-color: #0066cc;
-      background: #edf2f7;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
-    }
+  body { background: var(--paper); color: var(--text); font-family: var(--mona); font-weight: 400; }
+  .aav, .aav h1, .aav h2, .aav h3, .aav h4, .aav p, .aav button, .aav input { font-family: var(--mona); }
+  header { z-index: 999; }
+  .aav-hidden { display: none !important; }
+  .aav-wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+  .aav-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-    .option-btn.selected {
-      background: #0066cc;
-      border-color: #0066cc;
-      color: white;
-    }
+  /* Mona Sans width axis does the typographic work: wide for display, narrow for labels */
+  .aav-label {
+    font-stretch: 82%; font-weight: 600; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase;
+  }
 
-    .option-btn.selected .option-icon {
-      color: white;
-    }
+  /* ---------- hero: a hiring desk for software ---------- */
+  .aav-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 128px 0 160px;
+    background:
+      radial-gradient(700px 420px at 82% 28%, rgba(155, 123, 255, .26), transparent 65%),
+      radial-gradient(620px 380px at 6% 92%, rgba(25, 164, 255, .18), transparent 65%),
+      linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+  }
+  .aav-hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .55;
+    background-image: radial-gradient(rgba(170, 190, 255, .22) 1px, transparent 1.2px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 72%);
+            mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 72%);
+  }
+  .aav-hero-grid { position: relative; display: grid; grid-template-columns: 1.08fr .92fr; gap: 56px; align-items: center; }
+  .aav-eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--bolt); margin-bottom: 20px; }
+  .aav-hero h1 {
+    font-stretch: 118%; font-weight: 820; font-size: clamp(2.6rem, 5.8vw, 4.6rem); line-height: .98;
+    letter-spacing: -.035em; color: #fff; margin: 0 0 24px;
+  }
+  .aav-hero h1 em {
+    font-style: normal; background: linear-gradient(90deg, var(--sky), var(--fit) 55%, var(--mkt));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .aav-lede { font-size: 1.16rem; line-height: 1.6; color: rgba(255, 255, 255, .74); max-width: 510px; margin: 0 0 32px; font-weight: 350; }
+  .aav-lede strong { color: #fff; font-weight: 600; }
+  .aav-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .9rem; color: rgba(255, 255, 255, .6); font-stretch: 92%; }
+  .aav-meta i { color: var(--sky); margin-right: 6px; }
 
-    .option-icon {
-      font-size: 1.5rem;
-      min-width: 30px;
-      color: #0066cc;
-    }
-    
-    .option-text {
-      flex: 1;
-    }
-    
-    .text-input {
-      width: 100%;
-      padding: 1rem;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 1rem;
-      transition: border-color 0.2s;
-    }
-    
-    .text-input:focus {
-      outline: none;
-      border-color: #0066cc;
-    }
-    
-    .nav-buttons {
-      padding: 1.5rem 2rem;
-      background: #f7fafc;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    
-    .btn {
-      padding: 0.75rem 2rem;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-      font-size: 1rem;
-    }
-    
-    .btn-primary {
-      background: #0066cc;
-      color: white;
-    }
+  .aav-btn {
+    font: inherit; font-family: var(--mona); font-weight: 650; border: none; border-radius: 12px; padding: 14px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1.1;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease, opacity .2s ease;
+  }
+  .aav-btn:focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; }
+  .aav-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 #b89b00; }
+  .aav-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #b89b00; color: var(--ink); text-decoration: none; }
+  .aav-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 #b89b00; }
+  .aav-btn-ink { background: var(--ink); color: #fff; }
+  .aav-btn-ink:hover:not(:disabled) { background: var(--ink-3); color: #fff; transform: translateY(-1px); }
+  .aav-btn-ink i { color: var(--bolt); }
+  .aav-btn-ghost { background: transparent; color: var(--muted); padding: 12px 14px; }
+  .aav-btn-ghost:hover:not(:disabled) { color: var(--ink); background: var(--paper); }
+  .aav-btn:disabled { opacity: .35; cursor: not-allowed; }
 
-    .btn-primary:hover:not(:disabled) {
-      background: #0052a3;
-      transform: translateY(-1px);
-    }
-    
-    .btn-secondary {
-      background: white;
-      color: #4a5568;
-      border: 2px solid #e2e8f0;
-    }
-    
-    .btn-secondary:hover {
-      border-color: #cbd5e0;
-    }
-    
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    
-    .result-container {
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    
-    .score-circle {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 2rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      font-weight: 700;
-      color: white;
-      position: relative;
-    }
-    
-    .score-label {
-      font-size: 1rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 1rem;
-    }
-    
-    .result-title {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #2d3748;
-      margin: 1rem 0;
-    }
-    
-    .result-description {
-      font-size: 1.1rem;
-      color: #4a5568;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    /* Experience Builder banner — shared dlightning style */
-    .featureBgImg {
-      position: relative;
-      overflow: hidden;
-    }
+  /* hero visual: a sample agent spec, cycling through example hires */
+  .aav-sample {
+    position: relative; border-radius: 20px; padding: 24px 24px 22px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .03));
+    border: 1px solid rgba(255, 255, 255, .14); backdrop-filter: blur(6px);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .7);
+    transform: rotate(1.2deg);
+  }
+  .aav-sample-top { display: flex; justify-content: space-between; align-items: center; color: rgba(255, 255, 255, .55); margin-bottom: 16px; }
+  .aav-sample-top .aav-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--mkt); margin-right: 8px; box-shadow: 0 0 0 4px rgba(47, 217, 160, .18); animation: aav-pulse 2s ease-in-out infinite; }
+  .aav-sample-name { font-stretch: 112%; font-weight: 760; font-size: 1.5rem; letter-spacing: -.02em; line-height: 1.1; color: #fff; margin: 0 0 16px; min-height: 1.65em; }
+  .aav-sample dl { margin: 0 0 18px; display: grid; grid-template-columns: 118px 1fr; gap: 9px 14px; font-size: .95rem; }
+  .aav-sample dt { color: rgba(255, 255, 255, .5); font-stretch: 85%; font-weight: 500; letter-spacing: .04em; }
+  .aav-sample dd { margin: 0; color: #fff; font-weight: 450; }
+  .aav-sample .aav-swap { transition: opacity .35s ease, transform .35s var(--ease); }
+  .aav-sample.is-out .aav-swap { opacity: 0; transform: translateY(6px); }
+  .aav-stamp {
+    position: absolute; right: -14px; top: -20px; transform: rotate(8deg); padding: 8px 14px; border-radius: 10px;
+    background: var(--bolt); color: var(--ink); font-stretch: 112%; font-weight: 820; font-size: 1rem; letter-spacing: .02em;
+    box-shadow: 0 10px 24px -8px rgba(255, 215, 0, .55);
+  }
 
-    .featureBgImg-bg {
-      object-position: center calc(50% + 42px);
-      transition: transform 0.42s ease-in-out;
-    }
+  /* three pillar meters (shared by hero, spec sheet and result) */
+  .aav-meters { display: grid; gap: 10px; }
+  .aav-meter { display: grid; grid-template-columns: 104px 1fr 44px; align-items: center; gap: 12px; font-size: .86rem; }
+  .aav-meter-k { font-stretch: 85%; font-weight: 600; letter-spacing: .03em; }
+  .aav-meter-v { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .aav-track { display: block; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+  .aav-fill { display: block; height: 100%; width: 0; border-radius: 99px; transition: width .7s var(--ease); }
+  .aav-fill[data-p="who"] { background: var(--who); }
+  .aav-fill[data-p="fit"] { background: var(--fit); }
+  .aav-fill[data-p="mkt"] { background: var(--mkt); }
+  .aav-meter-k[data-p="who"] { color: var(--who); }
+  .aav-meter-k[data-p="fit"] { color: var(--fit); }
+  .aav-meter-k[data-p="mkt"] { color: var(--mkt); }
 
-    .featureBgImg:hover .featureBgImg-bg {
-      transform: scale(1.1);
-    }
+  @keyframes aav-pulse { 50% { opacity: .45; } }
+  @keyframes aav-in { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes aav-pop { 0% { transform: scale(.6) rotate(-10deg); opacity: 0; } 70% { transform: scale(1.08) rotate(6deg); opacity: 1; } 100% { transform: scale(1) rotate(5deg); } }
 
-    .featureBgImg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(34, 13, 172, 0.693) 0%, rgba(184, 2, 181, 0.153) 100%);
-      z-index: -1;
-      transition: opacity 0.3s ease-in-out;
-      mix-blend-mode: soft-light;
-    }
+  /* ---------- the hiring desk: questions left, live spec right ---------- */
+  .aav-desk {
+    position: relative; z-index: 5; margin-top: -96px; background: var(--card); border-radius: 22px;
+    box-shadow: 0 1px 0 rgba(8, 15, 38, .04), 0 34px 70px -28px rgba(8, 15, 38, .38);
+    display: grid; grid-template-columns: 1fr 360px; overflow: hidden; min-height: 600px;
+  }
+  .aav-main { padding: 30px 40px 28px; display: flex; flex-direction: column; min-width: 0; }
 
-    .builder-banner {
-      background: linear-gradient(135deg, #4f3ad6 0%, #7a1fae 100%);
-      padding: 2rem;
-      border-radius: 16px;
-      margin: 2rem 0;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
+  /* progress: ten segments, coloured by the pillar each question feeds */
+  .aav-progress { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; margin-bottom: 10px; }
+  .aav-seg { height: 6px; border-radius: 99px; background: #e7ebf3; position: relative; overflow: hidden; }
+  .aav-seg::after { content: ''; position: absolute; inset: 0; transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); border-radius: inherit; }
+  .aav-seg[data-p="who"]::after { background: var(--who); }
+  .aav-seg[data-p="fit"]::after { background: var(--fit); }
+  .aav-seg[data-p="mkt"]::after { background: var(--mkt); }
+  .aav-seg.is-done::after { transform: scaleX(1); }
+  .aav-seg.is-now { box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--ink); }
+  .aav-progress-meta { display: flex; justify-content: space-between; align-items: center; color: var(--muted); margin-bottom: 26px; }
+  .aav-progress-meta b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .aav-pill { display: inline-flex; align-items: center; gap: 7px; padding: 4px 10px; border-radius: 99px; }
+  .aav-pill i { width: 7px; height: 7px; border-radius: 50%; }
+  .aav-pill[data-p="who"] { color: var(--who-dk); background: rgba(25, 164, 255, .1); }
+  .aav-pill[data-p="who"] i { background: var(--who); }
+  .aav-pill[data-p="fit"] { color: var(--fit-dk); background: rgba(155, 123, 255, .12); }
+  .aav-pill[data-p="fit"] i { background: var(--fit); }
+  .aav-pill[data-p="mkt"] { color: var(--mkt-dk); background: rgba(47, 217, 160, .14); }
+  .aav-pill[data-p="mkt"] i { background: var(--mkt); }
 
-    .builder-content {
-      flex: 1;
-    }
+  .aav-qbox { flex: 1; animation: aav-in .4s var(--ease) both; }
+  .aav-q { font-stretch: 108%; font-weight: 740; font-size: clamp(1.45rem, 2.7vw, 1.95rem); line-height: 1.16; letter-spacing: -.025em; color: var(--ink); margin: 0 0 8px; }
+  .aav-q:focus { outline: none; }
+  .aav-q-hint { color: var(--muted); font-size: 1rem; line-height: 1.5; margin: 0 0 24px; }
+  .aav-q-hint kbd, .aav-nav-tip kbd { font-family: var(--mona); font-stretch: 85%; font-size: .78rem; background: var(--paper); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; color: var(--text); box-shadow: none; }
 
-    .builder-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: white;
-    }
+  .aav-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .aav-opt {
+    all: unset; box-sizing: border-box; position: relative; display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: 14px; background: #fff; border: 1.5px solid var(--line); cursor: pointer; color: var(--text);
+    transition: border-color .18s ease, background .18s ease, transform .18s var(--ease), box-shadow .18s ease;
+  }
+  .aav-opt:hover { border-color: #b9c5da; transform: translateY(-1px); box-shadow: 0 8px 18px -12px rgba(8, 15, 38, .35); }
+  .aav-opt:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .aav-opt-ico { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--paper); color: var(--ink-3); font-size: .98rem; transition: background .18s ease, color .18s ease; }
+  .aav-opt-t { display: block; font-weight: 600; font-size: .98rem; line-height: 1.25; color: var(--ink); }
+  .aav-opt-d { display: block; font-size: .85rem; line-height: 1.35; color: var(--muted); margin-top: 2px; }
+  .aav-opt-key { font-stretch: 85%; font-size: .74rem; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 1px 7px; align-self: start; }
+  .aav-opt[aria-checked="true"] { border-color: var(--ink); background: #f7f8fc; box-shadow: inset 0 0 0 1px var(--ink); }
+  .aav-opt[aria-checked="true"] .aav-opt-ico { background: var(--ink); color: var(--bolt); }
+  .aav-opt[aria-checked="true"] .aav-opt-key { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .aav-other { grid-column: 1 / -1; }
 
-    .builder-description {
-      opacity: 0.95;
-      line-height: 1.5;
-    }
+  .aav-input {
+    width: 100%; box-sizing: border-box; font-family: var(--mona); font-size: 1.02rem; line-height: 1.5; color: var(--text);
+    padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; transition: border-color .18s ease, box-shadow .18s ease;
+  }
+  .aav-input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(25, 164, 255, .16); }
+  /* problem statement: a sentence with three blanks */
+  .aav-madlib { display: grid; gap: 4px; }
+  .aav-blank { padding: 12px 14px 12px 16px; border-radius: 14px; background: var(--paper); border-left: 4px solid #c9d2e3; transition: border-color .25s ease; }
+  .aav-blank.is-set { border-left-color: var(--fit); }
+  .aav-blank .aav-label { display: block; color: var(--muted); margin-bottom: 6px; }
+  .aav-blank.is-set .aav-label { color: var(--fit-dk); }
+  .aav-blank.is-set .aav-label::after { content: ' \2713'; }
+  .aav-blank .aav-input { padding: 11px 14px; font-weight: 550; }
+  .aav-blank-tip { font-size: .84rem; color: var(--muted); margin: 6px 0 0; line-height: 1.4; }
+  .aav-join { font-stretch: 110%; font-weight: 700; font-size: 1.02rem; color: var(--ink); padding: 4px 0 4px 20px; }
+  .aav-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  .aav-chip {
+    all: unset; box-sizing: border-box; cursor: pointer; font-size: .86rem; line-height: 1.2; padding: 7px 12px; border-radius: 99px;
+    background: #fff; border: 1.5px solid var(--line); color: var(--text); transition: border-color .15s ease, background .15s ease, color .15s ease;
+  }
+  .aav-chip:hover { border-color: var(--fit); }
+  .aav-chip:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .aav-chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 
-    .hidden {
-      display: none;
-    }
-    
-    @media (max-width: 640px) {
-      .quiz-container {
-        margin: 1.5rem 0 0;
-        border-radius: 16px;
-      }
-      
-      .question-container {
-        padding: 2rem 1.5rem;
-      }
-      
-      .option-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .builder-banner {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .email-form {
-        flex-direction: column;
-      }
-    }
-  </style>
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
-    <link rel="manifest" href="/site.webmanifest">
+  .aav-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 22px; margin-top: 26px; border-top: 1px solid var(--line); }
+  .aav-nav-tip { font-size: .85rem; color: var(--muted); font-stretch: 92%; }
+
+  /* the live spec sheet */
+  .aav-spec { background: linear-gradient(180deg, var(--ink-2), var(--ink)); color: #fff; padding: 28px 26px; display: flex; flex-direction: column; }
+  .aav-spec-head { display: flex; justify-content: space-between; align-items: center; color: rgba(255, 255, 255, .5); margin-bottom: 4px; }
+  .aav-spec h2 { font-stretch: 112%; font-weight: 780; font-size: 1.35rem; letter-spacing: -.02em; color: #fff; margin: 0 0 18px; }
+  .aav-spec ol { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 2px; }
+  .aav-spec li { display: grid; grid-template-columns: 8px 1fr; gap: 10px; padding: 7px 0; border-bottom: 1px dashed rgba(255, 255, 255, .1); }
+  .aav-spec li i { width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; background: rgba(255, 255, 255, .22); transition: background .3s ease, box-shadow .3s ease; }
+  .aav-spec li[data-p="who"].is-set i { background: var(--who); }
+  .aav-spec li[data-p="fit"].is-set i { background: var(--fit); }
+  .aav-spec li[data-p="mkt"].is-set i { background: var(--mkt); }
+  .aav-spec li.is-now i { box-shadow: 0 0 0 4px rgba(255, 215, 0, .3); background: var(--bolt); }
+  .aav-spec-k { display: block; font-stretch: 82%; font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .45); }
+  .aav-spec-v { display: block; font-size: .92rem; line-height: 1.35; color: rgba(255, 255, 255, .3); margin-top: 1px; overflow-wrap: anywhere; }
+  .aav-spec li.is-set .aav-spec-v { color: #fff; animation: aav-in .35s var(--ease) both; }
+  .aav-spec .aav-meters { margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .12); }
+  .aav-spec .aav-meter { grid-template-columns: 92px 1fr 40px; }
+
+  /* ---------- result ---------- */
+  .aav-result { padding-top: 0; animation: aav-in .5s var(--ease) both; }
+  .aav-result:focus { outline: none; }
+  .aav-verdict {
+    position: relative; z-index: 5; margin-top: -96px; border-radius: 22px; overflow: hidden; color: #fff;
+    background: radial-gradient(600px 300px at 90% 0%, rgba(155, 123, 255, .3), transparent 60%), linear-gradient(160deg, var(--ink-3), var(--ink));
+    box-shadow: 0 34px 70px -28px rgba(8, 15, 38, .5);
+    display: grid; grid-template-columns: 240px 1fr; gap: 36px; padding: 40px 44px; align-items: center;
+  }
+  .aav-dial { position: relative; width: 220px; height: 220px; }
+  .aav-dial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .aav-dial circle { fill: none; stroke-width: 14; }
+  .aav-dial .aav-dial-bg { stroke: rgba(255, 255, 255, .1); }
+  .aav-dial .aav-dial-seg { stroke-linecap: butt; transition: stroke-dasharray 1s var(--ease); }
+  .aav-dial-num { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
+  .aav-dial-num b { display: block; color: #fff; font-stretch: 120%; font-weight: 850; font-size: 4rem; line-height: .9; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+  .aav-dial-num span { display: block; color: rgba(255, 255, 255, .55); margin-top: 6px; }
+  .aav-hire {
+    display: inline-block; padding: 7px 14px; border-radius: 10px; background: var(--bolt); color: var(--ink);
+    font-stretch: 112%; font-weight: 820; font-size: .98rem; letter-spacing: .02em; margin-bottom: 14px; animation: aav-pop .6s var(--ease) .3s both;
+  }
+  .aav-hire.is-soft { background: #fff; }
+  .aav-verdict h2 { font-stretch: 116%; font-weight: 820; font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1; letter-spacing: -.035em; color: #fff; margin: 0 0 14px; }
+  .aav-verdict p { color: rgba(255, 255, 255, .76); font-size: 1.06rem; line-height: 1.6; margin: 0 0 22px; max-width: 580px; }
+  .aav-verdict .aav-meters { max-width: 520px; }
+
+  .aav-grid2 { display: grid; grid-template-columns: 1.15fr .85fr; gap: 20px; margin-top: 20px; }
+  .aav-panel { background: #fff; border-radius: 18px; padding: 28px 30px; box-shadow: 0 1px 0 rgba(8, 15, 38, .04), 0 20px 40px -26px rgba(8, 15, 38, .3); }
+  .aav-panel h3 { font-stretch: 110%; font-weight: 760; font-size: 1.3rem; letter-spacing: -.02em; color: var(--ink); margin: 0 0 6px; }
+  .aav-panel .aav-panel-sub { color: var(--muted); margin: 0 0 18px; font-size: .96rem; }
+  .aav-next { border-left: 5px solid var(--bolt); }
+  .aav-next .aav-pill { margin-bottom: 12px; }
+  .aav-next p.aav-next-body { font-size: 1.08rem; line-height: 1.6; color: var(--text); margin: 0; }
+  .aav-flags { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .aav-flags li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; font-size: .95rem; line-height: 1.5; color: var(--text); }
+  .aav-flags li i { color: var(--warn); margin-top: 4px; }
+  .aav-flags li.is-good i { color: var(--mkt-dk); }
+
+  .aav-jd { margin-top: 20px; }
+  .aav-jd-body { font-stretch: 104%; font-size: clamp(1.08rem, 1.8vw, 1.28rem); line-height: 1.7; color: var(--text); margin: 0; font-weight: 420; }
+  .aav-jd-body mark { background: none; padding: 0 2px; font-weight: 650; color: var(--ink); box-shadow: inset 0 -.42em 0 rgba(255, 215, 0, .45); }
+  .aav-jd-problem { margin: 18px 0 0; padding: 14px 18px; border-radius: 12px; background: var(--paper); font-style: italic; color: var(--muted); }
+
+  .aav-after { display: flex; justify-content: center; gap: 10px; margin: 22px 0 0; }
+
+  .aav-cta {
+    position: relative; isolation: isolate; overflow: hidden; display: block; margin-top: 40px; padding: 38px 40px; border-radius: 20px; color: #fff; text-decoration: none;
+  }
+  .aav-cta:hover { text-decoration: none; color: #fff; }
+  .aav-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .6s var(--ease); }
+  .aav-cta::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(100deg, rgba(8, 15, 38, .93) 0%, rgba(40, 18, 110, .6) 55%, rgba(8, 15, 38, .1) 100%); }
+  .aav-cta:hover img { transform: scale(1.05); }
+  .aav-cta h2 { font-stretch: 114%; font-weight: 800; font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.03em; line-height: 1.05; color: #fff; margin: 0 0 8px; }
+  .aav-cta p { color: rgba(255, 255, 255, .8); margin: 0 0 18px; max-width: 460px; }
+
+  /* ---------- FAQ ---------- */
+  .aav-seo { max-width: 860px; margin: 100px auto 0; padding: 0 20px; line-height: 1.65; }
+  .aav-seo h2 { font-stretch: 110%; font-size: 1.7rem; font-weight: 780; letter-spacing: -.02em; color: var(--ink); margin: 0 0 16px; }
+  .aav-seo details { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 0 20px; margin-bottom: 10px; }
+  .aav-seo summary { cursor: pointer; color: var(--ink); font-weight: 600; padding: 16px 0; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .aav-seo summary::-webkit-details-marker { display: none; }
+  .aav-seo summary::after { content: "+"; color: var(--blue); font-size: 1.3rem; margin-left: 12px; }
+  .aav-seo details[open] summary::after { content: "\2013"; }
+  .aav-seo details p { padding: 0 0 16px; margin: 0; color: var(--muted); }
+  .aav-seo a { color: var(--blue); }
+
+  /* ---------- footer ---------- */
+  footer.aav-footer { margin-top: 90px; width: 100%; background: var(--ink); color: #fff; padding: 56px 34px; }
+  footer.aav-footer h3 { font-family: var(--mona); font-stretch: 112%; font-size: 1.6rem; font-weight: 780; letter-spacing: -.02em; color: #fff; margin-bottom: 16px; }
+  footer.aav-footer ol { padding-left: 22px; color: rgba(255, 255, 255, .85); }
+  footer.aav-footer li { margin-bottom: 9px; line-height: 1.5; }
+  footer.aav-footer p { color: rgba(255, 255, 255, .55); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1000px) {
+    .aav-desk { grid-template-columns: 1fr; }
+    .aav-spec { order: -1; padding: 20px 22px; }
+    .aav-spec ol, .aav-spec h2, .aav-spec-head { display: none; }
+    .aav-spec .aav-meters { margin: 0; padding: 0; border: 0; }
+  }
+  @media (max-width: 900px) {
+    .aav-hero { padding: 108px 0 140px; }
+    .aav-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .aav-sample { transform: none; max-width: 520px; }
+    .aav-verdict { grid-template-columns: 1fr; justify-items: start; padding: 32px 26px; gap: 22px; }
+    .aav-dial { width: 180px; height: 180px; }
+    .aav-dial-num b { font-size: 3.2rem; }
+    .aav-grid2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    .aav-opts { grid-template-columns: 1fr; }
+    .aav-main { padding: 24px 18px 22px; }
+    .aav-panel { padding: 24px 20px; }
+    .aav-nav-tip { display: none; }
+    .aav-cta { padding: 26px 22px; }
+    .aav-sample dl { grid-template-columns: 1fr; gap: 2px; }
+    .aav-sample dd { margin-bottom: 8px; }
+    .aav-stamp { right: 10px; }
+    footer.aav-footer { padding: 64px 8px; }
+  }
+  @media (hover: none) { .aav-opt-key, .aav-nav-tip { display: none; } .aav-opt { grid-template-columns: 38px 1fr; } }
+
+  /* the saved PDF/PNG is 760px wide: stack everything */
+  .dl-artifact .aav-verdict { margin-top: 0; grid-template-columns: 1fr; justify-items: start; padding: 30px; box-shadow: none; }
+  .dl-artifact .aav-grid2 { grid-template-columns: 1fr; }
+  .dl-artifact .aav-panel { box-shadow: none; border: 1px solid var(--line); }
+  .dl-artifact .aav-hire { animation: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
 </head>
-<body class="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen flex flex-col items-center">
-<header id='header'></header>
 
-<div class="h-14 bg-blue-800 w-full"></div>
+<body class="aav">
+<header id="header"></header>
 
-<div class="w-full px-4 flex justify-center">
-  <div class="quiz-container">
-    <div class="quiz-header">
-      <h1 class="text-3xl font-bold mb-2">AI Agent Idea Validation Quiz</h1>
-      <p class="text-lg opacity-90">Will your AI agent idea actually work? Take the 3-minute reality check</p>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressBar" style="width: 0%"></div>
-      </div>
-      <p class="mt-2 text-sm opacity-75">Question <span id="currentQ">1</span> of <span id="totalQ">10</span></p>
-    </div>
-    
-    <div id="questionsSection">
-      <div class="question-container" id="questionContainer"></div>
-      
-      <div class="nav-buttons">
-        <button class="btn btn-secondary" id="backBtn" onclick="goBack()">
-          <i class="fas fa-arrow-left mr-2"></i>Back
-        </button>
-        <button class="btn btn-primary" id="nextBtn" onclick="goNext()" disabled>
-          Next<i class="fas fa-arrow-right ml-2"></i>
-        </button>
+<section class="aav-hero">
+  <div class="aav-wrap aav-hero-grid">
+    <div>
+      <div class="aav-eyebrow aav-label"><i class="fas fa-bolt" aria-hidden="true"></i> AI Agent Reality Check</div>
+      <h1>Would anyone <em>hire your agent?</em></h1>
+      <p class="aav-lede">An AI agent is a new hire for someone's team. Answer ten questions and its <strong>job spec writes itself</strong>, scored on who it's for, the problem it takes over, and whether money already moves there.</p>
+      <button type="button" class="aav-btn aav-btn-bolt" id="aavStart">Write the job spec <i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+      <div class="aav-meta">
+        <span><i class="far fa-clock" aria-hidden="true"></i>About 3 minutes</span>
+        <span><i class="fas fa-lock-open" aria-hidden="true"></i>No signup</span>
+        <span><i class="fas fa-download" aria-hidden="true"></i>Save your verdict as PDF</span>
       </div>
     </div>
-    
-    <div id="resultsSection" class="hidden">
-      <div class="result-container">
-        <div class="score-circle" id="scoreCircle">
-          <span id="scoreNumber">0</span>
-        </div>
-        <div class="score-label" id="scoreLabel">YOUR SCORE</div>
-        <h2 class="result-title" id="resultTitle"></h2>
-        <p class="result-description" id="resultDescription"></p>
-        
-        <div class="builder-banner featureBgImg relative overflow-hidden">
-          <img src="../img/exp-builder/immersive-experience.png" alt="Background silhouette of a woman in a pink and purple gradient room." class="featureBgImg-bg absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out">
-          <div class="builder-content relative z-10">
-            <h3 class="builder-title">Ready to Validate with Real Users?</h3>
-            <p class="builder-description">Use Experience Builder to prototype your AI agent idea and test it with actual users—no coding required. Build interactive flows, gather feedback, and validate before you invest in development.</p>
-            <a href="../experience-builder.html">
-              <button class="bg-gradient-to-r from-violet-600 to-purple-800 hover:from-violet-500 hover:to-purple-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mt-3">
-                Experience Builder&emsp; <i class="fa fa-bolt text-yellow-300" aria-hidden="true"></i>
-              </button>
-            </a>
-          </div>
-        </div>
 
-        <button class="btn btn-secondary mt-4" onclick="restartQuiz()">
-          <i class="fas fa-redo mr-2"></i>Take Quiz Again
-        </button>
-      </div>
+    <div class="aav-sample" id="aavSample" aria-hidden="true">
+      <div class="aav-stamp aav-swap" id="aavSampleStamp">HIRE IT</div>
+      <div class="aav-sample-top aav-label"><span><span class="aav-dot"></span>Agent spec · sample</span><span id="aavSampleN">01 / 03</span></div>
+      <p class="aav-sample-name aav-swap" id="aavSampleName"></p>
+      <dl class="aav-swap" id="aavSampleDl"></dl>
+      <div class="aav-meters" id="aavSampleMeters"></div>
     </div>
   </div>
-</div>
+</section>
+
+<main class="aav-wrap">
+  <section class="aav-desk" id="aavDesk" aria-label="AI agent validation questions">
+    <div class="aav-main">
+      <div class="aav-progress" id="aavProgress" aria-hidden="true"></div>
+      <div class="aav-progress-meta aav-label">
+        <span id="aavPillar"></span>
+        <span aria-live="polite">Question <b id="currentQ">1</b> of <b id="totalQ">10</b></span>
+      </div>
+
+      <div class="aav-qbox" id="questionContainer"></div>
+
+      <div class="aav-nav">
+        <button type="button" class="aav-btn aav-btn-ghost" id="backBtn"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</button>
+        <span class="aav-nav-tip">Number keys pick · <kbd>Enter</kbd> continues</span>
+        <button type="button" class="aav-btn aav-btn-ink" id="nextBtn" disabled>Next <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <aside class="aav-spec" aria-label="Your agent's job spec so far">
+      <div class="aav-spec-head aav-label"><span>Job spec · draft</span><i class="fas fa-robot" aria-hidden="true"></i></div>
+      <h2>Your agent</h2>
+      <ol id="aavSpecList"></ol>
+      <div class="aav-meters" id="aavLiveMeters"></div>
+    </aside>
+  </section>
+
+  <section id="result" class="aav-result aav-hidden" aria-live="polite" tabindex="-1"></section>
+
+  <div class="aav-after aav-hidden" id="aavAfter">
+    <button type="button" class="aav-btn aav-btn-ghost" id="restartBtn"><i class="fas fa-redo" aria-hidden="true"></i> Spec a different agent</button>
+  </div>
+
+  <a class="aav-cta aav-hidden" id="expBld" href="../experience-builder.html">
+    <img src="../img/exp-builder/immersive-experience.png" alt="" loading="lazy">
+    <div>
+      <h2>Put your agent in front of real users</h2>
+      <p>Experience Builder prototypes your agent's flow and tests it with the people you'd sell to, before anyone writes a prompt chain.</p>
+      <span class="aav-btn aav-btn-bolt">Explore Experience Builder <i class="fas fa-bolt" aria-hidden="true"></i></span>
+    </div>
+  </a>
+</main>
 
 <div id="error"></div>
+
+<!-- SEO content: sits BELOW the tool so it never gets in the way of using it -->
+<section class="aav-seo aav" aria-label="About validating AI agent ideas">
+  <h2>Frequently asked questions</h2>
+  <details>
+    <summary>How do I validate an AI agent idea before building it?</summary>
+    <p>Deliver the outcome by hand first. Take a real customer's input, produce the output yourself, and hand it back where they already work. If they use it and ask for more, you've found a task worth automating. If they don't, a model won't change that.</p>
+  </details>
+  <details>
+    <summary>What makes an AI agent idea strong?</summary>
+    <p>A specific person with a trigger that makes the pain urgent, a repetitive task with a clear finished output, and evidence that people already pay to get it done. The quiz scores those three: who it's for, problem fit, and market proof.</p>
+  </details>
+  <details>
+    <summary>Is it bad if nobody sells anything like my agent yet?</summary>
+    <p>Not necessarily, but it's a question to answer before building. Find out where the money and time go today, even if the answer is a spreadsheet and an intern. That's what your agent competes with.</p>
+  </details>
+  <details>
+    <summary>Is the tool free?</summary>
+    <p>Yes. No signup, and your answers stay in your browser. If you want help testing the idea with real users, our <a href="../experience-builder.html">Experience Builder</a> does that.</p>
+  </details>
+</section>
 
 <!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
 <div id="related-tools-con"></div>
 
-<footer class="mt-24 w-full bg-blue-950 text-white py-8">
-  <div class="container mx-auto px-4">
+<footer class="aav-footer aav">
+  <div class="container">
     <div class="row">
       <div class="col-lg-7">
-        <h3 class="text-2xl font-bold mb-4 text-white">How It Works</h3>
-        <ol class="list-decimal pl-6 space-y-2 instruct-list">
-          <li>Answer 10 quick questions about your AI agent idea.</li>
-          <li>We score your target user, market signal, and problem-solution fit.</li>
-          <li>Get a validation score with a clear next-step recommendation.</li>
-          <li>See whether you're ready to build, or need more discovery first.</li>
+        <h3>How it works</h3>
+        <ol>
+          <li>Answer ten questions about who your agent works for and what it takes off their plate.</li>
+          <li>Watch the job spec fill in as you go.</li>
+          <li>Get a score out of 100, split across who it's for, problem fit and market proof.</li>
+          <li>See the red flags in your answers and one next step aimed at your weakest pillar.</li>
+          <li>Save the verdict as a PDF or PNG.</li>
         </ol>
-        <p class="mt-4 text-gray-400 max-w-screen-lg">This reality check stress-tests your AI agent concept against the same criteria investors and operators use—who it's for, what painful task it removes, and whether people already pay to solve it.</p>
+        <p class="mt-3">The reality check tests your AI agent concept against what investors and operators ask first: who it's for, what painful task it removes, and whether people already pay to solve it. Your answers stay in your browser.</p>
       </div>
       <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
     </div>
   </div>
 </footer>
 
-  <script>
-    $(document).ready(function() {
-      $('#email-form-con').load("email-capture.html");
-      $('#related-tools-con').load("related-tools.html");
-      $('#header').load("../header.html", function(response, status, xhr) {
-        if (status == "error") {
-          $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
-        }
+<!-- Site-wide behaviors, including the sticky nav every main page has -->
+<script src="../js/main.js"></script>
+<script>
+(function () {
+  var PILLARS = {
+    who: { name: "Who it's for", short: 'Who' },
+    fit: { name: 'Problem fit',  short: 'Fit' },
+    mkt: { name: 'Market proof', short: 'Market' }
+  };
+
+  var questions = [
+    {
+      pillar: 'who', spec: 'Works for',
+      question: 'Who specifically needs this AI agent?',
+      subtext: 'Think about the person who would use it every day.',
+      options: [
+        { icon: 'fas fa-bullhorn', text: 'Sales teams', desc: 'Reps, managers, sales ops', value: 'sales', points: 10 },
+        { icon: 'fas fa-headset', text: 'Customer support teams', desc: 'Agents, managers, success teams', value: 'support', points: 10 },
+        { icon: 'fas fa-chart-line', text: 'Research & analytics teams', desc: 'Analysts, researchers, strategists', value: 'research', points: 10 },
+        { icon: 'fas fa-cogs', text: 'Operations teams', desc: 'Managers, inventory, logistics', value: 'ops', points: 10 },
+        { icon: 'fas fa-hospital', text: 'Healthcare professionals', desc: 'Doctors, nurses, clinic staff', value: 'healthcare', points: 10 },
+        { icon: 'fas fa-bullseye', text: 'Marketing teams', desc: 'Content creators, campaign managers', value: 'marketing', points: 10 },
+        { icon: 'fas fa-briefcase', text: 'Business owners & founders', desc: 'Solo entrepreneurs, small business', value: 'founders', points: 10 },
+        { icon: 'fas fa-graduation-cap', text: 'Educators & trainers', desc: 'Teachers, coaches, instructors', value: 'educators', points: 10 },
+        { icon: 'fas fa-ellipsis-h', text: 'Someone else', desc: 'Name them', value: 'other', points: 5, hasInput: true }
+      ]
+    },
+    {
+      pillar: 'who', spec: 'Company size',
+      question: 'What size organization do they work in?',
+      subtext: 'This decides how they buy and what they can afford.',
+      options: [
+        { icon: 'fas fa-user', text: 'Solo / freelancer', desc: '1 person', value: 'solo', points: 8 },
+        { icon: 'fas fa-users', text: 'Micro team', desc: '2–10 people', value: 'micro', points: 9 },
+        { icon: 'fas fa-building', text: 'Small business', desc: '11–50 people', value: 'small', points: 10 },
+        { icon: 'fas fa-city', text: 'Mid-market', desc: '51–200 people', value: 'mid', points: 10 },
+        { icon: 'fas fa-globe', text: 'Enterprise', desc: '200+ people', value: 'enterprise', points: 8 },
+        { icon: 'fas fa-question-circle', text: 'Not sure yet', desc: 'Varies widely', value: 'varies', points: 3,
+          flag: "Your buyer's company size varies widely. Pricing, sales and onboarding all depend on it, so pick one to start." }
+      ]
+    },
+    {
+      pillar: 'who', spec: 'Hired because',
+      question: "What's happening in their world right now?",
+      subtext: 'The trigger or change that makes them need your agent now.',
+      options: [
+        { icon: 'fas fa-chart-line', text: 'Growing fast', desc: 'Hiring, scaling, more volume', value: 'growth', points: 10 },
+        { icon: 'fas fa-fire', text: 'Drowning in manual work', desc: 'Overwhelmed, backlogged', value: 'overwhelmed', points: 10 },
+        { icon: 'fas fa-dollar-sign', text: 'Just got funding', desc: 'Have budget, need efficiency', value: 'funded', points: 9 },
+        { icon: 'fas fa-exclamation-triangle', text: 'Compliance or audit pressure', desc: 'A regulatory deadline', value: 'compliance', points: 9 },
+        { icon: 'fas fa-tired', text: 'Burned by their current tool', desc: 'Frustrated with what they use', value: 'frustrated', points: 8 },
+        { icon: 'fas fa-lightbulb', text: 'Exploring AI adoption', desc: 'Curious, testing, researching', value: 'exploring', points: 6,
+          flag: "“Exploring AI” is curiosity, not pain. Curious buyers try things and rarely pay for them." },
+        { icon: 'fas fa-ellipsis-h', text: 'Another trigger', desc: 'Describe it', value: 'other', points: 5, hasInput: true }
+      ]
+    },
+    {
+      pillar: 'fit', spec: 'Takes over',
+      question: 'What painful task takes up most of their time?',
+      subtext: 'The thing they do over and over that wears them down.',
+      options: [
+        { icon: 'fas fa-pen', text: 'Writing & drafting', desc: 'Emails, reports, documentation', value: 'writing', points: 10 },
+        { icon: 'fas fa-folder-open', text: 'Organizing & categorizing', desc: 'Tickets, leads, documents', value: 'organizing', points: 10 },
+        { icon: 'fas fa-search', text: 'Researching & analyzing', desc: 'Reading reports, finding insights', value: 'researching', points: 10 },
+        { icon: 'fas fa-phone', text: 'Repetitive communication', desc: 'Follow-ups, status updates', value: 'communication', points: 9 },
+        { icon: 'fas fa-keyboard', text: 'Data entry & formatting', desc: 'Copy-paste, reformatting', value: 'data-entry', points: 9 },
+        { icon: 'fas fa-calendar', text: 'Scheduling & coordinating', desc: 'Meetings, tasks, resources', value: 'scheduling', points: 8 },
+        { icon: 'fas fa-calculator', text: 'Manual calculations', desc: 'Spreadsheets, metrics', value: 'calculations', points: 8 },
+        { icon: 'fas fa-random', text: 'Routing & triage', desc: 'Deciding who handles what', value: 'triage', points: 9 },
+        { icon: 'fas fa-ellipsis-h', text: 'Other repetitive work', desc: 'Describe it', value: 'other', points: 5, hasInput: true }
+      ]
+    },
+    {
+      pillar: 'fit', spec: 'Hands back',
+      question: "What does “done” look like when your agent finishes?",
+      subtext: 'The tangible thing they get back.',
+      options: [
+        { icon: 'fas fa-file-alt', text: 'A written document', desc: 'Report, email, summary', value: 'document', points: 10 },
+        { icon: 'fas fa-chart-bar', text: 'A dashboard', desc: 'Charts, metrics, insights', value: 'dashboard', points: 10 },
+        { icon: 'fas fa-check-square', text: 'Sorted items', desc: 'Prioritized list, tagged tickets', value: 'sorted', points: 10 },
+        { icon: 'fas fa-bell', text: 'An alert', desc: 'Slack message, email ping', value: 'alert', points: 8 },
+        { icon: 'fas fa-table', text: 'Formatted output', desc: 'Spreadsheet, API data, filled template', value: 'formatted', points: 9 },
+        { icon: 'fas fa-comment-dots', text: 'A drafted reply', desc: 'Ready-to-send message', value: 'draft', points: 9 },
+        { icon: 'fas fa-compass', text: 'A recommendation', desc: 'What to do next, who to contact', value: 'recommendation', points: 8 },
+        { icon: 'fas fa-ellipsis-h', text: 'Something else', desc: 'Describe it', value: 'other', points: 5, hasInput: true }
+      ]
+    },
+    {
+      pillar: 'fit', spec: 'Works in',
+      question: 'How would they work with your agent?',
+      subtext: 'Where it fits into their day.',
+      options: [
+        { icon: 'fas fa-comment', text: 'Chat', desc: 'Ask questions, get answers', value: 'chat', points: 9 },
+        { icon: 'fas fa-file-invoice', text: 'A form', desc: 'Fill in inputs, get a result', value: 'form', points: 10 },
+        { icon: 'fas fa-envelope', text: 'Email', desc: 'Send a request, receive output', value: 'email', points: 8 },
+        { icon: 'fas fa-plug', text: 'Inside an existing tool', desc: 'Slack bot, CRM plugin', value: 'embedded', points: 10 },
+        { icon: 'fas fa-desktop', text: 'A web dashboard', desc: 'Log in, view results', value: 'dashboard', points: 9 },
+        { icon: 'fas fa-mobile-alt', text: 'A mobile app', desc: 'On-the-go access', value: 'mobile', points: 7 },
+        { icon: 'fas fa-robot', text: 'Fully automated', desc: 'Runs in the background, sends results', value: 'automated', points: 10 },
+        { icon: 'fas fa-question', text: 'Still figuring it out', desc: '', value: 'unsure', points: 3,
+          flag: "You don't know where the agent lives yet. Agents inside a tool people already open every day get used; new destinations get forgotten." }
+      ]
+    },
+    {
+      pillar: 'mkt', spec: 'Manual run',
+      question: 'Could you deliver this outcome by hand first?',
+      subtext: 'Before building any AI, could a person do this for a customer?',
+      options: [
+        { icon: 'fas fa-smile', text: 'Yes, in under an hour', desc: 'I could do it myself today', value: 'easy', points: 10 },
+        { icon: 'fas fa-clock', text: 'Yes, but it takes hours', desc: 'Slow, but doable', value: 'time-consuming', points: 9 },
+        { icon: 'fas fa-user-graduate', text: 'Maybe, with an expert', desc: 'Needs specialized knowledge', value: 'specialized', points: 7 },
+        { icon: 'fas fa-times-circle', text: 'No, it needs real-time AI', desc: 'A person couldn’t keep up', value: 'requires-ai', points: 3,
+          flag: "If no person could deliver this, you can't test demand before building. Look for a slower manual version of the same outcome." },
+        { icon: 'fas fa-question-circle', text: "I haven't thought about it", desc: '', value: 'unsure', points: 2,
+          flag: "You haven't tried delivering this by hand. It's the cheapest test available to you." }
+      ]
+    },
+    {
+      pillar: 'mkt', spec: 'Money flows?',
+      question: 'Are people already paying for solutions here?',
+      subtext: 'Does money already move in this space?',
+      options: [
+        { icon: 'fas fa-dollar-sign', text: 'Yes, expensive ones', desc: '$500+ a month', value: 'expensive', points: 10 },
+        { icon: 'fas fa-money-bill', text: 'Yes, affordable ones', desc: '$50–500 a month', value: 'affordable', points: 10 },
+        { icon: 'fas fa-gift', text: 'Only free or manual options', desc: 'Spreadsheets, interns, freeware', value: 'free', points: 6,
+          flag: "Only free alternatives exist. You'll need a clear reason for people to pay over “good enough.”" },
+        { icon: 'fas fa-rocket', text: 'No, this is new territory', desc: 'Nothing like it exists', value: 'new', points: 5,
+          flag: "Nobody paying for this yet can mean an open field or no demand. Find where the time and money go today." },
+        { icon: 'fas fa-question', text: "Not sure, haven't looked", desc: '', value: 'unsure', points: 2,
+          flag: "You haven't checked whether people pay for this. That's an afternoon of research." }
+      ]
+    },
+    {
+      pillar: 'fit', spec: 'The problem', type: 'sentence',
+      question: 'Finish the problem statement',
+      subtext: "We started it from your answers. Make it sound like your customer, then pick or write the why."
+    },
+    {
+      pillar: 'mkt', spec: 'Edge',
+      question: 'What makes your version different?',
+      subtext: 'Why would someone choose your agent over the alternatives?',
+      options: [
+        { icon: 'fas fa-user-check', text: 'I know this user deeply', desc: 'Lived experience, insider knowledge', value: 'expertise', points: 10 },
+        { icon: 'fas fa-handshake', text: 'I have unique access', desc: 'Distribution, partnerships, audience', value: 'access', points: 10 },
+        { icon: 'fas fa-bolt', text: 'Faster or cheaper', desc: 'Than what exists', value: 'efficiency', points: 8 },
+        { icon: 'fas fa-bullseye', text: 'A niche others ignore', desc: 'Specific and underserved', value: 'niche', points: 9 },
+        { icon: 'fas fa-users', text: 'Early users ready to test', desc: 'People waiting on it', value: 'users', points: 10 },
+        { icon: 'fas fa-clone', text: "It's the same as what exists", desc: 'Honesty check', value: 'same', points: 2,
+          flag: "If it's the same as existing solutions, you're competing on price or distribution. Know which." },
+        { icon: 'fas fa-question-circle', text: 'Not sure yet', desc: '', value: 'unsure', points: 3,
+          flag: "No edge yet. Distribution, insider knowledge or a sharp niche usually beats a better model." }
+      ]
+    }
+  ];
+
+  // Problem statement: a fill-in sentence, prefilled from earlier answers
+  var SIZE_PHRASE = {
+    solo: ' who work solo', micro: ' on teams of 2–10', small: ' at small businesses',
+    mid: ' at mid-size companies', enterprise: ' at large enterprises', varies: ''
+  };
+  var TASK_PHRASE = {
+    writing: 'drafting emails and reports', organizing: 'sorting tickets, leads and documents',
+    researching: 'digging through reports for insights', communication: 'chasing follow-ups and status updates',
+    'data-entry': 'copying data between tools', scheduling: 'coordinating meetings and resources',
+    calculations: 'keeping spreadsheets and metrics up to date', triage: 'deciding who handles what'
+  };
+  var TRIGGER_WHY = {
+    growth: 'the volume grows faster than the team', overwhelmed: "it's all done by hand",
+    funded: 'they need to do more without hiring', compliance: 'every step has to hold up in an audit',
+    frustrated: "their current tool doesn't fit how they work"
+  };
+  var WHY_CHIPS = [
+    "it's all done by hand", "their tools don't talk to each other", 'the volume grows faster than the team',
+    'only one person knows how it works', 'mistakes are expensive', "it eats hours they don't have"
+  ];
+  var STOCK_WHYS = WHY_CHIPS.concat(Object.keys(TRIGGER_WHY).map(function (k) { return TRIGGER_WHY[k]; }));
+
+  function lowerFirst(t) { return t ? t.charAt(0).toLowerCase() + t.slice(1) : t; }
+  function suggestWho() {
+    var a = answers[0], size = answers[1];
+    if (!a) return '';
+    return a.text + (size ? SIZE_PHRASE[size.value] || '' : '');
+  }
+  function suggestWhat() {
+    var a = answers[3];
+    if (!a) return '';
+    return a.value === 'other' ? lowerFirst(a.text) : TASK_PHRASE[a.value] || lowerFirst(a.text);
+  }
+  function whyChips() {
+    var t = answers[2] && TRIGGER_WHY[answers[2].value];
+    var list = t ? [t] : [];
+    WHY_CHIPS.forEach(function (c) { if (list.indexOf(c) < 0) list.push(c); });
+    return list.slice(0, 6);
+  }
+  function composeProblem(parts) {
+    return parts.who + ' struggle with ' + parts.what + ' because ' + parts.why.replace(/[.\s]+$/, '') + '.';
+  }
+  // All three blanks are required, so the structure is a given; specificity earns the rest.
+  // Rewriting the prefilled who, or writing your own why, shows you know the customer.
+  function scoreProblem(parts) {
+    var s = 8;
+    if (parts.who !== suggestWho()) s += 1;
+    if (STOCK_WHYS.indexOf(parts.why) < 0) s += 1;
+    return s;
+  }
+
+  var TIERS = [
+    { min: 90, hire: 'HIRE IT', title: 'Ready to build', color: 'mkt',
+      desc: 'A clear problem, a specific user and a deliverable outcome, plus signs that money already moves here. You know how to test it by hand first. Start prototyping.' },
+    { min: 70, hire: 'HIRE ON TRIAL', title: 'Strong foundation', color: 'who',
+      desc: 'Most of the spec is sharp, with one or two soft spots. Tighten the weakest pillar below and you are ready to put the idea in front of real users.' },
+    { min: 50, hire: 'SECOND INTERVIEW', title: 'Needs validation research', color: 'fit', soft: true,
+      desc: 'The idea is real, but the fit between problem and solution has gaps. Before building, talk to the people you would sell to and confirm the pain is theirs, not yours.' },
+    { min: 0, hire: 'NOT HIRING YET', title: 'Start with discovery', color: 'fit', soft: true,
+      desc: "You're early, which is the cheapest time to learn. Talk to 10–15 people in your target audience about how they work today and what they already do about it. A sharper idea comes out of those calls." }
+  ];
+
+  var NEXT_STEPS = {
+    who: 'Narrow “who” to one job title, at one company size, at the moment the trigger hits. Then find five of those people on LinkedIn or in a Slack community and ask how they handled it last time. If you can’t find five, the target is too vague or too small.',
+    fit: 'Do the agent’s job by hand for three people this week. Take their real input, produce the output yourself and hand it back where they already work. Time each run. What they do with the output tells you whether the task is worth automating.',
+    mkt: 'List three tools or services people pay for to get this done today, with prices. Then ask five prospects to pre-pay or sign a letter of intent for your manual version. “I’d use that” is not a signal; a card number is.'
+  };
+
+  var SAMPLES = [
+    { name: 'Ticket triage agent', stamp: 'HIRE IT', rows: [['Works for', 'Support leads, 11–50 staff'], ['Hired because', 'Ticket volume doubled'], ['Takes over', 'Routing and tagging'], ['Hands back', 'A prioritized queue']], s: { who: 93, fit: 90, mkt: 87 } },
+    { name: 'Clinic intake summarizer', stamp: 'HIRE ON TRIAL', rows: [['Works for', 'Clinic staff, 2–10 people'], ['Hired because', 'Audit deadline in Q3'], ['Takes over', 'Reading intake forms'], ['Hands back', 'A one-page summary']], s: { who: 90, fit: 80, mkt: 63 } },
+    { name: 'AI for everything', stamp: 'NOT HIRING YET', rows: [['Works for', 'Everyone, really'], ['Hired because', 'AI is exciting'], ['Takes over', 'Still figuring it out'], ['Hands back', 'Vibes']], s: { who: 30, fit: 25, mkt: 23 } }
+  ];
+
+  var currentQuestion = 0;
+  var answers = [];
+  var advanceTimer = null;
+
+  function $id(id) { return document.getElementById(id); }
+  function reduced() { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
+  }
+
+  function metersHTML(scores, labelKey) {
+    return ['who', 'fit', 'mkt'].map(function (p) {
+      var v = scores ? scores[p] : 0;
+      return '<div class="aav-meter"><span class="aav-meter-k" data-p="' + p + '">' + PILLARS[p][labelKey || 'name'] + '</span>' +
+        '<span class="aav-track"><span class="aav-fill" data-p="' + p + '" style="width:' + v + '%"></span></span>' +
+        '<span class="aav-meter-v" data-v="' + p + '">' + (scores ? v + '%' : '–') + '</span></div>';
+    }).join('');
+  }
+
+  // pillar score as a percentage of answered-so-far (live) or of all questions (final)
+  function pillarScores(liveOnly) {
+    var out = {};
+    ['who', 'fit', 'mkt'].forEach(function (p) {
+      var got = 0, max = 0;
+      questions.forEach(function (q, i) {
+        if (q.pillar !== p) return;
+        if (liveOnly && !answers[i]) return;
+        max += 10;
+        got += answers[i] ? answers[i].points : 0;
       });
+      out[p] = max ? Math.round(got / max * 100) : 0;
     });
+    return out;
+  }
 
-    const questions = [
-      {
-        id: 1,
-        question: "Who specifically needs this AI agent?",
-        subtext: "Think about the person who would use this daily",
-        options: [
-          { icon: "fas fa-bullhorn", text: "Sales teams (reps, managers, sales operations)", value: "sales", points: 10 },
-          { icon: "fas fa-headset", text: "Customer support teams (agents, managers, success teams)", value: "support", points: 10 },
-          { icon: "fas fa-chart-line", text: "Research/analytics teams (analysts, researchers, strategists)", value: "research", points: 10 },
-          { icon: "fas fa-cogs", text: "Operations teams (managers, inventory, logistics)", value: "ops", points: 10 },
-          { icon: "fas fa-hospital", text: "Healthcare professionals (doctors, nurses, clinic staff)", value: "healthcare", points: 10 },
-          { icon: "fas fa-bullseye", text: "Marketing teams (content creators, campaign managers)", value: "marketing", points: 10 },
-          { icon: "fas fa-briefcase", text: "Business owners/founders (solo entrepreneurs, small business)", value: "founders", points: 10 },
-          { icon: "fas fa-graduation-cap", text: "Educators/trainers (teachers, coaches, instructors)", value: "educators", points: 10 },
-          { icon: "fas fa-ellipsis-h", text: "Other (please specify)", value: "other", points: 5, hasInput: true }
-        ]
-      },
-      {
-        id: 2,
-        question: "What size organization do they work in?",
-        subtext: "This affects how they buy and what they can afford",
-        options: [
-          { icon: "fas fa-user", text: "Solo/freelancer (1 person)", value: "solo", points: 8 },
-          { icon: "fas fa-users", text: "Micro team (2-10 people)", value: "micro", points: 9 },
-          { icon: "fas fa-building", text: "Small business (11-50 people)", value: "small", points: 10 },
-          { icon: "fas fa-city", text: "Mid-market (51-200 people)", value: "mid", points: 10 },
-          { icon: "fas fa-globe", text: "Enterprise (200+ people)", value: "enterprise", points: 8 },
-          { icon: "fas fa-question-circle", text: "Not sure yet / varies widely", value: "varies", points: 3 }
-        ]
-      },
-      {
-        id: 3,
-        question: "What's happening in their world right now?",
-        subtext: "What trigger or change creates the need for your agent?",
-        options: [
-          { icon: "fas fa-chart-line", text: "Growing fast (hiring, scaling, more volume)", value: "growth", points: 10 },
-          { icon: "fas fa-fire", text: "Drowning in manual work (overwhelmed, backlogged)", value: "overwhelmed", points: 10 },
-          { icon: "fas fa-dollar-sign", text: "Just got funding (have budget, need efficiency)", value: "funded", points: 9 },
-          { icon: "fas fa-exclamation-triangle", text: "Facing compliance/audit pressure (regulatory deadline)", value: "compliance", points: 9 },
-          { icon: "fas fa-tired", text: "Burned by current solution (frustrated with existing tools)", value: "frustrated", points: 8 },
-          { icon: "fas fa-lightbulb", text: "Exploring AI adoption (curious, testing, researching)", value: "exploring", points: 6 },
-          { icon: "fas fa-ellipsis-h", text: "Other trigger", value: "other", points: 5, hasInput: true }
-        ]
-      },
-      {
-        id: 4,
-        question: "What painful task takes up most of their time?",
-        subtext: "The thing they do over and over that feels soul-crushing",
-        options: [
-          { icon: "fas fa-pen", text: "Writing/drafting (emails, reports, documentation)", value: "writing", points: 10 },
-          { icon: "fas fa-folder-open", text: "Organizing/categorizing (tickets, leads, documents)", value: "organizing", points: 10 },
-          { icon: "fas fa-search", text: "Researching/analyzing (reading reports, finding insights)", value: "researching", points: 10 },
-          { icon: "fas fa-phone", text: "Repetitive communication (follow-ups, status updates)", value: "communication", points: 9 },
-          { icon: "fas fa-keyboard", text: "Data entry/formatting (copy-paste, reformatting)", value: "data-entry", points: 9 },
-          { icon: "fas fa-calendar", text: "Scheduling/coordinating (meetings, tasks, resources)", value: "scheduling", points: 8 },
-          { icon: "fas fa-calculator", text: "Manual calculations/tracking (spreadsheets, metrics)", value: "calculations", points: 8 },
-          { icon: "fas fa-random", text: "Routing/triage (deciding who handles what)", value: "triage", points: 9 },
-          { icon: "fas fa-ellipsis-h", text: "Other repetitive work", value: "other", points: 5, hasInput: true }
-        ]
-      },
-      {
-        id: 5,
-        question: "What does 'done' look like when your agent finishes?",
-        subtext: "The tangible thing they get back",
-        options: [
-          { icon: "fas fa-file-alt", text: "Written document (report, email, summary)", value: "document", points: 10 },
-          { icon: "fas fa-chart-bar", text: "Dashboard/visualization (charts, metrics, insights)", value: "dashboard", points: 10 },
-          { icon: "fas fa-check-square", text: "Sorted/categorized items (prioritized list, tagged tickets)", value: "sorted", points: 10 },
-          { icon: "fas fa-bell", text: "Alert/notification (Slack message, email ping)", value: "alert", points: 8 },
-          { icon: "fas fa-table", text: "Formatted output (spreadsheet, API data, template filled)", value: "formatted", points: 9 },
-          { icon: "fas fa-comment-dots", text: "Drafted response (ready-to-send message)", value: "draft", points: 9 },
-          { icon: "fas fa-compass", text: "Recommendation (what to do next, who to contact)", value: "recommendation", points: 8 },
-          { icon: "fas fa-ellipsis-h", text: "Other deliverable", value: "other", points: 5, hasInput: true }
-        ]
-      },
-      {
-        id: 6,
-        question: "How would they interact with your agent?",
-        subtext: "Where does this fit into their daily workflow?",
-        options: [
-          { icon: "fas fa-comment", text: "Chat interface (ask questions, get answers)", value: "chat", points: 9 },
-          { icon: "fas fa-file-invoice", text: "Form submission (fill out inputs, get result)", value: "form", points: 10 },
-          { icon: "fas fa-envelope", text: "Email-based (send request, receive output)", value: "email", points: 8 },
-          { icon: "fas fa-plug", text: "Embedded in existing tool (Slack bot, CRM plugin)", value: "embedded", points: 10 },
-          { icon: "fas fa-desktop", text: "Web dashboard (log in, view results)", value: "dashboard", points: 9 },
-          { icon: "fas fa-mobile-alt", text: "Mobile app (on-the-go access)", value: "mobile", points: 7 },
-          { icon: "fas fa-robot", text: "Fully automated (runs in background, sends results)", value: "automated", points: 10 },
-          { icon: "fas fa-question", text: "Still figuring this out", value: "unsure", points: 3 }
-        ]
-      },
-      {
-        id: 7,
-        question: "Could you deliver this outcome manually first?",
-        subtext: "Before building AI, could a human do this for customers?",
-        options: [
-          { icon: "fas fa-smile", text: "Yes, easily! I could do this manually in under an hour", value: "easy", points: 10 },
-          { icon: "fas fa-clock", text: "Yes, but it would take several hours of work", value: "time-consuming", points: 9 },
-          { icon: "fas fa-exclamation-circle", text: "Maybe, but requires specialized expertise", value: "specialized", points: 7 },
-          { icon: "fas fa-times-circle", text: "No, requires real-time AI capabilities", value: "requires-ai", points: 3 },
-          { icon: "fas fa-question-circle", text: "Hmm... I haven't thought about this", value: "unsure", points: 2 }
-        ]
-      },
-      {
-        id: 8,
-        question: "Are people already paying for solutions in this space?",
-        subtext: "Does money flow here already?",
-        options: [
-          { icon: "fas fa-dollar-sign", text: "Yes, expensive solutions exist ($500+/month)", value: "expensive", points: 10 },
-          { icon: "fas fa-money-bill", text: "Yes, affordable tools exist ($50-500/month)", value: "affordable", points: 10 },
-          { icon: "fas fa-gift", text: "Only free/manual alternatives exist", value: "free", points: 6 },
-          { icon: "fas fa-rocket", text: "No, this is completely new territory", value: "new", points: 5 },
-          { icon: "fas fa-question", text: "Not sure, haven't researched yet", value: "unsure", points: 2 }
-        ]
-      },
-      {
-        id: 9,
-        question: "Can you describe the problem in one clear sentence?",
-        subtext: "Use this format: 'People in [WHO] struggle with [WHAT] because [WHY]'",
-        type: "text",
-        placeholder: "Example: Sales managers at small software companies struggle with reformatting weekly reports because their CRM doesn't export in the format finance needs",
-        scoring: function(text) {
-          let score = 0;
-          const lower = text.toLowerCase();
-          
-          // Check for WHO indicators
-          const whoWords = ['people in', 'teams', 'managers', 'professionals', 'users', 'employees', 'owners', 'founders'];
-          if (whoWords.some(word => lower.includes(word))) score += 3;
-          
-          // Check for WHAT indicators
-          const whatWords = ['struggle', 'have trouble', 'face challenges', 'difficulty', 'problem', 'issue'];
-          if (whatWords.some(word => lower.includes(word))) score += 3;
-          
-          // Check for WHY/consequence indicators
-          const whyWords = ['because', 'since', 'due to', 'as', 'which leads to', 'resulting in'];
-          if (whyWords.some(word => lower.includes(word))) score += 4;
-          
-          // Length bonus (good problem statements are detailed)
-          if (text.length > 50) score += 2;
-          
-          // Penalty for very short responses
-          if (text.length < 20) score = Math.max(0, score - 3);
-          
-          return Math.min(10, score);
+  /* ---------- hero sample ---------- */
+  function renderSample(i) {
+    var s = SAMPLES[i];
+    $id('aavSampleName').textContent = s.name;
+    $id('aavSampleStamp').textContent = s.stamp;
+    $id('aavSampleN').textContent = '0' + (i + 1) + ' / 0' + SAMPLES.length;
+    $id('aavSampleDl').innerHTML = s.rows.map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>'; }).join('');
+    $id('aavSampleMeters').innerHTML = metersHTML(s.s, 'short');
+  }
+  function startSamples() {
+    var i = 0, card = $id('aavSample');
+    renderSample(0);
+    if (reduced()) return;
+    setInterval(function () {
+      card.classList.add('is-out');
+      setTimeout(function () {
+        i = (i + 1) % SAMPLES.length;
+        renderSample(i);
+        card.classList.remove('is-out');
+      }, 380);
+    }, 4200);
+  }
+
+  /* ---------- live spec sheet ---------- */
+  function shortAnswer(i) {
+    var a = answers[i];
+    if (!a) return '';
+    if (questions[i].type === 'sentence') return a.text.length > 90 ? a.text.slice(0, 88) + '…' : a.text;
+    return a.text;
+  }
+  function renderSpec() {
+    $id('aavSpecList').innerHTML = questions.map(function (q, i) {
+      var v = shortAnswer(i);
+      var cls = (v ? 'is-set ' : '') + (i === currentQuestion ? 'is-now' : '');
+      return '<li data-p="' + q.pillar + '" class="' + cls + '"><i></i><div><span class="aav-spec-k">' + q.spec + '</span>' +
+        '<span class="aav-spec-v">' + (v ? esc(v) : '—') + '</span></div></li>';
+    }).join('');
+    var live = pillarScores(true);
+    var any = answers.some(Boolean);
+    ['who', 'fit', 'mkt'].forEach(function (p) {
+      var fill = document.querySelector('#aavLiveMeters .aav-fill[data-p="' + p + '"]');
+      var val = document.querySelector('#aavLiveMeters [data-v="' + p + '"]');
+      var has = questions.some(function (q, i) { return q.pillar === p && answers[i]; });
+      fill.style.width = (has ? live[p] : 0) + '%';
+      val.textContent = has && any ? live[p] + '%' : '–';
+    });
+  }
+
+  function renderProgress() {
+    $id('aavProgress').innerHTML = questions.map(function (q, i) {
+      var cls = (answers[i] ? 'is-done ' : '') + (i === currentQuestion ? 'is-now' : '');
+      return '<span class="aav-seg ' + cls + '" data-p="' + q.pillar + '"></span>';
+    }).join('');
+    var p = questions[currentQuestion].pillar;
+    $id('aavPillar').innerHTML = '<span class="aav-pill" data-p="' + p + '"><i></i>' + PILLARS[p].name + '</span>';
+    $id('currentQ').textContent = currentQuestion + 1;
+  }
+
+  /* ---------- questions ---------- */
+  function renderQuestion(focus) {
+    clearTimeout(advanceTimer);
+    var q = questions[currentQuestion];
+    var a = answers[currentQuestion];
+    var html = '<h2 class="aav-q" id="aavQ" tabindex="-1">' + q.question + '</h2><p class="aav-q-hint">' + q.subtext + '</p>';
+
+    if (q.type === 'sentence') {
+      var parts = a ? a.parts : { who: suggestWho(), what: suggestWhat(), why: '' };
+      html += '<div class="aav-madlib">' +
+        '<div class="aav-blank" data-slot="who"><label class="aav-label" for="pWho">Who</label>' +
+          '<input type="text" class="aav-input" id="pWho" autocomplete="off" placeholder="e.g. Clinic managers at small practices" value="' + esc(parts.who) + '">' +
+          '<p class="aav-blank-tip">Narrower is better. Add a job title or an industry.</p></div>' +
+        '<div class="aav-join">struggle with</div>' +
+        '<div class="aav-blank" data-slot="what"><label class="aav-label" for="pWhat">What</label>' +
+          '<input type="text" class="aav-input" id="pWhat" autocomplete="off" placeholder="e.g. reformatting weekly reports" value="' + esc(parts.what) + '">' +
+          '<p class="aav-blank-tip">The task, the way they would describe it.</p></div>' +
+        '<div class="aav-join">because</div>' +
+        '<div class="aav-blank" data-slot="why"><label class="aav-label" for="pWhy">Why</label>' +
+          '<input type="text" class="aav-input" id="pWhy" autocomplete="off" placeholder="Pick one below or write your own" value="' + esc(parts.why) + '">' +
+          '<div class="aav-chips" role="group" aria-label="Common reasons">' +
+            whyChips().map(function (c) { return '<button type="button" class="aav-chip" aria-pressed="false" data-why="' + esc(c) + '">' + esc(c) + '</button>'; }).join('') +
+          '</div></div>' +
+      '</div>';
+    } else {
+      html += '<div class="aav-opts" role="radiogroup" aria-labelledby="aavQ">';
+      q.options.forEach(function (opt, idx) {
+        var on = a && a.index === idx;
+        html += '<button type="button" class="aav-opt" role="radio" aria-checked="' + (on ? 'true' : 'false') + '" data-idx="' + idx + '">' +
+          '<span class="aav-opt-ico"><i class="' + opt.icon + '" aria-hidden="true"></i></span>' +
+          '<span><span class="aav-opt-t">' + opt.text + '</span>' + (opt.desc ? '<span class="aav-opt-d">' + opt.desc + '</span>' : '') + '</span>' +
+          (idx < 9 ? '<span class="aav-opt-key" aria-hidden="true">' + (idx + 1) + '</span>' : '') + '</button>';
+        if (opt.hasInput) {
+          html += '<div class="aav-other' + (on ? '' : ' aav-hidden') + '" id="otherWrap"><label class="aav-sr" for="otherInput">Please specify</label>' +
+            '<input type="text" class="aav-input" id="otherInput" placeholder="Please specify…" value="' + (on ? esc(a.text) : '') + '"></div>';
         }
-      },
-      {
-        id: 10,
-        question: "What makes YOUR version different?",
-        subtext: "Why would someone choose your agent over alternatives?",
-        options: [
-          { icon: "fas fa-user-check", text: "I deeply understand this user (lived experience, insider knowledge)", value: "expertise", points: 10 },
-          { icon: "fas fa-handshake", text: "I have unique access (distribution, partnerships, audience)", value: "access", points: 10 },
-          { icon: "fas fa-bolt", text: "I can deliver faster/cheaper than alternatives", value: "efficiency", points: 8 },
-          { icon: "fas fa-bullseye", text: "I'm solving a specific niche others ignore", value: "niche", points: 9 },
-          { icon: "fas fa-users", text: "I have early users ready to test with me", value: "users", points: 10 },
-          { icon: "fas fa-clone", text: "This is the same as existing solutions (honesty check!)", value: "same", points: 2 },
-          { icon: "fas fa-question-circle", text: "Not sure what makes mine different yet", value: "unsure", points: 3 }
-        ]
-      }
-    ];
-
-    let currentQuestion = 0;
-    let answers = [];
-    let score = 0;
-
-    function init() {
-      document.getElementById('totalQ').textContent = questions.length;
-      renderQuestion();
-    }
-
-    function renderQuestion() {
-      const q = questions[currentQuestion];
-      const container = document.getElementById('questionContainer');
-      
-      let html = `
-        <div class="question-text">${q.question}</div>
-        <div class="question-subtext">${q.subtext}</div>
-      `;
-      
-      if (q.type === 'text') {
-        html += `
-          <textarea 
-            class="text-input" 
-            id="textAnswer" 
-            rows="4" 
-            placeholder="${q.placeholder}"
-            oninput="enableNext()"
-          ></textarea>
-        `;
-      } else {
-        html += '<div class="option-grid">';
-        q.options.forEach((opt, idx) => {
-          html += `
-            <div class="option-btn" onclick="selectOption(${idx}, ${opt.hasInput || false})">
-              <div class="option-icon"><i class="${opt.icon}"></i></div>
-              <div class="option-text">${opt.text}</div>
-            </div>
-          `;
-          if (opt.hasInput) {
-            html += `
-              <input 
-                type="text" 
-                class="text-input hidden" 
-                id="optionInput${idx}" 
-                placeholder="Please specify..."
-                oninput="enableNext()"
-              />
-            `;
-          }
-        });
-        html += '</div>';
-      }
-      
-      container.innerHTML = html;
-      
-      // Update progress
-      const progress = ((currentQuestion) / questions.length) * 100;
-      document.getElementById('progressBar').style.width = progress + '%';
-      document.getElementById('currentQ').textContent = currentQuestion + 1;
-      
-      // Update back button
-      document.getElementById('backBtn').disabled = currentQuestion === 0;
-      document.getElementById('nextBtn').disabled = true;
-      
-      // Restore previous answer if exists
-      if (answers[currentQuestion]) {
-        if (q.type === 'text') {
-          document.getElementById('textAnswer').value = answers[currentQuestion].text || '';
-          enableNext();
-        } else {
-          const selectedIdx = answers[currentQuestion].index;
-          if (selectedIdx !== undefined) {
-            selectOption(selectedIdx, q.options[selectedIdx].hasInput);
-          }
-        }
-      }
-    }
-
-    function selectOption(index, hasInput = false) {
-      const q = questions[currentQuestion];
-      const buttons = document.querySelectorAll('.option-btn');
-      
-      buttons.forEach(btn => btn.classList.remove('selected'));
-      buttons[index].classList.add('selected');
-      
-      // Handle "Other" option with text input
-      if (hasInput) {
-        const input = document.getElementById('optionInput' + index);
-        input.classList.remove('hidden');
-        input.focus();
-        
-        // Don't enable next until they type something
-        if (!input.value.trim()) {
-          document.getElementById('nextBtn').disabled = true;
-          return;
-        }
-      } else {
-        // Hide all inputs
-        document.querySelectorAll('[id^="optionInput"]').forEach(inp => {
-          inp.classList.add('hidden');
-        });
-      }
-      
-      answers[currentQuestion] = {
-        index: index,
-        value: q.options[index].value,
-        points: q.options[index].points,
-        text: hasInput ? document.getElementById('optionInput' + index).value : q.options[index].text
-      };
-      
-      enableNext();
-    }
-
-    function enableNext() {
-      const q = questions[currentQuestion];
-      let canProceed = false;
-      
-      if (q.type === 'text') {
-        const text = document.getElementById('textAnswer').value.trim();
-        canProceed = text.length > 0;
-        if (canProceed) {
-          answers[currentQuestion] = {
-            text: text,
-            points: q.scoring(text)
-          };
-        }
-      } else {
-        const selected = answers[currentQuestion];
-        if (selected) {
-          const opt = q.options[selected.index];
-          if (opt.hasInput) {
-            const input = document.getElementById('optionInput' + selected.index);
-            canProceed = input && input.value.trim().length > 0;
-            if (canProceed) {
-              answers[currentQuestion].text = input.value;
-            }
-          } else {
-            canProceed = true;
-          }
-        }
-      }
-      
-      document.getElementById('nextBtn').disabled = !canProceed;
-    }
-
-    function goNext() {
-      if (currentQuestion < questions.length - 1) {
-        currentQuestion++;
-        renderQuestion();
-      } else {
-        calculateAndShowResults();
-      }
-    }
-
-    function goBack() {
-      if (currentQuestion > 0) {
-        currentQuestion--;
-        renderQuestion();
-      }
-    }
-
-    function calculateAndShowResults() {
-      // Calculate total score
-      score = answers.reduce((sum, answer) => sum + (answer.points || 0), 0);
-      
-      // Show results section
-      document.getElementById('questionsSection').classList.add('hidden');
-      document.getElementById('resultsSection').classList.remove('hidden');
-      
-      // Determine result tier
-      let resultData;
-      if (score >= 90) {
-        resultData = {
-          color: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
-          emoji: '🚀',
-          title: 'Ready to Build!',
-          description: 'You have a clear problem, specific target user, and a deliverable outcome. Your idea shows strong validation potential. The market exists, and you understand how to test it manually first. Time to start prototyping!'
-        };
-      } else if (score >= 70) {
-        resultData = {
-          color: 'linear-gradient(135deg, #016de0 0%, #003ca4 100%)',
-          emoji: '💪',
-          title: 'Strong Foundation',
-          description: 'You have good clarity on most elements, but there are 1-2 areas that need sharpening. With some focused work on positioning and validation approach, you\'ll be ready to test your idea with real users.'
-        };
-      } else if (score >= 50) {
-        resultData = {
-          color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-          emoji: '🔍',
-          title: 'Needs Validation Research',
-          description: 'Your idea exists, but there are gaps in problem-solution fit. Before building anything, spend time talking to potential users. Understand their pain points deeply and validate that your solution addresses real needs.'
-        };
-      } else {
-        resultData = {
-          color: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-          emoji: '🌱',
-          title: 'Start with Discovery',
-          description: 'You\'re in the early exploration phase. That\'s okay! The next step is customer discovery: talk to 10-15 people in your target audience. Learn about their workflows, pain points, and what they currently do. This will help you shape a clearer idea.'
-        };
-      }
-      
-      // Update UI with results
-      document.getElementById('scoreCircle').style.background = resultData.color;
-      document.getElementById('scoreNumber').textContent = score;
-      document.getElementById('scoreLabel').textContent = resultData.emoji + ' ' + resultData.title.toUpperCase();
-      document.getElementById('resultTitle').textContent = resultData.title;
-      document.getElementById('resultDescription').textContent = resultData.description;
-
-      // Make quiz answers available to the shared email-capture module
-      updateInteractionData(resultData.title);
-
-      // Scroll to top of results
-      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Summarize the quiz for the shared email-capture form (window.userInteractionData)
-    function updateInteractionData(resultTitle) {
-      const lines = [`Validation score: ${score}/100 (${resultTitle})`];
-      questions.forEach((q, i) => {
-        const a = answers[i];
-        if (!a) return;
-        lines.push(`Q${i + 1} ${q.question} — ${a.text || a.value || ''}`);
       });
-      window.userInteractionData = lines.join('\n');
+      html += '</div>';
     }
 
-    function restartQuiz() {
-      currentQuestion = 0;
-      answers = [];
-      score = 0;
-      window.userInteractionData = '';
+    var box = $id('questionContainer');
+    box.innerHTML = html;
+    // replay entrance animation
+    box.style.animation = 'none'; void box.offsetWidth; box.style.animation = '';
 
-      document.getElementById('questionsSection').classList.remove('hidden');
-      document.getElementById('resultsSection').classList.add('hidden');
-
-      renderQuestion();
+    if (q.type === 'sentence') {
+      ['pWho', 'pWhat', 'pWhy'].forEach(function (id) { $id(id).addEventListener('input', onSentenceInput); });
+      box.querySelectorAll('.aav-chip').forEach(function (c) {
+        c.addEventListener('click', function () { $id('pWhy').value = c.getAttribute('data-why'); onSentenceInput(); });
+      });
+      onSentenceInput();
+      if (focus) $id('aavQ').focus({ preventScroll: true });
+    } else {
+      box.querySelectorAll('.aav-opt').forEach(function (b) {
+        b.addEventListener('click', function () { selectOption(+b.getAttribute('data-idx'), true); });
+      });
+      var other = $id('otherInput');
+      if (other) other.addEventListener('input', function () {
+        var opt = q.options[answers[currentQuestion] ? answers[currentQuestion].index : -1];
+        if (opt && opt.hasInput) setAnswer(answers[currentQuestion].index, other.value.trim());
+      });
+      if (focus) $id('aavQ').focus({ preventScroll: true });
     }
 
-    // Initialize on page load
-    init();
-  </script>
+    $id('backBtn').disabled = currentQuestion === 0;
+    $id('nextBtn').innerHTML = currentQuestion === questions.length - 1
+      ? 'See the verdict <i class="fas fa-gavel" aria-hidden="true"></i>'
+      : 'Next <i class="fas fa-arrow-right" aria-hidden="true"></i>';
+    renderProgress();
+    renderSpec();
+    updateNext();
+  }
 
-  <!-- Branded result download (PNG / PDF) -->
-  <script src="result-download.js"
-          data-dl-container="#resultsSection"
-          data-dl-title="AI Agent Idea Validation"
-          data-dl-filename="dlightning-ai-agent-validation"></script>
+  function setAnswer(index, typed) {
+    var q = questions[currentQuestion], opt = q.options[index];
+    if (opt.hasInput && !typed) { answers[currentQuestion] = { index: index, value: opt.value, points: opt.points, text: '' }; }
+    else answers[currentQuestion] = { index: index, value: opt.value, points: opt.points, text: opt.hasInput ? typed : opt.text };
+    renderSpec();
+    renderProgress();
+    updateNext();
+  }
+
+  function selectOption(index, fromUser) {
+    var q = questions[currentQuestion], opt = q.options[index];
+    $id('questionContainer').querySelectorAll('.aav-opt').forEach(function (b, i) { b.setAttribute('aria-checked', i === index ? 'true' : 'false'); });
+    var wrap = $id('otherWrap');
+    if (wrap) wrap.classList.toggle('aav-hidden', !opt.hasInput);
+    var prev = answers[currentQuestion];
+    setAnswer(index, opt.hasInput ? ($id('otherInput').value.trim() || (prev && prev.index === index ? prev.text : '')) : '');
+    if (opt.hasInput) { $id('otherInput').focus(); return; }
+    // auto-advance after a beat, so the choice is visible first
+    if (fromUser) {
+      clearTimeout(advanceTimer);
+      advanceTimer = setTimeout(goNext, reduced() ? 0 : 380);
+    }
+  }
+
+  function onSentenceInput() {
+    var parts = { who: $id('pWho').value.trim(), what: $id('pWhat').value.trim(), why: $id('pWhy').value.trim() };
+    document.querySelectorAll('.aav-blank').forEach(function (b) { b.classList.toggle('is-set', parts[b.getAttribute('data-slot')].length > 1); });
+    document.querySelectorAll('.aav-chip').forEach(function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-why') === parts.why ? 'true' : 'false'); });
+    var complete = parts.who.length > 1 && parts.what.length > 1 && parts.why.length > 1;
+    answers[currentQuestion] = complete ? { parts: parts, text: composeProblem(parts), points: scoreProblem(parts) } : undefined;
+    renderSpec();
+    renderProgress();
+    updateNext();
+  }
+
+  function answered(i) {
+    var a = answers[i];
+    return !!(a && a.text);
+  }
+  function updateNext() { $id('nextBtn').disabled = !answered(currentQuestion); }
+
+  function goNext() {
+    if (!answered(currentQuestion)) return;
+    if (currentQuestion < questions.length - 1) { currentQuestion++; renderQuestion(true); }
+    else showResults();
+  }
+  function goBack() {
+    if (currentQuestion > 0) { currentQuestion--; renderQuestion(true); }
+  }
+
+  /* ---------- result ---------- */
+  function dialHTML(scores, total) {
+    // three arcs, each pillar's contribution to the 100
+    var r = 92, C = 2 * Math.PI * r, offset = 0, segs = '';
+    var weights = { who: 30, fit: 40, mkt: 30 };
+    ['who', 'fit', 'mkt'].forEach(function (p) {
+      var len = C * (scores[p] / 100) * (weights[p] / 100);
+      segs += '<circle class="aav-dial-seg" r="' + r + '" cx="110" cy="110" stroke="var(--' + p + ')" stroke-dasharray="' + len.toFixed(1) + ' ' + C.toFixed(1) + '" stroke-dashoffset="' + (-offset).toFixed(1) + '"></circle>';
+      offset += C * (weights[p] / 100);
+    });
+    return '<div class="aav-dial" role="img" aria-label="Score ' + total + ' out of 100"><svg viewBox="0 0 220 220"><circle class="aav-dial-bg" r="' + r + '" cx="110" cy="110"></circle>' + segs + '</svg>' +
+      '<div class="aav-dial-num"><div><b>' + total + '</b><span class="aav-label">out of 100</span></div></div></div>';
+  }
+
+  function specSentence() {
+    function m(i, lower) { var v = shortAnswer(i); return '<mark>' + esc(lower ? v.toLowerCase() : v) + '</mark>'; }
+    var size = answers[1], sizeOpt = questions[1].options[size.index];
+    var sizeText = size.value === 'varies' ? 'organizations of any size' : sizeOpt.text.toLowerCase() + ' (' + sizeOpt.desc + ')';
+    return 'Wanted: an AI agent for ' + m(0) + ' at <mark>' + esc(sizeText) + '</mark>. ' +
+      'They need it because of ' + m(2, true) + '. ' +
+      'It takes over ' + m(3, true) + ', hands back ' + m(4, true) + ' and works through ' + m(5, true) + '. ' +
+      'Your edge: ' + m(9, true) + '.';
+  }
+
+  function showResults() {
+    var total = answers.reduce(function (s, a) { return s + (a ? a.points : 0); }, 0);
+    var scores = pillarScores(false);
+    var tier = TIERS.filter(function (t) { return total >= t.min; })[0];
+    var weakest = ['who', 'fit', 'mkt'].reduce(function (lo, p) { return scores[p] < scores[lo] ? p : lo; }, 'who');
+
+    var flags = [];
+    questions.forEach(function (q, i) {
+      var a = answers[i];
+      if (!a) return;
+      if (q.type === 'sentence') {
+        if (a.points < 9) flags.push("Your problem statement is still in our words. Rewrite the who or the why the way your customer would say it.");
+      } else if (q.options[a.index].flag) flags.push(q.options[a.index].flag);
+    });
+    var flagsHTML = flags.length
+      ? flags.map(function (f) { return '<li><i class="fas fa-exclamation-triangle" aria-hidden="true"></i><span>' + esc(f) + '</span></li>'; }).join('')
+      : '<li class="is-good"><i class="fas fa-check-circle" aria-hidden="true"></i><span>No red flags in your answers. The next step is evidence from real people.</span></li>';
+
+    var html =
+      '<div class="aav-verdict">' + dialHTML(scores, total) +
+        '<div><span class="aav-hire' + (tier.soft ? ' is-soft' : '') + '">' + tier.hire + '</span>' +
+        '<h2>' + tier.title + '</h2><p>' + esc(tier.desc) + '</p>' +
+        '<div class="aav-meters">' + metersHTML(scores) + '</div></div>' +
+      '</div>' +
+      '<div class="aav-grid2">' +
+        '<div class="aav-panel aav-next"><span class="aav-pill aav-label" data-p="' + weakest + '"><i></i>Weakest pillar · ' + PILLARS[weakest].name + '</span>' +
+          '<h3>Your next move</h3><p class="aav-next-body">' + esc(NEXT_STEPS[weakest]) + '</p></div>' +
+        '<div class="aav-panel"><h3>Red flags</h3><p class="aav-panel-sub">' +
+          (flags.length ? flags.length + ' answer' + (flags.length > 1 ? 's' : '') + ' worth a second look.' : 'Checked against all ten answers.') + '</p>' +
+          '<ul class="aav-flags">' + flagsHTML + '</ul></div>' +
+      '</div>' +
+      '<div class="aav-panel aav-jd"><h3>The job spec</h3><p class="aav-panel-sub">Read it out loud. Would the person you described sign it?</p>' +
+        '<p class="aav-jd-body">' + specSentence() + '</p>' +
+        '<p class="aav-jd-problem">“' + esc(answers[8].text) + '”</p></div>';
+
+    $id('aavDesk').classList.add('aav-hidden');
+    var res = $id('result');
+    res.innerHTML = html;
+    res.classList.remove('aav-hidden');
+    $id('aavAfter').classList.remove('aav-hidden');
+    $id('expBld').classList.remove('aav-hidden');
+
+    updateInteractionData(total, tier.title, scores);
+    res.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+    res.focus({ preventScroll: true });
+  }
+
+  // Summarize the quiz for the shared email-capture form (window.userInteractionData)
+  function updateInteractionData(total, title, scores) {
+    var lines = ['Validation score: ' + total + '/100 (' + title + ')',
+      "Who it's for " + scores.who + '% · Problem fit ' + scores.fit + '% · Market proof ' + scores.mkt + '%'];
+    questions.forEach(function (q, i) {
+      var a = answers[i];
+      if (a) lines.push('Q' + (i + 1) + ' ' + q.question + ' — ' + (a.text || a.value || ''));
+    });
+    window.userInteractionData = lines.join('\n');
+  }
+
+  function restartQuiz() {
+    currentQuestion = 0;
+    answers = [];
+    window.userInteractionData = '';
+    $id('result').classList.add('aav-hidden');
+    $id('result').innerHTML = '';
+    $id('aavAfter').classList.add('aav-hidden');
+    $id('expBld').classList.add('aav-hidden');
+    $id('aavDesk').classList.remove('aav-hidden');
+    renderQuestion(false);
+    $id('aavDesk').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+    $id('aavQ').focus({ preventScroll: true });
+  }
+
+  /* ---------- keyboard ---------- */
+  document.addEventListener('keydown', function (e) {
+    if ($id('aavDesk').classList.contains('aav-hidden')) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    var typing = tag === 'textarea' || tag === 'input';
+    var q = questions[currentQuestion];
+    if (!typing && q.options && /^[1-9]$/.test(e.key)) {
+      var idx = +e.key - 1;
+      if (idx < q.options.length) { e.preventDefault(); selectOption(idx, true); }
+    } else if (e.key === 'Enter' && tag !== 'textarea' && tag !== 'button') {
+      if (answered(currentQuestion)) { e.preventDefault(); goNext(); }
+    }
+  });
+
+  $id('nextBtn').addEventListener('click', goNext);
+  $id('backBtn').addEventListener('click', goBack);
+  $id('restartBtn').addEventListener('click', restartQuiz);
+  $id('aavStart').addEventListener('click', function () {
+    $id('aavDesk').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+    var first = $id('questionContainer').querySelector('.aav-opt');
+    if (first) first.focus({ preventScroll: true });
+  });
+
+  $id('totalQ').textContent = questions.length;
+  $id('aavLiveMeters').innerHTML = metersHTML(null, 'name');
+  startSamples();
+  renderQuestion(false);
+
+  $(document).ready(function () {
+    $('#email-form-con').load("email-capture.html");
+    $('#related-tools-con').load("related-tools.html");
+    $('#header').load("../header.html", function (response, status, xhr) {
+      if (status == "error") {
+        $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
+      }
+    });
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AI Agent Idea Validation",
+  "url": "https://dlightning.org/d-tools/AI-agent-idea-validation.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "description": "A free 10-question reality check for AI agent ideas. Scores who the agent is for, problem fit and market proof, flags weak answers, and recommends one next step.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@type": "Organization", "name": "Dlightning", "url": "https://dlightning.org" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I validate an AI agent idea before building it?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Deliver the outcome by hand first. Take a real customer's input, produce the output yourself, and hand it back where they already work. If they use it and ask for more, you've found a task worth automating. If they don't, a model won't change that." }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes an AI agent idea strong?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A specific person with a trigger that makes the pain urgent, a repetitive task with a clear finished output, and evidence that people already pay to get it done. The quiz scores those three: who it's for, problem fit, and market proof." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it bad if nobody sells anything like my agent yet?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Not necessarily, but it's a question to answer before building. Find out where the money and time go today, even if the answer is a spreadsheet and an intern. That's what your agent competes with." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the tool free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. No signup, and your answers stay in your browser." }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dlightning.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Decision Tools", "item": "https://dlightning.org/d-tools/decision-tools.html" },
+    { "@type": "ListItem", "position": 3, "name": "AI Agent Idea Validation", "item": "https://dlightning.org/d-tools/AI-agent-idea-validation.html" }
+  ]
+}
+</script>
+
+<!-- Branded result download (PNG / PDF) -->
+<script src="result-download.js"
+        data-dl-container="#result"
+        data-dl-title="AI Agent Idea Validation"
+        data-dl-filename="dlightning-ai-agent-validation"></script>
+
 </body>
 </html>
