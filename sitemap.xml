@@ -158,6 +158,18 @@
   </url>
 
   <url>
+    <loc>https://dlightning.org/d-tools/customer-interview-script.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://dlightning.org/d-tools/mvp-scope-estimator.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://dlightning.org/blog/</loc>
     <lastmod>2026-08-31</lastmod>
     <priority>0.6</priority>

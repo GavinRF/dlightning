@@ -332,6 +332,16 @@
                     }
                 });
 
+                // A d-tool can hand over a brief (e.g. the MVP estimator's scope); use it once
+                try {
+                    const brief = sessionStorage.getItem('dl-brief');
+                    if (brief && !commentsField.value) {
+                        commentsField.value = brief.slice(0, 1000);
+                        commentsField.dispatchEvent(new Event('input'));
+                    }
+                    sessionStorage.removeItem('dl-brief');
+                } catch (err) { /* storage blocked: nothing to prefill */ }
+
                 // Real-time validation
                 const nameField = document.getElementById('name');
                 const emailField = document.getElementById('email');
@@ -528,7 +538,7 @@
     <!-- ================ contact section end ================= -->
 
      <!-- Scroll to top button  -->
-     <div class="back-to-top" data-scroll-nav="0"><i class="fa fa-arrow-up"></i></div>
+     <div class="back-to-top" data-scroll-nav="0" role="button" tabindex="0" aria-label="Back to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
     <!-- footer start -->
     <div class="footer" id="footer">
         <!-- Replaced by footer.html on load. Static so every page in the nav is
@@ -580,8 +590,15 @@
             }
             });
 
-            $backToTop.on('click', function(e) {
-            $("html, body").animate({scrollTop: 0}, 500);
+            $backToTop.on('click keydown', function(e) {
+                if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+                e.preventDefault();
+                // native smooth scroll: the site-wide scroll-behavior makes jQuery's animate stutter
+                var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
+                // move keyboard focus with it, so Tab picks up from the top rather than the bottom of the page
+                var heading = document.querySelector('h1, h2, h3');
+                if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
             });
     </script>
     <!--/ footer end  -->

@@ -3004,6 +3004,16 @@ h6 {
   padding: 0;
   text-align: center;
   line-height: 31px;
+  /* above AOS-animated sections (their transforms open stacking contexts that
+     paint over an un-indexed fixed element), below the sticky header (990) */
+  z-index: 980;
+  /* a bare outline disappears over screenshots and dark sections */
+  background: #fff;
+}
+
+.back-to-top:focus-visible{
+  outline: 3px solid #2454e6;
+  outline-offset: 3px;
 }
 
 .produt-title{

@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Build a customer interview script in 2 minutes. Pick what you need to learn and who you're talking to, and get timed questions with follow-ups, the questions to avoid, and what to listen for.">
+<meta name="keywords" content="customer interview questions, customer interview script, user interview questions, problem interview, customer discovery questions, churn interview questions, Mom Test questions">
+<link rel="canonical" href="https://dlightning.org/d-tools/customer-interview-script.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow">
+
+<title>Customer Interview Script Builder - Free Interview Questions | Dlightning</title>
+
+<meta property="og:url" content="https://dlightning.org/d-tools/customer-interview-script.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:image" content="https://dlightning.org/img/products/CIS.png"/>
+<meta property="og:title" content="Customer Interview Script Builder - Free Interview Questions | Dlightning"/>
+<meta property="og:description" content="A timed customer interview script, written for your topic and the people you're talking to, in 2 minutes."/>
+<meta property="og:image:width" content="824"/>
+<meta property="og:image:height" content="551"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Customer Interview Script Builder - Free Interview Questions | Dlightning">
+<meta name="twitter:description" content="A timed customer interview script, written for your topic and the people you're talking to, in 2 minutes.">
+<meta name="twitter:image" content="https://dlightning.org/img/products/CIS.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --ink: #0a1430;
+    --ink-2: #16244f;
+    --cobalt: #0b4fe0;
+    --sky: #009dff;
+    --bolt: #ffd23f;
+    --bolt-deep: #c99e12;
+    --paper: #f3f1ea;
+    --card: #ffffff;
+    --text: #141a2e;
+    --muted: #5a6378;
+    --line: #e0ddd3;
+    --red: #d6204e;
+    --green: #1f9d63;
+    --font: 'Instrument Sans', 'Rubik', sans-serif;
+    --serif: 'Newsreader', Georgia, serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
+
+  body { background: var(--paper); color: var(--text); font-family: var(--font); }
+  header { z-index: 999; }
+  .cis-hidden { display: none !important; }
+  .cis-wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+  .cis-page h1, .cis-page h2, .cis-page h3, .cis-page legend { font-family: var(--font); }
+
+  /* ---------- hero: an index card with the bad question struck out ---------- */
+  .cis-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 128px 0 156px;
+    background:
+      radial-gradient(620px 380px at 86% 30%, rgba(0, 157, 255, .34), transparent 65%),
+      linear-gradient(165deg, var(--ink-2) 0%, var(--ink) 100%);
+  }
+  .cis-hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .4;
+    background-image: linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px);
+    background-size: 100% 34px;
+    -webkit-mask-image: radial-gradient(ellipse at 80% 40%, #000, transparent 70%);
+            mask-image: radial-gradient(ellipse at 80% 40%, #000, transparent 70%);
+  }
+  .cis-hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .cis-eyebrow {
+    display: inline-flex; align-items: center; gap: 9px; font-size: .8rem; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--bolt); margin-bottom: 20px;
+  }
+  .cis-hero h1 {
+    font-weight: 700; font-size: clamp(2.6rem, 5.2vw, 3.9rem); line-height: .98; letter-spacing: -.04em;
+    color: #fff; margin: 0 0 24px;
+  }
+  .cis-hero h1 span { display: block; color: var(--bolt); font-family: var(--serif); font-style: italic; font-weight: 500; letter-spacing: -.02em; }
+  .cis-lede { font-size: 1.17rem; line-height: 1.58; color: rgba(255, 255, 255, .82); max-width: 510px; margin: 0 0 32px; }
+  .cis-lede strong { color: #fff; font-weight: 700; }
+  .cis-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .9rem; color: rgba(255, 255, 255, .7); }
+  .cis-meta i { color: var(--bolt); margin-right: 6px; }
+
+  .cis-cards { width: 100%; max-width: 470px; justify-self: end; overflow: visible; }
+  .cis-cards .back { fill: rgba(255, 255, 255, .08); stroke: rgba(255, 255, 255, .16); }
+  .cis-cards .front { fill: #fbfaf5; }
+  .cis-cards .rule { stroke: #e4e0d4; stroke-width: 1; }
+  .cis-cards .margin { stroke: rgba(214, 32, 78, .35); stroke-width: 1.5; }
+  .cis-cards .kick { fill: var(--cobalt); font: 700 11px var(--font); letter-spacing: .16em; }
+  .cis-cards .bad { fill: #8a90a0; font: italic 500 21px var(--serif); }
+  .cis-cards .good { fill: var(--ink); font: italic 600 23px var(--serif); }
+  .cis-cards .note { fill: var(--muted); font: 500 12.5px var(--font); }
+  .cis-cards .strike { stroke: var(--red); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 300; stroke-dashoffset: 300; animation: cis-draw .5s ease-out .5s forwards; }
+  .cis-cards .hl { fill: var(--bolt); opacity: 0; animation: cis-fade .4s ease-out 1.1s forwards; }
+  .cis-cards .tick { fill: none; stroke: var(--green); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; stroke-dashoffset: 40; animation: cis-draw .35s ease-out 1.4s forwards; }
+  @keyframes cis-draw { to { stroke-dashoffset: 0; } }
+  @keyframes cis-fade { to { opacity: .55; } }
+
+  .cis-btn {
+    font: inherit; font-weight: 700; border: none; border-radius: 10px; padding: 13px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1.2;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease, opacity .2s ease;
+  }
+  .cis-btn:focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; }
+  .cis-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 var(--bolt-deep); }
+  .cis-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--bolt-deep); color: var(--ink); text-decoration: none; }
+  .cis-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--bolt-deep); }
+  .cis-btn-ink { background: var(--ink); color: #fff; }
+  .cis-btn-ink:hover:not(:disabled) { background: var(--cobalt); color: #fff; }
+  .cis-btn-ink i { color: var(--bolt); }
+  .cis-btn-ink:disabled { opacity: .35; cursor: not-allowed; }
+  .cis-btn-line { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+  .cis-btn-line:hover { background: var(--ink); color: #fff; }
+  .cis-btn-ghost { background: transparent; color: var(--muted); padding: 10px 14px; }
+  .cis-btn-ghost:hover { color: var(--ink); background: var(--paper); }
+
+  /* ---------- the bench: questions left, the script outline right ---------- */
+  .cis-bench { position: relative; z-index: 5; margin-top: -96px; display: grid; grid-template-columns: 1fr 340px; gap: 22px; align-items: start; }
+  .cis-stage {
+    background: var(--card); border-radius: 18px; padding: 30px 38px 28px;
+    box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 30px 60px -26px rgba(10, 20, 48, .35);
+  }
+
+  .cis-steps { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .cis-steps button {
+    all: unset; box-sizing: border-box; display: block; width: 100%; cursor: default;
+    font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #98a0b2;
+  }
+  .cis-steps button::before {
+    content: ''; display: block; height: 10px; border-radius: 3px; margin-bottom: 8px;
+    background: #e8e6df; transition: background .3s ease, box-shadow .3s ease;
+  }
+  .cis-steps .is-done button { color: var(--ink); cursor: pointer; }
+  .cis-steps .is-done button::before { background: var(--ink); }
+  .cis-steps .is-current button { color: var(--cobalt); }
+  .cis-steps .is-current button::before { background: var(--bolt); box-shadow: 0 0 0 3px rgba(255, 210, 63, .28); }
+  .cis-steps button:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 4px; border-radius: 4px; }
+
+  .cis-q { border: 0; margin: 0; padding: 0; min-width: 0; animation: cis-in .4s var(--ease); }
+  @keyframes cis-in { from { opacity: 0; transform: translateY(12px); } }
+  .cis-q-kicker { font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--cobalt); margin: 0 0 8px; }
+  .cis-q legend {
+    float: left; width: 100%; padding: 0; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1.12;
+    letter-spacing: -.025em; color: var(--ink); margin: 0 0 12px;
+  }
+  .cis-q legend + * { clear: both; }
+  .cis-q-why { font-size: 1rem; line-height: 1.55; color: var(--muted); margin: 0 0 22px; max-width: 600px; }
+  .cis-q-why b { color: var(--ink); font-weight: 700; }
+
+  .cis-opts { display: grid; gap: 10px; }
+  .cis-opts.is-grid { grid-template-columns: 1fr 1fr; }
+  .cis-opt { position: relative; display: block; margin: 0; cursor: pointer; }
+  .cis-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .cis-opt-face {
+    display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; height: 100%;
+    padding: 15px 18px; border-radius: 12px; border: 2px solid var(--line); background: #fff;
+    transition: border-color .2s ease, background .2s ease, transform .2s var(--ease), box-shadow .2s ease;
+  }
+  .cis-opt-ico {
+    width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; font-size: 1.05rem;
+    background: #eaf1ff; color: var(--cobalt); transition: background .2s ease, color .2s ease, transform .3s var(--ease);
+  }
+  .cis-opt-title { display: block; font-size: 1.06rem; font-weight: 700; color: var(--ink); letter-spacing: -.01em; line-height: 1.25; }
+  .cis-opt-desc { display: block; font-size: .93rem; color: var(--muted); line-height: 1.45; margin-top: 3px; }
+  .cis-opt-key {
+    font-size: .78rem; font-weight: 700; color: #98a0b2; border: 1.5px solid var(--line); border-radius: 6px;
+    min-width: 26px; height: 26px; display: grid; place-items: center; font-variant-numeric: tabular-nums;
+  }
+  .cis-opt:hover .cis-opt-face { border-color: #b4c5ea; transform: translateX(3px); }
+  .cis-opt input:focus-visible + .cis-opt-face { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+  .cis-opt input:checked + .cis-opt-face { border-color: var(--ink); background: #fffbea; box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px, -2px); }
+  .cis-opt input:checked + .cis-opt-face .cis-opt-ico { background: var(--bolt); color: var(--ink); transform: rotate(-6deg); }
+  .cis-opt input:checked + .cis-opt-face .cis-opt-key { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  .cis-fields { display: grid; gap: 18px; }
+  .cis-field label { display: block; font-size: .95rem; font-weight: 700; color: var(--ink); margin: 0 0 4px; }
+  .cis-field label span { font-weight: 400; color: var(--muted); }
+  .cis-field-hint { font-size: .88rem; color: var(--muted); margin: 0 0 8px; line-height: 1.45; }
+  .cis-field input {
+    display: block; width: 100%; padding: 13px 16px; font: inherit; font-size: 1.06rem; color: var(--text);
+    background: #faf9f5; border: 2px solid var(--line); border-radius: 10px;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .cis-field input::placeholder { color: #a5aab8; }
+  .cis-field input:hover { border-color: #c9c5b8; }
+  .cis-field input:focus { outline: none; background: #fff; border-color: var(--cobalt); box-shadow: 0 0 0 4px rgba(11, 79, 224, .14); }
+  .cis-preview { margin: 4px 0 0; padding: 14px 16px; border-radius: 10px; background: var(--paper); font-family: var(--serif); font-size: 1.08rem; line-height: 1.45; color: var(--ink); }
+  .cis-preview b { display: block; font-family: var(--font); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+
+  .cis-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .cis-nav-hint { font-size: .85rem; color: var(--muted); }
+  .cis-nav-hint kbd { font: inherit; font-weight: 700; font-size: .78rem; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; box-shadow: none; }
+
+  /* the outline: fills in with your choices and the sections of the script */
+  .cis-sheet {
+    position: sticky; top: 96px; background: var(--ink); color: #fff; border-radius: 18px; padding: 26px 24px 22px;
+    box-shadow: 0 30px 60px -26px rgba(10, 20, 48, .55); overflow: hidden;
+  }
+  .cis-sheet::after {
+    content: ''; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 157, 255, .3), transparent 70%); pointer-events: none;
+  }
+  .cis-sheet-title { font-size: .76rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt); margin: 0 0 4px; }
+  .cis-sheet-sub { font-size: .92rem; color: rgba(255, 255, 255, .6); margin: 0 0 14px; line-height: 1.45; }
+  .cis-sheet dl { margin: 0; }
+  .cis-row { padding: 11px 0; border-top: 1px solid rgba(255, 255, 255, .1); }
+  .cis-row dt { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .5); margin-bottom: 3px; }
+  .cis-row dd { margin: 0; font-size: .98rem; font-weight: 600; line-height: 1.35; color: #fff; overflow-wrap: anywhere; }
+  .cis-row dd.is-empty { color: rgba(255, 255, 255, .32); font-weight: 400; font-style: italic; }
+  .cis-row.is-new dd { animation: cis-flash 1s ease; }
+  @keyframes cis-flash { 0% { color: var(--bolt); transform: translateX(-4px); } 100% { color: #fff; transform: none; } }
+  .cis-outline { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(255, 255, 255, .1); display: grid; gap: 6px; }
+  .cis-outline li { display: flex; justify-content: space-between; gap: 10px; font-size: .86rem; color: rgba(255, 255, 255, .78); }
+  .cis-outline li span:last-child { color: var(--bolt); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cis-outline .is-total { padding-top: 6px; border-top: 1px dashed rgba(255, 255, 255, .18); color: #fff; font-weight: 700; }
+  .cis-sheet-foot { margin: 14px 0 0; font-size: .82rem; color: rgba(255, 255, 255, .45); }
+  .cis-sheet-foot i { color: var(--bolt); margin-right: 6px; }
+
+  /* ---------- results ---------- */
+  .cis-results:focus { outline: none; }
+  .cis-verdict {
+    position: relative; z-index: 5; margin-top: -96px; border-radius: 18px; overflow: hidden; color: #fff;
+    background: var(--ink); display: grid; grid-template-columns: 1.3fr 1fr;
+    box-shadow: 0 30px 60px -26px rgba(10, 20, 48, .5);
+  }
+  .cis-verdict-main { padding: 38px 40px 36px; }
+  .cis-kicker { font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt); margin: 0 0 10px; }
+  .cis-verdict h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); font-weight: 700; line-height: 1; letter-spacing: -.04em; color: #fff; margin: 0 0 16px; }
+  .cis-verdict-sub { font-size: 1.12rem; line-height: 1.5; color: rgba(255, 255, 255, .82); margin: 0; max-width: 480px; }
+  .cis-verdict-sub b { color: #fff; }
+  .cis-verdict-side { padding: 38px 36px; background: linear-gradient(160deg, var(--cobalt) 0%, #0839a8 100%); display: flex; flex-direction: column; justify-content: center; }
+  .cis-side-label { font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .7); margin: 0 0 8px; }
+  .cis-side-big { font-size: 1.9rem; font-weight: 700; letter-spacing: -.03em; line-height: 1.05; color: #fff; margin: 0 0 8px; }
+  .cis-side-desc { font-size: 1rem; line-height: 1.5; color: rgba(255, 255, 255, .84); margin: 0; }
+
+  .cis-res-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: 22px; margin-top: 22px; align-items: start; }
+  .cis-col { display: grid; gap: 22px; }
+  .cis-panel { background: var(--card); border-radius: 18px; padding: 30px 32px; box-shadow: 0 1px 0 rgba(10, 20, 48, .04), 0 20px 44px -28px rgba(10, 20, 48, .3); }
+  .cis-panel > h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; color: var(--ink); margin: 0 0 6px; }
+  .cis-panel-sub { font-size: .97rem; color: var(--muted); line-height: 1.5; margin: 0 0 20px; }
+
+  /* the script itself */
+  .cis-script-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .cis-copy { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cis-copy .cis-btn { padding: 9px 14px; font-size: .9rem; }
+  .cis-sec { margin-top: 26px; }
+  .cis-sec-head { display: flex; align-items: baseline; gap: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); margin-bottom: 14px; }
+  .cis-sec-num { font-size: .78rem; font-weight: 700; letter-spacing: .14em; color: var(--cobalt); }
+  .cis-sec-head h3 { flex: 1; font-size: 1.18rem; font-weight: 700; letter-spacing: -.01em; color: var(--ink); margin: 0; }
+  .cis-sec-time { font-size: .78rem; font-weight: 700; color: var(--ink); background: var(--bolt); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+  .cis-items { list-style: none; margin: 0; padding: 0; counter-reset: q; }
+  .cis-item { position: relative; padding: 0 0 16px 40px; }
+  .cis-item.is-q { counter-increment: q; }
+  .cis-item.is-q::before {
+    content: counter(q); position: absolute; left: 0; top: 2px; width: 26px; height: 26px; border-radius: 7px;
+    background: var(--paper); color: var(--ink); font-size: .8rem; font-weight: 700; display: grid; place-items: center;
+  }
+  .cis-item-text { font-family: var(--serif); font-size: 1.16rem; line-height: 1.42; color: var(--ink); margin: 0; }
+  .cis-item.is-say { padding-left: 0; }
+  .cis-item.is-say .cis-item-text { font-style: italic; padding: 12px 16px; border-left: 4px solid var(--bolt); background: #fffbea; border-radius: 0 10px 10px 0; }
+  .cis-say-label { display: block; font-family: var(--font); font-style: normal; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--bolt-deep); margin-bottom: 4px; }
+  .cis-item-note { font-size: .9rem; line-height: 1.45; color: var(--muted); margin: 5px 0 0; }
+  .cis-item-note b { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cobalt); margin-right: 6px; }
+  .cis-fill { background: linear-gradient(transparent 62%, rgba(255, 210, 63, .6) 62%); color: inherit; padding: 0 1px; }
+
+  /* sidebar panels */
+  .cis-rules { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .cis-rules li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; font-size: .97rem; line-height: 1.5; color: var(--text); }
+  .cis-rules li i { color: var(--cobalt); margin-top: 4px; }
+  .cis-rules li.is-aud { padding: 12px 14px; border-radius: 12px; background: #fffbea; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+  .cis-rules li.is-aud i { color: var(--ink); }
+  .cis-rules b { color: var(--ink); }
+
+  .cis-swaps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .cis-swap { border: 2px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+  .cis-swap-bad { font-family: var(--serif); font-size: 1.04rem; color: #8a90a0; text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 2px; margin: 0 0 6px; }
+  .cis-swap-good { font-family: var(--serif); font-size: 1.08rem; font-weight: 600; color: var(--ink); margin: 0 0 6px; }
+  .cis-swap-good i { color: var(--green); font-size: .85rem; margin-right: 6px; }
+  .cis-swap-why { font-size: .88rem; color: var(--muted); line-height: 1.45; margin: 0; }
+
+  .cis-ticket { position: relative; border-radius: 16px; background: var(--bolt); color: var(--ink); padding: 22px 24px 20px; }
+  .cis-ticket::before, .cis-ticket::after { content: ''; position: absolute; top: 52px; width: 22px; height: 22px; border-radius: 50%; background: var(--card); }
+  .cis-ticket::before { left: -11px; }
+  .cis-ticket::after { right: -11px; }
+  .cis-ticket-label { font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 24px; }
+  .cis-ticket-text { font-size: 1.04rem; font-weight: 600; line-height: 1.4; margin: 0; border-top: 2px dashed rgba(10, 20, 48, .3); padding-top: 14px; }
+  .cis-signal { margin: 16px 0 0; font-size: .97rem; line-height: 1.5; color: var(--text); }
+  .cis-signal b { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--red); margin-bottom: 2px; }
+
+  .cis-probes { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .cis-probes li { font-family: var(--serif); font-size: 1rem; color: var(--ink); background: var(--paper); border-radius: 999px; padding: 6px 14px; }
+
+  .cis-after { display: flex; justify-content: center; margin-top: 8px; }
+  .cis-toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0; z-index: 9999; pointer-events: none;
+    background: var(--ink); color: #fff; font-weight: 600; padding: 12px 20px; border-radius: 12px; transition: opacity .25s ease, transform .25s var(--ease); }
+  .cis-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+  .cis-toast i { color: var(--bolt); margin-right: 8px; }
+
+  .cis-cta {
+    position: relative; display: block; overflow: hidden; isolation: isolate; border-radius: 18px; margin-top: 28px;
+    padding: 36px 40px; color: #fff; background: var(--ink);
+  }
+  .cis-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: .5; transition: transform .5s var(--ease); }
+  .cis-cta::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(10, 20, 48, .94) 0%, rgba(10, 20, 48, .6) 60%, rgba(10, 20, 48, .25) 100%); }
+  .cis-cta:hover img { transform: scale(1.06); }
+  .cis-cta-kicker { font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--bolt); margin: 0 0 8px; }
+  .cis-cta h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -.03em; color: #fff; margin: 0 0 8px; }
+  .cis-cta p { font-size: 1.04rem; color: rgba(255, 255, 255, .82); max-width: 540px; margin: 0 0 20px; line-height: 1.5; }
+
+  /* ---------- reference content below the tool ---------- */
+  .cis-faq { margin-top: 90px; display: grid; grid-template-columns: 1fr 1.6fr; gap: 40px; align-items: start; }
+  .cis-faq > div:first-child h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.08; color: var(--ink); margin: 0 0 12px; }
+  .cis-faq > div:first-child p { font-size: 1.02rem; line-height: 1.55; color: var(--muted); margin: 0; }
+  .cis-faq-item { padding: 20px 0; border-top: 1px solid var(--line); }
+  .cis-faq-item:first-child { border-top: none; padding-top: 0; }
+  .cis-faq-item h3 { font-size: 1.15rem; font-weight: 700; color: var(--ink); margin: 0 0 6px; letter-spacing: -.01em; }
+  .cis-faq-item p { font-size: 1rem; line-height: 1.6; color: var(--text); margin: 0; }
+  .cis-faq-item a { color: var(--cobalt); text-decoration: underline; text-underline-offset: 2px; }
+
+  footer.cis-footer { margin-top: 90px; width: 100%; background: var(--ink); color: #fff; padding: 56px 34px; font-family: var(--font); }
+  footer.cis-footer h3 { font-family: var(--font); font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; color: #fff; margin-bottom: 16px; }
+  footer.cis-footer ol { padding-left: 22px; color: rgba(255, 255, 255, .85); }
+  footer.cis-footer li { margin-bottom: 9px; line-height: 1.5; }
+  footer.cis-footer p { color: rgba(255, 255, 255, .55); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 991px) {
+    .cis-hero { padding: 108px 0 140px; }
+    .cis-hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .cis-cards { justify-self: start; max-width: 400px; }
+    .cis-bench { grid-template-columns: 1fr; }
+    .cis-sheet { position: static; }
+    .cis-verdict, .cis-res-grid, .cis-faq { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .cis-stage { padding: 24px 18px 22px; }
+    .cis-steps button { font-size: 0; }
+    .cis-opts.is-grid { grid-template-columns: 1fr; }
+    .cis-opt-face { grid-template-columns: 38px 1fr; padding: 13px 14px; gap: 12px; }
+    .cis-opt-ico { width: 38px; height: 38px; }
+    .cis-opt-key, .cis-nav-hint { display: none; }
+    .cis-verdict-main, .cis-verdict-side, .cis-panel { padding: 26px 20px; }
+    .cis-item { padding-left: 36px; }
+    .cis-cta { padding: 28px 22px; }
+    footer.cis-footer { padding: 64px 8px; }
+  }
+  @media (hover: none) { .cis-nav-hint { display: none; } }
+
+  /* the saved PDF/PNG is 760px wide: stack the panels and keep the ink */
+  .dl-artifact .cis-verdict { margin-top: 0; box-shadow: none; grid-template-columns: 1fr; }
+  .dl-artifact .cis-res-grid { grid-template-columns: 1fr; }
+  .dl-artifact .cis-panel { box-shadow: none; border: 1px solid var(--line); }
+  .dl-artifact .cis-panel-sub { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .cis-cards .strike, .cis-cards .tick { stroke-dashoffset: 0; }
+    .cis-cards .hl { opacity: .55; }
+  }
+</style>
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body class="cis-page">
+<header id="header"></header>
+
+<section class="cis-hero">
+  <div class="cis-wrap cis-hero-grid">
+    <div>
+      <div class="cis-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i> Interview Script Builder</div>
+      <h1>Walk in with <span>better questions.</span></h1>
+      <p class="cis-lede">Four questions about what you need to learn and who you're talking to. You leave with <strong>a timed script to read from</strong>, the questions to avoid, and <strong>what to listen for</strong>.</p>
+      <button type="button" class="cis-btn cis-btn-bolt" id="cisStart">Write my script <i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+      <div class="cis-meta">
+        <span><i class="far fa-clock" aria-hidden="true"></i>About 2 minutes</span>
+        <span><i class="far fa-file-alt" aria-hidden="true"></i>Download as PDF or text</span>
+        <span><i class="fas fa-lock-open" aria-hidden="true"></i>No signup</span>
+      </div>
+    </div>
+
+    <!-- An index card: the question everyone asks, struck out, and the one to ask instead. -->
+    <svg class="cis-cards" viewBox="0 0 440 340" aria-hidden="true">
+      <rect class="back" x="34" y="6" width="390" height="300" rx="14" transform="rotate(4 229 156)"/>
+      <rect class="front" x="10" y="26" width="400" height="300" rx="14"/>
+      <line class="rule" x1="10" y1="96" x2="410" y2="96"/>
+      <line class="rule" x1="10" y1="140" x2="410" y2="140"/>
+      <line class="rule" x1="10" y1="200" x2="410" y2="200"/>
+      <line class="rule" x1="10" y1="236" x2="410" y2="236"/>
+      <line class="rule" x1="10" y1="272" x2="410" y2="272"/>
+      <line class="margin" x1="52" y1="26" x2="52" y2="326"/>
+      <text class="kick" x="70" y="70">03 · THE LAST TIME</text>
+      <text class="bad" x="70" y="130">Would you use an app that…?</text>
+      <line class="strike" x1="64" y1="123" x2="350" y2="123"/>
+      <rect class="hl" x="66" y="168" width="318" height="16" rx="3"/>
+      <text class="good" x="70" y="182">Tell me about the last time</text>
+      <text class="good" x="70" y="226">that happened.</text>
+      <polyline class="tick" points="236,214 246,224 266,202"/>
+      <text class="note" x="70" y="262">Probe: What did you do next?</text>
+      <text class="note" x="70" y="298">Listen for: money or time already spent</text>
+    </svg>
+  </div>
+</section>
+
+<main class="cis-wrap">
+  <section class="cis-bench" id="cisBench" aria-label="Script builder">
+    <div class="cis-stage">
+      <ol class="cis-steps" id="cisSteps" aria-label="Progress"></ol>
+      <div id="cisQuestion"></div>
+      <div class="cis-nav">
+        <button type="button" class="cis-btn cis-btn-ghost" id="cisBack"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</button>
+        <span class="cis-nav-hint" id="cisHint">Keys <kbd>1</kbd>–<kbd id="cisKeyMax">5</kbd> pick, <kbd>Enter</kbd> continues</span>
+        <button type="button" class="cis-btn cis-btn-ink" id="cisNext" disabled>Next <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <aside class="cis-sheet" aria-label="Your script so far">
+      <p class="cis-sheet-title">Your script</p>
+      <p class="cis-sheet-sub">Takes shape as you answer. Change anything by going back.</p>
+      <dl id="cisSheet"></dl>
+      <ol class="cis-outline cis-hidden" id="cisOutline"></ol>
+      <p class="cis-sheet-foot"><i class="fas fa-lock" aria-hidden="true"></i>Stays in your browser.</p>
+    </aside>
+  </section>
+
+  <section id="results" class="cis-results cis-hidden" tabindex="-1" aria-live="polite">
+    <div class="cis-verdict">
+      <div class="cis-verdict-main">
+        <p class="cis-kicker">Your interview script</p>
+        <h2 id="cisGoal"></h2>
+        <p class="cis-verdict-sub" id="cisSummary"></p>
+      </div>
+      <div class="cis-verdict-side">
+        <p class="cis-side-label">How many to run</p>
+        <p class="cis-side-big" id="cisCount"></p>
+        <p class="cis-side-desc" id="cisCountDesc"></p>
+      </div>
+    </div>
+
+    <div class="cis-res-grid">
+      <div class="cis-panel">
+        <div class="cis-script-head">
+          <div>
+            <h2>The script</h2>
+            <p class="cis-panel-sub">Read the boxed parts aloud. Numbered questions are in order; skip any that their story already answered.</p>
+          </div>
+          <div class="cis-copy" data-dl-ignore>
+            <button type="button" class="cis-btn cis-btn-line" id="cisCopy"><i class="far fa-copy" aria-hidden="true"></i> Copy</button>
+            <button type="button" class="cis-btn cis-btn-line" id="cisTxt"><i class="fas fa-file-download" aria-hidden="true"></i> .txt</button>
+          </div>
+        </div>
+        <div id="cisScript"></div>
+      </div>
+
+      <div class="cis-col">
+        <div class="cis-panel">
+          <h2>Rules for the room</h2>
+          <p class="cis-panel-sub">The ones that matter most for who you're talking to.</p>
+          <ul class="cis-rules" id="cisRules"></ul>
+        </div>
+
+        <div class="cis-panel">
+          <h2>Don't ask, ask instead</h2>
+          <p class="cis-panel-sub">The questions everyone is tempted to ask, and what to say instead.</p>
+          <ul class="cis-swaps" id="cisSwaps"></ul>
+        </div>
+
+        <div class="cis-panel">
+          <h2>What to listen for</h2>
+          <p class="cis-panel-sub">Decide this before the first interview, so the answers can't talk you into it.</p>
+          <div class="cis-ticket">
+            <p class="cis-ticket-label">Keep going if</p>
+            <p class="cis-ticket-text" id="cisPass"></p>
+          </div>
+          <p class="cis-signal"><b>Rethink if</b><span id="cisKill"></span></p>
+        </div>
+
+        <div class="cis-panel">
+          <h2>Follow-ups for any answer</h2>
+          <p class="cis-panel-sub">When an answer is vague, use one of these before you move on.</p>
+          <ul class="cis-probes" id="cisProbes"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cis-after cis-hidden" id="cisAfter">
+    <button type="button" class="cis-btn cis-btn-ghost" id="cisReset"><i class="fas fa-redo" aria-hidden="true"></i> Start over</button>
+  </div>
+
+  <a class="cis-cta cis-hidden" id="cisCta" href="../experience-builder.html" style="text-decoration:none">
+    <img src="../img/exp-builder/immersive-experience.png" alt="" loading="lazy">
+    <p class="cis-cta-kicker">After the interviews</p>
+    <h2>Turn what you heard into personas</h2>
+    <p>Experience Builder transcribes your interview notes and turns them into proto personas, so the patterns across five conversations are in one place instead of five notebooks.</p>
+    <span class="cis-btn cis-btn-bolt">Explore Experience Builder <i class="fas fa-bolt" aria-hidden="true"></i></span>
+  </a>
+
+  <!-- Reference content: sits below the tool so it never gets in the way of using it -->
+  <section class="cis-faq" aria-labelledby="cisFaqTitle">
+    <div>
+      <h2 id="cisFaqTitle">Customer interview questions, briefly</h2>
+      <p>What the script above is built on, if you want to adjust it or write your own.</p>
+    </div>
+    <div>
+      <div class="cis-faq-item">
+        <h3>What makes a good customer interview question?</h3>
+        <p>It asks about something that already happened. "Tell me about the last time…" gets a real story with real details. "Would you…?" and "Do you think…?" ask people to predict their own behavior, and people are kind and optimistic about the future, so the answers mislead you.</p>
+      </div>
+      <div class="cis-faq-item">
+        <h3>How many customer interviews do I need?</h3>
+        <p>Five to eight per type of person is usually enough to see a pattern. If the same story keeps coming up by the fifth interview, you have it. If every interview sounds different, you may be talking to more than one audience, and each needs its own five.</p>
+      </div>
+      <div class="cis-faq-item">
+        <h3>How long should a customer interview be?</h3>
+        <p>Thirty minutes suits most interviews. Fifteen works for people who barely used your product or are doing you a favor. Forty-five is for when you want to see their workaround on screen or hear the whole buying process.</p>
+      </div>
+      <div class="cis-faq-item">
+        <h3>Should I show them my idea?</h3>
+        <p>Not until the end, and only if you're testing a concept. Once they've seen it, everything they say is about your idea rather than their problem. If you don't yet know whether the problem is real, start with the <a href="project-validation-methods.html">Project Validation Methods</a> tool to choose the right test.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="cis-toast" id="cisToast" role="status" aria-live="polite"></div>
+
+<div id="error"></div>
+
+<!-- Reusable cross-link component (loaded via jQuery, like header/email-capture) -->
+<div id="related-tools-con"></div>
+
+<footer class="cis-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <h3>How it works</h3>
+        <ol>
+          <li>Pick what you need to learn: whether the problem is real, whether your idea fits, whether people will pay, why customers stay, or why they left.</li>
+          <li>Say who you're talking to. Strangers, friends and customers each need a different opening and different care.</li>
+          <li>Describe the people and the problem in their words. Every question is written around them.</li>
+          <li>Pick a length. Fifteen minutes keeps the essential questions; forty-five adds the deeper follow-ups.</li>
+          <li>Leave with a timed script, the questions to avoid, and what would tell you to keep going or rethink. Copy it, save it as text, or download a PDF.</li>
+        </ol>
+        <p class="mt-3">Every question asks about something that already happened, because that's what people can answer honestly. Your answers stay in your browser.</p>
+      </div>
+      <div class="col-lg-5" id="email-form-con"><!-- Filled with email-capture.html --></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Site-wide behaviors, including the sticky nav every main page has -->
+<script src="../js/main.js"></script>
+<script>
+(function () {
+    /* ---------- content ----------
+       Five goals. Each has its own story and dig-deeper sections, an optional
+       extra section, swaps, and signals. Questions carry a level: 1 is in every
+       script, 2 joins at 30 minutes, 3 at 45. {who}, {topic}, {product} and
+       {idea} are filled from the details step. Items with say:true are read aloud. */
+
+    var GOALS = {
+        problem: {
+            t: 'Is the problem real?', ico: 'fa-search',
+            d: 'Before building: find out if it hurts enough to fix',
+            count: '5–8', countDesc: 'Stop when the stories start repeating. If every interview sounds different, you may be talking to more than one audience.',
+            sections: [
+                { t: 'The last time', items: [
+                    { lvl: 1, q: 'Tell me about the last time {topic} came up for you. What happened?', note: ['Probe', 'Ask for the day, where they were and what they were in the middle of. A real story beats a general opinion.'] },
+                    { lvl: 1, q: 'What did you do about it?', note: ['Probe', 'Keep asking “and then what?” until the story ends.'] },
+                    { lvl: 2, q: 'What was the hardest part?' },
+                    { lvl: 1, q: 'What did it cost you, in time, money or anything else?', note: ['Listen for', 'Specific numbers. “A few hours every Friday” is a real cost. “It’s annoying” is not yet.'] }
+                ] },
+                { t: 'How they handle it now', items: [
+                    { lvl: 1, q: 'How do you handle {topic} today? Can you walk me through it?', note: ['Probe', 'Ask to see it: the spreadsheet, the app, the sticky note on the monitor.'] },
+                    { lvl: 1, q: 'What have you tried to make it easier? How did that go?', note: ['Listen for', 'Paying for a fix or building a workaround means real pain. Never having looked means it isn’t painful enough yet.'] },
+                    { lvl: 2, q: 'How often does this happen?' },
+                    { lvl: 3, q: 'Who else is affected when something goes wrong with {topic}?' },
+                    { lvl: 3, q: 'Have you looked for a better way? What did you find?' }
+                ] }
+            ],
+            swaps: [
+                { bad: 'Would you use an app that helps with {topic}?', good: 'How do you handle {topic} today?', why: 'Almost everyone says yes to a hypothetical. What they already do shows how much they care.' },
+                { bad: 'Is {topic} a problem for you?', good: 'Tell me about the last time {topic} came up.', why: 'A yes/no question about pain gets a polite yes. A story shows whether it hurt.' },
+                { bad: 'Do you think other {who} have this problem?', good: 'Who else do you know who deals with {topic}?', why: 'They can’t speak for others, but they can introduce you to them.' }
+            ],
+            pass: 'Most of them bring up {topic} before you do, and have already spent money or built a workaround.',
+            kill: 'They can’t remember the last time it happened, shrug at the cost, or have never tried to fix it.'
+        },
+
+        concept: {
+            t: 'Will my idea fit?', ico: 'fa-lightbulb',
+            d: 'You have a concept or mockup and want honest reactions',
+            count: '5–8', countDesc: 'Five is enough to hear whether people understand it. Keep going if the reactions split, to see which kind of person wants it.',
+            sections: [
+                { t: 'The last time', items: [
+                    { lvl: 1, q: 'Tell me about the last time {topic} came up for you. What happened?', note: ['Probe', 'Get the story before you show anything. It’s what you’ll compare their reaction to.'] },
+                    { lvl: 1, q: 'How do you handle it today?' },
+                    { lvl: 2, q: 'What’s the most frustrating part of how you do it now?' },
+                    { lvl: 3, q: 'What have you tried before? Why did you stop?' }
+                ] },
+                { t: 'Show the idea', items: [
+                    { say: true, lvl: 1, q: 'I’d like to show you something we’re working on: {idea}. I’ll stay quiet while you take a look. Please think out loud.' },
+                    { lvl: 1, q: 'In your own words, what is this?', note: ['Listen for', 'If they can’t explain it back, the problem is how it’s described, not their answer.'] },
+                    { lvl: 1, q: 'Where would this fit in how you handle {topic} now? What would it replace?' },
+                    { lvl: 2, q: 'What’s the first thing you’d want to do with it?' },
+                    { lvl: 2, q: 'What would stop you from using it?' },
+                    { lvl: 3, q: 'Who else would have a say before you started using something like this?' },
+                    { lvl: 1, q: 'We’re looking for people to try an early version. Can I put your name down?', note: ['Listen for', 'A name, an email or a date counts. “Sounds cool, keep me posted” does not.'] }
+                ] }
+            ],
+            swaps: [
+                { bad: 'Do you like it?', good: 'What would this replace for you?', why: 'People are kind about ideas to your face. What it replaces tells you if there’s room for it.' },
+                { bad: 'Would you use this?', good: 'Can I put your name down to try it?', why: 'A future “yes” costs nothing. A name and email cost a little, which is why they mean something.' },
+                { bad: 'What features should we add?', good: 'What’s the first thing you’d want to do with it?', why: 'Feature wishlists are guesses. The first thing they reach for shows what they came for.' }
+            ],
+            pass: 'They explain the idea back correctly, say what it would replace, and at least a third give you a name or a date to try it.',
+            kill: 'You hear compliments with no commitment, or each person describes the idea differently.'
+        },
+
+        pay: {
+            t: 'Would they pay?', ico: 'fa-wallet',
+            d: 'What they spend now, and how buying actually happens',
+            count: '6–10', countDesc: 'Buying differs more than usage does. Talk to enough people to hear the same purchase story from both small and large buyers.',
+            sections: [
+                { t: 'The last time', items: [
+                    { lvl: 1, q: 'Tell me about the last time {topic} came up for you. What happened?' },
+                    { lvl: 1, q: 'What did it cost you, in time, money or anything else?', note: ['Listen for', 'A number they can name without thinking. That number is the budget you’re competing for.'] },
+                    { lvl: 3, q: 'How often does that happen?' }
+                ] },
+                { t: 'Money and buying', items: [
+                    { lvl: 1, q: 'What do you spend on {topic} today, in money or in time?', note: ['Probe', 'Ask for the actual tools, subscriptions, freelancers or staff hours.'] },
+                    { lvl: 1, q: 'Tell me about the last time you paid for something to help with {topic}. How did you decide?' },
+                    { lvl: 1, q: 'Who else had to agree before you bought it?', note: ['Listen for', 'If someone else signs off, you need to talk to them too.'] },
+                    { lvl: 2, q: 'What made it worth the money, or not?' },
+                    { lvl: 2, q: 'Where did you look before you chose it?' },
+                    { lvl: 3, q: 'How did you pay for it? Your own card, a team budget, an expense claim?' },
+                    { lvl: 3, q: 'Have you ever cancelled something like it? What happened?' }
+                ] }
+            ],
+            swaps: [
+                { bad: 'How much would you pay for this?', good: 'What do you spend on {topic} today?', why: 'Guesses about future spending are unreliable. What they spend now is a real number.' },
+                { bad: 'Would $20 a month be fair?', good: 'How did you decide on the last thing you bought for this?', why: 'Naming a price anchors them to it. The last purchase shows how they actually decide.' },
+                { bad: 'Is price important to you?', good: 'Who else had to agree before you bought it?', why: 'Everyone says price matters. Knowing who signs off tells you who you’re really selling to.' }
+            ],
+            pass: 'They already pay for something to handle {topic}, and either they decide on purchases themselves or they can tell you exactly who does.',
+            kill: 'Nobody spends money or meaningful time on it now, or every purchase needs approval from someone you can’t reach.'
+        },
+
+        stay: {
+            t: 'Why do customers stay?', ico: 'fa-heart',
+            d: 'What your best customers came for and why they stuck',
+            count: '5–8', countDesc: 'Look for the reason that comes up in at least half the interviews. That reason, in their words, is your positioning.',
+            sections: [
+                { t: 'Before they found you', items: [
+                    { lvl: 1, q: 'Think back to just before you started using {product}. What was going on that made you look for something?', note: ['Probe', 'Ask what they were using before and what else they considered.'] },
+                    { lvl: 2, q: 'How did you first hear about {product}?' },
+                    { lvl: 1, q: 'What made you pick {product} over the other options?' }
+                ] },
+                { t: 'Using it now', items: [
+                    { lvl: 1, q: 'Tell me about the last time you used {product}. What were you doing?' },
+                    { lvl: 1, q: 'What’s the most annoying part of using it?', note: ['Probe', 'Don’t explain or defend. Write it down and ask for an example.'] },
+                    { lvl: 2, q: 'What do you use alongside it for {topic}?' },
+                    { lvl: 2, q: 'Have you recommended it to anyone? What did you tell them?', note: ['Listen for', 'The words they use to describe you. They often make better marketing copy than yours.'] },
+                    { lvl: 3, q: 'What would you do if {product} disappeared tomorrow?' },
+                    { lvl: 3, q: 'Is there anything you expected it to do that it doesn’t?' }
+                ] }
+            ],
+            swaps: [
+                { bad: 'What do you love about {product}?', good: 'Tell me about the last time you used {product}.', why: 'Asking for praise gets praise. A real session shows what they actually rely on.' },
+                { bad: 'Would you recommend us?', good: 'Have you recommended it to anyone? What did you say?', why: 'Past recommendations are evidence. Future ones are a courtesy.' },
+                { bad: 'What features do you want next?', good: 'What do you use alongside it for {topic}?', why: 'The tools next to yours show the gaps more reliably than a wishlist.' }
+            ],
+            pass: 'The same reason for choosing {product} comes up in at least half the interviews, in words you could put on your homepage.',
+            kill: 'Every customer gives a different reason. You may not have a clear audience yet, or more than one is hiding in your customer list.'
+        },
+
+        leave: {
+            t: 'Why did people leave?', ico: 'fa-door-open',
+            d: 'What happened with people who stopped using it',
+            count: '5–8', countDesc: 'Leavers are harder to book, so ask more people than you need. A short call and a small thank-you gift help.',
+            sections: [
+                { t: 'Signing up', items: [
+                    { lvl: 1, q: 'Take me back to when you signed up for {product}. What were you hoping it would do?' },
+                    { lvl: 2, q: 'What were you using for {topic} before that?' }
+                ] },
+                { t: 'When it stopped working', items: [
+                    { lvl: 1, q: 'When did you first start to feel it wasn’t working for you?', note: ['Probe', 'Look for the moment, not the reason. Reasons come later and are tidier than what really happened.'] },
+                    { lvl: 2, q: 'What was the last thing you did in {product} before you stopped?' },
+                    { lvl: 1, q: 'What do you use for {topic} now?' },
+                    { lvl: 1, q: 'How are you handling {topic} now, without it?', note: ['Listen for', 'If they’re fine without you, the need may have been smaller than it looked.'] },
+                    { lvl: 3, q: 'Did you tell anyone you’d stopped using it? What did you say?' }
+                ] }
+            ],
+            swaps: [
+                { bad: 'Why did you cancel?', good: 'When did you first feel it wasn’t working?', why: '“Why” invites a tidy, polite reason. “When” brings back what actually happened.' },
+                { bad: 'What could we have done better?', good: 'What do you use for {topic} now?', why: 'Advice is a guess. Their replacement shows what they needed.' },
+                { bad: 'Would you come back if we fixed it?', good: 'How are you handling {topic} now, without it?', why: 'Almost everyone says maybe. How they manage now shows if they miss you.' }
+            ],
+            pass: 'Three or more describe the same moment it stopped working. That moment is the first thing to fix.',
+            kill: 'Every reason is different. Check whether they were the wrong audience to begin with, or run the Drop-Off Diagnostic to find the stage you lose people.'
+        }
+    };
+    var GOAL_ORDER = ['problem', 'concept', 'pay', 'stay', 'leave'];
+
+    /* Who you're talking to. Each goal offers the audiences that make sense for it. */
+    var AUDIENCES = {
+        strangers: {
+            t: 'People I don’t know', ico: 'fa-user-friends', d: 'In your target market, found through communities, outreach or referrals', sheet: 'Strangers',
+            intro: 'Thanks for making the time. I’m talking to {who} about {topic}, to understand how it really goes for people. I’m not selling anything, and there are no wrong answers. Is it OK if I take notes?',
+            rule: 'Don’t explain your idea at the start. Once you do, the interview turns into a pitch and they start being polite.'
+        },
+        warm: {
+            t: 'People I know', ico: 'fa-user-check', d: 'Friends, colleagues, people in your network', sheet: 'People I know',
+            intro: 'Thanks for doing this. For the next {mins} minutes, pretend you don’t know me. I’m trying to understand what dealing with {topic} is really like for {who}, and the most useful thing you can do is tell me what actually happens, even if it’s not what you think I want to hear. Mind if I take notes?',
+            rule: 'People who know you will be kind. Ignore every compliment and opinion. Only what they’ve actually done counts.'
+        },
+        customers: {
+            t: 'My current customers', ico: 'fa-user-tag', d: 'People already using {product}', sheet: 'Current customers',
+            intro: 'Thanks for making the time. I’m not here to sell you anything or to defend {product}. I want to understand what dealing with {topic} is like for you, including the parts we don’t help with. Complaints are the most useful thing you can give me. OK if I take notes?',
+            rule: 'They’re already customers, so they’ll describe your product rather than their problem. Keep steering back to {topic} itself.'
+        },
+        regulars: {
+            t: 'Regulars', ico: 'fa-star', d: 'People who use it often and have for a while', sheet: 'Regulars',
+            intro: 'Thanks for making the time. You’ve been using {product} for a while, and I’d like to understand why. Nothing you say will hurt our feelings, and the annoying parts are as useful to us as the good ones. OK if I take notes?',
+            rule: 'Don’t defend the product. When they complain, write it down and ask for an example.'
+        },
+        newbies: {
+            t: 'New customers', ico: 'fa-seedling', d: 'People who started in the last month or two', sheet: 'New customers',
+            intro: 'Thanks for making the time. You started using {product} recently, so you still remember what it was like before and what made you switch. That’s what I’d like to hear about. OK if I take notes?',
+            rule: 'They remember the switch clearly now and won’t in six months. Spend most of the time on what happened just before they signed up.'
+        },
+        cancelled: {
+            t: 'People who cancelled', ico: 'fa-user-minus', d: 'They paid, then stopped', sheet: 'Cancelled',
+            intro: 'Thanks for agreeing to talk, especially since you’ve stopped using {product}. I’m not going to try to win you back. I want to understand what happened so we can do better for the next person. Nothing you say will offend me. OK if I take notes?',
+            rule: 'Don’t try to win them back. If they think you’re selling, you’ll get a polite reason instead of the real one.'
+        },
+        tried: {
+            t: 'People who tried it once', ico: 'fa-user-clock', d: 'Signed up and never really got going', sheet: 'Tried and left',
+            intro: 'Thanks for taking this. You signed up for {product} and didn’t stick with it, which is completely fine. I’d like to understand what you were hoping for and what got in the way. This will be quick. OK if I take notes?',
+            rule: 'They barely used it, so they can’t say much about the product. Ask about what they expected and what they did instead.'
+        }
+    };
+    var AUDIENCES_FOR = {
+        problem: ['strangers', 'warm', 'customers'],
+        concept: ['strangers', 'warm', 'customers'],
+        pay: ['strangers', 'warm', 'customers'],
+        stay: ['regulars', 'newbies'],
+        leave: ['cancelled', 'tried']
+    };
+    var NEEDS_PRODUCT = { customers: 1, regulars: 1, newbies: 1, cancelled: 1, tried: 1 };
+
+    var LENGTHS = {
+        '15': { lvl: 1, t: '15 minutes', ico: 'fa-hourglass-start', d: 'Only the essential questions. Good for busy people or a quick favor' },
+        '30': { lvl: 2, t: '30 minutes', ico: 'fa-hourglass-half', d: 'The usual length. Room for the story and the follow-ups' },
+        '45': { lvl: 3, t: '45 minutes', ico: 'fa-hourglass-end', d: 'Every question. Time to see their workaround on screen' }
+    };
+
+    var WARMUP = [
+        { lvl: 1, q: 'To start, tell me a little about yourself and what a typical week looks like for you.' },
+        { lvl: 2, q: 'When in a typical week do you deal with {topic}?' },
+        { lvl: 3, q: 'How long have you been dealing with {topic}?' }
+    ];
+    var CLOSE = [
+        { lvl: 1, q: 'Is there anything about {topic} I should have asked but didn’t?' },
+        { lvl: 1, q: 'Who else should I talk to about this? Could you introduce me?', note: ['Listen for', 'An introduction means they took the conversation seriously.'] },
+        { lvl: 2, q: 'Can I get back in touch if I have another question?' },
+        { say: true, lvl: 1, q: 'Thank you, this was really helpful. I’ll share what we learn once we’ve talked to a few more {who}.' }
+    ];
+
+    var RULES = [
+        { ico: 'fa-volume-down', t: '<b>Talk less than a fifth of the time.</b> If you’re explaining, you’re not learning.' },
+        { ico: 'fa-history', t: '<b>Ask about the past, not the future.</b> What people did is evidence. What they say they would do is a guess.' },
+        { ico: 'fa-hourglass', t: '<b>Let silence sit.</b> Count to five after an answer. The useful part often comes after the pause.' }
+    ];
+
+    var PROBES = ['Tell me more about that.', 'What happened next?', 'Why was that?', 'Can you show me?', 'What do you mean by “___”?', 'When was the last time?', 'How did you feel about that?'];
+
+    var STEP_GOAL = {
+        key: 'goal', tab: 'Goal', sheet: 'What you’ll learn',
+        q: 'What do you need to learn from these interviews?',
+        why: 'Pick the one question you most need answered. <b>A script that tries to learn everything learns nothing well.</b>',
+        opts: GOAL_ORDER.map(function (k) { return { v: k, ico: GOALS[k].ico, t: GOALS[k].t, d: GOALS[k].d }; })
+    };
+
+    // Audience options depend on the goal, and some descriptions mention the product.
+    function stepAudience() {
+        var list = AUDIENCES_FOR[answers.goal] || AUDIENCES_FOR.problem;
+        return {
+            key: 'audience', tab: 'People', sheet: 'Talking to',
+            q: 'Who will you be talking to?',
+            why: 'It changes how you open the interview and the one thing most likely to go wrong. <b>If it’s a mix, pick the most common.</b>',
+            opts: list.map(function (k) { var a = AUDIENCES[k]; return { v: k, ico: a.ico, t: a.t, d: a.d.replace('{product}', 'your product') }; })
+        };
+    }
+
+    var STEP_DETAILS = {
+        key: 'details', tab: 'Details', sheet: 'About', text: true,
+        q: 'Who are they, and what’s the problem?',
+        why: 'Use the words <b>they</b> would use, not your product’s. Every question gets written around them.'
+    };
+
+    var STEP_LENGTH = {
+        key: 'length', tab: 'Length', sheet: 'Length',
+        q: 'How long will each interview be?',
+        why: 'Shorter scripts keep the essential questions. <b>You can always run over if it’s going well.</b>',
+        opts: ['15', '30', '45'].map(function (k) { return { v: k, ico: LENGTHS[k].ico, t: LENGTHS[k].t, d: LENGTHS[k].d }; })
+    };
+
+    /* ---------- state ---------- */
+    var answers = {};
+    var cur = 0;
+    var $q = document.getElementById('cisQuestion');
+    var $steps = document.getElementById('cisSteps');
+    var $sheet = document.getElementById('cisSheet');
+    var $outline = document.getElementById('cisOutline');
+    var $next = document.getElementById('cisNext');
+    var $back = document.getElementById('cisBack');
+
+    function steps() { return [STEP_GOAL, stepAudience(), STEP_DETAILS, STEP_LENGTH]; }
+
+    function esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
+    }
+    function clean(s) { return (s || '').trim().replace(/\s+/g, ' ').replace(/[.!?]+$/, ''); }
+
+    function needsProduct() { return !!NEEDS_PRODUCT[answers.audience]; }
+    function needsIdea() { return answers.goal === 'concept'; }
+
+    function isDone(s) {
+        if (s.text) return !!(clean(answers.who) && clean(answers.topic) && (!needsIdea() || clean(answers.idea)));
+        return !!answers[s.key];
+    }
+
+    function optFor(step, v) {
+        if (!step.opts) return null;
+        for (var i = 0; i < step.opts.length; i++) if (step.opts[i].v === v) return step.opts[i];
+        return null;
+    }
+
+    // Fill the placeholders. In HTML, the filled-in words are escaped and highlighted.
+    function fill(str, html) {
+        var vals = {
+            who: clean(answers.who) || 'people like them',
+            topic: clean(answers.topic) || 'this',
+            product: clean(answers.product) || 'our product',
+            idea: clean(answers.idea) || 'our idea',
+            mins: answers.length || '30'
+        };
+        return String(str).split(/(\{who\}|\{topic\}|\{product\}|\{idea\}|\{mins\})/).map(function (part) {
+            var m = part.match(/^\{(\w+)\}$/);
+            if (m) return html ? '<mark class="cis-fill">' + esc(vals[m[1]]) + '</mark>' : vals[m[1]];
+            return html ? esc(part) : part;
+        }).join('');
+    }
+
+    /* ---------- building the script ---------- */
+    function pick(items, lvl) { return items.filter(function (it) { return it.lvl <= lvl; }); }
+
+    function buildScript() {
+        var g = GOALS[answers.goal];
+        var a = AUDIENCES[answers.audience];
+        var len = LENGTHS[answers.length || '30'];
+        var lvl = len.lvl;
+        var mins = +(answers.length || 30);
+
+        var secs = [{ t: 'Open', items: [{ say: true, lvl: 1, q: a.intro }], fixed: 2 },
+                    { t: 'Warm up', items: pick(WARMUP, lvl), fixed: lvl + 1 }];
+        g.sections.forEach(function (s) { secs.push({ t: s.t, items: pick(s.items, lvl) }); });
+        secs.push({ t: 'Close', items: pick(CLOSE, lvl), fixed: 3 });
+
+        // Open, warm-up and close get fixed time; the rest splits by question count.
+        var middle = secs.filter(function (s) { return !s.fixed; });
+        var qCount = middle.reduce(function (n, s) { return n + s.items.filter(function (i) { return !i.say; }).length; }, 0);
+        var left = mins - secs.reduce(function (n, s) { return n + (s.fixed || 0); }, 0);
+        middle.forEach(function (s) {
+            var n = s.items.filter(function (i) { return !i.say; }).length;
+            s.mins = Math.max(1, Math.round(n / qCount * left));
+        });
+        // Rounding can drift; settle the difference on the biggest section.
+        var drift = left - middle.reduce(function (n, s) { return n + s.mins; }, 0);
+        var biggest = middle.reduce(function (b, s) { return s.mins > b.mins ? s : b; }, middle[0]);
+        biggest.mins += drift;
+        secs.forEach(function (s) { if (s.fixed) s.mins = s.fixed; });
+        return secs;
+    }
+
+    function questionTotal(secs) {
+        return secs.reduce(function (n, s) { return n + s.items.filter(function (i) { return !i.say; }).length; }, 0);
+    }
+
+    /* ---------- wizard ---------- */
+    function renderSteps() {
+        var S = steps();
+        $steps.innerHTML = S.map(function (s, i) {
+            var done = isDone(s);
+            var cls = i === cur ? 'is-current' : (done ? 'is-done' : '');
+            var label = s.tab + (done ? ', answered' : '') + (i === cur ? ', current step' : '');
+            return '<li class="' + cls + '"><button type="button" data-step="' + i + '" aria-label="Step ' + (i + 1) + ': ' + label + '"' +
+                (i === cur ? ' aria-current="step"' : '') + '>' + s.tab + '</button></li>';
+        }).join('');
+    }
+
+    function sheetValue(s) {
+        if (s.text) {
+            if (!clean(answers.who) && !clean(answers.topic)) return '';
+            var v = esc(clean(answers.who) || '…') + ', about ' + esc(clean(answers.topic) || '…');
+            if (needsProduct() && clean(answers.product)) v += ' (' + esc(clean(answers.product)) + ')';
+            return v;
+        }
+        if (s.key === 'audience') return answers.audience ? AUDIENCES[answers.audience].sheet : '';
+        var o = optFor(s, answers[s.key]);
+        return o ? esc(o.t) : '';
+    }
+
+    function renderSheet(changedKey) {
+        $sheet.innerHTML = steps().map(function (s) {
+            var v = sheetValue(s);
+            return '<div class="cis-row' + (s.key === changedKey ? ' is-new' : '') + '"><dt>' + s.sheet + '</dt>' +
+                (v ? '<dd>' + v + '</dd>' : '<dd class="is-empty">Not picked yet</dd>') + '</div>';
+        }).join('');
+
+        if (answers.goal && answers.audience) {
+            var secs = buildScript();
+            $outline.innerHTML = secs.map(function (s) {
+                var n = s.items.filter(function (i) { return !i.say; }).length;
+                return '<li><span>' + s.t + '</span><span>' + (n ? n + ' q · ' : '') + s.mins + ' min</span></li>';
+            }).join('') + '<li class="is-total"><span>' + questionTotal(secs) + ' questions</span><span>' + (answers.length || 30) + ' min</span></li>';
+            $outline.classList.remove('cis-hidden');
+        } else {
+            $outline.classList.add('cis-hidden');
+        }
+    }
+
+    function renderDetails() {
+        var showProduct = needsProduct();
+        var showIdea = needsIdea();
+        return '<div class="cis-fields">' +
+            '<div class="cis-field"><label for="cisWho">Who are they?</label>' +
+            '<p class="cis-field-hint" id="cisWhoHint">A plural, specific enough that you could find ten of them.</p>' +
+            '<input type="text" id="cisWho" data-k="who" maxlength="80" placeholder="freelance bookkeepers" autocomplete="off" aria-describedby="cisWhoHint" value="' + esc(answers.who || '') + '"></div>' +
+            '<div class="cis-field"><label for="cisTopic">The problem area, in their words</label>' +
+            '<p class="cis-field-hint" id="cisTopicHint">A few words that fit “the last time ___ came up”.</p>' +
+            '<input type="text" id="cisTopic" data-k="topic" maxlength="80" placeholder="late invoices" autocomplete="off" aria-describedby="cisTopicHint" value="' + esc(answers.topic || '') + '"></div>' +
+            (showProduct ? '<div class="cis-field"><label for="cisProduct">Your product’s name <span>(optional)</span></label>' +
+            '<input type="text" id="cisProduct" data-k="product" maxlength="60" placeholder="InvoiceFlow" autocomplete="off" value="' + esc(answers.product || '') + '"></div>' : '') +
+            (showIdea ? '<div class="cis-field"><label for="cisIdea">Your idea, in one sentence</label>' +
+            '<p class="cis-field-hint" id="cisIdeaHint">You’ll read this aloud, so describe what it does, not how clever it is.</p>' +
+            '<input type="text" id="cisIdea" data-k="idea" maxlength="160" placeholder="an app that sends polite payment reminders for you" autocomplete="off" aria-describedby="cisIdeaHint" value="' + esc(answers.idea || '') + '"></div>' : '') +
+            '<p class="cis-preview" id="cisPreview"></p>' +
+            '</div>';
+    }
+
+    function updatePreview() {
+        var p = document.getElementById('cisPreview');
+        if (p) p.innerHTML = '<b>Your first question will read</b>' + fill('Tell me about the last time {topic} came up for you.', true);
+    }
+
+    function renderQuestion(focus) {
+        var S = steps();
+        var s = S[cur];
+        var body = s.text ? renderDetails() :
+            '<div class="cis-opts' + (s.grid ? ' is-grid' : '') + '">' +
+            s.opts.map(function (o, i) {
+                var checked = answers[s.key] === o.v ? ' checked' : '';
+                return '<label class="cis-opt"><input type="radio" name="cis-' + s.key + '" value="' + o.v + '"' + checked + '>' +
+                    '<span class="cis-opt-face"><span class="cis-opt-ico"><i class="fas ' + o.ico + '" aria-hidden="true"></i></span>' +
+                    '<span><span class="cis-opt-title">' + o.t + '</span><span class="cis-opt-desc">' + o.d + '</span></span>' +
+                    '<span class="cis-opt-key" aria-hidden="true">' + (i + 1) + '</span></span></label>';
+            }).join('') + '</div>';
+
+        $q.innerHTML = '<fieldset class="cis-q">' +
+            '<p class="cis-q-kicker">Question ' + (cur + 1) + ' of ' + S.length +
+            (cur > 0 && answers.goal ? ' · ' + GOALS[answers.goal].t : '') + '</p>' +
+            '<legend>' + s.q + '</legend>' +
+            '<p class="cis-q-why">' + s.why + '</p>' + body + '</fieldset>';
+
+        if (s.text) {
+            document.getElementById('cisHint').innerHTML = '<kbd>Enter</kbd> continues';
+            updatePreview();
+        } else {
+            document.getElementById('cisHint').innerHTML = 'Keys <kbd>1</kbd>–<kbd>' + s.opts.length + '</kbd> pick, <kbd>Enter</kbd> continues';
+        }
+        $next.disabled = !isDone(s);
+        $next.innerHTML = cur === S.length - 1
+            ? 'Write my script <i class="fas fa-bolt" aria-hidden="true"></i>'
+            : 'Next <i class="fas fa-arrow-right" aria-hidden="true"></i>';
+        $back.style.visibility = cur === 0 ? 'hidden' : 'visible';
+        renderSteps();
+        if (focus) {
+            var target = s.text
+                ? ($q.querySelector('input[type="text"]:not([value]), input[type="text"][value=""]') || $q.querySelector('input[type="text"]'))
+                : ($q.querySelector('input:checked') || $q.querySelector('input'));
+            if (target) target.focus({ preventScroll: true });
+        }
+    }
+
+    function go(i) {
+        cur = Math.max(0, Math.min(steps().length - 1, i));
+        renderQuestion(true);
+        var top = document.getElementById('cisBench').getBoundingClientRect().top + window.pageYOffset - 90;
+        if (window.pageYOffset > top) window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
+    function advance() {
+        var S = steps();
+        if (!isDone(S[cur])) return;
+        if (cur < S.length - 1) go(cur + 1); else showResults();
+    }
+
+    $q.addEventListener('change', function (e) {
+        if (e.target.type !== 'radio') return;
+        var key = steps()[cur].key;
+        // A new goal can rule out the audience picked for the old one
+        if (key === 'goal' && AUDIENCES_FOR[e.target.value].indexOf(answers.audience) < 0) delete answers.audience;
+        answers[key] = e.target.value;
+        $next.disabled = false;
+        renderSheet(key);
+        renderSteps();
+    });
+
+    $q.addEventListener('input', function (e) {
+        var k = e.target.dataset && e.target.dataset.k;
+        if (!k) return;
+        answers[k] = e.target.value;
+        $next.disabled = !isDone(STEP_DETAILS);
+        updatePreview();
+        renderSheet();
+        renderSteps();
+    });
+
+    $steps.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-step]');
+        if (!b) return;
+        var i = +b.dataset.step;
+        // only jump to steps whose earlier questions are all answered
+        if (i <= cur || steps().slice(0, i).every(isDone)) go(i);
+    });
+
+    $next.addEventListener('click', advance);
+    $back.addEventListener('click', function () { go(cur - 1); });
+
+    document.addEventListener('keydown', function (e) {
+        if (document.getElementById('cisBench').classList.contains('cis-hidden')) return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        if (e.target.matches('input[type="text"]')) {
+            if (e.key === 'Enter') { e.preventDefault(); advance(); }
+            return;
+        }
+        if (e.target.matches('textarea, input[type="email"]')) return;
+        var n = parseInt(e.key, 10);
+        var radios = $q.querySelectorAll('input[type="radio"]');
+        if (n >= 1 && n <= radios.length) {
+            radios[n - 1].checked = true;
+            radios[n - 1].focus({ preventScroll: true });
+            radios[n - 1].dispatchEvent(new Event('change', { bubbles: true }));
+        } else if (e.key === 'Enter' && !e.target.matches('button, a')) {
+            e.preventDefault();
+            advance();
+        }
+    });
+
+    document.getElementById('cisStart').addEventListener('click', function () {
+        var top = document.getElementById('cisBench').getBoundingClientRect().top + window.pageYOffset - 90;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        var first = $q.querySelector('input:checked') || $q.querySelector('input');
+        if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, 400);
+    });
+
+    /* ---------- results ---------- */
+    function noteHtml(n) { return n ? '<p class="cis-item-note"><b>' + n[0] + '</b>' + fill(n[1], true) + '</p>' : ''; }
+
+    function scriptHtml(secs) {
+        return secs.map(function (s, si) {
+            return '<section class="cis-sec"><div class="cis-sec-head"><span class="cis-sec-num">' + ('0' + (si + 1)).slice(-2) + '</span>' +
+                '<h3>' + s.t + '</h3><span class="cis-sec-time">' + s.mins + ' min</span></div>' +
+                '<ol class="cis-items">' + s.items.map(function (it) {
+                    if (it.say) return '<li class="cis-item is-say"><p class="cis-item-text"><span class="cis-say-label">Say</span>' + fill(it.q, true) + '</p></li>';
+                    return '<li class="cis-item is-q"><p class="cis-item-text">' + fill(it.q, true) + '</p>' + noteHtml(it.note) + '</li>';
+                }).join('') + '</ol></section>';
+        }).join('');
+    }
+
+    // Plain-text version for copying and the .txt download
+    function scriptText(secs) {
+        var g = GOALS[answers.goal];
+        var lines = [
+            'CUSTOMER INTERVIEW SCRIPT: ' + g.t.toUpperCase(),
+            answers.length + ' minutes with ' + fill('{who}') + ', about ' + fill('{topic}'),
+            ''
+        ];
+        secs.forEach(function (s, si) {
+            lines.push(('0' + (si + 1)).slice(-2) + '  ' + s.t.toUpperCase() + '  (' + s.mins + ' min)');
+            var n = 0;
+            s.items.forEach(function (it) {
+                if (it.say) { lines.push('    SAY: ' + fill(it.q)); return; }
+                n++;
+                lines.push('    ' + n + '. ' + fill(it.q));
+                if (it.note) lines.push('       ' + it.note[0] + ': ' + fill(it.note[1]));
+            });
+            lines.push('');
+        });
+        lines.push('FOLLOW-UPS FOR ANY ANSWER');
+        PROBES.forEach(function (p) { lines.push('    - ' + p); });
+        lines.push('', 'DON\'T ASK / ASK INSTEAD');
+        g.swaps.forEach(function (w) { lines.push('    x ' + fill(w.bad), '    > ' + fill(w.good)); });
+        lines.push('', 'KEEP GOING IF: ' + fill(g.pass), 'RETHINK IF: ' + fill(g.kill));
+        lines.push('', 'Made with the Customer Interview Script Builder: https://dlightning.org/d-tools/customer-interview-script.html');
+        return lines.join('\n');
+    }
+
+    var lastSecs = null;
+
+    function showResults() {
+        var g = GOALS[answers.goal];
+        var a = AUDIENCES[answers.audience];
+        var secs = buildScript();
+        lastSecs = secs;
+
+        document.getElementById('cisGoal').textContent = g.t;
+        document.getElementById('cisSummary').innerHTML = '<b>' + answers.length + ' minutes</b> with ' + esc(fill('{who}')) +
+            ', about ' + esc(fill('{topic}')) + '. ' + questionTotal(secs) + ' questions, in ' + secs.length + ' parts.';
+        document.getElementById('cisCount').textContent = g.count + ' interviews';
+        document.getElementById('cisCountDesc').textContent = g.countDesc;
+
+        document.getElementById('cisScript').innerHTML = scriptHtml(secs);
+
+        document.getElementById('cisRules').innerHTML =
+            '<li class="is-aud"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i><span><b>With ' + esc(a.sheet.toLowerCase()) + ':</b> ' + fill(a.rule, true) + '</span></li>' +
+            RULES.map(function (r) { return '<li><i class="fas ' + r.ico + '" aria-hidden="true"></i><span>' + r.t + '</span></li>'; }).join('');
+
+        document.getElementById('cisSwaps').innerHTML = g.swaps.map(function (w) {
+            return '<li class="cis-swap"><p class="cis-swap-bad">' + fill(w.bad, true) + '</p>' +
+                '<p class="cis-swap-good"><i class="fas fa-check" aria-hidden="true"></i>' + fill(w.good, true) + '</p>' +
+                '<p class="cis-swap-why">' + fill(w.why, true) + '</p></li>';
+        }).join('');
+
+        document.getElementById('cisPass').innerHTML = fill(g.pass, true);
+        document.getElementById('cisKill').innerHTML = fill(g.kill, true);
+        document.getElementById('cisProbes').innerHTML = PROBES.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('');
+
+        // Make the choices available to the shared email-capture module
+        window.userInteractionData = [
+            'Goal: ' + g.t,
+            'Audience: ' + a.sheet,
+            'Who: ' + fill('{who}'),
+            'Topic: ' + fill('{topic}'),
+            needsProduct() ? 'Product: ' + fill('{product}') : '',
+            needsIdea() ? 'Idea: ' + fill('{idea}') : '',
+            'Length: ' + answers.length + ' min, ' + questionTotal(secs) + ' questions'
+        ].filter(Boolean).join('\n');
+
+        document.getElementById('cisBench').classList.add('cis-hidden');
+        ['results', 'cisAfter', 'cisCta'].forEach(function (id) { document.getElementById(id).classList.remove('cis-hidden'); });
+        window.scrollTo({ top: 0 });
+        document.getElementById('results').focus({ preventScroll: true });
+    }
+
+    var toastTimer;
+    function toast(msg) {
+        var t = document.getElementById('cisToast');
+        t.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i>' + esc(msg);
+        t.classList.add('is-on');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { t.classList.remove('is-on'); }, 2400);
+    }
+
+    document.getElementById('cisCopy').addEventListener('click', function () {
+        var text = scriptText(lastSecs);
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function () { toast('Script copied'); }, fallback);
+        } else {
+            fallback();
+        }
+        function fallback() {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); toast('Script copied'); } catch (err) { alert('Copy failed. Use the .txt download instead.'); }
+            ta.remove();
+        }
+    });
+
+    document.getElementById('cisTxt').addEventListener('click', function () {
+        var blob = new Blob([scriptText(lastSecs)], { type: 'text/plain;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = 'interview-script-' + answers.goal + '.txt';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+    });
+
+    document.getElementById('cisReset').addEventListener('click', function () {
+        answers = {};
+        lastSecs = null;
+        ['results', 'cisAfter', 'cisCta'].forEach(function (id) { document.getElementById(id).classList.add('cis-hidden'); });
+        document.getElementById('cisBench').classList.remove('cis-hidden');
+        window.userInteractionData = '';
+        renderSheet();
+        go(0);
+        window.scrollTo({ top: 0 });
+    });
+
+    $(document).ready(function () {
+        $('#email-form-con').load("email-capture.html");
+        $('#related-tools-con').load("related-tools.html");
+        $('#header').load("../header.html", function (response, status, xhr) {
+            if (status == "error") {
+                $("#error").html("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
+            }
+        });
+        renderSheet();
+        renderQuestion(false);
+    });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Customer Interview Script Builder",
+  "url": "https://dlightning.org/d-tools/customer-interview-script.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "description": "A free interactive tool that writes a timed customer interview script for your goal (problem discovery, concept testing, willingness to pay, retention or churn), your audience and your topic, with follow-up probes, questions to avoid and decision signals.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@type": "Organization", "name": "Dlightning", "url": "https://dlightning.org" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What makes a good customer interview question?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It asks about something that already happened. \"Tell me about the last time…\" gets a real story with real details. \"Would you…?\" and \"Do you think…?\" ask people to predict their own behavior, and people are kind and optimistic about the future, so the answers mislead you." } },
+    { "@type": "Question", "name": "How many customer interviews do I need?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Five to eight per type of person is usually enough to see a pattern. If the same story keeps coming up by the fifth interview, you have it. If every interview sounds different, you may be talking to more than one audience, and each needs its own five." } },
+    { "@type": "Question", "name": "How long should a customer interview be?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Thirty minutes suits most interviews. Fifteen works for people who barely used your product or are doing you a favor. Forty-five is for when you want to see their workaround on screen or hear the whole buying process." } },
+    { "@type": "Question", "name": "Should I show them my idea?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Not until the end, and only if you're testing a concept. Once they've seen it, everything they say is about your idea rather than their problem." } }
+  ]
+}
+</script>
+
+<!-- Branded result download (PNG / PDF) -->
+<script src="result-download.js"
+        data-dl-container="#results"
+        data-dl-title="Customer Interview Script"
+        data-dl-filename="dlightning-interview-script"></script>
+</body>
+</html>

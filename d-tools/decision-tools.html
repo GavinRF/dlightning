@@ -144,7 +144,28 @@
         .dq-result .dq-link:hover, .dq-result .dq-link:focus-visible { color: var(--dq-blue); }
         .dq-result .dq-link:focus-visible { outline-color: var(--dq-blue); }
 
+        /* jump list under the quiz */
+        .dq-jump { max-width: 980px; margin: 26px auto 0; text-align: center; }
+        .dq-jump-label { display: block; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #5e6679; margin-bottom: 14px; }
+        .dq-jump ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        .dq-jump a {
+            display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px;
+            font-size: .92rem; font-weight: 500; line-height: 1.2; color: var(--dq-ink); text-decoration: none;
+            background: #fff; border: 1px solid rgba(10, 20, 48, .14);
+            transition: transform .2s var(--dq-ease), border-color .2s ease, box-shadow .2s ease;
+        }
+        .dq-jump a i { color: var(--dq-blue); font-size: .85rem; line-height: 1 !important; }
+        .dq-jump a:hover, .dq-jump a:focus-visible {
+            transform: translateY(-2px); border-color: var(--dq-blue); color: var(--dq-ink); text-decoration: none;
+            box-shadow: 0 10px 20px -14px rgba(36, 84, 230, .6);
+        }
+        .dq-jump a:focus-visible { outline: 3px solid var(--dq-blue); outline-offset: 3px; }
+        /* land below the fixed header */
+        .section-top-border[id] { scroll-margin-top: 110px; }
+
         @media (max-width: 767px) {
+            .dq-jump ul { justify-content: flex-start; }
+            .dq-jump-label { text-align: left; }
             .dq { padding-top: 28px; }
             .dq-panel { padding: 30px 20px 24px; border-radius: 20px; }
             .dq-head { margin-bottom: 22px; }
@@ -157,6 +178,7 @@
         }
         @media (prefers-reduced-motion: reduce) {
             .dq *, .dq *::before { animation: none !important; transition: none !important; }
+            html { scroll-behavior: auto !important; }
         }
         /* Category Header Styles */
         .category-header {
@@ -240,10 +262,26 @@
                         <noscript><p class="dq-trail">The quiz needs JavaScript. Every tool is listed below.</p></noscript>
                     </div>
                 </div>
+                <nav class="dq-jump" aria-label="Jump to a tool">
+                    <span class="dq-jump-label">Or jump straight to one</span>
+                    <ul>
+                        <li><a href="#business-idea-generator"><i class="fas fa-lightbulb" aria-hidden="true"></i>Business Idea Generator</a></li>
+                        <li><a href="#entrepreneur-decision-tree"><i class="fas fa-code-branch" aria-hidden="true"></i>Entrepreneur Decision Tree</a></li>
+                        <li><a href="#project-validation-methods"><i class="fas fa-flask" aria-hidden="true"></i>Project Validation Methods</a></li>
+                        <li><a href="#customer-interview-script"><i class="fas fa-comments" aria-hidden="true"></i>Customer Interview Script</a></li>
+                        <li><a href="#ai-agent-idea-validation"><i class="fas fa-robot" aria-hidden="true"></i>AI Agent Idea Validation</a></li>
+                        <li><a href="#founder-blockers-diagnostic"><i class="fas fa-hand-rock" aria-hidden="true"></i>Founder Blockers Diagnostic</a></li>
+                        <li><a href="#ux-maturity-assessment"><i class="fas fa-chart-line" aria-hidden="true"></i>UX Maturity Assessment</a></li>
+                        <li><a href="#ux-methods-tree"><i class="fas fa-sitemap" aria-hidden="true"></i>UX Methods Tree</a></li>
+                        <li><a href="#design-system-readiness"><i class="fas fa-cubes" aria-hidden="true"></i>Design System Readiness</a></li>
+                        <li><a href="#drop-off-diagnostic"><i class="fas fa-filter" aria-hidden="true"></i>Drop-Off Diagnostic</a></li>
+                        <li><a href="#mvp-scope-estimator"><i class="fas fa-ruler-combined" aria-hidden="true"></i>MVP Scope and Cost Estimator</a></li>
+                    </ul>
+                </nav>
             </div>
         </section>
         <!-- Tool #1: Business Idea Generator -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="business-idea-generator">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -290,7 +328,7 @@
         </div>
 
         <!-- Tool #2: Entrepreneur Decision Tree -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="entrepreneur-decision-tree">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -337,7 +375,7 @@
         </div>
 
         <!-- Tool #3: Project Validation Methods -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="project-validation-methods">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -384,7 +422,7 @@
         </div>
 
         <!-- Tool #4: UX Maturity Assessment -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="ux-maturity-assessment">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -431,7 +469,7 @@
         </div>
 
         <!-- Tool #5: UX Methods Tree -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="ux-methods-tree">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -478,7 +516,7 @@
         </div>
 
         <!-- Tool #6: Design System Readiness Assessment -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="design-system-readiness">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -525,7 +563,7 @@
         </div>
 
         <!-- Tool #7: AI Agent Idea Validation -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="ai-agent-idea-validation">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -572,7 +610,7 @@
         </div>
 
         <!-- Tool #8: Founder Blockers Diagnostic -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="founder-blockers-diagnostic">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -619,7 +657,7 @@
         </div>
 
         <!-- Tool #9: Drop-Off Diagnostic -->
-        <div class="section-top-border">
+        <div class="section-top-border" id="drop-off-diagnostic">
             <div class="container">
                 <div class="Process_main_wrap">
                     <div class="row">
@@ -665,7 +703,104 @@
             </div>
         </div>
 
+        <!-- Tool #10: Customer Interview Script Builder -->
+        <div class="section-top-border" id="customer-interview-script">
+            <div class="container">
+                <div class="Process_main_wrap">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="Process_info" style="padding-left: 0px;">
+                                <a href="customer-interview-script.html">
+                                <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                    Customer Interview Script Builder
+                                </h2>
+                                <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Four questions about what you need to learn, who you're talking to and the problem in their words. You get a timed script written around your topic, the questions not to ask, and what should tell you to keep going.</p>
+                                </a>
+                                <ul>
+                                    <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
+                                    A timed script with follow-up probes
+                                    </li>
+                                    <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="250">
+                                    The questions to avoid, and what to ask instead
+                                    </li>
+                                    <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
+                                    Copy it, save as text, or download a PDF
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
+                            <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
+                                <a href="customer-interview-script.html">
+                                    <img style="width: 84%; margin-bottom: 14px;" src="../img/products/CIS.png" alt="Customer Interview Script Builder tool screenshot">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                            <div class="about_btn" data-aos="fade-up" data-aos-duration="900" data-aos-delay="350" >
+                                <a class="boxed-btn4" href="customer-interview-script.html">
+                                    <i class="fas fa-comments mr-2"></i>Write my script
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool #11: MVP Scope and Cost Estimator -->
+        <div class="section-top-border" id="mvp-scope-estimator">
+            <div class="container">
+                <div class="Process_main_wrap">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="Process_info" style="padding-left: 0px;">
+                                <a href="mvp-scope-estimator.html">
+                                <h2 data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                    MVP Scope and Cost Estimator
+                                </h2>
+                                <p data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">Five questions about what you're building and who's building it. You get a v1 feature list, what can wait for later and what to do instead, and a time and cost range with the assumptions behind it.</p>
+                                </a>
+                                <ul>
+                                    <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
+                                    Move features between v1 and later and watch the estimate change
+                                    </li>
+                                    <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="250">
+                                    Weeks of work and cost, at a rate you can change
+                                    </li>
+                                    <li data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
+                                    Send the scope to us for a proposal, or download it
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 offset-xl-1 offset-lg-1 col-sm-12 center-sm">
+                            <div data-aos="fade-right" data-aos-duration="400" data-aos-delay="300">
+                                <a href="mvp-scope-estimator.html">
+                                    <img style="width: 84%; margin-bottom: 14px;" src="../img/products/MSE.png" alt="MVP Scope and Cost Estimator tool screenshot">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                            <div class="about_btn" data-aos="fade-up" data-aos-duration="900" data-aos-delay="350" >
+                                <a class="boxed-btn4" href="mvp-scope-estimator.html">
+                                    <i class="fas fa-ruler-combined mr-2"></i>Estimate my v1
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <!--/ back to top  -->
+    <div class="back-to-top" role="button" tabindex="0" aria-label="Back to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
 
     <!-- FOOTER  -->
     <div class="footer" id="footer">
@@ -704,12 +839,36 @@
                 $('.decision-tools').addClass('thisPage');
             }
         });
+
+        // Scroll to top
+        var $backToTop = $('.back-to-top');
+        $backToTop.hide();
+
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+        });
+
+        $backToTop.on('click keydown', function(e) {
+            if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+            e.preventDefault();
+            // native smooth scroll: the site-wide scroll-behavior makes jQuery's animate stutter
+            var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
+            // move keyboard focus with it, so Tab picks up from the quiz rather than the bottom of the page
+            var title = document.getElementById('dq-title');
+            title.setAttribute('tabindex', '-1');
+            title.focus({ preventScroll: true });
+        });
     });
 
     // ---------- Tool finder quiz ----------
     (function () {
         var GOALS = [
-            { value: 'business-idea',    icon: 'fa-lightbulb', label: 'Find a business idea',       sub: 'Starting from nothing yet' },
+            { value: 'business-idea',    icon: 'fa-lightbulb', label: 'Start a business',           sub: 'With an idea or without one' },
             { value: 'validate-idea',    icon: 'fa-flask',     label: 'Test an idea I already have', sub: 'Before I spend money building it' },
             { value: 'assess-readiness', icon: 'fa-route',     label: 'Check if I\'m ready',         sub: 'Myself, my team or my market' },
             { value: 'improve-ux',       icon: 'fa-sitemap',   label: 'Improve my product\'s UX',    sub: 'It exists and people use it' }
@@ -717,11 +876,12 @@
 
         var FOLLOW_UPS = {
             'business-idea': {
-                question: 'What\'s your tightest constraint?',
+                question: 'Do you have an idea yet?',
                 options: [
-                    { value: 'time',   icon: 'fa-clock',          label: 'Time',   sub: 'Evenings and weekends only' },
-                    { value: 'budget', icon: 'fa-wallet',         label: 'Money',  sub: 'A few hundred dollars, tops' },
-                    { value: 'skills', icon: 'fa-screwdriver-wrench', label: 'Skills', sub: 'I\'m not sure what I\'m good at' }
+                    { value: 'build',  icon: 'fa-ruler-combined', label: 'Yes, ready to build it', sub: 'What v1 needs and what it costs' },
+                    { value: 'time',   icon: 'fa-clock',          label: 'No, and time is tight',  sub: 'Evenings and weekends only' },
+                    { value: 'budget', icon: 'fa-wallet',         label: 'No, and money is tight', sub: 'A few hundred dollars, tops' },
+                    { value: 'skills', icon: 'fa-screwdriver-wrench', label: 'No, and I\'m unsure of my skills', sub: 'I\'m not sure what I\'m good at' }
                 ]
             },
             'validate-idea': {
@@ -762,18 +922,21 @@
             fbd:  { icon: 'fa-hand-rock',   name: 'Founder Blockers Diagnostic',         link: 'founder-block.html' },
             umt:  { icon: 'fa-sitemap',     name: 'UX Methods Tree',                     link: 'ux-method-tree.html' },
             uma:  { icon: 'fa-chart-line',  name: 'UX Maturity Assessment',              link: 'ux-maturity-assessment.html' },
-            dod:  { icon: 'fa-filter',      name: 'Drop-Off Diagnostic',                 link: 'drop-off-diagnostic.html' }
+            dod:  { icon: 'fa-filter',      name: 'Drop-Off Diagnostic',                 link: 'drop-off-diagnostic.html' },
+            cis:  { icon: 'fa-comments',    name: 'Customer Interview Script Builder',   link: 'customer-interview-script.html' },
+            mse:  { icon: 'fa-ruler-combined', name: 'MVP Scope and Cost Estimator',     link: 'mvp-scope-estimator.html' }
         };
 
         // tool, why it fits, and an optional query string that opens the tool pre-filtered
         var MATCHES = {
+            'business-idea_build':  { tool: 'mse', why: 'Tick the features you have in mind. See which ones can wait for later, and get a time and cost range for the v1 with the assumptions behind it.' },
             'business-idea_time':   { tool: 'big', why: 'We\'ve set it to ideas you can run on evenings and weekends. Each one shows what you need to begin and a cheap test to run this week.', query: '?time=side' },
             'business-idea_budget': { tool: 'big', why: 'We\'ve set it to ideas you can start for under $500. Each one comes with a cheap test to see if anyone will pay.', query: '?budget=1' },
             'business-idea_skills': { tool: 'big', why: 'Take its 60-second quiz or tick the skills you do have. 170+ ideas narrow to the ones that use them.' },
 
             'validate-idea_fast-feedback': { tool: 'pvms', why: 'Two or three questions about where your project is. You get one method, the steps to run it, and the result that should tell you to stop.' },
             'validate-idea_low-cost':      { tool: 'pvms', why: 'It matches your project stage to one validation method, with pass and kill signals, so you don\'t pay for research you don\'t need.' },
-            'validate-idea_deep-insight':  { tool: 'pvms', why: 'It picks the method that answers your biggest unknown and gives you a hypothesis with a number to beat.' },
+            'validate-idea_deep-insight':  { tool: 'cis',  why: 'Understanding why takes conversations. Get a timed interview script written around your problem, with the questions to avoid and what to listen for.' },
             'validate-idea_ai-agent':      { tool: 'ai',   why: 'Write your agent\'s job spec in ten questions and get a hire verdict before you build.' },
 
             'assess-readiness_personal': { tool: 'edt', why: 'Up to ten questions about your experience, runway, customers and team. You end with a readiness score and the next four things to do.' },
