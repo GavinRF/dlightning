@@ -4,6 +4,7 @@ import os
 
 from generate_feed import write_feed, parse_date
 from generate_index import write_index
+from generate_ecosystem import write_ecosystem_count
 
 SITE = "https://dlightning.org"
 RELATED_LIMIT = 6
@@ -169,6 +170,13 @@ if __name__ == "__main__":
     # HTML instead of being built by blog-list.js after load.
     count, index_changed = write_index(metadata)
     print(f"{'Wrote' if index_changed else 'Unchanged'} blog/index.html with {count} post cards.")
+
+    # The ecosystem page quotes the essay count; keep it matching the metadata.
+    count, eco_changed = write_ecosystem_count(metadata)
+    if eco_changed is None:
+        print("WARNING: ecosystem.html essay count not found (card reworded?) - left unchanged.")
+    else:
+        print(f"{'Wrote' if eco_changed else 'Unchanged'} ecosystem.html essay count ({count}).")
 
 
 # RUN COMMAND to Generate Posts from MetaData

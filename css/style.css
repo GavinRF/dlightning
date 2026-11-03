@@ -524,6 +524,23 @@ h3 {
   outline: none;
 }
 
+/* Text link after the homepage Screen Builder paragraphs */
+.sb-guide-p {
+  text-align: left;
+  margin: -4px 0 0;
+}
+
+.sb-guide-link {
+  font-size: 1.16rem;
+  color: #e7fcff !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sb-guide-link:hover {
+  color: #ffd23f !important;
+}
+
 .boxed-btn4.large-width {
   width: 220px;
 }

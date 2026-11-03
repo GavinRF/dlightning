@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Screen Builder: Free Mobile App Mockup Tool in Your Browser | Dlightning</title>
-<meta name="description" content="Screen Builder is a free browser tool for mocking up mobile app screens without a designer. Click in 50+ ready components, set colours once for every screen, and download each screen as a PNG.">
+<meta name="description" content="Screen Builder is a free browser tool for designing mobile app screens from ready-made parts. Click in 50+ components, set colors once for every screen, and download each screen as a PNG.">
 <link rel="canonical" href="https://dlightning.org/screen-builder-guide.html">
 <meta name="author" content="Dlightning">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Screen Builder: app screens, no designer">
-<meta property="og:description" content="A free browser tool that builds app screens from ready-made parts. Watch a coffee-shop screen go from empty to finished.">
+<meta property="og:title" content="Screen Builder: app screens from ready-made parts">
+<meta property="og:description" content="A free browser tool for designing app screens. Watch a coffee-shop screen go from empty to finished in about a minute.">
 <meta property="og:url" content="https://dlightning.org/screen-builder-guide.html">
 <meta property="og:image" content="https://dlightning.org/img/screen-builder-guide/hero-build-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Screen Builder: app screens, no designer">
-<meta name="twitter:description" content="A free browser tool that builds app screens from ready-made parts.">
+<meta name="twitter:title" content="Screen Builder: app screens from ready-made parts">
+<meta name="twitter:description" content="A free browser tool for designing app screens: click in the parts, set your colors once, download a PNG.">
 <meta name="twitter:image" content="https://dlightning.org/img/screen-builder-guide/hero-build-poster.jpg">
 
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
@@ -67,7 +67,7 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "What is a screen builder?", "acceptedAnswer": { "@type": "Answer", "text": "A screen builder assembles an app screen from ready-made parts instead of drawn shapes. You place a navigation bar, a heading, a form and a card on a device-sized frame and see the layout before anyone writes code." } },
-    { "@type": "Question", "name": "Do I need design skills?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every component arrives already styled, and one theme sets the colours and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud colour, and the Theme tab takes that back in one drag." } },
+    { "@type": "Question", "name": "Do I need design skills?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every component arrives already styled, and one theme sets the colors and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud colour, and the Theme tab takes that back in one drag." } },
     { "@type": "Question", "name": "Is Screen Builder free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can build two screens without an account. A free account adds a third screen, two saved projects and up to 28 components per project. Pro, at $6 a month or $60 a year, removes the limits." } },
     { "@type": "Question", "name": "Do I need to install anything?", "acceptedAnswer": { "@type": "Answer", "text": "No. Screen Builder runs in a desktop web browser. You sign in, with Google or an email address, only when you want to save projects." } },
     { "@type": "Question", "name": "How do I export my screens?", "acceptedAnswer": { "@type": "Answer", "text": "Choose Download PNG Image at the bottom of the sidebar. Each screen saves as a picture you can drop into a deck, a ticket or a message." } },
@@ -128,6 +128,8 @@
   .sbg-hero h1 .ln { display: block; overflow: hidden; padding-bottom: .16em; margin-bottom: -.1em; }
   .sbg-hero h1 .ln > span { display: block; }
   .sbg-hero h1 .ln + .ln > span { color: var(--bolt); }
+  .sbg-hero h1 .ln + .ln { font-size: .7em; line-height: 1.02; }
+  .sbg-hero h1 .nw { white-space: nowrap; }
   .sbg-lede { font-size: 1.2rem; line-height: 1.6; color: rgba(255, 255, 255, .86); max-width: 33em; margin: 0 0 36px; }
   .sbg-lede strong { color: #fff; }
   .sbg-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; }
@@ -340,9 +342,9 @@
     <div>
       <h1 id="sbg-h1">
         <span class="ln"><span>Screen Builder.</span></span>
-        <span class="ln"><span>App screens, no designer.</span></span>
+        <span class="ln"><span>App screens from <span class="nw">ready-made</span> parts.</span></span>
       </h1>
-      <p class="sbg-lede">A screen builder puts an app screen together from ready-made parts. <strong>Click a navigation bar, a photo card or a button and it lands, already styled, on a real phone screen.</strong> Set your colours once, then download the screen as a PNG.</p>
+      <p class="sbg-lede">Our screen builder lets you design an app screen by clicking pieces into place. <strong>Click a navigation bar, a photo card or a button and it lands, already styled, on a real phone screen.</strong> Set your colors once, then download the screen as a PNG.</p>
       <div class="sbg-actions">
         <a class="sbg-btn sbg-btn-bolt" href="/screen-builder/">Open Screen Builder <i class="fa-solid fa-bolt" aria-hidden="true"></i></a>
         <span class="sbg-note"><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Free for two screens. No install, no signup.</span>
@@ -356,7 +358,7 @@
         </video>
         <button type="button" class="sbg-play" id="sbg-hero-toggle" aria-label="Pause video"><i class="fa-solid fa-pause" aria-hidden="true"></i></button>
       </div>
-      <figcaption>The real tool, sped up 2×: a coffee-shop screen from empty phone to finished in about a minute.</figcaption>
+      <figcaption>The real tool: a coffee-shop screen from empty phone to finished in about a minute.</figcaption>
     </figure>
   </div>
 </section>
@@ -383,7 +385,7 @@
             <span class="sbg-step-d">Click an image slot and pick a file from your computer. If the photo fights the layout, the arrows above the card flip through its other layouts until one fits.</span>
             <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
           <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-theme.mp4" data-poster="img/screen-builder-guide/farm-step-theme-poster.jpg">
-            <span class="sbg-step-n" aria-hidden="true">4</span><span class="sbg-step-t">Pick your colours once</span>
+            <span class="sbg-step-n" aria-hidden="true">4</span><span class="sbg-step-t">Pick your colors once</span>
             <span class="sbg-step-d">The Theme tab holds a primary, secondary and accent colour plus two fonts. Drag the wheel from stock blue to field green and every button, bar and icon on every screen follows.</span>
             <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
           <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-screens.mp4" data-poster="img/screen-builder-guide/farm-step-screens-poster.jpg">
@@ -521,7 +523,7 @@
     </div>
     <div>
       <details open><summary>What is a screen builder?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>A screen builder assembles an app screen from ready-made parts instead of drawn shapes. You place a navigation bar, a heading, a form and a card on a device-sized frame and see the layout before anyone writes code.</p></details>
-      <details><summary>Do I need design skills?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Every component arrives already styled, and one theme sets the colours and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud colour, and the Theme tab takes that back in one drag.</p></details>
+      <details><summary>Do I need design skills?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Every component arrives already styled, and one theme sets the colors and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud colour, and the Theme tab takes that back in one drag.</p></details>
       <details><summary>Is Screen Builder free?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Yes. You can build two screens without an account. A free account adds a third screen, two saved projects and up to 28 components per project. Pro, at $6 a month or $60 a year, removes the limits.</p></details>
       <details><summary>Do I need to install anything?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Screen Builder runs in a desktop web browser. You sign in, with Google or an email address, only when you want to save projects.</p></details>
       <details><summary>How do I export my screens?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Choose Download PNG Image at the bottom of the sidebar. Each screen saves as a picture you can drop into a deck, a ticket or a message.</p></details>
