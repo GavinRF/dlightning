@@ -535,6 +535,9 @@
         </div>
         <!--/ closing call to action  -->
 
+        <!--/ back to top  -->
+        <div class="back-to-top" data-scroll-nav="0" role="button" tabindex="0" aria-label="Back to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
+
         <div class="footer" id="footer">
             <!-- Replaced by footer.html on load. Static so every page in the nav is
                  reachable without JavaScript; same links, same anchor text as the
@@ -587,8 +590,15 @@
             }
             });
 
-            $backToTop.on('click', function(e) {
-            $("html, body").animate({scrollTop: 0}, 500);
+            $backToTop.on('click keydown', function(e) {
+                if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+                e.preventDefault();
+                // native smooth scroll: the site-wide scroll-behavior makes jQuery's animate stutter
+                var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
+                // move keyboard focus with it, so Tab picks up from the top rather than the bottom of the page
+                var heading = document.querySelector('h1, h2, h3');
+                if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
             });
         </script>
         <!--/ footer end  -->

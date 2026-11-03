@@ -1110,5 +1110,32 @@
         data-dl-container="#results"
         data-dl-title="Drop-Off Diagnostic"
         data-dl-filename="dlightning-drop-off-diagnostic"></script>
+    <!--/ back to top  -->
+    <div class="back-to-top" data-scroll-nav="0" role="button" tabindex="0" aria-label="Back to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
+    <script>
+    $(function() {
+        var $backToTop = $('.back-to-top');
+        $backToTop.hide();
+
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+        });
+
+        $backToTop.on('click keydown', function(e) {
+            if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+            e.preventDefault();
+            // native smooth scroll: the site-wide scroll-behavior makes jQuery's animate stutter
+            var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
+            // move keyboard focus with it, so Tab picks up from the top rather than the bottom of the page
+            var heading = document.querySelector('h1, h2, h3');
+            if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+        });
+    });
+    </script>
 </body>
 </html>

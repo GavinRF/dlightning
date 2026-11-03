@@ -51,7 +51,7 @@ A collaborative product validation platform built by Dlightning to help teams va
 - Unlimited projects and extended documentation (Pro)
 
 ### Screen Builder
-An intuitive drag-and-drop design tool for rapid prototyping and interface mockups. Enables teams to move from idea to testable prototype quickly, with professional-quality results.
+A free browser tool for mocking up mobile app screens from 50+ ready components, themed once across every screen and exported as PNG images. Free for two screens without an account; Pro is $6/month. Tool: https://dlightning.org/screen-builder/ · Guide: https://dlightning.org/screen-builder-guide.html
 
 ## Design Process
 

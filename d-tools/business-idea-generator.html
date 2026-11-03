@@ -395,6 +395,9 @@
   .big-sl-fab-count.bump { animation: big-bump .45s var(--ease); }
   @keyframes big-bump { 0% { transform: scale(1); } 35% { transform: scale(1.35); } 100% { transform: scale(1); } }
   @media (max-width: 560px) { .big-sl-fab-label { display: none; } .big-sl-fab { right: 14px; bottom: 14px; padding: 10px 10px 10px 14px; } }
+  /* the back-to-top arrow shares this corner: lift it above the shortlist button while that's showing */
+  .back-to-top { transition: bottom .3s var(--ease); }
+  body:has(.big-sl-fab.is-on) .back-to-top { bottom: 78px; }
 
   /* ---------- shortlist (also the downloadable keepsake) ---------- */
   .big-shortlist { background: var(--card); border-radius: 14px; padding: 26px 30px 18px; margin-top: 40px; box-shadow: 0 16px 34px -18px rgba(10, 20, 48, .3); border-top: 6px solid var(--bolt); }
@@ -1505,5 +1508,32 @@
         data-dl-title="Business Idea Shortlist"
         data-dl-filename="dlightning-business-ideas"></script>
 
+    <!--/ back to top  -->
+    <div class="back-to-top" data-scroll-nav="0" role="button" tabindex="0" aria-label="Back to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
+    <script>
+    $(function() {
+        var $backToTop = $('.back-to-top');
+        $backToTop.hide();
+
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                $backToTop.fadeIn();
+            } else {
+                $backToTop.fadeOut();
+            }
+        });
+
+        $backToTop.on('click keydown', function(e) {
+            if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+            e.preventDefault();
+            // native smooth scroll: the site-wide scroll-behavior makes jQuery's animate stutter
+            var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
+            // move keyboard focus with it, so Tab picks up from the top rather than the bottom of the page
+            var heading = document.querySelector('h1, h2, h3');
+            if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+        });
+    });
+    </script>
 </body>
 </html>

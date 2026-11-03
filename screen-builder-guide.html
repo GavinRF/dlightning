@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screen Builder: Free Mobile App Mockup Tool in Your Browser | Dlightning</title>
+<meta name="description" content="Screen Builder is a free browser tool for mocking up mobile app screens without a designer. Click in 50+ ready components, set colours once for every screen, and download each screen as a PNG.">
+<link rel="canonical" href="https://dlightning.org/screen-builder-guide.html">
+<meta name="author" content="Dlightning">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Screen Builder: app screens, no designer">
+<meta property="og:description" content="A free browser tool that builds app screens from ready-made parts. Watch a coffee-shop screen go from empty to finished.">
+<meta property="og:url" content="https://dlightning.org/screen-builder-guide.html">
+<meta property="og:image" content="https://dlightning.org/img/screen-builder-guide/hero-build-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Screen Builder: app screens, no designer">
+<meta name="twitter:description" content="A free browser tool that builds app screens from ready-made parts.">
+<meta name="twitter:image" content="https://dlightning.org/img/screen-builder-guide/hero-build-poster.jpg">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Screen Builder",
+  "url": "https://dlightning.org/screen-builder/",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Any (web browser)",
+  "description": "A free browser tool for mocking up mobile app screens from ready-made components, themed once and exported as PNG images.",
+  "publisher": { "@type": "Organization", "name": "Dlightning", "url": "https://dlightning.org/" },
+  "offers": [
+    { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Pro, monthly", "price": "6.00", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Pro, yearly", "price": "60.00", "priceCurrency": "USD" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Building a coffee-shop app screen in Screen Builder",
+  "description": "A screen recording of Screen Builder, sped up 2x: a navigation bar, hero photo, pills, two product cards and a bottom navigation bar added to an empty phone screen.",
+  "thumbnailUrl": "https://dlightning.org/img/screen-builder-guide/hero-build-poster.jpg",
+  "contentUrl": "https://dlightning.org/img/screen-builder-guide/hero-build.mp4",
+  "uploadDate": "2026-11-02",
+  "duration": "PT30S"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What is a screen builder?", "acceptedAnswer": { "@type": "Answer", "text": "A screen builder assembles an app screen from ready-made parts instead of drawn shapes. You place a navigation bar, a heading, a form and a card on a device-sized frame and see the layout before anyone writes code." } },
+    { "@type": "Question", "name": "Do I need design skills?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every component arrives already styled, and one theme sets the colours and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud colour, and the Theme tab takes that back in one drag." } },
+    { "@type": "Question", "name": "Is Screen Builder free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can build two screens without an account. A free account adds a third screen, two saved projects and up to 28 components per project. Pro, at $6 a month or $60 a year, removes the limits." } },
+    { "@type": "Question", "name": "Do I need to install anything?", "acceptedAnswer": { "@type": "Answer", "text": "No. Screen Builder runs in a desktop web browser. You sign in, with Google or an email address, only when you want to save projects." } },
+    { "@type": "Question", "name": "How do I export my screens?", "acceptedAnswer": { "@type": "Answer", "text": "Choose Download PNG Image at the bottom of the sidebar. Each screen saves as a picture you can drop into a deck, a ticket or a message." } },
+    { "@type": "Question", "name": "Can I make my own components?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Custom Component Editor takes a block of HTML with inline styles, previews it, and adds it to the selected screen." } },
+    { "@type": "Question", "name": "Does it replace Figma?", "acceptedAnswer": { "@type": "Answer", "text": "No. Screen Builder is quicker for the first layout, when the question is whether a screen works at all. Pixel-level drawing, clickable prototypes and a shared design system belong in Figma." } },
+    { "@type": "Question", "name": "Does it produce code?", "acceptedAnswer": { "@type": "Answer", "text": "No. It produces pictures of screens for planning and discussion. A developer builds the real thing from them, and is usually glad to get a picture instead of a paragraph." } }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --ink: #0a1430;
+    --ink-2: #16244f;
+    --cobalt: #0b4fe0;
+    --sky: #009dff;
+    --bolt: #ffd23f;
+    --bolt-deep: #c99e12;
+    --paper: #eef1f6;
+    --card: #ffffff;
+    --text: #141a2e;
+    --muted: #4c5570;
+    --line: #dce1ea;
+    --font: 'Hanken Grotesk', 'Rubik', sans-serif;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+  }
+  body { background: var(--paper); color: var(--text); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  header { z-index: 999; }
+  .sbg h1, .sbg h2, .sbg h3, .sbg p, .sbg li, .sbg dt, .sbg dd, .sbg td, .sbg th, .sbg summary, .sbg figcaption { font-family: var(--font); }
+  .sbg ::selection { background: var(--bolt); color: var(--ink); }
+  .sbg a { text-underline-offset: 4px; }
+  .sbg-wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- buttons (same build as the d-tools pages) ---------- */
+  .sbg-btn {
+    font: inherit; font-weight: 800; font-size: 1.06rem; border: none; border-radius: 10px; padding: 15px 24px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1.2;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease, color .2s ease;
+  }
+  .sbg-btn:focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; }
+  .sbg-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 var(--bolt-deep); }
+  .sbg-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--bolt-deep); color: var(--ink); text-decoration: none; }
+  .sbg-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--bolt-deep); }
+  .sbg-btn-ink { background: var(--ink); color: #fff; }
+  .sbg-btn-ink:hover { background: var(--cobalt); color: #fff; text-decoration: none; }
+  .sbg-btn-ink i { color: var(--bolt); }
+
+  /* ---------- hero ---------- */
+  .sbg-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 118px 0 76px;
+    background:
+      radial-gradient(640px 420px at 82% 40%, rgba(0, 157, 255, .30), transparent 65%),
+      radial-gradient(520px 360px at 5% 100%, rgba(11, 79, 224, .35), transparent 60%),
+      var(--ink);
+  }
+  .sbg-hero-grid { display: grid; grid-template-columns: 5fr 6fr; gap: 64px; align-items: center; }
+  .sbg-hero h1 { font-weight: 900; font-size: clamp(2.7rem, 5.4vw, 4.6rem); line-height: .95; letter-spacing: -.035em; color: #fff; margin: 0 0 28px; }
+  .sbg-hero h1 .ln { display: block; overflow: hidden; padding-bottom: .16em; margin-bottom: -.1em; }
+  .sbg-hero h1 .ln > span { display: block; }
+  .sbg-hero h1 .ln + .ln > span { color: var(--bolt); }
+  .sbg-lede { font-size: 1.2rem; line-height: 1.6; color: rgba(255, 255, 255, .86); max-width: 33em; margin: 0 0 36px; }
+  .sbg-lede strong { color: #fff; }
+  .sbg-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; }
+  .sbg-note { font-size: .98rem; color: rgba(255, 255, 255, .78); }
+  .sbg-note i { color: var(--bolt); margin-right: 6px; }
+
+  .sbg-reel { position: relative; margin: 0; }
+  .sbg-reel-frame { position: relative; border-radius: 20px; background: #fff; padding: 10px; box-shadow: 14px 14px 0 rgba(0, 0, 0, .35), 0 40px 80px -30px rgba(0, 0, 0, .6); }
+  .sbg-reel video, .sbg-reel img { display: block; width: 100%; height: auto; aspect-ratio: 860 / 880; border-radius: 12px; background: #f6f6f6; object-fit: cover; }
+  .sbg-reel figcaption { margin-top: 26px; font-size: .95rem; color: rgba(255, 255, 255, .72); }
+  .sbg-play {
+    position: absolute; right: 22px; bottom: 22px; width: 46px; height: 46px; border-radius: 50%; border: 0;
+    background: var(--ink); color: #fff; display: grid; place-items: center; cursor: pointer; font-size: 15px;
+    transition: transform .2s var(--ease), background .2s;
+  }
+  .sbg-play:hover { background: var(--cobalt); transform: scale(1.06); }
+  .sbg-play:focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; }
+
+  /* ---------- section shells ---------- */
+  .sbg-sec { padding: 120px 0; }
+  .sbg-sec h2 { font-weight: 900; font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1; letter-spacing: -.03em; color: var(--ink); margin: 0 0 18px; }
+  .sbg-sec .sbg-intro { font-size: 1.15rem; line-height: 1.6; color: var(--muted); max-width: 40em; margin: 0; }
+  .sbg-dark { background: var(--ink); color: #fff; }
+  .sbg-dark h2 { color: #fff; }
+  .sbg-dark .sbg-intro { color: rgba(255, 255, 255, .8); }
+  .sbg-white { background: #fff; }
+  .sbg-intro a { color: var(--cobalt); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; }
+  .sbg-intro a:hover { color: var(--ink); }
+
+  /* ---------- how it's built: chaptered player ---------- */
+  .sbg-how-grid { display: grid; grid-template-columns: 5fr 6fr; gap: 64px; align-items: start; margin-top: 56px; }
+  .sbg-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .sbg-steps li + li { margin-top: 6px; }
+  .sbg-step {
+    all: unset; box-sizing: border-box; display: grid; grid-template-columns: 44px 1fr; gap: 0 16px; width: 100%;
+    padding: 20px 22px; border-radius: 14px; cursor: pointer; color: var(--text);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+  .sbg-step:hover { background: rgba(255, 255, 255, .65); }
+  .sbg-step:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+  .sbg-step-n {
+    grid-row: span 2; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+    font-weight: 900; font-size: 1.15rem; background: #dfe4ee; color: var(--ink); font-variant-numeric: tabular-nums;
+    transition: background .25s ease, color .25s ease;
+  }
+  .sbg-step-t { font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em; line-height: 1.25; align-self: center; }
+  .sbg-step-d { font-size: 1.02rem; line-height: 1.6; color: var(--muted); margin-top: 6px; }
+  .sbg-step[aria-current="step"] { background: #fff; box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 18px 40px -24px rgba(0, 0, 0, .22); }
+  .sbg-step[aria-current="step"] .sbg-step-n { background: var(--bolt); }
+  .sbg-step-bar { grid-column: 2; height: 4px; border-radius: 2px; background: #e5e9f0; margin-top: 14px; overflow: hidden; display: none; }
+  .sbg-step[aria-current="step"] .sbg-step-bar { display: block; }
+  .sbg-step-bar i { display: block; height: 100%; width: 0; background: var(--cobalt); }
+  .sbg-how-aside { font-size: 1rem; line-height: 1.6; color: var(--muted); margin: 26px 22px 0; }
+
+  .sbg-player { position: sticky; top: 110px; margin: 0; }
+  .sbg-player-frame { border-radius: 20px; background: var(--ink); padding: 10px; box-shadow: 0 40px 80px -36px rgba(0, 0, 0, .35); }
+  .sbg-player video { display: block; width: 100%; height: auto; aspect-ratio: 860 / 880; border-radius: 12px; background: #f6f6f6; object-fit: cover; object-position: left top; }
+  .sbg-player figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 16px; font-size: .95rem; color: var(--muted); }
+  .sbg-player figcaption b { color: var(--ink); }
+
+  /* ---------- made with it: shelf of real screens ---------- */
+  .sbg-made-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 24px; }
+  .sbg-shelf {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 248px; gap: 28px; margin-top: 56px;
+    overflow-x: auto; --shelf-pad: max(24px, calc((100vw - 1180px) / 2 + 24px)); padding: 24px var(--shelf-pad) 40px; scroll-padding-inline: var(--shelf-pad); scroll-snap-type: x mandatory;
+    scrollbar-color: var(--bolt) rgba(255, 255, 255, .1); scrollbar-width: thin;
+  }
+  .sbg-shelf:focus-visible { outline: 3px solid var(--bolt); outline-offset: -3px; }
+  .sbg-shelf figure { margin: 0; scroll-snap-align: start; }
+  .sbg-shelf figure:nth-child(even) { margin-top: 48px; }
+  .sbg-shelf img { display: block; width: 100%; height: auto; border-radius: 17px; box-shadow: 0 30px 50px -28px rgba(0, 0, 0, .7); transition: transform .4s var(--ease); }
+  .sbg-shelf figure:hover img { transform: translateY(-8px) rotate(-1deg); }
+  .sbg-shelf figcaption { margin-top: 16px; font-size: .98rem; line-height: 1.45; color: rgba(255, 255, 255, .78); }
+  .sbg-shelf figcaption b { display: block; color: #fff; font-size: 1.05rem; }
+  .sbg-shelf-hint { font-size: .95rem; color: rgba(255, 255, 255, .7); }
+  .sbg-hint-touch { display: none; }
+  @media (hover: none) { .sbg-hint-mouse { display: none; } .sbg-hint-touch { display: inline; } }
+
+  /* ---------- the sidebar's contents ---------- */
+  .sbg-parts { display: grid; grid-template-columns: 4fr 7fr; gap: 64px; align-items: start; }
+  .sbg-parts-head { position: static; }
+  .sbg-sidebars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px; }
+  .sbg-sidebars figure { margin: 0; }
+  .sbg-sidebars img { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 24px 40px -26px rgba(0, 0, 0, .45); }
+  .sbg-sidebars figcaption { margin-top: 10px; font-size: .95rem; font-weight: 700; color: var(--ink); }
+  .sbg-parts dl { margin: 0; background: #fff; border-radius: 18px; padding: 12px 34px; box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 20px 44px -28px rgba(0, 0, 0, .2); }
+  .sbg-parts dl > div { display: grid; grid-template-columns: 170px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .sbg-parts dl > div:last-child { border-bottom: 0; }
+  .sbg-parts dt { font-weight: 800; font-size: 1.08rem; color: var(--ink); }
+  .sbg-parts dd { margin: 0; font-size: 1.02rem; line-height: 1.6; color: var(--text); }
+
+  /* ---------- comparison ---------- */
+  .sbg-table-card { margin-top: 48px; background: #fff; border-radius: 18px; padding: 10px 10px 10px 30px; box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 20px 44px -28px rgba(0, 0, 0, .2); overflow-x: auto; }
+  .sbg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 1.02rem; }
+  .sbg-table th, .sbg-table td { padding: 18px 20px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); line-height: 1.45; }
+  .sbg-table tr:last-child th, .sbg-table tr:last-child td { border-bottom: 0; }
+  .sbg-table thead th { font-weight: 800; color: var(--ink); font-size: 1.02rem; vertical-align: bottom; }
+  .sbg-table tbody th { font-weight: 700; color: var(--ink); width: 26%; padding-left: 0; }
+  .sbg-table thead th:first-child { padding-left: 0; }
+  .sbg-table .is-us { background: #fffbea; }
+  .sbg-table thead .is-us { background: var(--bolt); border-radius: 12px 12px 0 0; border-bottom-color: var(--bolt); }
+  .sbg-table tr:last-child .is-us { border-radius: 0 0 12px 12px; }
+  .sbg-table td.is-us { font-weight: 700; color: var(--ink); }
+
+  /* ---------- pricing ---------- */
+  .sbg-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 48px; max-width: 980px; }
+  .sbg-plan { border-radius: 20px; padding: 36px 38px 38px; background: #fff; box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 20px 44px -28px rgba(0, 0, 0, .2); display: flex; flex-direction: column; }
+  .sbg-plan h3 { font-weight: 900; font-size: 1.5rem; letter-spacing: -.02em; color: var(--ink); margin: 0; }
+  .sbg-price { font-weight: 900; font-size: 3.4rem; letter-spacing: -.04em; line-height: 1; margin: 18px 0 6px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .sbg-price small { font-size: 1.05rem; font-weight: 600; letter-spacing: 0; color: var(--muted); margin-left: 6px; }
+  .sbg-plan-sub { font-size: 1rem; color: var(--muted); margin: 0 0 22px; }
+  .sbg-plan ul { list-style: none; padding: 0; margin: 0 0 30px; }
+  .sbg-plan li { position: relative; padding-left: 30px; font-size: 1.04rem; line-height: 1.5; margin-bottom: 12px; color: var(--text); }
+  .sbg-plan li i { position: absolute; left: 0; top: 4px; color: var(--cobalt); }
+  .sbg-plan .sbg-btn { margin-top: auto; align-self: flex-start; }
+  .sbg-plan-pro { background: var(--ink); color: #fff; box-shadow: 14px 14px 0 var(--bolt), 0 30px 60px -30px rgba(0, 0, 0, .4); }
+  .sbg-plan-pro h3, .sbg-plan-pro .sbg-price { color: #fff; }
+  .sbg-plan-pro .sbg-price small, .sbg-plan-pro .sbg-plan-sub { color: rgba(255, 255, 255, .75); }
+  .sbg-plan-pro li { color: rgba(255, 255, 255, .92); }
+  .sbg-plan-pro li i { color: var(--bolt); }
+
+  /* ---------- faq ---------- */
+  .sbg-faq-grid { display: grid; grid-template-columns: 4fr 7fr; gap: 64px; align-items: start; }
+  .sbg-faq details { background: #fff; border-radius: 14px; margin-bottom: 10px; box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 12px 30px -24px rgba(0, 0, 0, .2); }
+  .sbg-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 26px; font-weight: 800; font-size: 1.12rem; color: var(--ink); border-radius: 14px; }
+  .sbg-faq summary::-webkit-details-marker { display: none; }
+  .sbg-faq summary i { color: var(--cobalt); transition: transform .25s var(--ease); flex: none; }
+  .sbg-faq details[open] summary i { transform: rotate(45deg); }
+  .sbg-faq summary:hover { color: var(--cobalt); }
+  .sbg-faq summary:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+  .sbg-faq details p { margin: 0; padding: 0 26px 24px; font-size: 1.05rem; line-height: 1.65; color: var(--text); max-width: 42em; }
+
+  /* ---------- closing band ---------- */
+  .sbg-close { position: relative; overflow: hidden; isolation: isolate; border-radius: 24px; padding: 72px 64px; color: #fff; margin-bottom: 120px; }
+  .sbg-close img { position: absolute; top: 0; right: 0; width: 46%; height: 100%; object-fit: cover; object-position: 30% 20%; z-index: -2; transition: transform .8s var(--ease); }
+  .sbg-close { background: var(--ink); }
+  .sbg-close::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--ink) 0%, var(--ink) 40%, var(--ink) 54%, rgba(10, 20, 48, .2) 72%, rgba(10, 20, 48, 0) 100%); }
+  .sbg-close:hover img { transform: scale(1.04); }
+  .sbg-close h2 { color: #fff; max-width: 10em; }
+  .sbg-close p { font-size: 1.15rem; line-height: 1.6; color: rgba(255, 255, 255, .86); max-width: 26em; margin: 0 0 32px; }
+
+  /* ---------- hero entrance: the one authored moment ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .sbg-hero h1 .ln > span { transform: translateY(105%); animation: sbg-rise .9s var(--ease) forwards; }
+    .js .sbg-hero h1 .ln + .ln > span { animation-delay: .12s; }
+    .js .sbg-lede, .js .sbg-actions { opacity: 0; animation: sbg-fade .8s var(--ease) .35s forwards; }
+    .js .sbg-reel { opacity: 0; transform: translateX(40px) rotate(1.5deg); animation: sbg-slide 1.1s var(--ease) .2s forwards; }
+  }
+  @keyframes sbg-rise { to { transform: none; } }
+  @keyframes sbg-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes sbg-slide { to { opacity: 1; transform: none; } }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 991px) {
+    .sbg-hero { padding: 116px 0 96px; }
+    .sbg-hero-grid, .sbg-how-grid, .sbg-parts, .sbg-faq-grid { grid-template-columns: 1fr; gap: 48px; }
+    .sbg-reel { max-width: 560px; }
+    .sbg-player { position: relative; top: 0; order: -1; max-width: 560px; }
+    .sbg-parts-head { position: static; }
+    .sbg-sec { padding: 96px 0; }
+  }
+  @media (max-width: 640px) {
+    .sbg-wrap { padding: 0 20px; }
+    .sbg-hero { padding: 104px 0 80px; }
+    .sbg-hero h1 { font-size: 2.6rem; }
+    .sbg-lede { font-size: 1.08rem; }
+    .sbg-actions .sbg-btn { width: 100%; justify-content: center; }
+    .sbg-reel-frame { box-shadow: 8px 8px 0 rgba(0, 0, 0, .35), 0 30px 60px -30px rgba(0, 0, 0, .6); padding: 6px; }
+    .sbg-sec { padding: 80px 0; }
+    .sbg-step { padding: 16px 14px; grid-template-columns: 38px 1fr; gap: 0 12px; }
+    .sbg-step-n { width: 38px; height: 38px; }
+    .sbg-how-aside { margin: 22px 14px 0; }
+    .sbg-made-head { grid-template-columns: 1fr; }
+    .sbg-shelf { grid-auto-columns: 200px; gap: 20px; --shelf-pad: 20px; }
+    .sbg-parts dl { padding: 6px 22px; }
+    .sbg-parts dl > div { grid-template-columns: 1fr; gap: 4px; }
+    .sbg-sidebars { grid-template-columns: 1fr; }
+    .sbg-sidebars img { height: 460px; object-fit: cover; object-position: top; }
+    .sbg-table-card { padding: 6px 18px; }
+    .sbg-table thead { display: none; }
+    .sbg-table, .sbg-table tbody, .sbg-table tr, .sbg-table th, .sbg-table td { display: block; width: 100%; }
+    .sbg-table tr { padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .sbg-table tr:last-child { border-bottom: 0; }
+    .sbg-table th, .sbg-table td { border: 0; padding: 4px 0; }
+    .sbg-table tbody th { width: 100%; font-size: 1.08rem; padding-bottom: 8px; }
+    .sbg-table td::before { content: attr(data-col) ": "; font-weight: 700; color: var(--ink); }
+    .sbg-table td.is-us { background: #fffbea; padding: 8px 10px; border-radius: 8px; margin: 2px 0 4px; }
+    .sbg-plans { grid-template-columns: 1fr; gap: 36px; }
+    .sbg-plan { padding: 30px 26px; }
+    .sbg-plan-pro { box-shadow: 8px 8px 0 var(--bolt); }
+    .sbg-plan .sbg-btn { align-self: stretch; justify-content: center; }
+    .sbg-faq summary { padding: 18px 20px; font-size: 1.05rem; }
+    .sbg-faq details p { padding: 0 20px 20px; }
+    .sbg-close { padding: 48px 26px; border-radius: 18px; margin-bottom: 80px; }
+    .sbg-close img { width: 100%; }
+    .sbg-close::after { background: rgba(10, 20, 48, .9); }
+  }
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+
+<body class="sbg">
+<header id="header"></header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="sbg-hero" aria-labelledby="sbg-h1">
+  <div class="sbg-wrap sbg-hero-grid">
+    <div>
+      <h1 id="sbg-h1">
+        <span class="ln"><span>Screen Builder.</span></span>
+        <span class="ln"><span>App screens, no designer.</span></span>
+      </h1>
+      <p class="sbg-lede">A screen builder puts an app screen together from ready-made parts. <strong>Click a navigation bar, a photo card or a button and it lands, already styled, on a real phone screen.</strong> Set your colours once, then download the screen as a PNG.</p>
+      <div class="sbg-actions">
+        <a class="sbg-btn sbg-btn-bolt" href="/screen-builder/">Open Screen Builder <i class="fa-solid fa-bolt" aria-hidden="true"></i></a>
+        <span class="sbg-note"><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Free for two screens. No install, no signup.</span>
+      </div>
+    </div>
+
+    <figure class="sbg-reel">
+      <div class="sbg-reel-frame">
+        <video id="sbg-hero-video" muted loop playsinline preload="metadata" poster="img/screen-builder-guide/hero-build-poster.jpg" width="860" height="880" aria-label="Screen recording: a coffee-shop app screen built in Screen Builder">
+          <source src="img/screen-builder-guide/hero-build.mp4" type="video/mp4">
+        </video>
+        <button type="button" class="sbg-play" id="sbg-hero-toggle" aria-label="Pause video"><i class="fa-solid fa-pause" aria-hidden="true"></i></button>
+      </div>
+      <figcaption>The real tool, sped up 2×: a coffee-shop screen from empty phone to finished in about a minute.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ HOW IT'S BUILT ============ -->
+<section class="sbg-sec" id="how" aria-labelledby="how-h">
+  <div class="sbg-wrap">
+    <h2 id="how-h">How a screen gets built</h2>
+    <p class="sbg-intro">Five moves, filmed in the real tool while building a vegetable-box app for a small farm. Pick one to watch it, or leave them to play through in order.</p>
+
+    <div class="sbg-how-grid">
+      <div>
+        <ol class="sbg-steps" id="sbg-steps">
+          <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-add.mp4" data-poster="img/screen-builder-guide/farm-step-add-poster.jpg" aria-current="step">
+            <span class="sbg-step-n" aria-hidden="true">1</span><span class="sbg-step-t">Click a component</span>
+            <span class="sbg-step-d">Each button in the sidebar drops its piece onto the selected screen, already styled. The farm got its top bar and a photo hero in about ten seconds.</span>
+            <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
+          <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-edit.mp4" data-poster="img/screen-builder-guide/farm-step-edit-poster.jpg">
+            <span class="sbg-step-n" aria-hidden="true">2</span><span class="sbg-step-t">Type over the text</span>
+            <span class="sbg-step-d">Click any heading or paragraph and type over it. There are no text boxes to draw and no layers to manage, so the slow part is deciding what the farm should say about Wednesday's delivery.</span>
+            <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
+          <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-photo.mp4" data-poster="img/screen-builder-guide/farm-step-photo-poster.jpg">
+            <span class="sbg-step-n" aria-hidden="true">3</span><span class="sbg-step-t">Drop in your photos</span>
+            <span class="sbg-step-d">Click an image slot and pick a file from your computer. If the photo fights the layout, the arrows above the card flip through its other layouts until one fits.</span>
+            <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
+          <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-theme.mp4" data-poster="img/screen-builder-guide/farm-step-theme-poster.jpg">
+            <span class="sbg-step-n" aria-hidden="true">4</span><span class="sbg-step-t">Pick your colours once</span>
+            <span class="sbg-step-d">The Theme tab holds a primary, secondary and accent colour plus two fonts. Drag the wheel from stock blue to field green and every button, bar and icon on every screen follows.</span>
+            <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
+          <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-screens.mp4" data-poster="img/screen-builder-guide/farm-step-screens-poster.jpg">
+            <span class="sbg-step-n" aria-hidden="true">5</span><span class="sbg-step-t">Add screens, then download</span>
+            <span class="sbg-step-d">The round + adds the next screen in the flow. Download PNG Image saves each screen as a picture for your deck, your spec or your developer.</span>
+            <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
+        </ol>
+        <p class="sbg-how-aside">To rearrange, hover over anything on a screen and drag its ⋮ handle; the red × deletes it. Screens come in twenty preset sizes, from a Galaxy Z Flip phone up to an iPad Pro and a full HD desktop.</p>
+      </div>
+
+      <figure class="sbg-player">
+        <div class="sbg-player-frame">
+          <video id="sbg-step-video" muted playsinline preload="metadata" poster="img/screen-builder-guide/farm-step-add-poster.jpg" width="860" height="880" aria-label="Screen recording of the selected step">
+            <source src="img/screen-builder-guide/farm-step-add.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption><span id="sbg-step-label"><b>Step 1:</b> Click a component</span><span>Real recordings, trimmed to fit</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MADE WITH IT ============ -->
+<section class="sbg-sec sbg-dark" id="made" aria-labelledby="made-h">
+  <div class="sbg-wrap sbg-made-head">
+    <div>
+      <h2 id="made-h">Made in Screen Builder</h2>
+      <p class="sbg-intro">Ten screens from eight projects, all built from the same sidebar. The theme and the photos do the heavy lifting; nobody opened a design file for any of them.</p>
+    </div>
+    <p class="sbg-shelf-hint"><span class="sbg-hint-mouse">Scroll sideways</span><span class="sbg-hint-touch">Swipe</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></p>
+  </div>
+  <div class="sbg-shelf" tabindex="0" aria-label="Screens made in Screen Builder">
+    <figure><img src="img/screen-builder-guide/made-tea-home.webp" width="560" height="1213" loading="lazy" alt="Your Cup of Tea app home screen: a woodblock-print hero, a large Experience Tea heading and green accordions"><figcaption><b>Your Cup of Tea</b>Tea-tour events, green theme, Archivo Narrow</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-tea-cover.webp" width="560" height="1223" loading="lazy" alt="Your Cup of Tea product screen with a book cover image, a green icon bar and a Buy Now button"><figcaption><b>Your Cup of Tea, screen 3</b>A product page built from an image, an icon bar and a button</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-collective-home.webp" width="560" height="1223" loading="lazy" alt="The Design Collective home screen with an illustrated banner, a Join button, a feature card and an alert"><figcaption><b>The Design Collective</b>Community sign-up, navy and orange</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-collective-team.webp" width="560" height="1223" loading="lazy" alt="The Design Collective team screen with a success message, a video card and a Join a Team list"><figcaption><b>The Design Collective, screen 2</b>Video card, call to action and a team list</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-adventure.webp" width="560" height="1197" loading="lazy" alt="Adventure travel app on a dark theme with a purple hero, a seaside rock photo card and a Win at Life badge"><figcaption><b>Adventure</b>Travel app on a dark theme</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-dashboard.webp" width="560" height="1204" loading="lazy" alt="Dark dashboard screen with a 95 percent satisfaction stat, a blue bar graph and a pink card"><figcaption><b>Satisfaction dashboard</b>Stat card, bar graph and colour card</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-summer.webp" width="560" height="1132" loading="lazy" alt="Summer Vacation screen with a beach photo, a three-step tracker, a checklist and a party-mode toggle"><figcaption><b>Summer Vacation</b>Progress tracker, checklist and toggle</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-dog-gallery.webp" width="560" height="1215" loading="lazy" alt="Dog illustration gallery with ghost and filled red buttons and a progress bar"><figcaption><b>Dog gallery</b>Image grid, serif headings, red theme</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-night.webp" width="560" height="1204" loading="lazy" alt="Landing screen for Screen Builder Beta with a silhouette photo, pink chips, a step tracker and an orange Go For It button"><figcaption><b>Screen Builder beta</b>A landing screen for the tool, made in the tool</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-welcome-dark.webp" width="560" height="1182" loading="lazy" alt="Dark two-column screen with a welcome hero, an image, buttons, chips and checkboxes"><figcaption><b>Two-column layout</b>Columns component on a dark theme</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ THE SIDEBAR ============ -->
+<section class="sbg-sec" id="components" aria-labelledby="parts-h">
+  <div class="sbg-wrap sbg-parts">
+    <div class="sbg-parts-head">
+      <h2 id="parts-h">What's in the sidebar</h2>
+      <p class="sbg-intro">More than fifty parts, most with several layouts each. These are the names you'll find in the tool, grouped the way an app is usually put together.</p>
+      <div class="sbg-sidebars">
+        <figure><img src="img/screen-builder-guide/sidebar-elements.webp" width="320" height="1080" loading="lazy" alt="The Elements tab of the Screen Builder sidebar: Adjustable Space, Icon, Image, Blank Card, Button and form inputs"><figcaption>Elements tab</figcaption></figure>
+        <figure><img src="img/screen-builder-guide/sidebar-components.webp" width="320" height="1080" loading="lazy" alt="The Components tab of the Screen Builder sidebar: Data Table, Pills, Progress Tracker, Footer, charts and chat parts, with the green Download PNG Image button"><figcaption>Components tab</figcaption></figure>
+      </div>
+    </div>
+    <dl>
+      <div><dt>Building blocks</dt><dd>Adjustable Space, Icon, Image, Button, Divider Line, Blank Card, Color Block, Columns</dd></div>
+      <div><dt>Text</dt><dd>Heading (H1 to H6), Paragraph, Block Quote, Bullet List, Field Label</dd></div>
+      <div><dt>Forms</dt><dd>Input Field, Text Area, Checkbox, Radio Button, Form Group, Dropdown, Toggle Switch, Range Slider, Date Picker, File Upload</dd></div>
+      <div><dt>Navigation</dt><dd>Top Navigation Bar, Sidebar, Bottom Navigation Bar, Tabs, Search Bar, Pagination, Floating Action Button, Bottom Sheet, Footer</dd></div>
+      <div><dt>Content</dt><dd>Hero Section, Image Card, Text Card, List Item, Comparison Card, Accordion, Avatar, Pills</dd></div>
+      <div><dt>Feedback</dt><dd>Alert, Notification, Modal Pop-up, Progress Indicator, Progress Tracker</dd></div>
+      <div><dt>Media and data</dt><dd>Image Gallery, Video, Music Player, Data Table, Bar Graph, Pie Graph</dd></div>
+      <div><dt>Chat</dt><dd>Left Chat Bubble, Right Chat Bubble, Chat Input, Keyboard</dd></div>
+      <div><dt>Your own</dt><dd>The Custom Component Editor takes HTML with inline styles, previews it and adds it to the screen.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section class="sbg-sec sbg-white" id="compare" aria-labelledby="cmp-h">
+  <div class="sbg-wrap">
+    <h2 id="cmp-h">Where it fits</h2>
+    <p class="sbg-intro">Screen Builder is for the first version of a screen, when the question is whether it works at all. Here's how it compares with the two things people usually reach for.</p>
+    <div class="sbg-table-card">
+      <table class="sbg-table">
+        <thead><tr><th scope="col"><span class="sr-only">Task</span></th><th scope="col" class="is-us">Screen Builder</th><th scope="col">A design tool like Figma</th><th scope="col">A paper sketch</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Getting started</th><td class="is-us" data-col="Screen Builder">Open the page</td><td data-col="Design tool">Sign up, then start a file</td><td data-col="Paper">Find a pen</td></tr>
+          <tr><th scope="row">The first screen</th><td class="is-us" data-col="Screen Builder">Assembled from ready parts</td><td data-col="Design tool">Drawn in frames, or from a UI kit</td><td data-col="Paper">Drawn by hand</td></tr>
+          <tr><th scope="row">Design skills needed</th><td class="is-us" data-col="Screen Builder">None; parts arrive styled</td><td data-col="Design tool">Some, to make it look right</td><td data-col="Paper">None, and it shows</td></tr>
+          <tr><th scope="row">Changing the brand colour</th><td class="is-us" data-col="Screen Builder">Once; every screen follows</td><td data-col="Design tool">Through styles you set up first</td><td data-col="Paper">Redraw every screen</td></tr>
+          <tr><th scope="row">Device sizes</th><td class="is-us" data-col="Screen Builder">Twenty presets, phone to desktop</td><td data-col="Design tool">Any frame size</td><td data-col="Paper">Whatever fits the page</td></tr>
+          <tr><th scope="row">Freeform drawing</th><td class="is-us" data-col="Screen Builder">No, components only</td><td data-col="Design tool">Yes</td><td data-col="Paper">Yes</td></tr>
+          <tr><th scope="row">Clickable prototype</th><td class="is-us" data-col="Screen Builder">No</td><td data-col="Design tool">Yes</td><td data-col="Paper">No</td></tr>
+          <tr><th scope="row">What you hand over</th><td class="is-us" data-col="Screen Builder">PNG images</td><td data-col="Design tool">PNG, SVG, PDF and specs</td><td data-col="Paper">A photo of the page</td></tr>
+          <tr><th scope="row">Cost</th><td class="is-us" data-col="Screen Builder">Free, or $6 a month for Pro</td><td data-col="Design tool">Free tier, then paid seats</td><td data-col="Paper">The paper</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="sbg-sec" id="pricing" aria-labelledby="price-h">
+  <div class="sbg-wrap">
+    <h2 id="price-h">Free until you need more</h2>
+    <p class="sbg-intro">Start without an account. Sign in when you want to save your work, and go Pro only when you hit a limit.</p>
+    <div class="sbg-plans">
+      <div class="sbg-plan">
+        <h3>Free</h3>
+        <p class="sbg-price">$0</p>
+        <p class="sbg-plan-sub">No card, no trial clock.</p>
+        <ul>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i>Two screens without an account</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i>A third screen and two saved projects with a free account (Google or email)</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i>Up to 28 components per project</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i>Every theme setting and PNG download</li>
+        </ul>
+        <a class="sbg-btn sbg-btn-ink" href="/screen-builder/">Start free <i class="fa-solid fa-bolt" aria-hidden="true"></i></a>
+      </div>
+      <div class="sbg-plan sbg-plan-pro">
+        <h3>Pro</h3>
+        <p class="sbg-price">$6<small>a month</small></p>
+        <p class="sbg-plan-sub">Or $60 for a year, which works out to $5 a month.</p>
+        <ul>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i>Unlimited projects and screens</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i>No cap on components per project</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i>Your images saved with your projects</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i>Early access to new components</li>
+        </ul>
+        <a class="sbg-btn sbg-btn-bolt" href="/screen-builder/">Open Screen Builder <i class="fa-solid fa-bolt" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sbg-sec sbg-faq" id="faq" aria-labelledby="faq-h" style="padding-top:0">
+  <div class="sbg-wrap sbg-faq-grid">
+    <div>
+      <h2 id="faq-h">Questions people ask</h2>
+      <p class="sbg-intro">Something not covered? <a href="/contact.html">Ask us directly</a>.</p>
+    </div>
+    <div>
+      <details open><summary>What is a screen builder?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>A screen builder assembles an app screen from ready-made parts instead of drawn shapes. You place a navigation bar, a heading, a form and a card on a device-sized frame and see the layout before anyone writes code.</p></details>
+      <details><summary>Do I need design skills?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Every component arrives already styled, and one theme sets the colours and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud colour, and the Theme tab takes that back in one drag.</p></details>
+      <details><summary>Is Screen Builder free?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Yes. You can build two screens without an account. A free account adds a third screen, two saved projects and up to 28 components per project. Pro, at $6 a month or $60 a year, removes the limits.</p></details>
+      <details><summary>Do I need to install anything?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Screen Builder runs in a desktop web browser. You sign in, with Google or an email address, only when you want to save projects.</p></details>
+      <details><summary>How do I export my screens?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Choose Download PNG Image at the bottom of the sidebar. Each screen saves as a picture you can drop into a deck, a ticket or a message.</p></details>
+      <details><summary>Can I make my own components?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Yes. The Custom Component Editor takes a block of HTML with inline styles, previews it, and adds it to the selected screen.</p></details>
+      <details><summary>Does it replace Figma?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Screen Builder is quicker for the first layout, when the question is whether a screen works at all. Pixel-level drawing, clickable prototypes and a shared design system belong in Figma.</p></details>
+      <details><summary>Does it produce code?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. It produces pictures of screens for planning and discussion. A developer builds the real thing from them, and is usually glad to get a picture instead of a paragraph.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSE ============ -->
+<div class="sbg-wrap">
+  <section class="sbg-close sbg-sec" aria-labelledby="close-h">
+    <img src="img/screen-builder-guide/tea-project-canvas.webp" alt="" width="1600" height="912" loading="lazy">
+    <h2 id="close-h">Your first screen is two clicks away.</h2>
+    <p>No account for the first two screens, nothing to install. Open it, click a navigation bar, and keep going.</p>
+    <a class="sbg-btn sbg-btn-bolt" href="/screen-builder/">Open Screen Builder <i class="fa-solid fa-bolt" aria-hidden="true"></i></a>
+  </section>
+</div>
+
+</main>
+
+<div class="footer" id="footer">
+  <!-- Replaced by footer.html on load. Static so every page in the nav is reachable without JavaScript. -->
+  <a href="/" class="home">Home</a>
+  <a href="/Process.html" class="process">Process</a>
+  <a href="/practice.html" class="practice">Practice</a>
+  <a href="/Pricing.html" class="pricing">Services</a>
+  <a href="/collective-info.html" class="collective">Collective</a>
+  <a href="/blog/" class="sparks">Sparks Blog</a>
+  <a href="/downloads.html" class="downloads">Offerings</a>
+  <a href="/experience-builder.html" class="expBuilder">Experience Builder</a>
+  <a href="/screen-builder/" class="screenBuilder">Screen Builder</a>
+  <a href="/d-tools/decision-tools.html" class="decision-tools">Decision Tools</a>
+  <a href="/privacy-policy.html" class="privacyPolicyPage">Privacy Policy</a>
+  <a href="/tos.html" class="tos">Terms of Service</a>
+  <a href="/contact.html" class="contact2">Contact Us</a>
+</div>
+
+<script>
+$(document).ready(function () {
+  $('#footer').load("footer.html");
+  $('#header').load("header.html");
+});
+
+(function () {
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- hero reel: autoplay unless reduced motion, with a pause control ---------- */
+  var hv = document.getElementById('sbg-hero-video');
+  var ht = document.getElementById('sbg-hero-toggle');
+  function heroState() {
+    var playing = !hv.paused;
+    ht.setAttribute('aria-label', playing ? 'Pause video' : 'Play video');
+    ht.innerHTML = '<i class="fa-solid fa-' + (playing ? 'pause' : 'play') + '" aria-hidden="true"></i>';
+  }
+  hv.addEventListener('play', heroState);
+  hv.addEventListener('pause', heroState);
+  ht.addEventListener('click', function () { if (hv.paused) hv.play(); else hv.pause(); });
+  if (!still) { var p = hv.play(); if (p && p.catch) p.catch(heroState); } else { heroState(); }
+
+  /* ---------- chaptered player: steps drive the clip, clips advance the steps ---------- */
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.sbg-step'));
+  var sv = document.getElementById('sbg-step-video');
+  var label = document.getElementById('sbg-step-label');
+  var current = 0, inView = false;
+
+  function select(i, play) {
+    current = i;
+    steps.forEach(function (s, k) {
+      if (k === i) s.setAttribute('aria-current', 'step'); else s.removeAttribute('aria-current');
+      s.querySelector('.sbg-step-bar i').style.width = '0';
+    });
+    var s = steps[i];
+    sv.poster = s.dataset.poster;
+    sv.src = s.dataset.src;
+    label.innerHTML = '<b>Step ' + (i + 1) + ':</b> ' + s.querySelector('.sbg-step-t').textContent;
+    if (play) { var p = sv.play(); if (p && p.catch) p.catch(function () {}); }
+  }
+  steps.forEach(function (s, i) {
+    s.addEventListener('click', function () { select(i, true); });
+  });
+  sv.addEventListener('timeupdate', function () {
+    if (!sv.duration) return;
+    steps[current].querySelector('.sbg-step-bar i').style.width = (sv.currentTime / sv.duration * 100) + '%';
+  });
+  sv.addEventListener('ended', function () {
+    if (still) return;
+    select((current + 1) % steps.length, inView);
+  });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        inView = e.isIntersecting;
+        if (inView && !still) { var p = sv.play(); if (p && p.catch) p.catch(function () {}); }
+        else if (!inView) sv.pause();
+      });
+    }, { threshold: 0.45 }).observe(sv);
+  }
+  sv.addEventListener('click', function () { if (sv.paused) sv.play(); else sv.pause(); });
+})();
+</script>
+</body>
+</html>

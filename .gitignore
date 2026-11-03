@@ -74,3 +74,16 @@ blog-pipeline/
 
 # /brag launch-video output (renders, intermediates)
 brag-output*/
+
+# Project-local Claude Code skills (installed via npx skills)
+.claude/skills/
+skills-lock.json
+
+# Design-skill working files (impeccable, taste-skill): briefs, direction, review shots.
+# Kept locally so the next run picks up where this one left off; not site content.
+.impeccable/
+.taste-skill/
+PRODUCT.md
+DESIGN.md
+# Image provenance sidecars written by the design skills (e.g. foo.webp.json)
+img/**/*.json
