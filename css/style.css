@@ -3025,7 +3025,7 @@ h6 {
      paint over an un-indexed fixed element), below the sticky header (990) */
   z-index: 980;
   /* a bare outline disappears over screenshots and dark sections */
-  background: #fff;
+  background: #f7fafff0;
 }
 
 .back-to-top:focus-visible{
