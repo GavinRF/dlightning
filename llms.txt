@@ -51,7 +51,7 @@ A collaborative product validation platform built by Dlightning to help teams va
 - Unlimited projects and extended documentation (Pro)
 
 ### Screen Builder
-A free browser tool for mocking up mobile app screens from 50+ ready components, themed once across every screen and exported as PNG images. Free for two screens without an account; Pro is $6/month. Tool: https://dlightning.org/screen-builder/ · Guide: https://dlightning.org/screen-builder-guide.html
+A free browser tool for designing app and web screens from 50+ ready components. Layouts are responsive by default across twenty phone, tablet and desktop sizes, themed once across every screen and exported as PNG images. Free for two screens without an account; Pro is $6/month. Tool: https://dlightning.org/screen-builder/ · Guide: https://dlightning.org/screen-builder-guide.html
 
 ## Design Process
 

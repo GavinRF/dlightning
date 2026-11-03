@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Screen Builder: Free Mobile App Mockup Tool in Your Browser | Dlightning</title>
-<meta name="description" content="Screen Builder is a free browser tool for designing mobile app screens from ready-made parts. Click in 50+ components, set colors once for every screen, and download each screen as a PNG.">
+<title>Screen Builder: Free App &amp; Web Screen Mockup Tool | Dlightning</title>
+<meta name="description" content="Screen Builder is a free browser tool for designing app and web screens from ready-made parts, with responsive layouts from phone to desktop. Click in 50+ components, set colors once, and download each screen as a PNG.">
 <link rel="canonical" href="https://dlightning.org/screen-builder-guide.html">
 <meta name="author" content="Dlightning">
 
@@ -40,7 +40,7 @@
   "url": "https://dlightning.org/screen-builder/",
   "applicationCategory": "DesignApplication",
   "operatingSystem": "Any (web browser)",
-  "description": "A free browser tool for mocking up mobile app screens from ready-made components, themed once and exported as PNG images.",
+  "description": "A free browser tool for designing app and web screens from ready-made components. Layouts are responsive by default across phone, tablet and desktop sizes, themed once and exported as PNG images.",
   "publisher": { "@type": "Organization", "name": "Dlightning", "url": "https://dlightning.org/" },
   "offers": [
     { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD" },
@@ -67,16 +67,20 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "What is a screen builder?", "acceptedAnswer": { "@type": "Answer", "text": "A screen builder assembles an app screen from ready-made parts instead of drawn shapes. You place a navigation bar, a heading, a form and a card on a device-sized frame and see the layout before anyone writes code." } },
-    { "@type": "Question", "name": "Do I need design skills?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every component arrives already styled, and one theme sets the colors and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud colour, and the Theme tab takes that back in one drag." } },
+    { "@type": "Question", "name": "Is it only for mobile screens?", "acceptedAnswer": { "@type": "Answer", "text": "No. Screens come in twenty preset sizes, from phones through tablets to a full HD desktop, and layouts are responsive by default. Every part stretches to the width of its screen, and Columns wrap onto a new row when a screen gets too narrow, so one set of parts works at every size." } },
+    { "@type": "Question", "name": "Do I need design skills?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every component arrives already styled, and one theme sets the colors and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud color, and the Theme tab takes that back in one drag." } },
     { "@type": "Question", "name": "Is Screen Builder free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can build two screens without an account. A free account adds a third screen, two saved projects and up to 28 components per project. Pro, at $6 a month or $60 a year, removes the limits." } },
     { "@type": "Question", "name": "Do I need to install anything?", "acceptedAnswer": { "@type": "Answer", "text": "No. Screen Builder runs in a desktop web browser. You sign in, with Google or an email address, only when you want to save projects." } },
     { "@type": "Question", "name": "How do I export my screens?", "acceptedAnswer": { "@type": "Answer", "text": "Choose Download PNG Image at the bottom of the sidebar. Each screen saves as a picture you can drop into a deck, a ticket or a message." } },
-    { "@type": "Question", "name": "Can I make my own components?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Custom Component Editor takes a block of HTML with inline styles, previews it, and adds it to the selected screen." } },
+    { "@type": "Question", "name": "Why can't I draw shapes?", "acceptedAnswer": { "@type": "Answer", "text": "Drawing tools are left out on purpose. With no rectangle tool and no per-element letter spacing, the conversation stays on whether the right content is on the screen in the right order. Project-wide settings in the Theme tab handle the look: two fonts, three colors, corner radius, the gap between parts and the padding inside each screen." } },
     { "@type": "Question", "name": "Does it replace Figma?", "acceptedAnswer": { "@type": "Answer", "text": "No. Screen Builder is quicker for the first layout, when the question is whether a screen works at all. Pixel-level drawing, clickable prototypes and a shared design system belong in Figma." } },
-    { "@type": "Question", "name": "Does it produce code?", "acceptedAnswer": { "@type": "Answer", "text": "No. It produces pictures of screens for planning and discussion. A developer builds the real thing from them, and is usually glad to get a picture instead of a paragraph." } }
+    { "@type": "Question", "name": "Does it produce code?", "acceptedAnswer": { "@type": "Answer", "text": "No. It produces pictures of screens for planning and discussion. That's deliberate: a picture invites feedback, where code looks like a commitment to ship. A developer builds the real thing from them, and is usually glad to get a picture instead of a paragraph." } }
   ]
 }
 </script>
+<!-- Removed from the FAQ data while the Custom Component Editor is non-functional; add back to mainEntity with the visible FAQ:
+    { "@type": "Question", "name": "Can I make my own components?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Custom Component Editor takes a block of HTML with inline styles, previews it, and adds it to the selected screen." } },
+-->
 
 <style>
   :root {
@@ -156,6 +160,15 @@
   .sbg-dark h2 { color: #fff; }
   .sbg-dark .sbg-intro { color: rgba(255, 255, 255, .8); }
   .sbg-white { background: #fff; }
+
+  /* ---------- responsive by default ---------- */
+  .sbg-resp { display: grid; grid-template-columns: 4fr 7fr; gap: 64px; align-items: center; }
+  .sbg-resp figure { margin: 0; }
+  .sbg-resp .sbg-intro + .sbg-intro { margin-top: 16px; }
+  .sbg-resp-frame { border-radius: 20px; background: var(--ink); padding: 10px; box-shadow: 0 40px 80px -36px rgba(0, 0, 0, .35); }
+  .sbg-resp video { display: block; width: 100%; height: auto; aspect-ratio: 1140 / 854; border-radius: 12px; background: #1a1a1a; cursor: pointer; }
+  .sbg-resp figcaption { margin-top: 14px; font-size: .95rem; color: var(--text); }
+  @media (max-width: 960px) { .sbg-resp { grid-template-columns: 1fr; gap: 36px; } }
   .sbg-intro a { color: var(--cobalt); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; }
   .sbg-intro a:hover { color: var(--ink); }
 
@@ -200,6 +213,8 @@
   .sbg-shelf:focus-visible { outline: 3px solid var(--bolt); outline-offset: -3px; }
   .sbg-shelf figure { margin: 0; scroll-snap-align: start; }
   .sbg-shelf figure:nth-child(even) { margin-top: 48px; }
+  .sbg-shelf figure.is-wide { grid-column: span 3; }
+  .sbg-shelf figure.is-mid { grid-column: span 2; }
   .sbg-shelf img { display: block; width: 100%; height: auto; border-radius: 17px; box-shadow: 0 30px 50px -28px rgba(0, 0, 0, .7); transition: transform .4s var(--ease); }
   .sbg-shelf figure:hover img { transform: translateY(-8px) rotate(-1deg); }
   .sbg-shelf figcaption { margin-top: 16px; font-size: .98rem; line-height: 1.45; color: rgba(255, 255, 255, .78); }
@@ -209,13 +224,19 @@
   @media (hover: none) { .sbg-hint-mouse { display: none; } .sbg-hint-touch { display: inline; } }
 
   /* ---------- the sidebar's contents ---------- */
-  .sbg-parts { display: grid; grid-template-columns: 4fr 7fr; gap: 64px; align-items: start; }
-  .sbg-parts-head { position: static; }
-  .sbg-sidebars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px; }
+  .sbg-parts { display: grid; grid-template-columns: 260px 1fr; column-gap: 72px; row-gap: 8px; align-items: start; }
+  .sbg-parts-head { grid-column: 1 / -1; position: static; }
+  .sbg-sb-tabs { display: flex; gap: 6px; margin-top: 32px; }
+  .sbg-sb-tabs[hidden] { display: none; }
+  .sbg-sb-tabs button { font: inherit; font-size: .88rem; font-weight: 700; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--ink); cursor: pointer; }
+  .sbg-sb-tabs button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .sbg-sb-tabs button:focus-visible { outline: 3px solid var(--bolt); outline-offset: 2px; }
+  .sbg-sidebars { display: grid; gap: 24px; margin-top: 18px; max-width: 260px; }
   .sbg-sidebars figure { margin: 0; }
-  .sbg-sidebars img { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 24px 40px -26px rgba(0, 0, 0, .45); }
+  .sbg-sidebars figure[hidden] { display: none; }
+  .sbg-sidebars img { display: block; width: 82.5%; height: auto; border-radius: 12px; box-shadow: 0 24px 40px -26px rgba(0, 0, 0, .45); }
   .sbg-sidebars figcaption { margin-top: 10px; font-size: .95rem; font-weight: 700; color: var(--ink); }
-  .sbg-parts dl { margin: 0; background: #fff; border-radius: 18px; padding: 12px 34px; box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 20px 44px -28px rgba(0, 0, 0, .2); }
+  .sbg-parts dl { margin: 32px 0 0; background: #fff; border-radius: 18px; padding: 12px 34px; box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 20px 44px -28px rgba(0, 0, 0, .2); }
   .sbg-parts dl > div { display: grid; grid-template-columns: 170px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); }
   .sbg-parts dl > div:last-child { border-bottom: 0; }
   .sbg-parts dt { font-weight: 800; font-size: 1.08rem; color: var(--ink); }
@@ -306,8 +327,8 @@
     .sbg-shelf { grid-auto-columns: 200px; gap: 20px; --shelf-pad: 20px; }
     .sbg-parts dl { padding: 6px 22px; }
     .sbg-parts dl > div { grid-template-columns: 1fr; gap: 4px; }
-    .sbg-sidebars { grid-template-columns: 1fr; }
-    .sbg-sidebars img { height: 460px; object-fit: cover; object-position: top; }
+    .sbg-sidebars { margin-inline: auto; }
+    .sbg-sb-tabs { justify-content: center; }
     .sbg-table-card { padding: 6px 18px; }
     .sbg-table thead { display: none; }
     .sbg-table, .sbg-table tbody, .sbg-table tr, .sbg-table th, .sbg-table td { display: block; width: 100%; }
@@ -344,7 +365,7 @@
         <span class="ln"><span>Screen Builder.</span></span>
         <span class="ln"><span>App screens from <span class="nw">ready-made</span> parts.</span></span>
       </h1>
-      <p class="sbg-lede">Our screen builder lets you design an app screen by clicking pieces into place. <strong>Click a navigation bar, a photo card or a button and it lands, already styled, on a real phone screen.</strong> Set your colors once, then download the screen as a PNG.</p>
+      <p class="sbg-lede">Our screen builder lets you design an app screen by clicking pieces into place. <strong>Click a navigation bar, a photo card or a button and it lands, already styled, on a phone, tablet or desktop screen.</strong> Set your colors once, then download the screen as a PNG.</p>
       <div class="sbg-actions">
         <a class="sbg-btn sbg-btn-bolt" href="/screen-builder/">Open Screen Builder <i class="fa-solid fa-bolt" aria-hidden="true"></i></a>
         <span class="sbg-note"><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Free for two screens. No install, no signup.</span>
@@ -374,11 +395,11 @@
         <ol class="sbg-steps" id="sbg-steps">
           <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-add.mp4" data-poster="img/screen-builder-guide/farm-step-add-poster.jpg" aria-current="step">
             <span class="sbg-step-n" aria-hidden="true">1</span><span class="sbg-step-t">Click a component</span>
-            <span class="sbg-step-d">Each button in the sidebar drops its piece onto the selected screen, already styled. The farm got its top bar and a photo hero in about ten seconds.</span>
+            <span class="sbg-step-d">Each button in the sidebar drops a component onto the selected Screen. The farm got its top bar and a photo hero in about ten seconds.</span>
             <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
           <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-edit.mp4" data-poster="img/screen-builder-guide/farm-step-edit-poster.jpg">
             <span class="sbg-step-n" aria-hidden="true">2</span><span class="sbg-step-t">Type over the text</span>
-            <span class="sbg-step-d">Click any heading or paragraph and type over it. There are no text boxes to draw and no layers to manage, so the slow part is deciding what the farm should say about Wednesday's delivery.</span>
+            <span class="sbg-step-d">Click any heading or paragraph and type over it. There are no text boxes to draw and no layers to manage.</span>
             <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
           <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-photo.mp4" data-poster="img/screen-builder-guide/farm-step-photo-poster.jpg">
             <span class="sbg-step-n" aria-hidden="true">3</span><span class="sbg-step-t">Drop in your photos</span>
@@ -386,14 +407,14 @@
             <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
           <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-theme.mp4" data-poster="img/screen-builder-guide/farm-step-theme-poster.jpg">
             <span class="sbg-step-n" aria-hidden="true">4</span><span class="sbg-step-t">Pick your colors once</span>
-            <span class="sbg-step-d">The Theme tab holds a primary, secondary and accent colour plus two fonts. Drag the wheel from stock blue to field green and every button, bar and icon on every screen follows.</span>
+            <span class="sbg-step-d">The Theme tab holds a primary, secondary and accent color, two fonts, corner radius and spacing. Drag the wheel from stock blue to field green and every button, bar and icon on every screen follows. Dark mode flips them all and adjusts text to stay readable.</span>
             <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
           <li><button type="button" class="sbg-step" data-src="img/screen-builder-guide/farm-step-screens.mp4" data-poster="img/screen-builder-guide/farm-step-screens-poster.jpg">
             <span class="sbg-step-n" aria-hidden="true">5</span><span class="sbg-step-t">Add screens, then download</span>
             <span class="sbg-step-d">The round + adds the next screen in the flow. Download PNG Image saves each screen as a picture for your deck, your spec or your developer.</span>
             <span class="sbg-step-bar" aria-hidden="true"><i></i></span></button></li>
         </ol>
-        <p class="sbg-how-aside">To rearrange, hover over anything on a screen and drag its ⋮ handle; the red × deletes it. Screens come in twenty preset sizes, from a Galaxy Z Flip phone up to an iPad Pro and a full HD desktop.</p>
+        <p class="sbg-how-aside">To rearrange, hover over anything on a screen and drag its ⋮ handle; the red × deletes it. Screens come in twenty preset sizes, from a Galaxy Z Flip phone up to an iPad Pro and a full HD desktop, and layouts are responsive by default: parts stretch to the screen and Columns wrap when it narrows.</p>
       </div>
 
       <figure class="sbg-player">
@@ -408,12 +429,31 @@
   </div>
 </section>
 
+<!-- ============ RESPONSIVE ============ -->
+<section class="sbg-sec sbg-white" id="responsive" aria-labelledby="resp-h">
+  <div class="sbg-wrap sbg-resp">
+    <div>
+      <h2 id="resp-h">Responsive by default</h2>
+      <p class="sbg-intro">Screens aren't stuck at phone size. Drag a screen's corner and the parts rearrange themselves.</p>
+      <p class="sbg-intro">The same layout works on a 320-pixel phone all the way up to a full HD desktop, with no second version to build.</p>
+    </div>
+    <figure>
+      <div class="sbg-resp-frame">
+        <video id="sbg-resp-video" muted loop playsinline preload="metadata" poster="img/screen-builder-guide/responsive-resize-poster.jpg" width="1140" height="854" aria-label="Screen recording: one Screen Builder screen dragged from phone width to tablet width, its parts reflowing from one column into three">
+          <source src="img/screen-builder-guide/responsive-resize.mp4" type="video/mp4">
+        </video>
+      </div>
+      <figcaption>One screen dragged from phone width to 930 pixels.</figcaption>
+    </figure>
+  </div>
+</section>
+
 <!-- ============ MADE WITH IT ============ -->
 <section class="sbg-sec sbg-dark" id="made" aria-labelledby="made-h">
   <div class="sbg-wrap sbg-made-head">
     <div>
       <h2 id="made-h">Made in Screen Builder</h2>
-      <p class="sbg-intro">Ten screens from eight projects, all built from the same sidebar. The theme and the photos do the heavy lifting; nobody opened a design file for any of them.</p>
+      <p class="sbg-intro">Screens built from the same sidebar. The theme and layout do the heavy lifting.</p>
     </div>
     <p class="sbg-shelf-hint"><span class="sbg-hint-mouse">Scroll sideways</span><span class="sbg-hint-touch">Swipe</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></p>
   </div>
@@ -423,11 +463,14 @@
     <figure><img src="img/screen-builder-guide/made-collective-home.webp" width="560" height="1223" loading="lazy" alt="The Design Collective home screen with an illustrated banner, a Join button, a feature card and an alert"><figcaption><b>The Design Collective</b>Community sign-up, navy and orange</figcaption></figure>
     <figure><img src="img/screen-builder-guide/made-collective-team.webp" width="560" height="1223" loading="lazy" alt="The Design Collective team screen with a success message, a video card and a Join a Team list"><figcaption><b>The Design Collective, screen 2</b>Video card, call to action and a team list</figcaption></figure>
     <figure><img src="img/screen-builder-guide/made-adventure.webp" width="560" height="1197" loading="lazy" alt="Adventure travel app on a dark theme with a purple hero, a seaside rock photo card and a Win at Life badge"><figcaption><b>Adventure</b>Travel app on a dark theme</figcaption></figure>
-    <figure><img src="img/screen-builder-guide/made-dashboard.webp" width="560" height="1204" loading="lazy" alt="Dark dashboard screen with a 95 percent satisfaction stat, a blue bar graph and a pink card"><figcaption><b>Satisfaction dashboard</b>Stat card, bar graph and colour card</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-dashboard.webp" width="560" height="1204" loading="lazy" alt="Dark dashboard screen with a 95 percent satisfaction stat, a blue bar graph and a pink card"><figcaption><b>Satisfaction dashboard</b>Stat card, bar graph and color card</figcaption></figure>
     <figure><img src="img/screen-builder-guide/made-summer.webp" width="560" height="1132" loading="lazy" alt="Summer Vacation screen with a beach photo, a three-step tracker, a checklist and a party-mode toggle"><figcaption><b>Summer Vacation</b>Progress tracker, checklist and toggle</figcaption></figure>
     <figure><img src="img/screen-builder-guide/made-dog-gallery.webp" width="560" height="1215" loading="lazy" alt="Dog illustration gallery with ghost and filled red buttons and a progress bar"><figcaption><b>Dog gallery</b>Image grid, serif headings, red theme</figcaption></figure>
     <figure><img src="img/screen-builder-guide/made-night.webp" width="560" height="1204" loading="lazy" alt="Landing screen for Screen Builder Beta with a silhouette photo, pink chips, a step tracker and an orange Go For It button"><figcaption><b>Screen Builder beta</b>A landing screen for the tool, made in the tool</figcaption></figure>
     <figure><img src="img/screen-builder-guide/made-welcome-dark.webp" width="560" height="1182" loading="lazy" alt="Dark two-column screen with a welcome hero, an image, buttons, chips and checkboxes"><figcaption><b>Two-column layout</b>Columns component on a dark theme</figcaption></figure>
+    <figure><img src="img/screen-builder-guide/made-wireframe.webp" width="526" height="742" loading="lazy" alt="Gray wireframe-style screen: a list item, a two-by-two grid of empty image slots, pagination and a video player"><figcaption><b>Wireframe</b>Stock parts before any photos or theme, which reads as a wireframe</figcaption></figure>
+    <figure class="is-mid"><img src="img/screen-builder-guide/made-plants-table.webp" width="868" height="749" loading="lazy" alt="My Plants tablet screen in mint green: a search bar, an Add New Plant button, an upcoming-tasks table for watering, sunlight and fertilizer, and a row of four plant cards"><figcaption><b>My Plants, tablet</b>Data table and a row of four cards at 832 pixels wide</figcaption></figure>
+    <figure class="is-wide"><img src="img/screen-builder-guide/made-farm-desktop.webp" width="1366" height="775" loading="lazy" alt="Hollow Creek Farm on a desktop-size screen: a harvest-crate photo hero, size pills, three photo cards for heirloom tomatoes, rainbow carrots and a family box in a row, and a green Hold my box button"><figcaption><b>Hollow Creek Farm, desktop</b>The parts from the phone demo at HD Desktop size, cards in three columns</figcaption></figure>
   </div>
 </section>
 
@@ -437,9 +480,17 @@
     <div class="sbg-parts-head">
       <h2 id="parts-h">What's in the sidebar</h2>
       <p class="sbg-intro">More than fifty parts, most with several layouts each. These are the names you'll find in the tool, grouped the way an app is usually put together.</p>
-      <div class="sbg-sidebars">
+    </div>
+    <div class="sbg-parts-shots">
+      <div class="sbg-sb-tabs" role="group" aria-label="Show sidebar tab" hidden>
+        <button type="button" aria-pressed="true" data-i="0">Elements</button>
+        <button type="button" aria-pressed="false" data-i="1">Components</button>
+        <button type="button" aria-pressed="false" data-i="2">Theme</button>
+      </div>
+      <div class="sbg-sidebars" id="sbg-sidebars">
         <figure><img src="img/screen-builder-guide/sidebar-elements.webp" width="320" height="1080" loading="lazy" alt="The Elements tab of the Screen Builder sidebar: Adjustable Space, Icon, Image, Blank Card, Button and form inputs"><figcaption>Elements tab</figcaption></figure>
         <figure><img src="img/screen-builder-guide/sidebar-components.webp" width="320" height="1080" loading="lazy" alt="The Components tab of the Screen Builder sidebar: Data Table, Pills, Progress Tracker, Footer, charts and chat parts, with the green Download PNG Image button"><figcaption>Components tab</figcaption></figure>
+        <figure><img src="img/screen-builder-guide/sidebar-theme.webp" width="320" height="1080" loading="lazy" alt="The Theme tab of the Screen Builder sidebar: primary, secondary and accent color bars over a color wheel, primary and secondary font menus, and heading size controls"><figcaption>Theme tab</figcaption></figure>
       </div>
     </div>
     <dl>
@@ -451,7 +502,10 @@
       <div><dt>Feedback</dt><dd>Alert, Notification, Modal Pop-up, Progress Indicator, Progress Tracker</dd></div>
       <div><dt>Media and data</dt><dd>Image Gallery, Video, Music Player, Data Table, Bar Graph, Pie Graph</dd></div>
       <div><dt>Chat</dt><dd>Left Chat Bubble, Right Chat Bubble, Chat Input, Keyboard</dd></div>
+      <div><dt>Theme</dt><dd>Primary, secondary and accent colors, two fonts, size and weight for each heading level, corner radius, the gap between parts, padding inside each screen, and dark mode. Every setting applies to every screen at once.</dd></div>
+      <!-- Custom Component Editor is non-functional for now; restore when it works again.
       <div><dt>Your own</dt><dd>The Custom Component Editor takes HTML with inline styles, previews it and adds it to the screen.</dd></div>
+      -->
     </dl>
   </div>
 </section>
@@ -465,11 +519,12 @@
       <table class="sbg-table">
         <thead><tr><th scope="col"><span class="sr-only">Task</span></th><th scope="col" class="is-us">Screen Builder</th><th scope="col">A design tool like Figma</th><th scope="col">A paper sketch</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Getting started</th><td class="is-us" data-col="Screen Builder">Open the page</td><td data-col="Design tool">Sign up, then start a file</td><td data-col="Paper">Find a pen</td></tr>
+          <tr><th scope="row">Getting started</th><td class="is-us" data-col="Screen Builder">Open the page, click a button</td><td data-col="Design tool">Sign up, then start a file</td><td data-col="Paper">Find a pen</td></tr>
           <tr><th scope="row">The first screen</th><td class="is-us" data-col="Screen Builder">Assembled from ready parts</td><td data-col="Design tool">Drawn in frames, or from a UI kit</td><td data-col="Paper">Drawn by hand</td></tr>
           <tr><th scope="row">Design skills needed</th><td class="is-us" data-col="Screen Builder">None; parts arrive styled</td><td data-col="Design tool">Some, to make it look right</td><td data-col="Paper">None, and it shows</td></tr>
-          <tr><th scope="row">Changing the brand colour</th><td class="is-us" data-col="Screen Builder">Once; every screen follows</td><td data-col="Design tool">Through styles you set up first</td><td data-col="Paper">Redraw every screen</td></tr>
+          <tr><th scope="row">Changing the brand color</th><td class="is-us" data-col="Screen Builder">Once; every screen follows</td><td data-col="Design tool">Through styles you set up first</td><td data-col="Paper">Redraw every screen</td></tr>
           <tr><th scope="row">Device sizes</th><td class="is-us" data-col="Screen Builder">Twenty presets, phone to desktop</td><td data-col="Design tool">Any frame size</td><td data-col="Paper">Whatever fits the page</td></tr>
+          <tr><th scope="row">Responsive layout</th><td class="is-us" data-col="Screen Builder">By default; parts reflow to fit</td><td data-col="Design tool">With auto layout you set up</td><td data-col="Paper">No</td></tr>
           <tr><th scope="row">Freeform drawing</th><td class="is-us" data-col="Screen Builder">No, components only</td><td data-col="Design tool">Yes</td><td data-col="Paper">Yes</td></tr>
           <tr><th scope="row">Clickable prototype</th><td class="is-us" data-col="Screen Builder">No</td><td data-col="Design tool">Yes</td><td data-col="Paper">No</td></tr>
           <tr><th scope="row">What you hand over</th><td class="is-us" data-col="Screen Builder">PNG images</td><td data-col="Design tool">PNG, SVG, PDF and specs</td><td data-col="Paper">A photo of the page</td></tr>
@@ -523,13 +578,17 @@
     </div>
     <div>
       <details open><summary>What is a screen builder?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>A screen builder assembles an app screen from ready-made parts instead of drawn shapes. You place a navigation bar, a heading, a form and a card on a device-sized frame and see the layout before anyone writes code.</p></details>
-      <details><summary>Do I need design skills?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Every component arrives already styled, and one theme sets the colors and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud colour, and the Theme tab takes that back in one drag.</p></details>
+      <details><summary>Is it only for mobile screens?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Screens come in twenty preset sizes, from phones through tablets to a full HD desktop, and layouts are responsive by default. Every part stretches to the width of its screen, and Columns wrap onto a new row when a screen gets too narrow, so one set of parts works at every size.</p></details>
+      <details><summary>Do I need design skills?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Every component arrives already styled, and one theme sets the colors and fonts for every screen, so the result looks consistent without design training. The worst you can do is pick a loud color, and the Theme tab takes that back in one drag.</p></details>
       <details><summary>Is Screen Builder free?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Yes. You can build two screens without an account. A free account adds a third screen, two saved projects and up to 28 components per project. Pro, at $6 a month or $60 a year, removes the limits.</p></details>
       <details><summary>Do I need to install anything?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Screen Builder runs in a desktop web browser. You sign in, with Google or an email address, only when you want to save projects.</p></details>
       <details><summary>How do I export my screens?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Choose Download PNG Image at the bottom of the sidebar. Each screen saves as a picture you can drop into a deck, a ticket or a message.</p></details>
+      <!-- Custom Component Editor is non-functional for now; restore when it works again.
       <details><summary>Can I make my own components?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Yes. The Custom Component Editor takes a block of HTML with inline styles, previews it, and adds it to the selected screen.</p></details>
+      -->
+      <details><summary>Why can't I draw shapes?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>Drawing tools are left out on purpose. With no rectangle tool and no per-element letter spacing, the conversation stays on whether the right content is on the screen in the right order. Project-wide settings in the Theme tab handle the look: two fonts, three colors, corner radius, the gap between parts and the padding inside each screen.</p></details>
       <details><summary>Does it replace Figma?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. Screen Builder is quicker for the first layout, when the question is whether a screen works at all. Pixel-level drawing, clickable prototypes and a shared design system belong in Figma.</p></details>
-      <details><summary>Does it produce code?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. It produces pictures of screens for planning and discussion. A developer builds the real thing from them, and is usually glad to get a picture instead of a paragraph.</p></details>
+      <details><summary>Does it produce code?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary><p>No. It produces pictures of screens for planning and discussion. That's deliberate: a picture invites feedback, where code looks like a commitment to ship. A developer builds the real thing from them, and is usually glad to get a picture instead of a paragraph.</p></details>
     </div>
   </div>
 </section>
@@ -624,6 +683,34 @@ $(document).ready(function () {
     }, { threshold: 0.45 }).observe(sv);
   }
   sv.addEventListener('click', function () { if (sv.paused) sv.play(); else sv.pause(); });
+
+  /* ---------- sidebar shots: one tab at a time (all three show without JS) ---------- */
+  var sbt = document.querySelector('.sbg-sb-tabs');
+  var sbf = document.querySelectorAll('#sbg-sidebars figure');
+  if (sbt && sbf.length) {
+    var sbb = sbt.querySelectorAll('button');
+    function sbShow(i) {
+      sbf.forEach(function (f, k) { f.hidden = k !== i; });
+      sbb.forEach(function (b, k) { b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+    }
+    sbb.forEach(function (b) { b.addEventListener('click', function () { sbShow(+b.dataset.i); }); });
+    sbt.hidden = false;
+    sbShow(0);
+  }
+
+  /* ---------- responsive demo: plays while in view unless reduced motion; click toggles ---------- */
+  var rv = document.getElementById('sbg-resp-video');
+  if (rv) {
+    rv.addEventListener('click', function () { if (rv.paused) rv.play(); else rv.pause(); });
+    if ('IntersectionObserver' in window && !still) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) { var p = rv.play(); if (p && p.catch) p.catch(function () {}); }
+          else rv.pause();
+        });
+      }, { threshold: 0.45 }).observe(rv);
+    }
+  }
 })();
 </script>
 </body>
