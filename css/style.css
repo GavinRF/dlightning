@@ -336,6 +336,7 @@ h3 {
 .fWghtLight{
   font-weight: lighter;
   line-height: 1.68em !important;
+  text-wrap: balance;
 }
 
 .section-padding {
@@ -1330,11 +1331,25 @@ h3 {
   width: 115%;
 }
 
+/* text stacks above the illustration here: centre it */
 @media (max-width: 767px) {
   .slider_area .single_slider .phone_thumb {
     top: 20px;
-    left: 5px;
-    width: 95%;
+    left: 0;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  /* the img is width:108% inline; pull it back by half the overflow so it stays centred */
+  .slider_area .single_slider .phone_thumb img {
+    margin-left: -4%;
+  }
+}
+
+/* side by side, but the 115% width above overflowed the right edge at 768px */
+@media (min-width: 768px) and (max-width: 991px) {
+  .slider_area .single_slider .phone_thumb {
+    width: 105%;
   }
 }
 
@@ -1347,7 +1362,7 @@ h3 {
 @media (min-width: 768px) and (max-width: 991px) {
   .slider_area .single_slider .phone_thumb img {
     width: 60%;
-    margin-left: 45px;
+    /* margin-left: 45px; */
   }
 }
 
@@ -1367,10 +1382,11 @@ h3 {
 .slider_area .single_slider .slider_text h1 {
   color: #FFF;
   font-family: 'Rubik', sans-serif;
-  font-size: 58px;
+  font-size: 68px;
   text-transform: capitalize;
-  letter-spacing: .02rem;
-  font-weight: 520;
+  letter-spacing: 0.01rem;
+  word-spacing: 0.05em;
+  font-weight: 580;
   line-height: 76px;
 }
 

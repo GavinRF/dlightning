@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>What You Get: a sample Concierge project | Dlightning</title>
+    <meta name="description" content="Metsämaa, a sample Concierge Service project from start to finish: the brief, hypothesis, persona, journey map, competitor analysis, recommendations and six finished screens.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <style>
+        /* Tokens: the system sheet, unchanged. Every value below comes from here. */
+        :root {
+            --ink: #0a1430;
+            --text: #141a2e;
+            --muted: #4c5570;
+            --paper: #eef1f6;
+            --card: #ffffff;
+            --line: #dce1ea;
+            --cobalt: #0b4fe0;
+            --bolt: #ffd23f;
+            --bolt-deep: #c99e12;
+            --on-ink: #ffffff;
+            --on-ink-soft: rgba(255, 255, 255, .8);
+
+            --s1: 4px; --s2: 8px; --s3: 16px; --s4: 24px; --s5: 32px;
+            --s6: 48px; --s7: 64px; --s8: 96px; --s9: 128px;
+
+            --t-display: clamp(40px, 4.6vw, 64px);
+            --t-h2: clamp(30px, 2.9vw, 40px);
+            --t-h3: 22px;
+            --t-body: 18px;
+            --t-small: 15px;
+
+            --measure: 64ch;
+            --page: 1180px;
+            --radius: 16px;
+            --font: 'Hanken Grotesk', system-ui, sans-serif;
+            --ease: cubic-bezier(.16, 1, .3, 1);
+        }
+
+        body { background: var(--paper); }
+        .wyg { font: 400 var(--t-body)/1.6 var(--font); color: var(--text); -webkit-font-smoothing: antialiased; }
+        .wyg ::selection { background: var(--bolt); color: var(--ink); }
+        .wyg :where(h1, h2, h3, p, ul, ol, figure) { margin: 0; padding: 0; font-family: var(--font); }
+        .wyg :where(p, li) { font-size: inherit; line-height: inherit; color: inherit; }
+        .wyg :focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; border-radius: 4px; }
+        .wyg-wrap { max-width: var(--page); margin: 0 auto; padding: 0 var(--s4); }
+
+        .wyg-btn {
+            font: 800 17px/1.2 var(--font); border: 0; border-radius: 10px; padding: 15px 24px;
+            display: inline-flex; gap: 10px; align-items: center; text-decoration: none; cursor: pointer;
+            transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s;
+        }
+        .wyg-btn-bolt { background: var(--bolt); color: var(--ink); box-shadow: 0 5px 0 var(--bolt-deep); }
+        .wyg-btn-bolt:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--bolt-deep); color: var(--ink); text-decoration: none; }
+        .wyg-btn-bolt:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--bolt-deep); }
+
+        /* ---------- Hero ---------- */
+        .wyg-hero { background: var(--ink); color: var(--on-ink); padding: var(--s9) 0 var(--s3); overflow: hidden; }
+        .wyg-hero-grid { display: grid; grid-template-columns: 5fr 7fr; gap: var(--s7); align-items: center; padding-top: var(--s6); }
+        .wyg-hero h1 { font-size: var(--t-display); font-weight: 900; line-height: 1; letter-spacing: -0.03em; color: var(--on-ink); }
+        .wyg-hero .lede { margin-top: var(--s4); max-width: 34ch; color: var(--on-ink-soft); }
+        .wyg-hero .actions { margin-top: var(--s6); display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s5); }
+        .wyg-hero .actions a:not(.wyg-btn) { color: var(--on-ink); font-weight: 800; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 2px; }
+        .wyg-hero .actions a:not(.wyg-btn):hover { color: var(--bolt); }
+
+        /* the deliverable stack: real artifacts, layered */
+        .stack { position: relative; aspect-ratio: 7 / 5.4; }
+        .stack > * { position: absolute; margin: 0; }
+        .stack .doc { background: var(--card); border-radius: 12px; padding: var(--s2); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .65); }
+        .stack .doc img { display: block; width: 100%; height: auto; border-radius: 6px; }
+        .stack .doc.journey { left: 0; top: 0; width: 76%; }
+        .stack .doc.comp { right: 0; top: 34%; width: 60%; }
+        .stack .phone { width: 21%; border-radius: 8px; overflow: hidden; background: var(--card); box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .7); }
+        .stack .phone img { display: block; width: 100%; height: auto; }
+        .stack .phone.a { left: 4%; bottom: 0; }
+        .stack .phone.b { left: 27%; bottom: 5%; }
+
+        /* contents: the tour's stops */
+        .wyg-contents { margin-top: var(--s8); padding: var(--s4) 0; display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); list-style: none; font-size: var(--t-small); position: relative; }
+        .wyg-contents::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(255, 255, 255, .16); }
+        .wyg-contents a { color: var(--on-ink-soft); font-weight: 600; text-decoration: none; }
+        .wyg-contents a:hover { color: var(--on-ink); text-decoration: underline; text-underline-offset: 4px; }
+        .wyg-contents li:first-child a { color: var(--on-ink); font-weight: 800; }
+
+
+        /* ---------- Section shell (shared by every section below the hero) ---------- */
+        .wyg-sec { padding: var(--s9) 0; }
+        .wyg-sec.on-card { background: var(--card); }
+        .wyg-sec h2 { font-size: var(--t-h2); font-weight: 900; line-height: 1.08; letter-spacing: -0.025em; color: var(--ink); }
+        .wyg-sec h3 { font-size: var(--t-h3); font-weight: 800; line-height: 1.3; letter-spacing: -0.01em; color: var(--ink); }
+        .wyg-sec .intro { margin-top: var(--s3); max-width: var(--measure); }
+        .wyg-sec .intro + .intro { margin-top: var(--s3); }
+        .wyg-small { font-size: var(--t-small); line-height: 1.5; color: var(--muted); }
+
+        /* ---------- The brief ---------- */
+        .brief { display: grid; grid-template-columns: 7fr 4fr; gap: var(--s7); align-items: start; }
+        .brief .question { margin-top: var(--s5); font-size: var(--t-h3); font-weight: 800; line-height: 1.4; color: var(--ink); max-width: 36ch; }
+        .facts { margin-top: var(--s6); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4) var(--s5); max-width: 560px; }
+        .facts div { background: var(--card); border-radius: 12px; padding: var(--s3) var(--s4); }
+        .facts dt { font-size: var(--t-small); font-weight: 600; color: var(--muted); }
+        .facts dd { margin: var(--s1) 0 0; font-weight: 800; color: var(--ink); }
+        .brief figure { justify-self: end; width: min(100%, 220px); }
+        .brief figure img { display: block; width: 100%; height: auto; border-radius: 8px; box-shadow: 0 30px 60px -30px rgba(10, 20, 48, .45); }
+        .brief figcaption { margin-top: var(--s3); }
+
+        /* ---------- Hypothesis ---------- */
+        .hypo-statement { margin-top: var(--s5); font-size: var(--t-h2); font-weight: 600; line-height: 1.25; letter-spacing: -0.02em; color: var(--text); max-width: 40ch; }
+        .hypo-label { margin-top: var(--s7); font-weight: 800; color: var(--ink); }
+        .assumptions { margin-top: var(--s4); list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+        .assumptions li { background: var(--paper); border-radius: var(--radius); padding: var(--s5) var(--s4); font-weight: 600; color: var(--ink); }
+
+
+        /* ---------- Persona (placeholder until the Experience Builder artifact exists) ---------- */
+        .persona { display: grid; grid-template-columns: 4fr 7fr; gap: var(--s7); align-items: start; margin-top: var(--s7); }
+        .persona .who { font-weight: 800; color: var(--ink); }
+        .persona blockquote { margin: var(--s4) 0 0; font-size: var(--t-h3); font-weight: 800; line-height: 1.4; color: var(--ink); }
+        .placeholder { aspect-ratio: 3 / 2; border-radius: var(--radius); background: var(--paper); border: 2px dashed var(--line); display: grid; place-items: center; text-align: center; padding: var(--s5); }
+
+        /* ---------- Artifact sections (journey map, competitors) ---------- */
+        .artifact { margin: var(--s7) 0 0; }
+        .artifact .frame { background: var(--card); border-radius: var(--radius); padding: var(--s3); }
+        .on-card .artifact .frame { background: var(--paper); }
+        .artifact img { display: block; width: 100%; height: auto; border-radius: 8px; }
+        .artifact figcaption { margin-top: var(--s3); display: flex; justify-content: space-between; gap: var(--s4); }
+        .artifact figcaption a { color: var(--cobalt); font-weight: 600; text-underline-offset: 4px; text-decoration: underline; text-decoration-thickness: 2px; }
+        .artifact figcaption a:hover { color: var(--ink); }
+        .finding { margin-top: var(--s6); display: grid; grid-template-columns: 4fr 7fr; gap: var(--s7); }
+        .finding p { max-width: var(--measure); }
+
+        /* ---------- Recommendations ---------- */
+        .recs { margin-top: var(--s7); list-style: none; display: grid; gap: var(--s3); counter-reset: rec; }
+        .recs li { counter-increment: rec; display: grid; grid-template-columns: 48px 4fr 6fr auto; gap: var(--s4); align-items: baseline; background: var(--paper); border-radius: var(--radius); padding: var(--s4) var(--s5); }
+        .recs li::before { content: counter(rec); font-weight: 900; font-size: var(--t-h3); color: var(--ink); font-variant-numeric: tabular-nums; }
+        .recs h3 { font-size: var(--t-h3); }
+        .recs a { font-size: var(--t-small); font-weight: 700; color: var(--cobalt); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; white-space: nowrap; }
+        .recs a:hover { color: var(--ink); }
+        .recs .none { font-size: var(--t-small); color: var(--muted); white-space: nowrap; }
+
+        /* ---------- Screens ---------- */
+        .screens { margin-top: var(--s7); list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s7) var(--s5); }
+        .screens li { display: grid; grid-template-rows: 1fr auto auto; justify-items: center; text-align: center; }
+        .screens li > a.shot { align-self: end; }
+        .screens a.shot { display: block; width: min(100%, 240px); border-radius: 8px; overflow: hidden; box-shadow: 0 24px 48px -28px rgba(10, 20, 48, .45); transition: transform .3s var(--ease); scroll-margin-top: 120px; }
+        .screens a.shot:hover { transform: translateY(-4px); }
+        .screens img { display: block; width: 100%; height: auto; }
+        .screens h3 { margin-top: var(--s4); font-size: 18px; }
+        .screens p { margin-top: var(--s1); }
+
+        /* ---------- How the weeks run ---------- */
+        .weeks { margin-top: var(--s7); list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+        .weeks li { background: var(--paper); border-radius: var(--radius); padding: var(--s5) var(--s4); }
+        .weeks h3 { font-size: var(--t-h3); }
+        .weeks p { margin-top: var(--s2); }
+        .your-part { margin-top: var(--s6); max-width: var(--measure); }
+        .your-part b { color: var(--ink); font-weight: 800; }
+
+        /* ---------- Price and close ---------- */
+        .wyg-close { background: var(--card); border-radius: var(--radius); padding: var(--s7); display: grid; grid-template-columns: 7fr 5fr; gap: var(--s7); align-items: end; }
+        .wyg-close .intro { margin-top: var(--s3); }
+        .wyg-close .actions { display: grid; gap: var(--s4); justify-items: start; }
+        .wyg-close .actions a:not(.wyg-btn) { color: var(--cobalt); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+        .wyg-close .actions a:not(.wyg-btn):hover { color: var(--ink); }
+        .sample-note { margin-top: var(--s5); }
+
+        @media (max-width: 960px) {
+            .wyg-sec { padding: 72px 0; }
+            .weeks { grid-template-columns: 1fr; gap: var(--s3); }
+            .wyg-close { grid-template-columns: 1fr; gap: var(--s5); padding: var(--s5) var(--s4); }
+            .recs li { grid-template-columns: 32px 1fr; gap: var(--s2) var(--s3); padding: var(--s4); }
+            .recs li > p, .recs li > a, .recs li > .none { grid-column: 2; }
+            .screens { grid-template-columns: repeat(2, 1fr); gap: var(--s6) var(--s4); }
+            .persona, .finding { grid-template-columns: 1fr; gap: var(--s4); }
+            .brief { grid-template-columns: 1fr; gap: var(--s6); }
+            .brief figure { justify-self: start; width: 220px; }
+            .assumptions { grid-template-columns: 1fr; gap: var(--s3); }
+            .artifact .frame { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-color: var(--muted) transparent; }
+            .artifact .frame img { width: 960px; max-width: none; }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .stack > * { animation: settle .9s var(--ease) both; }
+            .stack .doc.comp { animation-delay: .08s; }
+            .stack .phone.a { animation-delay: .16s; }
+            .stack .phone.b { animation-delay: .24s; }
+            @keyframes settle { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        }
+
+        @media (max-width: 960px) {
+            .wyg-hero { padding-top: var(--s8); }
+            .wyg-hero-grid { grid-template-columns: 1fr; gap: var(--s6); padding-top: var(--s4); }
+            .wyg-contents { margin-top: var(--s6); }
+        }
+        @media (max-width: 560px) {
+            .wyg { font-size: 17px; }
+            .stack .phone { width: 28%; border-radius: 6px; }
+            .stack .phone.a { left: 4%; }
+            .stack .phone.b { left: 34%; }
+        }
+    </style>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <header id="header"></header>
+
+    <main class="wyg">
+        <section class="wyg-hero" aria-labelledby="wyg-title">
+            <div class="wyg-wrap">
+                <div class="wyg-hero-grid">
+                    <div>
+                        <h1 id="wyg-title">One project, start to finish</h1>
+                        <p class="lede">Metsämaa is a sample project we ran through the Concierge Service. Everything on this page is what a client gets, in the order we make it.</p>
+                        <div class="actions">
+                            <a class="wyg-btn wyg-btn-bolt" href="dist/client-intake.html">Start Concierge Intake</a>
+                            <a href="#screens">Jump to the screens</a>
+                        </div>
+                    </div>
+                    <div class="stack" aria-hidden="true">
+                        <figure class="doc journey"><img src="../img/metsamaa/journey.webp" width="2400" height="1448" alt=""></figure>
+                        <figure class="doc comp"><img src="../img/metsamaa/competitors.webp" width="2400" height="1737" alt=""></figure>
+                        <figure class="phone a"><img src="../img/metsamaa/home.webp" width="540" height="1200" alt=""></figure>
+                        <figure class="phone b"><img src="../img/metsamaa/custom-form.webp" width="540" height="1451" alt=""></figure>
+                    </div>
+                </div>
+                <nav aria-label="On this page">
+                    <ol class="wyg-contents">
+                        <li><a href="#brief">The brief</a></li>
+                        <li><a href="#hypothesis">Hypothesis</a></li>
+                        <li><a href="#persona">Persona</a></li>
+                        <li><a href="#journey">Journey map</a></li>
+                        <li><a href="#competitors">Competitors</a></li>
+                        <li><a href="#recommendations">Recommendations</a></li>
+                        <li><a href="#screens">Screens</a></li>
+                        <li><a href="#price">Price</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </section>
+
+        <section class="wyg-sec" id="brief" aria-labelledby="brief-title">
+            <div class="wyg-wrap brief">
+                <div>
+                    <h2 id="brief-title">The brief</h2>
+                    <p class="intro">Metsämaa makes solid-wood furniture in Finland. Its line: furniture for life. It wants to sell high-end dining sets to restaurant owners through an app.</p>
+                    <p class="question">The question we were asked: will restaurant owners buy furniture this expensive on their phone, and what would they need to trust it?</p>
+                    <dl class="facts">
+                        <div><dt>Client</dt><dd>Metsämaa (sample)</dd></div>
+                        <div><dt>Makes</dt><dd>Solid-wood furniture</dd></div>
+                        <div><dt>Selling to</dt><dd>Restaurant owners</dd></div>
+                        <div><dt>Through</dt><dd>A mobile app</dd></div>
+                    </dl>
+                </div>
+                <figure>
+                    <img src="../img/metsamaa/splash.webp" width="540" height="1200" alt="Metsämaa app opening screen: the name and 'furniture for life' above a wooden chair and desk" loading="lazy">
+                    <figcaption class="wyg-small">Metsämaa, furniture for life</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="wyg-sec on-card" id="hypothesis" aria-labelledby="hypo-title">
+            <div class="wyg-wrap">
+                <h2 id="hypo-title">What we assumed going in</h2>
+                <p class="hypo-statement">Restaurant owners furnishing a new room will order custom, high-end dining sets online if they can see the work up close and talk to a person before they pay.</p>
+                <p class="hypo-label">Three assumptions to test:</p>
+                <ul class="assumptions">
+                    <li>Price isn't the main barrier. Confidence is.</li>
+                    <li>Buyers want to set size, wood and colour themselves.</li>
+                    <li>A workshop visit or a call is what closes the sale.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="wyg-sec" id="persona" aria-labelledby="persona-title">
+            <div class="wyg-wrap">
+                <h2 id="persona-title">Who we're designing for</h2>
+                <div class="persona">
+                    <div>
+                        <p class="who">Rauno, 34, Finland. Opening his first restaurant.</p>
+                        <blockquote>"I'm buying these once. They need to last as long as the restaurant does."</blockquote>
+                    </div>
+                    <!-- PLACEHOLDER: replace with the Rauno persona exported from Experience Builder (artifact frame, like the journey map). -->
+                    <div class="placeholder"><p class="wyg-small">Persona artifact goes here (from Experience Builder)</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="wyg-sec on-card" id="journey" aria-labelledby="journey-title">
+            <div class="wyg-wrap">
+                <h2 id="journey-title">His path from search to sitting down</h2>
+                <p class="intro">Seven moments, from Rauno's first search to a full dining room. The curve tracks how he feels at each one.</p>
+                <figure class="artifact">
+                    <div class="frame" tabindex="0" role="region" aria-label="Journey map, scrolls sideways on small screens"><img src="../img/metsamaa/journey.webp" width="2400" height="1448" loading="lazy" alt="Metsämaa journey map: Rauno's seven steps from searching online to using the furniture, with his feelings, actions and Metsämaa's opportunities at each step"></div>
+                    <figcaption><span class="wyg-small">Metsämaa journey map</span><a class="wyg-small" href="../img/metsamaa/journey.webp" target="_blank" rel="noopener">Open full size</a></figcaption>
+                </figure>
+                <div class="finding">
+                    <h3>What it showed</h3>
+                    <p>Confidence dips while he compares manufacturers, and peaks after he sees the furniture in person. The visit is the turning point, so the app has to get him there.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="wyg-sec" id="competitors" aria-labelledby="comp-title">
+            <div class="wyg-wrap">
+                <h2 id="comp-title">Who else he's looking at</h2>
+                <p class="intro">Four companies Rauno would compare Metsämaa against, side by side on range, price, channels, customer experience and sustainability.</p>
+                <figure class="artifact">
+                    <div class="frame" tabindex="0" role="region" aria-label="Competitor analysis, scrolls sideways on small screens"><img src="../img/metsamaa/competitors.webp" width="2400" height="1737" loading="lazy" alt="Metsämaa competitor analysis comparing IKEA, Ashley, Wayfair and Crate and Barrel on product range, pricing strategy, sales channels, customer experience and sustainability, with insights below"></div>
+                    <figcaption><span class="wyg-small">Metsämaa competitor analysis</span><a class="wyg-small" href="../img/metsamaa/competitors.webp" target="_blank" rel="noopener">Open full size</a></figcaption>
+                </figure>
+                <div class="finding">
+                    <h3>What it showed</h3>
+                    <p>All four sell to homes. None speaks to someone furnishing a whole restaurant, and only Crate &amp; Barrel offers design consultations. That gap is Metsämaa's opening.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="wyg-sec on-card" id="recommendations" aria-labelledby="recs-title">
+            <div class="wyg-wrap">
+                <h2 id="recs-title">What we recommended</h2>
+                <ol class="recs">
+                    <li><h3>Lead with custom.</h3><p>Size, wood and colour chosen up front, in one form.</p><a href="#screen-custom">See the custom form</a></li>
+                    <li><h3>Put a person in the loop.</h3><p>Book a workshop tour or a call before paying.</p><a href="#screen-appointment">See the booking screen</a></li>
+                    <li><h3>Show the real material.</h3><p>Large photos, every colourway, reviews from other buyers.</p><a href="#screen-product">See the product screen</a></li>
+                    <li><h3>Make the order feel certain.</h3><p>One clear total, then a confirmed order you can track.</p><a href="#screen-cart">See the cart</a></li>
+                    <li><h3>Sell the long life, not the price.</h3><p>That's the ground IKEA and Wayfair can't take.</p><span class="none">Runs through every screen</span></li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="wyg-sec" id="screens" aria-labelledby="screens-title">
+            <div class="wyg-wrap">
+                <h2 id="screens-title">The screens</h2>
+                <p class="intro">Wireframes first, to agree the flow. Then six finished screens, each built from a recommendation above.</p>
+                <figure class="artifact">
+                    <div class="frame" tabindex="0" role="region" aria-label="Wireframes, scroll sideways on small screens"><img src="../img/metsamaa/wireframes.webp" width="2400" height="750" loading="lazy" alt="Seven grey wireframes of the Metsämaa app: product grid, product detail, cart, custom furniture form, profile and appointments"></div>
+                    <figcaption><span class="wyg-small">Wireframes</span><a class="wyg-small" href="../img/metsamaa/wireframes.webp" target="_blank" rel="noopener">Open full size</a></figcaption>
+                </figure>
+                <ul class="screens">
+                    <li><a class="shot" id="screen-home" href="../img/metsamaa/home.webp" target="_blank" rel="noopener"><img src="../img/metsamaa/home.webp" width="540" height="1200" loading="lazy" alt="Metsämaa app home screen: furniture categories and a grid of products"></a><h3>Home</h3><p class="wyg-small">Browse by type</p></li>
+                    <li><a class="shot" id="screen-custom" href="../img/metsamaa/custom-form.webp" target="_blank" rel="noopener"><img src="../img/metsamaa/custom-form.webp" width="540" height="1451" loading="lazy" alt="Custom furniture form: choose furniture type, colour, wood type and size"></a><h3>Custom furniture form</h3><p class="wyg-small">Recommendation 1</p></li>
+                    <li><a class="shot" id="screen-appointment" href="../img/metsamaa/appointment.webp" target="_blank" rel="noopener"><img src="../img/metsamaa/appointment.webp" width="540" height="1287" loading="lazy" alt="Book an appointment: a March calendar and a grid of time slots"></a><h3>Book an appointment</h3><p class="wyg-small">Recommendation 2</p></li>
+                    <li><a class="shot" id="screen-product" href="../img/metsamaa/product.webp" target="_blank" rel="noopener"><img src="../img/metsamaa/product.webp" width="540" height="1200" loading="lazy" alt="Product detail for the Exclusive Sofa: large photo, colour options, rating and Add to cart"></a><h3>Product detail</h3><p class="wyg-small">Recommendation 3</p></li>
+                    <li><a class="shot" id="screen-cart" href="../img/metsamaa/cart.webp" target="_blank" rel="noopener"><img src="../img/metsamaa/cart.webp" width="540" height="1200" loading="lazy" alt="Cart with three chairs and a grand total of $697"></a><h3>Cart</h3><p class="wyg-small">Recommendation 4</p></li>
+                    <li><a class="shot" id="screen-order" href="../img/metsamaa/order-accepted.webp" target="_blank" rel="noopener"><img src="../img/metsamaa/order-accepted.webp" width="540" height="1200" loading="lazy" alt="Order accepted confirmation with Track my Order and Back to Home"></a><h3>Order accepted</h3><p class="wyg-small">Recommendation 4</p></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="wyg-sec on-card" id="weeks" aria-labelledby="weeks-title">
+            <div class="wyg-wrap">
+                <h2 id="weeks-title">Two to three weeks</h2>
+                <ol class="weeks">
+                    <li><h3>Week 1</h3><p>Intake, the brief, hypothesis, competitor analysis</p></li>
+                    <li><h3>Week 2</h3><p>Interviews, persona, journey map</p></li>
+                    <li><h3>Week 3</h3><p>Recommendations, wireframes, six screens</p></li>
+                </ol>
+                <p class="your-part"><b>Your part:</b> the intake conversation, one kickoff call, answers when we have questions, a review at the end.</p>
+            </div>
+        </section>
+
+        <section class="wyg-sec" id="price" aria-labelledby="price-title">
+            <div class="wyg-wrap">
+                <div class="wyg-close">
+                    <div>
+                        <h2 id="price-title">Starting at $2,800</h2>
+                        <p class="intro">Research report, persona, journey map, competitor analysis, and six screen mocks from Screen Builder.</p>
+                    </div>
+                    <div class="actions">
+                        <a class="wyg-btn wyg-btn-bolt" href="dist/client-intake.html">Start Concierge Intake</a>
+                        <a href="../experience-builder.html">Rather do it yourself? Experience Builder is $6 a month.</a>
+                    </div>
+                </div>
+                <p class="wyg-small sample-note">Metsämaa is a sample project made to show the process.</p>
+            </div>
+        </section>
+    </main>
+
+    <div class="footer" id="footer">
+        <a href="/">Home</a>
+        <a href="/intake/product-validation-offer.html">Concierge Service</a>
+        <a href="/contact.html">Contact Us</a>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#header').load("../header.html");
+            $('#footer').load("../footer.html");
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

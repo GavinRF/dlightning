@@ -175,11 +175,12 @@
                         </div>
                     </div>
                     <div class="col-xl-6 col-md-6">
-                        <div class="phone_thumb" data-aos="fade-up" data-aos-delay="300" data-aos-duration="400">
-                            <img data-aos="fade-up" data-aos-duration="600" data-aos-delay="600" style="width: 100%;" src="img/ilstrator/desk.png" alt="a purple desk with a plant and computer on it">
-                            <img class="loveBubble top" data-aos="fade-up" data-aos-duration="400" data-aos-delay="300" style="width: 100%;" src="img/ilstrator/referralMan.png" alt="man pointing to his network">
-                            <img class="loveBubble top" data-aos="fade-down" data-aos-duration="400" data-aos-delay="800" style="width: 100%;" src="img/ilstrator/referral.png" alt="the network, a few floating heads">
-                            <small data-aos="fade-up" data-aos-delay="800" style="float: right; color: lightgrey; margin: -10px 26px 0 -26px;">Illustrations by <a style="color: darkgray" href="https://www.vecteezy.com/members/swayaway1" target="_blank">swayaway1</a></small>
+                        <div class="phone_thumb">
+                            <!-- animated SVG with its own intro, so no AOS here. Loaded by the data-anim-src
+                                 script (fresh copy per visit); aspect-ratio holds the space while it loads. -->
+                            <img data-anim-src="img/ilstrator/network.svg" style="width:108%;aspect-ratio:1258/980" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="a man at a desk pointing up at his network of people in floating bubbles">
+                            <noscript><img src="img/ilstrator/network.svg" style="width:108%" alt="a man at a desk pointing up at his network of people in floating bubbles"></noscript>
+                            <small data-aos="fade-up" data-aos-delay="800" style="float: right; color: lightgrey; margin: -2px -6px 0 -26px;">Illustrations by <a style="color: darkgray" href="https://www.vecteezy.com/members/swayaway1" target="_blank">swayaway1</a></small>
                         </div>
                     </div>
                 </div>
@@ -216,7 +217,9 @@
                 <div class="col-lg-4 col-md-4">
                     <div class="single_service text-center" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
                         <div class="thumb">
-                            <img src="img/icon/2.svg" alt="illustration of magnifying glass with a woman's face in it over a webpage">
+                            <!-- animated SVG, set up like the bullhorn: see the comment there -->
+                            <img data-anim-src="img/icon/page-inspection.svg" style="width:106%;max-width:none;margin:-8%" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="illustration of a magnifying glass with a woman's face in it over a webpage">
+                            <noscript><img src="img/icon/page-inspection.svg" style="width:106%;max-width:none;margin:-8%" alt="illustration of a magnifying glass with a woman's face in it over a webpage"></noscript>
                         </div>
                         <h3>Dig Deep</h3>
                             <p>Our research drives first impressions to successful outcomes, and ensures your customers have a remarkable journey that enhances their&nbsp;experience.</p>
@@ -225,7 +228,9 @@
                 <div class="col-lg-4 col-md-4">
                         <div class="single_service text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
                                 <div class="thumb">
-                                        <img src="img/icon/1.svg" alt="illustartion of a clipboard, a calculaor, and a pen">
+                                        <!-- animated SVG, set up like the bullhorn below -->
+                                        <img data-anim-src="img/icon/clip-board-calc.svg" style="width:116%;max-width:none;margin:-8%;padding-top:12px" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="illustration of a clipboard, a calculator, and a pen">
+                                        <noscript><img src="img/icon/clip-board-calc.svg" style="width:116%;max-width:none;margin:-8%;padding-top:12px" alt="illustration of a clipboard, a calculator, and a pen"></noscript>
                                 </div>
                                 <h3>Gain Powerful Insights</h3>
                                          <p>We don't just analyze data; we translate it into actionable strategies and beautiful UI so products achieve their full potential.</p>
@@ -235,7 +240,11 @@
 
                             <div class="single_service text-center" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                                 <div class="thumb">
-                                        <img src="img/icon/bull-horn.svg" alt="illustartion of a bullhorn">
+                                        <!-- animated SVG: loaded on scroll-in so its intro plays where it can be seen.
+                                             Its viewBox has 80 units of room around the art for the blob to stretch into;
+                                             width 116% / margin -8% (1160/1000; 80/1160 of 116% = 8%) cancel that so the art keeps its size. -->
+                                        <img data-anim-src="img/icon/bull-horn.svg" style="width:116%;max-width:none;margin:-8%" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="illustration of a bullhorn">
+                                        <noscript><img src="img/icon/bull-horn.svg" style="width:116%;max-width:none;margin:-8%" alt="illustration of a bullhorn"></noscript>
                                 </div>
                                 <h3>Empower Your Brand</h3>
                                 <p>Elevate customer interactions with captivating moments of Dlightning, transforming your digital presence into&nbsp;an&nbsp;experience.</p>
@@ -611,6 +620,28 @@
       AOS.init({
         once: true
       });
+
+      // Animated SVG icons run their intro from the moment they load, so hold
+      // the load until the icon is on screen.
+      (function () {
+        var imgs = document.querySelectorAll('img[data-anim-src]');
+        // Browsers keep one copy of an SVG image per URL, animation clock included,
+        // so a reload would show it mid-loop. A per-visit query gives a fresh copy.
+        var visit = Date.now().toString(36);
+        function load(img) { img.src = img.getAttribute('data-anim-src') + '?v=' + visit; img.removeAttribute('data-anim-src'); }
+        if (!('IntersectionObserver' in window)) { imgs.forEach(load); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { load(e.target.__animImg); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.3 });
+        // watch the fixed-size .thumb box; the placeholder img itself has no real size
+        imgs.forEach(function (img) {
+          var box = img.closest('.thumb') || img;
+          box.__animImg = img;
+          io.observe(box);
+        });
+      })();
 
         $(document).ready(function(){
         //    $('#loading').load("loader.html");
