@@ -21,7 +21,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,700;0,900;1,500;1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -45,7 +45,7 @@
 
     /* chapter names: --w is each word's measured advance at 100px, so every name fills the width left of the nav exactly */
     --t-title: clamp(4.5rem, 16vw, 15rem);        /* the page title */
-    --t-lede: 1.25rem;                            /* lede and principle text */
+    --t-lede: 1.45rem;                            /* lede and principle text */
     --t-body: 1.0625rem;                          /* contents */
     --t-small: 0.9375rem;                         /* chapter rail */
 
@@ -85,7 +85,7 @@
   .dp-contents li { break-inside: avoid; }
   .dp-contents a {
     font-size: var(--t-body); line-height: var(--line); font-weight: 700; color: inherit;
-    text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 2px; text-underline-offset: 5px;
+    text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 2px; text-underline-offset: 2px;
     transition: text-decoration-color .2s ease;
   }
   .dp-contents a:hover { color: inherit; text-decoration-color: currentColor; }
@@ -123,10 +123,19 @@
 
   /* ---------- the nav: two columns in the introduction, one column beside each name once you scroll ---------- */
   @media (min-width: 992px) {
-    .dp-contents.is-docked { position: fixed; z-index: 50; top: 52%; right: var(--rail-edge); width: var(--s9); transform: translateY(-50%); }
+    .dp-contents.is-docked { position: fixed; z-index: 50; top: 48%; right: var(--rail-edge); width: var(--s9); transform: translateY(-50%); }
     .dp-contents.is-docked ol { columns: 1; }
     .dp-contents.is-docked a { font-weight: 500; }
     .dp-contents.is-docked a[aria-current="true"] { font-weight: 900; }
+    /* a dot hangs left of the current stage; absolutely placed so the words never shift */
+    .dp-contents.is-docked a { position: relative; }
+    .dp-contents.is-docked a::before {
+      content: ""; position: absolute; left: -.85em; top: 50%;
+      width: .3em; height: .3em; margin-top: -.15em; border-radius: 50%;
+      background: currentColor; transform: scale(0); transition: transform .2s ease;
+    }
+    .dp-contents.is-docked a[aria-current="true"]::before { transform: scale(1); }
+    @media (prefers-reduced-motion: reduce) { .dp-contents.is-docked a::before { transition: none; } }
     .dp-contents.is-docked li.on-navy { color: var(--paper); }   /* each line takes the colour of the chapter behind it */
     .dp-contents li { transition: color .15s linear; }
     .dp-contents.is-gone { opacity: 0; visibility: hidden; }
@@ -159,7 +168,7 @@
   .dp-wall > span:hover, .dp-wall > span:focus-within { color: var(--paper); }
   .dp-wall .dp-end { color: var(--paper); }
   .dp-wall a { color: var(--bolt); font-weight: 900; text-decoration: none; }
-  .dp-wall a:hover { color: var(--bolt); text-decoration: underline; text-decoration-thickness: .06em; text-underline-offset: .12em; }
+  .dp-wall a:hover { color: var(--bolt); text-decoration: underline; text-decoration-thickness: .06em; text-underline-offset: .05em; }
   .dp-wall a:focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; border-radius: 2px; }
   .dp-sum ::selection { background: var(--bolt); color: var(--navy); }
 
@@ -199,7 +208,7 @@
   .dp-btn:focus-visible { outline: 3px solid var(--bolt); outline-offset: 4px; }
   .dp-link {
     font-size: var(--t-body); line-height: var(--line); font-weight: 700; color: var(--paper);
-    text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px;
+    text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px;
   }
   .dp-link:hover { color: var(--paper); text-decoration-color: transparent; }
   .dp-link:focus-visible { outline: 3px solid var(--paper); outline-offset: 3px; }
@@ -225,6 +234,36 @@
   @keyframes dp-rise { from { opacity: 0; transform: translateY(.18em); } to { opacity: 1; transform: none; } }
   @keyframes dp-fade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
+  /* ---------- the third layer: a question to ask of the design, and the principle it trades against ---------- */
+  .dp-ask, .dp-tension { grid-column: 1; margin: 0; max-width: 34em; color: inherit; }
+  .dp-label { font-weight: 900; font-style: normal; }
+  .dp-ask { margin-top: var(--s4); font-size: var(--t-body); line-height: var(--line); font-weight: 500; }
+  .dp-ask .dp-label { margin-right: .35em; }
+  .dp-tension { margin-top: var(--s2); font-size: var(--t-small); line-height: 24px; font-weight: 500; font-style: italic; }
+  .dp-tension .dp-label { margin-right: .5em; }
+  .dp-tn, .dp-tn a { font-weight: 900; color: inherit; }
+  .dp-tn a {
+    text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); transition: text-decoration-color .2s ease;
+  }
+  .dp-tn a:hover { color: inherit; text-decoration-color: currentColor; }
+  .dp-tn a:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: 2px; }
+  @media (min-width: 992px) {
+    /* the ask hangs in the margin beside the text, large; the tension tucks under the text, small */
+    .dp-ch { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .dp-text { grid-column: 1 / 7; grid-row: 2; }
+    .dp-ask {
+      grid-column: 8 / 13; grid-row: 2; align-self: start; margin: 0; max-width: none;
+      font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.15; font-weight: 700; letter-spacing: -.02em; text-wrap: balance;
+    }
+    .dp-ask .dp-label { display: block; margin: 0 0 var(--s2); font-size: var(--t-small); line-height: 1; letter-spacing: 0; }
+    .dp-tension { grid-column: 1 / 7; grid-row: 3; margin-top: var(--s4); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .js .dp-ch .dp-ask, .js .dp-ch .dp-tension { transition: transform .8s var(--ease) .45s, opacity .8s var(--ease) .45s; }
+    .js .dp-ch.is-out .dp-ask, .js .dp-ch.is-out .dp-tension { transform: translateY(24px); opacity: 0; }
+  }
+
   /* ---------- tablet ---------- */
   @media (max-width: 991px) {
     :root { --margin: var(--s5); --header: 62px; }
@@ -235,7 +274,7 @@
     .dp-back {
       display: inline-block; grid-column: 1; justify-self: start; margin-top: var(--s5); padding: var(--s1) 0;
       font-size: var(--t-body); font-weight: 700; color: inherit;
-      text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px;
+      text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px;
     }
     .dp-back:hover { color: inherit; }
     .dp-back:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
@@ -248,6 +287,7 @@
     .dp-slot { grid-column: 1 / -1; margin-top: var(--s5); }
     .dp-ch { padding: var(--s7) var(--margin); }
   }
+
 </style>
 <script>document.documentElement.classList.add('js')</script>
 </head>
@@ -259,7 +299,7 @@
   <section class="dp-intro dp-grid" aria-labelledby="dp-title">
     <h1 id="dp-title"><span>Design</span><span>principles</span></h1>
     <div class="dp-hang dp-grid">
-      <p class="dp-lede">Eleven principles for any design, from the first sketch to the finished build. The first ten are qualities to hold every part to. The eleventh, overall quality, is what you get&nbsp;when&nbsp;you&nbsp;do.</p>
+      <p class="dp-lede">Eleven principles for any design, from the first sketch to the finished build. The first ten are qualities to hold every design decision to. The eleventh, is what you get&nbsp;when&nbsp;you&nbsp;do.</p>
       <div class="dp-slot" id="contents">
       <nav class="dp-contents" id="dp-nav" aria-label="Principles">
         <ol>
@@ -284,6 +324,8 @@
   <section class="dp-ch is-bolt" id="simplicity" aria-labelledby="simplicity-h">
     <h2 class="dp-name" id="simplicity-h" style="--w: 405.7">Simplic<span class="k-it">i</span><span class="k-ty">t</span>y</h2>
     <p class="dp-text"><b>Simplicity</b> means fewer moving parts, fewer processes and fewer inputs. As the number of parts and processes increases, so does the probability of a mistake. Most mistakes are made when an overly complex system is forced to fit into a small&nbsp;space.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">What can we take out and still have it&nbsp;work?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#flexibility">Flexibility</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Each option added for a case that might come later is another moving part&nbsp;now.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -291,6 +333,8 @@
   <section class="dp-ch is-navy" id="strength" aria-labelledby="strength-h">
     <h2 class="dp-name" id="strength-h" style="--w: 361.5">Stren<span class="k-gt">g</span>th</h2>
     <p class="dp-text"><b>Strength</b> of design relates to the forces that it is capable of withstanding. Without sufficient strength, a design lacks durability and resilience. The stronger the design, the more stresses it will&nbsp;tolerate.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">What is the heaviest load this will carry, and what happens just past&nbsp;it?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#economy">Economy</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Strength costs material, and every saving on material comes out of the&nbsp;margin.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -298,6 +342,8 @@
   <section class="dp-ch is-paper" id="flexibility" aria-labelledby="flexibility-h">
     <h2 class="dp-name" id="flexibility-h" style="--w: 396.5">Flexibil<span class="k-it">i</span><span class="k-ty">t</span>y</h2>
     <p class="dp-text"><b>Flexibility</b> is the ability to respond to change. If a design is not flexible, it will be brittle. A flexible design is one that can adapt to new circumstances and permits&nbsp;modifications.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">Which part will change first, and how much else moves when it&nbsp;does?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#simplicity">Simplicity</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">A design that can adapt to anything carries parts for things it may never&nbsp;do.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -305,6 +351,8 @@
   <section class="dp-ch is-bolt" id="reliability" aria-labelledby="reliability-h">
     <h2 class="dp-name" id="reliability-h" style="--w: 402.2">Reliabil<span class="k-it">i</span><span class="k-ty">t</span>y</h2>
     <p class="dp-text"><b>Reliability</b> is the ability to continue working under varying conditions. Reliability is related to strength and flexibility. A design without strength is not long-lasting and a design without flexibility has less ability to adapt; therefore, it will be unreliable when conditions&nbsp;change.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">Where will this be used that we haven&rsquo;t&nbsp;tested?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#performance">Performance</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Tuning for speed in ideal conditions narrows the range of conditions it&nbsp;survives.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -312,6 +360,8 @@
   <section class="dp-ch is-navy" id="economy" aria-labelledby="economy-h">
     <h2 class="dp-name" id="economy-h" style="--w: 384.4">Economy</h2>
     <p class="dp-text"><b>Economy</b> refers to a design that requires less resources and is scalable. With fewer necessary resources, the overall cost is lower, reducing waste and assuring affordability. Economy of scale means that as the system grows, and increases units in production, the lower the cost per unit of&nbsp;output.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">What does this cost at ten times the&nbsp;size?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#strength">Strength</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Taking out material takes out the reserve that absorbs the unexpected&nbsp;load.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -319,6 +369,8 @@
   <section class="dp-ch is-paper" id="predictability" aria-labelledby="predictability-h">
     <h2 class="dp-name" id="predictability-h" style="--w: 549.1">Predi<span class="k-ct">c</span>tabil<span class="k-it">i</span><span class="k-ty">t</span>y</h2>
     <p class="dp-text"><b>Predictability</b> is the capability of the design to perform consistently over time. Predictability is also related to intuitiveness. The more predictable the design, the more likely it is that the design will perform as people&nbsp;expect.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">Would someone using this for the first time guess what it does&nbsp;next?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#flexibility">Flexibility</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Every behaviour that changes with context is one more thing a person has to&nbsp;learn.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -326,6 +378,8 @@
   <section class="dp-ch is-bolt" id="performance" aria-labelledby="performance-h">
     <h2 class="dp-name" id="performance-h" style="--w: 543">Pe<span class="k-rf">r</span>formance</h2>
     <p class="dp-text"><b>Performance</b> is the capability of the design to run smoothly under demand. If a design cannot perform at the extremes of its capabilities, it is likely that the system is flawed. The more performant the design, the more likely the design will run without lag or&nbsp;latency.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">What happens on the slowest connection, at the busiest&nbsp;hour?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#maintainability">Maintainability</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Code tuned for speed is often harder to read, and harder to&nbsp;change.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -333,6 +387,8 @@
   <section class="dp-ch is-navy" id="security" aria-labelledby="security-h">
     <h2 class="dp-name" id="security-h" style="--w: 349.3">Secur<span class="k-it">i</span><span class="k-ty">t</span>y</h2>
     <p class="dp-text"><b>Security</b> is the capability of the design to resist attack. If a design is not secure, some people will take advantage of it and others will be negatively affected. The more secure the design, the more likely it is that the design will keep people safe and protect what they hold dear – whether it’s their data, money, belongings, family, or their own personal&nbsp;safety.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">Who would want to break this, and what would they&nbsp;get?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#accessibility">Accessibility</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Each lock is a step someone has to get through, including the people it is meant to&nbsp;serve.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -340,6 +396,8 @@
   <section class="dp-ch is-paper" id="maintainability" aria-labelledby="maintainability-h">
     <h2 class="dp-name" id="maintainability-h" style="--w: 615.5">Maintainabil<span class="k-it">i</span><span class="k-ty">t</span>y</h2>
     <p class="dp-text"><b>Maintainability</b> is the ease with which a design can be changed, repaired, or upgraded. If a design is not maintainable, it may need to be&nbsp;replaced.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">Could someone new fix this without the person who built&nbsp;it?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#economy">Economy</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Building for repair costs more up front, and the savings come years&nbsp;later.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -347,6 +405,8 @@
   <section class="dp-ch is-navy" id="accessibility" aria-labelledby="accessibility-h">
     <h2 class="dp-name" id="accessibility-h" style="--w: 517.5">Accessibil<span class="k-it">i</span><span class="k-ty">t</span>y</h2>
     <p class="dp-text"><b>Accessibility</b> is the capability of the design to be used by those who need it. The more accessible the design is, the more likely it will be used&nbsp;widely.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">Who can&rsquo;t use this&nbsp;yet?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn"><a href="#security">Security</a></span><span class="dp-sep"> &mdash; </span><span class="dp-tl">Every check that keeps the wrong people out can keep the right people out&nbsp;too.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
@@ -354,12 +414,14 @@
   <section class="dp-ch is-bolt" id="overall-quality" aria-labelledby="overall-quality-h">
     <h2 class="dp-name" id="overall-quality-h" style="--w: 630.9">Overall Qual<span class="k-it">i</span><span class="k-ty">t</span>y</h2>
     <p class="dp-text">When these design principles have been thoughtfully applied, before and during implementation, the resulting design is more likely to possess overall integrity. The capability of the design to perform its purpose is assured because each part is held to a high standard, reflecting its level of&nbsp;quality.</p>
+    <p class="dp-ask"><span class="dp-label">Ask</span> <span class="dp-q">Which of the ten did we trade away, and did we mean&nbsp;to?</span></p>
+    <p class="dp-tension"><span class="dp-label">Tension</span> <span class="dp-tn">All ten</span><span class="dp-sep"> &mdash; </span><span class="dp-tl">The principles trade against one another, and quality depends on making those trades on&nbsp;purpose.</span></p>
     <a class="dp-back" href="#contents">Back to contents</a>
   </section>
 
   <section class="dp-sum" id="all-principles" aria-labelledby="all-principles-h">
     <h2 id="all-principles-h">In short</h2>
-    <p class="dp-wall"><span style="--i: 0">Fewer moving parts, fewer processes and fewer inputs: that is <a href="#simplicity">simplicity</a>.</span> <span style="--i: 1">A design&rsquo;s <a href="#strength">strength</a> is the force it is capable of withstanding.</span> <span style="--i: 2">The ability to respond to change is <a href="#flexibility">flexibility</a>.</span> <span style="--i: 3">When conditions vary, <a href="#reliability">reliability</a> is the ability to keep working.</span> <span style="--i: 4">A design that needs fewer resources and scales well has <a href="#economy">economy</a>.</span> <span style="--i: 5">Over time, <a href="#predictability">predictability</a> means it performs consistently.</span> <span style="--i: 6">Under demand, <a href="#performance">performance</a> is the capability to run smoothly.</span> <span style="--i: 7">To resist attack, a design needs <a href="#security">security</a>.</span> <span style="--i: 8"><a href="#maintainability">Maintainability</a> is the ease with which it can be changed, repaired or upgraded.</span> <span style="--i: 9">And when those who need it can use it, the design has <a href="#accessibility">accessibility</a>.</span> <span class="dp-end" style="--i: 10">When these <a href="#overall-quality">design principles</a> have been thoughtfully applied, before and during implementation, the resulting design is more likely to possess&nbsp;overall&nbsp;integrity.</span></p>
+    <p class="dp-wall"><span style="--i: 0">Start with <a href="#simplicity">simplicity</a>, since a part that isn&rsquo;t there can&rsquo;t break, needs no upkeep and can&rsquo;t be attacked.</span> <span style="--i: 1">Then add <a href="#strength">strength</a> where the loads are known and <a href="#flexibility">flexibility</a> where change is likely.</span> <span style="--i: 2">Together they give you <a href="#reliability">reliability</a>, a design that holds under load and adapts to change.</span> <span style="--i: 3"><a href="#economy">Economy</a> is the budget all the others draw on.</span> <span style="--i: 4"><a href="#predictability">Predictability</a> can make up for some <a href="#performance">performance</a>, because a wait people can see the end of feels shorter than one they can&rsquo;t.</span> <span style="--i: 5"><a href="#security">Security</a> and <a href="#accessibility">accessibility</a> pull hardest against each other, so check every lock against the people it might keep out.</span> <span style="--i: 6"><a href="#maintainability">Maintainability</a> costs the people building it now and pays the people who inherit it later.</span> <span class="dp-end" style="--i: 7"><a href="#overall-quality">Overall quality</a> comes from making each of these trades on purpose, and writing down&nbsp;why.</span></p>
   </section>
 
   <section class="dp-cta" id="start" aria-labelledby="start-h">
@@ -502,6 +564,26 @@ $(document).ready(function () {
   });
   if ('onscrollend' in window) addEventListener('scrollend', function () { pending = null; });
   else addEventListener('scroll', function () { clearTimeout(timer); timer = setTimeout(function () { pending = null; }, 160); }, { passive: true });
+})();
+
+/* ---------- links to a chapter: go to its snap marker ----------
+   A stuck chapter already reports itself at the top of the screen, so the browser's own jump to #id does nothing.
+   The marker before each chapter stays in the flow, so scrolling to it lands the chapter whole. */
+(function () {
+  var stack = matchMedia('(min-width: 992px) and (min-height: 640px)'), reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  document.addEventListener('click', function (e) {
+    if (!stack.matches || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest('a[href^="#"]');
+    var ch = a && a.hash.length > 1 && document.getElementById(a.hash.slice(1));
+    if (!ch || !ch.classList.contains('dp-ch')) return;
+    var mark = ch.previousElementSibling;
+    if (!mark || !mark.classList.contains('dp-snap')) return;
+    e.preventDefault();
+    history.pushState(null, '', a.hash);
+    scrollTo({ top: mark.getBoundingClientRect().top + scrollY, behavior: reduce.matches ? 'auto' : 'smooth' });
+    var h = ch.querySelector('.dp-name');   /* focus goes with it, so Tab picks up in the chapter */
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  });
 })();
 
 /* ---------- back to top: shows once the introduction is behind you ---------- */
