@@ -4,7 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>What You Get: a sample Concierge project | Dlightning</title>
-    <meta name="description" content="Metsämaa, a sample Concierge Service project from start to finish: the brief, hypothesis, persona, journey map, competitor analysis, recommendations and six finished screens.">
+    <meta name="description" content="Metsämaa, a sample Concierge Service project from start to finish: the brief, hypothesis, persona, journey map, competitor analysis, recommendations and six screens.">
+    <link rel="canonical" href="https://dlightning.org/intake/what-you-get.html">
+    <meta property="og:url" content="https://dlightning.org/intake/what-you-get.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Dlightning">
+    <meta property="og:image" content="https://dlightning.org/img/opengraph/what-you-get.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="The Metsämaa sample project: a journey map, competitor table and app screens beside the headline One project, start to finish">
+    <meta property="og:title" content="What You Get: a sample Concierge project | Dlightning">
+    <meta property="og:description" content="Metsämaa, a sample Concierge Service project from start to finish: the brief, hypothesis, persona, journey map, competitor analysis, recommendations and six screens.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What You Get: a sample Concierge project | Dlightning">
+    <meta name="twitter:description" content="Metsämaa, a sample Concierge Service project from start to finish: the brief, hypothesis, persona, journey map, competitor analysis, recommendations and six screens.">
+    <meta name="twitter:image" content="https://dlightning.org/img/opengraph/what-you-get.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,11 +133,11 @@
         .assumptions li { background: var(--paper); border-radius: var(--radius); padding: var(--s5) var(--s4); font-weight: 600; color: var(--ink); }
 
 
-        /* ---------- Persona (placeholder until the Experience Builder artifact exists) ---------- */
-        .persona { display: grid; grid-template-columns: 4fr 7fr; gap: var(--s7); align-items: start; margin-top: var(--s7); }
+        /* ---------- Persona ---------- */
+        .persona { display: grid; grid-template-columns: 5fr 6fr; gap: var(--s7); align-items: start; }
         .persona .who { font-weight: 800; color: var(--ink); }
-        .persona blockquote { margin: var(--s4) 0 0; font-size: var(--t-h3); font-weight: 800; line-height: 1.4; color: var(--ink); }
-        .placeholder { aspect-ratio: 3 / 2; border-radius: var(--radius); background: var(--paper); border: 2px dashed var(--line); display: grid; place-items: center; text-align: center; padding: var(--s5); }
+        .persona .artifact { margin-top: 0; }
+        .persona h2 + .who { margin-top: var(--s5); }
 
         /* ---------- Artifact sections (journey map, competitors) ---------- */
         .artifact { margin: var(--s7) 0 0; }
@@ -138,11 +152,13 @@
 
         /* ---------- Recommendations ---------- */
         .recs { margin-top: var(--s7); list-style: none; display: grid; gap: var(--s3); counter-reset: rec; }
-        .recs li { counter-increment: rec; display: grid; grid-template-columns: 48px 4fr 6fr auto; gap: var(--s4); align-items: baseline; background: var(--paper); border-radius: var(--radius); padding: var(--s4) var(--s5); }
+        .recs li { counter-increment: rec; display: grid; grid-template-columns: 48px 4fr 6fr 11rem; gap: var(--s4); align-items: baseline; background: var(--paper); border-radius: var(--radius); padding: var(--s4) var(--s5); }
         .recs li::before { content: counter(rec); font-weight: 900; font-size: var(--t-h3); color: var(--ink); font-variant-numeric: tabular-nums; }
         .recs h3 { font-size: var(--t-h3); }
         .recs a { font-size: var(--t-small); font-weight: 700; color: var(--cobalt); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; white-space: nowrap; }
         .recs a:hover { color: var(--ink); }
+        .recs li > a, .recs li > .none { justify-self: end; }
+        .recs .src { display: block; margin-top: var(--s1); font-size: var(--t-small); color: var(--muted); }
         .recs .none { font-size: var(--t-small); color: var(--muted); white-space: nowrap; }
 
         /* ---------- Screens ---------- */
@@ -272,6 +288,7 @@
         <section class="wyg-sec on-card" id="hypothesis" aria-labelledby="hypo-title">
             <div class="wyg-wrap">
                 <h2 id="hypo-title">What we assumed going in</h2>
+                <p class="intro">We write down what we think is true before we talk to anyone. Research with nothing to test turns into a pile of opinions. With a hypothesis, every interview either backs an assumption up or knocks it down, and the ones that fall are often where the best ideas come from.</p>
                 <p class="hypo-statement">Restaurant owners furnishing a new room will order custom, high-end dining sets online if they can see the work up close and talk to a person before they pay.</p>
                 <p class="hypo-label">Three assumptions to test:</p>
                 <ul class="assumptions">
@@ -284,14 +301,17 @@
 
         <section class="wyg-sec" id="persona" aria-labelledby="persona-title">
             <div class="wyg-wrap">
-                <h2 id="persona-title">Who we're designing for</h2>
                 <div class="persona">
                     <div>
+                        <h2 id="persona-title">Who we're designing for</h2>
                         <p class="who">Rauno, 34, Finland. Opening his first restaurant.</p>
-                        <blockquote>"I'm buying these once. They need to last as long as the restaurant does."</blockquote>
+                        <p class="intro">A persona is one person standing in for everyone we interviewed. We talk to real buyers first, then sort what they told us: the goals that came up again and again, the things that stopped them buying, and the habits behind both. Rauno is that pattern with a name, a budget and an opening date.</p>
+                        <p class="intro">He's there so every later decision has someone to answer to. "Would Rauno trust this screen?" is a question the team can settle. "Would users like it?" isn't. The journey map, the recommendations and the screens below are all built around him.</p>
                     </div>
-                    <!-- PLACEHOLDER: replace with the Rauno persona exported from Experience Builder (artifact frame, like the journey map). -->
-                    <div class="placeholder"><p class="wyg-small">Persona artifact goes here (from Experience Builder)</p></div>
+                    <figure class="artifact">
+                        <div class="frame" tabindex="0" role="region" aria-label="Persona, scrolls sideways on small screens"><img src="../img/metsamaa/persona.webp" width="1572" height="2586" loading="lazy" alt="Persona card for Rauno Virtanen, 34, a chef opening a 42-seat restaurant in Tampere: his backstory, education, traits, sliders for price sensitivity, deadline pressure and research habits, and his goals, pain points and product actions"></div>
+                        <figcaption><span class="wyg-small">Rauno, the Metsämaa persona</span><a class="wyg-small" href="../img/metsamaa/persona.webp" target="_blank" rel="noopener">Open full size</a></figcaption>
+                    </figure>
                 </div>
             </div>
         </section>
@@ -300,6 +320,7 @@
             <div class="wyg-wrap">
                 <h2 id="journey-title">His path from search to sitting down</h2>
                 <p class="intro">Seven moments, from Rauno's first search to a full dining room. The curve tracks how he feels at each one.</p>
+                <p class="intro">A journey map follows one person through every step of buying, not just the part that happens in the app. Most products are designed screen by screen, which hides where people give up. Laying the whole path out in a line shows the moment that matters most, and here it happened outside the app entirely.</p>
                 <figure class="artifact">
                     <div class="frame" tabindex="0" role="region" aria-label="Journey map, scrolls sideways on small screens"><img src="../img/metsamaa/journey.webp" width="2400" height="1448" loading="lazy" alt="Metsämaa journey map: Rauno's seven steps from searching online to using the furniture, with his feelings, actions and Metsämaa's opportunities at each step"></div>
                     <figcaption><span class="wyg-small">Metsämaa journey map</span><a class="wyg-small" href="../img/metsamaa/journey.webp" target="_blank" rel="noopener">Open full size</a></figcaption>
@@ -329,12 +350,13 @@
         <section class="wyg-sec on-card" id="recommendations" aria-labelledby="recs-title">
             <div class="wyg-wrap">
                 <h2 id="recs-title">What we recommended</h2>
+                <p class="intro">Every recommendation here traces back to something the research turned up. Some confirmed what we assumed going in: buyers do want to choose size, wood and colour themselves. The journey map showed the sale is won at the workshop, not in the app, so the app's job is to get Rauno there. The competitor analysis showed that none of the big names sells to restaurants, which is why long life, not price, runs through every screen.</p>
                 <ol class="recs">
-                    <li><h3>Lead with custom.</h3><p>Size, wood and colour chosen up front, in one form.</p><a href="#screen-custom">See the custom form</a></li>
-                    <li><h3>Put a person in the loop.</h3><p>Book a workshop tour or a call before paying.</p><a href="#screen-appointment">See the booking screen</a></li>
-                    <li><h3>Show the real material.</h3><p>Large photos, every colourway, reviews from other buyers.</p><a href="#screen-product">See the product screen</a></li>
-                    <li><h3>Make the order feel certain.</h3><p>One clear total, then a confirmed order you can track.</p><a href="#screen-cart">See the cart</a></li>
-                    <li><h3>Sell the long life, not the price.</h3><p>That's the ground IKEA and Wayfair can't take.</p><span class="none">Runs through every screen</span></li>
+                    <li><h3>Lead with custom.</h3><p>Size, wood and colour chosen up front, in one form.<span class="src">From the interviews: confirmed assumption 2</span></p><a href="#screen-custom">See the custom form</a></li>
+                    <li><h3>Put a person in the loop.</h3><p>Book a workshop tour or a call before paying.<span class="src">From the journey map</span></p><a href="#screen-appointment">See the booking screen</a></li>
+                    <li><h3>Show the real material.</h3><p>Large photos, every colourway, reviews from other buyers.<span class="src">From the persona: photos flatten the grain</span></p><a href="#screen-product">See the product screen</a></li>
+                    <li><h3>Make the order feel certain.</h3><p>One clear total, then a confirmed order you can track.<span class="src">From the persona: &ldquo;4&ndash;10 weeks&rdquo; is useless to him</span></p><a href="#screen-cart">See the cart</a></li>
+                    <li><h3>Sell the long life, not the price.</h3><p>That's the ground IKEA and Wayfair can't take.<span class="src">From the competitor analysis</span></p><span class="none">Runs through every screen</span></li>
                 </ol>
             </div>
         </section>
@@ -342,11 +364,7 @@
         <section class="wyg-sec" id="screens" aria-labelledby="screens-title">
             <div class="wyg-wrap">
                 <h2 id="screens-title">The screens</h2>
-                <p class="intro">Wireframes first, to agree the flow. Then six finished screens, each built from a recommendation above.</p>
-                <figure class="artifact">
-                    <div class="frame" tabindex="0" role="region" aria-label="Wireframes, scroll sideways on small screens"><img src="../img/metsamaa/wireframes.webp" width="2400" height="750" loading="lazy" alt="Seven grey wireframes of the Metsämaa app: product grid, product detail, cart, custom furniture form, profile and appointments"></div>
-                    <figcaption><span class="wyg-small">Wireframes</span><a class="wyg-small" href="../img/metsamaa/wireframes.webp" target="_blank" rel="noopener">Open full size</a></figcaption>
-                </figure>
+                <p class="intro">Each screen carries out one recommendation above. We build them in Screen Builder, our own tool for the first version of a screen, when the question is whether it works at all. What you get is iteration one: mid-fidelity screens, as finished as the photos and content we have allow. You see them in days, and changes are cheap until the flow is right.</p>
                 <ul class="screens">
                     <li><a class="shot" id="screen-home" href="../img/metsamaa/home.webp" target="_blank" rel="noopener"><img src="../img/metsamaa/home.webp" width="540" height="1200" loading="lazy" alt="Metsämaa app home screen: furniture categories and a grid of products"></a><h3>Home</h3><p class="wyg-small">Browse by type</p></li>
                     <li><a class="shot" id="screen-custom" href="../img/metsamaa/custom-form.webp" target="_blank" rel="noopener"><img src="../img/metsamaa/custom-form.webp" width="540" height="1451" loading="lazy" alt="Custom furniture form: choose furniture type, colour, wood type and size"></a><h3>Custom furniture form</h3><p class="wyg-small">Recommendation 1</p></li>
@@ -364,7 +382,7 @@
                 <ol class="weeks">
                     <li><h3>Week 1</h3><p>Intake, the brief, hypothesis, competitor analysis</p></li>
                     <li><h3>Week 2</h3><p>Interviews, persona, journey map</p></li>
-                    <li><h3>Week 3</h3><p>Recommendations, wireframes, six screens</p></li>
+                    <li><h3>Week 3</h3><p>Recommendations, six screens from Screen Builder</p></li>
                 </ol>
                 <p class="your-part"><b>Your part:</b> the intake conversation, one kickoff call, answers when we have questions, a review at the end.</p>
             </div>
@@ -379,7 +397,7 @@
                     </div>
                     <div class="actions">
                         <a class="wyg-btn wyg-btn-bolt" href="dist/client-intake.html">Start Concierge Intake</a>
-                        <a href="../experience-builder.html">Rather do it yourself? Experience Builder is $6 a month.</a>
+                        <a href="../experience-builder.html"><small>Rather do it yourself?<br>Experience Builder is $6 a month.</small></a>
                     </div>
                 </div>
                 <p class="wyg-small sample-note">Metsämaa is a sample project made to show the process.</p>
