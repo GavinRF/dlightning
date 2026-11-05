@@ -134,6 +134,15 @@
 
   .dp-back { display: none; }
 
+  /* ---------- back to top: the site's button, in this page's colours; it reads on bolt, navy, paper and blue ---------- */
+  .dp .back-to-top {
+    background: var(--navy); color: var(--bolt); border-color: var(--bolt);
+    opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s, background-color .2s ease, color .2s ease;
+  }
+  .dp .back-to-top.is-shown { opacity: 1; visibility: visible; }
+  .dp .back-to-top:hover { background: var(--bolt); color: var(--navy); }
+  .dp .back-to-top:focus-visible { outline: 3px solid var(--bolt); outline-offset: 3px; }
+
   /* ---------- the close: every principle in one paragraph, names lit ---------- */
   .dp-sum {
     background: var(--navy); color: var(--paper); min-height: 100svh;
@@ -380,6 +389,8 @@
   <a href="/contact.html" class="contact2">Contact Us</a>
 </div>
 
+<div class="back-to-top" role="button" tabindex="0" aria-label="Back to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
+
 <script>
 $(document).ready(function () {
   $('#footer').load("footer.html");
@@ -463,6 +474,51 @@ $(document).ready(function () {
   }
   if ('onscrollend' in window) addEventListener('scrollend', settle);
   else addEventListener('scroll', function () { clearTimeout(timer); timer = setTimeout(settle, 160); }, { passive: true });
+})();
+
+/* ---------- arrow keys: one tap moves a whole principle, up or down ----------
+   Stops are the top of the page, each chapter's snap marker, the summary, the call and the footer. */
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var marks = Array.prototype.slice.call(document.querySelectorAll('.dp-snap, .dp-sum, .dp-cta'));
+  var pending = null, timer = null;   /* where a smooth move is headed, so quick repeated taps step on rather than re-aim */
+  function stops() {
+    var max = document.documentElement.scrollHeight - innerHeight;
+    var list = [0].concat(marks.map(function (m) { return Math.min(max, Math.round(m.getBoundingClientRect().top + scrollY)); }), max);
+    return list.sort(function (a, b) { return a - b; }).filter(function (y, i, a) { return i === 0 || y - a[i - 1] > 2; });
+  }
+  addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    var el = document.activeElement;
+    if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
+    var from = pending !== null ? pending : scrollY, list = stops(), to = null, i;
+    if (e.key === 'ArrowDown') { for (i = 0; i < list.length; i++) if (list[i] > from + 2) { to = list[i]; break; } }
+    else { for (i = list.length - 1; i >= 0; i--) if (list[i] < from - 2) { to = list[i]; break; } }
+    if (to === null) return;
+    e.preventDefault();
+    pending = reduce.matches ? null : to;
+    scrollTo({ top: to, behavior: reduce.matches ? 'auto' : 'smooth' });
+  });
+  if ('onscrollend' in window) addEventListener('scrollend', function () { pending = null; });
+  else addEventListener('scroll', function () { clearTimeout(timer); timer = setTimeout(function () { pending = null; }, 160); }, { passive: true });
+})();
+
+/* ---------- back to top: shows once the introduction is behind you ---------- */
+(function () {
+  var btn = document.querySelector('.back-to-top'), reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  function toggle() { btn.classList.toggle('is-shown', scrollY > innerHeight / 2); }
+  addEventListener('scroll', toggle, { passive: true });
+  toggle();
+  function go(e) {
+    if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' });
+    var h = document.getElementById('dp-title');   /* focus goes with it, so Tab picks up from the top */
+    h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true });
+  }
+  btn.addEventListener('click', go);
+  btn.addEventListener('keydown', go);
 })();
 
 /* ---------- chapters: each name slides in from the edge that cuts it, once ---------- */
