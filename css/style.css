@@ -3303,6 +3303,12 @@ details[open] summary ~ * {
   padding: 22px 0px 20px 26px;
 }
 
+@media (max-width: 990px) {
+  .product-card-area{
+    padding: 22px 0px 20px 0px;
+  }
+}
+
 .pDash{
   width: 86%;
   box-shadow: -2px 2px 18px #03032a2b;
