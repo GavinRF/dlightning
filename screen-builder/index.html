@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Screen Builder</title>
+<title>Screen Builder | Dlightning</title>
 <meta name="description" content="Interactive mobile device mockup with draggable interface and component library including buttons, inputs, checkboxes, radio buttons, dropdowns, cards, navigation bars, and modals. Features a realistic device frame with status bar. Quickly prototype your design and export it as an image.">
 <meta name="keywords" content="mobile mockup, UI components, device prototype, interactive interface, drag and drop, UI design, button component, input field, checkbox, radio button, dropdown menu, card component, navigation bar, modal window, mobile status bar, UX mockup tool, faster than Figma, Figma killer, wireframe builder, screen creator, Modern Wireframe Generator">
 <meta name="author" content="Dlightning">
@@ -16,10 +16,8 @@
 <meta property="og:description" content="Dedicated to creating a better world through design."/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
-<meta property="og:url" content="https://dlightning.org/screen-builder/"/>
-<link rel="canonical" href="https://dlightning.org/screen-builder/"/>
 
-<!-- favicon -->
+<!-- favicons (served from site root) -->
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
@@ -42,10 +40,12 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-functions-compat.js"></script>
+<!-- Keep every Firebase SDK script on the same version (compat). Mixing in v8 scripts
+     re-registered storage over the v10 one and loaded functions from a different SDK. -->
 
 <script src="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
 </head>
 
@@ -82,7 +82,7 @@
     <!-- SIDEBAR ////////////////// -->
     <div class="sidebar">
         <div id="titleBlock">
-                <a href="/"><img src="img/transparent white D.png" height="32px"></a>
+                <a href="index.html"><img src="img/transparent white D.png" height="32px"></a> 
                 <h1 id="mainH1">Screen Builder</h1>
             <div>
                 <button id="sidebar-toggle-btn" title="toggle the sidebar" class="toggle-btn"><i class="fa-solid fa-square-caret-left"></i> </button>
@@ -99,6 +99,8 @@
         <button class="login-button" onclick="showAuthModal()">
             <div>Sign In &nbsp;<i class="fas fa-sign-in-alt"></i></div>
         </button>
+        <!-- New tab: logged-out work lives only in this page, so navigating away would lose it -->
+        <a class="how-it-works-link" href="/screen-builder-guide.html" target="_blank" rel="noopener">New here? See how it works <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
     </div>
     
 
@@ -123,7 +125,7 @@
         <div id="search-container">
             <div class="search-wrapper">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" id="componentSearch" placeholder="Search..." >
+                <input type="text" id="componentSearch" placeholder="Search...   ( / )" title="Search components (/ or Ctrl/Cmd+K) · Enter adds the top result" >
                 <i class="fas fa-times clear-icon" id="clearSearch" title="clear search"></i>
             </div>
         </div>
@@ -134,76 +136,76 @@
     <div class="sidebar-content active" data-tab="basic">
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="adjustableSpace">
-                <i title="adjustable space" class="fas fa-arrows-alt-v"></i> 
+            <button title="adjustable space" class="component-btn" data-component="adjustableSpace">
+                <i class="fas fa-arrows-alt-v"></i> 
                 Adjustable Space 
                 <span>blank empty padding margin</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="icon">
-                <i title="icon" class="fas fa-icons"></i> 
+            <button title="icon" class="component-btn" data-component="icon">
+                <i class="fas fa-icons"></i> 
                 Icon 
                 <span>svg </span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="image">
-                <i title="image" class="fas fa-image"></i> 
+            <button title="image" class="component-btn" data-component="image">
+                <i class="fas fa-image"></i> 
                 Image
                 <span> picture photo</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="blankCard">
-                <i style="font-size: 17px;" title="blank card" class="fa-regular fa-square"></i> 
+            <button title="blank card" class="component-btn" data-component="blankCard">
+                <i style="font-size: 17px;" class="fa-regular fa-square"></i> 
                 <!-- <i class="fa-regular fa-rectangle-xmark"></i> -->
                 Blank Card
                 <span>group empty</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="button">
-                <i title="button" class="fas fa-circle-plus"></i> 
+            <button title="button" class="component-btn" data-component="button">
+                <i class="fas fa-circle-plus"></i> 
                 Button
                 <span>ghost group</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="hzDivider">
-                <i title="divider line" class="fa-solid fa-minus"></i> 
+            <button title="divider line" class="component-btn" data-component="hzDivider">
+                <i class="fa-solid fa-minus"></i> 
                 Divider Line
                 <span>horizontal break</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="colorBlock" style="border-radius: 0px;">
-                <i style="font-size: 16px;" title="color block" class="fa-solid fa-fill-drip"></i> 
+            <button title="color block" class="component-btn" data-component="colorBlock" style="border-radius: 0px;">
+                <i style="font-size: 16px;" class="fa-solid fa-fill-drip"></i> 
                 Color Block 
                 <span>group</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="columns">
-                <i title="columns" class="fa-solid fa-table-columns"></i>
+            <button title="columns" class="component-btn" data-component="columns">
+                <i class="fa-solid fa-table-columns"></i>
                 Columns 
                 <span>group</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <!-- // TEXT ELEMENTS  -->
@@ -211,47 +213,47 @@
         <div class="btn-class-group">
             <label class="groupLabel">Text Elements</label>
                 <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="heading">
-                    <i title="heading" class="fas fa-heading"></i> 
+                <button title="heading" class="component-btn" data-component="heading">
+                    <i class="fas fa-heading"></i> 
                     Heading
                     <span>title</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="paragraph">
-                    <i title="paragraph" class="fas fa-paragraph"></i> 
+                <button title="paragraph" class="component-btn" data-component="paragraph">
+                    <i class="fas fa-paragraph"></i> 
                     Paragraph
                     <span>text</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="blockquote">
-                    <i title="block-quote" class="fas fa-quote-right"></i> 
+                <button title="block-quote" class="component-btn" data-component="blockquote">
+                    <i class="fas fa-quote-right"></i> 
                     Block Quote
                     <span>text</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="bulletedList">
-                    <i title="list" class="fas fa-list-ul"></i> 
+                <button title="list" class="component-btn" data-component="bulletedList">
+                    <i class="fas fa-list-ul"></i> 
                     Bullet List
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="label">
-                    <i title="field label" class="fas fa-tag"></i> 
+                <button title="field label" class="component-btn" data-component="label">
+                    <i class="fas fa-tag"></i> 
                     Field Label
                     <span>text</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
         </div>
         <!-- // FORM ELEMENTS  -->
@@ -265,7 +267,7 @@
                     Input Field
                     <span>text</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
@@ -274,7 +276,7 @@
                     Text Area
                     <span>Input</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
@@ -282,67 +284,67 @@
                     <i class="fas fa-check-square"></i> 
                     Checkbox
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="radio">
-                    <i title="radio button" class="fas fa-dot-circle"></i> 
+                <button title="radio button" class="component-btn" data-component="radio">
+                    <i class="fas fa-dot-circle"></i> 
                     Radio Button
                     <span>dial</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <!-- <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="formGroup">
-                    <i title="form group" class="fa-solid fa-object-group"></i> 
+                <button title="form group" class="component-btn" data-component="formGroup">
+                    <i class="fa-solid fa-object-group"></i> 
                     Form Group
                     <span></span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div> -->
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="dropdown">
-                    <i title="dropdown" class="fa-solid fa-chevron-down"></i> 
+                <button title="dropdown" class="component-btn" data-component="dropdown">
+                    <i class="fa-solid fa-chevron-down"></i> 
                     Dropdown
                     <span>select picklist</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="toggleSwitch">
-                    <i title="toggle" class="fas fa-toggle-on"></i> 
+                <button title="toggle" class="component-btn" data-component="toggleSwitch">
+                    <i class="fas fa-toggle-on"></i> 
                     Toggle Switch
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="slider">
-                    <i title="slider" class="fas fa-sliders-h"></i>
+                <button title="slider" class="component-btn" data-component="slider">
+                    <i class="fas fa-sliders-h"></i>
                     Range Slider
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="datePicker">
-                    <i title="date picker" class="fas fa-calendar-alt"></i> 
+                <button title="date picker" class="component-btn" data-component="datePicker">
+                    <i class="fas fa-calendar-alt"></i> 
                     Date Picker
                     <span>calendar</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="fileUpload">
-                    <i title="file upload" class="fas fa-file-upload"></i> 
+                <button title="file upload" class="component-btn" data-component="fileUpload">
+                    <i class="fas fa-file-upload"></i> 
                     File Upload
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
         </div>
     </div>
@@ -352,28 +354,28 @@
     <div class="sidebar-content" data-tab="components">
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;">
-                <i title="top nav" class="fas fa-bars"></i> 
+            <button title="top nav" class="component-btn" data-component="navbar" style="border-bottom: 4px solid rgba(51, 51, 51, 0.28); border-radius: 5px 5px 0 0;">
+                <i class="fas fa-bars"></i> 
                 Top Navigation Bar
                 <span>menu</span>
             </button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="sidebar">
-                <i title="sidebar" class="fa-solid fa-clapperboard fa-rotate-270"></i> 
+            <button title="sidebar" class="component-btn" data-component="sidebar">
+                <i class="fa-solid fa-clapperboard fa-rotate-270"></i> 
                 Sidebar
                 <span>menu</span>
             </button>
         </div>
         
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="hero">
-                <i title="hero" class="fa-solid fa-mattress-pillow fa-rotate-90"></i> 
+            <button title="hero" class="component-btn" data-component="hero">
+                <i class="fa-solid fa-mattress-pillow fa-rotate-90"></i> 
                 Hero Section
                 <span>header jumbotron</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
@@ -382,86 +384,86 @@
                 Avatar
                 <span>profile image</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="alert">
-                <i title="alert" class="fas fa-exclamation-triangle"></i> 
+            <button title="alert" class="component-btn" data-component="alert">
+                <i class="fas fa-exclamation-triangle"></i> 
                 Alert
                 <span>warning info error</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="notificationBanner">
-                <i title="notification" class="fas fa-bell"></i>  
+            <button title="notification" class="component-btn" data-component="notificationBanner">
+                <i class="fas fa-bell"></i>  
                 Notification
                 <span></span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="searchBar">
-                <i title="search" class="fas fa-search"></i> 
+            <button title="search" class="component-btn" data-component="searchBar">
+                <i class="fas fa-search"></i> 
                 Search Bar
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="tabs">
-                <i title="tabs" class="fas fa-folder"></i> 
+            <button title="tabs" class="component-btn" data-component="tabs">
+                <i class="fas fa-folder"></i> 
                 Tabs
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="accordion">
-                <i title="accordion" class="fas fa-chevron-down"></i> 
+            <button title="accordion" class="component-btn" data-component="accordion">
+                <i class="fas fa-chevron-down"></i> 
                 Accordion
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="btn-group-spacer"></div>
         <div class="btn-class-group">
             <label class="groupLabel">Cards</label>
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="card">
-                    <i title="img card" class="fa-regular fa-window-maximize"></i> 
+                <button title="img card" class="component-btn" data-component="card">
+                    <i class="fa-regular fa-window-maximize"></i> 
                     Image Card
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="card2">
+                <button title="text card" class="component-btn" data-component="card2">
                     <!-- <i title="text card" class="fa-solid fa-window-maximize"></i>  -->
-                    <i title="text card" class="fa-solid fa-money-check fa-flip-horizontal"></i>
+                    <i class="fa-solid fa-money-check fa-flip-horizontal"></i>
                     Text Card
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="listItem">
-                    <i title="text card" class="fa-solid fa-diagram-next"></i>
+                <button title="list item" class="component-btn" data-component="listItem">
+                    <i class="fa-solid fa-diagram-next"></i>
                     List Item
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="featureComparisonCard">
-                    <i title="comparison" class="fa-solid fa-check-double"></i></i>  
+                <button title="comparison" class="component-btn" data-component="featureComparisonCard">
+                    <i class="fa-solid fa-check-double"></i></i>  
                     Comparison Card
                     <span>product</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
              <!-- next card  -->
@@ -472,123 +474,123 @@
         <div class="btn-class-group">
             <label class="groupLabel">Media</label>
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="imgGallery">
-                    <i title="gallery" class="fas fa-images"></i> 
+                <button title="gallery" class="component-btn" data-component="imgGallery">
+                    <i class="fas fa-images"></i> 
                     Image Gallery
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="video">
-                    <i title="video" class="fas fa-video"></i> 
+                <button title="video" class="component-btn" data-component="video">
+                    <i class="fas fa-video"></i> 
                     Video
                     <span>live stream photo </span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="musicPlayer">
-                    <i title="video" class="fas fa-music"></i> 
+                <button title="music player" class="component-btn" data-component="musicPlayer">
+                    <i class="fas fa-music"></i> 
                     Music Player
                     <span> audio player</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
         </div>
         <div style="height: 4px;"></div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="modal">
-                <i title="modal" class="fas fa-square-up-right"></i> 
+            <button title="modal" class="component-btn" data-component="modal">
+                <i class="fas fa-square-up-right"></i> 
                 Modal Pop-up
                 <span>dialog</span>
             </button>
-            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
+            <!-- <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="table">
-                <i title="data table" class="fas fa-table"></i> 
+            <button title="data table" class="component-btn" data-component="table">
+                <i class="fas fa-table"></i> 
                 Data Table
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="chipGroup">
-                <i title="pills" class="fa-solid fa-capsules fa-rotate-90"></i> 
+            <button title="pills" class="component-btn" data-component="chipGroup">
+                <i class="fa-solid fa-capsules fa-rotate-90"></i> 
                 Pills 
                 <span>chips tags hashtags cloud</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="progressBar">
-                <i title="progress" class="fa-solid fa-bars-progress"></i> 
+            <button title="progress indicator" class="component-btn" data-component="progressBar">
+                <i class="fa-solid fa-bars-progress"></i> 
                 Progress Indicator
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="progressTracker">
-                <i title="progress" class="fa-solid fa-code-commit"></i>  
+            <button title="progress tracker" class="component-btn" data-component="progressTracker">
+                <i class="fa-solid fa-code-commit"></i>  
                 Progress Tracker 
                 <span>steps timeline</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="pagination">
-                <i title="pagination" class="fa-solid fa-sort fa-rotate-90"></i></i>  
+            <button title="pagination" class="component-btn" data-component="pagination">
+                <i class="fa-solid fa-sort fa-rotate-90"></i></i>  
                 Pagination
                 <span>navigation</span>
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="footer">
-                <i title="footer" class="fa-solid fa-mattress-pillow fa-rotate-270"></i> 
+            <button title="footer" class="component-btn" data-component="footer">
+                <i class="fa-solid fa-mattress-pillow fa-rotate-270"></i> 
                 Footer
             </button>
-            <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="floatingActionButton">
-                <i title="FAB" class="fas fa-circle-plus"></i> 
+            <button title="FAB" class="component-btn" data-component="floatingActionButton">
+                <i class="fas fa-circle-plus"></i> 
                 Floating Action Button
                 <span>FAB</span>
             </button>
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="keyboard">
-                <i title="keyboard" class="fa-solid fa-keyboard"></i> 
+            <button title="keyboard" class="component-btn" data-component="keyboard">
+                <i class="fa-solid fa-keyboard"></i> 
                 Keyboard
                 <span>keys</span>
             </button>
-            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
+            <!-- <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
         <div class="comp-btn-wrap">
-            <button class="component-btn" data-component="bottomSheet">
+            <button title="bottom sheet" class="component-btn" data-component="bottomSheet">
                 <!-- fa-circle-half-stroke fa-rotate-270 -->
-                <i title="bottom sheet" class="fa-solid fa-arrow-up-from-bracket"></i> 
+                <i class="fa-solid fa-arrow-up-from-bracket"></i> 
                 Bottom Sheet
                 <span>menu</span>
             </button>
-            <!-- <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
+            <!-- <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button> -->
         </div>
 
-        <button class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;">
+        <button title="bottom nav bar" class="component-btn" data-component="bottomNav" style="border-top: 4px solid rgba(51, 51, 51, 0.28); border-radius: 0 0 5px 5px;">
             
-            <i title="bottom nav bar" style="background-color: var(--text-on-primary); margin: 0 10px 0 0; border-radius: 0 0 4px 4px; width: 20px; display: inline-flex; justify-content: center; height: 10px !important; outline: 1px solid;"><div style="color: var(--color-primary); margin: -2px 0 4px 0" class="fa-solid fa-ellipsis"></div></i>
+            <i style="background-color: var(--text-on-primary); margin: 0 10px 0 0; border-radius: 0 0 4px 4px; width: 20px; display: inline-flex; justify-content: center; height: 10px !important; outline: 1px solid;"><div style="color: var(--color-primary); margin: -2px 0 4px 0" class="fa-solid fa-ellipsis"></div></i>
            
             Bottom Navigation Bar
             <span>link buttons</span>
@@ -599,21 +601,21 @@
         <div class="btn-class-group">
             <label class="groupLabel">Charts</label>
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="graph">
-                    <i title="bar graph" class="fas fa-chart-column"></i> 
+                <button title="bar graph" class="component-btn" data-component="graph">
+                    <i class="fas fa-chart-column"></i> 
                     Bar Graph 
                     <span>chart column line</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="pieGraph">
-                    <i title="pie graph" class="fas fa-chart-pie"></i> 
+                <button title="pie graph" class="component-btn" data-component="pieGraph">
+                    <i class="fas fa-chart-pie"></i> 
                     Pie Graph 
                     <span>chart</span>
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
         </div>
 
@@ -621,27 +623,27 @@
         <div class="btn-class-group">
             <label class="groupLabel">Chat</label>
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="leftChat">
-                    <i title="left chat" class="fas fa-comment-alt"></i> 
+                <button title="left chat" class="component-btn" data-component="leftChat">
+                    <i class="fas fa-comment-alt"></i> 
                     Left Chat Bubble
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
 
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="rightChat">
-                    <i title="right chat" class="fa-solid fa-message" style=" -webkit-transform: scaleX(-1); transform: scaleX(-1);"></i> 
+                <button title="right chat" class="component-btn" data-component="rightChat">
+                    <i class="fa-solid fa-message" style=" -webkit-transform: scaleX(-1); transform: scaleX(-1);"></i> 
                     Right Chat Bubble
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
             
             <div class="comp-btn-wrap">
-                <button class="component-btn" data-component="chatInput">
-                    <i title="chat input" class="fas fa-paper-plane"></i> 
+                <button title="chat input" class="component-btn" data-component="chatInput">
+                    <i class="fas fa-paper-plane"></i> 
                     Chat Input
                 </button>
-                <button class="preview-trigger" title="preview"><i title="dropdown" class="toggle-icon fa-solid fa-chevron-down"></i></button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
         </div>
     </div>
@@ -1324,7 +1326,7 @@
 
     <!-- .canvas-content gap controls -->
     <label style="color: white; margin-left: 6px;"><i class="fa-solid fa-arrows-left-right-to-line fa-rotate-90"></i>&emsp; Component Gap</label>
-    <p style="color: gray; margin: 4px 0 0 6px; font-size: smaller;">(applies to selected screen)</p>
+    <p id="gap-target-hint" style="color: gray; margin: 4px 0 0 6px; font-size: smaller;">(applies to selected screen)</p>
                 <div class="gap-controls">
                     <div class="range-input-group">
                         <input type="range" 
@@ -1389,7 +1391,7 @@
     <!-- <hr> -->
         <div style="margin: 86px 0 0 0; display: flex; justify-content: center; align-items: center;">
             <!-- DLIGHTNING LOGO ////////////////// -->
-            <a id="dlightning" href="/" target="blank">
+            <a id="dlightning" href="index.html" target="blank">
                 <!-- <img src="img/small transparent.png" id="Dimg"> -->
                 <img src="img/transparent white D.png" id="Dimg2" alt="Dlightning logo">
             </a>
@@ -1673,7 +1675,7 @@ $(document).on('mouseenter', '.previewInnerCon', function() {
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
 <!-- Collaboration flags (kept in dev + prod). Off by default; flip to true to test. See docs/*-spec.md -->
-<script>window.COLLAB_PRESENCE_ENABLED = true; window.COLLAB_SYNC_ENABLED = true; window.COLLAB_ACCESS_ENABLED = true;</script>
+<script>window.COLLAB_PRESENCE_ENABLED = true; window.COLLAB_SYNC_ENABLED = true; window.COLLAB_ACCESS_ENABLED = true; window.COLLAB_CURSORS_ENABLED = false; /* flip true once RTDB instance + rules are live */</script>
 <script src="js/bundle.min.js"></script>
 
 <!-- <script src="js/collab-sys.js"></script> -->

@@ -1,14 +1,28 @@
 <!DOCTYPE html>
+<!--
+  payment-success.html — DISPLAY-ONLY as of 2026-11. See TODO.md (🔐 section) for history.
+
+  What happened: this page used to write `pro_account: true` + subscription fields to
+  users/{uid} straight from the browser, after only a client-side Stripe PaymentIntent
+  check (hard-coded test key). Anyone signed in could do the same from the console, and
+  it fought the Stripe webhook, which is the real source of truth for Pro.
+
+  Now it writes NOTHING. It just watches the user's doc and shows success once the
+  webhook (functions/index.js → stripeWebhook) has set `pro_account: true`.
+
+  Checkout no longer sends users here (new-Stripe.js returns to index.html?subscription=success).
+  Kept, not deleted, in case an old link/redirect still points at it — see the loose-ends
+  list in TODO.md before removing it for good.
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Subscription Successful - Dlightning</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <style>
     :root {
       --color-primary: #3498db;
@@ -183,52 +197,49 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
     
-    // Get query parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const paymentIntent = urlParams.get('payment_intent');
-    const paymentIntentClientSecret = urlParams.get('payment_intent_client_secret');
-    const redirectStatus = urlParams.get('redirect_status');
-    
-    // Check authentication and payment status
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        try {
-          if (redirectStatus === 'succeeded' && paymentIntent && paymentIntentClientSecret) {
-            // Verify payment with Stripe
-            const stripe = Stripe('pk_test_51MzJG5Dw0oD39kdpZVxP3trpRMunGg4nbCPcEgrYz9mDQ1kS05xfrmYIzwfwTrVPGYtbA2Pv6kKDq5PvsLzVZ58Q00q5XRYgDI');
-            const { paymentIntent: verifiedIntent } = await stripe.retrievePaymentIntent(paymentIntentClientSecret);
-            
-            if (verifiedIntent.status === 'succeeded') {
-              // Update user's subscription status in Firestore
-              await db.collection('users').doc(user.uid).update({
-                pro_account: true,
-                subscription_status: 'active',
-                subscription_start_date: firebase.firestore.FieldValue.serverTimestamp(),
-                last_payment_status: 'succeeded',
-                last_payment_date: firebase.firestore.FieldValue.serverTimestamp(),
-                payment_intent_id: paymentIntent
-              });
-              
-              // Show success UI
-              document.getElementById('loading').style.display = 'none';
-              document.getElementById('success-content').style.display = 'block';
-            } else {
-              throw new Error('Payment verification failed');
-            }
-          } else {
-            throw new Error('Missing payment information');
-          }
-        } catch (error) {
-          console.error('Error handling payment success:', error);
-          
-          document.getElementById('loading').style.display = 'none';
-          document.getElementById('error-content').style.display = 'block';
-          document.getElementById('error-message').textContent = error.message || 'Payment verification failed';
-        }
-      } else {
-        // User not logged in
+    // READ-ONLY: never write to users/{uid} from here — the Stripe webhook owns Pro status.
+    const ACTIVATION_TIMEOUT_MS = 30000;
+    const show = (id) => {
+      ['loading', 'success-content', 'error-content'].forEach(el =>
+        document.getElementById(el).style.display = el === id ? 'block' : 'none');
+    };
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
         window.location.href = '/';
+        return;
       }
+
+      let done = false;
+      const timer = setTimeout(() => {
+        if (done) return;
+        done = true;
+        unsubscribe();
+        // Not necessarily a failure: the webhook may just be slow.
+        document.querySelector('#error-content h1').textContent = 'Still activating…';
+        document.getElementById('error-message').textContent =
+          'Your payment is being processed. Pro features will unlock automatically within a few minutes — ' +
+          'refresh the builder shortly. Contact support if it still hasn\'t activated.';
+        show('error-content');
+      }, ACTIVATION_TIMEOUT_MS);
+
+      const unsubscribe = db.collection('users').doc(user.uid).onSnapshot((doc) => {
+        if (done) return;
+        if (doc.exists && doc.data().pro_account === true) {
+          done = true;
+          clearTimeout(timer);
+          unsubscribe();
+          show('success-content');
+        }
+      }, (error) => {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        console.error('Error reading subscription status:', error);
+        document.getElementById('error-message').textContent =
+          'We couldn\'t check your subscription status. Please refresh the builder or contact support.';
+        show('error-content');
+      });
     });
   </script>
 </body>
