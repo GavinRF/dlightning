@@ -121,6 +121,10 @@
             <i class="fa-solid fa-font"></i>
             <!-- <i class="fa-solid fa-hexagon-nodes-bolt"></i> -->
         </button>
+        <button class="sidebar-tab" data-tab="prototype">
+            Prototype <br>
+            <i class="fa-solid fa-play"></i>
+        </button>
     </div>
         <div id="search-container">
             <div class="search-wrapper">
@@ -365,8 +369,26 @@
             <button title="sidebar" class="component-btn" data-component="sidebar">
                 <i class="fa-solid fa-clapperboard fa-rotate-270"></i> 
                 Sidebar
-                <span>menu</span>
+                <span>drawer, full-screen menu</span>
             </button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button title="shelf" class="component-btn" data-component="shelf">
+                <i class="fa-solid fa-ellipsis"></i> 
+                Shelf
+                <span>scrolling nav row</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="comp-btn-wrap">
+            <button title="breadcrumb" class="component-btn" data-component="breadcrumb">
+                <i class="fa-solid fa-angles-right"></i> 
+                Breadcrumb
+                <span>page trail</span>
+            </button>
+            <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
         </div>
         
         <div class="comp-btn-wrap">
@@ -498,6 +520,15 @@
                 </button>
                 <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
+
+            <div class="comp-btn-wrap">
+                <button title="map" class="component-btn" data-component="map">
+                    <i class="fas fa-map-location-dot"></i> 
+                    Map
+                    <span> location directions</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
         </div>
         <div style="height: 4px;"></div>
 
@@ -613,7 +644,16 @@
                 <button title="pie graph" class="component-btn" data-component="pieGraph">
                     <i class="fas fa-chart-pie"></i> 
                     Pie Graph 
-                    <span>chart</span>
+                    <span>chart donut doughnut</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button title="line graph" class="component-btn" data-component="lineGraph">
+                    <i class="fas fa-chart-line"></i> 
+                    Line Graph 
+                    <span>chart area trend sparkline stat kpi</span>
                 </button>
                 <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
@@ -642,6 +682,24 @@
                 <button title="chat input" class="component-btn" data-component="chatInput">
                     <i class="fas fa-paper-plane"></i> 
                     Chat Input
+                </button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button title="AI welcome" class="component-btn" data-component="aiWelcome">
+                    <i class="fas fa-wand-magic-sparkles"></i> 
+                    AI Welcome
+                    <span>assistant empty state starter prompts</span>
+                </button>
+                <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
+            </div>
+
+            <div class="comp-btn-wrap">
+                <button title="code block" class="component-btn" data-component="codeBlock">
+                    <i class="fas fa-code"></i> 
+                    Code Block
+                    <span>code snippet terminal developer</span>
                 </button>
                 <button class="preview-trigger" title="preview"><i class="toggle-icon fa-solid fa-chevron-down"></i></button>
             </div>
@@ -1324,6 +1382,26 @@
                 </div>
             </div>
 
+<!-- ICON STYLE (css/icon-styles.css) -->
+            <div id="icon-style-controls">
+                <label style="color: white;"><i class="fa-solid fa-icons"></i>&emsp; Icon Style</label>
+                <p style="color: gray; margin: 4px 0; font-size: smaller;">(applies to all icons in your screens)</p>
+                <div class="icon-style-options" role="radiogroup" aria-label="Icon style">
+                    <button type="button" class="icon-style-option" data-icon-style="" title="Solid (Font Awesome)" role="radio">
+                        <i class="fa-solid fa-heart"></i><span>Solid</span>
+                    </button>
+                    <button type="button" class="icon-style-option" data-icon-style="ph-regular" title="Outline (Phosphor)" role="radio">
+                        <span class="icon-style-glyph" style="font-family: 'Phosphor'">&#xe2a8;</span><span>Outline</span>
+                    </button>
+                    <button type="button" class="icon-style-option" data-icon-style="ph-fill" title="Fill (Phosphor)" role="radio">
+                        <span class="icon-style-glyph" style="font-family: 'Phosphor-Fill'">&#xe2a8;</span><span>Fill</span>
+                    </button>
+                    <button type="button" class="icon-style-option" data-icon-style="ph-duotone" title="Duotone (Phosphor)" role="radio">
+                        <span class="icon-style-glyph icon-style-duotone" style="font-family: 'Phosphor-Duotone'"><span>&#xe2a8;</span><span>&#xe2a9;</span></span><span>Duotone</span>
+                    </button>
+                </div>
+            </div>
+
     <!-- .canvas-content gap controls -->
     <label style="color: white; margin-left: 6px;"><i class="fa-solid fa-arrows-left-right-to-line fa-rotate-90"></i>&emsp; Component Gap</label>
     <p id="gap-target-hint" style="color: gray; margin: 4px 0 0 6px; font-size: smaller;">(applies to selected screen)</p>
@@ -1375,9 +1453,30 @@
                 <div class="btn-group-spacer"></div>
     </div>
 
+<!-- PROTOTYPE (js/prototype.js) // / / /// / / / -->
+    <div class="sidebar-content" data-tab="prototype">
+        <div class="proto-panel">
+            <p class="proto-intro">Link buttons, cards and icons to screens, then press <b>Play</b> to click through your prototype. Components like accordions, tabs, sliders, galleries and inputs work on their own.</p>
+            <div class="proto-actions">
+                <button type="button" class="system-btn proto-link-toggle" aria-pressed="false" title="Click elements on a screen to link them (Esc to stop)"><i class="fa-solid fa-link"></i> Link mode</button>
+                <button type="button" class="system-btn proto-play-btn" title="Play from the selected screen"><i class="fa-solid fa-play"></i> Play</button>
+            </div>
+            <label class="groupLabel" for="proto-start-select">Start screen</label>
+            <select id="proto-start-select" class="proto-start-select" title="Where Play starts"></select>
+            <label class="groupLabel">Links</label>
+            <div class="proto-link-list"></div>
+        </div>
+    </div>
+
     <div style="height: 12px;"></div>
             <div>
                 <button title="download" class="system-btn" id="download-btn"><i class="fas fa-circle-down"></i> <span> &emsp;Download PNG Image</span></button>
+                <!-- Export sizes: tablet/desktop render an off-screen copy; the builder is unchanged -->
+                <div class="export-sizes" role="group" aria-label="Export sizes" style="display: none"><!-- shown by setupExportSizes when EXPORT_SIZES_ENABLED -->
+                    <label class="export-size-opt" title="The screen exactly as it is in the builder"><input type="checkbox" value="current" checked><span><i class="fa-solid fa-mobile-screen"></i> As designed</span></label>
+                    <label class="export-size-opt" title="768 × 1024, full page"><input type="checkbox" value="tablet"><span><i class="fa-solid fa-tablet-screen-button"></i> Tablet</span></label>
+                    <label class="export-size-opt" title="1440 × 900, full page"><input type="checkbox" value="desktop"><span><i class="fa-solid fa-desktop"></i> Desktop</span></label>
+                </div>
             </div>
 
         <!-- DARK MODE  -->
@@ -1397,6 +1496,7 @@
             </a>
         </div>
 
+        <a id="gallery-link" href="components.html" target="_blank" rel="noopener" title="See every component and variant"><i class="fas fa-table-cells-large"></i><span> Component Gallery</span></a>
         <div class="system-links">
             <a style="color: gray;" target="_blank" href="/tos">ToS</a>
             <a style="color: gray;" target="_blank" href="/privacy-policy">Privacy Policy</a>
@@ -1423,6 +1523,12 @@
 </div>
 </div>
 
+<!-- PROTOTYPE TOOLBAR (js/prototype.js) ////////////////// -->
+<div class="proto-fab-group">
+    <button type="button" class="proto-link-toggle" aria-pressed="false" title="Link mode: click elements to link them to screens (Esc to stop)"><i class="fa-solid fa-link"></i><span> Link</span></button>
+    <button type="button" class="proto-play-btn" title="Play prototype from the selected screen"><i class="fa-solid fa-play"></i><span> Play</span></button>
+</div>
+
 <!-- MAGNIFY! ////////////////// -->
 <div class="magnify-button-group">
     <button id="zoom-in">
@@ -1431,13 +1537,19 @@
     <button id="zoom-out">
         <i class="fa-solid fa-magnifying-glass-minus"></i>
     </button>
-    <span id="zoom-level">100%</span>
+    <button id="zoom-fit" title="Fit all screens">
+        <i class="fa-solid fa-expand"></i>
+    </button>
+    <span id="zoom-level" title="Reset to 100%">100%</span>
 </div>
 
 <!-- ICON PICKER ////////////////// -->
 <div class="icon-picker-backdrop"></div>
 <div class="icon-picker-modal">
-    <input type="text" class="icon-picker-search" placeholder="Search icons...">
+    <div class="icon-picker-top">
+        <input type="text" class="icon-picker-search" placeholder="Search icons...">
+        <nav class="icon-picker-pills" aria-label="Icon sections"></nav>
+    </div>
     <div class="icon-picker-grid"></div>
 </div>
 
@@ -1616,10 +1728,16 @@
 
     processBatch() {
         this.pendingElements.forEach(element => {
-        const bg = window.getComputedStyle(element).backgroundColor.match(/\d+/g);
+        const bg = window.getComputedStyle(element).backgroundColor.match(/[\d.]+/g);
         if (!bg) return;
-        
-        const hex = '#' + bg.map(c => (+c).toString(16).padStart(2, '0')).join('');
+        // Fully transparent (e.g. an unselected segmented tab) has no backdrop of its
+        // own — reading it as black would give light text on a light parent.
+        if (bg.length === 4 && +bg[3] === 0) {
+            element.style.removeProperty('--basic-txt-color');
+            return;
+        }
+
+        const hex = '#' + bg.slice(0, 3).map(c => (+c).toString(16).padStart(2, '0')).join('');
         element.style.setProperty('--basic-txt-color', this.getTextColor(hex));
         });
         this.pendingElements.clear();

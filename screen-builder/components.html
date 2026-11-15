@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Component Gallery | Dlightning</title>
+<meta name="description" content="Every Screen Builder component and variant in one view, in light or dark mode.">
+<!-- components.html — read-only gallery of every component variant.
+     Renders straight from setupVariants() / window.Components, so it stays in sync with the builder. -->
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700|Rubik:400,500,700&display=swap">
+<link rel="stylesheet" href="css/styles.min.css">
+<style>
+    /* ---------- Page chrome ---------- */
+    html, body { height: auto; }
+    body.gallery {
+        --scale: 0.85;
+        --tile-w: 322px;
+        --page-bg: #eef1f4;
+        --panel-bg: #ffffff;
+        --panel-border: #dde2e7;
+        --muted: #6b7680;
+        background: var(--page-bg);
+        color: var(--basic-txt-color);
+        font-family: var(--interface-HL), 'Roboto', sans-serif;
+        min-height: 100vh;
+    }
+    body.gallery.dark-mode {
+        --page-bg: #121214;
+        --panel-bg: #1c1c20;
+        --panel-border: #2c2d33;
+        --muted: #9aa3ab;
+        background: var(--page-bg);
+    }
+    .g-header {
+        position: sticky; top: 0; z-index: 50;
+        display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px;
+        padding: 14px 28px;
+        background: var(--interface-color);
+        color: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,.18);
+    }
+    .g-brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+    .g-brand h1 { font-size: 20px; margin: 0; font-weight: 500; color: #fff; }
+    .g-brand a { color: #ffffffb0; font-size: 13px; text-decoration: none; }
+    .g-brand a:hover { color: #fff; }
+    .g-count { font-size: 13px; color: #ffffffa0; }
+    .g-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+    .g-search {
+        background: #ffffff1a; border: 1px solid #ffffff30; color: #fff;
+        border-radius: 8px; padding: 7px 30px 7px 12px; font-size: 14px; width: 200px; outline: none;
+        user-select: text; -webkit-user-select: text;
+    }
+    .g-search::placeholder { color: #ffffff80; }
+    .g-search::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }   /* replaced by .g-search-clear */
+    .g-search-wrap { position: relative; display: flex; align-items: center; }
+    .g-search-clear {
+        position: absolute; right: 5px; width: 22px; height: 22px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; padding: 0;
+        background: none; border: 0; color: #ffffffa0; font-size: 13px; cursor: pointer;
+    }
+    .g-search-clear:hover, .g-search-clear:focus-visible { color: #fff; background: #ffffff26; outline: none; }
+    .g-search-clear[hidden] { display: none; }
+    .g-search:focus { border-color: var(--primary-color); }
+    .g-ctl { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #fff; }
+    .g-ctl input[type=range] { width: 120px; accent-color: var(--primary-color); }
+    .g-ctl output { min-width: 36px; font-variant-numeric: tabular-nums; }
+    .g-ctl .dark-mode-label { margin: 0; cursor: pointer; }
+    /* Icon style switcher (css/icon-styles.css) */
+    .g-colors { display: flex; align-items: center; gap: 6px; }
+    .g-swatch { position: relative; width: 24px; height: 24px; border-radius: 50%; overflow: hidden; cursor: pointer;
+        border: 2px solid #ffffff60; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+    .g-swatch:hover { border-color: #fff; }
+    .g-swatch input { position: absolute; inset: -6px; width: 36px; height: 36px; border: 0; padding: 0; cursor: pointer; }
+    .g-colors .g-reset { background: none; border: 0; color: #ffffffa0; cursor: pointer; padding: 2px 4px; font-size: 13px; }
+    .g-colors .g-reset:hover { color: #fff; }
+    .g-seg { display: flex; gap: 2px; padding: 2px; border-radius: 8px; background: #ffffff1a; border: 1px solid #ffffff30; }
+    .g-seg button {
+        border: none; background: none; color: #ffffffb0; font-size: 12px;
+        padding: 5px 10px; border-radius: 6px; cursor: pointer;
+    }
+    .g-seg button:hover { color: #fff; }
+    .g-seg button.active { background: var(--primary-color); color: #fff; }
+    .g-nav {
+        display: flex; flex-wrap: wrap; gap: 6px;
+        padding: 12px 28px; border-bottom: 1px solid var(--panel-border);
+        background: var(--panel-bg);
+    }
+    .g-nav a {
+        font-size: 13px; text-decoration: none; color: var(--basic-txt-color);
+        padding: 5px 11px; border-radius: 999px; border: 1px solid var(--panel-border);
+    }
+    .g-nav a:hover { border-color: var(--primary-color); color: var(--primary-color); }
+    main { padding: 8px 28px 60px; }
+    .g-intro {
+        display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-start;
+        margin-top: 24px; padding: 22px 26px;
+        background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 14px;
+    }
+    .g-intro-text { flex: 1 1 420px; max-width: 680px; }
+    .g-intro h2 { font-size: 22px; font-weight: 500; margin: 0 0 8px; color: var(--basic-txt-color); }
+    .g-intro p { margin: 0 0 14px; line-height: 1.55; color: var(--muted); font-size: 14px; }
+    .g-intro-cta {
+        display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+        padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500;
+        background: var(--primary-color); color: #fff;
+    }
+    .g-intro-cta:hover { filter: brightness(1.08); }
+    .g-intro ul { flex: 1 1 280px; list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .g-intro li { display: flex; gap: 10px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+    .g-intro li i { width: 16px; margin-top: 2px; text-align: center; color: var(--primary-color); }
+    .g-intro li b { color: var(--basic-txt-color); font-weight: 500; }
+    .g-category > h2 {
+        font-size: 22px; font-weight: 500; margin: 32px 0 4px;
+        color: var(--basic-txt-color); scroll-margin-top: 90px;
+    }
+    .g-component {
+        background: var(--panel-bg); border: 1px solid var(--panel-border);
+        border-radius: 14px; padding: 14px 16px 18px; margin-top: 14px;
+    }
+    .g-component > header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+    .g-component > header h3 { font-size: 16px; margin: 0; font-weight: 500; color: var(--basic-txt-color); }
+    .g-component .g-sub { font-size: 12px; color: var(--muted); }
+    .g-grid {
+        display: grid; gap: 14px; align-items: start;
+        grid-template-columns: repeat(auto-fill, calc(var(--tile-w) * var(--scale)));
+    }
+    .g-tile { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .g-tile-label { font-size: 11px; color: var(--muted); text-align: center; }
+    .g-empty { padding: 60px 0; text-align: center; color: var(--muted); display: none; }
+    .g-skipped { margin-top: 36px; font-size: 13px; color: var(--muted); }
+
+    /* ---------- The mini screen each variant renders in ---------- */
+    .g-frame {
+        width: calc(var(--tile-w) * var(--scale));
+        border-radius: 12px; overflow: hidden;
+        border: 1px solid var(--panel-border);
+    }
+    .g-stage {
+        /* zoom (not transform) so the scaled tile also takes up scaled layout space */
+        zoom: var(--scale);
+        width: var(--tile-w);
+        box-sizing: border-box;  /* padding inside the 322px, like the real screen */
+        position: relative;
+        pointer-events: none;   /* view-only: no editor hover chrome, no editing */
+        isolation: isolate;     /* keep components' own z-indexes (navbars 991, sheets 9995…) inside the tile, under the sticky header */
+    }
+    .g-stage.canvas-content {
+        min-height: 0; padding: 16px 10px; z-index: auto;
+    }
+    .g-stage.g-tall { min-height: 460px; }
+    .g-stage.g-flush { padding: 0; }
+    .g-stage .component-container:hover { outline: none; }
+    /* Editor-only chrome that some markup carries */
+    .g-stage .delete-btn, .g-stage .variant-controls, .g-stage .color-swatch-container,
+    .g-stage .tabs-controls, .g-stage .nav-delete-btn, .g-stage .nav-add-btn,
+    .g-stage .nav-active-btn, .g-stage .add-option-wrapper, .g-stage .component-handle,
+    .g-stage .bar-graph-controls, .g-stage .pie-graph-controls, .g-stage .resize-handle,
+    .g-stage .placeholder .non-editable { display: none !important; }
+    .g-stage .placeholder { display: none; }
+    .g-stage input[type="file"] { display: none; }   /* raw "Choose files" control */
+    /* Overlay-type components: sit them in a frame-sized box */
+    /* In normal flow (not absolute): the component wrapper it sits in has no height of its own */
+    .g-overlay {
+        position: relative; width: 100%; min-height: 460px; box-sizing: border-box; padding: 24px 0;
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: center; background: rgba(0,0,0,.55);
+    }
+    .g-overlay.g-bottom { justify-content: flex-end; }
+    /* Pinned to the screen's bottom edge in the builder; here they sit in normal flow */
+    .g-stage .bottomNavContain, .g-stage .keyboard-container, .g-stage .bottomSheet-container { position: relative; }
+    .g-stage .bottomSheet-container { height: auto !important; width: 100%; }
+    .g-stage .fab-container { bottom: 16px; right: 18px; left: auto; width: auto; }
+    .g-stage .fab-nav { flex: none; }
+    .g-stage .bottomSheet-container .bottom-sheet-content { min-height: 90px; }
+    .g-overlay.g-sheet { padding-bottom: 0; }
+    /* Colored top nav (.nav-brand) starts 5px below the screen top (navContain's 26px margin
+       minus its -21px), plus the wrapper's 2px top margin; fill up to the tile edge, keeping
+       its content where it was, and end at 57px like the other bars so the shadow line shows */
+    .g-stage .navContain > .nav-brand { box-sizing: border-box; margin-top: -28px; height: 57px; padding-top: 5px; }
+    /* Classic date picker: its calendar popover hangs below the field (absolute), so make room for it */
+    .g-stage:has(.date-picker-calendar-con) { padding-bottom: 212px; }
+    .g-stage .component-container:has(> .component-content > .g-sheet) { margin-bottom: 0; }   /* sit flush on the frame's bottom edge */
+    .g-stage .component-container:has(> .component-content > .bottomNavContain):not(:has(.bottomNav[data-nav-style="floating"])) { margin-bottom: 0; }   /* same for bottom navs; floating keeps its lift */
+    .g-stage .sidebar-container { height: 100%; }
+    /* Drop containers show their empty state as on hover in the builder */
+    .g-stage .empty-placeholder { visibility: visible; }
+    .g-stage .column-container { outline: 1px dashed var(--panel-border); outline-offset: -1px; border-radius: 6px; }
+    .g-stage .data-table-column-controls, .g-stage .td-column-resizer, .g-stage .data-table-button-container,
+    .g-stage .add-chip-btn, .g-stage .remove-chip, .g-stage .progress-tracker-controls,
+    .g-stage .columns-controls, .g-stage .bullet-list-item-controls, .g-stage .bullet-list-add-btn,
+    .g-stage .sidebar-add-btn, .g-stage .iconControls, .g-stage .bs-preset-controls { display: none !important; }
+    /* Floating nav is lifted off the bottom edge: show screen background below it (and its shadow) */
+    .g-stage:has(.bottomNav[data-nav-style="floating"]) { padding-bottom: 18px !important; }
+</style>
+</head>
+
+<body class="gallery">
+<header class="g-header">
+    <div class="g-brand">
+        <h1>⚡ Component Gallery</h1>
+        <span class="g-count" id="gCount"></span>
+        <a href="index.html"><i class="fas fa-arrow-left"></i> Back to builder</a>
+    </div>
+    <div class="g-controls">
+        <div class="g-search-wrap">
+            <input class="g-search" id="gSearch" type="search" placeholder="Filter components…" aria-label="Filter components">
+            <button type="button" class="g-search-clear" id="gSearchClear" title="Clear search" aria-label="Clear search" hidden><i class="fas fa-xmark"></i></button>
+        </div>
+        <label class="g-ctl" for="gScale">
+            <i class="fas fa-magnifying-glass-minus"></i>
+            <input id="gScale" type="range" min="0.35" max="1" step="0.05" value="0.85">
+            <output id="gScaleOut">85%</output>
+        </label>
+        <div class="g-ctl g-colors" aria-label="Theme colors">
+            <i class="fas fa-palette"></i>
+            <label class="g-swatch" title="Primary color"><input type="color" data-color-var="--color-primary" aria-label="Primary color"></label>
+            <label class="g-swatch" title="Secondary color"><input type="color" data-color-var="--color-secondary" aria-label="Secondary color"></label>
+            <label class="g-swatch" title="Accent color"><input type="color" data-color-var="--color-accent" aria-label="Accent color"></label>
+            <button type="button" class="g-reset" id="gColorReset" title="Reset to default colors"><i class="fas fa-rotate-left"></i></button>
+        </div>
+        <div class="g-ctl">
+            <i class="fas fa-icons"></i>
+            <div class="g-seg" id="gIconStyle" role="radiogroup" aria-label="Icon style">
+                <button type="button" data-icon-style="" role="radio" title="Font Awesome solid">Solid</button>
+                <button type="button" data-icon-style="ph-regular" role="radio" title="Phosphor regular">Outline</button>
+                <button type="button" data-icon-style="ph-fill" role="radio" title="Phosphor fill">Fill</button>
+                <button type="button" data-icon-style="ph-duotone" role="radio" title="Phosphor duotone">Duotone</button>
+            </div>
+        </div>
+        <div class="g-ctl">
+            <label class="switchDark">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="sliderDark"></span>
+            </label>
+            <label for="darkModeToggle" class="dark-mode-label">Dark Mode</label>
+        </div>
+    </div>
+</header>
+<nav class="g-nav" id="gNav"></nav>
+<main id="gMain">
+    <section class="g-intro" aria-labelledby="gIntroTitle">
+        <div class="g-intro-text">
+            <h2 id="gIntroTitle">Every component in Screen Builder, in one place</h2>
+            <p>Screen Builder is Dlightning's no-code tool for mocking up mobile app screens: drag ready-made
+               components onto a phone screen, restyle them and click through them as a prototype. This page is
+               its full catalog. It shows every component and each of its variants, drawn from the same code the
+               builder uses, so what you see here is what lands on your screen.</p>
+            <a class="g-intro-cta" href="index.html"><i class="fas fa-bolt"></i> Open the builder</a>
+        </div>
+        <ul>
+            <li><i class="fas fa-palette"></i><span><b>Try your colors.</b> Pick a primary, secondary and accent color in the header to see every component in your palette.</span></li>
+            <li><i class="fas fa-icons"></i><span><b>Switch icon styles</b> between solid, outline, fill and duotone, or turn on dark mode.</span></li>
+            <li><i class="fas fa-magnifying-glass"></i><span><b>Find a component</b> with the filter box or the category links, and zoom out to compare more at once.</span></li>
+        </ul>
+    </section>
+    <p class="g-empty" id="gEmpty">No components match that filter.</p>
+</main>
+
+<!-- Component modules + variant library (same order as index.html). Only their data
+     (variants / styles / create) is used here; the editor itself is never loaded. -->
+<!-- BUILD:GALLERY-JS:START -->
+<script src="js/components/progressBar.js"></script>
+<script src="js/components/chipGroup.js"></script>
+<script src="js/components/notificationBanner.js"></script>
+<script src="js/components/tabs.js"></script>
+<script src="js/components/checkbox.js"></script>
+<script src="js/components/radio.js"></script>
+<script src="js/components/dropdown.js"></script>
+<script src="js/components/divider.js"></script>
+<script src="js/components/video.js"></script>
+<script src="js/components/modal.js"></script>
+<script src="js/components/keyboard.js"></script>
+<script src="js/components/chatInput.js"></script>
+<script src="js/components/chat.js"></script>
+<script src="js/components/adjustableSpace.js"></script>
+<script src="js/components/bulletedList.js"></script>
+<script src="js/components/floatingActionButton.js"></script>
+<script src="js/components/sidebar.js"></script>
+<script src="js/components/bottomNav.js"></script>
+<script src="js/components/navbar.js"></script>
+<script src="js/components/table.js"></script>
+<script src="js/components/bottomSheet.js"></script>
+<script src="js/components/accordion.js"></script>
+<script src="js/components/featureComparisonCard.js"></script>
+<script src="js/components/pagination.js"></script>
+<script src="js/components/shelf.js"></script>
+<script src="js/components/breadcrumb.js"></script>
+<script src="js/components/progressTracker.js"></script>
+<script src="js/components/blankCard.js"></script>
+<script src="js/components/datePicker.js"></script>
+<script src="js/components/icon.js"></script>
+<script src="js/components/columns.js"></script>
+<script src="js/components/graph.js"></script>
+<script src="js/components/pieGraph.js"></script>
+<script src="js/components/lineGraph.js"></script>
+<script src="js/components/fileUpload.js"></script>
+<script src="js/components/musicPlayer.js"></script>
+<script src="js/components/toggleSwitch.js"></script>
+<script src="js/components/blockquote.js"></script>
+<script src="js/components/codeBlock.js"></script>
+<script src="js/components/aiWelcome.js"></script>
+<script src="js/components/slider.js"></script>
+<script src="js/components/map.js"></script>
+<script src="js/variants.js"></script>
+<!-- BUILD:GALLERY-JS:END -->
+
+<script>
+(() => {
+    // ---------- Markup for components the editor builds in JS (no setupVariants entry).
+    // Mirrors the default DOM from the factories in ux-mock-bldr.js; styles come from the
+    // modules' own style lists, applied the same way (data attributes read by CSS).
+    const tabsHTML = (style) => `
+        <div class="tabs-container"${style === 'classic' ? '' : ` data-tab-style="${style}"`}>
+            <div class="tabs-wrapper" style="display:flex;width:100%;${style === 'underline' ? 'color:var(--color-primary);' : ''}">
+                ${[1, 2, 3].map(i => {
+                    const on = i === 1;
+                    const bg = style === 'underline' ? '' : `background-color:${on ? 'var(--color-primary)' : style === 'segmented' ? 'transparent' : 'var(--neutral-gray)'};color:${on && style === 'classic' ? 'white' : 'var(--basic-txt-color)'};`;
+                    return `<div class="ui-tab usa${on ? ' selected' : ''}" style="${bg}">Tab ${i}</div>`;
+                }).join('')}
+            </div>
+        </div>`;
+
+    const accordionHTML = (style, open) => {
+        const classic = style === 'classic';
+        return `
+        <div class="accordion-container"${classic ? ' style="border:.12rem solid var(--color-primary)"' : ` data-accordion-style="${style}"`}>
+            <button class="accordion-header"${classic ? ' style="background-color:var(--color-primary);color:white;"' : ''}>
+                <span class="usa">Section Title</span>
+                <i class="fas fa-chevron-down"${open ? ' style="transform:rotate(180deg)"' : ''}></i>
+            </button>
+            <div class="accordion-content" style="${open ? 'height:auto;padding:8px 12px 12px;' : 'height:0;padding:0 12px;'}">
+                ${open ? '<p class="paragraph-element" style="margin:0">Collapsible content goes here.</p>' : ''}
+            </div>
+        </div>`;
+    };
+
+    const bottomNavHTML = (style) => `
+        <nav class="bottomNavContain max-items">
+            <div class="shadow-div"></div>
+            <div class="bottomNav bottom-navbar"${style === 'classic' ? '' : ` data-nav-style="${style}"`}>
+                ${[['home', 'Home'], ['search', 'Search'], ['plus', 'Add'], ['heart', 'Like'], ['user', 'Profile']].map(([icon, label], i) => `
+                <div class="nav-item-container${i === 0 ? ' active' : ''}">
+                    <div class="bottom-nav-item"><i class="fas fa-${icon}"></i><span class="usa">${label}</span></div>
+                </div>`).join('')}
+                <button class="nav-add-btn"></button>
+            </div>
+        </nav>`;
+
+    const checkboxHTML = (checked, label) => `
+        <div class="custom-checkbox-wrapper">
+            <div class="fa-regular fa-square checkbox-square-icon">
+                <i class="fa-solid fa-square-check checkbox-check-icon${checked ? ' checked' : ''}" style="color:var(--color-primary)"></i>
+            </div>
+            <span style="font-size:16px;color:var(--basic-txt-color)">${label}</span>
+        </div>`;
+
+    const radioHTML = (on, label) => `
+        <div class="radio-wrapper">
+            <label class="radio-label"><div class="radio-outer-circle custom-radio"${on ? ' style="border-color:var(--color-primary)"' : ''}>
+                <span class="radio-dot" style="background-color:var(--color-primary);${on ? 'display:block;' : ''}"></span>
+            </div></label>
+            <span style="color:var(--basic-txt-color)">${label}</span>
+        </div>`;
+
+    const dropdownHTML = `
+        <div class="custom-dropdown-container">
+            <div class="dropdown-header"><div class="selected-text">Dropdown</div><i class="fas fa-chevron-down"></i></div>
+        </div>`;
+
+    // Data table: the four default columns table.setup() builds (checkbox / link / text / action).
+    const tableHTML = (headerColor) => {
+        const cols = [['Check', 'checkbox'], ['ID', 'link'], ['Name', 'text'], ['Action', 'action (icon)']];
+        const cell = (type, r) => {
+            if (type === 'checkbox') return `<td class="dt-cell-td"><div class="fa-regular fa-square" style="margin:-2px 10px 0 10px;border-radius:4px;position:relative;font-size:18px;color:#a0a0a0;"><i class="fa-solid fa-square-check" style="font-size:18px;color:var(--primary-color);display:${r === 0 ? 'block' : 'none'};position:absolute;top:0;left:0;"></i></div></td>`;
+            if (type === 'link') return `<td class="dt-cell-td"><span style="color:#0d87d8">#${1001 + r}</span></td>`;
+            if (type === 'action (icon)') return `<td class="dt-cell-td icon-container"><i class="fas fa-bolt"></i><span style="margin-left:8px">Action</span></td>`;
+            return `<td class="dt-cell-td">${['Ava Chen', 'Leo Park', 'Mia Ross'][r]}</td>`;
+        };
+        return `
+        <div class="data-table-scroll-wrapper"><div class="data-table-container">
+            <div class="data-table-header-bg" style="background-color:${headerColor}"></div>
+            <table class="data-table-main">
+                <thead><tr>${cols.map(([t, type]) => `<th class="data-table-header-cell" data-column-type="${type}"><div class="data-table-header-content"><span>${t}</span><div class="td-header-icon icon-container"><i class="fas fa-sort"></i></div></div></th>`).join('')}</tr></thead>
+                <tbody>${[0, 1, 2].map(r => `<tr class="data-table-row">${cols.map(([, type]) => cell(type, r)).join('')}</tr>`).join('')}</tbody>
+            </table>
+        </div></div>`;
+    };
+
+    // Pills: the chip group's default chips; `selected` = indexes shown selected.
+    const chipsHTML = (labels, selected = []) => `
+        <div class="chip-group-wrapper"><div class="chip-group-container">
+            ${labels.map((l, i) => `<div class="chip" data-selected="${selected.includes(i)}"${selected.includes(i) ? ' style="background-color:var(--color-primary)"' : ''}><span class="usa">${l}</span></div>`).join('')}
+        </div></div>`;
+
+    // Progress tracker: steps as setup() builds them; `layout` horizontal | vertical.
+    const trackerHTML = (count, current, layout) => {
+        const step = (i) => `
+            <div class="step-container${i === current ? ' selected-step' : ''}" data-step style="display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;flex:0 1 auto;text-align:center;">
+                <div class="step-circle" style="width:36px;height:36px;border-radius:50%;display:flex;justify-content:center;align-items:center;font-weight:bold;margin:0 6px;${i === current ? 'background-color:var(--color-primary);' : 'background-color:var(--neutral-gray);color:#666;'}">${i + 1}</div>
+                <div class="step-label" style="font-size:14px;color:#666;font-weight:500;">Step ${i + 1}</div>
+            </div>`;
+        const line = '<div class="connecting-line" style="height:2px;background-color:#E0E0E0;flex:1;margin:18px 0 0 0;align-self:flex-start;border-radius:2px"></div>';
+        const steps = Array.from({ length: count }, (_, i) => step(i)).join(line);
+        return `<div class="progress-tracker-container"${layout === 'vertical' ? ' data-tracker-layout="vertical"' : ''}>
+            <div class="steps-container" style="display:flex;align-items:center;width:100%;position:relative;">${steps}</div>
+        </div>`;
+    };
+
+    // Bullet list: item markup from the bulletedList factory; `icon` is the bullet glyph.
+    const bulletListHTML = (icon, items) => `
+        <div class="bullet-list-container">
+            ${items.map(t => `<div class="bullet-list-item"><div class="bullet-list-item-icon icon-container bullet-icon"><i class="fas fa-${icon}"></i></div><div class="bullet-list-item-text">${t}</div></div>`).join('')}
+        </div>`;
+
+    const iconHTML = (icon, size) => `<div class="iconContainerClass align-content"><i class="fa-solid fa-${icon} icon-container" style="color:var(--color-accent);font-size:${size}px"></i></div>`;
+
+    // Columns / color block are drop containers: shown empty, as they land on the screen.
+    const columnsHTML = (n) => `
+        <div class="columns-wrapper" style="gap:6px">
+            ${Array.from({ length: n }, () => '<div class="column-container"><div class="empty-placeholder"><i class="fas fa-table-columns"></i></div></div>').join('')}
+        </div>`;
+    const colorBlockHTML = (inner) => `<div class="colorBlock-container" style="width:100%;position:relative"><div class="colorBlock-inner" style="background-color:var(--color-secondary)">${inner}</div></div>`;
+
+    const sidebarHTML = `
+        <div class="sidebar-container"><div class="sidebar-panel">
+            <button class="sidebar-toggle"><i class="fas fa-chevron-left"></i></button>
+            <div class="sidebar-header">
+                <div class="card-image ui-sidebar-avatar"><i class="fas fa-image" style="color:var(--placeholder-color)"></i></div>
+                <h3 style="margin:0;color:var(--basic-txt-color)">Sidebar Title</h3>
+            </div>
+            <div class="sidebar-nav">
+                ${[['home', 'Home'], ['user', 'Profile'], ['cog', 'Settings'], ['envelope', 'Messages']].map(([i, t]) => `
+                <div class="icon-container"><div class="sidebar-nav-item"><i class="fas fa-${i} icon-container" style="width:20px;text-align:center;color:var(--color-primary)"></i><span style="flex:1">${t}</span></div></div>`).join('')}
+            </div>
+            <div class="sidebar-footer">
+                <div class="card-image ui-sidebar-user"><i class="fas fa-user" style="color:var(--placeholder-color)"></i></div>
+                <div style="flex:1"><div style="font-weight:500;color:var(--basic-txt-color)">Display Name</div><div style="font-size:12px;color:#666">Role</div></div>
+                <div class="icon-container"><i class="fas fa-ellipsis-v" style="color:var(--color-primary);padding:8px"></i></div>
+            </div>
+        </div></div>`;
+
+    // Bottom sheet presets live in the module (labels exposed; html inserted by setPreset).
+    // setPreset then calls the editor's icon-picker wiring, which isn't loaded here: the
+    // preset block is already in place by then, so that error is swallowed.
+    const bottomSheetHTML = (i) => {
+        const sheet = document.createElement('div');
+        sheet.className = 'bottomSheet-container';
+        sheet.dataset.state = 'expanded';
+        sheet.innerHTML = '<div class="bottom-sheet-handle-container"><div class="bottom-sheet-drag-handle"></div></div><div class="bottom-sheet-content"><div class="empty-placeholder non-editable" style="position:absolute;top:50%;left:50%;font-style:italic">drag &amp; drop components here</div></div>';
+        try { window.Components.bottomSheet.setPreset(sheet, i); } catch (e) { /* editor-only wiring */ }
+        if (sheet.querySelector('.bottom-sheet-preset')) sheet.querySelector('.empty-placeholder').remove();
+        return sheet.outerHTML;
+    };
+
+    const fabHTML = (icon) => `<div class="fab-container"><div class="fab-nav icon-container" style="background-color:var(--color-primary)"><i class="fas fa-${icon} fab-icon"></i></div></div>`;
+
+    const headingHTML = (lvl) => `<div class="heading-wrapper" style="width:100%"><${lvl}>Heading ${lvl.toUpperCase()}</${lvl}></div>`;
+
+    // Build a module's default element (graph / pie / file upload). Its setup() may wire
+    // editor-only bits; anything that throws is just skipped.
+    const fromCreate = (type) => () => {
+        try { return [window.Components[type].create().outerHTML]; } catch (e) { return []; }
+    };
+    // Same, once per variant (modules whose create(i) builds variant i), labelled
+    const fromCreateVariants = (type, names) => () => {
+        try { return names.map((name, i) => [name, window.Components[type].create(i).outerHTML]); } catch (e) { return []; }
+    };
+    const v = (type) => () => setupVariants(type) || [];
+    const labelled = (list) => () => list;   // [[label, html], ...]
+
+    // ---------- Catalog: categories follow the builder's sidebar ----------
+    // Each entry: [type, title, source, opts]. opts: tall (overlay height), flush (no padding),
+    // wrap (fn wrapping each variant), labels (names for variants).
+    const CATALOG = [
+        ['Basics', [
+            ['image', 'Image', v('image')],
+            ['blankCard', 'Blank Card', v('blankCard')],
+            ['button', 'Button', v('button')],
+            ['hzDivider', 'Divider', v('hzDivider')],
+            ['icon', 'Icon', labelled([['Default (24px)', iconHTML('bolt-lightning', 24)], ['Large (48px)', iconHTML('heart', 48)], ['Extra large (72px)', iconHTML('star', 72)]])],
+            ['adjustableSpace', 'Adjustable Space', () => [['Spacer (28px, outlined here)', '<div class="blankSpace" style="height:28px;outline:1px dashed var(--muted)"></div>']]],
+        ]],
+        ['Layout', [
+            ['columns', 'Columns', labelled([['2 columns', columnsHTML(2)], ['3 columns', columnsHTML(3)], ['4 columns', columnsHTML(4)]])],
+            ['colorBlock', 'Color Block', labelled([
+                ['Empty', colorBlockHTML('<div class="empty-placeholder non-editable" style="position:absolute;top:50%;left:50%;font-style:italic;color:inherit">drag &amp; drop components here</div>')],
+                ['With content', colorBlockHTML(`<div style="padding:20px 16px">${headingHTML('h3').replace('<h3>', '<h3 style="color:inherit">')}<p class="paragraph-element" style="margin:8px 0 0;color:inherit">Group components on a full-width band of color.</p></div>`)],
+            ]), { pad: '16px 10px' }],
+        ]],
+        ['Text', [
+            ['heading', 'Heading', labelled(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map(h => [h.toUpperCase(), headingHTML(h)]))],
+            ['paragraph', 'Paragraph', () => ['<div style="width:100%"><p class="paragraph-element usa">This is a paragraph. Click to edit in the builder.</p></div>']],
+            ['blockquote', 'Block Quote', v('blockquote')],
+            ['bulletedList', 'Bullet List', labelled([
+                ['Bullets', bulletListHTML('circle', ['First item', 'Second item', 'Third item'])],
+                ['Checklist', bulletListHTML('check', ['Fast setup', 'No code', 'Share a link'])],
+                ['Arrows', bulletListHTML('arrow-right', ['Step one', 'Step two', 'Step three'])],
+            ])],
+            ['label', 'Field Label', () => ['<label class="field-label-element">Label Text</label>']],
+        ]],
+        ['Forms', [
+            ['input', 'Text Input', v('input')],
+            ['textarea', 'Textarea', v('textarea')],
+            ['searchBar', 'Search Bar', v('searchBar')],
+            ['checkbox', 'Checkbox', labelled([['Checked', checkboxHTML(true, 'Remember me')], ['Unchecked', checkboxHTML(false, 'Subscribe')]])],
+            ['radio', 'Radio Button', labelled([['Selected', radioHTML(true, 'Option A')], ['Unselected', radioHTML(false, 'Option B')]])],
+            ['dropdown', 'Dropdown', () => [dropdownHTML]],
+            ['toggleSwitch', 'Toggle Switch', v('toggleSwitch')],
+            ['slider', 'Slider', v('slider')],
+            ['datePicker', 'Date Picker', v('datePicker')],
+            ['fileUpload', 'File Upload', fromCreate('fileUpload')],
+        ]],
+        ['Navigation', [
+            // In the builder every navbar starts as variant 1 and switching variants swaps only the bar,
+            // so variant 1's .top-shadow-div (the thin line under the bar) stays on all of them. Mirror that.
+            ['navbar', 'Top Nav', () => (setupVariants('navbar') || []).map(h => h.includes('top-shadow-div') ? h
+                : h.replace(/<\/div>\s*$/, '<div class="top-shadow-div"></div></div>')), { flush: true }],
+            // Styles are data-sidebar-style on the root (js/components/sidebar.js); the gallery
+            // shows them in a positioned frame so the right / full-screen styles sit right
+            ['sidebar', 'Sidebar', labelled(window.Components.sidebar.STYLES.map(st => [st.label,
+                st.id === 'drawer' ? sidebarHTML : sidebarHTML.replace('<div class="sidebar-container"', `<div class="sidebar-container" data-sidebar-style="${st.id}"`)])),
+                { flush: true, wrap: h => `<div style="position:relative;width:100%;height:460px;background:rgba(0,0,0,.35)">${h.replace('<div class="sidebar-container"', '<div class="sidebar-container" style="position:absolute;left:0;top:0;bottom:0"')}</div>` }],
+            ['shelf', 'Shelf', () => (setupVariants('shelf') || []).map((h, i) => [['Category tiles', 'Underline links', 'Image circles', 'Pills'][i] || `Variant ${i + 1}`, h])],
+            ['breadcrumb', 'Breadcrumb', () => (setupVariants('breadcrumb') || []).map((h, i) => [['Chevrons', 'Home + slashes', 'Pills', 'Collapsed', 'Back link'][i] || `Variant ${i + 1}`, h])],
+            ['bottomNav', 'Bottom Nav', labelled(window.Components.bottomNav.STYLES.map(s => [s.label, bottomNavHTML(s.id)])), { flush: true, minH: 0, pad: '28px 0 0' }],
+            ['tabs', 'Tabs', labelled([['Classic', 'classic'], ['Underline', 'underline'], ['Segmented', 'segmented'], ['Pills', 'pills']].map(([l, id]) => [l, tabsHTML(id)]))],
+            ['pagination', 'Pagination', v('pagination')],
+            ['footer', 'Footer', v('footer'), { pad: '16px 10px 0' }]   // footer-wrapper breaks out of the screen's 10px side padding, so keep it,
+        ]],
+        ['Interface', [
+            // pad 0 10px = the screen's side padding, which full-bleed heroes break out of
+            ['hero', 'Hero', () => (setupVariants('hero') || []).map((h, i) => [[
+                'Gradient', 'Dark gradient', 'With button', 'Split screen', 'Diagonal', 'Floating card', 'Image shapes',
+                'Immersive', 'Spotlight card', 'Editorial', 'Frosted glass', 'Bento', 'Bold color', 'Search',
+            ][i] || `Variant ${i + 1}`, h]), { pad: '0 10px' }],
+            ['avatar', 'Avatar', v('avatar')],
+            ['alert', 'Alert', v('alert')],
+            ['notificationBanner', 'Notification', v('notificationBanner')],
+            ['accordion', 'Accordion', labelled([['Classic', 'classic'], ['FAQ', 'faq'], ['Bordered card', 'card']].flatMap(([l, id]) => [[l, accordionHTML(id, false)], [l + ' (open)', accordionHTML(id, true)]]))],
+            ['progressBar', 'Progress Indicator', v('progressBar')],
+            ['progressTracker', 'Progress Tracker', labelled([['Horizontal', trackerHTML(4, 1, 'horizontal')], ['Vertical', trackerHTML(4, 1, 'vertical')]])],
+            ['chipGroup', 'Pills', labelled([['Default', chipsHTML(['Design', 'Development', 'Marketing'])], ['With selection', chipsHTML(['All', 'Music', 'Podcasts', 'Books', 'Live'], [0, 3])]])],
+            ['table', 'Data Table', labelled([['Primary header', tableHTML('var(--color-primary)')], ['Secondary header', tableHTML('var(--color-secondary)')]])],
+        ]],
+        ['Cards & Lists', [
+            ['card', 'Image Card', v('card')],
+            ['card2', 'Text Card', v('card2')],
+            ['listItem', 'List Item', v('listItem')],
+            ['featureComparisonCard', 'Comparison', v('featureComparisonCard')],
+        ]],
+        ['Media', [
+            ['imgGallery', 'Gallery', v('imgGallery')],
+            ['video', 'Video', v('video')],
+            ['musicPlayer', 'Music Player', v('musicPlayer')],
+            ['map', 'Map', () => (setupVariants('map') || []).map((h, i) => [['Classic', 'Nearby places', 'Route', 'Location card', 'Dark'][i] || `Variant ${i + 1}`, h])],
+        ]],
+        ['Charts', [
+            ['graph', 'Bar Graph', fromCreateVariants('graph', ['Vertical', 'Horizontal', 'Activity', 'Grouped', 'Stacked'])],
+            ['pieGraph', 'Pie Graph', fromCreateVariants('pieGraph', ['Pie', 'Donut'])],
+            ['lineGraph', 'Line Graph', fromCreateVariants('lineGraph', ['Area', 'Line', 'Stat card', 'Compare'])],
+        ]],
+        ['Chat', [
+            ['leftChat', 'Left Chat', v('leftChat')],
+            ['rightChat', 'Right Chat', v('rightChat')],
+            ['chatInput', 'Chat Input', v('chatInput')],
+            ['aiWelcome', 'AI Welcome', v('aiWelcome')],
+            ['codeBlock', 'Code Block', v('codeBlock')],
+        ]],
+        ['Overlays', [
+            ['modal', 'Modal', v('modal'), { flush: true, wrap: h => `<div class="g-overlay"><div class="ui-modal">${h}</div></div>` }],
+            ['bottomSheet', 'Bottom Sheet', labelled(window.Components.bottomSheet.presets.map((l, i) => [l, bottomSheetHTML(i)])), { flush: true, wrap: h => `<div class="g-overlay g-bottom g-sheet">${h}</div>` }],
+            ['floatingActionButton', 'Floating Action Button', labelled([['Add', fabHTML('plus')], ['Edit', fabHTML('pen')], ['Message', fabHTML('comment')]]), { minH: 140, wrap: h => `<div style="position:relative;height:110px">${h}</div>` }],
+            ['keyboard', 'Keyboard', v('keyboard'), { flush: true, pad: '28px 0 0', wrap: h => `<div class="keyboard-container">${h}</div>` }],
+        ]],
+    ];
+
+    // ---------- Render ----------
+    const main = document.getElementById('gMain');
+    const nav = document.getElementById('gNav');
+    const empty = document.getElementById('gEmpty');
+    const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    let total = 0;
+
+    for (const [category, items] of CATALOG) {
+        const section = document.createElement('section');
+        section.className = 'g-category';
+        section.id = 'cat-' + slug(category);
+        section.innerHTML = `<h2>${category}</h2>`;
+
+        for (const [type, title, source, opts = {}] of items) {
+            let list;
+            try { list = source() || []; } catch (e) { console.warn('gallery: skipped', type, e); list = []; }
+            if (!list.length) continue;
+
+            const block = document.createElement('article');
+            block.className = 'g-component';
+            block.dataset.search = `${title} ${type} ${category}`.toLowerCase();
+            block.innerHTML = `<header><h3>${title}</h3><span class="g-sub">${list.length} variant${list.length === 1 ? '' : 's'}</span></header>`;
+            const grid = document.createElement('div');
+            grid.className = 'g-grid';
+
+            list.forEach((entry, i) => {
+                const [label, html] = Array.isArray(entry) ? entry : [`Variant ${i + 1}`, entry];
+                const tile = document.createElement('div');
+                tile.className = 'g-tile';
+                const frame = document.createElement('div');
+                frame.className = 'g-frame';
+                const stage = document.createElement('div');
+                stage.className = 'g-stage canvas-content' + (opts.tall ? ' g-tall' : '') + (opts.flush ? ' g-flush' : '');
+                if (opts.minH) stage.style.minHeight = opts.minH + 'px';
+                if (opts.pad) stage.style.padding = opts.pad;   // e.g. headroom for the bottom nav's raised center button
+                stage.innerHTML = `<div class="component-container" data-component-type="${type}"><div class="component-content">${opts.wrap ? opts.wrap(html) : html}</div></div>`;
+                // View-only: nothing is editable or focusable
+                stage.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+                stage.inert = true;
+                frame.appendChild(stage);
+                tile.appendChild(frame);
+                tile.insertAdjacentHTML('beforeend', `<div class="g-tile-label">${label}</div>`);
+                grid.appendChild(tile);
+                total++;
+            });
+
+            block.appendChild(grid);
+            section.appendChild(block);
+        }
+        if (section.querySelector('.g-component')) {
+            main.insertBefore(section, empty);
+            nav.insertAdjacentHTML('beforeend', `<a href="#${section.id}">${category}</a>`);
+        }
+    }
+    document.getElementById('gCount').textContent = `${total} variants`;
+
+    // ---------- Controls ----------
+    // Dark mode: same body class + localStorage key as the builder, so the setting is shared.
+    const dark = document.getElementById('darkModeToggle');
+    const applyDark = (on) => { document.body.classList.toggle('dark-mode', on); dark.checked = on; };
+    applyDark(localStorage.getItem('darkMode') === 'true');
+    dark.addEventListener('change', () => { localStorage.setItem('darkMode', dark.checked); applyDark(dark.checked); });
+
+    // Text contrast: same rule as the builder's TextContrastAdjuster (ux-mock-bldr.js, not
+    // loaded here) — anything with an inline background gets black or white text by luminance.
+    const updateContrast = () => {
+        main.querySelectorAll('.g-stage [style*="background-color"], .g-stage [style*="background: var(--color"]').forEach(el => {
+            const bg = getComputedStyle(el).backgroundColor;
+            const rgb = bg && bg !== 'transparent' && bg.match(/\d+(\.\d+)?/g);
+            if (!rgb || (rgb.length > 3 && +rgb[3] === 0)) return;
+            const color = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255 > 0.5 ? '#000000' : '#FFFFFF';
+            el.style.color = color;
+            if (el.classList.contains('data-table-header-bg')) {
+                const thead = el.parentElement?.querySelector('.data-table-main > thead');
+                if (thead) thead.style.color = color;
+            }
+        });
+    };
+
+    // Theme colors: inline CSS vars on <html>, as the builder's Theme tab sets them. Gallery-only
+    // preference (localStorage) — the builder keeps colors per project.
+    const colorInputs = document.querySelectorAll('[data-color-var]');
+    const rootStyle = document.documentElement.style;
+    const COLOR_KEY = 'galleryColors';
+    const defaults = {};
+    colorInputs.forEach(inp => { defaults[inp.dataset.colorVar] = getComputedStyle(document.documentElement).getPropertyValue(inp.dataset.colorVar).trim(); });
+    const applyColors = (colors) => {
+        colorInputs.forEach(inp => {
+            const v = inp.dataset.colorVar;
+            if (colors[v]) rootStyle.setProperty(v, colors[v]); else rootStyle.removeProperty(v);
+            inp.value = colors[v] || defaults[v];
+            inp.closest('.g-swatch').style.background = inp.value;
+        });
+        updateContrast();
+    };
+    let savedColors = {};
+    try { savedColors = JSON.parse(localStorage.getItem(COLOR_KEY)) || {}; } catch (e) { /* ignore bad data */ }
+    applyColors(savedColors);
+    colorInputs.forEach(inp => inp.addEventListener('input', () => {
+        savedColors[inp.dataset.colorVar] = inp.value;
+        localStorage.setItem(COLOR_KEY, JSON.stringify(savedColors));
+        applyColors(savedColors);
+    }));
+    document.getElementById('gColorReset').addEventListener('click', () => {
+        savedColors = {};
+        localStorage.removeItem(COLOR_KEY);
+        applyColors(savedColors);
+    });
+    dark.addEventListener('change', updateContrast);
+
+    // Icon style: same <html data-icon-style> hook the builder's Theme tab sets (css/icon-styles.css).
+    // Gallery-only preference — the builder keeps it per project.
+    const iconBtns = document.querySelectorAll('#gIconStyle button');
+    const applyIconStyle = (style) => {
+        if (!['ph-regular', 'ph-fill', 'ph-duotone'].includes(style)) style = '';
+        if (style) document.documentElement.setAttribute('data-icon-style', style);
+        else document.documentElement.removeAttribute('data-icon-style');
+        iconBtns.forEach(b => {
+            const on = b.dataset.iconStyle === style;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-checked', on ? 'true' : 'false');
+        });
+    };
+    applyIconStyle(localStorage.getItem('galleryIconStyle') || '');
+    iconBtns.forEach(b => b.addEventListener('click', () => {
+        applyIconStyle(b.dataset.iconStyle);
+        localStorage.setItem('galleryIconStyle', b.dataset.iconStyle);
+    }));
+
+    // Scale
+    const scale = document.getElementById('gScale');
+    const scaleOut = document.getElementById('gScaleOut');
+    const applyScale = (s) => {
+        document.body.style.setProperty('--scale', s);
+        scaleOut.textContent = Math.round(s * 100) + '%';
+        scale.value = s;
+    };
+    applyScale(parseFloat(localStorage.getItem('galleryScale')) || 0.85);   // default 85%: fewer wrapped tiles on typical screens
+    scale.addEventListener('input', () => { applyScale(scale.value); localStorage.setItem('galleryScale', scale.value); });
+
+    // Filter
+    const search = document.getElementById('gSearch');
+    const clearBtn = document.getElementById('gSearchClear');
+    const clearSearch = () => {
+        search.value = '';
+        search.dispatchEvent(new Event('input'));
+        search.focus();
+    };
+    clearBtn.addEventListener('click', clearSearch);
+    search.addEventListener('keydown', (e) => { if (e.key === 'Escape' && search.value) { e.preventDefault(); clearSearch(); } });
+    search.addEventListener('input', () => {
+        clearBtn.hidden = !search.value;
+        const q = search.value.trim().toLowerCase();
+        let shown = 0;
+        document.querySelectorAll('.g-category').forEach(section => {
+            let any = false;
+            section.querySelectorAll('.g-component').forEach(block => {
+                const hit = !q || block.dataset.search.includes(q);
+                block.hidden = !hit;
+                if (hit) { any = true; shown++; }
+            });
+            section.hidden = !any;
+        });
+        empty.style.display = shown ? 'none' : 'block';
+    });
+})();
+</script>
+</body>
+</html>
