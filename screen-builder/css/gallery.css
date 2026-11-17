@@ -1,0 +1,134 @@
+/* gallery.css — page chrome shared by the read-only galleries (components.html, templates.html):
+   sticky header with filter / zoom / theme colors / icon style / dark mode, category nav,
+   intro panel, category sections, blocks of tiles. Page-specific rules stay in each page. */
+/* ---------- Page chrome ---------- */
+html, body { height: auto; }
+body.gallery {
+    --scale: 0.85;
+    --tile-w: 322px;
+    --page-bg: #eef1f4;
+    --panel-bg: #ffffff;
+    --panel-border: #dde2e7;
+    --muted: #6b7680;
+    background: var(--page-bg);
+    color: var(--basic-txt-color);
+    font-family: var(--interface-HL), 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+body.gallery.dark-mode {
+    --page-bg: #121214;
+    --panel-bg: #1c1c20;
+    --panel-border: #2c2d33;
+    --muted: #9aa3ab;
+    background: var(--page-bg);
+}
+.g-header {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px;
+    padding: 14px 28px;
+    background: var(--interface-color);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,.18);
+}
+.g-brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+.g-brand h1 { font-size: 20px; margin: 0; font-weight: 500; color: #fff; }
+.g-brand a { color: #ffffffb0; font-size: 13px; text-decoration: none; }
+.g-brand a:hover { color: #fff; }
+.g-count { font-size: 13px; color: #ffffffa0; }
+.g-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+.g-search {
+    background: #ffffff1a; border: 1px solid #ffffff30; color: #fff;
+    border-radius: 8px; padding: 7px 30px 7px 12px; font-size: 14px; width: 200px; outline: none;
+    user-select: text; -webkit-user-select: text;
+}
+.g-search::placeholder { color: #ffffff80; }
+.g-search::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }   /* replaced by .g-search-clear */
+.g-search-wrap { position: relative; display: flex; align-items: center; }
+.g-search-clear {
+    position: absolute; right: 5px; width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; padding: 0;
+    background: none; border: 0; color: #ffffffa0; font-size: 13px; cursor: pointer;
+}
+.g-search-clear:hover, .g-search-clear:focus-visible { color: #fff; background: #ffffff26; outline: none; }
+.g-search-clear[hidden] { display: none; }
+.g-search:focus { border-color: var(--interface-btn); }
+.g-ctl { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #fff; }
+.g-ctl input[type=range] { width: 120px; accent-color: var(--interface-btn); }
+.g-ctl output { min-width: 36px; font-variant-numeric: tabular-nums; }
+.g-ctl .dark-mode-label { margin: 0; cursor: pointer; }
+/* Icon style switcher (css/icon-styles.css) */
+.g-colors { display: flex; align-items: center; gap: 6px; }
+.g-swatch { position: relative; width: 24px; height: 24px; border-radius: 50%; overflow: hidden; cursor: pointer;
+    border: 2px solid #ffffff60; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+.g-swatch:hover { border-color: #fff; }
+.g-swatch input { position: absolute; inset: -6px; width: 36px; height: 36px; border: 0; padding: 0; cursor: pointer; }
+.g-colors .g-reset { background: none; border: 0; color: #ffffffa0; cursor: pointer; padding: 2px 4px; font-size: 13px; }
+.g-colors .g-reset:hover { color: #fff; }
+.g-seg { display: flex; gap: 2px; padding: 2px; border-radius: 8px; background: #ffffff1a; border: 1px solid #ffffff30; }
+.g-seg button {
+    border: none; background: none; color: #ffffffb0; font-size: 12px;
+    padding: 5px 10px; border-radius: 6px; cursor: pointer;
+}
+.g-seg button:hover { color: #fff; }
+.g-seg button.active { background: var(--interface-btn); color: var(--interface-btn-text); }
+.g-nav {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 12px 28px; border-bottom: 1px solid var(--panel-border);
+    background: var(--panel-bg);
+}
+.g-nav a {
+    font-size: 13px; text-decoration: none; color: var(--basic-txt-color);
+    padding: 5px 11px; border-radius: 999px; border: 1px solid var(--panel-border);
+}
+.g-nav a:hover { border-color: var(--interface-link); color: var(--interface-link); }
+main { padding: 8px 28px 60px; }
+.g-intro {
+    display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-start;
+    margin-top: 24px; padding: 22px 26px;
+    background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 14px;
+}
+.g-intro-text { flex: 1 1 420px; max-width: 680px; }
+.g-intro h2 { font-size: 22px; font-weight: 500; margin: 0 0 8px; color: var(--basic-txt-color); }
+.g-intro p { margin: 0 0 14px; line-height: 1.55; color: var(--muted); font-size: 14px; }
+.g-intro-cta {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500;
+    background: var(--interface-btn); color: var(--interface-btn-text);
+}
+.g-intro-cta:hover { background: var(--interface-btn-hover); }
+.g-intro ul { flex: 1 1 280px; list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.g-intro li { display: flex; gap: 10px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+.g-intro li i { width: 16px; margin-top: 2px; text-align: center; color: var(--interface-link); }
+.g-intro li b { color: var(--basic-txt-color); font-weight: 500; }
+.g-category > h2 {
+    font-size: 22px; font-weight: 500; margin: 32px 0 4px;
+    color: var(--basic-txt-color); scroll-margin-top: 90px;
+}
+.g-component {
+    background: var(--panel-bg); border: 1px solid var(--panel-border);
+    border-radius: 14px; padding: 14px 16px 18px; margin-top: 14px;
+}
+.g-component > header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.g-component > header h3 { font-size: 16px; margin: 0; font-weight: 500; color: var(--basic-txt-color); }
+.g-component .g-sub { font-size: 12px; color: var(--muted); }
+.g-grid {
+    display: grid; gap: 14px; align-items: start;
+    grid-template-columns: repeat(auto-fill, calc(var(--tile-w) * var(--scale)));
+}
+.g-tile { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.g-tile-label { font-size: 11px; color: var(--muted); text-align: center; }
+.g-empty { padding: 60px 0; text-align: center; color: var(--muted); display: none; }
+.g-skipped { margin-top: 36px; font-size: 13px; color: var(--muted); }
+.g-frame {
+    width: calc(var(--tile-w) * var(--scale));
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--panel-border);
+}
+
+/* Text on a recolored background (js/gallery.js sets black/white on [data-g-contrast]).
+   Headings, navbar spans and icons, and card text have their own default-text-color rules
+   (ux-mock-bldr.css `h1…h6, .navbar span`; componentVariants.css `.nav-icon`, `.nav-icon-light`, `.card-text`), so they
+   wouldn't inherit it and kept the default text color on a recolored navbar, nav pill or card. Inline colors still win. */
+.g-frame [data-g-contrast] :is(h1, h2, h3, h4, h5, h6, .card-text),
+.g-frame .navbar[data-g-contrast] :is(span, .nav-icon),   /* nav icons: .nav-icon is primary, .nav-icon-light default text */
+.g-frame .navbar [data-g-contrast] span { color: inherit; }   /* e.g. the selected nav pill */

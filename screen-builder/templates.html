@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Template Gallery | Dlightning</title>
+<meta name="description" content="Every Screen Builder template and app pack in one view, in light or dark mode.">
+<!-- templates.html — read-only gallery of every template screen and app pack.
+     Renders with the template picker's own preview code (window.screenTemplates in js/templates.js),
+     so it stays in sync with the builder. Same page chrome as components.html (css/gallery.css, js/gallery.js). -->
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700|Rubik:400,500,700&display=swap">
+<link rel="stylesheet" href="css/styles.min.css">
+<link rel="stylesheet" href="css/gallery.css">
+<style>
+    body.gallery { --tile-w: 322px; --screen-h: 706px; }   /* the builder's default screen size */
+    .g-grid { gap: 32px 28px; }   /* whole screens need more air than the component gallery's 14px */
+    .g-component > header { flex-wrap: wrap; }
+    .g-component .g-blurb { flex-basis: 100%; margin: -6px 0 0; font-size: 13px; color: var(--muted); }
+    .g-pro {
+        font-size: 10px; font-weight: 700; letter-spacing: .04em; padding: 2px 6px; border-radius: 4px;
+        background: var(--interface-btn); color: var(--interface-btn-text);
+    }
+    .g-tile-label b { display: block; font-size: 13px; font-weight: 500; color: var(--basic-txt-color); }
+    .g-tile[hidden] { display: none; }
+    /* App packs list their screens in build order; each links to the screen's own tile
+       (every template is drawn once, under its category) */
+    .g-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; padding: 0; list-style: none; }
+    .g-flow li { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+    .g-flow li + li::before { content: '\f054'; font: 900 9px 'Font Awesome 6 Free'; color: var(--muted); }
+    .g-flow a {
+        text-decoration: none; color: var(--basic-txt-color);
+        padding: 5px 11px; border-radius: 999px; border: 1px solid var(--panel-border);
+    }
+    .g-flow a:hover { border-color: var(--interface-link); color: var(--interface-link); }
+    .g-flow a span { color: var(--muted); margin-right: 4px; font-variant-numeric: tabular-nums; }
+    .g-tile { scroll-margin-top: 100px; }   /* clear the sticky header when a pack link jumps here */
+    .g-tile:target .g-frame { outline: 3px solid var(--interface-link); outline-offset: 2px; }
+
+    /* ---------- The screen each template renders in: the picker's thumbnail (.template-preview >
+       .tp-scale, css/ux-mock-bldr.css) at screen size, scaled with zoom. Scrolls (hover glides it). */
+    .g-frame .template-preview {
+        height: calc(var(--screen-h) * var(--scale));
+        border-radius: 0; background-color: var(--color-background);
+    }
+    .g-frame .tp-scale {
+        zoom: var(--scale);
+        width: var(--tile-w); min-height: var(--screen-h);
+        margin: 0; padding: 10px 10px 28px; border: 0; border-radius: 0;
+        display: flex; flex-direction: column;
+    }
+    .g-frame .tp-scale .tp-bottomNav { margin-top: auto; }   /* tab bars sit on the screen's bottom edge */
+</style>
+</head>
+
+<body class="gallery">
+<header class="g-header">
+    <div class="g-brand">
+        <h1>⚡ Template Gallery</h1>
+        <span class="g-count" id="gCount"></span>
+        <a href="index.html"><i class="fas fa-arrow-left"></i> Back to builder</a>
+        <a href="components.html"><i class="fas fa-table-cells-large"></i> Components</a>
+    </div>
+    <div class="g-controls">
+        <div class="g-search-wrap">
+            <input class="g-search" id="gSearch" type="search" placeholder="Filter templates…" aria-label="Filter templates">
+            <button type="button" class="g-search-clear" id="gSearchClear" title="Clear search" aria-label="Clear search" hidden><i class="fas fa-xmark"></i></button>
+        </div>
+        <label class="g-ctl" for="gScale">
+            <i class="fas fa-magnifying-glass-minus"></i>
+            <input id="gScale" type="range" min="0.3" max="1" step="0.05" value="0.6">
+            <output id="gScaleOut">60%</output>
+        </label>
+        <div class="g-ctl g-colors" aria-label="Theme colors">
+            <i class="fas fa-palette"></i>
+            <label class="g-swatch" title="Primary color"><input type="color" data-color-var="--color-primary" aria-label="Primary color"></label>
+            <label class="g-swatch" title="Secondary color"><input type="color" data-color-var="--color-secondary" aria-label="Secondary color"></label>
+            <label class="g-swatch" title="Accent color"><input type="color" data-color-var="--color-accent" aria-label="Accent color"></label>
+            <button type="button" class="g-reset" id="gColorReset" title="Reset to default colors"><i class="fas fa-rotate-left"></i></button>
+        </div>
+        <div class="g-ctl">
+            <i class="fas fa-icons"></i>
+            <div class="g-seg" id="gIconStyle" role="radiogroup" aria-label="Icon style">
+                <button type="button" data-icon-style="" role="radio" title="Font Awesome solid">Solid</button>
+                <button type="button" data-icon-style="ph-regular" role="radio" title="Phosphor regular">Outline</button>
+                <button type="button" data-icon-style="ph-fill" role="radio" title="Phosphor fill">Fill</button>
+                <button type="button" data-icon-style="ph-duotone" role="radio" title="Phosphor duotone">Duotone</button>
+            </div>
+        </div>
+        <div class="g-ctl">
+            <label class="switchDark">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="sliderDark"></span>
+            </label>
+            <label for="darkModeToggle" class="dark-mode-label">Dark Mode</label>
+        </div>
+    </div>
+</header>
+<nav class="g-nav" id="gNav"></nav>
+<main id="gMain">
+    <section class="g-intro" aria-labelledby="gIntroTitle">
+        <div class="g-intro-text">
+            <h2 id="gIntroTitle">Every template in Screen Builder, in one place</h2>
+            <p>Screen Builder is Dlightning's no-code tool for mocking up mobile app screens. Templates give you a
+               finished screen in one click, and app packs (Pro) build a whole app at once, its screens already
+               connected so you can click through them as a prototype. This page shows them all, drawn from the
+               same data the builder's template picker uses.</p>
+            <a class="g-intro-cta" href="index.html"><i class="fas fa-bolt"></i> Open the builder</a>
+        </div>
+        <ul>
+            <li><i class="fas fa-palette"></i><span><b>Try your colors.</b> Pick a primary, secondary and accent color in the header to see every template in your palette.</span></li>
+            <li><i class="fas fa-icons"></i><span><b>Switch icon styles</b> between solid, outline, fill and duotone, or turn on dark mode.</span></li>
+            <li><i class="fas fa-arrows-up-down"></i><span><b>Hover a screen</b> to scroll through it. Find one with the filter box or the category links, and zoom out to compare more at once.</span></li>
+        </ul>
+    </section>
+    <p class="g-empty" id="gEmpty">No templates match that filter.</p>
+</main>
+
+<!-- Component modules + variant library + templates (same order as index.html). Only their data is
+     used here; the editor itself is never loaded. TEMPLATE_GALLERY stops templates.js wiring the picker. -->
+<script>window.TEMPLATE_GALLERY = true;</script>
+<!-- BUILD:GALLERY-JS:START -->
+<script src="js/components/accent-contrast.js"></script>
+<script src="js/components/progressBar.js"></script>
+<script src="js/components/chipGroup.js"></script>
+<script src="js/components/notificationBanner.js"></script>
+<script src="js/components/tabs.js"></script>
+<script src="js/components/checkbox.js"></script>
+<script src="js/components/radio.js"></script>
+<script src="js/components/dropdown.js"></script>
+<script src="js/components/divider.js"></script>
+<script src="js/components/video.js"></script>
+<script src="js/components/modal.js"></script>
+<script src="js/components/keyboard.js"></script>
+<script src="js/components/chatInput.js"></script>
+<script src="js/components/chat.js"></script>
+<script src="js/components/adjustableSpace.js"></script>
+<script src="js/components/bulletedList.js"></script>
+<script src="js/components/floatingActionButton.js"></script>
+<script src="js/components/sidebar.js"></script>
+<script src="js/components/bottomNav.js"></script>
+<script src="js/components/navbar.js"></script>
+<script src="js/components/table.js"></script>
+<script src="js/components/bottomSheet.js"></script>
+<script src="js/components/accordion.js"></script>
+<script src="js/components/featureComparisonCard.js"></script>
+<script src="js/components/pagination.js"></script>
+<script src="js/components/shelf.js"></script>
+<script src="js/components/breadcrumb.js"></script>
+<script src="js/components/progressTracker.js"></script>
+<script src="js/components/blankCard.js"></script>
+<script src="js/components/datePicker.js"></script>
+<script src="js/components/icon.js"></script>
+<script src="js/components/columns.js"></script>
+<script src="js/components/graph.js"></script>
+<script src="js/components/pieGraph.js"></script>
+<script src="js/components/lineGraph.js"></script>
+<script src="js/components/fileUpload.js"></script>
+<script src="js/components/musicPlayer.js"></script>
+<script src="js/components/toggleSwitch.js"></script>
+<script src="js/components/blockquote.js"></script>
+<script src="js/components/codeBlock.js"></script>
+<script src="js/components/aiWelcome.js"></script>
+<script src="js/components/slider.js"></script>
+<script src="js/components/map.js"></script>
+<script src="js/components/rating.js"></script>
+<script src="js/components/stepper.js"></script>
+<script src="js/variants.js"></script>
+<script src="js/templates.js"></script>
+<!-- BUILD:GALLERY-JS:END -->
+<script src="js/gallery.js"></script>
+
+<script>
+(() => {
+    const { TEMPLATES, TEMPLATE_CARDS, TEMPLATE_PACKS, TEMPLATE_CATEGORIES, mountTemplatePreview } = window.screenTemplates;
+    const main = document.getElementById('gMain');
+    const nav = document.getElementById('gNav');
+    const empty = document.getElementById('gEmpty');
+    const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    const cardByKey = Object.fromEntries(TEMPLATE_CARDS.map(c => [c.key, c]));
+
+    // One screen tile: the template's picker preview at screen size, labelled
+    const tile = (key, title, sub, search) => {
+        const el = document.createElement('div');
+        el.className = 'g-tile';
+        el.id = 't-' + key;
+        if (search) el.dataset.search = search.toLowerCase();
+        const frame = document.createElement('div');
+        frame.className = 'g-frame';
+        el.appendChild(frame);
+        mountTemplatePreview(frame, TEMPLATES[key] || [], el);
+        el.insertAdjacentHTML('beforeend', `<div class="g-tile-label"><b>${esc(title)}</b>${sub ? esc(sub) : ''}</div>`);
+        return el;
+    };
+    const block = (headerHtml, search, bodyHtml = '<div class="g-grid"></div>') => {
+        const art = document.createElement('article');
+        art.className = 'g-component';
+        if (search != null) art.dataset.search = search.toLowerCase();
+        art.innerHTML = `<header>${headerHtml}</header>${bodyHtml}`;
+        return art;
+    };
+    // Packs each template belongs to, so filtering by a pack's name also finds its screens
+    const packsOf = {};
+    TEMPLATE_PACKS.forEach(p => p.screens.forEach(k => (packsOf[k] ||= []).push(p.title)));
+
+    let screens = 0, packs = 0;
+    for (const { id, label } of TEMPLATE_CATEGORIES) {
+        const section = document.createElement('section');
+        section.className = 'g-category';
+        section.id = 'cat-' + id;
+        section.innerHTML = `<h2>${esc(label)}</h2>`;
+
+        // App packs first, as in the picker: one block per pack listing its screens in build
+        // order (the first is the prototype's start screen), each linking to that screen's tile
+        for (const pack of TEMPLATE_PACKS.filter(p => p.cat === id)) {
+            const names = pack.screens.map(k => cardByKey[k]?.title || k);
+            const flow = pack.screens.map((key, i) => `<li><a href="#t-${key}"><span>${i + 1}</span>${esc(names[i])}</a></li>`).join('');
+            section.appendChild(block(
+                `<h3>${esc(pack.title)}</h3><span class="g-pro">PRO</span><span class="g-sub">App pack · ${pack.screens.length} connected screens</span><p class="g-blurb">${esc(pack.blurb)}</p>`,
+                `${pack.title} ${pack.blurb} ${pack.tags || ''} ${label} pack app flow ${names.join(' ')}`,
+                `<ol class="g-flow">${flow}</ol>`));
+            packs++;
+        }
+
+        // Single screens: one block, filtered tile by tile
+        const cards = TEMPLATE_CARDS.filter(c => c.cat === id);
+        if (cards.length) {
+            const art = block(`<h3>Screens</h3><span class="g-sub">${cards.length} template${cards.length === 1 ? '' : 's'}</span>`);
+            const grid = art.querySelector('.g-grid');
+            cards.forEach(c => grid.appendChild(tile(c.key, c.title, c.blurb, `${c.title} ${c.blurb} ${c.tags || ''} ${label} ${c.key} ${(packsOf[c.key] || []).join(' ')}`)));
+            section.appendChild(art);
+            screens += cards.length;
+        }
+
+        if (section.querySelector('.g-component')) {
+            main.insertBefore(section, empty);
+            nav.insertAdjacentHTML('beforeend', `<a href="#${section.id}">${esc(label)}</a>`);
+        }
+    }
+    document.getElementById('gCount').textContent = `${screens} templates · ${packs} app packs`;
+
+    window.initGalleryControls({ defaultScale: 0.6, scaleKey: 'templateGalleryScale' });
+
+})();
+</script>
+</body>
+</html>

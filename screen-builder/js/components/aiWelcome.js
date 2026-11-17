@@ -10,13 +10,13 @@ window.Components.aiWelcome = (() => {
 
     const card = (icon, title, sub) => /*html*/`<div class="aw-prompt">
                 <span class="icon-container aw-prompt-icon"><i class="fas ${icon}"></i></span>
-                <span class="aw-prompt-title" contenteditable="true">${title}</span>
-                <span class="aw-prompt-sub" contenteditable="true">${sub}</span>
+                <span class="aw-prompt-title usa" contenteditable="true">${title}</span>
+                <span class="aw-prompt-sub usa" contenteditable="true">${sub}</span>
             </div>`;
 
     const row = (icon, title) => /*html*/`<div class="aw-prompt aw-row">
                 <span class="icon-container aw-prompt-icon"><i class="fas ${icon}"></i></span>
-                <span class="aw-prompt-title" contenteditable="true">${title}</span>
+                <span class="aw-prompt-title usa" contenteditable="true">${title}</span>
                 <i class="fas fa-arrow-up aw-row-go non-editable"></i>
             </div>`;
 

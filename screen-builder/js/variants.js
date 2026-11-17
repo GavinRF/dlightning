@@ -687,7 +687,7 @@ case 'blankCard':
             `<div class="card-con">
                 <div class="card-quote">
                     <div class="card-quote-text heading-wrapper">
-                        <h4 contenteditable="true">
+                        <h4 class="usa" contenteditable="true">
                         <span style="margin-left: -12px;">"&hairsp;</span><span class="usa">Quote card, designed to display text with impact.</span>&hairsp;"
                         </h4>
                     </div>
@@ -1073,7 +1073,7 @@ case 'blankCard':
         `<div class="navContain">
             <div class="fw navbar top-navbar">
                 <div>
-                    <span spellcheck="false" class="nav-brand-text ml-16" contenteditable="true">Brand</span>
+                    <span spellcheck="false" class="nav-brand-text ml-16 usa" contenteditable="true">Brand</span>
                 </div>
                 
                 <div class="icon-container nav-icon mr-16">
@@ -1103,7 +1103,7 @@ case 'blankCard':
                     <i class="fas fa-arrow-left"></i>
                 </div>
                 <div class="nav-center-content">
-                    <span spellcheck="false" class="nav-title-text" contenteditable="true">Brand</span>
+                    <span spellcheck="false" class="nav-title-text usa" contenteditable="true">Brand</span>
                 </div>
                 <div class="icon-container nav-icon nav-icon-light mr-16">
                     <i class="fas fa-bars"></i>
@@ -1121,8 +1121,8 @@ case 'blankCard':
                     <span class="non-editable"><i class="fas fa-image"></i></span>
                 </div>
                 <div class="nav-flex-grow">
-                    <span contenteditable="true" class="nav-username">Username</span>
-                    <span contenteditable="true" class="nav-status">Online</span>
+                    <span contenteditable="true" class="nav-username usa">Username</span>
+                    <span contenteditable="true" class="nav-status usa">Online</span>
                 </div>
                 <div class="nav-icon-group">
                     <div class="icon-container nav-icon">
@@ -1145,7 +1145,7 @@ case 'blankCard':
             <div class="icon-container nav-icon">
             <i class="fas fa-search"></i>
             </div>
-            <span contenteditable="true" style="margin-left: 10px; color: var(--basic-txt-color);">Search...</span>
+            <span class="usa" contenteditable="true" style="margin-left: 10px; color: var(--basic-txt-color);">Search...</span>
         </div>
         <div class="icon-container mr-16 nav-icon">
             <i class="fas fa-microphone"></i>
@@ -1161,16 +1161,16 @@ case 'blankCard':
             <i class="fas fa-sliders"></i>
             </div>
             <div class="nav-pill" style="background-color: var(--color-primary);">
-            <span contenteditable="true">All</span>
+            <span class="usa" contenteditable="true">All</span>
             </div>
             <div class="nav-pill">
-            <span contenteditable="true">Popular</span>
+            <span class="usa" contenteditable="true">Popular</span>
             </div>
             <div class="nav-pill">
-            <span contenteditable="true">New</span>
+            <span class="usa" contenteditable="true">New</span>
             </div>
             <div class="nav-pill">
-            <span contenteditable="true">Trending</span>
+            <span class="usa" contenteditable="true">Trending</span>
             </div>
         </div>
         </div>
@@ -1181,7 +1181,7 @@ case 'blankCard':
         `<div class="navContain">
             <div class="fw navbar top-navbar">
             <div class="nav-flex-grow">
-                <span contenteditable="true" class="nav-brand-text ml-16">Profile</span>
+                <span contenteditable="true" class="nav-brand-text ml-16 usa">Profile</span>
             </div>
             <div class="nav-icon-group mr-8">
                 <div class="icon-container nav-icon">
@@ -1205,7 +1205,7 @@ case 'blankCard':
                 </div>
                 <div class="nav-center-content">
                     <div>
-                    <span class="nav-brand-text" contenteditable="true">SHOP</span>
+                    <span class="nav-brand-text usa" contenteditable="true">SHOP</span>
                     </div>
                 </div>
                 <div class="nav-icon-group mr-8">
@@ -1229,7 +1229,7 @@ case 'blankCard':
                     <span class="non-editable"><i class="fas fa-bolt"></i></span>
                 </div>
                 <div class="nav-center-content">
-                    <span class="nav-title-text" contenteditable="true">App Name</span>
+                    <span class="nav-title-text usa" contenteditable="true">App Name</span>
                 </div>
             </div>
         </div>`,
@@ -1318,7 +1318,7 @@ case 'blankCard':
                 <input type="text" placeholder="Ask anything..." class="chat-input">
                 <div class="chat-prompt-bar">
                     <div class="icon-container chat-prompt-btn"><i class="fas fa-plus"></i></div>
-                    <div class="chat-prompt-model"><span contenteditable="true">Smart</span><i class="fas fa-chevron-down non-editable"></i></div>
+                    <div class="chat-prompt-model"><span class="usa" contenteditable="true">Smart</span><i class="fas fa-chevron-down non-editable"></i></div>
                     <div class="chat-prompt-spacer"></div>
                     <div class="icon-container chat-prompt-btn"><i class="fas fa-microphone"></i></div>
                     <button class="chat-send-btn icon-container chat-prompt-send" style="background-color: var(--color-primary); color: white;">
@@ -1940,7 +1940,7 @@ case 'blankCard':
                 </div>
                 <div class="ui-input-error-message">
                     <i class="fas fa-exclamation-triangle ui-input-error-icon"></i>
-                    <div contenteditable="true">Please enter a valid value</div>
+                    <div class="usa" contenteditable="true">Please enter a valid value</div>
                 </div>
             </div>`,
             // Disabled input
@@ -1986,7 +1986,7 @@ case 'blankCard':
                 <div class="progress-bar" style="width: 100%; height: 6px; background-color: var(--neutral-gray); border-radius: 5px; overflow: hidden;">
                     <div style="width: 76%; height: 100%; background-color: var(--color-primary); transition: width 0.3s ease;"></div>
                 </div>
-                <div contenteditable="true" style="margin-top: 5px; font-weight: bold; color: var(--basic-txt-color);">76%</div>
+                <div class="usa" contenteditable="true" style="margin-top: 5px; font-weight: bold; color: var(--basic-txt-color);">76%</div>
             </div>`,
 
             // Thick Bar
@@ -2041,7 +2041,7 @@ case 'blankCard':
                         style="transition: stroke-dasharray 0.3s ease;"
                     />
                 </svg>
-                <div contenteditable="true" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: calc(0.15 * var(--progress-size, 100px)); color: var(--basic-txt-color);">76%</div>
+                <div class="usa" contenteditable="true" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: calc(0.15 * var(--progress-size, 100px)); color: var(--basic-txt-color);">76%</div>
             </div>
         </div>`,
 
@@ -2075,7 +2075,7 @@ case 'blankCard':
                         style="transition: stroke-dasharray 0.3s ease;"
                     />
                 </svg>
-                <div contenteditable="true" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 24px; font-weight: bold; color: var(--basic-txt-color);">76%</div>
+                <div class="usa" contenteditable="true" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 24px; font-weight: bold; color: var(--basic-txt-color);">76%</div>
             </div>
         </div>`,
 
@@ -2096,7 +2096,7 @@ case 'blankCard':
                         style="transform-origin: center; transition: transform 0.3s ease-in-out, d 0.3s ease-in-out;"
                     />
                 </svg>
-                <div contenteditable="true" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; color: var(--basic-txt-color); pointer-events: all;">76%</div>
+                <div class="usa" contenteditable="true" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; color: var(--basic-txt-color); pointer-events: all;">76%</div>
             </div>
         </div>`
         ];
@@ -2136,14 +2136,14 @@ case 'blankCard':
                     </div>
                     <div class="footer-links-section">
                         <ul class="footer-link-column">
-                            <li contenteditable="true"><a href="#" class="footer-link usa">About Us</a></li>
-                            <li contenteditable="true"><a href="#" class="footer-link usa">Contact</a></li>
-                            <li contenteditable="true"><a href="#" class="footer-link usa">Careers</a></li>
+                            <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">About Us</a></li>
+                            <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Contact</a></li>
+                            <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Careers</a></li>
                         </ul>
                         <ul class="footer-link-column">
-                            <li contenteditable="true"><a href="#" class="footer-link usa">Support</a></li>
-                            <li contenteditable="true"><a href="#" class="footer-link usa">Privacy Policy</a></li>
-                            <li contenteditable="true"><a href="#" class="footer-link usa">Terms of Use</a></li>
+                            <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Support</a></li>
+                            <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Privacy Policy</a></li>
+                            <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Terms of Use</a></li>
                         </ul>
                     </div>
                 </div>
@@ -2223,9 +2223,9 @@ case 'blankCard':
                                 <h4 contenteditable="true" class="footer-subheading usa">Product</h4>
                                 </div>
                                 <ul class="footer-link-column">
-                                    <li contenteditable="true"><a href="#" class="footer-link usa">Features</a></li>
-                                    <li contenteditable="true"><a href="#" class="footer-link usa">Pricing</a></li>
-                                    <li contenteditable="true"><a href="#" class="footer-link usa">Tutorials</a></li>
+                                    <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Features</a></li>
+                                    <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Pricing</a></li>
+                                    <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Tutorials</a></li>
                                 </ul>
                             </div>
                             <div class="footer-column">
@@ -2233,9 +2233,9 @@ case 'blankCard':
                                 <h4 contenteditable="true" class="footer-subheading usa">Company</h4>
                                 </div>
                                 <ul class="footer-link-column">
-                                    <li contenteditable="true"><a href="#" class="footer-link usa">About</a></li>
-                                    <li contenteditable="true"><a href="#" class="footer-link usa">Blog</a></li>
-                                    <li contenteditable="true"><a href="#" class="footer-link usa">Careers</a></li>
+                                    <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">About</a></li>
+                                    <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Blog</a></li>
+                                    <li class="usa" contenteditable="true"><a href="#" class="footer-link usa">Careers</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -3111,7 +3111,7 @@ case 'blankCard':
             `<div class="keyboard-layout keyboard-layout-phone-dialer">
                 <!-- Phone number display -->
                 <div class="phone-number-display">
-                    <span contenteditable="true">+1 555 123 4567</span>
+                    <span class="usa" contenteditable="true">+1 555 123 4567</span>
                     <div class="backspace-button">
                         <i class="fas fa-backspace"></i>
                     </div>

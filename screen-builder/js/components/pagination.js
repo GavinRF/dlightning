@@ -10,11 +10,11 @@ const PAGINATION_VARIANTS = [
     `<div class="pagination-container">
             <div class="pagination-wrapper">
                 <button class="page-btn prev-page icon-container"><i style="color: var(--basic-txt-color);" class="fas fa-angle-left"></i></button>
-                <button class="page-btn" contenteditable="true">1</button>
-                <button class="page-btn" contenteditable="true">2</button>
-                <button class="page-btn" contenteditable="true">3</button>
-                <button class="page-btn" contenteditable="true">...</button>
-                <button class="page-btn" contenteditable="true">45</button>
+                <button class="page-btn usa" contenteditable="true">1</button>
+                <button class="page-btn usa" contenteditable="true">2</button>
+                <button class="page-btn usa" contenteditable="true">3</button>
+                <button class="page-btn usa" contenteditable="true">...</button>
+                <button class="page-btn usa" contenteditable="true">45</button>
                 <button class="page-btn next-page icon-container"><i style="color: var(--basic-txt-color);" class="fas fa-angle-right"></i></button>
             </div>
         </div>`,
@@ -34,9 +34,9 @@ const PAGINATION_VARIANTS = [
     /*html*/
     `<div class="pagination-container pagination-prevnext">
             <div class="pagination-wrapper">
-                <button class="page-btn prev-page icon-container"><i class="fas fa-arrow-left"></i><span contenteditable="true">Previous</span></button>
-                <span class="page-count" contenteditable="true">Page 2 of 10</span>
-                <button class="page-btn next-page icon-container"><span contenteditable="true">Next</span><i class="fas fa-arrow-right"></i></button>
+                <button class="page-btn prev-page icon-container"><i class="fas fa-arrow-left"></i><span class="usa" contenteditable="true">Previous</span></button>
+                <span class="page-count usa" contenteditable="true">Page 2 of 10</span>
+                <button class="page-btn next-page icon-container"><span class="usa" contenteditable="true">Next</span><i class="fas fa-arrow-right"></i></button>
             </div>
         </div>`,
 
@@ -45,11 +45,11 @@ const PAGINATION_VARIANTS = [
     `<div class="pagination-container pagination-circles">
             <div class="pagination-wrapper">
                 <button class="page-btn prev-page icon-container"><i class="fas fa-chevron-left"></i></button>
-                <button class="page-btn" contenteditable="true">1</button>
-                <button class="page-btn" contenteditable="true">2</button>
-                <button class="page-btn" contenteditable="true">3</button>
-                <button class="page-btn" contenteditable="true">4</button>
-                <button class="page-btn" contenteditable="true">5</button>
+                <button class="page-btn usa" contenteditable="true">1</button>
+                <button class="page-btn usa" contenteditable="true">2</button>
+                <button class="page-btn usa" contenteditable="true">3</button>
+                <button class="page-btn usa" contenteditable="true">4</button>
+                <button class="page-btn usa" contenteditable="true">5</button>
                 <button class="page-btn next-page icon-container"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>`

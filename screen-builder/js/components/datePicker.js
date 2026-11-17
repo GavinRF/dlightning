@@ -31,7 +31,7 @@ window.Components.datePicker = (() => {
         `<div class="dp-weekdays non-editable">${labels.map(l => `<span>${l}</span>`).join('')}</div>`;
 
     const wheel = (items, selectedIndex) => `<div class="dp-wheel-col">${items.map((t, i) =>
-        `<div class="dp-wheel-item${i === selectedIndex ? ' dp-wheel-selected' : ''}" contenteditable="true">${t}</div>`).join('')}</div>`;
+        `<div class="dp-wheel-item${i === selectedIndex ? ' dp-wheel-selected' : ''} usa" contenteditable="true">${t}</div>`).join('')}</div>`;
 
     const classicDays = Array.from({ length: 31 }, (_, i) =>
         `<span class="date-picker-day-cell">${i + 1}</span>`).join('');
@@ -39,7 +39,7 @@ window.Components.datePicker = (() => {
     const VARIANTS = [
         // 1 — Classic field + popover (matches the old JS factory's markup)
         /*html*/
-        `<div class="date-picker-wrapper"><span contenteditable="true" spellcheck="false" style="opacity: 0.7;">DD/MM/YYYY</span><i class="fas fa-calendar-alt date-picker-icon" style="color: var(--color-primary);"></i><div class="date-picker-calendar-con"><div class="date-picker-month-text" contenteditable="true">January</div><div class="date-picker-year-text" contenteditable="true">2025</div><div class="date-picker-days-grid">${classicDays}</div></div></div>`,
+        `<div class="date-picker-wrapper"><span class="usa" contenteditable="true" spellcheck="false" style="opacity: 0.7;">DD/MM/YYYY</span><i class="fas fa-calendar-alt date-picker-icon" style="color: var(--color-primary);"></i><div class="date-picker-calendar-con"><div class="date-picker-month-text usa" contenteditable="true">January</div><div class="date-picker-year-text usa" contenteditable="true">2025</div><div class="date-picker-days-grid">${classicDays}</div></div></div>`,
 
         // 2 — iOS wheel
         /*html*/
@@ -54,21 +54,21 @@ window.Components.datePicker = (() => {
         /*html*/
         `<div class="dp-cal dp-material">
             <div class="dp-m-head">
-                <div class="dp-m-caption" contenteditable="true">Select date</div>
+                <div class="dp-m-caption usa" contenteditable="true">Select date</div>
                 <div class="dp-m-date-row">
-                    <div class="dp-header-date" contenteditable="true">Jan 15</div>
+                    <div class="dp-header-date usa" contenteditable="true">Jan 15</div>
                     <div class="icon-container"><i class="fas fa-pen"></i></div>
                 </div>
             </div>
             <div class="dp-month-row">
-                <span class="dp-month" contenteditable="true">January 2025</span>
+                <span class="dp-month usa" contenteditable="true">January 2025</span>
                 <div class="icon-container dp-nav"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-right"></i></div>
             </div>
             ${weekdays()}
             ${grid(15)}
             <div class="dp-actions" style="color: var(--color-primary);">
-                <span contenteditable="true">Cancel</span>
-                <span contenteditable="true">OK</span>
+                <span class="usa" contenteditable="true">Cancel</span>
+                <span class="usa" contenteditable="true">OK</span>
             </div>
         </div>`,
 
@@ -76,14 +76,14 @@ window.Components.datePicker = (() => {
         /*html*/
         `<div class="dp-cal dp-ios-cal">
             <div class="dp-month-row">
-                <span class="dp-month" contenteditable="true">January 2025</span>
+                <span class="dp-month usa" contenteditable="true">January 2025</span>
                 <div class="icon-container dp-nav" style="color: var(--color-accent);"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-right"></i></div>
             </div>
             ${weekdays(['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'])}
             ${grid(15, 'var(--color-accent)')}
             <div class="dp-time-row">
-                <span contenteditable="true">Time</span>
-                <span class="dp-time-pill" contenteditable="true">9:41 AM</span>
+                <span class="usa" contenteditable="true">Time</span>
+                <span class="dp-time-pill usa" contenteditable="true">9:41 AM</span>
             </div>
         </div>`
     ];

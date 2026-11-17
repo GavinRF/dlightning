@@ -24,7 +24,7 @@ window.Components.toggleSwitch = (() => {
     // Settings rows (icon = full class, e.g. 'fab fa-bluetooth-b' for brand icons): thumb position for OFF switches is fixed up by setup() (CSS vars)
     const settingsRow = (icon, label, on) => /*html*/`<div class="toggle-row">
                 <div class="icon-container toggle-row-icon"><i class="${icon}"></i></div>
-                <span class="toggle-row-label" contenteditable="true">${label}</span>
+                <span class="toggle-row-label usa" contenteditable="true">${label}</span>
                 ${sw(on)}
             </div>`;
 
@@ -32,17 +32,17 @@ window.Components.toggleSwitch = (() => {
         // 1 — Classic: Off [switch] On (matches the old JS factory's markup)
         /*html*/
         `<div class="toggle-switch-container">
-            <span contenteditable="true" style="margin-right: 10px; cursor: pointer;">Off</span>
+            <span class="usa" contenteditable="true" style="margin-right: 10px; cursor: pointer;">Off</span>
             ${sw(true)}
-            <span contenteditable="true" style="margin-left: 10px; cursor: pointer;">On</span>
+            <span class="usa" contenteditable="true" style="margin-left: 10px; cursor: pointer;">On</span>
         </div>`,
 
         // 2 — iOS-style row: title + description, switch on the right
         /*html*/
         `<div class="toggle-switch-container toggle-ios">
             <div class="toggle-text">
-                <div class="toggle-title" contenteditable="true">Notifications</div>
-                <div class="toggle-desc" contenteditable="true">Get alerts for new messages</div>
+                <div class="toggle-title usa" contenteditable="true">Notifications</div>
+                <div class="toggle-desc usa" contenteditable="true">Get alerts for new messages</div>
             </div>
             ${sw(true)}
         </div>`,
@@ -50,7 +50,7 @@ window.Components.toggleSwitch = (() => {
         // 3 — Material-style: label left, slim track with an overhanging thumb
         /*html*/
         `<div class="toggle-switch-container toggle-material">
-            <span class="toggle-title" contenteditable="true">Dark mode</span>
+            <span class="toggle-title usa" contenteditable="true">Dark mode</span>
             ${sw(true)}
         </div>`,
 

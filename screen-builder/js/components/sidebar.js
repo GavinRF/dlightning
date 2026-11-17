@@ -136,7 +136,7 @@ window.Components.sidebar = {
 
         const textElement = document.createElement('span');
         textElement.textContent = text;
-        textElement.setAttribute('contenteditable', 'true');
+        textElement.setAttribute('contenteditable', 'true'); textElement.classList.add('usa');
         textElement.style.flex = '1';
 
         // Delete button

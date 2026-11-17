@@ -196,10 +196,10 @@ window.Components.lineGraph = (() => {
             const head = document.createElement('div');
             head.className = 'line-graph-stat';
             head.innerHTML =
-                '<div class="line-graph-stat-title" contenteditable="true" data-stat-field="title"></div>' +
+                '<div class="line-graph-stat-title usa" contenteditable="true" data-stat-field="title"></div>' +
                 '<div class="line-graph-stat-row">' +
-                    '<div class="line-graph-stat-value" contenteditable="true" data-stat-field="value"></div>' +
-                    '<div class="line-graph-stat-change" contenteditable="true" data-stat-field="change"></div>' +
+                    '<div class="line-graph-stat-value usa" contenteditable="true" data-stat-field="value"></div>' +
+                    '<div class="line-graph-stat-change usa" contenteditable="true" data-stat-field="change"></div>' +
                 '</div>';
             head.querySelector('.line-graph-stat-title').textContent = stat.title;
             head.querySelector('.line-graph-stat-value').textContent = stat.value;
@@ -220,7 +220,7 @@ window.Components.lineGraph = (() => {
                 if (!k) swatch.style.background = state.color;
                 const text = document.createElement('span');
                 text.className = 'line-graph-legend-name';
-                text.setAttribute('contenteditable', 'true');
+                text.setAttribute('contenteditable', 'true'); text.classList.add('usa');
                 text.dataset.legend = k;
                 text.textContent = name;
                 item.append(swatch, text);
@@ -317,7 +317,7 @@ window.Components.lineGraph = (() => {
             state.points.forEach((p, i) => {
                 const label = document.createElement('div');
                 label.className = 'line-graph-label';
-                label.setAttribute('contenteditable', 'true');
+                label.setAttribute('contenteditable', 'true'); label.classList.add('usa');
                 label.dataset.index = i;
                 label.style.left = `${xs[i].x}%`;
                 // No wider than the space between points, so long labels truncate instead of colliding

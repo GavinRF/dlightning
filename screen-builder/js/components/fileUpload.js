@@ -30,7 +30,9 @@ window.Components.fileUpload = (() => {
             img.className = 'file-upload-preview-img';
             const reader = new FileReader();
             reader.onload = e => { img.src = e.target.result; };
-            reader.readAsDataURL(file);
+            // Small thumbnail copy (js/image-shrink.js); the card still shows the real file's size
+            (window.shrinkImage ? window.shrinkImage(file, { maxSize: 400 }) : Promise.resolve(file))
+                .then(small => reader.readAsDataURL(small));
             content.appendChild(img);
         } else {
             const icon = document.createElement('i');

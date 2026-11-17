@@ -1,13 +1,13 @@
 // Component registry module — see docs/component-module-migration.md
 // breadcrumb: a trail of page links; the last crumb is the current page. Separators are
 // CSS (::before on each crumb after the first, per variant), so adding/removing crumbs
-// needs no separator bookkeeping. Editor: hover a crumb for × (remove), "+" adds one
+// needs no separator bookkeeping. Editor: hover a crumb for × (remove), "+ Add level" adds one
 // before the current page. Play: an unlinked earlier crumb (or the back-link variant)
-// acts as Back.
+// acts as Back. The trail is one line that scrolls sideways (mouse-drag in the player).
 window.Components = window.Components || {};
 
 const BC_ITEM = (label) =>
-    `<span class="bc-item"><span class="bc-label" contenteditable="true">${label}</span></span>`;
+    `<span class="bc-item"><span class="bc-label usa" contenteditable="true">${label}</span></span>`;
 
 const BREADCRUMB_VARIANTS = [
     // 1 — Chevrons
@@ -37,7 +37,7 @@ const BREADCRUMB_VARIANTS = [
     // 5 — Mobile back link to the parent page
     /*html*/
     `<nav class="breadcrumb bc-back">
-        <div class="bc-list"><span class="bc-item"><span class="icon-container bc-back-icon"><i class="fas fa-chevron-left"></i></span><span class="bc-label" contenteditable="true">Back to Shoes</span></span></div>
+        <div class="bc-list"><span class="bc-item"><span class="icon-container bc-back-icon"><i class="fas fa-chevron-left"></i></span><span class="bc-label usa" contenteditable="true">Back to Shoes</span></span></div>
     </nav>`
 ];
 
@@ -62,13 +62,48 @@ window.Components.breadcrumb = {
         const bc = root.querySelector('.breadcrumb');
         if (!bc || bc._playBound) return;
         bc._playBound = true;
+        const list = bc.querySelector('.bc-list');
         const items = [...bc.querySelectorAll('.bc-item')];
+
+        // Start at the end so the current page shows; mouse drag scrolls the trail
+        // (touch/trackpad scroll natively). A drag isn't a tap: _protoDragged drops its click.
+        if (list) {
+            list.scrollLeft = list.scrollWidth;
+            let startX = 0, startLeft = 0, down = false, dragging = false;
+            list.addEventListener('pointerdown', (e) => {
+                if (e.pointerType !== 'mouse' || e.button !== 0) return;
+                down = true; dragging = false;
+                startX = e.clientX; startLeft = list.scrollLeft;
+            });
+            list.addEventListener('pointermove', (e) => {
+                if (!down) return;
+                const dx = e.clientX - startX;
+                if (!dragging && Math.abs(dx) > 4) {
+                    dragging = true;
+                    list.setPointerCapture(e.pointerId);
+                    list.classList.add('bc-dragging');
+                }
+                if (dragging) list.scrollLeft = startLeft - dx;
+            });
+            const end = () => {
+                if (!down) return;
+                down = false;
+                list.classList.remove('bc-dragging');
+                if (dragging) {
+                    list._protoDragged = true;
+                    setTimeout(() => { list._protoDragged = false; }, 0);
+                }
+            };
+            list.addEventListener('pointerup', end);
+            list.addEventListener('pointercancel', end);
+        }
+
         const isBackLink = bc.classList.contains('bc-back');
         items.forEach((item, i) => {
             if ((i === items.length - 1 && !isBackLink) || item.classList.contains('bc-ellipsis')) return;
             item.classList.add('bc-tappable');
             item.addEventListener('click', (e) => {
-                if (item.closest('[data-proto-action]')) return;
+                if (list?._protoDragged || item.closest('[data-proto-action]')) return;
                 e.stopPropagation();
                 window.prototypeMode?.goBack?.();
             });
@@ -102,8 +137,14 @@ window.Components.breadcrumb = {
             add.type = 'button';
             add.className = 'bc-add-btn non-editable';
             add.title = 'Add a level';
-            add.textContent = '+';
+            add.innerHTML = '<span class="shelf-add-plus">+</span>Add level';
             bc.appendChild(add);
+        }
+
+        // Pills: readable text on the colored current page (js/components/accent-contrast.js)
+        if (bc.classList.contains('bc-pills')) {
+            window.accentContrast?.update(bc);
+            requestAnimationFrame(() => window.accentContrast?.update(bc));   // once a fresh insert is in the page
         }
 
         if (!bc._bcBound) {

@@ -254,12 +254,12 @@ window.Components.pieGraph = (() => {
             hole.className = 'pie-graph-center';
             const value = document.createElement('div');
             value.className = 'pie-graph-center-value';
-            value.setAttribute('contenteditable', 'true');
+            value.setAttribute('contenteditable', 'true'); value.classList.add('usa');
             value.dataset.centerField = 'value';
             value.textContent = center.value;
             const label = document.createElement('div');
             label.className = 'pie-graph-center-label';
-            label.setAttribute('contenteditable', 'true');
+            label.setAttribute('contenteditable', 'true'); label.classList.add('usa');
             label.dataset.centerField = 'label';
             label.textContent = center.label;
             hole.append(value, label);

@@ -45,7 +45,7 @@ window.Components.dropdown = {
 
             const option = document.createElement('div');
             option.className = 'option';
-            option.setAttribute('contenteditable', 'true');
+            option.setAttribute('contenteditable', 'true'); option.classList.add('usa');
             option.textContent = 'New Option';
 
             const deleteButton = document.createElement('button');

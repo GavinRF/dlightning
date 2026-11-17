@@ -88,6 +88,7 @@ window.Components.chatInput = {
                 children.disconnect();
                 resize.disconnect();
                 canvas._chatInputWatch = null;
+                window.Components.keyboard?.refresh?.(); // drop its height from the keyboard's scroll room
                 return;
             }
             observeBars();
@@ -108,6 +109,8 @@ window.Components.chatInput = {
     },
 
     place(canvas) {
+        // Its height counts toward the keyboard's scroll room (keyboard.js)
+        window.Components.keyboard?.refresh?.();
         const input = canvas.querySelector(':scope > .chatInput-container');
         if (!input) return;
         const bottom = `${this.offsetFor(canvas)}px`;

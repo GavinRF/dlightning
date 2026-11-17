@@ -15,11 +15,11 @@ window.Components = window.Components || {};
 // back brings the user's grid back as they left it (re-bound via afterVariantChange).
 const FC_CLASSIC = (() => {
     const headerCell = (text, i) =>
-        `<div contenteditable="true" style="font-weight: bold; color: #777; padding: 8px 0;${i > 0 ? ' text-align: center;' : ''}">${text}</div>`;
+        `<div class="usa" contenteditable="true" style="font-weight: bold; color: #777; padding: 8px 0;${i > 0 ? ' text-align: center;' : ''}">${text}</div>`;
     const check = '<div class="comparison-card-value" style="text-align: center; cursor: pointer;"><i class="fas fa-check" style="color: green;"></i></div>';
-    const row = (name) => `<div class="comparison-card-row"><div style="display: flex; align-items: center; gap: 8px; width: 100%;"><span contenteditable="true">${name}</span><button class="delete-fc-row"><i class="fas fa-trash"></i></button></div></div>${check}${check}`;
+    const row = (name) => `<div class="comparison-card-row"><div style="display: flex; align-items: center; gap: 8px; width: 100%;"><span class="usa" contenteditable="true">${name}</span><button class="delete-fc-row"><i class="fas fa-trash"></i></button></div></div>${check}${check}`;
     return `<div class="feature-comparison-card" style="border: .12rem solid var(--color-primary);">`
-        + `<div contenteditable="true" class="comparison-card-header" style="background-color: var(--color-primary);">Feature Comparison</div>`
+        + `<div contenteditable="true" class="comparison-card-header usa" style="background-color: var(--color-primary);">Feature Comparison</div>`
         + `<div class="comparison-card-content"><div class="comparison-card-grid" data-columns="3">`
         + ['Features', 'Basic', 'Pro'].map(headerCell).join('')
         + ['Feature 1', 'Feature 2', 'Feature 3'].map(row).join('')
@@ -29,7 +29,7 @@ const FC_CLASSIC = (() => {
 })();
 
 const fcFeature = (text, on = true) =>
-    `<li class="${on ? '' : 'fc-off'}"><div class="icon-container"><i class="fas ${on ? 'fa-check' : 'fa-xmark'}"></i></div><span contenteditable="true">${text}</span></li>`;
+    `<li class="${on ? '' : 'fc-off'}"><div class="icon-container"><i class="fas ${on ? 'fa-check' : 'fa-xmark'}"></i></div><span class="usa" contenteditable="true">${text}</span></li>`;
 
 const FC_VARIANTS = [
     FC_CLASSIC,
@@ -38,20 +38,20 @@ const FC_VARIANTS = [
     /*html*/
     `<div class="fc-pricing">
         <div class="fc-plan">
-            <div class="fc-plan-top"><span class="fc-plan-name" contenteditable="true">Basic</span><span class="fc-price"><b contenteditable="true">$0</b><small contenteditable="true">/mo</small></span></div>
+            <div class="fc-plan-top"><span class="fc-plan-name usa" contenteditable="true">Basic</span><span class="fc-price"><b class="usa" contenteditable="true">$0</b><small class="usa" contenteditable="true">/mo</small></span></div>
             <ul class="fc-features">${fcFeature('1 project')}${fcFeature('Community support')}${fcFeature('Custom domain', false)}</ul>
-            <div class="fc-cta fc-cta-outline" contenteditable="true">Get started</div>
+            <div class="fc-cta fc-cta-outline usa" contenteditable="true">Get started</div>
         </div>
         <div class="fc-plan fc-plan-featured" style="border-color: var(--color-primary);">
-            <span class="fc-badge" contenteditable="true" style="background-color: var(--color-accent);">Most popular</span>
-            <div class="fc-plan-top"><span class="fc-plan-name" contenteditable="true">Pro</span><span class="fc-price"><b contenteditable="true">$12</b><small contenteditable="true">/mo</small></span></div>
+            <span class="fc-badge usa" contenteditable="true" style="background-color: var(--color-accent);">Most popular</span>
+            <div class="fc-plan-top"><span class="fc-plan-name usa" contenteditable="true">Pro</span><span class="fc-price"><b class="usa" contenteditable="true">$12</b><small class="usa" contenteditable="true">/mo</small></span></div>
             <ul class="fc-features">${fcFeature('Unlimited projects')}${fcFeature('Priority support')}${fcFeature('Custom domain')}</ul>
-            <div class="fc-cta" contenteditable="true" style="background-color: var(--color-primary);">Upgrade to Pro</div>
+            <div class="fc-cta usa" contenteditable="true" style="background-color: var(--color-primary);">Upgrade to Pro</div>
         </div>
         <div class="fc-plan">
-            <div class="fc-plan-top"><span class="fc-plan-name" contenteditable="true">Team</span><span class="fc-price"><b contenteditable="true">$29</b><small contenteditable="true">/mo</small></span></div>
+            <div class="fc-plan-top"><span class="fc-plan-name usa" contenteditable="true">Team</span><span class="fc-price"><b class="usa" contenteditable="true">$29</b><small class="usa" contenteditable="true">/mo</small></span></div>
             <ul class="fc-features">${fcFeature('Everything in Pro')}${fcFeature('5 team seats')}${fcFeature('Admin controls')}</ul>
-            <div class="fc-cta fc-cta-outline" contenteditable="true">Contact sales</div>
+            <div class="fc-cta fc-cta-outline usa" contenteditable="true">Contact sales</div>
         </div>
     </div>`,
 
@@ -59,15 +59,15 @@ const FC_VARIANTS = [
     /*html*/
     `<div class="fc-pricing fc-single">
         <div class="fc-billing">
-            <span class="fc-billing-opt" contenteditable="true">Monthly</span>
-            <span class="fc-billing-opt fc-billing-on" contenteditable="true" style="background-color: var(--color-primary);">Yearly −20%</span>
+            <span class="fc-billing-opt usa" contenteditable="true">Monthly</span>
+            <span class="fc-billing-opt fc-billing-on usa" contenteditable="true" style="background-color: var(--color-primary);">Yearly −20%</span>
         </div>
         <div class="fc-plan fc-plan-featured">
-            <span class="fc-plan-name" contenteditable="true">Premium</span>
-            <div class="fc-price fc-price-lg"><b contenteditable="true">$96</b><small contenteditable="true">/year</small></div>
-            <div class="fc-note" contenteditable="true">That's just $8 a month, billed yearly</div>
+            <span class="fc-plan-name usa" contenteditable="true">Premium</span>
+            <div class="fc-price fc-price-lg"><b class="usa" contenteditable="true">$96</b><small class="usa" contenteditable="true">/year</small></div>
+            <div class="fc-note usa" contenteditable="true">That's just $8 a month, billed yearly</div>
             <ul class="fc-features">${fcFeature('All premium features')}${fcFeature('Unlimited storage')}${fcFeature('Cancel anytime')}</ul>
-            <div class="fc-cta" contenteditable="true" style="background-color: var(--color-primary);">Start free trial</div>
+            <div class="fc-cta usa" contenteditable="true" style="background-color: var(--color-primary);">Start free trial</div>
         </div>
     </div>`
 ];
@@ -221,7 +221,9 @@ window.Components.featureComparisonCard = {
         cell.appendChild(label);
       }
       cell.removeAttribute('contenteditable');
-      cell.querySelector('.comparison-col-label').setAttribute('contenteditable', 'true');
+      const colLabel = cell.querySelector('.comparison-col-label');
+      colLabel.setAttribute('contenteditable', 'true');
+      colLabel.classList.add('usa');
       if (!cell.querySelector('.delete-fc-col')) {
         const del = document.createElement('button');
         del.className = 'delete-fc-col';
@@ -253,7 +255,7 @@ window.Components.featureComparisonCard = {
 
       const textSpan = document.createElement('span');
       textSpan.textContent = featureName;
-      textSpan.setAttribute('contenteditable', 'true');
+      textSpan.setAttribute('contenteditable', 'true'); textSpan.classList.add('usa');
 
       wrapper.appendChild(textSpan);
       wrapper.appendChild(deleteFCRow);
@@ -315,7 +317,7 @@ window.Components.featureComparisonCard = {
     // Header row: first cell is the "Features" label, the rest are plan headers
     const headerRow = getRows()[0] || [];
     headerRow.forEach((cell, c) => {
-      if (c === 0) cell.setAttribute('contenteditable', 'true');
+      if (c === 0) { cell.setAttribute('contenteditable', 'true'); cell.classList.add('usa'); }
       else decorateColumnHeader(cell);
     });
     // Mark value cells so delegation/styling can find them
@@ -393,7 +395,7 @@ window.Components.featureComparisonCard = {
 
     // Make the header editable if it exists
     if (header) {
-      header.setAttribute('contenteditable', 'true');
+      header.setAttribute('contenteditable', 'true'); header.classList.add('usa');
     }
 
     updateButtonStates();

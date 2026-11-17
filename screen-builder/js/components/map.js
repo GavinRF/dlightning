@@ -98,7 +98,7 @@ window.Components.map = (() => {
 
     const chip = (left, top, icon, text, { active = false, place = null, minZoom = null } = {}) =>
         `<div class="map-marker map-chip${active ? ' active' : ''}"${placeAttrs(place)}${minZoom ? ` data-map-min-zoom="${minZoom}"` : ''} style="${at(left, top)}">`
-        + `<span class="icon-container"><i class="fas ${icon}"></i></span><span class="map-chip-text" contenteditable="true">${text}</span></div>`;
+        + `<span class="icon-container"><i class="fas ${icon}"></i></span><span class="map-chip-text usa" contenteditable="true">${text}</span></div>`;
 
     const userDot = (left, top, fixed = false) =>
         `<div class="map-marker map-user non-editable"${fixed ? ' data-map-fixed' : ''} style="${at(left, top)}"></div>`;
@@ -137,16 +137,16 @@ window.Components.map = (() => {
             + userDot(22, 60, true)
             + pin(78, 21, { icon: 'fa-flag-checkered', fixed: true, cls: 'map-pin-flag' }),
             { height: 260, extra: `<div class="map-eta-card">`
-                + `<div class="map-eta-text"><div class="map-eta-time" contenteditable="true">12 min</div>`
-                + `<div class="map-eta-sub" contenteditable="true">3.4 mi &middot; Fastest route</div></div>`
-                + `<div class="map-eta-go" style="background-color: var(--color-primary);"><span contenteditable="true">Go</span></div></div>` })}</div>`,
+                + `<div class="map-eta-text"><div class="map-eta-time usa" contenteditable="true">12 min</div>`
+                + `<div class="map-eta-sub usa" contenteditable="true">3.4 mi &middot; Fastest route</div></div>`
+                + `<div class="map-eta-go" style="background-color: var(--color-primary);"><span class="usa" contenteditable="true">Go</span></div></div>` })}</div>`,
 
         // 4 — Location card: compact map + address row
         `<div class="map-component map-location-card">${view(pin(50, 52), { height: 150 })}`
             + `<div class="map-location-info">`
             + `<div class="icon-container map-location-icon" style="background-color: var(--color-primary);"><i class="fas fa-store"></i></div>`
-            + `<div class="map-location-text"><div class="map-location-name" contenteditable="true">Central Park Cafe</div>`
-            + `<div class="map-location-address" contenteditable="true">123 Main St, New York, NY</div></div>`
+            + `<div class="map-location-text"><div class="map-location-name usa" contenteditable="true">Central Park Cafe</div>`
+            + `<div class="map-location-address usa" contenteditable="true">123 Main St, New York, NY</div></div>`
             + `<div class="map-location-action icon-container"><i class="fas fa-diamond-turn-right"></i></div>`
             + `</div></div>`,
 

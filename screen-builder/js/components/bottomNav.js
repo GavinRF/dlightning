@@ -41,6 +41,8 @@ window.Components.bottomNav = {
         window.Components.bottomNav.setupActiveToggle(bottomNavContainer);
         window.Components.bottomNav.setupBadgeToggle(bottomNavContainer);
         window.Components.bottomNav.setupStyleControls(bottomNavContainer);
+        // Loaded / synced bottom navs come back with their × but no click handler
+        editor.setupDeleteHandler(bottomNavContainer);
 
         // Setup delete buttons for nav items
         navItems.forEach(item => {
@@ -99,7 +101,7 @@ window.Components.bottomNav = {
                             <button class="nav-delete-btn">×</button>
                             <a href="#" class="bottom-nav-item">
                                 <i class="fa-solid fa-bolt-lightning" ></i>
-                                <span contenteditable="true">New</span>
+                                <span class="usa" contenteditable="true">New</span>
                             </a>
                         `;
 
@@ -145,7 +147,7 @@ window.Components.bottomNav = {
                                 <button class="nav-delete-btn">×</button>
                                 <a href="#" class="bottom-nav-item">
                                     <i class="fa-solid fa-bolt-lightning" ></i>
-                                    <span contenteditable="true">New</span>
+                                    <span class="usa" contenteditable="true">New</span>
                                 </a>
                             `;
 
@@ -187,7 +189,7 @@ window.Components.bottomNav = {
                         <button class="nav-delete-btn">×</button>
                         <a href="#" class="bottom-nav-item">
                             <i class="fa-solid fa-bolt-lightning" ></i>
-                            <span contenteditable="true">New</span>
+                            <span class="usa" contenteditable="true">New</span>
                         </a>
                     `;
 
@@ -414,7 +416,7 @@ window.Components.bottomNav = {
                         existing.remove();
                     } else {
                         const badge = document.createElement('span');
-                        badge.className = 'nav-badge';
+                        badge.className = 'nav-badge usa';
                         badge.contentEditable = 'true';
                         badge.spellcheck = false;
                         badge.textContent = '3';

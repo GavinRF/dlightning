@@ -32,7 +32,7 @@ window.Components.slider = (() => {
         /*html*/
         `<div class="range-slider-container cs-wrap">
             <div class="cs-head">
-                <span class="cs-label" contenteditable="true">Price range</span>
+                <span class="cs-label usa" contenteditable="true">Price range</span>
                 <span class="cs-value non-editable">$20 – $80</span>
             </div>
             <div class="cs-slider" data-min="0" data-max="100" data-step="1" data-prefix="$" style="color: var(--color-primary);">
@@ -60,7 +60,7 @@ window.Components.slider = (() => {
         /*html*/
         `<div class="range-slider-container cs-wrap">
             <div class="cs-head">
-                <span class="cs-label" contenteditable="true">Size</span>
+                <span class="cs-label usa" contenteditable="true">Size</span>
             </div>
             <div class="cs-slider cs-stepped" data-min="0" data-max="4" data-step="1" style="color: var(--color-primary);">
                 <div class="cs-track-area">
@@ -71,7 +71,7 @@ window.Components.slider = (() => {
                     ${thumb(2, 0, 4)}
                 </div>
                 <div class="cs-step-labels">
-                    <span contenteditable="true">XS</span><span contenteditable="true">S</span><span contenteditable="true">M</span><span contenteditable="true">L</span><span contenteditable="true">XL</span>
+                    <span class="usa" contenteditable="true">XS</span><span class="usa" contenteditable="true">S</span><span class="usa" contenteditable="true">M</span><span class="usa" contenteditable="true">L</span><span class="usa" contenteditable="true">XL</span>
                 </div>
             </div>
         </div>`

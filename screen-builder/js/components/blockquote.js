@@ -23,7 +23,7 @@ window.Components.blockquote = (() => {
         `<div class="component-wrapper bq-pull" style="width: 100%;">
             <div class="bq-quote"><blockquote class="blockquote-element usa" contenteditable="true">Simplicity is the ultimate sophistication.</blockquote></div>
             <div class="icon-container bq-mark" style="color: var(--color-accent);"><i class="fas fa-quote-left"></i></div>
-            <div class="bq-cite" contenteditable="true">— Leonardo da Vinci</div>
+            <div class="bq-cite usa" contenteditable="true">— Leonardo da Vinci</div>
         </div>`,
 
         // 3 — Testimonial: stars, quote, avatar + name + role
@@ -36,8 +36,8 @@ window.Components.blockquote = (() => {
             <div class="bq-author">
                 <div class="card-image bq-avatar"><i class="fas fa-user"></i></div>
                 <div>
-                    <div class="bq-name" contenteditable="true">Jordan Lee</div>
-                    <div class="bq-role" contenteditable="true">Product Manager</div>
+                    <div class="bq-name usa" contenteditable="true">Jordan Lee</div>
+                    <div class="bq-role usa" contenteditable="true">Product Manager</div>
                 </div>
             </div>
         </div>`,
@@ -47,7 +47,7 @@ window.Components.blockquote = (() => {
         `<div class="component-wrapper bq-card" style="width: 100%; background-color: var(--color-primary);">
             <div class="icon-container bq-card-mark"><i class="fas fa-quote-right"></i></div>
             <div class="bq-quote"><blockquote class="blockquote-element usa" contenteditable="true">The best way to predict the future is to create it.</blockquote></div>
-            <div class="bq-cite" contenteditable="true">— Peter Drucker</div>
+            <div class="bq-cite usa" contenteditable="true">— Peter Drucker</div>
         </div>`
     ];
 

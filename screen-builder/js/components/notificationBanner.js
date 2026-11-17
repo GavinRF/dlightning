@@ -20,9 +20,9 @@ window.Components.notificationBanner = (() => {
                 <i class="fas fa-bell" style="font-size: 20px; color: var(--color-accent);"></i>
             </div>
             <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;">
-                <div contenteditable="true" style="font-weight: 500; color: var(--basic-txt-color);">Click to edit this important notification message.</div>
-                <div contenteditable="true" style="font-size: 14px; color: #666;">Additional details can go here.</div>
-                <div class="notification-action-btn" contenteditable="true" data-always-visible="true" style="background-color: var(--color-primary);">Action</div>
+                <div class="usa" contenteditable="true" style="font-weight: 500; color: var(--basic-txt-color);">Click to edit this important notification message.</div>
+                <div class="usa" contenteditable="true" style="font-size: 14px; color: #666;">Additional details can go here.</div>
+                <div class="notification-action-btn usa" contenteditable="true" data-always-visible="true" style="background-color: var(--color-primary);">Action</div>
             </div>
             ${EYE}
         </div>`,
@@ -34,11 +34,11 @@ window.Components.notificationBanner = (() => {
                 <div class="icon-container noti-app-icon" style="background-color: var(--color-primary);">
                     <i class="fas fa-bolt"></i>
                 </div>
-                <span class="noti-app-name" contenteditable="true">APP NAME</span>
-                <span class="noti-time" contenteditable="true">now</span>
+                <span class="noti-app-name usa" contenteditable="true">APP NAME</span>
+                <span class="noti-time usa" contenteditable="true">now</span>
             </div>
-            <div class="noti-title" contenteditable="true">New message</div>
-            <div class="noti-body" contenteditable="true">You have a new notification. Tap to view the details.</div>
+            <div class="noti-title usa" contenteditable="true">New message</div>
+            <div class="noti-body usa" contenteditable="true">You have a new notification. Tap to view the details.</div>
         </div>`,
 
         // 3 — Toast (compact bar with an inline action)
@@ -47,8 +47,8 @@ window.Components.notificationBanner = (() => {
             <div class="icon-container" style="flex-shrink: 0;">
                 <i class="fas fa-circle-check"></i>
             </div>
-            <div class="noti-title" contenteditable="true" style="flex-grow: 1;">Changes saved</div>
-            <div class="notification-action-btn noti-toast-action" contenteditable="true" data-always-visible="true">Undo</div>
+            <div class="noti-title usa" contenteditable="true" style="flex-grow: 1;">Changes saved</div>
+            <div class="notification-action-btn noti-toast-action usa" contenteditable="true" data-always-visible="true">Undo</div>
             ${EYE}
         </div>`,
 
@@ -60,14 +60,14 @@ window.Components.notificationBanner = (() => {
                     <i class="fas fa-bell"></i>
                 </div>
                 <div style="flex-grow: 1; min-width: 0;">
-                    <div class="noti-title" contenteditable="true">Reminder</div>
-                    <div class="noti-body" contenteditable="true">Your appointment starts in 15 minutes.</div>
+                    <div class="noti-title usa" contenteditable="true">Reminder</div>
+                    <div class="noti-body usa" contenteditable="true">Your appointment starts in 15 minutes.</div>
                 </div>
                 <div class="icon-container noti-close"><i class="fas fa-xmark"></i></div>
             </div>
             <div class="noti-card-actions">
-                <div class="noti-btn-secondary" contenteditable="true">Dismiss</div>
-                <div class="notification-action-btn" contenteditable="true" data-always-visible="true" style="background-color: var(--color-primary);">View</div>
+                <div class="noti-btn-secondary usa" contenteditable="true">Dismiss</div>
+                <div class="notification-action-btn usa" contenteditable="true" data-always-visible="true" style="background-color: var(--color-primary);">View</div>
             </div>
             ${EYE}
         </div>`

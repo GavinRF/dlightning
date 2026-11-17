@@ -17,11 +17,11 @@ window.Components.divider = (() => {
 
         // 2 — Text in the middle ("OR")
         /*html*/
-        `<div class="hzRule"><div class="hzRule-container">${line()}<span class="hzRule-text" contenteditable="true">OR</span>${line()}</div></div>`,
+        `<div class="hzRule"><div class="hzRule-container">${line()}<span class="hzRule-text usa" contenteditable="true">OR</span>${line()}</div></div>`,
 
         // 3 — Section label on the left
         /*html*/
-        `<div class="hzRule"><div class="hzRule-container"><span class="hzRule-text hzRule-label" contenteditable="true">Section</span>${line()}</div></div>`,
+        `<div class="hzRule"><div class="hzRule-container"><span class="hzRule-text hzRule-label usa" contenteditable="true">Section</span>${line()}</div></div>`,
 
         // 4 — Icon in the middle
         /*html*/

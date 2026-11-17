@@ -19,7 +19,7 @@ window.Components.codeBlock = (() => {
     ].join('\n');
 
     const head = (lang) => /*html*/`<div class="cb-head">
-            <span class="cb-lang" contenteditable="true">${lang}</span>
+            <span class="cb-lang usa" contenteditable="true">${lang}</span>
             <span class="cb-copy non-editable"><i class="far fa-copy"></i> Copy</span>
         </div>`;
 
@@ -43,7 +43,7 @@ window.Components.codeBlock = (() => {
         `<div class="code-block cb-dark cb-terminal">
         <div class="cb-head">
             <span class="cb-dots non-editable"><i></i><i></i><i></i></span>
-            <span class="cb-lang" contenteditable="true">Terminal</span>
+            <span class="cb-lang usa" contenteditable="true">Terminal</span>
             <span class="cb-copy non-editable"><i class="far fa-copy"></i> Copy</span>
         </div>
         <pre class="cb-code" contenteditable="true" spellcheck="false"><span class="cb-c">$</span> npm install my-app

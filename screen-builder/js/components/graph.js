@@ -198,7 +198,7 @@ window.Components.graph = (() => {
 
             const monthLabel = document.createElement('div');
             monthLabel.className = 'bar-graph-month-label';
-            monthLabel.setAttribute('contenteditable', 'true');
+            monthLabel.setAttribute('contenteditable', 'true'); monthLabel.classList.add('usa');
             monthLabel.textContent = item.label;
             monthLabel.title = item.label; // full text when truncated
 
@@ -222,7 +222,7 @@ window.Components.graph = (() => {
 
             const label = document.createElement('div');
             label.className = 'bar-graph-month-label';
-            label.setAttribute('contenteditable', 'true');
+            label.setAttribute('contenteditable', 'true'); label.classList.add('usa');
             label.textContent = item.label;
             label.title = item.label;
 
@@ -266,7 +266,7 @@ window.Components.graph = (() => {
             dot.title = 'Change color';
             const name = document.createElement('span');
             name.className = 'bar-graph-legend-name';
-            name.setAttribute('contenteditable', 'true');
+            name.setAttribute('contenteditable', 'true'); name.classList.add('usa');
             name.textContent = ser.name;
             item.append(dot, name);
             legend.appendChild(item);
@@ -322,7 +322,7 @@ window.Components.graph = (() => {
 
             const monthLabel = document.createElement('div');
             monthLabel.className = 'bar-graph-month-label';
-            monthLabel.setAttribute('contenteditable', 'true');
+            monthLabel.setAttribute('contenteditable', 'true'); monthLabel.classList.add('usa');
             monthLabel.textContent = item.label;
             monthLabel.title = item.label;
             col.appendChild(monthLabel);

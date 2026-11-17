@@ -14,10 +14,10 @@ window.Components.modal = (() => {
         // the wrapper div are this variant too)
         /*html*/
         `<div class="modal-v-classic">
-            <h2 contenteditable="true" style="margin-top: 0; color: var(--basic-txt-color);">Modal Title</h2>
-            <p contenteditable="true" style="color: #7f8c8d;">This is the modal content. You can add any information here.</p>
+            <h2 class="usa" contenteditable="true" style="margin-top: 0; color: var(--basic-txt-color);">Modal Title</h2>
+            <p class="usa" contenteditable="true" style="color: #7f8c8d;">This is the modal content. You can add any information here.</p>
             <div style="text-align: right;">
-                <div contenteditable="true" class="modal-ok-btn" style="background-color: var(--color-primary);">OK</div>
+                <div contenteditable="true" class="modal-ok-btn usa" style="background-color: var(--color-primary);">OK</div>
             </div>
         </div>`,
 
@@ -27,11 +27,11 @@ window.Components.modal = (() => {
             <div class="icon-container modal-v-icon" style="background-color: var(--color-accent);">
                 <i class="fas fa-triangle-exclamation"></i>
             </div>
-            <h2 contenteditable="true">Delete this item?</h2>
-            <p contenteditable="true">This can't be undone. The item will be removed permanently.</p>
+            <h2 class="usa" contenteditable="true">Delete this item?</h2>
+            <p class="usa" contenteditable="true">This can't be undone. The item will be removed permanently.</p>
             <div class="modal-v-actions">
-                <div contenteditable="true" class="modal-v-btn modal-v-btn-ghost">Cancel</div>
-                <div contenteditable="true" class="modal-v-btn" style="background-color: var(--color-primary);">Delete</div>
+                <div contenteditable="true" class="modal-v-btn modal-v-btn-ghost usa">Cancel</div>
+                <div contenteditable="true" class="modal-v-btn usa" style="background-color: var(--color-primary);">Delete</div>
             </div>
         </div>`,
 
@@ -41,9 +41,9 @@ window.Components.modal = (() => {
             <div class="icon-container modal-v-icon modal-v-icon-lg" style="background-color: var(--color-primary);">
                 <i class="fas fa-check"></i>
             </div>
-            <h2 contenteditable="true">You're all set!</h2>
-            <p contenteditable="true">Your account has been created. Start exploring now.</p>
-            <div contenteditable="true" class="modal-v-btn modal-v-btn-block" style="background-color: var(--color-primary);">Get Started</div>
+            <h2 class="usa" contenteditable="true">You're all set!</h2>
+            <p class="usa" contenteditable="true">Your account has been created. Start exploring now.</p>
+            <div contenteditable="true" class="modal-v-btn modal-v-btn-block usa" style="background-color: var(--color-primary);">Get Started</div>
         </div>`,
 
         // 4 — Image header
@@ -54,9 +54,9 @@ window.Components.modal = (() => {
                 <i class="fa-solid fa-image image-ph non-editable"></i>
             </div>
             <div class="modal-v-body">
-                <h2 contenteditable="true">What's New</h2>
-                <p contenteditable="true">Discover the latest features we've added to make your experience even better.</p>
-                <div contenteditable="true" class="modal-v-btn modal-v-btn-block" style="background-color: var(--color-primary);">Take a Look</div>
+                <h2 class="usa" contenteditable="true">What's New</h2>
+                <p class="usa" contenteditable="true">Discover the latest features we've added to make your experience even better.</p>
+                <div contenteditable="true" class="modal-v-btn modal-v-btn-block usa" style="background-color: var(--color-primary);">Take a Look</div>
             </div>
         </div>`,
 
@@ -64,10 +64,10 @@ window.Components.modal = (() => {
         /*html*/
         `<div class="modal-v-sheet">
             <div class="modal-v-sheet-handle"></div>
-            <div class="modal-v-row"><div class="icon-container"><i class="fas fa-share-nodes"></i></div><span contenteditable="true">Share</span></div>
-            <div class="modal-v-row"><div class="icon-container"><i class="fas fa-link"></i></div><span contenteditable="true">Copy link</span></div>
-            <div class="modal-v-row"><div class="icon-container"><i class="fas fa-pen"></i></div><span contenteditable="true">Edit</span></div>
-            <div class="modal-v-row modal-v-row-danger"><div class="icon-container"><i class="fas fa-trash"></i></div><span contenteditable="true">Delete</span></div>
+            <div class="modal-v-row"><div class="icon-container"><i class="fas fa-share-nodes"></i></div><span class="usa" contenteditable="true">Share</span></div>
+            <div class="modal-v-row"><div class="icon-container"><i class="fas fa-link"></i></div><span class="usa" contenteditable="true">Copy link</span></div>
+            <div class="modal-v-row"><div class="icon-container"><i class="fas fa-pen"></i></div><span class="usa" contenteditable="true">Edit</span></div>
+            <div class="modal-v-row modal-v-row-danger"><div class="icon-container"><i class="fas fa-trash"></i></div><span class="usa" contenteditable="true">Delete</span></div>
         </div>`
     ];
 

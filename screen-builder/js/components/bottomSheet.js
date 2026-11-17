@@ -12,41 +12,41 @@ const BOTTOM_SHEET_PRESETS = [
     { label: 'Empty', html: '' },
 
     { label: 'Share sheet', html: /*html*/`<div class="bottom-sheet-preset bs-share">
-        <div class="bs-title" contenteditable="true">Share</div>
+        <div class="bs-title usa" contenteditable="true">Share</div>
         <div class="bs-apps">
-            <div class="bs-app"><div class="icon-container bs-app-icon" style="background-color: var(--color-primary);"><i class="fas fa-comment"></i></div><span contenteditable="true">Messages</span></div>
-            <div class="bs-app"><div class="icon-container bs-app-icon"><i class="fas fa-envelope"></i></div><span contenteditable="true">Mail</span></div>
-            <div class="bs-app"><div class="icon-container bs-app-icon"><i class="fas fa-link"></i></div><span contenteditable="true">Copy</span></div>
-            <div class="bs-app"><div class="icon-container bs-app-icon"><i class="fas fa-ellipsis"></i></div><span contenteditable="true">More</span></div>
+            <div class="bs-app"><div class="icon-container bs-app-icon" style="background-color: var(--color-primary);"><i class="fas fa-comment"></i></div><span class="usa" contenteditable="true">Messages</span></div>
+            <div class="bs-app"><div class="icon-container bs-app-icon"><i class="fas fa-envelope"></i></div><span class="usa" contenteditable="true">Mail</span></div>
+            <div class="bs-app"><div class="icon-container bs-app-icon"><i class="fas fa-link"></i></div><span class="usa" contenteditable="true">Copy</span></div>
+            <div class="bs-app"><div class="icon-container bs-app-icon"><i class="fas fa-ellipsis"></i></div><span class="usa" contenteditable="true">More</span></div>
         </div>
-        <div class="bs-row"><div class="icon-container"><i class="fas fa-star"></i></div><span contenteditable="true">Add to favorites</span></div>
-        <div class="bs-row"><div class="icon-container"><i class="fas fa-download"></i></div><span contenteditable="true">Save to device</span></div>
+        <div class="bs-row"><div class="icon-container"><i class="fas fa-star"></i></div><span class="usa" contenteditable="true">Add to favorites</span></div>
+        <div class="bs-row"><div class="icon-container"><i class="fas fa-download"></i></div><span class="usa" contenteditable="true">Save to device</span></div>
     </div>` },
 
     { label: 'Action list', html: /*html*/`<div class="bottom-sheet-preset bs-actions">
-        <div class="bs-title" contenteditable="true">Options</div>
-        <div class="bs-row"><div class="icon-container"><i class="fas fa-pen"></i></div><span contenteditable="true">Edit</span></div>
-        <div class="bs-row"><div class="icon-container"><i class="fas fa-copy"></i></div><span contenteditable="true">Duplicate</span></div>
-        <div class="bs-row"><div class="icon-container"><i class="fas fa-box-archive"></i></div><span contenteditable="true">Archive</span></div>
-        <div class="bs-row bs-row-danger"><div class="icon-container"><i class="fas fa-trash"></i></div><span contenteditable="true">Delete</span></div>
+        <div class="bs-title usa" contenteditable="true">Options</div>
+        <div class="bs-row"><div class="icon-container"><i class="fas fa-pen"></i></div><span class="usa" contenteditable="true">Edit</span></div>
+        <div class="bs-row"><div class="icon-container"><i class="fas fa-copy"></i></div><span class="usa" contenteditable="true">Duplicate</span></div>
+        <div class="bs-row"><div class="icon-container"><i class="fas fa-box-archive"></i></div><span class="usa" contenteditable="true">Archive</span></div>
+        <div class="bs-row bs-row-danger"><div class="icon-container"><i class="fas fa-trash"></i></div><span class="usa" contenteditable="true">Delete</span></div>
     </div>` },
 
     { label: 'Filters', html: /*html*/`<div class="bottom-sheet-preset bs-filters">
         <div class="bs-filter-head">
-            <span class="bs-title" contenteditable="true">Filters</span>
-            <span class="bs-reset" contenteditable="true">Reset</span>
+            <span class="bs-title usa" contenteditable="true">Filters</span>
+            <span class="bs-reset usa" contenteditable="true">Reset</span>
         </div>
-        <div class="bs-section" contenteditable="true">Sort by</div>
+        <div class="bs-section usa" contenteditable="true">Sort by</div>
         <div class="bs-chips">
-            <span class="bs-chip bs-chip-on" contenteditable="true" style="background-color: var(--color-primary);">Popular</span>
-            <span class="bs-chip" contenteditable="true">Newest</span>
-            <span class="bs-chip" contenteditable="true">Price</span>
+            <span class="bs-chip bs-chip-on usa" contenteditable="true" style="background-color: var(--color-primary);">Popular</span>
+            <span class="bs-chip usa" contenteditable="true">Newest</span>
+            <span class="bs-chip usa" contenteditable="true">Price</span>
         </div>
-        <div class="bs-section" contenteditable="true">Category</div>
-        <div class="bs-check"><div class="icon-container"><i class="fas fa-square-check"></i></div><span contenteditable="true">Electronics</span></div>
-        <div class="bs-check"><div class="icon-container"><i class="far fa-square"></i></div><span contenteditable="true">Clothing</span></div>
-        <div class="bs-check"><div class="icon-container"><i class="far fa-square"></i></div><span contenteditable="true">Home</span></div>
-        <div class="bs-apply" contenteditable="true" style="background-color: var(--color-primary);">Show results</div>
+        <div class="bs-section usa" contenteditable="true">Category</div>
+        <div class="bs-check"><div class="icon-container"><i class="fas fa-square-check"></i></div><span class="usa" contenteditable="true">Electronics</span></div>
+        <div class="bs-check"><div class="icon-container"><i class="far fa-square"></i></div><span class="usa" contenteditable="true">Clothing</span></div>
+        <div class="bs-check"><div class="icon-container"><i class="far fa-square"></i></div><span class="usa" contenteditable="true">Home</span></div>
+        <div class="bs-apply usa" contenteditable="true" style="background-color: var(--color-primary);">Show results</div>
     </div>` }
 ];
 

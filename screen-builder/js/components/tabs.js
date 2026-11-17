@@ -36,7 +36,8 @@
 //            data-tab-panel says — so dragging the line back down restores them. A new tabs
 //            component gets one right under it; sidebar-button inserts land just above it
 //            (the end of the tab's content); dragging a component from below it to above
-//            it joins the selected tab. Older tabs add one from their hover toolbar. It's
+//            it joins the selected tab. It can't be dragged above its tabs, off its screen or
+//            into a nested list (canMove). Older tabs add one from their hover toolbar. It's
 //            editor-only: hidden in play mode and in downloads.
 window.Components = window.Components || {};
 
@@ -89,7 +90,7 @@ window.Components.tabs = (() => {
         const groups = new Set(Array.from(pairs, pair => pair.split(':')[0]));
         const endOn = Array.from(groups, g =>
             `.canvas-content:has(> .component-container > .component-content > .tabs-end[data-tabs-end="${g}"]) .tabs-container[data-tabs-group="${g}"] .tabs-end-btn`
-            + ' { background-color: var(--interface-color); color: white; }');
+            + ' { background-color: white; color: var(--interface-color); }');
         style.textContent = endOn.concat(Array.from(pairs).map(pair => {
             const [g, t] = pair.split(':');
             return `.canvas-content:has(.tabs-container[data-tabs-group="${g}"] > .tabs-wrapper > .ui-tab.selected[data-tab-id="${t}"])`
@@ -404,6 +405,25 @@ window.Components.tabs = (() => {
             }
         },
 
+        // Delete (ux-mock-bldr.js setupDeleteHandler): the end lines of the tabs inside
+        // `comp`, unless another copy of that group stays on the screen.
+        endLinesOf(comp) {
+            const list = comp?.closest?.('.canvas-content');
+            if (!list || isEnd(comp)) return [];
+            const inside = Array.from(comp.querySelectorAll('.tabs-container[data-tabs-group]'));
+            const lines = [];
+            inside.forEach(container => {
+                const g = container.dataset.tabsGroup;
+                if (!SAFE.test(g)) return;
+                const others = Array.from(list.querySelectorAll(`.tabs-container[data-tabs-group="${g}"]`))
+                    .some(c => !comp.contains(c));
+                if (others) return;
+                list.querySelectorAll(`:scope > .component-container > .component-content > .tabs-end[data-tabs-end="${g}"]`)
+                    .forEach(line => lines.push(line.closest('.component-container')));
+            });
+            return lines;
+        },
+
         // New tabs component (insertComponent): its end line goes right under it.
         addEnd(root) {
             const container = findContainer(root);
@@ -415,7 +435,79 @@ window.Components.tabs = (() => {
         dragStart(items) {
             items.forEach(item => { item._tabsWasIn = !!governingTabs(item); });
         },
+        // Sortable onMove: an end line must stay a top-level component below its own tabs,
+        // so refuse drop spots that would put it above them, on another screen, or inside a
+        // nested list — and likewise a tabs component can't go below its own end line.
+        canMove(evt) {
+            const dragged = evt.dragged;
+            const related = evt.related;
+            const list = evt.to;
+            if (!dragged || !related || !list) return true;
+            const after = !!evt.willInsertAfter;
+            const precedes = (a, b) => !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+            if (isEnd(dragged)) {
+                const g = dragged.querySelector('.tabs-end')?.dataset.tabsEnd;
+                if (!g || !SAFE.test(g)) return true;
+                if (!list.classList.contains('canvas-content')) return false;
+                const tabsComp = list.querySelector(`:scope > .component-container .tabs-container[data-tabs-group="${g}"]`)
+                    ?.closest('.canvas-content > .component-container');
+                if (!tabsComp) return false;
+                if (related === list) return true; // appended at the end of the screen
+                if (related === tabsComp) return after;
+                return precedes(tabsComp, related);
+            }
+            const containers = dragged.querySelectorAll('.tabs-container');
+            for (const container of containers) {
+                const end = findEnd(container) ||
+                    document.querySelector(`.tabs-end[data-tabs-end="${CSS.escape(container.dataset.tabsGroup || '')}"]`)
+                        ?.closest('.component-container');
+                if (!end || end.parentElement !== list) continue;
+                if (related === list) return false; // appended at the end, below the line
+                if (related === end) { if (after) return false; continue; }
+                if (!precedes(related, end)) return false;
+            }
+            return true;
+        },
+
         dragEnd(items) {
+            // Safety net (multi-drag etc.): an end line that ended up above its tabs, or apart
+            // from them, goes back right under the tabs component.
+            const lists = new Set(items.map(i => i.parentElement).filter(Boolean));
+            items.forEach(item => {
+                item.querySelectorAll?.('.tabs-container').forEach(c => {
+                    const g = c.dataset.tabsGroup;
+                    if (!SAFE.test(g || '')) return;
+                    document.querySelectorAll(`.tabs-end[data-tabs-end="${g}"]`).forEach(l => {
+                        const p = l.closest('.component-container')?.parentElement;
+                        if (p) lists.add(p);
+                    });
+                });
+            });
+            items.forEach(item => {
+                const g = isEnd(item) && item.querySelector('.tabs-end')?.dataset.tabsEnd;
+                if (g && SAFE.test(g)) {
+                    document.querySelectorAll(`.tabs-container[data-tabs-group="${g}"]`).forEach(c => lists.add(c.closest('.canvas-content')));
+                }
+            });
+            document.querySelectorAll('.tabs-container[data-tabs-group]').forEach(container => {
+                const g = container.dataset.tabsGroup;
+                if (!SAFE.test(g)) return;
+                const tabsComp = container.closest('.canvas-content > .component-container');
+                if (!tabsComp) return;
+                const lines = Array.from(document.querySelectorAll(`.tabs-end[data-tabs-end="${g}"]`))
+                    .map(l => l.closest('.component-container')).filter(Boolean);
+                lines.forEach(end => {
+                    if (!lists.has(end.parentElement) && !lists.has(tabsComp.parentElement)) return;
+                    const ok = end.parentElement === tabsComp.parentElement &&
+                        !!(tabsComp.compareDocumentPosition(end) & Node.DOCUMENT_POSITION_FOLLOWING);
+                    if (ok) return;
+                    markChanged(end, 'Tab content end moved');
+                    tabsComp.after(end);
+                    markChanged(end, 'Tab content end moved');
+                });
+            });
+            scheduleRules();
+
             items.forEach(item => {
                 const was = item._tabsWasIn;
                 delete item._tabsWasIn;
@@ -423,6 +515,30 @@ window.Components.tabs = (() => {
                 if (!was && governingTabs(item)) {
                     item.removeAttribute(PANEL);
                     this.adopt(item);
+                    return;
+                }
+                // Dragged out from under its tabs (above them, onto another screen, into a
+                // nested list): it's no longer tab content, so it shows whichever tab is
+                // selected. (Below the end line it keeps its tab, as the line rules say.)
+                const v = item.getAttribute(PANEL);
+                if (!v) return;
+                const g = v.split(':')[0];
+                const list = item.parentElement;
+                const tabsComp = list?.classList.contains('canvas-content') && SAFE.test(g)
+                    ? list.querySelector(`:scope > .component-container .tabs-container[data-tabs-group="${g}"]`)
+                        ?.closest('.canvas-content > .component-container')
+                    : null;
+                const below = tabsComp && !!(tabsComp.compareDocumentPosition(item) & Node.DOCUMENT_POSITION_FOLLOWING);
+                if (!below) {
+                    item.removeAttribute(PANEL);
+                    markChanged(item, 'Tab content changed');
+                    this.adopt(item); // under another tabs component: join its selected tab
+                } else {
+                    const gov = governingTabs(item);
+                    if (gov && gov.dataset.tabsGroup !== g) {
+                        item.removeAttribute(PANEL);
+                        this.adopt(item); // moved under a different tabs component
+                    }
                 }
             });
         },

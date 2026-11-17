@@ -30,8 +30,8 @@ window.Components.musicPlayer = (() => {
             </div>`;
 
     const times = /*html*/`<div style="display: flex; justify-content: space-between; font-size: 12px;">
-                <div contenteditable="true">1:45</div>
-                <div contenteditable="true">3:30</div>
+                <div class="usa" contenteditable="true">1:45</div>
+                <div class="usa" contenteditable="true">3:30</div>
             </div>`;
 
     // Vertical-line waveform. Bar heights are a fixed, deterministic shape (layered sines)
@@ -129,8 +129,8 @@ window.Components.musicPlayer = (() => {
                     <i class="fas fa-music" style="font-size: 24px;"></i>
                 </div>
                 <div style="flex-grow: 1;">
-                    <div contenteditable="true" style="font-size: 18px; font-weight: bold; margin-bottom: 4px;">Song Title</div>
-                    <div contenteditable="true" style="font-size: 14px; opacity: 0.8;">Artist Name</div>
+                    <div class="usa" contenteditable="true" style="font-size: 18px; font-weight: bold; margin-bottom: 4px;">Song Title</div>
+                    <div class="usa" contenteditable="true" style="font-size: 14px; opacity: 0.8;">Artist Name</div>
                 </div>
             </div>
             <div style="margin-bottom: 16px;">
@@ -152,8 +152,8 @@ window.Components.musicPlayer = (() => {
             </div>
             <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="flex-grow: 1; min-width: 0;">
-                    <div contenteditable="true" style="font-size: 20px; font-weight: bold; margin-bottom: 4px;">Song Title</div>
-                    <div contenteditable="true" style="font-size: 15px; opacity: 0.8;">Artist Name</div>
+                    <div class="usa" contenteditable="true" style="font-size: 20px; font-weight: bold; margin-bottom: 4px;">Song Title</div>
+                    <div class="usa" contenteditable="true" style="font-size: 15px; opacity: 0.8;">Artist Name</div>
                 </div>
                 <div class="player-controls icon-container">${icon('fa-heart', '20px')}</div>
             </div>
@@ -180,8 +180,8 @@ window.Components.musicPlayer = (() => {
                     <i class="fas fa-music" style="font-size: 16px;"></i>
                 </div>
                 <div style="flex-grow: 1; min-width: 0;">
-                    <div contenteditable="true" style="font-size: 15px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Song Title</div>
-                    <div contenteditable="true" style="font-size: 13px; opacity: 0.8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Artist Name</div>
+                    <div class="usa" contenteditable="true" style="font-size: 15px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Song Title</div>
+                    <div class="usa" contenteditable="true" style="font-size: 13px; opacity: 0.8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Artist Name</div>
                 </div>
                 <div class="player-controls icon-container" style="display: flex; align-items: center; gap: 18px; flex-shrink: 0;">
                     ${icon('fa-heart')}
@@ -202,9 +202,9 @@ window.Components.musicPlayer = (() => {
                     <i class="fas fa-music" style="font-size: 20px;"></i>
                 </div>
                 <div style="flex-grow: 1; min-width: 0;">
-                    <div contenteditable="true" style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 4px;">Now Playing</div>
-                    <div contenteditable="true" style="font-size: 17px; font-weight: bold; margin-bottom: 2px;">Song Title</div>
-                    <div contenteditable="true" style="font-size: 14px; opacity: 0.8;">Artist Name</div>
+                    <div class="usa" contenteditable="true" style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 4px;">Now Playing</div>
+                    <div class="usa" contenteditable="true" style="font-size: 17px; font-weight: bold; margin-bottom: 2px;">Song Title</div>
+                    <div class="usa" contenteditable="true" style="font-size: 14px; opacity: 0.8;">Artist Name</div>
                 </div>
                 <div class="player-controls icon-container" style="width: 48px; height: 48px; border-radius: 50%; background-color: var(--color-accent); display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
                     ${icon('fa-play', '20px')}
@@ -224,16 +224,16 @@ window.Components.musicPlayer = (() => {
                     <i class="fas fa-music" style="font-size: 18px;"></i>
                 </div>
                 <div style="flex-grow: 1; min-width: 0;">
-                    <div contenteditable="true" style="font-size: 17px; font-weight: bold; margin-bottom: 2px;">Song Title</div>
-                    <div contenteditable="true" style="font-size: 14px; opacity: 0.8;">Artist Name</div>
+                    <div class="usa" contenteditable="true" style="font-size: 17px; font-weight: bold; margin-bottom: 2px;">Song Title</div>
+                    <div class="usa" contenteditable="true" style="font-size: 14px; opacity: 0.8;">Artist Name</div>
                 </div>
                 <div class="player-controls icon-container">${icon('fa-ellipsis', '18px')}</div>
             </div>
             <div>
                 <div style="margin-bottom: 6px;">${waveform()}</div>
                 <div style="display: flex; justify-content: space-between; font-size: 12px;">
-                    <div class="mp-time-current" contenteditable="true">1:35</div>
-                    <div class="mp-time-total" contenteditable="true">3:30</div>
+                    <div class="mp-time-current usa" contenteditable="true">1:35</div>
+                    <div class="mp-time-total usa" contenteditable="true">3:30</div>
                 </div>
             </div>
             <div class="player-controls icon-container" style="display: flex; justify-content: center; align-items: center; gap: 28px;">

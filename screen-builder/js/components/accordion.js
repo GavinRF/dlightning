@@ -150,8 +150,10 @@ window.Components.accordion = {
         content.style.padding = "0 12px";
       }
       
-      const hasComponents = content.querySelector('.component-container');
-      const hasPlaceholder = content.querySelector('.placeholder');
+      // Own children only: a nested accordion's placeholder isn't ours — removing it made that
+      // accordion put it back, and the two observers looped forever (page froze).
+      const hasComponents = content.querySelector(':scope > .component-container');
+      const hasPlaceholder = content.querySelector(':scope > .placeholder');
       if (hasComponents && hasPlaceholder) {
         hasPlaceholder.remove();
       } else if (!hasComponents && !hasPlaceholder) {

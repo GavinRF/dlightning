@@ -220,7 +220,7 @@ window.Components.bulletedList = {
                     <div class="bullet-icon icon-container">
                         <i class="fas fa-circle" style="margin-top: 1px;"></i>
                     </div>
-                    <div class="bullet-list-item-text" contenteditable="true">New item</div>
+                    <div class="bullet-list-item-text usa" contenteditable="true">New item</div>
                 `;
 
                 // Find icon-container and add click event to show icon picker

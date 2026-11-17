@@ -1,23 +1,24 @@
 // Component registry module — see docs/component-module-migration.md
 // shelf: a horizontally scrolling row of nav links / categories (news-app section strip,
 // store category shelf, story circles). One item is `.active`. Editor: hover an item for
-// ✓ (set active) / × (remove), "+" adds one, drag to reorder. Play: tap selects (and
+// click an item to make it active (as tabs do), × removes it, "+ Add item" adds one, drag to reorder, swatches pick the
+// active item's theme color (data-shelf-color on .shelf; none = primary). Play: tap selects (and
 // scrolls it into view), mouse-drag scrolls the row.
 window.Components = window.Components || {};
 
 const SHELF_ITEM = (label, active = false) =>
-    `<div class="shelf-item${active ? ' active' : ''}"><span class="shelf-label" contenteditable="true">${label}</span></div>`;
+    `<div class="shelf-item${active ? ' active' : ''}"><span class="shelf-label usa" contenteditable="true">${label}</span></div>`;
 const SHELF_ICON_ITEM = (icon, label, active = false) =>
-    `<div class="shelf-item${active ? ' active' : ''}"><div class="icon-container shelf-icon"><i class="fas fa-${icon}"></i></div><span class="shelf-label" contenteditable="true">${label}</span></div>`;
+    `<div class="shelf-item${active ? ' active' : ''}"><div class="icon-container shelf-icon"><i class="fas fa-${icon}"></i></div><span class="shelf-label usa" contenteditable="true">${label}</span></div>`;
 const SHELF_THUMB_ITEM = (label, active = false) =>
-    `<div class="shelf-item${active ? ' active' : ''}"><div class="card-image shelf-thumb"><i class="fa-solid fa-image image-ph non-editable"></i></div><span class="shelf-label" contenteditable="true">${label}</span></div>`;
+    `<div class="shelf-item${active ? ' active' : ''}"><div class="card-image shelf-thumb"><i class="fa-solid fa-image image-ph non-editable"></i></div><span class="shelf-label usa" contenteditable="true">${label}</span></div>`;
 
 const SHELF_VARIANTS = [
     // 1 — Category tiles (default insert): icon + label
     /*html*/
     `<div class="shelf shelf-tiles">
         <div class="shelf-row">
-            ${SHELF_ICON_ITEM('utensils', 'All', true)}${SHELF_ICON_ITEM('burger', 'Burgers')}${SHELF_ICON_ITEM('pizza-slice', 'Pizza')}${SHELF_ICON_ITEM('fish', 'Sushi')}${SHELF_ICON_ITEM('leaf', 'Healthy')}${SHELF_ICON_ITEM('mug-hot', 'Coffee')}${SHELF_ICON_ITEM('ice-cream', 'Dessert')}
+            ${SHELF_ICON_ITEM('utensils', 'All', true)}${SHELF_ICON_ITEM('burger', 'Burgers')}${SHELF_ICON_ITEM('pizza-slice', 'Pizza')}${SHELF_ICON_ITEM('mug-hot', 'Coffee')}
         </div>
     </div>`,
 
@@ -25,7 +26,7 @@ const SHELF_VARIANTS = [
     /*html*/
     `<div class="shelf shelf-underline">
         <div class="shelf-row">
-            ${SHELF_ITEM('Top Stories', true)}${SHELF_ITEM('World')}${SHELF_ITEM('Business')}${SHELF_ITEM('Tech')}${SHELF_ITEM('Sports')}${SHELF_ITEM('Culture')}${SHELF_ITEM('Travel')}
+            ${SHELF_ITEM('Top Stories', true)}${SHELF_ITEM('World')}${SHELF_ITEM('Tech')}${SHELF_ITEM('Sports')}
         </div>
     </div>`,
 
@@ -33,7 +34,7 @@ const SHELF_VARIANTS = [
     /*html*/
     `<div class="shelf shelf-circles">
         <div class="shelf-row">
-            ${SHELF_THUMB_ITEM('New In', true)}${SHELF_THUMB_ITEM('Women')}${SHELF_THUMB_ITEM('Men')}${SHELF_THUMB_ITEM('Shoes')}${SHELF_THUMB_ITEM('Bags')}${SHELF_THUMB_ITEM('Sale')}
+            ${SHELF_THUMB_ITEM('New In', true)}${SHELF_THUMB_ITEM('Women')}${SHELF_THUMB_ITEM('Men')}${SHELF_THUMB_ITEM('Sale')}
         </div>
     </div>`,
 
@@ -41,7 +42,7 @@ const SHELF_VARIANTS = [
     /*html*/
     `<div class="shelf shelf-pills">
         <div class="shelf-row">
-            ${SHELF_ITEM('For You', true)}${SHELF_ITEM('Following')}${SHELF_ITEM('Trending')}${SHELF_ITEM('Music')}${SHELF_ITEM('Gaming')}${SHELF_ITEM('Food')}${SHELF_ITEM('Fashion')}
+            ${SHELF_ITEM('For You', true)}${SHELF_ITEM('Following')}${SHELF_ITEM('Trending')}${SHELF_ITEM('Music')}
         </div>
     </div>`
 ];
@@ -64,6 +65,29 @@ window.Components.shelf = {
     setActive(shelf, item) {
         shelf.querySelectorAll('.shelf-item.active').forEach(el => { if (el !== item) el.classList.remove('active'); });
         item.classList.add('active');
+    },
+
+    // Theme-color swatches (editor chrome, rebuilt on every setup) for the active item
+    buildSwatches(shelf, changed) {
+        shelf.querySelectorAll(':scope > .color-swatch-container').forEach(el => el.remove());
+        if (typeof createColorSwatches !== 'function') return;
+        const current = shelf.dataset.shelfColor || 'primary';
+        const probe = document.createElement('div');
+        probe.style.backgroundColor = `var(--color-${current})`;
+        const made = createColorSwatches(probe);
+        const swatches = Array.isArray(made) ? made[0] : made;
+        if (!swatches?.children.length) return;
+        swatches.querySelectorAll('.color-swatch').forEach(sw => {
+            sw.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const name = sw.dataset.color.replace('--color-', '');
+                if (name === 'primary') delete shelf.dataset.shelfColor;
+                else shelf.dataset.shelfColor = name;
+                window.accentContrast?.update(shelf);
+                changed('Shelf color changed');
+            });
+        });
+        shelf.insertBefore(swatches, shelf.firstChild);
     },
 
     // Scroll the row (only the row — scrollIntoView would also scroll the screen) so the
@@ -134,8 +158,7 @@ window.Components.shelf = {
             if (item.querySelector(':scope > .shelf-item-ctrls')) return;
             const ctrls = document.createElement('div');
             ctrls.className = 'shelf-item-ctrls non-editable';
-            ctrls.innerHTML = '<button type="button" class="shelf-ctrl shelf-ctrl-active non-editable" title="Set as active">✓</button>' +
-                '<button type="button" class="shelf-ctrl shelf-ctrl-del non-editable" title="Remove">×</button>';
+            ctrls.innerHTML = '<button type="button" class="shelf-ctrl shelf-ctrl-del non-editable" title="Remove">×</button>';
             item.appendChild(ctrls);
         };
         row.querySelectorAll('.shelf-item').forEach(ensureControls);
@@ -145,7 +168,7 @@ window.Components.shelf = {
             add.type = 'button';
             add.className = 'shelf-add-btn non-editable';
             add.title = 'Add item';
-            add.textContent = '+';
+            add.innerHTML = '<span class="shelf-add-plus">+</span>Add item';
             shelf.appendChild(add);
         }
 
@@ -154,20 +177,30 @@ window.Components.shelf = {
             if (canvasId) window.projectManager?.addCanvasToChanged?.(canvasId, why);
         };
 
+        this.buildSwatches(shelf, changed);
+        window.accentContrast?.update(shelf);
+        requestAnimationFrame(() => window.accentContrast?.update(shelf));   // once a fresh insert is in the page
+
         // One delegated listener per element (expando props don't survive cloneNode, so a
         // duplicate gets its own)
         if (!shelf._shelfBound) {
             shelf._shelfBound = true;
             shelf.addEventListener('click', (e) => {
                 const ctrl = e.target.closest('.shelf-ctrl, .shelf-add-btn');
-                if (!ctrl || !shelf.contains(ctrl)) return;
+                if (!ctrl || !shelf.contains(ctrl)) {
+                    // A plain click on an item selects it, like tabs (label editing, the
+                    // icon picker and image slots still get the click)
+                    const picked = e.target.closest('.shelf-item');
+                    if (picked && row.contains(picked) && !picked.classList.contains('active')) {
+                        this.setActive(shelf, picked);
+                        changed('Shelf active item changed');
+                    }
+                    return;
+                }
                 e.preventDefault();
                 e.stopPropagation();
                 const item = ctrl.closest('.shelf-item');
-                if (ctrl.classList.contains('shelf-ctrl-active') && item) {
-                    this.setActive(shelf, item);
-                    changed('Shelf active item changed');
-                } else if (ctrl.classList.contains('shelf-ctrl-del') && item) {
+                if (ctrl.classList.contains('shelf-ctrl-del') && item) {
                     if (row.querySelectorAll('.shelf-item').length <= 1) return;
                     const wasActive = item.classList.contains('active');
                     item.remove();

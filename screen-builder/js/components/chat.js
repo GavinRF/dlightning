@@ -74,7 +74,9 @@ window.Components.chat = {
                             // Ensure the image container remains visible
                             newImageContainer.style.display = 'block';
                         };
-                        reader.readAsDataURL(file);
+                        // Shrink first (js/image-shrink.js) so the screen doesn't carry the full photo
+                        (window.shrinkImage ? window.shrinkImage(file) : Promise.resolve(file))
+                            .then(small => reader.readAsDataURL(small));
                     }
                 };
 
@@ -93,12 +95,12 @@ window.Components.chat = {
         const left = side === 'left';
         const bubbleCls = (left ? 'leftChat' : 'rightChat') + (bubbleClass ? ` ${bubbleClass}` : '');
         const bubbleStyle = left ? '' : ' style="background-color: var(--color-primary);"';
-        const ts = timestamp ? '<div class="chat-timestamp" contenteditable="true">1 minute ago</div>' : '';
+        const ts = timestamp ? '<div class="chat-timestamp usa" contenteditable="true">1 minute ago</div>' : '';
         const wrap = left
             ? '<div style="flex-grow: 1; max-width: 80%;">'
             : '<div class="chat-content-wrapper">';
         return /*html*/`<div class="chat-container"${left ? ' style="flex-direction: row;"' : ''}>
-            <div class="chat-avatar" contenteditable="true" style="background-color: var(--color-primary);">${left ? 'AV' : 'ME'}</div>
+            <div class="chat-avatar usa" contenteditable="true" style="background-color: var(--color-primary);">${left ? 'AV' : 'ME'}</div>
             ${wrap}
                 <div class="${bubbleCls}"${bubbleStyle}>${bubbleInner}</div>
                 ${ts}
@@ -113,7 +115,7 @@ window.Components.chat = {
                     </div>`;
 
     const message = (text = 'Click to edit this message.') =>
-        `<div class="chat-content" contenteditable="true">${text}</div>`;
+        `<div class="chat-content usa" contenteditable="true">${text}</div>`;
 
     const variantsFor = (side) => {
         // Waveform comes from the music player module (loaded later, but variants()
@@ -133,7 +135,7 @@ window.Components.chat = {
             row(side, /*html*/`<div class="chat-voice">
                     <div class="icon-container chat-voice-play"><i class="fas fa-play"></i></div>
                     ${wave}
-                    <span class="chat-voice-time" contenteditable="true">0:42</span>
+                    <span class="chat-voice-time usa" contenteditable="true">0:42</span>
                 </div>`),
 
             // 4 — Typing indicator
@@ -141,7 +143,7 @@ window.Components.chat = {
 
             // 5 — Message with a reaction
             row(side, message('That sounds great!') + /*html*/`<div class="chat-reactions icon-container">
-                    <i class="fas fa-heart"></i><span contenteditable="true">2</span>
+                    <i class="fas fa-heart"></i><span class="usa" contenteditable="true">2</span>
                 </div>`, { bubbleClass: 'chat-bubble-react' }),
 
             // 6 — AI response: no bubble, full width, assistant label, formatted text,
@@ -161,28 +163,28 @@ window.Components.chat = {
     const thoughtBlock = /*html*/`<div class="chat-ai-thought" data-open="false">
                     <div class="chat-ai-thought-head">
                         <i class="fas fa-lightbulb non-editable"></i>
-                        <span class="chat-ai-thought-label" contenteditable="true">Thought for 8s</span>
+                        <span class="chat-ai-thought-label usa" contenteditable="true">Thought for 8s</span>
                         <i class="fas fa-chevron-right chat-ai-thought-chev non-editable"></i>
                     </div>
-                    <div class="chat-ai-thought-body" contenteditable="true">They want sign-up to feel quicker. The biggest wins are usually fewer fields, visible progress, and letting people skip optional steps.</div>
+                    <div class="chat-ai-thought-body usa" contenteditable="true">They want sign-up to feel quicker. The biggest wins are usually fewer fields, visible progress, and letting people skip optional steps.</div>
                 </div>`;
 
-    const listBody = /*html*/`<div class="chat-content" contenteditable="true">Here are a few ways to make your onboarding feel faster:</div>
+    const listBody = /*html*/`<div class="chat-content usa" contenteditable="true">Here are a few ways to make your onboarding feel faster:</div>
                 <ul class="chat-ai-list">
-                    <li contenteditable="true">Ask for only the essentials up front</li>
-                    <li contenteditable="true">Show progress so people know what's left</li>
-                    <li contenteditable="true">Let them skip and finish setup later</li>
+                    <li class="usa" contenteditable="true">Ask for only the essentials up front</li>
+                    <li class="usa" contenteditable="true">Show progress so people know what's left</li>
+                    <li class="usa" contenteditable="true">Let them skip and finish setup later</li>
                 </ul>`;
 
     // Code block markup comes from the codeBlock module (loaded later; variants() only runs
     // at insert/switch time)
-    const codeBody = () => /*html*/`<div class="chat-content" contenteditable="true">Here's a small helper that formats a price:</div>
+    const codeBody = () => /*html*/`<div class="chat-content usa" contenteditable="true">Here's a small helper that formats a price:</div>
                 ${window.Components.codeBlock?.variants()[0] || ''}`;
 
     const aiResponse = (side, { thought = false, code = false } = {}) => /*html*/`<div class="chat-container chat-ai chat-ai-${side}">
             <div class="chat-ai-head">
                 <div class="icon-container chat-ai-icon" style="background-color: var(--color-primary);"><i class="fas fa-wand-magic-sparkles"></i></div>
-                <span class="chat-ai-name" contenteditable="true">Assistant</span>
+                <span class="chat-ai-name usa" contenteditable="true">Assistant</span>
             </div>
             <div class="${side === 'left' ? 'leftChat' : 'rightChat'} chat-bubble-ai">
                 ${thought ? thoughtBlock : ''}

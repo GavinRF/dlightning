@@ -47,6 +47,16 @@ window.Components.columns = {
         return column;
     };
 
+    // Resize handles sit centered in the gap between two columns (not on the left column's
+    // edge), so they line up with the empty columns' dashed outlines. Re-run on gap change.
+    const HANDLE_W = 10;
+    const centerHandles = () => {
+        const gap = parseFloat(getComputedStyle(columnContainer).columnGap) || 0;
+        columnContainer.querySelectorAll(':scope > .column-container > .column-resize-handle').forEach(handle => {
+            handle.style.right = `${-(gap + HANDLE_W) / 2}px`;
+        });
+    };
+
     // Function to create column resize handles
     const createResizeHandles = () => {
         // First remove any existing resize handles
@@ -61,13 +71,12 @@ window.Components.columns = {
             const handle = document.createElement('div');
             handle.className = 'column-resize-handle';
             handle.style.cssText = `
-                width: 8px;
+                width: ${HANDLE_W}px;
                 height: 100%;
                 cursor: col-resize;
                 z-index: 10;
                 position: absolute;
                 top: 0;
-                right: -4px;
                 background: transparent;
             `;
             
@@ -78,10 +87,10 @@ window.Components.columns = {
                 position: absolute;
                 top: 0;
                 bottom: 0;
-                left: 3px;
-                width: 2px;
+                left: calc(50% - 1.5px);
+                width: 3px;
                 background: transparent;
-                border-radius: 1px;
+                border-radius: 1.5px;
                 transition: background 0.2s ease;
             `;
             handle.appendChild(handleIndicator);
@@ -217,6 +226,7 @@ window.Components.columns = {
             column.style.position = 'relative';
             column.appendChild(handle);
         });
+        centerHandles();
     };
 
     // Update columns count
@@ -294,6 +304,7 @@ window.Components.columns = {
         const newGap = e.target.value;
         gapValue.textContent = newGap;
         columnContainer.style.gap = `${newGap}px`;
+        centerHandles();
     });
 
     decrementBtn.addEventListener('click', () => {
@@ -364,6 +375,13 @@ window.Components.columns = {
         
         // Set equal flex for all columns
         existingColumns.forEach(column => {
+            // Empty-column icon (shown by CSS in the editor while the column is empty)
+            if (!column.querySelector(':scope > .empty-placeholder')) {
+                const empty = document.createElement('div');
+                empty.classList.add('empty-placeholder');
+                empty.innerHTML = '<i class="fas fa-table-columns"></i>';
+                column.prepend(empty);
+            }
             column.style.flex = '1 1 min-content';
             column.style.flexGrow = 1; // Store the flex-grow value explicitly for easy access
         });
