@@ -47,10 +47,15 @@ window.Components.chat = {
             newImageContainer.addEventListener('click', () => {
                 const input = document.createElement('input');
                 input.type = 'file';
-                input.accept = 'image/*';
+                input.accept = window.shrinkImage?.ACCEPT || 'image/*';
 
-                input.onchange = (e) => {
-                    const file = e.target.files[0];
+                input.onchange = async (e) => {
+                    let file = e.target.files[0];
+                    if (file && window.shrinkImage) {
+                        const { ok, skipped } = await window.shrinkImage.filterImages([file]);
+                        if (skipped.length) window.projectManager?.showNotification(window.shrinkImage.skippedMessage(skipped), 'error');
+                        file = ok[0];
+                    }
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = (event) => {
