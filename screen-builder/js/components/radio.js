@@ -3,19 +3,27 @@
 window.Components = window.Components || {};
 
 window.Components.radio = {
-    // Prototype player (js/prototype.js): single-select across the radios on this screen.
+    // Prototype player (js/prototype.js): single-select across the radios on this screen;
+    // the circle or its label text selects.
     play(root) {
         root.querySelectorAll('.custom-radio').forEach(radio => {
             if (radio._playBound) return;
             radio._playBound = true;
-            radio.addEventListener('click', () => {
+            const select = () => {
                 const scope = radio.closest('.canvas') || document;
                 scope.querySelectorAll('.custom-radio').forEach(other => {
                     const dot = other.querySelector('span');
                     if (dot) dot.style.display = other === radio ? 'block' : 'none';
                     other.style.borderColor = other === radio ? 'var(--color-primary)' : '#e0e0e0';
                 });
-            });
+            };
+            radio.addEventListener('click', select);
+            const row = radio.closest('.radio-wrapper');
+            const label = row && [...row.children].find(c => c.tagName === 'SPAN');
+            if (label) {
+                label.style.cursor = 'pointer';
+                label.addEventListener('click', select);
+            }
         });
     },
 

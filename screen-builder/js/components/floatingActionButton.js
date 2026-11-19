@@ -10,6 +10,10 @@ window.Components.floatingActionButton = {
         const fab = fabContainer.querySelector('.fab-nav');
         if (!fab) return null;
 
+        // Delete (×): bound here too, so a FAB rebuilt from saved html (load, local draft, live
+        // sync, undo) can be deleted, not just a freshly inserted one. Idempotent.
+        editor.setupDeleteHandler(fabContainer);
+
 
         // Create or reset alignment controls
         const existingArrows = fabContainer.querySelectorAll('.alignment-arrow');
@@ -36,15 +40,16 @@ window.Components.floatingActionButton = {
             fabContainer.removeEventListener('mouseleave', eventHandlers.mouseleave);
         }
 
+        // Pointer events while hovered are CSS (#mockZone .fab-container:hover): an inline style
+        // was saved / live-synced with every hover, and a mid-hover save left the full-width bar
+        // catching clicks meant for the screen under it.
         // Create and store new event handlers
         eventHandlers.mouseenter = () => {
-            fabContainer.style.pointerEvents = 'auto';
             // Show alignment arrows
             alignmentControls.updateArrowVisibility();
         };
 
         eventHandlers.mouseleave = () => {
-            fabContainer.style.pointerEvents = 'none';
             // Hide alignment arrows
             alignmentControls.hideArrows();
         };

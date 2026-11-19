@@ -181,6 +181,7 @@ window.Components.chat = {
     const codeBody = () => /*html*/`<div class="chat-content usa" contenteditable="true">Here's a small helper that formats a price:</div>
                 ${window.Components.codeBlock?.variants()[0] || ''}`;
 
+    // side: 'left' | 'right' -> class chat-ai-left / chat-ai-right (chat-ai-right is styled in componentVariants.css)
     const aiResponse = (side, { thought = false, code = false } = {}) => /*html*/`<div class="chat-container chat-ai chat-ai-${side}">
             <div class="chat-ai-head">
                 <div class="icon-container chat-ai-icon" style="background-color: var(--color-primary);"><i class="fas fa-wand-magic-sparkles"></i></div>

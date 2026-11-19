@@ -35,9 +35,12 @@ window.Components.sidebar = {
     },
 
     // Prototype player (js/prototype.js). `root` = the .sidebar-container in the clone.
-    // The toggle collapses/expands it; no add/delete. Starts collapsed when a prototype
-    // link targets it — and a full-screen menu also starts closed when the screen's navbar
-    // has a hamburger to open it. Tapping an item in a full-screen menu closes it.
+    // No add/delete. Starts collapsed when a prototype link targets it — and a full-screen
+    // menu also starts closed when the screen's navbar has a hamburger to open it. Tapping
+    // an item in a full-screen menu closes it. Drawers hide their toggle tab in play (CSS):
+    // the hamburger (prototype.js navbarDefault), a link, or a swipe opens / closes them —
+    // swipe the panel (its closed rail too) toward / away from its edge, or for the right
+    // drawer (fully off-screen when closed) swipe in from the screen's right edge.
     play(root, { startOpen = true } = {}) {
         if (!root || root._playBound) return;
         root._playBound = true;
@@ -52,7 +55,58 @@ window.Components.sidebar = {
             root.querySelector('.sidebar-nav')?.addEventListener('click', (e) => {
                 if (e.target.closest('.sidebar-nav-item')) this.playSetOpen(root, false);
             });
+        } else {
+            const right = this.styleOf(root) === 'right';
+            // +1 = toward opening (away from the drawer's edge), -1 = toward closing
+            const onSwipe = (dir) => this.playSetOpen(root, dir > 0);
+            const panel = root.querySelector('.sidebar-panel');
+            if (panel) this.playSwipe(panel, right, onSwipe);
+            if (right) {
+                const edge = document.createElement('div');
+                edge.className = 'proto-sidebar-edge';
+                root.appendChild(edge);
+                this.playSwipe(edge, right, onSwipe);
+            }
         }
+    },
+
+    // Horizontal swipe starting on `el`: onSwipe(+1) for a swipe away from the drawer's edge
+    // (open), onSwipe(-1) toward it (close). The move / up are followed on window while the
+    // pointer is down (the pointer soon leaves a narrow rail or edge strip), and once it's a
+    // drag the pointer is captured to `el`, so the click that ends it lands there and is
+    // swallowed (el._protoDragged, read by the player's click handler).
+    playSwipe(el, right, onSwipe) {
+        el.addEventListener('pointerdown', (e) => {
+            if (e.button !== 0) return;
+            const x0 = e.clientX, y0 = e.clientY, id = e.pointerId;
+            let dragging = false;
+            const move = (ev) => {
+                if (ev.pointerId !== id || dragging) return;
+                const dx = ev.clientX - x0, dy = ev.clientY - y0;
+                if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+                    dragging = true;
+                    try { el.setPointerCapture(id); } catch (_) {}
+                    window.getSelection?.()?.removeAllRanges();
+                }
+            };
+            const end = (ev) => {
+                if (ev.pointerId !== id) return;
+                window.removeEventListener('pointermove', move, true);
+                window.removeEventListener('pointerup', end, true);
+                window.removeEventListener('pointercancel', end, true);
+                const dx = ev.clientX - x0, dy = ev.clientY - y0;
+                if (!dragging || ev.type === 'pointercancel' || Math.abs(dx) < 30 || Math.abs(dx) < Math.abs(dy)) return;
+                el._protoDragged = true;
+                setTimeout(() => { el._protoDragged = false; }, 0);
+                onSwipe((dx > 0) !== right ? 1 : -1);
+            };
+            window.addEventListener('pointermove', move, true);
+            window.addEventListener('pointerup', end, true);
+            window.addEventListener('pointercancel', end, true);
+        });
+        // A mouse drag would otherwise start a native drag of an icon / link / image, which
+        // cancels the pointer (Firefox especially)
+        el.addEventListener('dragstart', (e) => e.preventDefault());
     },
 
     playSetOpen(root, open) {
@@ -119,6 +173,10 @@ window.Components.sidebar = {
 
         if (!sidebar || !nav) return null;
 
+        // Delete (×): bound here, not only by the factory, so a sidebar rebuilt from saved html
+        // (load, local draft, live sync, undo) can be deleted too. Idempotent.
+        editor.setupDeleteHandler(container);
+
         // Function to create a new nav item
         const createNavItem = (icon = 'bolt-lightning', text = 'New Item') => {
             const itemCon = document.createElement('div');
@@ -144,17 +202,8 @@ window.Components.sidebar = {
         deleteButton.className = 'nav-item-delete';
         deleteButton.innerHTML = '×';
 
-        // Add event listeners for hover states
-        navItem.addEventListener('mouseenter', () => {
-            navItem.style.outline = '2px solid var(--neutral-gray)';
-            deleteButton.style.display = 'block';
-            setTimeout(() => deleteButton.style.opacity = '1', 0);
-        });
-
-        navItem.addEventListener('mouseleave', () => {
-            navItem.style.outline = 'none';
-            deleteButton.style.opacity = '0';
-        });
+        // Hover outline + delete button: CSS (.sidebar-nav-item:hover, componentVariants.css), not
+        // inline styles, which were saved / live-synced with every hover.
 
         // Add delete functionality
         deleteButton.addEventListener('click', (e) => {
@@ -191,21 +240,7 @@ window.Components.sidebar = {
             });
         }
 
-        // Reattach hover behaviors
-        item.addEventListener('mouseenter', () => {
-            item.style.outline = '2px solid var(--neutral-gray)';
-            const deleteBtn = item.querySelector('.nav-item-delete');
-            if (deleteBtn) {
-            deleteBtn.style.display = 'block';
-            setTimeout(() => deleteBtn.style.opacity = '1', 0);
-            }
-        });
-
-        item.addEventListener('mouseleave', () => {
-            item.style.outline = 'none';
-            const deleteBtn = item.querySelector('.nav-item-delete');
-            if (deleteBtn) deleteBtn.style.opacity = '0';
-        });
+        // Hover outline + delete button are CSS (.sidebar-nav-item:hover)
         });
 
         // Reattach "Add Item" functionality

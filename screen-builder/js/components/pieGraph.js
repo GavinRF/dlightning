@@ -446,14 +446,7 @@ window.Components.pieGraph = (() => {
             render(wrapper);
         });
 
-        wrapper.addEventListener('mouseover', (e) => {
-            const segment = e.target.closest('.pie-graph-segment');
-            if (segment) { segment.style.filter = 'drop-shadow(0 0 3px rgba(0,0,0,0.3))'; segment.style.opacity = '0.9'; }
-        });
-        wrapper.addEventListener('mouseout', (e) => {
-            const segment = e.target.closest('.pie-graph-segment');
-            if (segment) { segment.style.filter = 'none'; segment.style.opacity = '1'; }
-        });
+        // Slice hover highlight: CSS (.pie-graph-segment:hover, componentVariants.css)
 
         const setControlsOpacity = (v) => {
             const controls = wrapper.querySelector(':scope > .pie-graph-controls');

@@ -66,8 +66,12 @@ window.Components.bottomNav = {
             }
 
             // Setup icon click handlers
-            const icon = item.querySelector('i');
-            if (icon) {
+            // The nav icon itself — not item.querySelector('i'): setupActiveToggle /
+            // setupBadgeToggle (above) put their ✓ / bell buttons, each with an <i>, first in
+            // the item, so that would bind the picker to the bell instead
+            const icon = item.querySelector('.bottom-nav-item > i');
+            if (icon && !icon._iconPickerBound) {
+                icon._iconPickerBound = true;
                 icon.style.cursor = 'pointer';
                 icon.addEventListener('click', (e) => {
                     e.preventDefault();

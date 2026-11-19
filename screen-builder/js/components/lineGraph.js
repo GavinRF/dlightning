@@ -174,7 +174,7 @@ window.Components.lineGraph = (() => {
         const yMax = scale.max;
 
         wrapper.querySelectorAll(':scope > .line-graph-body').forEach(el => el.remove());
-        wrapper.classList.remove('line-graph--area', 'line-graph--line', 'line-graph--stat');
+        wrapper.classList.remove('line-graph--area', 'line-graph--line', 'line-graph--stat', 'line-graph--compare');
         wrapper.classList.add(`line-graph--${style}`);
 
         // Persisted controls (see graph.js) — same classes, so they're stripped in play

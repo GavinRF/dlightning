@@ -161,7 +161,7 @@
   const categoryLabel = id => TEMPLATE_CATEGORIES.find(c => c.id === id)?.label || '';
 
   const cardHtml = ({ key, cat, title, blurb, tags = '', screens }) => {
-    const search = `${title} ${blurb} ${tags} ${categoryLabel(cat)}${screens ? ' pack app flow' : ''}`.toLowerCase();
+    const search = `${title} ${blurb} ${tags} ${cat} ${categoryLabel(cat)}${screens ? ' app packs flow' : ''}`.toLowerCase();
     const badge = screens
       ? `<span class="template-pack-meta"><span class="template-pro-badge">PRO</span>${screens.length} screens</span>`
       : '';
@@ -190,15 +190,25 @@
 
     modal.innerHTML = /*HTML*/`
       <div class="modal-content">
-        <div class="modal-header">
-          <h2>Templates</h2>
-          <input type="search" class="template-search" placeholder="Search templates..." aria-label="Search templates" autocomplete="off" spellcheck="false">
-          <button class="close-modal">&times;</button>
+        <div class="template-modal-top">
+          <div class="modal-header">
+            <h2>Templates</h2>
+            <div class="picker-search-wrap template-search-wrap">
+              <input type="search" class="template-search" placeholder="Search templates or categories..." aria-label="Search templates" autocomplete="off" spellcheck="false">
+              <span class="picker-search-count" aria-live="polite"></span>
+              <button type="button" class="picker-search-clear" aria-label="Clear search" title="Clear search" hidden><i class="fas fa-times"></i></button>
+            </div>
+            <button class="close-modal">&times;</button>
+          </div>
+          <div class="template-cat-chips" role="toolbar" aria-label="Template categories">${chips}</div>
         </div>
-        <div class="template-cat-chips" role="toolbar" aria-label="Template categories">${chips}</div>
         ${section('packs', 'App packs <span>Whole apps, screens already connected</span>', TEMPLATE_PACKS)}
         ${TEMPLATE_CATEGORIES.map(c => section(c.id, c.label, TEMPLATE_CARDS.filter(card => card.cat === c.id))).join('')}
-        <p class="template-search-empty" hidden>No templates match your search.</p>
+        <div class="template-search-empty" hidden>
+          <p class="template-search-empty-msg">No templates match your search.</p>
+          <button type="button" class="picker-empty-btn" data-empty-action="clear">Clear search</button>
+          <button type="button" class="picker-empty-btn" data-empty-action="all-cats">Search all categories</button>
+        </div>
       </div>
     `;
 
@@ -275,7 +285,7 @@
   };
 
   // Editor-only chrome that variant markup carries (row delete buttons, add buttons…)
-  const PREVIEW_STRIP = '.delete-fc-row, .delete-fc-col, .comparison-add-row-btn, .noti-visibility-toggle, .nav-add-btn, .nav-delete-btn, .resize-handle, .tabs-controls';
+  const PREVIEW_STRIP = '.delete-fc-row, .delete-fc-col, .comparison-add-row-btn, .noti-visibility-toggle, .nav-add-btn, .nav-delete-btn, .resize-handle, .tabs-controls, .tabs-end-controls';
 
   // Wrappers the editor's factory puts around a component's variant markup
   const PREVIEW_WRAP = { avatar: 'avatar-container align-content' };
@@ -292,6 +302,7 @@
     if (html == null) return null;
 
     const item = document.createElement('div');
+    // tp-<component type>: tp-navbar, tp-hero, tp-bottomNav are styled in ux-mock-bldr.css (.tp-scale)
     item.className = `tp-item tp-${entry.type}`;
     item.innerHTML = PREVIEW_WRAP[entry.type] ? `<div class="${PREVIEW_WRAP[entry.type]}">${html}</div>` : html;
     item.querySelectorAll(PREVIEW_STRIP).forEach(n => n.remove());
@@ -333,7 +344,18 @@
       section.hidden = inSection === 0;
       shown += inSection;
     });
-    modal.querySelector('.template-search-empty').hidden = shown > 0;
+    window.setSearchCount?.(modal.querySelector('.template-search'), words.length ? shown : null, 'template');
+    const empty = modal.querySelector('.template-search-empty');
+    empty.hidden = shown > 0;
+    if (!shown) {
+      const label = modal.querySelector('.template-cat-chip.active')?.textContent || '';
+      empty.querySelector('.template-search-empty-msg').textContent = words.length
+        ? `No templates match "${query.trim()}"${cat !== 'all' ? ` in ${label}` : ''}.`
+        : 'No templates in this category.';
+      empty.querySelector('[data-empty-action="clear"]').hidden = !words.length;
+      // a chip narrows the search: offer the same search across every category
+      empty.querySelector('[data-empty-action="all-cats"]').hidden = cat === 'all' || !words.length;
+    }
   }
 
   // Fill every card's thumbnail (once — on first open, when all component modules are loaded)
@@ -436,6 +458,9 @@
   }
 
   // Initialize the template system
+  let openPickerFn = null;   // set by initializeTemplateSystem (no picker on the gallery page)
+  let placeAfter = null;     // the screen the open picker builds after (openPickerFn's `after`)
+
   function initializeTemplateSystem() {
     // Create the modal if it doesn't exist
     let templateModal = document.getElementById('template-modal');
@@ -445,14 +470,15 @@
 
     //first check if user can create more canvases
   async function canCreateMoreCanvases(currentCanvasCount) {
-    // For non-logged in users, limit to 2 canvases
-    if (!firebase.auth().currentUser && currentCanvasCount >= 2) {
+    // The editor's limits (ux-mock-bldr.js state: 2 signed out — unlimited on a local dev
+    // server — and 3 free), the same ones createNewCanvas enforces
+    const limits = editor.state;
+    if (!firebase.auth().currentUser && currentCanvasCount >= limits.signedOutScreenLimit) {
       showAuthModal('Sign In to create more screens', 'Signed-in designers can save projects and add more screens!');
       return false;
     }
     
-    // For logged in users, check subscription if they have 3+ canvases
-    if (firebase.auth().currentUser && currentCanvasCount >= 3) {
+    if (firebase.auth().currentUser && currentCanvasCount >= limits.freeScreenLimit) {
       try {
         const isProAccount = await imageManager.checkProAccess(firebase.auth().currentUser.uid);   // cached + live
         
@@ -477,16 +503,20 @@
       return;
     }
     
-    addTemplateBtn.addEventListener('click', async () => {
-      const canvasesNodeList = document.querySelectorAll('.canvas-wrapper');
-      const currentCanvasCount = canvasesNodeList.length;
+    // after: a .canvas-wrapper to build the picked template / pack right after (the screen
+    // ⋯ menu's "Add template after"); none = at the end, as the sidebar button does
+    openPickerFn = async ({ after = null } = {}) => {
+      // Locked screens count too (as in createNewCanvas)
+      const currentCanvasCount = document.querySelectorAll('.canvas-wrapper, .locked-screen').length;
       
       const canCreate = await canCreateMoreCanvases(currentCanvasCount);
+      placeAfter = canCreate ? after : null;
       if (canCreate) {
         renderTemplatePreviews(templateModal);
         // each open starts with the full gallery
         const search = templateModal.querySelector('.template-search');
         search.value = '';
+        templateModal.querySelector('.picker-search-clear').hidden = true;
         templateModal.querySelectorAll('.template-cat-chip').forEach(c => c.classList.toggle('active', c.dataset.cat === 'all'));
         filterTemplates(templateModal, '');
         templateModal.querySelector('.modal-content').scrollTop = 0;
@@ -500,10 +530,38 @@
         // The modal message is already shown by the canCreateMoreCanvases function
         // No need to show another modal here
       }
-    });
+    };
+    addTemplateBtn.addEventListener('click', () => openPickerFn());
     
     const searchInput = templateModal.querySelector('.template-search');
-    searchInput.addEventListener('input', () => filterTemplates(templateModal, searchInput.value));
+    const searchClear = templateModal.querySelector('.picker-search-clear');
+    const clearTemplateSearch = () => {
+      searchInput.value = '';
+      searchClear.hidden = true;
+      filterTemplates(templateModal, '');
+      searchInput.focus();
+    };
+    searchInput.addEventListener('input', () => {
+      searchClear.hidden = !searchInput.value;
+      filterTemplates(templateModal, searchInput.value);
+    });
+    searchClear.addEventListener('click', clearTemplateSearch);
+    templateModal.querySelector('[data-empty-action="clear"]').addEventListener('click', clearTemplateSearch);
+    templateModal.querySelector('[data-empty-action="all-cats"]').addEventListener('click', () => {
+      templateModal.querySelectorAll('.template-cat-chip').forEach(c => c.classList.toggle('active', c.dataset.cat === 'all'));
+      filterTemplates(templateModal, searchInput.value);
+      templateModal.querySelector('.modal-content').scrollTop = 0;
+      searchInput.focus();
+    });
+    // Esc clears the search, then closes the modal. Capture phase on window, so the
+    // editor's own Escape (deselect, shortcuts.js) doesn't run while the modal is open.
+    window.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || templateModal.style.display !== 'flex') return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (searchInput.value) clearTemplateSearch();
+      else templateModal.style.display = 'none';
+    }, true);
     // Enter builds the template when the search narrows it to one card
     searchInput.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter') return;
@@ -538,8 +596,10 @@
       card.addEventListener('click', () => {
         const templateType = card.getAttribute('data-template');
         templateModal.style.display = 'none';
-        if (PACKS_BY_KEY[templateType]) applyPack(templateType);
-        else applyTemplate(templateType);
+        const after = placeAfter?.isConnected ? placeAfter : null;
+        placeAfter = null;
+        if (PACKS_BY_KEY[templateType]) applyPack(templateType, { after });
+        else applyTemplate(templateType, { after });
       });
     });
   }
@@ -970,7 +1030,7 @@
       { type: 'adjustableSpace' },
       { type: 'heading', text: 'Go Pro' },
       { type: 'paragraph', text: 'Unlock every feature and work without limits. Try it free for 14 days.' },
-      { type: 'featureComparisonCard', variant: 2, text: { '.fc-plan-name': 'Pro', '.fc-features span': ['Unlimited projects', 'Team collaboration', 'Priority support'] }, go: { '.fc-cta, .fc-cta-outline': 'login' } },
+      { type: 'featureComparisonCard', variant: 2, text: { '.fc-plan-name': ['Pro', 'Pro'], '.fc-features span': ['Unlimited projects', 'Team collaboration', 'Priority support', 'Unlimited projects', 'Team collaboration', 'Priority support'] }, go: { '.fc-cta': ['login', 'login'] } },
       { type: 'featureComparisonCard', variant: 0, text: {
           '.comparison-card-header': 'Compare plans',
           // column headers are plain cells in the variant markup; setup turns them into labels
@@ -1985,10 +2045,17 @@
   // Build a template's entries onto a new screen. Returns { wrapper, links } — links are
   // the entries' `go` requests ({ el, to, transition }) for applyPack to resolve once
   // every screen of a pack exists — or null if the screen couldn't be created.
-  async function buildTemplateScreen(templateName, entries) {
+  // after: a .canvas-wrapper to place the new screen right after (else it goes at the end)
+  async function buildTemplateScreen(templateName, entries, { after = null } = {}) {
     // createNewCanvas runs its own screen-limit checks; undefined means blocked
-    const wrapper = await editor.createNewCanvas();
+    const wrapper = await editor.createNewCanvas({ copyStatusLook: true });
     if (!wrapper) return null;
+    if (after?.isConnected && after.nextElementSibling !== wrapper) {
+      after.after(wrapper);
+      editor.updateCanvasNumbers();
+      // Screens are stored by position: everything after the new one shifted
+      window.projectManager?.markAllCanvasesChanged?.('Template screen inserted');
+    }
     const canvas = wrapper.querySelector('.canvas');
     // Name the screen after its template ("Login"); saved by markScreenChanged below
     const title = editor.cleanScreenName(TEMPLATE_CARDS.find(c => c.key === templateName)?.title);
@@ -2093,12 +2160,12 @@
     return out;
   }
 
-  async function applyTemplate(templateName) {
+  async function applyTemplate(templateName, { after = null } = {}) {
     const entries = TEMPLATES[templateName];
     if (!entries) return console.error(`Unknown template type: ${templateName}`);
 
     if (!(await templateFitsComponentLimit(entries))) return;
-    await buildTemplateScreen(templateName, entries);
+    await buildTemplateScreen(templateName, entries, { after });
     // A single screen has no pack to link to: its `go` links are dropped
   }
 
@@ -2122,7 +2189,7 @@
   // Build every screen of a pack in order, then connect them: each `go` request becomes
   // a prototype link to the pack screen built from that template key (requests for
   // screens the pack doesn't include are dropped).
-  async function applyPack(packKey) {
+  async function applyPack(packKey, { after = null } = {}) {
     const pack = PACKS_BY_KEY[packKey];
     if (!pack) return console.error(`Unknown app pack: ${packKey}`);
     if (!(await canUsePacks())) return;
@@ -2131,9 +2198,10 @@
     for (const key of pack.screens) {
       const entries = TEMPLATES[key];
       if (!entries) { console.error(`[templates] ${packKey}: unknown template ${key}`); continue; }
-      const result = await buildTemplateScreen(key, entries);
+      const result = await buildTemplateScreen(key, entries, { after });
       if (!result) break; // blocked or deleted mid-build: connect what was built
       built.push({ key, ...result });
+      if (after) after = result.wrapper;   // the pack's screens stay in order
     }
     if (!built.length) return;
 
@@ -2174,7 +2242,11 @@
 
   // Exposed for debugging / tests, and for the read-only template gallery (templates.html),
   // which renders its tiles with the picker's own preview code
-  window.screenTemplates = { TEMPLATES, TEMPLATE_CARDS, TEMPLATE_PACKS, TEMPLATE_CATEGORIES, applyTemplate, applyPack, mountTemplatePreview };
+  window.screenTemplates = {
+    TEMPLATES, TEMPLATE_CARDS, TEMPLATE_PACKS, TEMPLATE_CATEGORIES, applyTemplate, applyPack, mountTemplatePreview,
+    // Open the picker ({ after: wrapper } builds the pick right after that screen)
+    openPicker: (opts) => openPickerFn?.(opts),
+  };
 
   // Initialize the template system once the editor is up (not on the gallery page: no editor there)
   if (window.TEMPLATE_GALLERY) {

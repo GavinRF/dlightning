@@ -9,6 +9,12 @@
 // Clicking a star sets the rating, in the editor and in play; clicking the current rating
 // again clears down to one less (so a prompt can go back to 0). Review-summary bars set
 // their fill from where they're clicked. Inline style changes are what save detects.
+// The bars share one color: --rating-bar-color on .rating-bars (one swatch for all of them).
+//
+// Contrast: a light star color (yellow, the usual pick) on a light background — or a dark
+// one on dark — gets an outline (.rating-outline-dark / -light on the star row), worked out
+// from the star color and the nearest painted background. Recomputed on setup and on theme /
+// swatch color changes (TextContrastAdjuster), so it's never stale for long.
 window.Components = window.Components || {};
 
 window.Components.rating = (() => {
@@ -29,7 +35,7 @@ window.Components.rating = (() => {
 
     const bar = (label, pct) => /*html*/`<div class="rating-bar-row">
                     <span class="rating-bar-label">${label}</span>
-                    <div class="rating-bar"><div class="rating-bar-fill" style="width: ${pct}%; background-color: var(--color-accent);"></div></div>
+                    <div class="rating-bar"><div class="rating-bar-fill" style="width: ${pct}%;"></div></div>
                 </div>`;
 
     const VARIANTS = [
@@ -61,7 +67,7 @@ window.Components.rating = (() => {
                 ${stars(4.5, ' rating-sm')}
                 <div class="rating-count usa" contenteditable="true">1,204 ratings</div>
             </div>
-            <div class="rating-bars">
+            <div class="rating-bars" style="--rating-bar-color: var(--color-accent);">
                 ${bar(5, 72)}
                 ${bar(4, 18)}
                 ${bar(3, 6)}
@@ -85,6 +91,39 @@ window.Components.rating = (() => {
             star.classList.toggle('fa-star', !half);
             if (value >= i + 0.5) star.style.removeProperty('color');
             else star.style.color = OFF_COLOR;
+        });
+    };
+
+    // ---- contrast outline ----
+    // Any computed CSS color -> [r, g, b, a]
+    const parse = (color) => {
+        const m = (color || '').match(/[\d.]+/g);
+        if (!m || m.length < 3) return null;
+        return [+m[0], +m[1], +m[2], m.length > 3 ? +m[3] : 1];
+    };
+    const lum = ([r, g, b]) => {
+        const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+    };
+    // Nearest ancestor with a painted background (white if none: the phone screen)
+    const backgroundOf = (el) => {
+        for (let n = el.parentElement; n && n !== document.documentElement; n = n.parentElement) {
+            const c = parse(getComputedStyle(n).backgroundColor);
+            if (c && c[3] > 0.5) return c;
+        }
+        return [255, 255, 255, 1];
+    };
+    const updateContrast = (container) => {
+        if (!container?.isConnected) return;
+        container.querySelectorAll('.rating-stars').forEach(row => {
+            const star = parse(getComputedStyle(row).color);
+            if (!star) return;
+            const bg = backgroundOf(row);
+            const [a, b] = [lum(star), lum(bg)];
+            const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+            const low = ratio < 2;   // e.g. gold #FFC107 on white is ~1.6
+            row.classList.toggle('rating-outline-dark', low && b > 0.4);
+            row.classList.toggle('rating-outline-light', low && b <= 0.4);
         });
     };
 
@@ -115,6 +154,14 @@ window.Components.rating = (() => {
             this.setup(content);
         },
 
+        // Outline light stars on light backgrounds (and dark on dark). `el` = anything in or
+        // around a .rating; with no el, every rating on the page.
+        updateContrast(el) {
+            if (!el) { document.querySelectorAll('.rating').forEach(updateContrast); return; }
+            const c = el.closest?.('.rating') || el.querySelector?.('.rating');
+            if (c) updateContrast(c);
+        },
+
         // Set a component's (first) star row — used by templates. value 0–5 (halves ok).
         setRating(root, value) {
             const row = root?.querySelector?.('.rating-stars');
@@ -127,6 +174,8 @@ window.Components.rating = (() => {
             const container = root.classList?.contains('rating') ? root : root.querySelector?.('.rating');
             if (!container || container._ratingBound) return;
             container._ratingBound = true;
+            updateContrast(container);
+            requestAnimationFrame(() => updateContrast(container));   // once a fresh insert is in the page
 
             container.addEventListener('click', (e) => {
                 const star = e.target.closest('.rating-stars i');

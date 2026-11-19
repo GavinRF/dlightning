@@ -6,12 +6,18 @@
 window.Components = window.Components || {};
 
 window.Components.checkbox = {
-    // Prototype player (js/prototype.js): toggle the check, nothing else.
+    // Prototype player (js/prototype.js): the box or its label text toggles the check.
     play(root) {
         root.querySelectorAll('.checkbox-square-icon').forEach(box => {
-            if (box._playBound) return;
-            box._playBound = true;
-            box.addEventListener('click', () => box.querySelector('.checkbox-check-icon')?.classList.toggle('checked'));
+            const row = box.parentElement;
+            if (!row || row._playBound) return;
+            row._playBound = true;
+            const label = [...row.children].find(c => c.tagName === 'SPAN');
+            if (label) label.style.cursor = 'pointer';
+            row.addEventListener('click', (e) => {
+                if (!box.contains(e.target) && !label?.contains(e.target)) return;
+                box.querySelector('.checkbox-check-icon')?.classList.toggle('checked');
+            });
         });
     },
 

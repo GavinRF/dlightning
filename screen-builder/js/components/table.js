@@ -414,12 +414,12 @@ window.Components = window.Components || {};
 
                 if (sortIcon) bindActionIcon(sortIcon);
 
+                // grab cursor: CSS (#mockZone .data-table-header-cell), not an inline style that was
+                // saved / live-synced with every hover
                 th.addEventListener('mouseenter', () => {
-                    th.style.cursor = 'grab';
                     if (controls && !shared.activeControls && !shared.resize) controls.style.display = 'flex';
                 });
                 th.addEventListener('mouseleave', (e) => {
-                    if (!th.classList.contains('sortable-chosen')) th.style.cursor = '';
                     if (controls && !controls.contains(e.relatedTarget) && shared.activeControls !== controls) {
                         controls.style.display = 'none';
                     }
@@ -537,12 +537,11 @@ window.Components = window.Components || {};
                     tr.remove();
                     updateAddButtonVisibility();
                 });
+                // Row is position: relative while hovered via CSS (#mockZone .data-table-row:hover)
                 tr.addEventListener('mouseenter', () => {
-                    tr.style.position = 'relative';
                     deleteBtn.style.display = 'flex';
                 });
                 tr.addEventListener('mouseleave', () => {
-                    tr.style.position = 'initial';
                     deleteBtn.style.display = 'none';
                 });
 

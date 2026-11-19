@@ -118,7 +118,6 @@ main { padding: 8px 28px 60px; }
 .g-tile { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .g-tile-label { font-size: 11px; color: var(--muted); text-align: center; }
 .g-empty { padding: 60px 0; text-align: center; color: var(--muted); display: none; }
-.g-skipped { margin-top: 36px; font-size: 13px; color: var(--muted); }
 .g-frame {
     width: calc(var(--tile-w) * var(--scale));
     border-radius: 12px; overflow: hidden;

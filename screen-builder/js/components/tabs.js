@@ -5,8 +5,10 @@
 // Why styles instead of markup variants: tabs carry content the user builds up (how
 // many tabs, their names, which is selected). Swapping in template markup would reset
 // that, so a style is just `data-tab-style` on .tabs-container, read by CSS, and every
-// tab survives the switch. The style arrows live in the existing hover toolbar
-// (.tabs-controls) next to − / +, and are injected into older saved tabs on setup.
+// tab survives the switch. The style arrows are a regular variant bar (.variant-controls
+// .tabs-style-controls, top center, rebuilt by setup, never saved). The − / + toolbar
+// (.tabs-controls) sits on the left, the end-of-tab-content toggle (.tabs-end-controls,
+// rebuilt by setup, never saved) on the right.
 //
 // Selected-tab color:
 //   inline styles (Classic / Segmented / Pills): the selected tab gets an inline
@@ -277,10 +279,11 @@ window.Components.tabs = (() => {
             }
         }
 
-        const label = container.querySelector('.tabs-style-label');
-        if (label) {
-            label.textContent = `${STYLES.indexOf(style) + 1}/${STYLES.length}`;
-            label.title = style.label;
+        const number = container.closest('.component-container')
+            ?.querySelector(':scope > .tabs-style-controls .variant-number');
+        if (number) {
+            number.textContent = `${STYLES.indexOf(style) + 1}/${STYLES.length}`;
+            number.title = style.label;
         }
 
         const tabs = container.querySelectorAll('.ui-tab');
@@ -291,23 +294,36 @@ window.Components.tabs = (() => {
         window.projectManager?.addCanvasToChanged(canvasId, 'Tabs style changed');
     };
 
-    // Style arrows in the hover toolbar: [◀ n/4 ▶] [−][+]. Injected if missing.
-    const ensureStyleControls = (container, controls) => {
-        if (controls.querySelector('.tabs-style-prev')) return;
+    // Style arrows: a variant bar like every other component's, on the component container
+    // (outside .component-content, so never saved). On insert, setup runs before the tabs
+    // are wrapped, so wait a frame for the wrapper. Same pattern as accordion.js.
+    const setupStyleControls = (container, retried = false) => {
+        const host = container.closest('.component-container');
+        if (!host) {
+            if (!retried) requestAnimationFrame(() => setupStyleControls(container, true));
+            return;
+        }
+        host.querySelectorAll(':scope > .tabs-style-controls').forEach(el => el.remove());
+        const bar = document.createElement('div');
+        bar.className = 'variant-controls tabs-style-controls';
         const prev = document.createElement('button');
-        prev.className = 'tabs-style-prev non-editable';
+        prev.className = 'nav-control prev-nav';
         prev.title = 'Previous tab style';
-        prev.innerHTML = '<i class="fas fa-chevron-left"></i>';
-        const label = document.createElement('span');
-        label.className = 'tabs-style-label non-editable';
+        prev.innerHTML = '<i class="fas fa-circle-left"></i>';
+        const number = document.createElement('span');
+        number.className = 'variant-number';
+        const index = styleIndex(container);
+        number.textContent = `${index + 1}/${STYLES.length}`;
+        number.title = STYLES[index].label;
         const next = document.createElement('button');
-        next.className = 'tabs-style-next non-editable';
+        next.className = 'nav-control next-nav';
         next.title = 'Next tab style';
-        next.innerHTML = '<i class="fas fa-chevron-right"></i>';
-        controls.prepend(prev, label, next);
-        const style = STYLES[styleIndex(container)];
-        label.textContent = `${styleIndex(container) + 1}/${STYLES.length}`;
-        label.title = style.label;
+        next.innerHTML = '<i class="fas fa-circle-right"></i>';
+        bar.append(prev, number, next);
+        bar.addEventListener('click', (e) => e.stopPropagation());
+        prev.addEventListener('click', () => applyStyle(container, styleIndex(container) - 1));
+        next.addEventListener('click', () => applyStyle(container, styleIndex(container) + 1));
+        host.appendChild(bar);
     };
 
     const createTab = (index) => {
@@ -580,14 +596,36 @@ window.Components.tabs = (() => {
             const removeButton = controls?.querySelector('.tabs-remove-btn');
             if (!tabs || !controls || !addButton || !removeButton) return;
 
-            ensureStyleControls(container, controls);
+            // Older saves carry the style arrows inside the − / + toolbar
+            controls.querySelectorAll('.tabs-style-prev, .tabs-style-label, .tabs-style-next')
+                .forEach(el => el.remove());
+            setupStyleControls(container);
             ensureIds(container);
-            if (!controls.querySelector('.tabs-end-btn')) {
+            // Older saves carry the end toggle inside the − / + toolbar
+            controls.querySelectorAll('.tabs-end-btn').forEach(el => el.remove());
+            let endControls = container.querySelector(':scope > .tabs-end-controls');
+            if (!endControls) {
+                endControls = document.createElement('div');
+                endControls.className = 'tabs-end-controls';
                 const endBtn = document.createElement('button');
                 endBtn.className = 'tabs-end-btn non-editable';
                 endBtn.title = 'End of tab content: things below the line show on every tab';
                 endBtn.innerHTML = '<i class="fas fa-grip-lines"></i>';
-                controls.appendChild(endBtn);
+                endControls.appendChild(endBtn);
+                container.appendChild(endControls);
+            }
+            if (!endControls._tabsBound) {
+                endControls._tabsBound = true;
+                endControls.addEventListener('click', (e) => {
+                    if (!e.target.closest('.tabs-end-btn')) return;
+                    const end = findEnd(container);
+                    if (end) {
+                        end.remove();
+                        markChanged(container, 'Tab content end removed');
+                    } else {
+                        addEnd(container);
+                    }
+                });
             }
 
             if (!tabs._tabsBound) {
@@ -624,18 +662,6 @@ window.Components.tabs = (() => {
                             }
                             scheduleRules();
                         }
-                    } else if (btn.classList.contains('tabs-end-btn')) {
-                        const end = findEnd(container);
-                        if (end) {
-                            end.remove();
-                            markChanged(container, 'Tab content end removed');
-                        } else {
-                            addEnd(container);
-                        }
-                    } else if (btn.classList.contains('tabs-style-prev')) {
-                        applyStyle(container, styleIndex(container) - 1);
-                    } else if (btn.classList.contains('tabs-style-next')) {
-                        applyStyle(container, styleIndex(container) + 1);
                     }
                 });
             }

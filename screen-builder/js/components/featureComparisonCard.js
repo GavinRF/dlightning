@@ -10,7 +10,7 @@
 window.Components = window.Components || {};
 
 // Variants: 1 = the comparison grid (built from the same structure the old factory made),
-// 2 = stacked pricing tiers, 3 = single plan with a Monthly/Yearly switch. The generic
+// 2 = stacked pricing tiers, 3 = single plan with Monthly/Yearly tabs (one plan panel each). The generic
 // variant switcher caches each variant's last HTML, so switching to a pricing layout and
 // back brings the user's grid back as they left it (re-bound via afterVariantChange).
 const FC_CLASSIC = (() => {
@@ -55,14 +55,22 @@ const FC_VARIANTS = [
         </div>
     </div>`,
 
-    // 3 — Single plan with a Monthly / Yearly switch
+    // 3 — Single plan with a Monthly / Yearly switch. Each option is a tab: its own plan panel
+    // (data-fc-option n ↔ data-fc-panel n), switched in the editor (to edit both) and in play.
     /*html*/
     `<div class="fc-pricing fc-single">
         <div class="fc-billing">
-            <span class="fc-billing-opt usa" contenteditable="true">Monthly</span>
-            <span class="fc-billing-opt fc-billing-on usa" contenteditable="true" style="background-color: var(--color-primary);">Yearly −20%</span>
+            <span class="fc-billing-opt usa" data-fc-option="0" contenteditable="true">Monthly</span>
+            <span class="fc-billing-opt fc-billing-on usa" data-fc-option="1" contenteditable="true" style="background-color: var(--color-primary);">Yearly −20%</span>
         </div>
-        <div class="fc-plan fc-plan-featured">
+        <div class="fc-plan fc-plan-featured" data-fc-panel="0">
+            <span class="fc-plan-name usa" contenteditable="true">Premium</span>
+            <div class="fc-price fc-price-lg"><b class="usa" contenteditable="true">$10</b><small class="usa" contenteditable="true">/month</small></div>
+            <div class="fc-note usa" contenteditable="true">Billed monthly, cancel anytime</div>
+            <ul class="fc-features">${fcFeature('All premium features')}${fcFeature('Unlimited storage')}${fcFeature('Cancel anytime')}</ul>
+            <div class="fc-cta usa" contenteditable="true" style="background-color: var(--color-primary);">Start free trial</div>
+        </div>
+        <div class="fc-plan fc-plan-featured fc-panel-on" data-fc-panel="1">
             <span class="fc-plan-name usa" contenteditable="true">Premium</span>
             <div class="fc-price fc-price-lg"><b class="usa" contenteditable="true">$96</b><small class="usa" contenteditable="true">/year</small></div>
             <div class="fc-note usa" contenteditable="true">That's just $8 a month, billed yearly</div>
@@ -89,29 +97,15 @@ window.Components.featureComparisonCard = {
 
     // Prototype player (js/prototype.js): pricing tiers — tap a plan to choose it (the
     // highlight border and the filled button move to it); single plan — the Monthly /
-    // Yearly switch flips. The comparison grid stays as designed. Linked CTAs keep their link.
+    // Yearly tabs switch plan panels. The comparison grid stays as designed. Linked CTAs keep their link.
     play(root) {
         const pricing = root.querySelector('.fc-pricing');
         if (!pricing || pricing._playBound) return;
         pricing._playBound = true;
+        this.setupBilling(pricing, { play: true });
 
         pricing.addEventListener('click', (e) => {
             if (e.target.closest('[data-proto-action]')) return;
-
-            const opt = e.target.closest('.fc-billing-opt');
-            if (opt) {
-                const opts = [...pricing.querySelectorAll('.fc-billing-opt')];
-                const on = opts.find(o => o.classList.contains('fc-billing-on'));
-                if (on === opt) return;
-                const color = on?.style.backgroundColor || 'var(--color-primary)';
-                opts.forEach(o => {
-                    o.classList.toggle('fc-billing-on', o === opt);
-                    if (o !== opt) { o.style.removeProperty('background-color'); o.style.removeProperty('color'); }
-                });
-                opt.style.backgroundColor = color;
-                window.TextContrastAdjuster?.updateElementContrast(opt);
-                return;
-            }
 
             if (pricing.classList.contains('fc-single')) return;
             const plan = e.target.closest('.fc-plan');
@@ -142,9 +136,54 @@ window.Components.featureComparisonCard = {
             .forEach(el => { el.style.cursor = 'pointer'; });
     },
 
-    // Only the grid variant has behavior (pricing layouts are static).
+    // Single plan (variant 3): the billing options are tabs, each showing its own plan panel.
+    // Editor: clicking an option switches to it (the caret still lands, so it can be renamed)
+    // and the swatches follow the shown panel. Play: same switch, nothing saved.
+    selectBilling(pricing, index) {
+        const opts = [...pricing.querySelectorAll('.fc-billing-opt')];
+        const opt = opts[index];
+        const on = opts.find(o => o.classList.contains('fc-billing-on'));
+        if (!opt || on === opt) return false;
+        const color = on?.style.backgroundColor || 'var(--color-primary)';
+        opts.forEach(o => {
+            o.classList.toggle('fc-billing-on', o === opt);
+            if (o !== opt) { o.style.removeProperty('background-color'); o.style.removeProperty('color'); }
+        });
+        opt.style.backgroundColor = color;
+        window.TextContrastAdjuster?.updateElementContrast(opt);
+        const key = opt.dataset.fcOption ?? String(index);
+        pricing.querySelectorAll(':scope > [data-fc-panel]').forEach(p => p.classList.toggle('fc-panel-on', p.dataset.fcPanel === key));
+        return true;
+    },
+
+    setupBilling(pricing, { play = false } = {}) {
+        if (!pricing?.classList.contains('fc-single') || pricing._billingBound) return;
+        pricing._billingBound = true;
+        const self = this;
+        pricing.addEventListener('click', (e) => {
+            if (e.target.closest('[data-proto-action]')) return;
+            const opt = e.target.closest('.fc-billing-opt');
+            if (!opt || !pricing.contains(opt)) return;
+            const index = [...pricing.querySelectorAll('.fc-billing-opt')].indexOf(opt);
+            if (!self.selectBilling(pricing, index) || play) return;
+            // Editor: rebuild the swatches for the panel now shown, mark the screen changed
+            const container = pricing.closest('.component-container');
+            const content = container?.querySelector(':scope > .component-content');
+            if (container && content && window.editor?.createColorSwatchesForVariant) {
+                [...container.querySelectorAll('.color-swatch-container')]
+                    .filter(sw => sw.closest('.component-container') === container)
+                    .forEach(sw => sw.remove());
+                window.editor.createColorSwatchesForVariant(container, content);
+                window.updateComponentSwatches?.(container);
+            }
+            const id = pricing.closest('.canvas-wrapper')?.getAttribute('data-canvas-id');
+            if (id) window.projectManager?.addCanvasToChanged?.(id, 'Billing option switched');
+        });
+    },
+
+    // Grid: add/delete/toggle; single plan: billing tabs. Tiers are static in the editor.
     afterVariantChange(content) {
-        if (content.querySelector('.comparison-card-grid')) this.setup(content);
+        this.setup(content);
     },
 
     MAX_ROWS: 20,
@@ -165,8 +204,11 @@ window.Components.featureComparisonCard = {
     const grid = card.querySelector('.comparison-card-grid');
     const addRowBtnOld = card.querySelector('.comparison-add-row-btn');
 
-    // Pricing variants have no grid and nothing to wire
-    if (!grid) return;
+    // Pricing variants have no grid; the single plan's billing tabs switch panels
+    if (!grid) {
+      self.setupBilling(container.classList?.contains('fc-single') ? container : container.querySelector?.('.fc-single'));
+      return;
+    }
 
     // If the container doesn't have the necessary structure, stop
     if (!grid || !addRowBtnOld) {
