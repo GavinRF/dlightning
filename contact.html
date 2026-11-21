@@ -114,6 +114,8 @@
                             <strong>✓ Success!</strong> Thank you for reaching out. We'll get back to you soon!
                         </div>
 
+                        <div id="formEmailWarning" class="email-warning" role="status" style="display: none;"></div>
+
                         <div id="formError" class="error-banner" style="display: none;"></div>
 
                         <div class="text-center">
@@ -279,6 +281,20 @@
                     }
                 }
 
+                .email-warning {
+                    background: #fff3cd;
+                    border: 1px solid #ffe69c;
+                    color: #664d03;
+                    padding: 16px 20px;
+                    border-radius: 4px;
+                    margin-top: 12px;
+                }
+
+                .email-warning a {
+                    color: inherit;
+                    text-decoration: underline;
+                }
+
                 .success-message.fade-out {
                     animation: fadeOut 0.5s ease-out forwards;
                 }
@@ -401,6 +417,7 @@
                 const btnText = submitBtn.querySelector('.btn-text');
                 const btnSpinner = submitBtn.querySelector('.btn-spinner');
                 const successMsg = document.getElementById('formSuccess');
+                const emailWarning = document.getElementById('formEmailWarning');
                 const errorBanner = document.getElementById('formError');
                 const captchaError = document.getElementById('captchaError');
 
@@ -429,8 +446,28 @@
                     errorBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
 
-                function showSuccess() {
+                // The message is stored even when email fails, so this is still a
+                // success. It only says what didn't happen. A missing notification
+                // matters more, because it means we may not see the message.
+                function emailWarningFor(result, address) {
+                    if (result.notified === false) {
+                        return 'Your message is saved, but our notification didn\'t go through, so we may not see it right away. ' +
+                            'If it\'s time-sensitive, email <a href="mailto:info@dlightning.org">info@dlightning.org</a> or book a consultation slot below.';
+                    }
+                    if (result.confirmationSent === false) {
+                        const safe = document.createElement('span');
+                        safe.textContent = address;
+                        return 'Your message reached us, but we couldn\'t send you a confirmation email. We\'ll still reply to <strong>' +
+                            safe.innerHTML + '</strong>.';
+                    }
+                    return '';
+                }
+
+                function showSuccess(result) {
+                    const warning = emailWarningFor(result, document.getElementById('email').value);
                     successMsg.style.display = 'block';
+                    emailWarning.innerHTML = warning;
+                    emailWarning.style.display = warning ? 'block' : 'none';
                     contactForm.reset();
 
                     document.querySelectorAll('.is-valid, .is-invalid').forEach(el => {
@@ -443,6 +480,12 @@
                     turnstileToken = '';
                     if (window.turnstile) {
                         window.turnstile.reset();
+                    }
+
+                    // Leave a warning on screen; it's the thing they need to act on.
+                    if (warning) {
+                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        return;
                     }
 
                     setTimeout(function() {
@@ -464,6 +507,7 @@
                     }
 
                     errorBanner.style.display = 'none';
+                    emailWarning.style.display = 'none';
 
                     const isNameValid = validateName();
                     const isEmailValid = validateEmail();
@@ -498,7 +542,7 @@
                         const result = await response.json().catch(() => ({}));
 
                         if (response.ok && result.success) {
-                            showSuccess();
+                            showSuccess(result);
                         } else {
                             showError(result.error || 'Something went wrong. Please email info@dlightning.org.');
                             turnstileToken = '';

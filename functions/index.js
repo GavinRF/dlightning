@@ -184,15 +184,17 @@ function validateContactFields({ name, email, phone, comments }) {
 }
 
 /**
- * Send mail through Resend. No-ops when unconfigured so the endpoint keeps
- * working (and still stores the lead) before email is set up.
+ * Send mail through Resend. Never throws: a mail failure must not lose the
+ * lead, so the caller gets { sent, error } and decides what to tell whom.
+ * Unconfigured counts as a failure, so a missing secret is visible rather
+ * than silent.
  */
 async function sendMail({ to, subject, replyTo, text, html }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM_EMAIL;
 
   if (!apiKey || !from || !to) {
-    return false;
+    return { sent: false, error: "Email is not configured (RESEND_API_KEY, CONTACT_FROM_EMAIL or recipient missing)" };
   }
 
   try {
@@ -213,14 +215,15 @@ async function sendMail({ to, subject, replyTo, text, html }) {
     });
 
     if (!response.ok) {
-      console.error("Resend error:", response.status, await response.text());
-      return false;
+      const body = await response.text();
+      console.error("Resend error:", response.status, body);
+      return { sent: false, error: `Resend ${response.status}: ${body.slice(0, 500)}` };
     }
 
-    return true;
+    return { sent: true, error: null };
   } catch (error) {
     console.error("Resend request failed:", error.message);
-    return false;
+    return { sent: false, error: `Resend request failed: ${error.message}` };
   }
 }
 
@@ -429,7 +432,7 @@ exports.submitContact = onRequest({
     const lead = await db.collection("leads").add(leadData);
 
     // --- Notify (best effort - a mail failure must not lose the lead) ---
-    await sendMail({
+    const notify = await sendMail({
       to: process.env.CONTACT_NOTIFY_TO,
       subject: `New contact form submission from ${values.name}`,
       replyTo: values.email,
@@ -445,9 +448,10 @@ exports.submitContact = onRequest({
       ].join("\n")
     });
 
+    let confirmation = null; // null = autoreply switched off
     if (process.env.CONTACT_AUTOREPLY === "true") {
       const autoreply = buildAutoreply(values);
-      await sendMail({
+      confirmation = await sendMail({
         to: values.email,
         subject: "We've got your message",
         text: autoreply.text,
@@ -455,7 +459,26 @@ exports.submitContact = onRequest({
       });
     }
 
-    return res.status(200).json({ success: true, id: lead.id });
+    // Record delivery on the lead itself, so a failed notification leaves a
+    // trace in Firestore instead of only in the function logs.
+    await lead.update({
+      email: {
+        notified: notify.sent,
+        notifyError: notify.error,
+        confirmationSent: confirmation ? confirmation.sent : null,
+        confirmationError: confirmation ? confirmation.error : null
+      }
+    }).catch((error) => console.error("Could not record email status:", error.message));
+
+    // The lead is stored either way, so this is still a success. The flags let
+    // the page say what didn't happen: no confirmation in the visitor's inbox,
+    // or no notification to us (in which case they should reach us directly).
+    return res.status(200).json({
+      success: true,
+      id: lead.id,
+      notified: notify.sent,
+      confirmationSent: confirmation ? confirmation.sent : null
+    });
   } catch (error) {
     console.error("Contact submission error:", error);
     return res.status(500).json({
