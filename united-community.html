@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>United Community: Four Specialties of Experience Design | Dlightning</title>
+<meta name="description" content="Individual experience, the experience design cycle, systems thinking and playful learning design, and how they meet in a united community.">
+<link rel="canonical" href="https://dlightning.org/united-community.html">
+<meta name="author" content="Dlightning">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="United Community">
+<meta property="og:description" content="Four specialties, where they overlap, and the shared understanding at the center.">
+<meta property="og:url" content="https://dlightning.org/united-community.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --navy: #0a1430;
+    --paper: #f4f6fa;
+    --font: 'Hanken Grotesk', 'Rubik', sans-serif;
+    --ease: cubic-bezier(.65, 0, .35, 1);
+    --header: 64px;
+    --grow: 820ms;
+  }
+  html { background: var(--navy); }
+  body.uc { padding-top: var(--header); background: var(--paper); color: var(--navy); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  .uc h1, .uc h2, .uc h3, .uc p, .uc li, .uc a, .uc button { font-family: var(--font); }
+  header { z-index: 999; }
+  /* the shared header is transparent until it sticks, so the top of the page gets a dark band behind it */
+  .uc-bar { position: absolute; top: 0; left: 0; right: 0; height: var(--header); background: var(--navy); }
+  .uc #footer > a { color: var(--paper); }
+
+  /* ---------- the diagram ---------- */
+  .uc-stage { min-height: calc(100vh - var(--header)); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: center; gap: 48px; padding: 48px 64px 72px; max-width: 1440px; margin: 0 auto; }
+  .uc-intro .eyebrow { font-size: .9375rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #4b5675; margin: 0 0 16px; }
+  .uc-intro h1 { font-size: clamp(3rem, 6.4vw, 6rem); font-weight: 900; line-height: .95; letter-spacing: -.03em; margin: 0 0 24px; color: var(--navy); }
+  .uc-intro p { font-size: 1.3rem; line-height: 1.5; color: #27314f; margin: 0 0 16px; max-width: 34ch; }
+  .uc-intro .hint { font-size: 1rem; color: #4b5675; display: flex; align-items: center; gap: 10px; margin-top: 32px; }
+  .uc-intro .hint i { font-size: 1.1rem; }
+
+  .venn { position: relative; width: 100%; aspect-ratio: 1 / 1; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .venn.is-live { cursor: pointer; }
+  /* the circles: real divs, multiplied together. isolation keeps the blend inside the diagram */
+  .venn-disc { position: absolute; inset: 0; isolation: isolate; }
+  .venn-disc .circ { position: absolute; border-radius: 50%; }   /* mix-blend-mode is set from BLEND in the script */
+  .venn-disc .core { position: absolute; border-radius: 50%; }
+  .venn svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  /* hovering washes the other regions toward the paper */
+  .venn-hl .region { fill: var(--paper); opacity: 0; transition: opacity .3s; }
+  .venn.has-hot .venn-hl .region:not(.is-hot) { opacity: .4; }
+  .venn text { fill: #fff; font-family: var(--font); pointer-events: none; user-select: none; }
+  .venn .big { font-size: 50px; font-weight: 500; letter-spacing: -.01em; }
+  .venn .small { font-size: 24px; font-weight: 500; letter-spacing: .16em; }
+  .venn .lab { outline: none; }
+  .venn .lab .ring { fill: none; stroke: #fff; stroke-width: 4; stroke-dasharray: 10 8; opacity: 0; transition: opacity .2s; }
+  .venn .lab:focus-visible .ring { opacity: 1; }
+  .venn .lab text { transition: transform .3s; transform-box: fill-box; transform-origin: center; }
+
+  /* ---------- the expanded section ---------- */
+  .ov { position: fixed; inset: 0; z-index: 2000; overflow-y: auto; overscroll-behavior: contain; visibility: hidden; color: var(--ink, #fff); background: var(--bg, var(--navy)); transition: background-color .6s ease, color .6s ease; }
+  .ov.is-open { visibility: visible; }
+  .ov.is-growing { transition: clip-path var(--grow) var(--ease), background-color .6s ease, color .6s ease; }
+  .ov-inner { max-width: 1180px; margin: 0 auto; padding: 32px 64px 96px; opacity: 0; transform: translateY(24px); transition: opacity .45s ease, transform .6s cubic-bezier(.16, 1, .3, 1); }
+  .ov.is-shown .ov-inner { opacity: 1; transform: none; }
+  .ov.is-swapping .ov-inner { opacity: 0; transform: translateY(12px); transition-duration: .22s; }
+
+  .ov-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }
+  .ov-back { appearance: none; border: 2px solid currentColor; background: transparent; color: inherit; border-radius: 999px; padding: 10px 20px 10px 16px; font-size: 1rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: background-color .2s, color .2s; }
+  .ov-back:hover, .ov-back:focus-visible { background: var(--ink); color: var(--bg); outline: none; }
+  .ov-map { width: 128px; flex: none; }
+  .ov-map .venn-hl .region { fill: var(--ink); }
+  .ov-map .venn.has-hot .venn-hl .region:not(.is-hot) { opacity: 0; }
+  .ov-map .venn.has-hot .venn-hl .region.is-hot { opacity: 1; }
+  .ov p, .ov li, .ov h3, .ov b { color: inherit; }
+
+  .ov-eyebrow { font-size: .9375rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .8; margin: 0 0 12px; }
+  .ov h2 { font-size: clamp(3rem, 8.5vw, 7.5rem); font-weight: 900; line-height: .92; letter-spacing: -.035em; margin: 0 0 32px; color: inherit; max-width: 12ch; outline: none; }
+  .ov-lede { font-size: clamp(1.25rem, 2.1vw, 1.65rem); line-height: 1.45; max-width: 40ch; margin: 0 0 64px; font-weight: 500; }
+
+  .ov-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px 32px; margin-bottom: 72px; }
+  .ov-card { border-top: 2px solid currentColor; padding-top: 16px; opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .6s cubic-bezier(.16, 1, .3, 1); }
+  .ov.is-shown .ov-card { opacity: 1; transform: none; }
+  .ov-card h3 { font-size: 1.35rem; font-weight: 700; margin: 0 0 10px; color: inherit; }
+  .ov-card p { font-size: 1.0625rem; line-height: 1.6; margin: 0; opacity: .92; }
+
+  .ov-q { margin-bottom: 72px; }
+  .ov-q h3, .ov-rel h3 { font-size: .9375rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .8; margin: 0 0 20px; color: inherit; }
+  .ov-q ol { list-style: none; padding: 0; margin: 0; counter-reset: q; }
+  .ov-q li { counter-increment: q; font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height: 1.4; padding: 16px 0 16px 56px; position: relative; border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .ov-q li::before { content: counter(q, decimal-leading-zero); position: absolute; left: 0; top: 19px; font-size: .95rem; font-weight: 700; opacity: .7; }
+
+  .ov-rel ul { list-style: none; padding: 0; margin: 0 0 72px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .chip { appearance: none; border: 0; border-radius: 999px; padding: 12px 20px 12px 14px; font-size: 1rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; background: var(--chip-bg); color: var(--chip-ink); box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 25%, transparent); transition: transform .2s; }
+  .chip:hover, .chip:focus-visible { transform: translateY(-2px); outline: 2px solid var(--ink); outline-offset: 3px; }
+  .chip .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--chip-ink); opacity: .5; }
+
+  .ov-pager { display: flex; justify-content: space-between; gap: 16px; border-top: 2px solid currentColor; padding-top: 24px; }
+  .ov-pager button { appearance: none; border: 0; background: none; color: inherit; cursor: pointer; text-align: left; padding: 0; font-size: 1.15rem; font-weight: 700; }
+  .ov-pager button span { display: block; font-size: .8125rem; letter-spacing: .14em; text-transform: uppercase; opacity: .75; font-weight: 700; margin-bottom: 4px; }
+  .ov-pager button:last-child { text-align: right; }
+  .ov-pager button:hover b, .ov-pager button:focus-visible b { text-decoration: underline; text-underline-offset: 4px; }
+  .ov-pager button:focus-visible { outline: 2px solid currentColor; outline-offset: 6px; }
+
+  @media (max-width: 991px) {
+    .uc-stage { grid-template-columns: 1fr; padding: 32px 24px 56px; gap: 16px; min-height: 0; }
+    .uc-intro p { max-width: none; font-size: 1.1rem; }
+    .uc-intro h1 { margin-bottom: 16px; }
+    .uc-intro .hint { margin-top: 8px; }
+    .ov-inner { padding: 24px 24px 72px; }
+    .ov-map { width: 88px; }
+    :root { --header: 62px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :root { --grow: 1ms; }
+    .ov-inner, .ov-card { transition: opacity .2s; transform: none !important; }
+  }
+</style>
+</head>
+
+<body class="uc">
+<div class="uc-bar" aria-hidden="true"></div>
+<header id="header"></header>
+
+<main>
+  <section class="uc-stage" aria-labelledby="uc-title">
+    <div class="uc-intro">
+      <p class="eyebrow">How we work</p>
+      <h1 id="uc-title">United Community</h1>
+      <p>Four specialties shape our work: individual experience, the experience design cycle, systems thinking and playful learning design. Each pair that overlaps makes something of its own, and all four meet in a team that understands its goals together.</p>
+      <p class="hint"><i class="fa fa-hand-pointer" aria-hidden="true"></i> Select any part of the diagram to go deeper.</p>
+    </div>
+    <div class="uc-diagram" id="diagram"></div>
+  </section>
+</main>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="ov-title" aria-hidden="true">
+  <div class="ov-inner" id="ov-inner"></div>
+</div>
+
+<div class="footer" id="footer">
+  <!-- Replaced by footer.html on load. Static so every page in the nav is reachable without JavaScript. -->
+  <a href="/" class="home">Home</a>
+  <a href="/Process.html" class="process">Process</a>
+  <a href="/practice.html" class="practice">Practice</a>
+  <a href="/Pricing.html" class="pricing">Services</a>
+  <a href="/collective-info.html" class="collective">Collective</a>
+  <a href="/blog/" class="sparks">Sparks Blog</a>
+  <a href="/downloads.html" class="downloads">Offerings</a>
+  <a href="/experience-builder.html" class="expBuilder">Experience Builder</a>
+  <a href="/screen-builder/" class="screenBuilder">Screen Builder</a>
+  <a href="/d-tools/decision-tools.html" class="decision-tools">Decision Tools</a>
+  <a href="/privacy-policy.html" class="privacyPolicyPage">Privacy Policy</a>
+  <a href="/tos.html" class="tos">Terms of Service</a>
+  <a href="/contact.html" class="contact2">Contact Us</a>
+</div>
+
+<script>
+$(document).ready(function () {
+  $('#footer').load("footer.html");
+  $('#header').load("header.html");
+});
+</script>
+
+<script>
+(function () {
+  /* ---------- geometry: the four circles and the center, in a 1080 square ---------- */
+  var R = 318, CORE = { x: 540, y: 540, r: 142 };
+  var CIRC = { T: [540, 360], L: [360, 540], R: [720, 540], B: [540, 720] };
+
+  /* the four circles are divs, 60% opaque, blended with each other inside an isolated group that sits on the paper.
+     Change BLEND to any CSS mix-blend-mode: multiply, screen, overlay, darken, lighten, color-dodge, color-burn,
+     hard-light, soft-light, difference, exclusion, hue, saturation, color, luminosity (the colours below follow it). */
+  var BLEND = 'multiply';
+  var PAPER = '#f4f6fa';
+  var CIRCLE_COLOR = { T: '#003CD799', R: '#01452499', B: '#0098C899', L: '#6C27DE99' };
+  var CORE_FILL = '#08122f';
+
+  /* the colour each overlap comes out as, worked out the way the browser composites it, so a section opens in
+     exactly the colour that was clicked: each circle blends with what is under it in the group (in DOM order),
+     then the group is laid over the paper */
+  /* every CSS mix-blend-mode, as the Compositing spec defines it (w3.org/TR/compositing-1), on 0–1 channels.
+     Separable modes work channel by channel; the last four work on the whole colour. */
+  var SEP = {
+    normal: function (b, s) { return s; },
+    multiply: function (b, s) { return b * s; },
+    screen: function (b, s) { return b + s - b * s; },
+    overlay: function (b, s) { return SEP['hard-light'](s, b); },
+    darken: function (b, s) { return Math.min(b, s); },
+    lighten: function (b, s) { return Math.max(b, s); },
+    'color-dodge': function (b, s) { return b === 0 ? 0 : s === 1 ? 1 : Math.min(1, b / (1 - s)); },
+    'color-burn': function (b, s) { return b === 1 ? 1 : s === 0 ? 0 : 1 - Math.min(1, (1 - b) / s); },
+    'hard-light': function (b, s) { return s <= .5 ? b * 2 * s : SEP.screen(b, 2 * s - 1); },
+    'soft-light': function (b, s) {
+      if (s <= .5) return b - (1 - 2 * s) * b * (1 - b);
+      var d = b <= .25 ? ((16 * b - 12) * b + 4) * b : Math.sqrt(b);
+      return b + (2 * s - 1) * (d - b);
+    },
+    difference: function (b, s) { return Math.abs(b - s); },
+    exclusion: function (b, s) { return b + s - 2 * b * s; }
+  };
+  function lumOf(c) { return .3 * c[0] + .59 * c[1] + .11 * c[2]; }
+  function clipColor(c) {
+    var l = lumOf(c), n = Math.min.apply(null, c), x = Math.max.apply(null, c);
+    if (n < 0) c = c.map(function (v) { return l + (v - l) * l / (l - n); });
+    if (x > 1) c = c.map(function (v) { return l + (v - l) * (1 - l) / (x - l); });
+    return c;
+  }
+  function setLum(c, l) { var d = l - lumOf(c); return clipColor(c.map(function (v) { return v + d; })); }
+  function satOf(c) { return Math.max.apply(null, c) - Math.min.apply(null, c); }
+  function setSat(c, sat) {
+    var n = Math.min.apply(null, c), x = Math.max.apply(null, c);
+    return c.map(function (v) { return x > n ? (v - n) * sat / (x - n) : 0; });
+  }
+  var NONSEP = {
+    hue: function (b, s) { return setLum(setSat(s, satOf(b)), lumOf(b)); },
+    saturation: function (b, s) { return setLum(setSat(b, satOf(s)), lumOf(b)); },
+    color: function (b, s) { return setLum(s, lumOf(b)); },
+    luminosity: function (b, s) { return setLum(b, lumOf(s)); }
+  };
+  function blendFn(mode) {
+    if (NONSEP[mode]) return NONSEP[mode];
+    var f = SEP[mode];
+    if (!f) { console.warn('United Community: unknown blend mode "' + mode + '", using normal'); f = SEP.normal; }
+    return function (b, s) { return b.map(function (v, i) { return f(v, s[i]); }); };
+  }
+  if (!SEP[BLEND] && !NONSEP[BLEND]) BLEND = 'normal';
+
+  function chans(hex) { return [1, 3, 5, 7].map(function (i) { return i < hex.length ? parseInt(hex.substr(i, 2), 16) : 255; }); }
+  function blendOf(combo) {
+    var f = blendFn(BLEND), cb = [0, 0, 0], ab = 0;
+    Object.keys(CIRC).forEach(function (k) {
+      if (combo.indexOf(k) < 0) return;
+      var s = chans(CIRCLE_COLOR[k]), as = s[3] / 255, cs = s.slice(0, 3).map(function (v) { return v / 255; });
+      var mixed = f(cb, cs), ao = as + ab * (1 - as);
+      cb = cb.map(function (b, i) { return (as * ((1 - ab) * cs[i] + ab * mixed[i]) + (1 - as) * ab * b) / ao; });
+      ab = ao;
+    });
+    var p = chans(PAPER);
+    return '#' + cb.map(function (v, i) { return ('0' + Math.round((ab * v + (1 - ab) * p[i] / 255) * 255).toString(16)).slice(-2); }).join('');
+  }
+  var FILL = {};
+  ['T', 'L', 'R', 'B', 'TL', 'TR', 'LB', 'RB', 'TB', 'LR', 'TLR', 'TLB', 'TRB', 'LRB', 'TLRB'].forEach(function (c) { FILL[c] = blendOf(c); });
+  /* which section each combination opens; three or four circles count as the center */
+  var KEY_OF = { T: 'individual', L: 'playful', R: 'cycle', B: 'systems', TL: 'growth', TR: 'inclusive', LB: 'explore', RB: 'holistic' };
+  function keyOfCombo(c) { return KEY_OF[c] || 'united'; }
+
+  /* where each section grows from and shrinks back to */
+  var ORIGIN = {
+    individual: [540, 165, 130], playful: [165, 540, 130], cycle: [915, 540, 130], systems: [540, 915, 130],
+    growth: [345, 345, 95], inclusive: [735, 345, 95], explore: [345, 735, 95], holistic: [735, 735, 95],
+    united: [540, 540, 142]
+  };
+
+  /* ---------- content ---------- */
+  var S = {
+    united: {
+      eyebrow: 'The center', title: 'United Community', color: CORE_FILL,
+      lede: 'A mutual understanding of high-level goals and rules of engagement, defined internally, so that people can work together.',
+      cards: [
+        ['Shared goals', 'Everyone can say what the work is for, in the same words. Goals are set high enough to cover the whole product and plainly enough that a new teammate can repeat them on their first day.'],
+        ['Rules of engagement', 'How decisions get made, who gets asked, how disagreement is settled and what done looks like. The team writes them itself, so people follow them because they agreed to them.'],
+        ['Defined internally', 'The community forms inside the team before it forms around the product. The understanding a team builds for itself is the one it ends up offering the people it serves.'],
+        ['What feeds it', 'Each specialty brings something to the center. Individual experience brings empathy, the design cycle brings evidence, systems thinking brings a view of the whole and playful learning brings the reasons people stay.']
+      ],
+      questions: ['Could each person on the team state the goal without looking it up?', 'When two people disagree, does everyone know how it gets settled?', 'Would a new member know the rules by the end of their first week?'],
+      related: ['individual', 'cycle', 'systems', 'playful']
+    },
+    individual: {
+      eyebrow: 'Specialty', title: 'Individual Experience', color: FILL.T,
+      lede: 'Perception, emotion and experience, from the personal to the cultural, translated into products that are meaningful and useful.',
+      cards: [
+        ['Perception', 'What people notice first, what they miss, and what they assume a thing does before they touch it.'],
+        ['Emotion', 'How each step feels: the confidence after something works, the doubt before a payment, the relief when an error explains itself.'],
+        ['Personal to cultural', 'Experience is shaped by one person’s history and by the shared language, norms and symbols of the groups they belong to. Both decide what a design means to someone.'],
+        ['Translation', 'Turning what we learn about people into features, words and flows they can use, so the insight survives the trip into the product.']
+      ],
+      questions: ['What does this person already believe when they arrive?', 'Where do they hesitate, and why?', 'What would this mean to someone from a different background?'],
+      related: ['growth', 'inclusive', 'united']
+    },
+    cycle: {
+      eyebrow: 'Specialty', title: 'Experience Design Cycle', color: FILL.R,
+      lede: 'A non-linear way of gathering data, finding insights and testing solutions, grounded in empathy for the customer’s perspective.',
+      cards: [
+        ['Gather data', 'Interviews, observation, analytics and support logs, collected to see the problem from the customer’s side. Watch what people do as closely as you listen to what they say.'],
+        ['Find insights', 'Sort the raw material into patterns: the needs that keep coming up, the workarounds people invent, the moments where things go wrong.'],
+        ['Test solutions', 'Put a prototype in front of real people early and cheaply, measure what changed and keep what holds up.'],
+        ['Non-linear', 'A test can send you back to research, and one interview can reshape a solution. The cycle goes where the evidence points, not in a fixed order.']
+      ],
+      questions: ['What have we assumed that we haven’t checked?', 'Which finding would change our plan if it turned out to be true?', 'Who haven’t we talked to yet?'],
+      related: ['inclusive', 'holistic', 'united']
+    },
+    systems: {
+      eyebrow: 'Specialty', title: 'Systems Thinking', color: FILL.B,
+      lede: 'Awareness of a system’s inputs and outputs, from messaging and data points to actions and pipelines, and how they add up to a whole greater than the sum of its parts.',
+      cards: [
+        ['Inputs', 'Everything that enters the system: a user’s action, a marketing message, a data feed, a support ticket, a decision made in a meeting.'],
+        ['Outputs', 'Everything it sends back out: screens, emails, notifications and reports, plus the habits and expectations it builds in the people who use it.'],
+        ['Pipelines and loops', 'How outputs become inputs again. A confusing email produces support tickets, the tickets produce a help page, and the help page changes the next email.'],
+        ['The whole', 'People judge a product as one thing. A well-made screen inside a broken flow still reads as a broken product.']
+      ],
+      questions: ['What feeds into this, and what does it feed?', 'If we change this piece, what else moves?', 'Where does information get lost between teams or tools?'],
+      related: ['explore', 'holistic', 'united']
+    },
+    playful: {
+      eyebrow: 'Specialty', title: 'Playful Learning Design', color: FILL.L,
+      lede: 'Progressively difficult puzzles, rewards, collected loot, leveling up, building teams and making personal connections: the things that produce joy and carry people along their journey.',
+      cards: [
+        ['Progressive challenge', 'Each puzzle a little harder than the last, so people stay just past what they can already do without tipping into frustration.'],
+        ['Rewards and loot', 'Rewards triggered by real progress and things worth collecting along the way, so effort leaves something behind.'],
+        ['Leveling up', 'Growth people can see: where they started, where they are now and what opens up next.'],
+        ['Teams and connection', 'Building teams and making personal connections, so the journey is shared and people come back for each other as much as for the product.']
+      ],
+      questions: ['What is the next thing this person is almost able to do?', 'What do they get to keep from the effort they put in?', 'Who are they doing this with?'],
+      related: ['growth', 'explore', 'united']
+    },
+    growth: {
+      eyebrow: 'Where two meet', title: 'Personalized Growth Path', color: FILL.TL, parents: ['individual', 'playful'],
+      lede: 'Playful learning shaped around one person: the challenge, the pacing and the rewards fit what they have done, how they feel about it and where they want to go.',
+      cards: [
+        ['Starts where they are', 'The path begins from what the person already knows and cares about, not from step one for everyone.'],
+        ['Paced to the person', 'Difficulty rises at the rate each person can take. Someone breezing through gets harder puzzles; someone stuck gets a different way in.'],
+        ['Rewards that land', 'What counts as a reward depends on the person: recognition, mastery, a collectible or time with a team. The path learns which one works.']
+      ],
+      questions: ['How does the path change for someone who arrives already skilled?', 'What happens when a person gets stuck?'],
+      related: ['individual', 'playful', 'united']
+    },
+    inclusive: {
+      eyebrow: 'Where two meet', title: 'Inclusive Design Process', color: FILL.TR, parents: ['individual', 'cycle'],
+      lede: 'The design cycle run with the full range of people who will use the product, so perception, emotion and culture count as evidence from the start.',
+      cards: [
+        ['Who’s in the room', 'Research and testing include people across ages, abilities, languages and cultures, not a single stand-in for an average user.'],
+        ['Edges inform the middle', 'Designing for someone using a screen reader, a slow connection or a second language usually makes the product clearer for everyone else too.'],
+        ['Empathy with evidence', 'Feelings and cultural context get recorded and tested like any other finding, so they shape decisions instead of staying in a slide deck.']
+      ],
+      questions: ['Whose experience is missing from our research?', 'Would this still work in another language, on another device, with another ability?'],
+      related: ['individual', 'cycle', 'united']
+    },
+    explore: {
+      eyebrow: 'Where two meet', title: 'Dynamic Exploration Framework', color: FILL.LB, parents: ['playful', 'systems'],
+      lede: 'Systems built for exploring: clear rules, responsive feedback loops and room to experiment, so people learn how things work by playing with them.',
+      cards: [
+        ['Rules you can discover', 'The system behaves consistently enough that people can form a theory, test it and find out they were right.'],
+        ['Feedback that responds', 'Every action produces a visible result, so cause and effect are easy to read and curiosity gets an answer.'],
+        ['Room to experiment', 'Safe ways to try something, undo it and try again. Mistakes cost little, so people take the risk of exploring.']
+      ],
+      questions: ['Can someone figure out the rules by trying things?', 'What does a mistake cost here?'],
+      related: ['playful', 'systems', 'united']
+    },
+    holistic: {
+      eyebrow: 'Where two meet', title: 'Holistic Product Development', color: FILL.RB, parents: ['cycle', 'systems'],
+      lede: 'The design cycle applied to the whole system: research, insight and testing cover messaging, data, pipelines and operations, not one screen at a time.',
+      cards: [
+        ['Research the whole journey', 'Study the path across every touchpoint: the ad, the signup, the product, the receipt, the support call.'],
+        ['Test across the seams', 'Problems often live where one team’s output becomes another’s input. Test those hand-offs as carefully as the screens.'],
+        ['Measure the system', 'Data from every part of the system feeds the next round of insight, so the cycle keeps going after launch.']
+      ],
+      questions: ['Which hand-off between teams has nobody tested?', 'What does the customer see that no single team owns?'],
+      related: ['cycle', 'systems', 'united']
+    }
+  };
+  /* the order "next" and "previous" walk: the center, then around the ring */
+  var ORDER = ['united', 'individual', 'inclusive', 'cycle', 'holistic', 'systems', 'explore', 'playful', 'growth'];
+
+  /* ---------- colour helpers: pick whichever ink reads better on each fill ---------- */
+  function lum(hex) {
+    var c = [1, 3, 5].map(function (i) { var v = parseInt(hex.substr(i, 2), 16) / 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); });
+    return .2126 * c[0] + .7152 * c[1] + .0722 * c[2];
+  }
+  function inkFor(hex) {
+    var L = lum(hex), navy = lum('#0a1430');
+    return (L + .05) / (navy + .05) > 1.05 / (L + .05) ? '#0a1430' : '#ffffff';
+  }
+
+  /* ---------- drawing ---------- */
+  var NS = 'http://www.w3.org/2000/svg', uid = 0;
+  function el(name, attrs, parent) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+
+  /* the diagram works in a 1040 square starting at (20, 20); divs are placed in percentages of it */
+  var BOX = 1040, OFF = 20;
+  function pct(v) { return (v / BOX * 100) + '%'; }
+  function disc(parent, cls, x, y, r, color) {
+    var d = document.createElement('div');
+    d.className = cls;
+    d.style.cssText = 'left:' + pct(x - r - OFF) + ';top:' + pct(y - r - OFF) + ';width:' + pct(2 * r) + ';height:' + pct(2 * r) + ';background:' + color;
+    parent.appendChild(d);
+    return d;
+  }
+
+  function drawVenn(host, opts) {
+    var p = 'v' + (uid++) + '-';
+    var wrap = document.createElement('div');
+    wrap.className = 'venn';
+    wrap.setAttribute('role', opts.labels ? 'group' : 'img');
+    wrap.setAttribute('aria-label', opts.labels ? 'United Community diagram' : 'Where this section sits in the diagram');
+    host.appendChild(wrap);
+
+    /* the graphic itself: four blended circles and the solid center */
+    var circles = document.createElement('div');
+    circles.className = 'venn-disc';
+    circles.setAttribute('aria-hidden', 'true');
+    wrap.appendChild(circles);
+    Object.keys(CIRC).forEach(function (k) { disc(circles, 'circ circ-' + k, CIRC[k][0], CIRC[k][1], R, CIRCLE_COLOR[k]).style.mixBlendMode = BLEND; });
+    disc(circles, 'core', CORE.x, CORE.y, CORE.r, CORE_FILL);
+
+    /* a layer of exact region shapes on top, used only to highlight one region against the rest */
+    var hl = el('svg', { viewBox: OFF + ' ' + OFF + ' ' + BOX + ' ' + BOX, class: 'venn-hl', 'aria-hidden': 'true' }, wrap);
+    var defs = el('defs', {}, hl);
+    Object.keys(CIRC).forEach(function (k) {
+      el('circle', { cx: CIRC[k][0], cy: CIRC[k][1], r: R }, el('clipPath', { id: p + 'c' + k }, defs));
+    });
+    Object.keys(FILL).forEach(function (combo) {
+      var mask = el('mask', { id: p + 'm' + combo, maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: 1080, height: 1080 }, defs);
+      el('rect', { width: 1080, height: 1080, fill: '#fff' }, mask);
+      Object.keys(CIRC).forEach(function (k) {
+        if (combo.indexOf(k) < 0) el('circle', { cx: CIRC[k][0], cy: CIRC[k][1], r: R, fill: '#000' }, mask);
+      });
+      el('circle', { cx: CORE.x, cy: CORE.y, r: CORE.r, fill: '#000' }, mask);
+      var g = el('g', { class: 'region', 'data-key': keyOfCombo(combo), mask: 'url(#' + p + 'm' + combo + ')' }, hl), inner = g;
+      combo.split('').forEach(function (k) { inner = el('g', { 'clip-path': 'url(#' + p + 'c' + k + ')' }, inner); });
+      el('rect', { width: 1080, height: 1080 }, inner);
+    });
+    el('circle', { class: 'region', 'data-key': 'united', cx: CORE.x, cy: CORE.y, r: CORE.r }, hl);
+
+    if (opts.labels) {
+      var svg = el('svg', { viewBox: OFF + ' ' + OFF + ' ' + BOX + ' ' + BOX, class: 'venn-lab' }, wrap);
+      var LABELS = [
+        ['united', 'big', 'middle', 540, [490, 548], ['United', 'Community']],
+        ['individual', 'big', 'middle', 540, [128, 186], ['Individual', 'Experience']],
+        ['inclusive', 'small', 'start', 672, [318, 350, 382], ['Inclusive', 'design', 'process']],
+        ['cycle', 'big', 'end', 1012, [488, 546, 604], ['Experience', 'Design', 'Cycle']],
+        ['holistic', 'small', 'start', 652, [715, 747, 779], ['Holistic', 'product', 'development']],
+        ['systems', 'big', 'middle', 540, [890, 948], ['Systems', 'Thinking']],
+        ['explore', 'small', 'start', 262, [715, 747, 779], ['Dynamic', 'exploration', 'framework']],
+        ['playful', 'big', 'start', 72, [494, 552], ['Playful', 'Learning']],
+        ['growth', 'small', 'start', 264, [318, 350], ['Personalized', 'growth path']]
+      ];
+      LABELS.forEach(function (l) {
+        var o = ORIGIN[l[0]];
+        var g = el('g', { class: 'lab', 'data-key': l[0], tabindex: 0, role: 'button', 'aria-label': S[l[0]].title + ': open' }, svg);
+        el('circle', { class: 'ring', cx: o[0], cy: o[1], r: o[2] }, g);
+        var t = el('text', { class: l[1], 'text-anchor': l[2] }, g);
+        l[5].forEach(function (line, i) {
+          var ts = el('tspan', { x: l[3], y: l[4][i] }, t);
+          ts.textContent = line;
+        });
+      });
+    }
+
+    /* hit-testing by geometry: masks don't clip pointer events, so the shapes can't do it themselves */
+    function keyAt(evt) {
+      var b = wrap.getBoundingClientRect();
+      var q = { x: OFF + (evt.clientX - b.left) / b.width * BOX, y: OFF + (evt.clientY - b.top) / b.height * BOX };
+      if (Math.hypot(q.x - CORE.x, q.y - CORE.y) <= CORE.r) return 'united';
+      var combo = Object.keys(CIRC).filter(function (k) { return Math.hypot(q.x - CIRC[k][0], q.y - CIRC[k][1]) <= R; }).join('');
+      return combo ? keyOfCombo(combo) : null;
+    }
+    function setHot(key) {
+      wrap.classList.toggle('has-hot', !!key);
+      wrap.classList.toggle('is-live', !!key);
+      hl.querySelectorAll('.region').forEach(function (r) { r.classList.toggle('is-hot', r.getAttribute('data-key') === key); });
+    }
+    wrap.setHot = setHot;
+    wrap.focusLabel = function (key) { var l = wrap.querySelector('.lab[data-key="' + key + '"]'); if (l) l.focus({ preventScroll: true }); };
+
+    if (opts.onPick) {
+      wrap.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') setHot(keyAt(e)); });
+      wrap.addEventListener('pointerleave', function () { setHot(opts.hot || null); });
+      wrap.addEventListener('click', function (e) { var k = keyAt(e); if (k) opts.onPick(k, wrap); });
+      wrap.addEventListener('focusin', function (e) { var l = e.target.closest('.lab'); if (l) setHot(l.getAttribute('data-key')); });
+      wrap.addEventListener('focusout', function () { setHot(opts.hot || null); });
+      wrap.addEventListener('keydown', function (e) {
+        var l = e.target.closest('.lab');
+        if (l && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); opts.onPick(l.getAttribute('data-key'), wrap); }
+      });
+    }
+    return wrap;
+  }
+
+  /* ---------- the main diagram ---------- */
+  var main = drawVenn(document.getElementById('diagram'), { labels: true, onPick: function (k) { open(k); } });
+
+  /* screen position of a section's origin circle in the main diagram */
+  function originOnScreen(key) {
+    var o = ORIGIN[key], b = main.getBoundingClientRect(), k = b.width / BOX;
+    return { x: b.left + (o[0] - OFF) * k, y: b.top + (o[1] - OFF) * k, r: o[2] * k };
+  }
+  function circle(o, r) { return 'circle(' + (r == null ? o.r : r) + 'px at ' + o.x + 'px ' + o.y + 'px)'; }
+  function coverRadius(o) { return Math.hypot(Math.max(o.x, innerWidth - o.x), Math.max(o.y, innerHeight - o.y)) + 4; }
+
+  /* ---------- the expanded view ---------- */
+  var ov = document.getElementById('ov'), inner = document.getElementById('ov-inner');
+  var current = null, busy = false, lastFocus = null;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+  function chip(key) {
+    var s = S[key];
+    return '<li><button type="button" class="chip" data-go="' + key + '" style="--chip-bg:' + s.color + ';--chip-ink:' + inkFor(s.color) + '"><span class="dot"></span>' + s.title + '</button></li>';
+  }
+
+  function render(key) {
+    var s = S[key], i = ORDER.indexOf(key);
+    var prev = ORDER[(i + ORDER.length - 1) % ORDER.length], next = ORDER[(i + 1) % ORDER.length];
+    var eyebrow = s.parents ? 'Where ' + S[s.parents[0]].title + ' meets ' + S[s.parents[1]].title : s.eyebrow;
+    inner.innerHTML =
+      '<div class="ov-top"><button type="button" class="ov-back" data-close><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to the diagram</button><div class="ov-map" id="ov-map"></div></div>' +
+      '<p class="ov-eyebrow">' + eyebrow + '</p>' +
+      '<h2 id="ov-title" tabindex="-1">' + s.title + '</h2>' +
+      '<p class="ov-lede">' + s.lede + '</p>' +
+      '<div class="ov-grid">' + s.cards.map(function (c, n) {
+        return '<div class="ov-card" style="transition-delay:' + (180 + n * 70) + 'ms"><h3>' + c[0] + '</h3><p>' + c[1] + '</p></div>';
+      }).join('') + '</div>' +
+      '<div class="ov-q"><h3>Questions we ask</h3><ol>' + s.questions.map(function (q) { return '<li>' + q + '</li>'; }).join('') + '</ol></div>' +
+      '<div class="ov-rel">' + (s.parents ? '<h3>Made from</h3>' : '<h3>Connects to</h3>') + '<ul>' + s.related.map(chip).join('') + '</ul></div>' +
+      '<nav class="ov-pager" aria-label="Other sections"><button type="button" data-go="' + prev + '"><span>Previous</span><b>← ' + S[prev].title + '</b></button>' +
+      '<button type="button" data-go="' + next + '"><span>Next</span><b>' + S[next].title + ' →</b></button></nav>';
+    ov.style.setProperty('--bg', s.color);
+    ov.style.setProperty('--ink', inkFor(s.color));
+    var map = drawVenn(document.getElementById('ov-map'), { onPick: function (k) { if (k !== current) swap(k); }, hot: key });
+    map.setHot(key);
+    document.title = s.title + ' | United Community | Dlightning';
+  }
+
+  function open(key, fromHash) {
+    if (busy || !S[key]) return;
+    busy = true; current = key; lastFocus = document.activeElement;
+    if (!fromHash) history.pushState({ uc: key }, '', '#' + key);
+    render(key);
+    var o = originOnScreen(key);
+    ov.classList.remove('is-growing', 'is-shown');
+    ov.style.clipPath = circle(o);
+    ov.scrollTop = 0;
+    ov.classList.add('is-open');
+    ov.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+    ov.getBoundingClientRect();                       /* commit the small circle before growing */
+    ov.classList.add('is-growing');
+    ov.style.clipPath = circle(o, coverRadius(o));
+    setTimeout(function () {
+      ov.classList.add('is-shown');
+      ov.classList.remove('is-growing');
+      ov.style.clipPath = 'none';
+      document.getElementById('ov-title').focus({ preventScroll: true });
+      busy = false;
+    }, reduce.matches ? 10 : parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grow')) * .9);
+  }
+
+  function close() {
+    if (busy || !current) return;
+    busy = true;
+    var key = current;
+    ov.classList.remove('is-shown');
+    /* bring the diagram fully into view behind the overlay so the section has somewhere to land */
+    var box = main.getBoundingClientRect();
+    if (box.top < 0 || box.bottom > innerHeight) scrollTo({ top: scrollY + box.top - Math.max(80, (innerHeight - box.height) / 2), behavior: 'auto' });
+    var o = originOnScreen(key);
+    ov.style.clipPath = circle(o, coverRadius(o));
+    ov.getBoundingClientRect();
+    setTimeout(function () {
+      ov.classList.add('is-growing');
+      ov.style.clipPath = circle(o);
+      setTimeout(function () {
+        ov.classList.remove('is-open', 'is-growing');
+        ov.setAttribute('aria-hidden', 'true');
+        ov.style.clipPath = '';
+        document.documentElement.style.overflow = '';
+        document.title = 'United Community: Four Specialties of Experience Design | Dlightning';
+        current = null; busy = false;
+        main.setHot(key);
+        if (lastFocus && lastFocus.closest && lastFocus.closest('.lab')) main.focusLabel(key);   /* keyboard users land back where they were */
+        setTimeout(function () { if (!main.matches(':hover')) main.setHot(null); }, 900);
+      }, reduce.matches ? 10 : parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grow')));
+    }, reduce.matches ? 0 : 200);
+  }
+
+  /* moving between sections without leaving: colour washes over, content swaps */
+  function swap(key) {
+    if (busy || !S[key] || key === current) return;
+    busy = true;
+    history.replaceState({ uc: key }, '', '#' + key);
+    current = key;
+    ov.classList.add('is-swapping');
+    setTimeout(function () {
+      ov.classList.remove('is-shown');
+      render(key);
+      ov.scrollTo({ top: 0, behavior: 'auto' });
+      ov.getBoundingClientRect();
+      ov.classList.remove('is-swapping');
+      ov.classList.add('is-shown');
+      document.getElementById('ov-title').focus({ preventScroll: true });
+      busy = false;
+    }, reduce.matches ? 0 : 230);
+  }
+
+  function leave() {
+    if (history.state && history.state.uc) history.back();       /* popstate does the closing */
+    else { history.replaceState(null, '', location.pathname + location.search); close(); }
+  }
+
+  ov.addEventListener('click', function (e) {
+    var go = e.target.closest('[data-go]');
+    if (go) { swap(go.getAttribute('data-go')); return; }
+    if (e.target.closest('[data-close]')) leave();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!current) return;
+    if (e.key === 'Escape') { e.preventDefault(); leave(); }
+    if (e.key === 'Tab') {                                         /* keep focus inside the open section */
+      var f = ov.querySelectorAll('button, [tabindex="0"], [href]');
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  addEventListener('popstate', function () {
+    var key = location.hash.slice(1);
+    if (S[key]) { current ? swap(key) : open(key, true); }
+    else if (current) close();
+  });
+
+  /* arriving with a hash opens that section straight away */
+  var start = location.hash.slice(1);
+  if (S[start]) {
+    history.replaceState(null, '', location.pathname + location.search);
+    history.pushState({ uc: start }, '', '#' + start);
+    requestAnimationFrame(function () { open(start, true); });
+  }
+})();
+</script>
+</body>
+</html>
