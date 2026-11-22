@@ -6,9 +6,81 @@
 // Variants swap what's INSIDE .ui-modal — the overlay, close button and arrows stay.
 // Variant roots that need different dialog chrome (no padding, bottom-aligned) are
 // handled in CSS via :has(> .modal-v-…) on .ui-modal / .modal-wrapper.
+//
+// Closing it in the editor: the dialog's own × (part of the design) and the round minimize
+// button on the overlay's top-right (.modal-min-btn, editor chrome) set data-modal-min on
+// the wrapper (saved html — undo, live sync and save carry it). A minimized modal is hidden
+// in the editor and PNG exports, so the screen behind it can be edited; the player still
+// shows it (and its × closes it there). A "Modal" button under the screen (.modal-reveal-btn,
+// on the wrapper, outside the design) or the sidebar's Modal button brings it back. The red
+// .delete-btn, as on every other component, is what removes it.
 window.Components = window.Components || {};
 
 window.Components.modal = (() => {
+    const MIN_ATTR = 'data-modal-min';
+
+    const markChanged = (canvas, why) => {
+        const id = canvas?.closest('.canvas-wrapper')?.getAttribute('data-canvas-id');
+        if (id) window.projectManager?.addCanvasToChanged?.(id, why);
+    };
+
+    // The "Modal" button under each screen whose modal is minimized. Not part of the design
+    // (it's on the wrapper, outside .canvas), so history / save never see it.
+    const COMPACT_BELOW = 260; // px of the screen's on-page width (same as the Keyboard button)
+    let revealQueued = false;
+    const updateRevealButtons = () => {
+        revealQueued = false;
+        document.querySelectorAll('#mockZone > .canvas-wrapper').forEach(wrapper => {
+            const canvas = wrapper.querySelector(':scope > .canvas');
+            const modal = canvas?.querySelector(':scope > .modal-wrapper');
+            let btn = wrapper.querySelector(':scope > .modal-reveal-btn');
+            if (!modal || !modal.hasAttribute(MIN_ATTR)) { btn?.remove(); return; }
+            if (!btn) {
+                btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'modal-reveal-btn';
+                btn.setAttribute('aria-label', 'Show modal');
+                btn.title = 'Show the modal (to edit it, or to have it in PNG exports)';
+                btn.innerHTML = '<i class="fa-regular fa-window-restore"></i><span>Modal</span>';
+                wrapper.appendChild(btn);
+                // Just minimized: a pop draws the eye to where the modal went
+                if (wrapper._modalRevealPop) {
+                    btn.classList.add('reveal-pop');
+                    btn.addEventListener('animationend', () => btn.classList.remove('reveal-pop'), { once: true });
+                }
+            }
+            wrapper._modalRevealPop = false;
+            btn.classList.toggle('reveal-compact', canvas.getBoundingClientRect().width < COMPACT_BELOW);
+        });
+    };
+    const scheduleReveal = () => {
+        if (revealQueued) return;
+        revealQueued = true;
+        requestAnimationFrame(updateRevealButtons);
+    };
+
+    const startWatching = () => {
+        if (window.PUBLIC_PROTO_TOKEN || window.TEMPLATE_GALLERY) return; // no editor there
+        const zone = document.getElementById('mockZone');
+        if (!zone) { setTimeout(startWatching, 200); return; }
+        new MutationObserver(scheduleReveal).observe(zone, {
+            childList: true, subtree: true, attributes: true, attributeFilter: [MIN_ATTR]
+        });
+        // Delegated: a duplicated screen's wrapper can carry a copy of the button
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest?.('#mockZone > .canvas-wrapper > .modal-reveal-btn');
+            if (!btn) return;
+            e.stopPropagation();
+            const modal = btn.parentElement.querySelector(':scope > .canvas > .modal-wrapper');
+            if (modal) api.setMinimized(modal, false);
+            scheduleReveal();
+        });
+        document.addEventListener('editorzoomchange', scheduleReveal);
+        scheduleReveal();
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startWatching);
+    else startWatching();
+
     const VARIANTS = [
         // 1 — Classic (same content the factory used to build; saved modals without
         // the wrapper div are this variant too)
@@ -68,10 +140,29 @@ window.Components.modal = (() => {
             <div class="modal-v-row"><div class="icon-container"><i class="fas fa-link"></i></div><span class="usa" contenteditable="true">Copy link</span></div>
             <div class="modal-v-row"><div class="icon-container"><i class="fas fa-pen"></i></div><span class="usa" contenteditable="true">Edit</span></div>
             <div class="modal-v-row modal-v-row-danger"><div class="icon-container"><i class="fas fa-trash"></i></div><span class="usa" contenteditable="true">Delete</span></div>
+        </div>`,
+
+        // 6 — Blank: an empty drop area, like a blank card — drag any components in. Its
+        // .blank-card-content class is what makes it a drop target (Sortable onAdd), keeps
+        // nested components through save / live sync (rewrapComponents) and gives it the
+        // blank card's placeholder; .modal-blank-content restyles it for the dialog.
+        /*html*/
+        `<div class="modal-v-blank">
+            <div class="blank-card-content modal-blank-content"></div>
         </div>`
     ];
 
-    return {
+    // The blank variant's drop area: placeholder + Sortable (blankCard.setup), and the
+    // components in it rebuilt from html (load, undo, live sync, a variant switch back from
+    // the cache) get their handlers again (projectManager.rehydrateDropZone, once per element).
+    const setupBlank = (dialog) => {
+        const inner = dialog?.querySelector(':scope > .modal-v-blank > .modal-blank-content');
+        if (!inner) return;
+        window.Components.blankCard?.setup(dialog);
+        window.projectManager?.rehydrateDropZone?.(inner);
+    };
+
+    const api = {
         variants() {
             return VARIANTS.slice();
         },
@@ -94,8 +185,13 @@ window.Components.modal = (() => {
             modal.className = 'ui-modal';
             modal.innerHTML = VARIANTS[0];
 
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = '×';
+
             modalWrapper.appendChild(closeBtnCon);
             modalWrapper.appendChild(modal);
+            modalWrapper.appendChild(deleteBtn);
 
             this.setup(modalWrapper);
             return modalWrapper;
@@ -114,40 +210,121 @@ window.Components.modal = (() => {
         },
 
         playSetOpen(root, open) {
-            root.style.display = open ? '' : 'none';
+            // 'flex', not '': clearing it drops the overlay's own inline display: flex (set in
+            // create()), which is what centers the dialog — no stylesheet rule puts it back
+            root.style.display = open ? 'flex' : 'none';
         },
 
         playIsOpen(root) {
             return root.style.display !== 'none';
         },
 
+        // Variant arrows swapped the dialog's markup (editor.setupVariantControls)
+        afterVariantChange(dialog) {
+            setupBlank(dialog);
+        },
+
+        // Editor only: hide (on) / show (off) the modal without removing it
+        isMinimized: (root) => !!root?.hasAttribute(MIN_ATTR),
+
+        setMinimized(root, on) {
+            if (!root || !!on === root.hasAttribute(MIN_ATTR)) return;
+            if (root.classList.contains('modal-minimizing')) return;   // already on its way down
+            const apply = () => {
+                root.classList.remove('modal-minimizing');
+                root.toggleAttribute(MIN_ATTR, !!on);
+                const wrapper = root.closest('.canvas-wrapper');
+                if (wrapper && on) wrapper._modalRevealPop = true;
+                markChanged(root.closest('.canvas'), on ? 'Modal minimized' : 'Modal shown');
+                scheduleReveal();
+            };
+            if (!on || !root.isConnected || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ||
+                typeof root.animate !== 'function') { apply(); return; }
+            // Minimizing: the dialog drops and shrinks toward the bottom edge — where the "Modal"
+            // button under the screen appears — while the dim fades. Web Animations, so nothing
+            // is written into the saved html; the class (session-only, editor-chrome.js) hides the
+            // chrome and blocks clicks meanwhile.
+            root.classList.add('modal-minimizing');
+            const MS = 320, EASE = 'cubic-bezier(.5, 0, .75, 0)';
+            const dialog = root.querySelector(':scope > .ui-modal');
+            const anims = [root.animate(
+                [{ backgroundColor: getComputedStyle(root).backgroundColor }, { backgroundColor: 'rgba(0, 0, 0, 0)' }],
+                { duration: MS, easing: 'ease-in' })];
+            Array.from(root.children).forEach(el => {
+                if (el !== dialog && !el.matches('div[style*="width: calc(100% - 46px)"]')) return;
+                // To the bottom edge (layout px, so the editor's zoom doesn't matter), shrinking
+                const dy = root.clientHeight - (el.offsetTop + el.offsetHeight / 2);
+                anims.push(el.animate(
+                    [{ transform: 'none', opacity: 1 }, { transform: `translateY(${dy}px) scale(.3)`, opacity: 0 }],
+                    { duration: MS, easing: EASE }));
+            });
+            Promise.all(anims.map(a => a.finished)).catch(() => {}).then(apply);
+        },
+
         setup(modalWrapper) {
             if (!modalWrapper) return;
 
-            // Set up close button (once per element — setup runs again on load/sync)
+            // The dialog's × closes it: in the editor that's minimizing (the player binds its own,
+            // on its clone). Once per element — setup runs again on load/sync.
             const closeBtnCon = modalWrapper.querySelector('div[style*="width: calc(100% - 46px)"]');
             const closeBtn = closeBtnCon?.querySelector('div');
             if (closeBtn && !closeBtn._modalCloseBound) {
                 closeBtn._modalCloseBound = true;
-                closeBtn.addEventListener('click', () => {
-                    editor.modalAdded = false;
-                    editor.specialComponents.modal.added = false;
-                    const canvas = modalWrapper.closest('.canvas');
-                    if (canvas) {
-                        canvas.removeAttribute('data-has-modal');
-                    }
-                    modalWrapper.remove();
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    api.setMinimized(modalWrapper, true);
                 });
             }
+
+            // Minimize button (editor chrome, rebuilt here so it comes back on load / sync / undo)
+            let minBtn = modalWrapper.querySelector(':scope > .modal-min-btn');
+            if (!minBtn) {
+                minBtn = document.createElement('button');
+                minBtn.type = 'button';
+                minBtn.className = 'modal-min-btn non-editable';
+                minBtn.title = 'Minimize the modal to edit the screen behind it (it still shows in play; the Modal button under the screen brings it back)';
+                minBtn.setAttribute('aria-label', 'Minimize modal');
+                minBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                modalWrapper.appendChild(minBtn);
+            }
+            if (!minBtn._modalBound) {
+                minBtn._modalBound = true;
+                minBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    api.setMinimized(modalWrapper, true);
+                });
+            }
+
+            // Delete (×), as on every other component: removes it (editor.deleteComponent).
+            // Saved modals from before it existed get one here.
+            let deleteBtn = modalWrapper.querySelector(':scope > .delete-btn');
+            if (!deleteBtn) {
+                deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.textContent = '×';
+                modalWrapper.appendChild(deleteBtn);
+            }
+            if (!deleteBtn._modalDeleteBound) {
+                deleteBtn._modalDeleteBound = true;
+                deleteBtn.addEventListener('click', () => {
+                    editor.modalAdded = false;
+                    editor.specialComponents.modal.added = false;
+                });
+            }
+            editor.setupDeleteHandler(modalWrapper);
 
             // Variant arrows on the overlay; they swap the dialog's contents
             const dialog = modalWrapper.querySelector('.ui-modal');
             if (dialog) editor.setupVariantControls(modalWrapper, dialog, 'modal');
+            setupBlank(dialog);
 
             // Set state flag
             editor.modalAdded = true;
+            scheduleReveal();
 
             return modalWrapper;
         }
     };
+    return api;
 })();

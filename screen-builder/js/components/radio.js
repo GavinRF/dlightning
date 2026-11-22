@@ -45,7 +45,8 @@ window.Components.radio = {
 
         // Make the label editable but prevent the click from propagating to the radio button
         if (radLabl) {
-            editor.makeTextEditable(radLabl);
+            // Older saved labels have no contenteditable (they used a click-to-input editor)
+            radLabl.setAttribute('contenteditable', 'true');
 
             // Prevent click on label from triggering radio button
             radLabl.addEventListener('click', (e) => {

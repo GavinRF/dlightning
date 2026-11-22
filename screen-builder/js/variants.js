@@ -1156,7 +1156,7 @@ case 'blankCard':
         /*html*/
         `<div class="navContain">
         <div class="fw navbar top-navbar" style="overflow: auto;">
-        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+        <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center;">
             <div class="icon-container mr-16 ml-16 nav-icon">
             <i class="fas fa-sliders"></i>
             </div>

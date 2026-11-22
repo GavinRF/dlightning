@@ -238,7 +238,7 @@
     radio: e => '<div class="radio-wrapper" style="display: flex; align-items: center;"><label class="radio-label">'
       + `<div class="radio-outer-circle custom-radio"${e.checked ? ' style="border-color: var(--color-primary);"' : ''}>`
       + `<span class="radio-dot" style="background-color: var(--color-primary);${e.checked ? ' display: block;' : ''}"></span></div></label>`
-      + '<span style="color: var(--basic-txt-color);">click to edit</span></div>',
+      + '<span class="usa" contenteditable="true" style="color: var(--basic-txt-color);">click to edit</span></div>',
     dropdown: () => '<div class="custom-dropdown-container"><div class="dropdown-header"><div class="selected-text">Select an option</div><i class="fas fa-chevron-down"></i></div></div>',
     tabs: e => '<div class="tabs-container"' + (e.style && e.style !== 'classic' ? ` data-tab-style="${e.style}"` : '') + '>'
       + '<div class="tabs-wrapper" style="display: flex; width: 100%;">'
@@ -2217,6 +2217,9 @@
       });
       markScreenChanged(wrapper, `Applied app pack: ${pack.title}`);
     });
+    // The pack's bars start synced (component-sync.js): its tab bars (tabBar(): the same bar on
+    // each screen), and top navs of the same style (their titles are per screen)
+    window.componentSync?.groupScreens(built.map(({ wrapper }) => wrapper));
 
     // Play starts at the pack's first screen unless the project already has a start screen
     const proto = window.prototypeMode;

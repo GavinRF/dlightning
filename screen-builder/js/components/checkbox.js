@@ -1,7 +1,7 @@
 // Component registry module — see docs/component-module-migration.md
 // checkbox: a square toggle icon with an editable label.
 // Note: this method uses the editor singleton — `this.` in the original method
-// became `editor.` here (e.g. editor.makeTextEditable, and the dedupe handle
+// became `editor.` here (e.g. the dedupe handle
 // editor._checkboxClickHandler, whose shared-property semantics are preserved as-is).
 window.Components = window.Components || {};
 
@@ -39,7 +39,8 @@ window.Components.checkbox = {
         }
 
         if (checkLabel) {
-            editor.makeTextEditable(checkLabel);
+            // Older saved labels have no contenteditable (they used a click-to-input editor)
+            checkLabel.setAttribute('contenteditable', 'true');
         }
     }
 };

@@ -1372,9 +1372,9 @@
             </div>
 
 <!-- BORDER RADIUS  -->
-            <div id="radius-preview">
+            <div class="radius-controls">
                 <div style="width: 100%;">
-                    <label style="color: white;"><i class="fa-solid fa-mound fa-rotate-90"></i>&emsp; Corner Radius</label>
+                    <label style="color: white;"><svg class="radius-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V12a8 8 0 0 1 8-8h8"/></svg>&emsp; Corner Radius</label>
                     <p style="color: gray; margin: 4px 0; font-size: smaller;">(applies to all cards and images)</p>
                     <div class="range-input-group">
                         <input type="range" 
@@ -1387,8 +1387,11 @@
                                class="border-radius-range" 
                                value="10" 
                                step="1" 
-                               min="12"
+                               min="0"
                                style="width: 56px">
+                        <div id="radius-preview-outer">
+                            <div class="radius-preview-inner"></div>
+                        </div>
                     </div>
         
                 </div>
@@ -1520,7 +1523,7 @@
 
     <div style="height: 12px;"></div>
             <div>
-                <button title="download" class="system-btn" id="download-btn"><i class="fas fa-circle-down"></i> <span> &emsp;Download PNG Image</span></button>
+                <button title="download" class="system-btn" id="download-btn"><i class="fas fa-circle-down"></i> <span>&emsp;Download PNG Image</span></button>
                 <!-- Export sizes: tablet/desktop render an off-screen copy; the builder is unchanged -->
                 <div class="export-sizes" role="group" aria-label="Export sizes" style="display: none"><!-- shown by setupExportSizes when EXPORT_SIZES_ENABLED -->
                     <label class="export-size-opt" title="The screen exactly as it is in the builder"><input type="checkbox" value="current" checked><span><i class="fa-solid fa-mobile-screen"></i> As designed</span></label>
@@ -1548,6 +1551,7 @@
 
         <a id="gallery-link" href="components.html" target="_blank" rel="noopener" title="See every component and variant"><i class="fas fa-table-cells-large"></i><span> Component Gallery</span></a>
         <a id="template-gallery-link" href="templates.html" target="_blank" rel="noopener" title="See every template and app pack"><i class="fas fa-layer-group"></i><span> Template Gallery</span></a>
+        <a id="shortcuts-link" href="#" role="button" title="Show keyboard shortcuts"><i class="fas fa-circle-question"></i><span> Shortcuts</span></a>
         <div class="system-links">
             <a style="color: gray;" target="_blank" href="/tos">ToS</a>
             <a style="color: gray;" target="_blank" href="/privacy-policy">Privacy Policy</a>

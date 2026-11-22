@@ -252,20 +252,31 @@
             <div class="dropdown-header"><div class="selected-text">Dropdown</div><i class="fas fa-chevron-down"></i></div>
         </div>`;
 
-    // Data table: the four default columns table.setup() builds (checkbox / link / text / action).
-    const tableHTML = (headerColor) => {
-        const cols = [['Check', 'checkbox'], ['ID', 'link'], ['Name', 'text'], ['Action', 'action (icon)']];
+    // Data table: the columns table.setup() builds per type (js/components/table.js createCell),
+    // `style` = data-table-style (classic / striped / compact / cards). Default columns, or
+    // `types` = one of each newer type: person / status / number / toggle.
+    const tableHTML = (headerColor, style = 'classic', types = false) => {
+        const cols = types
+            ? [['All', 'checkbox'], ['Name', 'person'], ['Status', 'status'], ['Amount', 'number'], ['Active', 'toggle']]
+            : [['All', 'checkbox'], ['ID', 'link'], ['Name', 'text'], ['Action', 'action (icon)']];
+        const names = ['Ava Chen', 'Leo Park', 'Mia Ross'];
+        const status = [['Active', 'success'], ['Pending', 'warning'], ['Inactive', 'neutral']];
         const cell = (type, r) => {
-            if (type === 'checkbox') return `<td class="dt-cell-td"><div class="fa-regular fa-square" style="margin:-2px 10px 0 10px;border-radius:4px;position:relative;font-size:18px;color:#a0a0a0;"><i class="fa-solid fa-square-check" style="font-size:18px;color:var(--primary-color);display:${r === 0 ? 'block' : 'none'};position:absolute;top:0;left:0;"></i></div></td>`;
-            if (type === 'link') return `<td class="dt-cell-td"><span style="color:#0d87d8">#${1001 + r}</span></td>`;
+            if (type === 'checkbox') return `<td class="dt-cell-td"><div class="fa-regular fa-square" style="margin:-2px 10px 0 10px;border-radius:4px;position:relative;font-size:18px;color:#a0a0a0;"><i class="fa-solid fa-square-check" style="font-size:18px;display:${r === 0 ? 'block' : 'none'};position:absolute;top:0;left:0;"></i></div></td>`;
+            if (type === 'link') return `<td class="dt-cell-td"><span class="dt-link">#${1001 + r}</span></td>`;
             if (type === 'action (icon)') return `<td class="dt-cell-td icon-container"><i class="fas fa-bolt"></i><span style="margin-left:8px">Action</span></td>`;
-            return `<td class="dt-cell-td">${['Ava Chen', 'Leo Park', 'Mia Ross'][r]}</td>`;
+            if (type === 'person') return `<td class="dt-cell-td dt-person"><span class="dt-avatar">${names[r].split(' ').map(w => w[0]).join('')}</span><span class="dt-person-name">${names[r]}</span></td>`;
+            if (type === 'status') return `<td class="dt-cell-td"><span class="dt-status" data-dt-tone="${status[r][1]}"><span class="dt-status-dot"></span><span>${status[r][0]}</span></span></td>`;
+            if (type === 'number') return `<td class="dt-cell-td dt-number">${['$1,250', '$860', '$2,430'][r]}</td>`;
+            if (type === 'toggle') return `<td class="dt-cell-td"><span class="dt-toggle" data-on="${r !== 2}"><span class="dt-toggle-knob"></span></span></td>`;
+            return `<td class="dt-cell-td">${names[r]}</td>`;
         };
+        const header = (t, type) => `<th class="data-table-header-cell" data-column-type="${type}"><div class="data-table-header-content">${type === 'checkbox' ? '<i class="dt-select-all fa-solid fa-square-minus"></i>' : ''}<span>${t}</span><div class="td-header-icon icon-container"><i class="fas fa-sort"></i></div></div></th>`;
         return `
-        <div class="data-table-scroll-wrapper"><div class="data-table-container">
+        <div class="data-table-scroll-wrapper"${style === 'classic' ? '' : ` data-table-style="${style}"`}><div class="data-table-container">
             <div class="data-table-header-bg" style="background-color:${headerColor}"></div>
             <table class="data-table-main">
-                <thead><tr>${cols.map(([t, type]) => `<th class="data-table-header-cell" data-column-type="${type}"><div class="data-table-header-content"><span>${t}</span><div class="td-header-icon icon-container"><i class="fas fa-sort"></i></div></div></th>`).join('')}</tr></thead>
+                <thead><tr>${cols.map(([t, type]) => header(t, type)).join('')}</tr></thead>
                 <tbody>${[0, 1, 2].map(r => `<tr class="data-table-row">${cols.map(([, type]) => cell(type, r)).join('')}</tr>`).join('')}</tbody>
             </table>
         </div></div>`;
@@ -442,7 +453,14 @@
         ]],
         ['Data Display', [
             ['avatar', 'Avatar', v('avatar')],
-            ['table', 'Data Table', labelled([['Primary header', tableHTML('var(--color-primary)')], ['Secondary header', tableHTML('var(--color-secondary)')]])],
+            ['table', 'Data Table', labelled([
+                ['Classic', tableHTML('var(--color-primary)')],
+                ['Striped', tableHTML('var(--color-primary)', 'striped')],
+                ['Compact', tableHTML('var(--color-primary)', 'compact')],
+                ['Cards', tableHTML('var(--color-primary)', 'cards')],
+                ['Person · Status · Number · Toggle', tableHTML('var(--color-primary)', 'classic', true)],
+                ['Secondary header', tableHTML('var(--color-secondary)')]
+            ])],
             ['chipGroup', 'Pills', labelled([['Default', chipsHTML(['Design', 'Development', 'Marketing'])], ['With selection', chipsHTML(['All', 'Music', 'Podcasts', 'Books', 'Live'], [0, 3])]])],
         ]],
         ['Overlays', [

@@ -194,6 +194,8 @@ window.Components.bottomSheet = {
     
     // Initialize sortable for content
     editor.initializeSortable(content);
+    // Components in it rebuilt from html (load, undo, live sync) get their handlers again
+    window.projectManager?.rehydrateDropZone?.(content);
     
     // Get content height including children
     const getContentHeight = () => {

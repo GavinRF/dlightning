@@ -50,7 +50,7 @@ window.COMPONENT_SEARCH_TERMS = {
     musicPlayer:            "audio player song podcast playlist media controls",
     map:                    "location directions gps pin address route",
     avatar:                 "profile image user picture account person headshot",
-    table:                  "grid spreadsheet rows columns data",
+    table:                  "grid spreadsheet rows columns data list status badge toggle switch avatar user people price striped admin dashboard",
     chipGroup:              "chips tags hashtags cloud filters badges categories",
     modal:                  "dialog popup confirm overlay lightbox",
     floatingActionButton:   "FAB add plus compose action",

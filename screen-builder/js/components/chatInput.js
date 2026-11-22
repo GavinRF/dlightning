@@ -104,7 +104,8 @@ window.Components.chatInput = {
     offsetFor(canvas, { keyboardOpen = true } = {}) {
         const kb = canvas.querySelector(':scope > .keyboard-container');
         const nav = canvas.querySelector(':scope > .bottomNavContain');
-        if (kb && keyboardOpen) return kb.offsetHeight;
+        // (a minimized keyboard is display: none in the editor — offsetHeight 0)
+        if (kb && keyboardOpen && kb.offsetHeight) return kb.offsetHeight;
         return nav ? nav.offsetHeight : 0;
     },
 

@@ -34,7 +34,56 @@ window.Components.navbar = {
         // update text contrast
         window.TextContrastAdjuster.updateElementContrast(navbarElement);
 
+        // Last, so setup's own changes aren't taken for an edit
+        window.componentSync?.attach(topNavbarContainer, 'navbar');   // Reuse / Synced · N / Detach + sync
         return topNavbarContainer;
+    },
+
+    // ---- Use on other screens / keep copies in sync (js/component-sync.js) ------------------
+    // Everything is shared (style, icons, images, colors, links…) except the bar's own text,
+    // which names the page: each slot below is per screen. A new copy takes its screen's name
+    // as the title (named screens only); a pushed copy keeps the text it had. App packs' top
+    // navs of the same style start synced, whatever their titles.
+    TITLE_SLOTS: [
+        '.nav-title-text, .nav-brand-text',   // a title / brand-as-title: one slot across variants
+        '.nav-username',                      // chat variant
+        '.nav-status',
+    ],
+
+    syncSettings() {
+        const N = window.Components.navbar;
+        return {
+            container: '.navContain',
+            noun: 'top nav',
+            replacesNote: 'nav',
+            groupPrefix: 'tnav_',
+            compactBelow: 340,
+            normalize(clone) {
+                N.TITLE_SLOTS.forEach(sel => clone.querySelectorAll(sel).forEach(el => {
+                    el.textContent = '';
+                    el.classList.remove('usa');   // edited or not: per screen too
+                }));
+            },
+            forScreen(clone, canvas) {
+                const name = canvas?.getAttribute('data-screen-name')?.trim();
+                const title = clone.querySelector(N.TITLE_SLOTS[0]);
+                if (name && title) title.textContent = name;
+            },
+            // Remembered across pushes (_syncTitles: this session only), so stepping the style
+            // through a variant without a title and back keeps the screen's own one
+            carryOver(old, fresh) {
+                const kept = { ...(old._syncTitles || {}) };
+                N.TITLE_SLOTS.forEach(sel => {
+                    const from = old.querySelector(sel);
+                    if (from) kept[sel] = { text: from.textContent, usa: from.classList.contains('usa') };
+                    const to = fresh.querySelector(sel);
+                    if (!to || !kept[sel]) return;
+                    to.textContent = kept[sel].text;
+                    to.classList.toggle('usa', kept[sel].usa);
+                });
+                fresh._syncTitles = kept;
+            },
+        };
     },
 
     // Helper function to set up all interactive elements in the navbar
@@ -74,3 +123,6 @@ window.Components.navbar = {
         return navbarElement;
     }
 };
+
+// (templates.html loads this module without component-sync.js)
+window.componentSync?.register('navbar', window.Components.navbar.syncSettings());
