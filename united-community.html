@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>United Community: Four Specialties of Experience Design | Dlightning</title>
-<meta name="description" content="Individual experience, the experience design cycle, systems thinking and playful learning design, and how they meet in a united community.">
+<title>Building a United Community: A Map of Four Systems That Connect People | Dlightning</title>
+<meta name="description" content="A viewpoint on four systems that, set in place together, create a united community: individual experience, the experience design cycle, systems thinking and playful learning design.">
 <link rel="canonical" href="https://dlightning.org/united-community.html">
 <meta name="author" content="Dlightning">
 
 <meta property="og:type" content="article">
-<meta property="og:title" content="United Community">
-<meta property="og:description" content="Four specialties, where they overlap, and the shared understanding at the center.">
+<meta property="og:title" content="Building a United Community">
+<meta property="og:description" content="A map of four systems, where they overlap, and the united community they create.">
 <meta property="og:url" content="https://dlightning.org/united-community.html">
 
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
@@ -46,10 +46,10 @@
 
   /* ---------- the diagram ---------- */
   .uc-stage { min-height: calc(100vh - var(--header)); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: center; gap: 48px; padding: 48px 64px 72px; max-width: 1440px; margin: 0 auto; }
-  .uc-intro .eyebrow { font-size: .9375rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #4b5675; margin: 0 0 16px; }
+  .uc-intro .eyebrow { font-size: .9375rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #4b5675; margin: 0 0 16px; max-width: none; }
   .uc-intro h1 { font-size: clamp(3rem, 6.4vw, 6rem); font-weight: 900; line-height: .95; letter-spacing: -.03em; margin: 0 0 24px; color: var(--navy); }
   .uc-intro p { font-size: 1.3rem; line-height: 1.5; color: #27314f; margin: 0 0 16px; max-width: 34ch; }
-  .uc-intro .hint { font-size: 1rem; color: #4b5675; display: flex; align-items: center; gap: 10px; margin-top: 32px; }
+  .uc-intro .hint { font-size: 1rem; color: #4b5675; display: flex; align-items: center; gap: 10px; margin-top: 32px; max-width: none; }
   .uc-intro .hint i { font-size: 1.1rem; }
 
   .venn { position: relative; width: 100%; aspect-ratio: 1 / 1; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
@@ -62,9 +62,14 @@
   /* hovering washes the other regions toward the paper */
   .venn-hl .region { fill: var(--paper); opacity: 0; transition: opacity .3s; }
   .venn.has-hot .venn-hl .region:not(.is-hot) { opacity: .4; }
+  .venn-hl .seams circle { fill: none; stroke: #fff; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
+  .venn-hl .seams { opacity: 0; transition: opacity .3s; }
+  .venn.has-hot .venn-hl .seams { opacity: 1; }
+  .ov-map .venn-hl .seams { display: none; }
   .venn text { fill: #fff; font-family: var(--font); pointer-events: none; user-select: none; }
-  .venn .big { font-size: 50px; font-weight: 500; letter-spacing: -.01em; }
-  .venn .small { font-size: 24px; font-weight: 500; letter-spacing: .16em; }
+  .venn .big { font-size: 42px; font-weight: 500; letter-spacing: -.01em; }
+  .venn .center { font-size: 46px; font-weight: 500; letter-spacing: -.01em; }
+  .venn .small { font-size: 24px; font-weight: 500; letter-spacing: .13em; }
   .venn .lab { outline: none; }
   .venn .lab .ring { fill: none; stroke: #fff; stroke-width: 4; stroke-dasharray: 10 8; opacity: 0; transition: opacity .2s; }
   .venn .lab:focus-visible .ring { opacity: 1; }
@@ -138,9 +143,9 @@
 <main>
   <section class="uc-stage" aria-labelledby="uc-title">
     <div class="uc-intro">
-      <p class="eyebrow">How we work</p>
-      <h1 id="uc-title">United Community</h1>
-      <p>Four specialties shape our work: individual experience, the experience design cycle, systems thinking and playful learning design. Each pair that overlaps makes something of its own, and all four meet in a team that understands its goals together.</p>
+      <p class="eyebrow">A map for work that connects people</p>
+      <h1 id="uc-title">Building a United Community</h1>
+      <p>Four systems that, set in place together, create a united community: individual experience, the experience design cycle, systems thinking and playful learning design. Each overlap is where art and science combine, and the center is the outcome they build toward.</p>
       <p class="hint"><i class="fa fa-hand-pointer" aria-hidden="true"></i> Select any part of the diagram to go deeper.</p>
     </div>
     <div class="uc-diagram" id="diagram"></div>
@@ -178,16 +183,24 @@ $(document).ready(function () {
 <script>
 (function () {
   /* ---------- geometry: the four circles and the center, in a 1080 square ---------- */
-  var R = 318, CORE = { x: 540, y: 540, r: 142 };
+  var R = 318;
+  /* the center is exactly the region inside all four circles: a rounded square whose sides are arcs of the four circles.
+     Its sides sit 138 from the middle (318 − 180), and its corners are where neighbouring circles cross. */
+  var CORE = (function () {
+    /* neighbouring circles (e.g. right and bottom) are 180√2 apart; they cross on the diagonal, h either side of
+       their midpoint (630, 630). The nearer crossing is the corner: 630 − h/√2, i.e. h/√2 − 90 from the middle */
+    var d = 180 * Math.SQRT2 / 2, h = Math.sqrt(R * R - d * d);
+    return { x: 540, y: 540, half: R - 180, corner: h / Math.SQRT2 - 90 };
+  })();
   var CIRC = { T: [540, 360], L: [360, 540], R: [720, 540], B: [540, 720] };
 
-  /* the four circles are divs, 60% opaque, blended with each other inside an isolated group that sits on the paper.
+  /* the four circles are semi-transparent divs, blended with each other inside an isolated group that sits on the paper.
      Change BLEND to any CSS mix-blend-mode: multiply, screen, overlay, darken, lighten, color-dodge, color-burn,
      hard-light, soft-light, difference, exclusion, hue, saturation, color, luminosity (the colours below follow it). */
   var BLEND = 'multiply';
   var PAPER = '#f4f6fa';
-  var CIRCLE_COLOR = { T: '#003CD799', R: '#01452499', B: '#0098C899', L: '#6C27DE99' };
-  var CORE_FILL = '#08122f';
+  var CIRCLE_COLOR = { T: '#1344CED8', R: '#007625B3', B: '#007AB5BA', L: '#6130C0CB' };
+  var CORE_FILL = '#050c35';
 
   /* the colour each overlap comes out as, worked out the way the browser composites it, so a section opens in
      exactly the colour that was clicked: each circle blends with what is under it in the group (in DOM order),
@@ -262,7 +275,7 @@ $(document).ready(function () {
   var ORIGIN = {
     individual: [540, 165, 130], playful: [165, 540, 130], cycle: [915, 540, 130], systems: [540, 915, 130],
     growth: [345, 345, 95], inclusive: [735, 345, 95], explore: [345, 735, 95], holistic: [735, 735, 95],
-    united: [540, 540, 142]
+    united: [540, 540, 138]
   };
 
   /* ---------- content ---------- */
@@ -286,7 +299,7 @@ $(document).ready(function () {
         ['Perception', 'What people notice first, what they miss, and what they assume a thing does before they touch it.'],
         ['Emotion', 'How each step feels: the confidence after something works, the doubt before a payment, the relief when an error explains itself.'],
         ['Personal to cultural', 'Experience is shaped by one person’s history and by the shared language, norms and symbols of the groups they belong to. Both decide what a design means to someone.'],
-        ['Translation', 'Turning what we learn about people into features, words and flows they can use, so the insight survives the trip into the product.']
+        ['Translation', 'Turning what is learned about people into features, words and flows they can use, so the insight survives the trip into the product.']
       ],
       questions: ['What does this person already believe when they arrive?', 'Where do they hesitate, and why?', 'What would this mean to someone from a different background?'],
       related: ['growth', 'inclusive', 'united']
@@ -397,6 +410,13 @@ $(document).ready(function () {
   /* the diagram works in a 1040 square starting at (20, 20); divs are placed in percentages of it */
   var BOX = 1040, OFF = 20;
   function pct(v) { return (v / BOX * 100) + '%'; }
+  /* outline of the center: four arcs of radius R through the four corners. In box units (0–1) for the div's clip */
+  function corePath(box) {
+    var a = CORE.corner, s = box ? 1 / (2 * CORE.half) : 1;
+    function pt(dx, dy) { return box ? ((dx + CORE.half) * s) + ' ' + ((dy + CORE.half) * s) : (CORE.x + dx) + ' ' + (CORE.y + dy); }
+    var arc = ' A ' + R * s + ' ' + R * s + ' 0 0 1 ';
+    return 'M ' + pt(-a, -a) + arc + pt(a, -a) + arc + pt(a, a) + arc + pt(-a, a) + arc + pt(-a, -a) + ' Z';
+  }
   function disc(parent, cls, x, y, r, color) {
     var d = document.createElement('div');
     d.className = cls;
@@ -410,7 +430,7 @@ $(document).ready(function () {
     var wrap = document.createElement('div');
     wrap.className = 'venn';
     wrap.setAttribute('role', opts.labels ? 'group' : 'img');
-    wrap.setAttribute('aria-label', opts.labels ? 'United Community diagram' : 'Where this section sits in the diagram');
+    wrap.setAttribute('aria-label', opts.labels ? 'Building a United Community diagram' : 'Where this section sits in the diagram');
     host.appendChild(wrap);
 
     /* the graphic itself: four blended circles and the solid center */
@@ -419,7 +439,10 @@ $(document).ready(function () {
     circles.setAttribute('aria-hidden', 'true');
     wrap.appendChild(circles);
     Object.keys(CIRC).forEach(function (k) { disc(circles, 'circ circ-' + k, CIRC[k][0], CIRC[k][1], R, CIRCLE_COLOR[k]).style.mixBlendMode = BLEND; });
-    disc(circles, 'core', CORE.x, CORE.y, CORE.r, CORE_FILL);
+    var coreDiv = disc(circles, 'core', CORE.x, CORE.y, CORE.half, CORE_FILL);
+    var clipSvg = el('svg', { width: 0, height: 0, 'aria-hidden': 'true', style: 'position:absolute' }, circles);
+    el('path', { d: corePath(true) }, el('clipPath', { id: p + 'core', clipPathUnits: 'objectBoundingBox' }, clipSvg));
+    coreDiv.style.clipPath = 'url(#' + p + 'core)';
 
     /* a layer of exact region shapes on top, used only to highlight one region against the rest */
     var hl = el('svg', { viewBox: OFF + ' ' + OFF + ' ' + BOX + ' ' + BOX, class: 'venn-hl', 'aria-hidden': 'true' }, wrap);
@@ -433,24 +456,27 @@ $(document).ready(function () {
       Object.keys(CIRC).forEach(function (k) {
         if (combo.indexOf(k) < 0) el('circle', { cx: CIRC[k][0], cy: CIRC[k][1], r: R, fill: '#000' }, mask);
       });
-      el('circle', { cx: CORE.x, cy: CORE.y, r: CORE.r, fill: '#000' }, mask);
       var g = el('g', { class: 'region', 'data-key': keyOfCombo(combo), mask: 'url(#' + p + 'm' + combo + ')' }, hl), inner = g;
       combo.split('').forEach(function (k) { inner = el('g', { 'clip-path': 'url(#' + p + 'c' + k + ')' }, inner); });
       el('rect', { width: 1080, height: 1080 }, inner);
     });
-    el('circle', { class: 'region', 'data-key': 'united', cx: CORE.x, cy: CORE.y, r: CORE.r }, hl);
+    /* thin lines on every circle edge, shown while hovering: the dimmed regions meet on these edges, and the
+       line covers the anti-aliased seam where two of them would otherwise overlap or leave a gap */
+    var seams = el('g', { class: 'seams' }, hl);
+    Object.keys(CIRC).forEach(function (k) { el('circle', { cx: CIRC[k][0], cy: CIRC[k][1], r: R }, seams); });
 
     if (opts.labels) {
       var svg = el('svg', { viewBox: OFF + ' ' + OFF + ' ' + BOX + ' ' + BOX, class: 'venn-lab' }, wrap);
       var LABELS = [
-        ['united', 'big', 'middle', 540, [490, 548], ['United', 'Community']],
-        ['individual', 'big', 'middle', 540, [128, 186], ['Individual', 'Experience']],
+        ['united', 'center', 'middle', 540, [530, 578], ['United', 'Community']],
+        ['individual', 'big', 'middle', 540, [140, 190], ['Individual', 'Experience']],
         ['inclusive', 'small', 'start', 672, [318, 350, 382], ['Inclusive', 'design', 'process']],
-        ['cycle', 'big', 'end', 1012, [488, 546, 604], ['Experience', 'Design', 'Cycle']],
+        /* the green-only area is widest just below the middle, so "Experience" sits there, centred in it */
+        ['cycle', 'big', 'middle', 925, [552, 602, 652], ['Experience', 'Design', 'Cycle']],
         ['holistic', 'small', 'start', 652, [715, 747, 779], ['Holistic', 'product', 'development']],
-        ['systems', 'big', 'middle', 540, [890, 948], ['Systems', 'Thinking']],
+        ['systems', 'big', 'middle', 540, [906, 956], ['Systems', 'Thinking']],
         ['explore', 'small', 'start', 262, [715, 747, 779], ['Dynamic', 'exploration', 'framework']],
-        ['playful', 'big', 'start', 72, [494, 552], ['Playful', 'Learning']],
+        ['playful', 'big', 'middle', 155, [530, 580], ['Playful', 'Learning']],
         ['growth', 'small', 'start', 264, [318, 350], ['Personalized', 'growth path']]
       ];
       LABELS.forEach(function (l) {
@@ -469,7 +495,6 @@ $(document).ready(function () {
     function keyAt(evt) {
       var b = wrap.getBoundingClientRect();
       var q = { x: OFF + (evt.clientX - b.left) / b.width * BOX, y: OFF + (evt.clientY - b.top) / b.height * BOX };
-      if (Math.hypot(q.x - CORE.x, q.y - CORE.y) <= CORE.r) return 'united';
       var combo = Object.keys(CIRC).filter(function (k) { return Math.hypot(q.x - CIRC[k][0], q.y - CIRC[k][1]) <= R; }).join('');
       return combo ? keyOfCombo(combo) : null;
     }
@@ -528,7 +553,7 @@ $(document).ready(function () {
       '<div class="ov-grid">' + s.cards.map(function (c, n) {
         return '<div class="ov-card" style="transition-delay:' + (180 + n * 70) + 'ms"><h3>' + c[0] + '</h3><p>' + c[1] + '</p></div>';
       }).join('') + '</div>' +
-      '<div class="ov-q"><h3>Questions we ask</h3><ol>' + s.questions.map(function (q) { return '<li>' + q + '</li>'; }).join('') + '</ol></div>' +
+      '<div class="ov-q"><h3>Questions to ask</h3><ol>' + s.questions.map(function (q) { return '<li>' + q + '</li>'; }).join('') + '</ol></div>' +
       '<div class="ov-rel">' + (s.parents ? '<h3>Made from</h3>' : '<h3>Connects to</h3>') + '<ul>' + s.related.map(chip).join('') + '</ul></div>' +
       '<nav class="ov-pager" aria-label="Other sections"><button type="button" data-go="' + prev + '"><span>Previous</span><b>← ' + S[prev].title + '</b></button>' +
       '<button type="button" data-go="' + next + '"><span>Next</span><b>' + S[next].title + ' →</b></button></nav>';
@@ -536,7 +561,7 @@ $(document).ready(function () {
     ov.style.setProperty('--ink', inkFor(s.color));
     var map = drawVenn(document.getElementById('ov-map'), { onPick: function (k) { if (k !== current) swap(k); }, hot: key });
     map.setHot(key);
-    document.title = s.title + ' | United Community | Dlightning';
+    document.title = s.title + ' | Building a United Community | Dlightning';
   }
 
   function open(key, fromHash) {
@@ -582,7 +607,7 @@ $(document).ready(function () {
         ov.setAttribute('aria-hidden', 'true');
         ov.style.clipPath = '';
         document.documentElement.style.overflow = '';
-        document.title = 'United Community: Four Specialties of Experience Design | Dlightning';
+        document.title = 'Building a United Community: A Map of Four Systems That Connect People | Dlightning';
         current = null; busy = false;
         main.setHot(key);
         if (lastFocus && lastFocus.closest && lastFocus.closest('.lab')) main.focusLabel(key);   /* keyboard users land back where they were */

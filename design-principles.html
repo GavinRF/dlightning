@@ -287,7 +287,14 @@
     .dp-intro { padding-top: var(--s5); padding-bottom: var(--s6); row-gap: var(--s6); }
     .dp-lede { grid-column: 1 / -1; }
     .dp-slot { grid-column: 1 / -1; margin-top: var(--s5); }
-    .dp-ch { padding: var(--s6) var(--margin); }
+    /* a card has to fit one screen with the address bar showing (100svh), and the fixed header covers its top */
+    .dp-ch { padding: calc(var(--header) + var(--s1)) var(--margin) var(--s3); }
+    .dp-name { margin-bottom: calc(var(--s3) + .2em); }   /* .2em still clears descenders */
+    .dp-text { line-height: 26px; }
+    .dp-ask { margin-top: var(--s4); }
+    .dp-ask .dp-label { margin-bottom: var(--s1); }
+    .dp-tension { margin-top: var(--s3); line-height: 22px; }
+    .dp-back { display: none; }   /* the back-to-top button does this job here, and the card needs the room */
   }
 
 </style>
