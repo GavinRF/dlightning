@@ -158,7 +158,7 @@
   .ed-intro h1 span { display: block; }
   .ed-hero .ed-lede { margin: 0 0 var(--s2); max-width: 30em; font-size: var(--t-lede); line-height: 1.45; font-weight: 500; color: var(--ink); text-wrap: pretty; }
   .ed-hero .ed-lede + .ed-lede { color: var(--body); }
-  .ed-hint { margin: var(--s4) 0 0; display: flex; align-items: center; gap: var(--s1); font-size: var(--t-body); color: var(--muted); }
+  .ed-hint { margin: var(--s4) 0 0; display: flex; align-items: center; gap: var(--s1); font-size: var(--t-body); color: var(--muted); position: absolute;}
 
   .ed-figure { grid-column: 6 / 13; margin: 0; }
   .ed-pyr { display: block; width: 100%; height: auto; overflow: visible; }
@@ -224,7 +224,7 @@
   /* inside the slice: as wide as the slice's narrow top, less the padding, so no line crosses an edge */
   .ed-mid {
     position: relative; margin: 0 auto; width: min(1100px, calc(var(--t) * 100cqw - 2 * var(--pad)));
-    padding: var(--s7) 0; display: flex; flex-direction: column; container-type: inline-size;
+    padding: var(--s5) 0; display: flex; flex-direction: column; container-type: inline-size;
   }
   .climb .ed-mid { flex-direction: column-reverse; }
 
@@ -304,7 +304,7 @@
   .ed-strata .ed-eyebrow { margin: 0; color: var(--c); }
   .ed-strata-rows { display: flex; flex-direction: column; gap: var(--s5); }
   .climb .ed-strata-rows { flex-direction: column-reverse; }
-  .ed-strata-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s6) var(--s5); align-items: end; }   /* cards of different lengths share a bottom edge, where their names sit */
+  .ed-strata-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s5) var(--s4); align-items: end; }   /* cards of different lengths share a bottom edge, where their names sit */
   .ed-term { padding-top: var(--s3); display: flex; flex-direction: column; gap: var(--s2); }
   .ed-term-parts > div { display: flex; flex-direction: column; gap: var(--s2); }
   /* climbed, each card reads upward too: the name at the bottom, then the question, then the reason */
@@ -364,6 +364,11 @@
     .climb .is-effort .ed-name { margin-left: 0; }
     .climb .is-effort .ed-lede { margin-left: auto; margin-right: auto; }
   }
+
+  /* tried to move this container up  */
+  /* #healthy-amount {
+    bottom: 1% !important;
+  } */
 
   /* ---------- the top: a triangle. Its words sit low and centred, where it is wide enough ---------- */
   .ed-level.is-joy { min-height: 560px; display: flex; flex-direction: column; justify-content: flex-end; }   /* the script fits the height */
@@ -477,13 +482,13 @@
   @media (max-width: 991px) {
     :root { --nav: 62px; --reserve: 0px; }
     .climb .ed-mini { display: none; }
-    .ed-hero { min-height: 0; row-gap: var(--s6); padding-top: calc(var(--nav) + var(--s5)); }
+    .ed-hero { min-height: 0; row-gap: var(--s6); padding-top: calc(var(--nav) + var(--s5)); padding-bottom: var(--s2);}
     .ed-intro, .ed-figure { grid-column: 1 / -1; }
     .ed-figure { max-width: 720px; }
   }
   @media (max-width: 640px) {
     :root { --margin: var(--s3); --gutter: var(--s2); --pad: var(--s2); --t-lede: 1.1875rem; --rights-t: .9; --effort-t: .76; }
-    .ed-hero { padding-bottom: var(--s2); row-gap: var(--s5); }
+    .ed-hero { padding-bottom: var(--s2); row-gap: var(--s4); }
     .ed-hint { display: none; }
     /* the hero's side names would shrink past reading size: the phone gets the pyramid alone, with larger words */
     .ed-pyr .tag { display: none; }
@@ -495,6 +500,10 @@
     .ed-level.is-joy .ed-flank { width: calc(var(--b) * 74cqw); }
     .ed-sky { padding: var(--s6) 0; }
     .ed-sky-col { gap: var(--s6); }
+  }
+
+  .h-rights {
+    color: rgb(27, 27, 218) !important;
   }
 </style>
 <script>document.documentElement.classList.add('climb')</script>
@@ -514,7 +523,7 @@
       <h1 id="ed-title"><span>The Ethical</span><span>Design Pyramid</span></h1>
       <p class="ed-lede">Deciding what is good or bad for other people is complicated. The platinum rule says to treat others as they would like to be treated, and the only way to know that is to&nbsp;ask.</p>
       <p class="ed-lede">Each layer carries the one above it. A product only reaches delight once everything beneath it is&nbsp;solid.</p>
-      <p class="ed-hint"><i class="fa fa-hand-pointer" aria-hidden="true"></i> Select a layer to read it.</p>
+      <p class="ed-hint"><i class="fa fa-hand-pointer" aria-hidden="true"></i> Going up...</p>
     </div>
 
     <figure class="ed-figure">
@@ -575,37 +584,37 @@
         <div class="ed-strata-row is-three">
           <article class="ed-term" id="decentralized" aria-labelledby="decentralized-h">
             <!-- <h3 id="decentralized-h">Decentralized</h3> -->
-            <span class="ed-label">Ask</span>
+            <span class="ed-label h-rights">Ask</span>
             <p class="ed-ask">Is the power to make change in the hands of a few powerful individuals, or many equal&nbsp;partners?</p>
-            <p>When a few people can change the rules, everyone else depends on their goodwill. Spread the power to make decisions across the people who build and use the product, and give them a real say in what it&nbsp;becomes.</p>
+            <p>When a few people can change the rules, everyone else depends on their goodwill. Spread the power to make decisions across the people who build and use the product to give them a real say in what it&nbsp;becomes.</p>
           </article>
           <article class="ed-term" id="private" aria-labelledby="private-h">
             <!-- <h3 id="private-h">Private</h3> -->
-             <span class="ed-label">Ask</span>
+             <span class="ed-label h-rights">Ask</span>
             <p class="ed-ask">Will sensitive user data be safe? Do users have the ability to choose when and with whom they share their personal&nbsp;information?</p>
             <p>Collect only what the product needs, say plainly what happens to it, and let people change their minds later. Sharing should be a choice someone makes, not a default they have to find and&nbsp;undo.</p>
           </article>
           <article class="ed-term" id="secure" aria-labelledby="secure-h">
             <!-- <h3 id="secure-h">Secure</h3> -->
-             <span class="ed-label">Ask</span>
+             <span class="ed-label h-rights">Ask</span>
             <p class="ed-ask">If someone tried to break in tomorrow, what would they reach, and who would pay for&nbsp;it?</p>
-            <p>Privacy depends on security. A promise to keep data safe means little if the system holding it is easy to break into. Protect accounts, encrypt what is stored and sent, and plan for the day something goes wrong. Security is one of our <a href="design-principles.html#security">design principles</a>&nbsp;too.</p>
+            <p>Privacy depends on security. A promise to keep data safe means little if the system holding it is easy to break into. Protect accounts, encrypt what is stored and sent, and plan for the day something goes wrong.</p>
           </article>
         </div>
         <div class="ed-strata-row is-two">
           <article class="ed-term" id="open" aria-labelledby="open-h">
             <!-- <h3 id="open-h">Open, Interoperable &amp;&nbsp;Accessible</h3> -->
-            <span class="ed-label">Ask</span>
+            <span class="ed-label h-rights">Ask</span>
             <p class="ed-ask">Is this platform exclusionary, or available to&nbsp;all?</p>
             <p>Open standards let people take their work and their data somewhere else. Interoperability lets a product work alongside the tools people already use. Accessibility means people of every ability, on older devices and slow connections, can use it as well as&nbsp;anyone.</p>
           </article>
           <article class="ed-term" id="sustainable" aria-labelledby="sustainable-h">
             <!-- <h3 id="sustainable-h">Sustainable</h3> -->
-             <span class="ed-label">Ask</span>
+             <span class="ed-label h-rights">Ask</span>
             <div class="ed-term-parts">
               <div>
                 <span class="ed-label">As a business</span>
-                <p class="ed-ask">Are you providing a service people rely on? Will it be around a month from now, three years from now, three decades from now? Is there a backup plan for when the time comes to shut&nbsp;down?</p>
+                <p class="ed-ask">Will your service be around a month from now, three years from now, three decades from now?</p>
                 <p>People build routines, and sometimes livelihoods, on the services they use. Plan for the long run, and if the service does have to close, give people warning, time and a way to take what is&nbsp;theirs.</p>
               </div>
               <div>
