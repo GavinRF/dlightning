@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "firebase": "^11.1.0"
+    "@chenglou/pretext": "^1.0.0",
+    "firebase": "^9.14.0"
   },
   "name": "screen-builder---dev",
   "version": "1.0.0",
@@ -9,7 +10,7 @@
     "lib": "lib"
   },
   "devDependencies": {
-    "firebase-tools": "^15.12.0"
+    "firebase-tools": "^13.11.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ethical Design Pyramid: Human Rights, Effort and Experience | Dlightning</title>
+<meta name="description" content="The Ethical Design Pyramid: human rights at the base, human effort in the middle and delight at the top. What each layer asks of a product, and why the lower layers hold up the rest.">
+<link rel="canonical" href="https://dlightning.org/ethical-design.html">
+<meta name="author" content="Dlightning">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0a1430">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dlightning">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="The Ethical Design Pyramid">
+<meta property="og:description" content="Human rights at the base, human effort in the middle, delight at the top. A page you climb from the base up.">
+<meta property="og:url" content="https://dlightning.org/ethical-design.html">
+<meta property="article:published_time" content="2026-11-22">
+<meta property="article:modified_time" content="2026-11-22">
+<meta property="article:section" content="Experience Design">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Ethical Design Pyramid">
+<meta name="twitter:description" content="Human rights at the base, human effort in the middle, delight at the top. A page you climb from the base up.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dlightning.org/ethical-design.html#article",
+      "headline": "The Ethical Design Pyramid: Human Rights, Effort and Experience",
+      "description": "The Ethical Design Pyramid: human rights at the base, human effort in the middle and delight at the top. What each layer asks of a product, and why the lower layers hold up the rest.",
+      "datePublished": "2026-11-22",
+      "dateModified": "2026-11-22",
+      "inLanguage": "en",
+      "mainEntityOfPage": "https://dlightning.org/ethical-design.html",
+      "author": { "@id": "https://dlightning.org/#org" },
+      "publisher": { "@id": "https://dlightning.org/#org" },
+      "about": [
+        { "@type": "Thing", "name": "Ethical design" },
+        { "@type": "Thing", "name": "Digital wellbeing" },
+        { "@type": "Thing", "name": "Privacy" },
+        { "@type": "Thing", "name": "Accessibility" },
+        { "@type": "Thing", "name": "Sustainability" }
+      ],
+      "hasPart": [
+        { "@type": "WebPageElement", "name": "Human Rights", "url": "https://dlightning.org/ethical-design.html#human-rights" },
+        { "@type": "WebPageElement", "name": "Human Effort", "url": "https://dlightning.org/ethical-design.html#human-effort" },
+        { "@type": "WebPageElement", "name": "Human Experience", "url": "https://dlightning.org/ethical-design.html#human-experience" },
+        { "@type": "WebPageElement", "name": "A healthy amount", "url": "https://dlightning.org/ethical-design.html#healthy-amount" }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://dlightning.org/#org",
+      "name": "Dlightning",
+      "url": "https://dlightning.org/",
+      "logo": "https://dlightning.org/img/favicon/apple-touch-icon.png"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dlightning.org/" },
+        { "@type": "ListItem", "position": 2, "name": "The Ethical Design Pyramid", "item": "https://dlightning.org/ethical-design.html" }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+<style>
+  /* =====================================================================================================
+     A page you climb. The hero is the ground floor, with the site nav along its top edge. Scrolling down
+     goes up: the hero sinks out of view and the nav rides down with it until it sticks to the bottom of the
+     screen. Above the ground is the pyramid, one straight-sided triangle: Human Rights as a base the full
+     width of the screen with every term inside it, then Human Effort and Human Experience, with their detail
+     in the white space beside them. Above the top is the sky, and the footer is the last thing you reach.
+
+     How: everything is stacked bottom-up (flex column-reverse) in one block that is fixed in place and
+     moved down by exactly the scroll distance by a scroll listener, so native scrolling (wheel, touch,
+     keys, momentum) drives it. Without JavaScript it is an ordinary page read top to bottom.
+     ===================================================================================================== */
+  :root {
+    /* the three layers, taken from the pyramid graphic. Navy is the site's navy; the green is a shade darker
+       than the graphic's so white text on it passes AA (4.7:1) */
+    --rights: #0a1430;
+    --effort: #3639ac;
+    --joy: #1f8456;
+    --paper: #f4f6fa;
+    --ink: #0a1430;
+    --body: #27314f;
+    --muted: #4b5675;
+    --font: 'Hanken Grotesk', 'Rubik', sans-serif;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+
+    --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 48px; --s6: 64px; --s7: 96px; --s8: 128px;
+    --margin: var(--s6);
+    --gutter: var(--s3);
+    --pad: var(--s5);                              /* the least room between text and a sloping edge */
+    --gap: 12px;                                   /* paper between the layers, as in the graphic */
+    --reserve: 112px;
+    --mini-room: 80px;                             /* the small pyramid's width plus its offset and a gap: right-hand text stops short of it */
+
+    --t-display: clamp(3.25rem, 6.6vw, 6.5rem);   /* page title, layer names, the last question */
+    --t-head: clamp(1.75rem, 2.8vw, 2.5rem);       /* item names */
+    --t-lede: 1.375rem;                            /* ledes, questions */
+    --t-body: 1.0625rem;                           /* body copy */
+    --t-small: .875rem;                            /* eyebrows, labels */
+
+    --nav: 64px;                                   /* the site nav's height; measured by the script */
+
+    /* each layer's width at its top, as a share of the screen. The base's bottom is the full width */
+    --rights-t: .38;
+    --effort-t: .3;
+  }
+  html { background: var(--paper); scroll-behavior: auto; }   /* style.css makes every jump smooth; the script picks per move */
+  body.ed { background: var(--paper); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  .ed h1, .ed h2, .ed h3, .ed h4, .ed p, .ed li, .ed a { font-family: var(--font); }
+  .ed a:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: 2px; }
+  .ed #footer > a { color: var(--paper); }
+  .ed #footer:not(:has(footer)) { background: var(--rights); padding: var(--s4); display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); }   /* the no-JS links */
+
+  .ed-eyebrow { margin: 0 0 var(--s2); font-size: var(--t-small); line-height: 1; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); max-width: none; }
+
+  /* ================================ the ground floor: the hero ================================ */
+  .ed-hero {
+    position: relative;
+    min-height: 100svh;
+    max-width: 1440px; width: 100%; margin: 0 auto;
+    padding: calc(var(--nav) + var(--s6)) var(--margin) var(--s7);
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: end;
+  }
+  /* the band the nav sits on, along the top of the ground floor */
+  .ed-ground { position: relative; background: var(--paper); }
+  .ed-ground::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: var(--nav); background: var(--rights); }
+  .ed-intro { grid-column: 1 / 6; }
+  .ed-intro h1 {
+    margin: 0 0 var(--s4) -.04em; color: var(--ink);
+    font-size: var(--t-display); font-weight: 900; line-height: .92; letter-spacing: -.035em;
+  }
+  .ed-intro h1 span { display: block; }
+  .ed-hero .ed-lede { margin: 0 0 var(--s2); max-width: 30em; font-size: var(--t-lede); line-height: 1.45; font-weight: 500; color: var(--ink); text-wrap: pretty; }
+  .ed-hero .ed-lede + .ed-lede { color: var(--body); }
+  .ed-hint { margin: var(--s4) 0 0; display: flex; align-items: center; gap: var(--s1); font-size: var(--t-body); color: var(--muted); }
+
+  .ed-figure { grid-column: 6 / 13; margin: 0; }
+  .ed-pyr { display: block; width: 100%; height: auto; overflow: visible; }
+  /* side by side, the hero has to fit between the nav and the bottom of the screen: the pyramid and the title
+     shrink with the screen's height as well as its width, so a short window never pushes the title under the nav */
+  @media (min-width: 992px) {
+    .ed-pyr { max-height: calc(100svh - var(--nav) - var(--s6) - var(--s7)); }
+    .ed-intro h1 { font-size: min(var(--t-display), 11svh); }
+  }
+  @media (min-width: 992px) and (max-height: 860px) {
+    .ed-hero { padding-top: calc(var(--nav) + var(--s5)); padding-bottom: var(--s3); }
+    .ed-pyr { max-height: calc(100svh - var(--nav) - var(--s5) - var(--s6)); }
+    .ed-hint { margin-top: var(--s3); }
+  }
+  .ed-pyr text { font-family: var(--font); pointer-events: none; user-select: none; }
+  .ed-pyr .in { fill: #fff; font-size: 30px; font-weight: 700; letter-spacing: -.005em; }
+  .ed-pyr .in-top { font-size: 36px; }
+  .ed-pyr .side { fill: var(--ink); font-size: 32px; font-weight: 400; letter-spacing: -.005em; }
+  .ed-pyr .rule { stroke: var(--ink); stroke-width: 1.5; }
+  .ed-pyr .layer { cursor: pointer; outline: none; }
+  .ed-pyr .layer path { transition: opacity .25s ease; }
+  .ed-pyr .layer .ring { fill: none; stroke: var(--ink); stroke-width: 4; stroke-dasharray: 10 8; opacity: 0; transition: opacity .2s; }
+  .ed-pyr .layer:focus-visible .ring { opacity: 1; }
+  /* pointing at one layer quiets the other two */
+  .ed-pyr:has(.layer:hover) .layer:not(:hover) path.fill,
+  .ed-pyr:has(.layer:focus-visible) .layer:not(:focus-visible) path.fill { opacity: .35; }
+  .ed-rights path.fill { fill: var(--rights); }
+  .ed-effort path.fill { fill: var(--effort); }
+  .ed-joy path.fill { fill: var(--joy); }
+
+  /* entrance: the pyramid is laid from the base up */
+  @media (prefers-reduced-motion: no-preference) {
+    .ed-pyr .layer, .ed-pyr .tag { animation: ed-lay .9s var(--ease) backwards; }
+    .ed-pyr .ed-rights, .ed-pyr .tag-rights { animation-delay: .1s; }
+    .ed-pyr .ed-effort, .ed-pyr .tag-effort { animation-delay: .35s; }
+    .ed-pyr .ed-joy, .ed-pyr .tag-joy { animation-delay: .6s; }
+    .ed-intro > * { animation: ed-fade .8s var(--ease) backwards; }
+    .ed-intro > :nth-child(2) { animation-delay: .05s; }
+    .ed-intro > :nth-child(3) { animation-delay: .15s; }
+    .ed-intro > :nth-child(4) { animation-delay: .22s; }
+    .ed-intro > :nth-child(5) { animation-delay: .3s; }
+  }
+  @keyframes ed-lay { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+  @keyframes ed-fade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+  /* ================================ the pyramid ================================ */
+  .ed-tower { display: flex; flex-direction: column; gap: var(--gap); background: var(--paper); }
+  .climb .ed-tower { flex-direction: column-reverse; }   /* source order reads up from the ground */
+  .climb .ed-ground { margin-top: calc(-1 * var(--gap)); }   /* the base stands right on the nav, with no paper between */
+
+  /* a slice is the full screen width, cut to its layer's shape. The slices share one outline: each starts as
+     wide as the one below it ended, so the slope carries on across the white space between them */
+  .ed-level { position: relative; container-type: inline-size; color: #fff; }
+  .is-rights { --c: var(--rights); --b: 1; --t: var(--rights-t); }
+  .is-effort { --c: var(--effort); --b: var(--rights-t); --t: var(--effort-t); }
+  .is-joy    { --c: var(--joy);    --b: var(--effort-t); --t: 0; }
+  .ed-shape {
+    --cut-b: calc((1 - var(--b)) * 50%);
+    --cut-t: calc((1 - var(--t)) * 50%);
+    position: absolute; inset: 0; background: var(--c);
+    clip-path: polygon(var(--cut-t) 0, calc(100% - var(--cut-t)) 0, calc(100% - var(--cut-b)) 100%, var(--cut-b) 100%);
+  }
+  /* inside the slice: as wide as the slice's narrow top, less the padding, so no line crosses an edge */
+  .ed-mid {
+    position: relative; margin: 0 auto; width: min(1100px, calc(var(--t) * 100cqw - 2 * var(--pad)));
+    padding: var(--s7) 0; display: flex; flex-direction: column; container-type: inline-size;
+  }
+  .climb .ed-mid { flex-direction: column-reverse; }
+
+  /* Effort and Experience: the summary inside the slice, the detail in the white space to its left.
+     The right-hand side is left to the small pyramid that follows the reader */
+  .ed-level-in { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; }
+  .ed-level-in > .ed-mid { grid-column: 2; grid-row: 1; margin: 0; }
+  .ed-flank {
+    grid-column: 1; grid-row: 1; justify-self: start; align-self: start;
+    width: min(480px, calc((1 - var(--b)) * 50cqw - var(--margin) - var(--s4)));   /* as wide as the white space at the slice's bottom edge */
+    margin-left: var(--s5); padding: var(--s4) 0 var(--s6); color: var(--ink);
+    display: flex; flex-direction: column; container-type: inline-size;
+  }
+  .climb .ed-flank { flex-direction: column-reverse; }
+  .ed-flank.is-right {
+    grid-column: 3; justify-self: end; margin-left: 0; margin-right: var(--mini-room);
+    width: min(480px, calc((1 - var(--b)) * 50cqw - var(--mini-room) - var(--s4)));
+  }
+  .ed-flank .ed-item { border-top: 0; padding-top: 0; padding-bottom: var(--s4); }
+  /* a rule in the layer's colour where its detail starts: on top when read down, at the bottom when climbed */
+  .ed-flank::after { content: ""; order: -1; display: block; height: 2px; background: var(--c); margin: 0 0 var(--s4); width: min(calc(100% - 86px), var(--rule-w, 100%)) !important;}   /* --rule-w: the room the slope leaves beside it (the script) */
+ 
+  .ed-flank .ed-label, .ed-flank .ed-steps li::before { color: var(--c); opacity: 1; }
+  .ed-flank .ed-body p:not(.ed-ask), .ed-flank .ed-steps p { color: var(--body); }
+  .ed-steps-head { margin: 0; padding: var(--s4) 0 var(--s3); font-size: var(--t-body); line-height: 1.6; font-weight: 700; color: inherit; }
+
+  .ed-level .ed-eyebrow { color: inherit; opacity: .8; text-wrap: balance; }
+  .ed-name {
+    margin: 0 0 var(--s4) -.04em; color: inherit;
+    font-size: min(var(--t-display), 13cqi); font-weight: 900; line-height: .92; letter-spacing: -.035em; text-wrap: balance;
+  }
+  .ed-level .ed-lede { margin: 0; max-width: 35em; font-size: var(--t-lede); line-height: 1.45; font-weight: 500; color: inherit; text-wrap: pretty; }
+  .ed-head { padding: 0 0 var(--s6); }
+  .climb .ed-head { padding: var(--s6) 0 0; }
+  /* the qualities a layer is made of, as in the graphic */
+  .ed-quals { margin: var(--s3) 0 0; font-size: var(--t-head); line-height: 1.1; font-weight: 700; letter-spacing: -.02em; color: inherit; text-wrap: balance; }
+
+  /* ---------- items: a rule, the name, the question, the reason ---------- */
+  .ed-item { padding: var(--s4) 0 var(--s6); display: grid; row-gap: var(--s3); align-content: start; }
+  .ed-item h3 { margin: 0; color: inherit; font-size: var(--t-head); font-weight: 900; line-height: 1.05; letter-spacing: -.02em; text-wrap: balance; }
+  .ed-label { display: block; margin: 0 0 var(--s1); font-size: var(--t-small); line-height: 1; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: inherit; opacity: .8; }
+  .ed-ask { margin: 0 0 var(--s3); font-size: var(--t-lede); line-height: 1.25; font-weight: 500; letter-spacing: -.01em; color: inherit; text-wrap: pretty; }
+  .ed-body p:not(.ed-ask) { margin: 0 0 var(--s2); max-width: 36em; font-size: var(--t-body); line-height: 1.6; color: inherit; }
+  .ed-body p:last-child { margin-bottom: 0; }
+  .ed-body .ed-ask ~ .ed-label { margin-top: var(--s5); }
+  /* climbed, the text reads upward like the rest: each label under what it names (Ask under its question),
+     then the reason above. Margins go on the bottom, between a piece and the one before it in the source */
+  html.climb .ed-tower .ed-body { display: flex; flex-direction: column-reverse; }
+  html.climb .ed-tower .ed-body > * { margin: 0; }
+  html.climb .ed-tower .ed-body > * + * { margin-bottom: var(--s3); }
+  html.climb .ed-tower .ed-body > p + p { margin-bottom: var(--s2); }
+  html.climb .ed-tower .ed-body > .ed-label + * { margin-bottom: var(--s1); }   /* a label sits close under its own line */
+  html.climb .ed-tower .ed-body > p + .ed-label { margin-bottom: var(--s4); }
+  .ed-tower a:not(.ed-btn):not(.ed-link):not(.layer) { color: inherit; font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 50%, transparent); }
+  .ed-tower a:not(.ed-btn):not(.ed-link):not(.layer):hover { color: inherit; text-decoration-color: currentColor; }
+  @container (min-width: 760px) {
+    .ed-mid .ed-item { grid-template-columns: 5fr 7fr; column-gap: var(--s3); }
+  }
+
+  /* ---------- the base, term by term: a flat band between the base and the middle ----------
+     Full width like the base, on a pale wash of its navy, with a navy rule along each edge where the
+     pyramid is cut. Rows stack upward when climbed, so the first terms sit nearest the base */
+  .ed-strata {
+    --c: var(--rights);
+    position: relative; container-type: inline-size; color: var(--ink);
+    background: color-mix(in srgb, var(--c) 6%, var(--paper));
+  }
+  .ed-strata.of-effort { --c: var(--effort); }
+  .ed-strata.of-joy { --c: var(--joy); }
+  .ed-strata[hidden] { display: none; }
+  /* a layer's side detail, moved into the band above it on smaller screens (the script moves it) */
+  .ed-strata-pair > .ed-flank { position: static; grid-column: auto; grid-row: auto; justify-self: stretch; align-self: end; width: auto; margin: 0; padding: 0; color: var(--ink); }
+  .ed-strata-pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s6) var(--s5); align-items: end; }
+  @container (min-width: 720px) { .ed-strata-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .ed-strata-in { width: min(1240px, calc(100% - 2 * var(--margin) - 2 * var(--reserve))); margin: 0 auto; padding: var(--s7) 0; display: flex; flex-direction: column; gap: var(--s5); container-type: inline-size; }
+  .climb .ed-strata-in { flex-direction: column-reverse; }
+  .ed-strata .ed-eyebrow { margin: 0; color: var(--c); }
+  .ed-strata-rows { display: flex; flex-direction: column; gap: var(--s5); }
+  .climb .ed-strata-rows { flex-direction: column-reverse; }
+  .ed-strata-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s6) var(--s5); align-items: end; }   /* cards of different lengths share a bottom edge, where their names sit */
+  .ed-term { padding-top: var(--s3); display: flex; flex-direction: column; gap: var(--s2); }
+  .ed-term-parts > div { display: flex; flex-direction: column; gap: var(--s2); }
+  /* climbed, each card reads upward too: the name at the bottom, then the question, then the reason */
+  .climb .ed-term { flex-direction: column-reverse; padding-top: 0; padding-bottom: var(--s3); }
+  .climb .ed-term-parts > div { flex-direction: column-reverse; }
+  .ed-term h3 { margin: 0; color: var(--ink); font-size: var(--t-head); font-weight: 900; line-height: 1.05; letter-spacing: -.02em; text-wrap: balance; }
+  .ed-term .ed-ask { margin: 0; color: var(--ink); }
+  .ed-term p:not(.ed-ask) { margin: 0; max-width: 36em; font-size: var(--t-body); line-height: 1.6; color: var(--body); }
+  .ed-term .ed-label { color: var(--c); opacity: 1; margin: 0; }
+  .ed-term-parts { display: grid; gap: var(--s5) var(--s5); }
+  .ed-strata a { color: inherit; font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 50%, transparent); }
+  .ed-strata a:hover { color: inherit; text-decoration-color: currentColor; }
+  @container (min-width: 720px) {
+    .ed-strata-row.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .ed-strata-row.is-two { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }   /* Sustainable has two halves */
+  }
+  @container (min-width: 900px) {
+    .ed-term-parts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .ed-strata-in { padding: var(--s2) 0; }
+  }
+
+  /* numbered steps and practices. Stacked, they count upward too: 01 at the bottom */
+  .ed-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s4); counter-reset: step; }
+  .climb .ed-steps { flex-direction: column-reverse; }
+  .ed-steps li { counter-increment: step; border-top: 2px solid color-mix(in srgb, var(--c, currentColor) 45%, transparent); padding-top: var(--s2); }
+  .ed-steps li::before { content: counter(step, decimal-leading-zero); display: block; margin-bottom: var(--s2); font-size: var(--t-small); line-height: 1; font-weight: 700; letter-spacing: .14em; opacity: .8; }
+  /* climbed, each step reads upward: its number and rule at the bottom, then the name, then the reason */
+  .climb .ed-steps li { display: flex; flex-direction: column-reverse; border-top: 0; padding-top: 0; border-bottom: 2px solid color-mix(in srgb, var(--c, currentColor) 45%, transparent); padding-bottom: var(--s2); }
+  .climb .ed-steps li::before { margin: var(--s2) 0 0; }
+  .climb .ed-steps h4 { margin: var(--s1) 0 0; }
+  .ed-steps h4 { margin: 0 0 var(--s1); font-size: var(--t-lede); line-height: 1.3; font-weight: 700; color: inherit; }
+  .ed-steps p { margin: 0; font-size: var(--t-body); line-height: 1.6; color: inherit; }
+
+  /* ---------- desktop: one straight-sided triangle across the three layers ----------
+     The script measures the layers and sets each one's --b and --t (and the top's height) so the sides run in
+     one straight line from the full-width base to the point. The content widths are fixed here instead of
+     taken from the slope, so the measuring doesn't chase itself */
+  @media (min-width: 992px) {
+    .climb .is-rights .ed-mid { width: min(1240px, calc(100cqw - 2 * var(--margin))); }
+    .climb .is-rights .ed-head { text-align: center; }
+    .climb .is-rights .ed-lede { margin: 0 auto; }
+    /* the detail beside a layer is placed and sized by the script; its lines stop short of the slope */
+    .climb .ed-flank { position: absolute; padding: 0; top: var(--s4); }
+    .climb .is-joy .ed-flank { top: auto; bottom: var(--s6); }
+    /* rules beside the slope are short bars on the outer side, so they never run into it */
+    .climb .ed-flank::after { width: var(--s6); }
+    .climb .ed-flank.is-right::after { align-self: flex-end; }
+    .climb .ed-flank .ed-steps li { border-bottom: 0; background: linear-gradient(var(--c), var(--c)) 0 100% / var(--s6) 2px no-repeat; }
+    .climb .is-effort .ed-name { font-size: min(var(--t-display), calc(var(--top-w, 432px) * .13)); }
+    .climb .is-rights { display: flex; flex-direction: column; justify-content: center; }
+    .climb .is-effort { display: flex; flex-direction: column; }
+    .climb .is-effort .ed-level-in { flex: 1; align-items: center; }
+    /* its summary centred in the slice, both ways; the wedges keep each line clear of both edges */
+    .climb .is-effort .ed-head { text-align: center; padding: 0; }
+    .climb .is-effort .ed-name { margin-left: 0; }
+    .climb .is-effort .ed-lede { margin-left: auto; margin-right: auto; }
+  }
+
+  /* ---------- the top: a triangle. Its words sit low and centred, where it is wide enough ---------- */
+  .ed-level.is-joy { min-height: 560px; display: flex; flex-direction: column; justify-content: flex-end; }   /* the script fits the height */
+  .is-joy .ed-mid { width: calc(var(--b) * 56cqw); text-align: center; padding: var(--s7) 0 var(--s6); }
+  .is-joy .ed-name { margin-left: 0; margin-bottom: var(--s3); font-size: min(var(--t-display), 17cqi); }
+  .is-joy .ed-head { padding: 0; }
+  /* its right-hand detail, with a name of its own */
+  html:not(.climb) #healthy-amount .ed-item h3 { margin: 0 0 var(--s3); }
+  html:not(.climb) #healthy-amount .ed-body p + .ed-label { margin-top: var(--s4); }
+  html:not(.climb) #healthy-amount .ed-ask { margin-bottom: 0; }
+
+  /* ================================ the sky above the top ================================ */
+  .ed-sky { padding: var(--s7) 0 var(--s7); }
+  .ed-sky-col { width: min(1100px, calc(100% - 2 * var(--margin) - 2 * var(--reserve))); margin: 0 auto; display: flex; flex-direction: column; gap: var(--s7); container-type: inline-size; }
+  .climb .ed-sky-col { flex-direction: column-reverse; }
+  .ed-sky .ed-steps { --c: var(--joy); color: var(--ink); }
+  .ed-sky .ed-steps li::before { color: var(--joy); opacity: 1; }
+  .ed-sky .ed-steps p { color: var(--body); }
+  @container (min-width: 760px) {
+    .ed-sky .ed-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s5) var(--s3); }
+  }
+
+  /* the last question, then the one ask. Upward: the lead-in, the question, the ask */
+  .ed-close { display: flex; flex-direction: column; }
+  .climb .ed-close { flex-direction: column-reverse; }
+  .ed-close-lede { margin: 0; max-width: 34em; font-size: var(--t-lede); line-height: 1.45; font-weight: 500; color: var(--body); }
+  .ed-final {
+    margin: var(--s4) 0 var(--s5) -.04em; max-width: 13em; color: var(--ink);
+    font-size: min(var(--t-display), 11cqi); font-weight: 900; line-height: .95; letter-spacing: -.035em; text-wrap: balance;
+  }
+  .ed-final em { font-style: normal; color: var(--joy); }
+  .ed-cta { border-top: 2px solid var(--ink); padding-top: var(--s4); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3) var(--s5); }
+  .climb .ed-cta { margin-bottom: var(--s6); }
+  .ed-cta p { margin: 0; max-width: 30em; font-size: var(--t-lede); line-height: 1.45; font-weight: 500; color: var(--ink); }
+  .ed-act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s4); }
+  .ed-btn { display: inline-block; padding: var(--s2) var(--s4); background: var(--ink); color: var(--paper); font-size: var(--t-body); line-height: 1.5; font-weight: 900; text-decoration: none; transition: background-color .2s ease; }
+  .ed-btn:hover { background: var(--joy); color: #fff; text-decoration: none; }
+  .ed-link { font-size: var(--t-body); font-weight: 700; color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; }
+  .ed-link:hover { color: var(--ink); text-decoration-color: transparent; }
+
+  /* ================================ the climb (only with the script) ================================ */
+  .ed-spacer { display: none; }
+  .climb .ed-spacer { display: block; }
+  .climb .ed-stage { position: fixed; z-index: 1; inset: 0; overflow: hidden; background: var(--paper); }
+  .climb .ed-tower { position: absolute; left: 0; right: 0; bottom: 0; }   /* not promoted to its own layer: at 9,000px tall it would raster in tiles and could flash blank on a fast scroll */
+  /* the nav starts along the top of the hero, rides down with it, and sticks at the bottom of the screen
+     (the script moves it, with the pyramid) */
+  .climb #header { position: relative; z-index: 1000; }
+  .climb .header-area { position: fixed; top: 0; z-index: 1000; will-change: transform; }
+  .climb .header-area .main-header-area { background: var(--rights) !important; }
+  /* stuck at the bottom, its menus open upward */
+  .climb .header-area.is-low .main-header-area { box-shadow: 0 -1px 0 rgba(255, 255, 255, .12); }
+  .climb .header-area.is-low .main-header-area .main-menu ul li .submenu { top: auto; bottom: 100%; }
+  .climb .header-area.is-low .main-header-area .main-menu ul li .submenu::before { top: auto; bottom: -8px; }
+  /* the phone menu is a full-screen panel fixed inside the nav; a moved nav would carry it off-screen, so it
+     goes back to the top while the menu is open (the panel covers the jump) */
+  .climb body.menu-open .header-area { transform: none !important; }
+
+  /* ---------- the pyramid that follows the reader: no box, just the shape ---------- */
+  /* text laid out along a slope by the script (Pretext): each line is its own row, placed where the slope leaves
+     room at its height. The block's original content stays hidden inside it, for its styles and to put back */
+  .ed-src { display: none !important; }
+  .ed-line { display: block; width: 0; white-space: pre; text-align: left; }   /* no width of its own, so a line laid out for a wider box never holds its box open */
+  .ed-gap { display: inline-block; }
+
+  .ed-mini { display: none; }
+  .climb .ed-mini {
+    display: block; position: fixed; z-index: 50; right: var(--s2); top: var(--s5); width: 48px;
+    transform: scale(.9); transform-origin: top right; opacity: 0; visibility: hidden; color: var(--ink);
+    transition: opacity .3s ease, visibility .3s, transform .4s var(--ease), color .3s ease;
+  }
+  .climb .ed-mini.is-on { opacity: 1; visibility: visible; transform: none; }
+  .ed-mini svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .ed-mini a { outline: none; }
+  .ed-mini path {
+    fill: var(--c); fill-opacity: 0; stroke: currentColor; stroke-opacity: .45; stroke-width: 1.5px; stroke-dasharray: 4 3;
+    vector-effect: non-scaling-stroke; transition: fill-opacity .4s ease, stroke-opacity .3s ease;
+  }
+  .ed-mini .m-rights { --c: var(--rights); }
+  .ed-mini .m-effort { --c: var(--effort); }
+  .ed-mini .m-joy { --c: var(--joy); }
+  .ed-mini a.is-built path { fill-opacity: .35; stroke-opacity: 0; }   /* passed: the shape dimmed, no outline */
+  .ed-mini a.is-here path { fill-opacity: 1; stroke-dasharray: none; stroke-opacity: 1; }
+  .ed-mini a:hover path { fill-opacity: .75; }
+  .ed-mini a:focus-visible path { stroke-opacity: 1; stroke-width: 3px; }
+  /* over a coloured layer its lines turn light, so the navy base still shows against the navy behind it */
+  .ed-mini.on-dark { color: #fff; }
+  .ed-mini-cap { display: block; margin: var(--s1) -10px 0; font-size: .625rem; line-height: 1.25; font-weight: 700; text-align: center; color: inherit; min-height: 2.5em; }   /* room for two lines, so a longer name doesn't make it jump */
+  @media (prefers-reduced-motion: reduce) { .ed-mini, .ed-mini path { transition: opacity .2s, visibility .2s; } }
+
+  /* ================================ smaller screens ================================ */
+  @media (max-width: 1199px) {
+    :root { --margin: var(--s5); --reserve: 96px; --mini-room: 76px; }
+    .climb .ed-mini { width: 44px; right: var(--s2); }
+  }
+  /* no room beside the slices for their detail: the script moves each layer's detail into a band above it.
+     Without the script it stays inside the slice, under its summary */
+  @media (max-width: 991px) {
+    :root { --pad: var(--s4); --rights-t: .86; --effort-t: .72; }
+    .ed-level-in { display: flex; flex-direction: column; align-items: center; }
+    .climb .ed-level-in { flex-direction: column-reverse; }
+    .ed-level .ed-flank, .ed-level .ed-flank.is-right { width: calc(var(--t) * 100cqw - 2 * var(--pad)); margin: 0; padding: 0 0 var(--s6); color: #fff; align-self: center; }
+    .ed-level .ed-flank::after { background: rgba(255, 255, 255, .35); height: 1px; }
+    .ed-level .ed-flank .ed-label, .ed-level .ed-flank .ed-steps li::before { color: inherit; opacity: .8; }
+    .ed-level .ed-flank .ed-body p:not(.ed-ask), .ed-level .ed-flank .ed-steps p { color: inherit; }
+    /* the top's words in a narrower column, so the triangle needn't climb far before it is wide enough */
+    .is-joy .ed-mid { width: calc(var(--b) * 48cqw); }
+    .climb .ed-level.is-joy { min-height: 0; }   /* the script fits its height to its words */
+    .ed-level.is-joy .ed-flank { width: calc(var(--b) * 66cqw); text-align: center; }
+  }
+  @media (max-width: 991px) {
+    :root { --nav: 62px; --reserve: 0px; }
+    .climb .ed-mini { display: none; }
+    .ed-hero { min-height: 0; row-gap: var(--s6); padding-top: calc(var(--nav) + var(--s5)); }
+    .ed-intro, .ed-figure { grid-column: 1 / -1; }
+    .ed-figure { max-width: 720px; }
+  }
+  @media (max-width: 640px) {
+    :root { --margin: var(--s3); --gutter: var(--s2); --pad: var(--s2); --t-lede: 1.1875rem; --rights-t: .9; --effort-t: .76; }
+    .ed-hero { padding-bottom: var(--s2); row-gap: var(--s5); }
+    .ed-hint { display: none; }
+    /* the hero's side names would shrink past reading size: the phone gets the pyramid alone, with larger words */
+    .ed-pyr .tag { display: none; }
+    .ed-pyr .in { font-size: 37px; }
+    .ed-pyr .in-top { font-size: 46px; }
+    .ed-mid { padding: var(--s3) 0; }
+    .ed-item { padding-bottom: var(--s5); }
+    .is-joy .ed-mid { width: calc(var(--b) * 54cqw); }
+    .ed-level.is-joy .ed-flank { width: calc(var(--b) * 74cqw); }
+    .ed-sky { padding: var(--s6) 0; }
+    .ed-sky-col { gap: var(--s6); }
+  }
+</style>
+<script>document.documentElement.classList.add('climb')</script>
+</head>
+
+<body class="ed">
+<header id="header"></header>
+
+<div class="ed-stage" id="ed-stage">
+<main class="ed-tower" id="ed-tower">
+
+  <!-- ===================== the ground floor ===================== -->
+  <div class="ed-ground">
+  <section class="ed-hero" aria-labelledby="ed-title">
+    <div class="ed-intro">
+      <p class="ed-eyebrow">Build from the base</p>
+      <h1 id="ed-title"><span>The Ethical</span><span>Design Pyramid</span></h1>
+      <p class="ed-lede">Deciding what is good or bad for other people is complicated. The platinum rule says to treat others as they would like to be treated, and the only way to know that is to&nbsp;ask.</p>
+      <p class="ed-lede">Each layer carries the one above it. A product only reaches delight once everything beneath it is&nbsp;solid.</p>
+      <p class="ed-hint"><i class="fa fa-hand-pointer" aria-hidden="true"></i> Select a layer to read it.</p>
+    </div>
+
+    <figure class="ed-figure">
+      <svg class="ed-pyr" id="ed-pyr" viewBox="-230 0 1130 760" role="group" aria-label="The Ethical Design Pyramid: Human Rights at the base, Human Effort in the middle, Human Experience at the top">
+        <!-- layer names, hanging left of each layer on a rule that runs to its edge -->
+        <g class="tag tag-joy" aria-hidden="true">
+          <text class="side" x="60"><tspan x="60" y="240">Human</tspan><tspan x="60" y="282">Experience</tspan></text>
+          <line class="rule" x1="60" y1="300" x2="276" y2="300"/>
+        </g>
+        <g class="tag tag-effort" aria-hidden="true">
+          <text class="side" x="-70"><tspan x="-70" y="460">Human</tspan><tspan x="-70" y="502">Effort</tspan></text>
+          <line class="rule" x1="-70" y1="520" x2="144" y2="520"/>
+        </g>
+        <g class="tag tag-rights" aria-hidden="true">
+          <text class="side" x="-200"><tspan x="-200" y="680">Human</tspan><tspan x="-200" y="722">Rights</tspan></text>
+          <line class="rule" x1="-200" y1="740" x2="12" y2="740"/>
+        </g>
+
+        <!-- the layers: a 720-high triangle from (450, 20) to a 860-wide base, cut in three with 8px gaps -->
+        <a class="layer ed-rights" href="#human-rights" aria-label="Human Rights: decentralized, private, open, interoperable, accessible, secure, sustainable">
+          <path class="ring" d="M146.6 528 H753.4 L880 740 H20 Z"/>
+          <path class="fill" d="M146.6 528 H753.4 L880 740 H20 Z"/>
+          <text class="in" text-anchor="middle"><tspan x="450" y="602">Decentralized, Private, Open,</tspan><tspan x="450" y="646">Interoperable, Accessible, Secure,</tspan><tspan x="450" y="690">Sustainable</tspan></text>
+        </a>
+        <a class="layer ed-effort" href="#human-effort" aria-label="Human Effort: functional, convenient and reliable">
+          <path class="ring" d="M278 308 H622 L748.6 520 H151.4 Z"/>
+          <path class="fill" d="M278 308 H622 L748.6 520 H151.4 Z"/>
+          <text class="in" text-anchor="middle"><tspan x="450" y="404">Functional,</tspan><tspan x="450" y="448">Convenient &amp; Reliable</tspan></text>
+        </a>
+        <a class="layer ed-joy" href="#human-experience" aria-label="Human Experience: delightful">
+          <path class="ring" d="M450 20 L617.2 300 H282.8 Z"/>
+          <path class="fill" d="M450 20 L617.2 300 H282.8 Z"/>
+          <text class="in in-top" text-anchor="middle" x="450" y="232">Delightful</text>
+        </a>
+      </svg>
+    </figure>
+  </section>
+  </div>
+
+  <!-- ===================== layer one: human rights. The base is the full width, and holds every term ===================== -->
+  <section class="ed-level is-rights" id="human-rights" aria-labelledby="human-rights-h">
+    <div class="ed-shape" aria-hidden="true"></div>
+    <div class="ed-mid">
+      <div class="ed-head">
+        <p class="ed-eyebrow">Layer one&nbsp;&middot; The base</p>
+        <h2 class="ed-name" id="human-rights-h">Human Rights</h2>
+        <p class="ed-lede">The rights a product has to respect before anything can be built on top of it. If this layer is weak, the layers above have nothing to stand&nbsp;on.</p>
+        <p class="ed-quals">Decentralized, Private, Open, Interoperable, Accessible, Secure, &amp;&nbsp;Sustainable</p>
+      </div>
+    </div>
+  </section>
+
+<!-- ===================== the base, term by term: a flat band cut through the pyramid between the base and the middle ===================== -->
+  <section class="ed-strata" id="human-rights-terms" aria-label="Human Rights, term by term">
+    <div class="ed-strata-in">
+      <p class="ed-eyebrow">What the base is made of</p>
+      <div class="ed-strata-rows">
+        <div class="ed-strata-row is-three">
+          <article class="ed-term" id="decentralized" aria-labelledby="decentralized-h">
+            <!-- <h3 id="decentralized-h">Decentralized</h3> -->
+            <span class="ed-label">Ask</span>
+            <p class="ed-ask">Is the power to make change in the hands of a few powerful individuals, or many equal&nbsp;partners?</p>
+            <p>When a few people can change the rules, everyone else depends on their goodwill. Spread the power to make decisions across the people who build and use the product, and give them a real say in what it&nbsp;becomes.</p>
+          </article>
+          <article class="ed-term" id="private" aria-labelledby="private-h">
+            <!-- <h3 id="private-h">Private</h3> -->
+             <span class="ed-label">Ask</span>
+            <p class="ed-ask">Will sensitive user data be safe? Do users have the ability to choose when and with whom they share their personal&nbsp;information?</p>
+            <p>Collect only what the product needs, say plainly what happens to it, and let people change their minds later. Sharing should be a choice someone makes, not a default they have to find and&nbsp;undo.</p>
+          </article>
+          <article class="ed-term" id="secure" aria-labelledby="secure-h">
+            <!-- <h3 id="secure-h">Secure</h3> -->
+             <span class="ed-label">Ask</span>
+            <p class="ed-ask">If someone tried to break in tomorrow, what would they reach, and who would pay for&nbsp;it?</p>
+            <p>Privacy depends on security. A promise to keep data safe means little if the system holding it is easy to break into. Protect accounts, encrypt what is stored and sent, and plan for the day something goes wrong. Security is one of our <a href="design-principles.html#security">design principles</a>&nbsp;too.</p>
+          </article>
+        </div>
+        <div class="ed-strata-row is-two">
+          <article class="ed-term" id="open" aria-labelledby="open-h">
+            <!-- <h3 id="open-h">Open, Interoperable &amp;&nbsp;Accessible</h3> -->
+            <span class="ed-label">Ask</span>
+            <p class="ed-ask">Is this platform exclusionary, or available to&nbsp;all?</p>
+            <p>Open standards let people take their work and their data somewhere else. Interoperability lets a product work alongside the tools people already use. Accessibility means people of every ability, on older devices and slow connections, can use it as well as&nbsp;anyone.</p>
+          </article>
+          <article class="ed-term" id="sustainable" aria-labelledby="sustainable-h">
+            <!-- <h3 id="sustainable-h">Sustainable</h3> -->
+             <span class="ed-label">Ask</span>
+            <div class="ed-term-parts">
+              <div>
+                <span class="ed-label">As a business</span>
+                <p class="ed-ask">Are you providing a service people rely on? Will it be around a month from now, three years from now, three decades from now? Is there a backup plan for when the time comes to shut&nbsp;down?</p>
+                <p>People build routines, and sometimes livelihoods, on the services they use. Plan for the long run, and if the service does have to close, give people warning, time and a way to take what is&nbsp;theirs.</p>
+              </div>
+              <div>
+                <span class="ed-label">For the planet</span>
+                <p class="ed-ask">Does this product rely heavily on natural resources without&nbsp;remediation?</p>
+                <p>Servers, devices and shipping all draw on energy and materials. Count what the product uses, cut what it doesn&rsquo;t need, and put back what it&nbsp;takes.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== layer two: human effort (summary inside, steps to the left, the question to the right) ===================== -->
+  <section class="ed-level is-effort" id="human-effort" aria-labelledby="human-effort-h">
+    <div class="ed-shape" aria-hidden="true"></div>
+    <div class="ed-level-in">
+      <div class="ed-mid">
+        <div class="ed-head">
+          <p class="ed-eyebrow">Layer two&nbsp;&middot; The middle</p>
+          <h2 class="ed-name" id="human-effort-h">Human Effort</h2>
+          <p class="ed-lede">Once a product respects people, it has to work for them, without disruption or&nbsp;frustration.</p>
+          <p class="ed-quals">Functional, Convenient, &amp;&nbsp;Reliable</p>
+        </div>
+      </div>
+      <div class="ed-flank is-right">
+        <article class="ed-item" id="functional" aria-labelledby="functional-h">
+          <h3 id="functional-h" class="sr-only">Functional, Convenient, &amp; Reliable</h3>
+          <div class="ed-body">
+            <span class="ed-label">Ask</span>
+            <p class="ed-ask">Does it do what it sets out to do, without disruption or frustration, every time someone needs&nbsp;it?</p>
+            <p>Product details should hold to <a href="design-principles.html">design principles</a> that protect customers from disruption and frustration. Our approach starts by understanding what the product sets out to achieve, so we can work out how to build&nbsp;it.</p>
+          </div>
+        </article>
+      </div>
+      <div class="ed-flank">
+        <p class="ed-steps-head">To keep problems from reaching the people who use&nbsp;it</p>
+        <ol class="ed-steps">
+          <li><h4>Evaluate needs</h4><p>Find out what customers need from the product, from the customers themselves, before deciding what it&nbsp;does.</p></li>
+          <li><h4>Plan explicitly</h4><p>Write down how the product will be made, in enough detail that gaps show up on paper instead of in&nbsp;use.</p></li>
+          <li><h4>Test rigorously</h4><p>Test every feature and function under the conditions people will really use it in, not only the ones it was built&nbsp;for.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- smaller screens: Human Effort's detail, moved here by the script -->
+  <section class="ed-strata of-effort" id="human-effort-detail" aria-label="Human Effort, in detail" hidden>
+    <div class="ed-strata-in"><p class="ed-eyebrow">Keeping it working</p><div class="ed-strata-pair"></div></div>
+  </section>
+
+  <!-- ===================== layer three: human experience (the top, detail on both sides) ===================== -->
+  <section class="ed-level is-joy" id="human-experience" aria-labelledby="human-experience-h">
+    <div class="ed-shape" aria-hidden="true"></div>
+    <div class="ed-level-in">
+      <div class="ed-mid">
+        <div class="ed-head">
+          <p class="ed-eyebrow">Layer three&nbsp;&middot; the top</p>
+          <h2 class="ed-name" id="human-experience-h">Human Experience</h2>
+          <p class="ed-quals">Delightful</p>
+        </div>
+      </div>
+      <div class="ed-flank">
+        <article class="ed-item" id="delightful" aria-labelledby="delightful-h">
+          <h3 id="delightful-h" class="sr-only">Delightful</h3>
+          <div class="ed-body">
+            <span class="ed-label">Ask</span>
+            <p class="ed-ask">Does interacting with the product elicit positive&nbsp;emotions?</p>
+            <p>This is the pinnacle of product achievement, and it can only be reached when the two layers beneath it have been met. People want to feel good and be happy, and products should aspire to deliver joy. A product that charms people while it leaks their data, or through a checkout that fails half the time, has not reached the&nbsp;top.</p>
+          </div>
+        </article>
+      </div>
+      <div class="ed-flank is-right" id="healthy-amount">
+        <article class="ed-item" aria-labelledby="healthy-amount-h">
+          <div class="ed-body">
+            <span class="ed-label">Delight, measured honestly</span>
+            <h3 id="healthy-amount-h">A healthy amount</h3>
+            <p>Online relationships are increasingly parasocial: one-way engagement that rarely supports real interaction, and deepens the public epidemic of&nbsp;loneliness.</p>
+            <p>There are benefits to using technology, and there are risks. A product can be enjoyable and still take more of someone&rsquo;s time and attention than they would choose to give&nbsp;it.</p>
+            <span class="ed-label">Ask</span>
+            <p class="ed-ask">How much time do people spend with this product, and what is a healthy amount of&nbsp;engagement?</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- smaller screens: Human Experience's detail, moved here by the script -->
+  <section class="ed-strata of-joy" id="human-experience-detail" aria-label="Human Experience, in detail" hidden>
+    <div class="ed-strata-in"><p class="ed-eyebrow">Delight, done right</p><div class="ed-strata-pair"></div></div>
+  </section>
+
+  <!-- ===================== the sky above the top: the four steps, then the last question ===================== -->
+  <section class="ed-sky" aria-label="A healthy amount, in practice">
+    <div class="ed-sky-col">
+      <ol class="ed-steps">
+        <li><h4>Show people their usage</h4><p>Give people information about how they use the product, so they can decide how much time to spend with it and when to shift their focus&nbsp;elsewhere.</p></li>
+        <li><h4>Design for positive activities</h4><p>Build around things that leave people better off, such as learning something new or connecting with the people they&nbsp;love.</p></li>
+        <li><h4>Notice how people feel</h4><p>Find out whether people feel anxious, depressed or stressed while using the product, and treat it as a defect to&nbsp;fix.</p></li>
+        <li><h4>Leave them in charge</h4><p>Give people the tools to feel good and improve their own experience, so they decide how the product fits into their&nbsp;life.</p></li>
+      </ol>
+      <div class="ed-close" id="the-question">
+        <p class="ed-close-lede">As information gets quicker and easier to deliver and access, technology can pull people further from their own lives.</p>
+        <h2 class="ed-final">Are your customers using the technology, or is the technology <em>using&nbsp;them?</em></h2>
+        <div class="ed-cta">
+          <p>Bring us a product, a site or an idea, and we&rsquo;ll build it from the base&nbsp;up.</p>
+          <div class="ed-act">
+            <a class="ed-btn" href="/contact.html">Start a project</a>
+            <a class="ed-link" href="/design-principles.html">Read our design principles</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- the end of the climb -->
+  <div class="footer" id="footer">
+    <!-- Replaced by footer.html on load. Static so every page in the nav is reachable without JavaScript. -->
+    <a href="/" class="home">Home</a>
+    <a href="/Process.html" class="process">Process</a>
+    <a href="/practice.html" class="practice">Practice</a>
+    <a href="/Pricing.html" class="pricing">Services</a>
+    <a href="/collective-info.html" class="collective">Collective</a>
+    <a href="/blog/" class="sparks">Sparks Blog</a>
+    <a href="/downloads.html" class="downloads">Offerings</a>
+    <a href="/experience-builder.html" class="expBuilder">Experience Builder</a>
+    <a href="/screen-builder/" class="screenBuilder">Screen Builder</a>
+    <a href="/d-tools/decision-tools.html" class="decision-tools">Decision Tools</a>
+    <a href="/privacy-policy.html" class="privacyPolicyPage">Privacy Policy</a>
+    <a href="/tos.html" class="tos">Terms of Service</a>
+    <a href="/contact.html" class="contact2">Contact Us</a>
+  </div>
+</main>
+</div>
+<div class="ed-spacer" id="ed-spacer" aria-hidden="true"></div>
+
+<nav class="ed-mini" id="ed-mini" aria-label="Pyramid layers">
+  <svg viewBox="0 0 900 760">
+    <a class="m-joy" href="#human-experience" aria-label="Human Experience"><path d="M450 20 L617.2 300 H282.8 Z"/></a>
+    <a class="m-effort" href="#human-effort" aria-label="Human Effort"><path d="M278 308 H622 L748.6 520 H151.4 Z"/></a>
+    <a class="m-rights" href="#human-rights" aria-label="Human Rights"><path d="M146.6 528 H753.4 L880 740 H20 Z"/></a>
+  </svg>
+  <span class="ed-mini-cap" id="ed-mini-cap" aria-hidden="true"></span>
+</nav>
+
+<script>
+$(document).ready(function () {
+  $('#footer').load("footer.html");
+  $('#header').load("header.html");
+});
+
+/* ---------- phone: crop the hero drawing to the pyramid alone, since the side names are hidden there ---------- */
+(function () {
+  var svg = document.getElementById('ed-pyr'), phone = matchMedia('(max-width: 640px)');
+  function crop() { svg.setAttribute('viewBox', phone.matches ? '10 0 880 760' : '-230 0 1130 760'); }
+  crop();
+  if (phone.addEventListener) phone.addEventListener('change', crop); else phone.addListener(crop);
+})();
+
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('climb')) return;
+  var stage = document.getElementById('ed-stage'), tower = document.getElementById('ed-tower');
+  var spacer = document.getElementById('ed-spacer');
+  var effort = document.getElementById('human-effort'), joy = document.getElementById('human-experience');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)'), wide = matchMedia('(min-width: 992px)');
+  var stick = 0, range = 0;
+
+  function bar() { return document.querySelector('#header .header-area'); }
+  function num(el, prop) { return parseFloat(getComputedStyle(el).getPropertyValue(prop)) || 0; }
+
+  /* ---------- the shape ----------
+     Desktop: one straight-sided triangle from the full-width base to the point, at the slope where the base's
+     terms just fill it. Text follows the slope on both sides of it: Pretext breaks every block of text into
+     lines, each as wide as the pyramid leaves room for at that line's height, and each line is painted as its
+     own row. Inside a slice a line starts and stops along both edges; beside one, it stops short of the edge.
+     Below desktop each slice keeps the slope in the stylesheet and its summary's lines follow that, and the
+     top is only made tall enough that, where its words end, it is still wider than them plus the padding. */
+  var rights = document.getElementById('human-rights');
+  var rightsMid = rights.querySelector('.ed-mid'), effortMid = effort.querySelector('.ed-mid');
+  var flankL = effort.querySelector('.ed-flank:not(.is-right)'), flankR = effort.querySelector('.ed-flank.is-right');
+  var flankJ = joy.querySelector('.ed-flank:not(.is-right)'), flankJR = joy.querySelector('.ed-flank.is-right');
+  var slices = [joy, effort, rights];   /* top down */
+  /* [where, which blocks, which way the slope lies]: in = inside a slice, left/right = beside it on that side */
+  var jobs = [
+    [rightsMid, '.ed-head > *', 'in'],
+    [effortMid, '.ed-head > *', 'in'],
+    [joy.querySelector('.ed-mid'), '.ed-head > *', 'in'],
+    [flankL, '.ed-steps-head, .ed-steps h4, .ed-steps p', 'left'],
+    [flankR, '.ed-body > *', 'right'],
+    [flankJ, '.ed-body > *', 'left'],
+    [flankJR, '.ed-body > *', 'right']
+  ];
+  var narrowJobs = jobs.slice(0, 2);   /* below desktop the detail has moved out of the slices */
+  function frac(n) { return String(Math.round(n * 10000) / 10000); }
+  function clamp(n, lo, hi) { return Math.min(hi, Math.max(lo, n)); }
+  function reset() {
+    unflow();
+    slices.forEach(function (el) { el.style.removeProperty('--b'); el.style.removeProperty('--t'); el.style.minHeight = ''; });
+    effort.style.removeProperty('--top-w');
+    rightsMid.style.width = ''; effortMid.style.width = '';
+    [flankL, flankR, flankJ, flankJR].forEach(function (f) { f.style.width = ''; f.style.top = ''; f.style.bottom = ''; f.style.left = ''; f.style.removeProperty('--rule-w'); });
+  }
+  function fitNarrow() {
+    var W = joy.clientWidth, base = W * num(joy, '--b'), pad = Math.min(24, num(root, '--pad') || 24);
+    /* only the words have to fit, not the padding above them: measure from the slice's bottom to their top */
+    var head = joy.querySelector('.ed-head'), h = joy.getBoundingClientRect().bottom - head.getBoundingClientRect().top;
+    var need = head.offsetWidth + 2 * pad;
+    var fit = base > need ? h * base / (base - need) : h * 3;
+    joy.style.minHeight = Math.ceil(Math.max(fit, h + 120)) + 'px';
+  }
+  /* the slices' outlines as they stand, so the half-width of the pyramid at any height can be read off */
+  function outline() {
+    return slices.map(function (el) { return { r: el.getBoundingClientRect(), b: num(el, '--b'), t: num(el, '--t') }; });
+  }
+  /* the lowest height at which the pyramid is still no wider than 2 * h across (it widens going down) */
+  function lowest(o, W, h) {
+    var lo = o[0].r.top, hi = o[o.length - 1].r.bottom;
+    for (var i = 0; i < 24; i++) { var m = (lo + hi) / 2; if (half(o, W, m) <= h) lo = m; else hi = m; }
+    return lo;
+  }
+  function half(o, W, y) {
+    if (y < o[0].r.top) return 0;
+    for (var i = 0; i < o.length; i++) {
+      var s = o[i];
+      if (y <= s.r.bottom) return W * (s.t + (s.b - s.t) * (Math.max(y, s.r.top) - s.r.top) / s.r.height) / 2;
+    }
+    return W / 2;
+  }
+  /* ---------- text along the slope, line by line (Pretext) ----------
+     Each block's own content is moved into a hidden .ed-src span inside it, where it keeps its styles; Pretext
+     breaks its text into lines, each as wide as room(top, bottom) allows at that line's height, and each line is
+     painted as an .ed-line row of clones of the inline elements its pieces came from (a link split across two
+     lines is two links, the second left out of the tab order). Until Pretext and the fonts have loaded the text
+     wraps normally. */
+  var pt = null, flowed = [];
+  var WS = /[ \t\n\r\f]+/g;   /* collapsible white space: not \s, which takes in the no-break spaces too */
+  function unflow() {
+    flowed.forEach(function (el) {
+      var src = el._src;
+      [].slice.call(el.childNodes).forEach(function (n) { if (n !== src) n.remove(); });
+      while (src.firstChild) el.insertBefore(src.firstChild, src);
+      src.remove();
+      el._src = null;
+    });
+    flowed = [];
+  }
+  function runsOf(el) {
+    var walk = document.createTreeWalker(el._src, NodeFilter.SHOW_TEXT), out = [], n;
+    while ((n = walk.nextNode())) {
+      var cs = getComputedStyle(n.parentNode), text = n.nodeValue;
+      if (cs.textTransform === 'uppercase') text = text.toUpperCase();
+      out.push({ node: n, text: text, font: cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily, letterSpacing: parseFloat(cs.letterSpacing) || 0 });
+    }
+    return out;
+  }
+  function prepared(el, runs) {
+    var key = runs.map(function (r) { return r.font + '|' + r.letterSpacing + '|' + r.text; }).join('\n');
+    if (el._key !== key) {
+      el._key = key;
+      el._prep = pt.prepareRichInline(runs.map(function (r) { return { text: r.text, font: r.font, letterSpacing: r.letterSpacing }; }));
+    }
+    return el._prep;
+  }
+  /* the lines, each given the room at its height, shrunk by s (about its middle when centred) */
+  function breakLines(prep, room, lh, s, mid) {
+    var out = [], cur;
+    for (var i = 0; i < 200; i++) {
+      var rm = room(i * lh, (i + 1) * lh), w = rm[1] - rm[0], ws = Math.max(1, w * s);
+      var l = mid ? rm[0] + (w - ws) / 2 : rm[0];
+      var r = pt.layoutNextRichInlineLineRange(prep, ws, cur);
+      if (!r) break;
+      out.push({ range: r, l: l, w: ws });
+      cur = r.end;
+    }
+    return out;
+  }
+  /* the widest word in a block, which every line it reaches has to have room for */
+  var ruler = document.createElement('canvas').getContext('2d');
+  function longestWord(el) {
+    var cs = getComputedStyle(el), text = (el._src || el).textContent, ls = parseFloat(cs.letterSpacing) || 0, most = 0;
+    if (cs.textTransform === 'uppercase') text = text.toUpperCase();
+    ruler.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+    text.split(WS).forEach(function (word) { if (word) most = Math.max(most, ruler.measureText(word).width + ls * word.length); });
+    return most;
+  }
+  /* the smallest shrink, down to lo, that keeps the same number of lines: balance for headings (lo .5), and a
+     lighter touch for running text (lo .88) that only kicks in when its last line is short */
+  function settleLines(prep, room, lh, mid, lo, onlyShort) {
+    var lines = breakLines(prep, room, lh, 1, mid), n = lines.length;
+    if (n < 2) return lines;
+    var last = lines[n - 1];
+    if (onlyShort && last.range.width > last.w * .3) return lines;
+    var a = lo, b = 1;
+    for (var k = 0; k < 10; k++) { var m = (a + b) / 2; if (breakLines(prep, room, lh, m, mid).length === n) b = m; else a = m; }
+    return b < 1 ? breakLines(prep, room, lh, b, mid) : lines;
+  }
+  function flow(el, room) {
+    if (!el._src) {
+      el._src = document.createElement('span');
+      el._src.className = 'ed-src';
+      el._src.hidden = true;
+      while (el.firstChild) el._src.appendChild(el.firstChild);
+      el.appendChild(el._src);
+    }
+    if (flowed.indexOf(el) < 0) flowed.push(el);
+    [].slice.call(el.childNodes).forEach(function (n) { if (n !== el._src) n.remove(); });
+    var runs = runsOf(el);
+    if (!runs.length) return;
+    var prep = prepared(el, runs), cs = getComputedStyle(el), wrap = cs.textWrapStyle || cs.textWrap || '';
+    var lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.2, mid = cs.textAlign === 'center';
+    var lines = wrap.indexOf('balance') >= 0 ? settleLines(prep, room, lh, mid, .5, false)
+              : wrap.indexOf('pretty') >= 0 ? settleLines(prep, room, lh, mid, .88, true)
+              : breakLines(prep, room, lh, 1, mid);
+    var out = document.createDocumentFragment(), linked = [];
+    lines.forEach(function (ln) {
+      var line = pt.materializeRichInlineLineRange(prep, ln.range), row = document.createElement('span');
+      var x = mid ? ln.l + (ln.w - line.width) / 2 : ln.l;
+      row.className = 'ed-line';
+      row.style.height = lh + 'px';
+      row.style.marginLeft = Math.round(x * 4) / 4 + 'px';
+      line.fragments.forEach(function (f, i) {
+        var text = f.text.replace(WS, ' ');
+        if (i === line.fragments.length - 1) text = text.replace(/ +$/, '');   /* the space that hangs past the line's end */
+        if (f.gapBefore) {
+          var gap = document.createElement('span');
+          gap.className = 'ed-gap'; gap.style.width = f.gapBefore + 'px'; gap.textContent = ' ';
+          row.appendChild(gap);
+        }
+        /* the fragment's text, inside clones of the inline elements it sat in */
+        var node = document.createTextNode(text);
+        for (var p = runs[f.itemIndex].node.parentNode; p && p !== el._src; p = p.parentNode) {
+          var c = p.cloneNode(false);
+          c.removeAttribute('id');
+          if (p.matches('a[href]')) { if (linked.indexOf(p) >= 0) c.setAttribute('tabindex', '-1'); else linked.push(p); }
+          c.appendChild(node); node = c;
+        }
+        row.appendChild(node);
+      });
+      out.appendChild(row);
+    });
+    el.appendChild(out);
+  }
+  /* the room a line has, from its top to its bottom (px down from the block's content box), in px from its left */
+  function roomFor(kind, o, W, box, inGap, outGap) {
+    var c = W / 2;
+    return function (y0, y1) {
+      var L = 0, R = box.width;
+      if (kind === 'in') {   /* the pyramid widens going down, so a line's top is its tightest */
+        var h = half(o, W, box.top + y0);
+        L = Math.max(L, c - h + inGap - box.left); R = Math.min(R, c + h - inGap - box.left);
+      } else if (kind === 'left') R = Math.min(R, c - half(o, W, box.top + y1) - outGap - box.left);
+      else L = Math.max(L, c + half(o, W, box.top + y1) + outGap - box.left);
+      return [L, Math.max(L, R)];
+    };
+  }
+  /* lay every block of text along the slope. Each block is read just before it is laid out: a block that
+     changes height moves the blocks stacked on it */
+  function wrapText(list, W, inGap, outGap) {
+    if (!pt) return;
+    var o = outline();
+    list.forEach(function (job) {
+      [].forEach.call(job[0].querySelectorAll(job[1]), function (el) {
+        var r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+        if (r.width < 40) return;
+        var pl = parseFloat(cs.paddingLeft) + parseFloat(cs.borderLeftWidth), pr = parseFloat(cs.paddingRight) + parseFloat(cs.borderRightWidth);
+        var box = { left: r.left + pl, top: r.top + parseFloat(cs.paddingTop) + parseFloat(cs.borderTopWidth), width: r.width - pl - pr };
+        flow(el, roomFor(job[2], o, W, box, inGap, outGap));
+      });
+    });
+  }
+  function shape() {
+    reset();
+    if (!wide.matches) {
+      /* the summaries fill their slices, as wide as the room at the bottom; their lines follow the stylesheet's slope */
+      if (pt) {
+        var Wn = rights.clientWidth, padn = num(root, '--pad');
+        rightsMid.style.width = Math.round(Wn - 2 * padn) + 'px';
+        effortMid.style.width = Math.round(num(effort, '--b') * Wn - 2 * padn) + 'px';
+        for (var p = 0; p < 3; p++) wrapText(narrowJobs, Wn, padn, 0);
+      }
+      fitNarrow();
+      return;
+    }
+    var W = effort.clientWidth, g = parseFloat(getComputedStyle(tower).rowGap) || 0;
+    var pad = num(root, '--pad'), margin = num(root, '--margin'), room = num(root, '--mini-room');
+    var clear = 32, space = 64, s4 = num(root, '--s4'), s6 = num(root, '--s6');
+    var top = Math.round(Math.max(360, .3 * W));            /* Human Effort's top edge: narrower on smaller screens, so the detail keeps its room beside it */
+    effort.style.setProperty('--top-w', top + 'px');
+    /* The detail beside the pyramid. On each side two columns stack from the bottom of the slope up: Human
+       Effort's stands as low as the slope still leaves its last line minLine, 160px (and at least a step above the layer's
+       bottom edge), and Human Experience's sits right above it, a gap higher, beside Human Effort's upper part if
+       that's where it falls. Each column is as wide as the room at its top, and its lines step along the slope.
+
+       The slope is the one free number: with it, Human Effort's height follows (the sides run straight from the
+       full-width base to the point), and so do the floor on each side and the room up to the point. It is the
+       steepest slope, no steeper than the base's terms allow, at which Human Effort holds its summary and each
+       side's stack fits between its floor and the point. So the pyramid grows only when the detail can't fit. */
+    var cols = [
+      { e: flankL, j: flankJ, side: margin },
+      { e: flankR, j: flankJR, side: room }
+    ];
+    var gapTop = s4;   /* the least room above the top column, below the point */
+    var minLine = 160;   /* the shortest a line beside the slope gets: where the room is less, the columns end */
+    function heFor(k, Hr) { return (W - top) / (2 * k) - Hr - 2 * g; }
+    function fits(k, Hr, He0, Hj0) {
+      var He = heFor(k, Hr);
+      if (He < He0 || top / (2 * k) - g < Hj0) return false;   /* each layer holds its own summary */
+      return cols.every(function (x) {
+        var roomTop = W / 2 - top / 2 - clear - x.side;            /* the room beside Human Effort's top */
+        var floor = Math.min(Math.max(0, roomTop - minLine) / k, He - s4);   /* how far below that top a column can end */
+        return floor + top / (2 * k) >= x.e.offsetHeight + space + x.j.offsetHeight + gapTop;
+      });
+    }
+
+    /* the slope, the heights and the wrapping depend on each other: a few rounds settles them */
+    for (var pass = 0; pass < 8; pass++) {
+      effort.style.minHeight = ''; rights.style.minHeight = ''; joy.style.minHeight = '0px';
+      var He0 = effort.offsetHeight, Hr = rights.offsetHeight, Hj0 = joy.offsetHeight;
+      /* the top is tall enough that, at the height of each block of its summary, it is wider than the block's
+         longest word plus the padding: its width at u above its bottom edge is top * (1 - u / its height) */
+      var jr = joy.getBoundingClientRect();
+      [].forEach.call(joy.querySelectorAll('.ed-mid .ed-head > *'), function (el) {
+        var need = longestWord(el) + 2 * pad, u = jr.bottom - el.getBoundingClientRect().top;
+        if (need < top) Hj0 = Math.max(Hj0, u * top / (top - need));
+      });
+      var k0 = clamp((W - top) / (2 * (Hr + He0 + 2 * g)), .1, .6);  /* inset per pixel up, each side: the steepest */
+      var k = k0;
+      if (!fits(k0, Hr, He0, Hj0)) {   /* the steepest slope that fits */
+        var lo = .1, hi = k0;
+        for (var i = 0; i < 20; i++) { var m = (lo + hi) / 2; if (fits(m, Hr, He0, Hj0)) lo = m; else hi = m; }
+        k = lo;
+      }
+      var He = Math.max(He0, heFor(k, Hr));
+      var eb = top + 2 * k * He, rt = eb + 2 * k * g, jb = top - 2 * k * g;
+      Hr = Math.max(Hr, (W - rt) / (2 * k));
+      effort.style.minHeight = Math.ceil(He) + 'px';
+      rights.style.minHeight = Math.ceil(Hr) + 'px';
+      joy.style.minHeight = Math.ceil(jb / (2 * k)) + 'px';
+      rights.style.setProperty('--b', '1');
+      rights.style.setProperty('--t', frac(rt / W));
+      effort.style.setProperty('--b', frac(eb / W));
+      effort.style.setProperty('--t', frac(top / W));
+      joy.style.setProperty('--b', frac(jb / W));
+      joy.style.setProperty('--t', '0');
+
+      /* boxes as wide as the room at their widest; each line keeps to the room at its own height */
+      effortMid.style.width = Math.round(eb - 2 * pad) + 'px';
+      cols.forEach(function (x) {
+        var roomTop = W / 2 - top / 2 - clear - x.side;
+        var floor = Math.min(Math.max(0, roomTop - minLine) / k, He - s4);
+        var eTop = floor - x.e.offsetHeight;                      /* depth of its top below Human Effort's top */
+        x.e.style.top = 'auto';
+        x.e.style.bottom = Math.round(He - floor) + 'px';
+        x.e.style.width = Math.round(clamp(roomTop - k * eTop, 200, 520)) + 'px';
+        var jUp = space - eTop;                                    /* height of the next column's bottom above that top */
+        x.j.style.bottom = Math.round(jUp - g) + 'px';             /* from Human Experience's bottom edge, g above it */
+        x.j.style.width = Math.round(clamp(roomTop + k * (jUp + x.j.offsetHeight), 220, 520)) + 'px';
+      });
+
+      wrapText(jobs, W, pad, clear);
+    }
+    /* the blocks have moved as their neighbours took their final heights: lay them out where they now are */
+    for (var settle = 0; settle < 2; settle++) wrapText(jobs, W, pad, clear);
+    /* each column's rule, at its bottom where the slope comes closest, stops short of the slope too */
+    var ol = outline();
+    cols.forEach(function (x) {
+      [[x.e, x.side === margin], [x.j, x.side === margin]].forEach(function (y) {
+        var f = y[0], r = f.getBoundingClientRect(), h = half(ol, W, r.bottom);
+        var w = y[1] ? W / 2 - h - clear - r.left : r.right - (W / 2 + h + clear);
+        f.style.setProperty('--rule-w', Math.max(0, Math.floor(w)) + 'px');
+      });
+    });
+  }
+
+  /* ---------- smaller screens: each layer's side detail moves out of the slice, into the band above it ----------
+     A marker holds each piece's place in its slice, so it can go back when the screen widens */
+  var moves = [[effort, 'human-effort-detail'], [joy, 'human-experience-detail']].map(function (x) {
+    var band = document.getElementById(x[1]);
+    return { band: band, pair: band.querySelector('.ed-strata-pair'), pieces: [].map.call(x[0].querySelectorAll('.ed-level-in > .ed-flank'), function (f) {
+      var mark = document.createComment('detail'); f.parentNode.insertBefore(mark, f); return { el: f, mark: mark };
+    }) };
+  });
+  var movedOut = false;
+  function placeDetail() {
+    var out = !wide.matches;
+    if (out === movedOut) return;
+    movedOut = out;
+    moves.forEach(function (m) {
+      m.pieces.forEach(function (p) { if (out) m.pair.appendChild(p.el); else p.mark.parentNode.insertBefore(p.el, p.mark.nextSibling); });
+      m.band.hidden = !out;
+    });
+  }
+
+  function layout() {
+    placeDetail();
+    var b = bar(), nav = b ? b.querySelector('.main-header-area').offsetHeight : num(root, '--nav') || 64;
+    root.style.setProperty('--nav', nav + 'px');
+    shape();
+    range = Math.max(0, tower.offsetHeight - stage.clientHeight);
+    spacer.style.height = tower.offsetHeight + 'px';
+    stick = Math.max(0, stage.clientHeight - nav);
+    move();
+  }
+
+  /* the climb: the pyramid moves down by the scroll distance, and the nav with it until it reaches the bottom.
+     Nothing else on screen scrolls natively, so there is nothing for the move to fall behind */
+  function move() {
+    var y = Math.max(0, scrollY), b = bar();
+    tower.style.transform = 'translateY(' + Math.min(y, range) + 'px)';
+    if (b) {
+      b.style.transform = 'translateY(' + Math.min(y, stick) + 'px)';
+      b.classList.toggle('is-low', y > stick / 2);
+    }
+    queue();
+  }
+  addEventListener('scroll', move, { passive: true });
+
+  var pending = false;
+  var shapedAt = -1e9;
+  function relayout() { if (!pending) { pending = true; requestAnimationFrame(function () { pending = false; layout(); shapedAt = performance.now(); }); } }
+  if ('ResizeObserver' in window) {
+    /* the shaping resizes the layers itself: those changes are not a reason to shape again */
+    var ro = new ResizeObserver(function () { if (performance.now() - shapedAt > 300) relayout(); });
+    [].forEach.call(tower.children, function (c) { ro.observe(c); });
+  }
+  /* the nav arrives later, from header.html */
+  new MutationObserver(relayout).observe(document.getElementById('header'), { childList: true });
+  addEventListener('resize', relayout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+  /* Pretext lays the text along the slope once it and the page's font have loaded: its widths have to be the
+     real font's, not the fallback's. If it can't load, the text wraps normally inside its boxes */
+  if (document.fonts) {
+    Promise.all([import('./js/vendor/pretext/rich-inline.js')].concat(['400', '500', '700', '900'].map(function (w) {
+      return document.fonts.load(w + ' 16px "Hanken Grotesk"');
+    }))).then(function (got) { pt = got[0]; relayout(); }, function (e) { console.warn('Pretext did not load; the text wraps normally', e); });
+  }
+
+  /* ---------- getting somewhere: links and keyboard focus ----------
+     The pyramid is fixed, so the browser can't scroll to things inside it by itself. Moving the page by the
+     gap between where a thing is and where it should be does it: more scroll moves the pyramid down. */
+  function reveal(el, mode, smooth) {
+    var r = el.getBoundingClientRect(), b = bar();
+    var floor = stage.clientHeight - (scrollY > stick / 2 && b ? b.offsetHeight || 64 : 0);   /* above the stuck nav */
+    var m = 24, d = 0;
+    if (mode === 'start') d = floor - r.bottom;              /* a layer starts at its bottom edge */
+    else if (r.top < m) d = m - r.top;
+    else if (r.bottom > floor - m) d = floor - m - r.bottom;
+    if (mode === 'start' && scrollY + d < stick) d += (b ? b.offsetHeight : 64);   /* landing from the hero: the nav will be stuck */
+    if (!d) return;
+    scrollTo({ top: Math.max(0, scrollY + d), behavior: smooth && !reduce.matches ? 'smooth' : 'auto' });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest('a[href^="#"]');
+    var t = a && a.hash.length > 1 && document.getElementById(a.hash.slice(1));
+    if (!t || !tower.contains(t)) return;
+    e.preventDefault();
+    history.pushState(null, '', a.hash);
+    reveal(t, 'start', true);
+    var h = t.querySelector('h1, h2, h3');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  });
+  tower.addEventListener('focusin', function (e) { reveal(e.target, 'nearest', false); });
+
+  /* ---------- the pyramid that follows the reader ----------
+     It appears once you're off the ground. Layers already climbed stay filled, the one at mid-screen is in
+     full colour, the ones above are dashed outlines. Over a coloured layer its lines turn light. */
+  var mini = document.getElementById('ed-mini'), cap = document.getElementById('ed-mini-cap');
+  var cta = document.querySelector('.ed-cta');   /* the small pyramid rides high on the right, but never above this */
+  var layers = ['human-rights', 'human-effort', 'human-experience'].map(function (id) { return document.getElementById(id); });
+  /* a level is its slice; Human Rights' also takes in the white space above it */
+  var levels = layers.map(function (l) { return [l]; });
+  levels[0].push(document.getElementById('human-rights-terms'));   /* the band of terms counts as the base */
+  levels[1].push(document.getElementById('human-effort-detail'));   /* and each band of detail as its layer */
+  levels[2].push(document.getElementById('human-experience-detail'));
+  var names = ['Human Rights', 'Human Effort', 'Human Experience'];
+  var links = layers.map(function (l) { return mini.querySelector('a[href="#' + l.id + '"]'); });
+  var ticking = false;
+  function inside(l, x, y) {   /* is the point inside this layer's sloped shape? */
+    var r = l.getBoundingClientRect();
+    if (y < r.top || y > r.bottom) return false;
+    var b = num(l, '--b'), t = num(l, '--t'), up = (r.bottom - y) / r.height, w = (b - (b - t) * up) * r.width;
+    return Math.abs(x - (r.left + r.width / 2)) < w / 2;
+  }
+  function update() {
+    ticking = false;
+    var mid = stage.clientHeight / 2, cur = -1;
+    levels.forEach(function (lv, i) {
+      var a = lv[0].getBoundingClientRect(), b = (lv[1] || lv[0]).getBoundingClientRect();
+      if (Math.max(a.bottom, b.bottom) >= mid && Math.min(a.top, b.top) <= mid) cur = i;
+    });
+    if (cur < 0 && layers[2].getBoundingClientRect().top > mid) cur = 3;   /* in the sky: the whole pyramid is below you */
+    mini.classList.toggle('is-on', cur >= 0);
+    links.forEach(function (a, i) {
+      a.classList.toggle('is-built', i < cur);
+      a.classList.toggle('is-here', i === cur);
+      if (i === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    if (cur >= 0) cap.textContent = cur < 3 ? names[cur] : 'Above the top';
+    mini.style.top = cta ? Math.max(num(root, '--s5'), cta.getBoundingClientRect().top) + 'px' : '';
+    var mr = mini.getBoundingClientRect(), mx = mr.left + mr.width / 2, my = mr.top + mr.height / 2;
+    mini.classList.toggle('on-dark', layers.some(function (l) { return inside(l, mx, my); }));
+  }
+  function queue() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+
+  layout();
+  /* arriving with a #link: go there once the layout has settled */
+  if (location.hash.length > 1) {
+    var t = document.getElementById(location.hash.slice(1));
+    if (t && tower.contains(t)) requestAnimationFrame(function () { layout(); reveal(t, 'start', false); });
+  }
+})();
+</script>
+</body>
+</html>
