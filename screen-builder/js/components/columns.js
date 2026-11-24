@@ -268,10 +268,13 @@ window.Components.columns = {
                 const flex = parseFloat(column.style.flexGrow) || 1;
                 totalFlexToRedistribute += flex;
                 
-                // Move content to first column
-                while (column.firstChild) {
-                    firstColumn.appendChild(column.firstChild);
-                }
+                // Move the column's components to the first column, not its chrome: its
+                // empty-column icon moved along became a second icon there, never hidden
+                // (only the first was), so it showed over the content and was saved with it.
+                Array.from(column.childNodes).forEach(node => {
+                    if (node.nodeType === 1 && node.matches('.empty-placeholder, .column-resize-handle')) return;
+                    firstColumn.appendChild(node);
+                });
                 column.remove();
             }
             
@@ -331,8 +334,6 @@ window.Components.columns = {
     });
 
     const mutationObserver = new MutationObserver((mutations) => {
-        const columns = columnContainer.querySelectorAll('.column-container');
-
         // Check if columns were added or removed
         const columnCountChanged = mutations.some(mutation => {
             return Array.from(mutation.addedNodes).some(node => 
@@ -347,15 +348,8 @@ window.Components.columns = {
             createResizeHandles();
         }
 
-        // Update placeholder visibility
-        columns.forEach(column => {
-            const empty = column.querySelector(':scope > .empty-placeholder');
-            const hasComponents = column.querySelector('.component-container');
-            if (empty) {
-                const hasDirectComponents = column.querySelector(':scope > .component-container');
-                empty.style.display = hasComponents ? 'none' : 'block';
-            }
-        });
+        // (The empty-column icon's visibility is CSS — .column-container:has(.component-container)
+        // hides it — so nothing about it is written inline and saved.)
     });
 
     mutationObserver.observe(columnContainer, {
@@ -375,7 +369,14 @@ window.Components.columns = {
         
         // Set equal flex for all columns
         existingColumns.forEach(column => {
-            // Empty-column icon (shown by CSS in the editor while the column is empty)
+            // Empty-column icon (shown by CSS in the editor while the column is empty). Exactly
+            // one per column: older builds moved a removed column's icon into the first column
+            // (a stray second icon, saved), and wrote its display inline — CSS owns that now.
+            column.querySelectorAll(':scope > .empty-placeholder').forEach((el, i) => {
+                if (i > 0) { el.remove(); return; }
+                el.style.removeProperty('display');
+                if (!el.getAttribute('style')) el.removeAttribute('style');
+            });
             if (!column.querySelector(':scope > .empty-placeholder')) {
                 const empty = document.createElement('div');
                 empty.classList.add('empty-placeholder');

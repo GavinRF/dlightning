@@ -167,13 +167,14 @@
 <script src="js/components/rating.js"></script>
 <script src="js/components/stepper.js"></script>
 <script src="js/variants.js"></script>
+<script src="js/screen-background.js"></script>
 <script src="js/templates.js"></script>
 <!-- BUILD:GALLERY-JS:END -->
 <script src="js/gallery.js"></script>
 
 <script>
 (() => {
-    const { TEMPLATES, TEMPLATE_CARDS, TEMPLATE_PACKS, TEMPLATE_CATEGORIES, mountTemplatePreview } = window.screenTemplates;
+    const { TEMPLATES, TEMPLATE_CARDS, TEMPLATE_PACKS, TEMPLATE_CATEGORIES, TEMPLATE_BG, mountTemplatePreview } = window.screenTemplates;
     const main = document.getElementById('gMain');
     const nav = document.getElementById('gNav');
     const empty = document.getElementById('gEmpty');
@@ -189,7 +190,7 @@
         const frame = document.createElement('div');
         frame.className = 'g-frame';
         el.appendChild(frame);
-        mountTemplatePreview(frame, TEMPLATES[key] || [], el);
+        mountTemplatePreview(frame, TEMPLATES[key] || [], el, { background: TEMPLATE_BG[key] });
         el.insertAdjacentHTML('beforeend', `<div class="g-tile-label"><b>${esc(title)}</b>${sub ? esc(sub) : ''}</div>`);
         return el;
     };

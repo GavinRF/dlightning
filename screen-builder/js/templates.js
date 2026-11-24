@@ -6,12 +6,14 @@
   // category as its own section). App packs come first, then single screens.
   const TEMPLATE_CATEGORIES = [
     { id: 'essentials',   label: 'Essentials' },
+    { id: 'testing',      label: 'User Testing' },
     { id: 'social',       label: 'Social' },
     { id: 'shopping',     label: 'Shopping' },
     { id: 'food',         label: 'Food & Drink' },
     { id: 'finance',      label: 'Finance' },
     { id: 'health',       label: 'Health & Fitness' },
     { id: 'travel',       label: 'Travel' },
+    { id: 'events',       label: 'Events' },
     { id: 'media',        label: 'Media' },
     { id: 'productivity', label: 'Productivity' },
     { id: 'education',    label: 'Education' },
@@ -26,18 +28,29 @@
   const TEMPLATE_CARDS = [
     // Essentials
     { key: 'login',          cat: 'essentials', title: 'Login',           blurb: 'Sign in, social sign-in, and sign up', tags: 'sign in sign up register auth password account' },
+    { key: 'splash',         cat: 'essentials', title: 'Splash',          blurb: 'Logo and loader; moves on by itself in Play', tags: 'splash launch loading startup logo intro brand' },
     { key: 'onboarding',     cat: 'essentials', title: 'Onboarding',      blurb: 'Welcome screen with page dots', tags: 'welcome intro walkthrough splash get started' },
     { key: 'verifyCode',     cat: 'essentials', title: 'Verify Code',     blurb: 'One-time code entry and resend', tags: 'otp 2fa two factor sms verification code auth' },
     { key: 'forgotPassword', cat: 'essentials', title: 'Forgot Password', blurb: 'Reset link request', tags: 'reset password recover account auth' },
     { key: 'permissions',    cat: 'essentials', title: 'Permissions',     blurb: 'Ask for notifications and location', tags: 'allow access location notifications camera privacy onboarding' },
+    { key: 'deleteAccount',  cat: 'essentials', title: 'Delete Account',  blurb: 'Warning, alternatives, reason, and confirm', tags: 'delete account close remove data privacy gdpr danger confirm leave' },
     { key: 'settings',       cat: 'essentials', title: 'Settings',        blurb: 'Toggles, account links, and log out', tags: 'preferences account toggles profile options' },
     { key: 'editProfile',    cat: 'essentials', title: 'Edit Profile',    blurb: 'Photo, name, bio, and save', tags: 'account profile form user details' },
     { key: 'notifications',  cat: 'essentials', title: 'Notifications',   blurb: 'Reminder card and activity list', tags: 'alerts activity inbox reminders' },
     { key: 'search',         cat: 'essentials', title: 'Search',          blurb: 'Recent searches, trending, and results', tags: 'find lookup query results filter' },
     { key: 'emptyState',     cat: 'essentials', title: 'Empty State',     blurb: 'Nothing-here-yet message with an action', tags: 'empty blank zero state no results placeholder' },
+    // Its name ("Page Not Found") is what the player's browser bar sends a bad address to
+    { key: 'notFound',       cat: 'essentials', title: 'Page Not Found',  blurb: 'Shown in Play when a typed address matches no screen', tags: '404 error not found missing broken link page dead end' },
     { key: 'success',        cat: 'essentials', title: 'Success',         blurb: 'Confirmation with next steps', tags: 'done complete confirmation thank you check' },
     { key: 'help',           cat: 'essentials', title: 'Help Center',     blurb: 'Search, topics, and FAQ', tags: 'support faq help questions contact' },
     { key: 'template3',      cat: 'essentials', title: 'Contact Form',    blurb: 'Inputs, dropdown, message box, and actions', tags: 'support feedback form email inquiry' },
+    { key: 'lockScreen',     cat: 'essentials', title: 'Lock Screen',     blurb: 'Clock, date, and stacked notifications', tags: 'lock screen home clock time notifications phone device wallpaper push' },
+    // User Testing: frame a usability test. The intro becomes the start screen and leads
+    // into the prototype (START links, see applyTemplate); the end screen's Finish shows
+    // the player's end card (and the exit survey, if the project has one).
+    { key: 'protoIntro',     cat: 'testing', title: 'Prototype Intro', blurb: 'Welcome testers, set the task, and start', tags: 'usability test user testing research study participant intro instructions welcome consent start prototype' },
+    { key: 'testTask',       cat: 'testing', title: 'Test Task',       blurb: 'Mid-test task card for a multi-part study', tags: 'usability test user testing research task scenario instructions next step' },
+    { key: 'testDone',       cat: 'testing', title: 'Test Complete',   blurb: 'Thank-you screen with Finish and feedback', tags: 'usability test user testing research end finish done thank you survey feedback' },
     // Social
     { key: 'social',         cat: 'social', title: 'Social Feed',  blurb: 'Feed filters, posts, and a center-action nav', tags: 'feed posts timeline community friends' },
     { key: 'explore',        cat: 'social', title: 'Explore',      blurb: 'Search, topics, and a photo grid', tags: 'discover trending grid search photos' },
@@ -75,6 +88,7 @@
     { key: 'workoutDone', cat: 'health', title: 'Workout Done', blurb: 'Summary stats and streak', tags: 'complete summary calories results' },
     { key: 'nutrition',   cat: 'health', title: 'Nutrition',  blurb: 'Calories, macros, and meals', tags: 'food diet calories macros meal log' },
     { key: 'habits',      cat: 'health', title: 'Habits',     blurb: 'Daily check-ins and streaks', tags: 'habit tracker routine streak goals wellness' },
+    { key: 'appointment', cat: 'health', title: 'Appointment', blurb: 'Provider, visit type, time slot, and confirm', tags: 'appointment booking doctor clinic schedule telehealth health visit salon service' },
     { key: 'meditation',  cat: 'health', title: 'Meditation', blurb: 'Session player and sounds', tags: 'mindfulness calm sleep breathe relax wellness' },
     // Travel
     { key: 'travelHome',    cat: 'travel', title: 'Travel',      blurb: 'Destination search and featured stays', tags: 'trip vacation hotel airbnb booking explore' },
@@ -85,6 +99,10 @@
     { key: 'rideRequest',   cat: 'travel', title: 'Ride',        blurb: 'Route, ride options, and request', tags: 'uber lyft taxi rideshare car driver transport' },
     { key: 'rideTracking',  cat: 'travel', title: 'Driver On the Way', blurb: 'Driver, car, and arrival time', tags: 'uber lyft taxi driver eta tracking' },
     { key: 'rateRide',      cat: 'travel', title: 'Rate Your Ride', blurb: 'Trip summary, rating, and tip', tags: 'uber lyft rating stars tip feedback' },
+    // Events
+    { key: 'eventsHome',        cat: 'events', title: 'Events',             blurb: 'Featured event and what\'s coming up', tags: 'events discover concerts meetups conference eventbrite tickets' },
+    { key: 'eventRegistration', cat: 'events', title: 'Event Registration', blurb: 'Date, venue, ticket type, and attendee details', tags: 'event register rsvp signup tickets conference meetup webinar workshop' },
+    { key: 'eventTicket',       cat: 'events', title: 'Your Ticket',        blurb: 'Registration confirmed, with a QR code', tags: 'event ticket qr confirmation rsvp pass entry admission' },
     // Media
     { key: 'streamingHome', cat: 'media', title: 'Streaming',   blurb: 'Featured show and rows of titles', tags: 'netflix tv movies shows watch video' },
     { key: 'showDetail',    cat: 'media', title: 'Show',        blurb: 'Show info, seasons, and episodes', tags: 'movie series episodes detail tv' },
@@ -116,6 +134,8 @@
     // Business
     { key: 'template2',      cat: 'business', title: 'Landing Page', blurb: 'Hero, testimonial, FAQ, and footer', tags: 'website marketing home homepage saas startup' },
     { key: 'pricing',        cat: 'business', title: 'Pricing',      blurb: 'Billing toggle, plan comparison, and FAQ', tags: 'plans subscription upgrade paywall billing pro' },
+    { key: 'paywall',        cat: 'business', title: 'Paywall',      blurb: 'In-app upgrade with plans and a free trial', tags: 'paywall premium subscription upgrade in-app purchase trial pro plans' },
+    { key: 'cancelSubscription', cat: 'business', title: 'Cancel Subscription', blurb: 'What you lose, a stay offer, and a reason', tags: 'cancel subscription churn retention downgrade unsubscribe billing offer' },
     { key: 'waitlist',       cat: 'business', title: 'Waitlist',     blurb: 'Coming-soon signup', tags: 'launch coming soon beta signup early access' },
     { key: 'propertyList',   cat: 'business', title: 'Listings',     blurb: 'Search, filters, and homes for sale', tags: 'real estate homes property rent zillow listings' },
     { key: 'propertyDetail', cat: 'business', title: 'Listing',      blurb: 'Photos, facts, agent, and tour', tags: 'real estate home property house detail' },
@@ -126,8 +146,8 @@
   // entry's `go` links (see TEMPLATE DEFINITIONS) resolve to the pack's other screens.
   // The first screen becomes the prototype's start screen if the project has none.
   const TEMPLATE_PACKS = [
-    { key: 'pack:auth',      cat: 'essentials', title: 'Sign-up Flow',     blurb: 'Welcome, sign in, verify, and permissions', tags: 'auth onboarding login register',
-      screens: ['onboarding', 'login', 'verifyCode', 'permissions', 'success', 'forgotPassword'] },
+    { key: 'pack:auth',      cat: 'essentials', title: 'Sign-up Flow',     blurb: 'Splash, welcome, sign in, verify, and permissions', tags: 'auth onboarding login register splash',
+      screens: ['splash', 'onboarding', 'login', 'verifyCode', 'permissions', 'success', 'forgotPassword'] },
     { key: 'pack:social',    cat: 'social', title: 'Social App',          blurb: 'Feed, explore, posting, chats, and profile', tags: 'instagram twitter community',
       screens: ['social', 'postDetail', 'explore', 'createPost', 'chatInbox', 'messaging', 'template1'] },
     { key: 'pack:shop',      cat: 'shopping', title: 'Shopping App',      blurb: 'Browse, product, bag, checkout, tracking, and review', tags: 'ecommerce store retail',
@@ -142,6 +162,8 @@
       screens: ['travelHome', 'hotelDetail', 'tripItinerary', 'boardingPass', 'mapLocation'] },
     { key: 'pack:ride',      cat: 'travel', title: 'Ride App',            blurb: 'Pick a ride, follow your driver, and rate the trip', tags: 'uber lyft taxi rideshare',
       screens: ['rideRequest', 'rideTracking', 'rateRide'] },
+    { key: 'pack:events',    cat: 'events', title: 'Events App',          blurb: 'Discover, register, and get your ticket', tags: 'eventbrite meetup conference rsvp',
+      screens: ['eventsHome', 'eventRegistration', 'eventTicket'] },
     { key: 'pack:streaming', cat: 'media', title: 'Streaming App',        blurb: 'Browse, show page, and watch', tags: 'netflix tv movies video',
       screens: ['streamingHome', 'showDetail', 'mediaGallery'] },
     { key: 'pack:music',     cat: 'media', title: 'Music App',            blurb: 'Library, now playing, and podcasts', tags: 'spotify audio podcasts',
@@ -365,6 +387,7 @@
     modal.querySelectorAll('.template-card').forEach(card => {
       const key = PACKS_BY_KEY[card.dataset.template]?.screens[0] || card.dataset.template;
       fillPreview(card.querySelector('.tp-scale'), TEMPLATES[key] || [], key);
+      if (TEMPLATE_BG[key]) window.screenBackground?.paint(card.querySelector('.tp-scale'), TEMPLATE_BG[key]);
       setupPreviewScroll(card);
     });
   }
@@ -395,13 +418,15 @@
   // Mount a standalone thumbnail (.template-preview > .tp-scale) for any entry list into
   // `container`, with the hover glide on `hoverTarget` (default: container) — used by
   // the welcome tutorial's template step. Empty entries → an empty phone (blank screen).
-  function mountTemplatePreview(container, entries, hoverTarget = container) {
+  // background: the screen's own color / gradient (TEMPLATE_BG), if any.
+  function mountTemplatePreview(container, entries, hoverTarget = container, { background = null } = {}) {
     const preview = document.createElement('div');
     preview.className = 'template-preview';
     const scale = document.createElement('div');
     scale.className = 'tp-scale' + (entries.length ? '' : ' tp-blank');
     preview.appendChild(scale);
     fillPreview(scale, entries, 'tutorial');
+    if (background) window.screenBackground?.paint(scale, background);
     container.appendChild(preview);
     setupPreviewScroll(hoverTarget);
     requestAnimationFrame(() => {
@@ -688,6 +713,12 @@
   // or ROOT for the component's own root. Ignored when the template is used on its own.
   // goTransition: 'fade' | 'up' | 'none' for those links (default: slide).
   const ROOT = '@root';
+  // Link targets resolved when the template is used on its own (resolveScreenLinks):
+  // START = the prototype's start screen as it was before this screen was added (else the
+  // screen after it, else the first other screen); NEXT = the screen right after this one.
+  // `${NEXT}|${START}` falls back like 'a|b'. In a pack, START is the pack's first screen.
+  const START = '@start';
+  const NEXT = '@next';
 
   // Bottom tab bar from [label, icon, screen] ×5 — the same bar on every screen of an app
   // highlights the right tab in play (bottomNav.play), and tabs switch without a slide.
@@ -732,14 +763,15 @@
   });
 
   // A large centered icon (success / empty states)
-  const bigIcon = (icon, size = 64) => ({
+  // color: any CSS color (default: the theme's primary); text color for screens with a background
+  const bigIcon = (icon, size = 64, color = 'var(--color-primary)') => ({
     type: 'icon', icon, size,
     after: el => {
       const i = queryOwn(el, '.iconContainerClass i')[0];
       if (!i) return;
       i.className = icon;
       i.style.fontSize = `${size}px`;
-      i.style.color = 'var(--color-primary)';
+      i.style.color = color;
       const control = el.querySelector('input.iconControls');
       if (control) control.value = size;
     },
@@ -759,6 +791,13 @@
   const center = el => {
     queryOwn(el, 'h1, h2, h3, h4, p').forEach(n => { n.style.textAlign = 'center'; });
   };
+  // Keep a component to a centered column on wide (tablet / desktop) screens; no change on a
+  // phone. Set on the component's root element, so it's saved with it.
+  const column = (w = 440) => el => {
+    const root = contentOf(el).firstElementChild;
+    if (root) { root.style.maxWidth = `${w}px`; root.style.marginInline = 'auto'; }
+  };
+  const both = (...fns) => el => fns.forEach(fn => fn(el));
   const LI_TITLE = '.li-content > span:first-child';
 
   // Tab bars shared by the screens of one app (and its app pack)
@@ -771,6 +810,7 @@
   const STREAM_TABS = tabBar(3, [['Home', 'fa-house', 'streamingHome'], ['Search', 'fa-magnifying-glass', null], ['Watch', 'fa-play', 'mediaGallery'], ['Downloads', 'fa-download', null], ['Profile', 'fa-user', null]]);
   const MUSIC_TABS = tabBar(3, [['Home', 'fa-house', null], ['Search', 'fa-magnifying-glass', null], ['Library', 'fa-layer-group', 'musicLibrary'], ['Podcasts', 'fa-podcast', 'podcast'], ['Playing', 'fa-music', 'nowPlaying']]);
   const WORK_TABS = tabBar(2, [['Tasks', 'fa-list-check', 'tasks'], ['Projects', 'fa-folder', 'projects'], ['New', 'fa-plus', 'taskDetail'], ['Calendar', 'fa-calendar', 'calendar'], ['Notes', 'fa-note-sticky', 'notes']]);
+  const EVENT_TABS = tabBar(1, [['Discover', 'fa-compass', 'eventsHome'], ['Search', 'fa-magnifying-glass', null], ['Tickets', 'fa-ticket', 'eventTicket'], ['Saved', 'fa-heart', null], ['Profile', 'fa-user', null]]);
   const LEARN_TABS = tabBar(4, [['Learn', 'fa-house', 'education'], ['Courses', 'fa-book', 'courseCatalog'], ['Practice', 'fa-bullseye', 'quiz'], ['Saved', 'fa-bookmark', null], ['Profile', 'fa-user', null]]);
 
   // AI apps: chats live in a slide-out sidebar (the navbar's menu icon opens it in play)
@@ -788,6 +828,13 @@
     type: 'navbar', variant: 2, text: { '.nav-title-text': title },
     go: { '.icon-container:has(.fa-bars)': 'overlay:sidebar' },
   });
+
+  // A template's screen background (screen-background.js: color / gradient, optional tone).
+  // Set on the new screen before its components; the picker thumbnails show it too.
+  const TEMPLATE_BG = {
+    splash: { color: 'primary' },
+    lockScreen: { gradient: 'glow' },
+  };
 
   const TEMPLATES = {
     template1: [ // Profile
@@ -1238,6 +1285,17 @@
       { type: 'adjustableSpace' },
     ],
 
+    notFound: [
+      { type: 'adjustableSpace' },
+      { type: 'adjustableSpace' },
+      bigIcon('fas fa-signs-post', 72),
+      { type: 'heading', level: 'h1', text: '404', after: both(center, column()) },
+      { type: 'heading', level: 'h3', text: 'Page not found', after: both(center, column()) },
+      { type: 'paragraph', text: "The page you're looking for doesn't exist or has moved. Check the address, or head back.", after: both(center, column()) },
+      { type: 'button', variant: 0, text: 'GO BACK', go: { [BTN]: 'back' }, after: column(280) },
+      { type: 'adjustableSpace' },
+    ],
+
     success: [
       { type: 'adjustableSpace' },
       { type: 'adjustableSpace' },
@@ -1263,6 +1321,117 @@
       { type: 'accordion', style: 'faq', text: 'Can I get a refund?' },
       { type: 'accordion', style: 'faq', text: 'How do I delete my account?' },
       { type: 'card2', variant: 2, text: { '.card-title': 'Still need help?', '.card-text': 'Our team usually replies within an hour.', '.card-action-btn span': ['Chat with us', 'Email'] } },
+    ],
+
+    // Splash: logo, name, and a loader. Moves on by itself in Play (TEMPLATE_AUTO).
+    splash: [
+      { type: 'adjustableSpace' },
+      { type: 'adjustableSpace' },
+      { type: 'image', variant: 5 }, // circle crop, for a logo
+      { type: 'heading', level: 'h1', text: 'Northwind', after: center },
+      { type: 'paragraph', text: 'Plan, build, and launch together', after: centered },
+      { type: 'adjustableSpace' },
+      bigIcon('fas fa-circle-notch fa-spin', 28, 'var(--basic-txt-color)'),
+      { type: 'adjustableSpace' },
+    ],
+
+    deleteAccount: [
+      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Delete Account' } },
+      { type: 'adjustableSpace' },
+      { ...bigIcon('fas fa-triangle-exclamation', 52), after: el => {
+          bigIcon('fas fa-triangle-exclamation', 52).after(el);
+          const i = queryOwn(el, '.iconContainerClass i')[0];
+          if (i) i.style.color = '#D92D20';
+        } },
+      { type: 'heading', level: 'h2', text: 'Delete your account?', after: both(center, column()) },
+      { type: 'paragraph', text: 'This permanently deletes your profile, posts, and saved items. It can’t be undone.', after: both(center, column()) },
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Before you go' } },
+      { type: 'listItem', variant: 3, text: 'Download a copy of your data', after: el => setIcon(el, '.li-icon i', 'fas fa-download') },
+      { type: 'listItem', variant: 3, text: 'Take a break instead (pause account)', after: el => setIcon(el, '.li-icon i', 'fas fa-pause') },
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Why are you leaving?' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'I don’t use it enough' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'Privacy concerns' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'I made another account' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'Something else' } },
+      { type: 'input', variant: 1, text: { '.ui-input-label': 'Password' }, placeholder: { '.ui-input-base': 'Enter your password to confirm' } },
+      { type: 'checkbox', text: { 'span': 'I understand this can’t be undone' } },
+      { type: 'button', variant: 0, text: 'DELETE ACCOUNT', go: { [BTN]: 'success' }, after: el => {
+          const b = queryOwn(el, BTN)[0];
+          if (b) b.style.backgroundColor = '#D92D20'; // destructive red, not the theme color
+        } },
+      { type: 'button', variant: 3, text: 'KEEP MY ACCOUNT', go: { [BTN]: 'back' } },
+    ],
+
+    // Lock screen: date, a big clock, and push notifications (notificationBanner variant 1)
+    lockScreen: [
+      { type: 'adjustableSpace' },
+      bigIcon('fas fa-lock', 22, 'var(--basic-txt-color)'),
+      { type: 'paragraph', text: 'Sunday, November 22', after: el => {
+          const p = el.querySelector('p');
+          if (p) Object.assign(p.style, { textAlign: 'center', fontSize: '18px', fontWeight: '500' });
+        } },
+      { type: 'heading', level: 'h1', text: '9:41', after: el => {
+          const h = el.querySelector('h1');
+          if (h) Object.assign(h.style, { textAlign: 'center', fontSize: '84px', fontWeight: '600', lineHeight: '1', letterSpacing: '-2px' });
+        } },
+      { type: 'adjustableSpace' },
+      { type: 'notificationBanner', variant: 1, text: { '.noti-app-name': 'MESSAGES', '.noti-time': 'now', '.noti-title': 'Sam Chen', '.noti-body': 'Running 5 min late, grab us a table?' },
+        after: el => setIcon(el, '.noti-app-icon i', 'fas fa-comment') },
+      { type: 'notificationBanner', variant: 1, text: { '.noti-app-name': 'CALENDAR', '.noti-time': '9:30 AM', '.noti-title': 'Design review in 15 min', '.noti-body': 'Room 4B · with Maya, Jordan, and 2 others' },
+        after: el => setIcon(el, '.noti-app-icon i', 'fas fa-calendar') },
+      { type: 'notificationBanner', variant: 1, text: { '.noti-app-name': 'WALLET', '.noti-time': '8:12 AM', '.noti-title': 'Payment received', '.noti-body': 'Alex sent you $24.00 for lunch 🍜' },
+        after: el => setIcon(el, '.noti-app-icon i', 'fas fa-wallet') },
+      { type: 'adjustableSpace' },
+      { type: 'paragraph', text: 'Swipe up to open', after: centered, go: { [ROOT]: `${NEXT}|${START}` } },
+    ],
+
+    // ── User Testing ──
+    // Copy is a starting point: the designer swaps in their own task and time.
+    protoIntro: [
+      { type: 'adjustableSpace' },
+      bigIcon('fas fa-hand-pointer', 56),
+      { type: 'heading', level: 'h2', text: 'Welcome to the prototype', after: both(center, column()) },
+      { type: 'paragraph', text: "Thanks for helping us test a new design. On the next screen you'll start an interactive prototype: a clickable mockup of the app, not the finished product.", after: both(center, column()) },
+      { type: 'card2', variant: 3, text: { '.card-title': 'Your goal', '.card-text': 'Book a table for two this Friday evening. Take your time, and if you can, say what you’re thinking as you go. This helps us see whether the design works the way we hope.' }, after: column() },
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Good to know' }, after: column() },
+      { type: 'bulletedList', after: both(column(), el => {
+          // ships with two items: add two more, then fill all four
+          for (let i = 0; i < 2; i++) el.querySelector('.add-bullet-text')?.closest('div, button')?.click();
+          setTexts(el, { '.bullet-list-item-text': [
+            'Not everything works. Many buttons, links, and fields do, but some are just for show.',
+            'You can’t break anything, so try whatever feels natural.',
+            'Nothing you type is saved or sent anywhere.',
+            'We’re testing the design, not you. There are no wrong answers.',
+          ] }, 'bulletedList');
+          setIcons(el, '.bullet-icon i', ['fas fa-hand-pointer', 'fas fa-shield-heart', 'fas fa-lock', 'fas fa-face-smile']);
+        }) },
+      { type: 'adjustableSpace' },
+      { type: 'button', variant: 0, text: 'START THE PROTOTYPE', go: { [BTN]: START }, after: column(320) },
+      { type: 'paragraph', text: 'Takes about 5 minutes', after: both(centered, column()) },
+    ],
+
+    // Between parts of a study: the next task, then back into the prototype
+    testTask: [
+      { type: 'adjustableSpace' },
+      { type: 'progressTracker', ...tracker(['Task 1', 'Task 2', 'Task 3'], 1) },
+      bigIcon('fas fa-bullseye', 52),
+      { type: 'heading', level: 'h2', text: 'Nice work! Next task', after: both(center, column()) },
+      { type: 'card2', variant: 3, text: { '.card-title': 'Task 2', '.card-text': 'You’d like to change your booking to 8:00 PM. Find your reservation and update the time.' }, after: column() },
+      { type: 'paragraph', text: 'If you get stuck, that’s useful for us too. Do what you would normally do, or move on when you’re ready.', after: both(center, column()) },
+      { type: 'adjustableSpace' },
+      { type: 'button', variant: 0, text: 'CONTINUE', go: { [BTN]: NEXT }, after: column(320) },
+    ],
+
+    testDone: [
+      { type: 'adjustableSpace' },
+      { type: 'adjustableSpace' },
+      bigIcon('fas fa-flag-checkered', 72),
+      { type: 'heading', level: 'h2', text: "That's the end of the test", after: both(center, column()) },
+      { type: 'paragraph', text: 'Thank you! Your time and honest reactions help us make the app easier for everyone.', after: both(center, column()) },
+      { type: 'card2', variant: 3, text: { '.card-title': 'One last thing', '.card-text': 'Tap Finish to wrap up. We may ask a few quick questions about how it went.' }, after: column() },
+      { type: 'adjustableSpace' },
+      { type: 'button', variant: 0, text: 'FINISH', go: { [BTN]: 'finish' }, after: column(320) },
+      { type: 'button', variant: 3, text: 'START OVER', go: { [BTN]: START }, after: column(320) },
     ],
 
     // ── Social ──
@@ -1664,6 +1833,70 @@
       { type: 'button', variant: 3, text: 'ARRIVED? RATE YOUR RIDE', go: { [BTN]: 'rateRide' } },
     ],
 
+    // ── Health ──
+    appointment: [
+      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Book Appointment' } },
+      { type: 'adjustableSpace' },
+      { type: 'avatar', variant: 6, text: { '.avatar-text': 'Dr. Priya Shah', '.avatar-sub-txt': 'Family medicine · ★ 4.9 (212)' } },
+      { type: 'chipGroup', text: { '[contenteditable="true"]': ['In person', 'Video visit', 'Phone'] } },
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Date' } },
+      { type: 'datePicker', variant: 2, text: { '.dp-m-caption': 'Select a date' } },
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Available times' } },
+      { type: 'chipGroup', text: { '[contenteditable="true"]': ['9:00 AM', '10:30 AM', '2:15 PM'] } },
+      { type: 'textarea', variant: 3, text: { '.ui-input-label': 'Reason for visit' }, placeholder: { '.ui-input-base': 'Briefly describe your symptoms or concerns' } },
+      { type: 'listItem', variant: 3, text: 'Blue Shield PPO · Member ID ••4821', after: el => setIcon(el, '.li-icon i', 'fas fa-id-card') },
+      { type: 'listItem', variant: 4, text: { '.usa': ['Estimated copay', '$25'] }, after: el => setIcon(el, '.icon-container i', 'fas fa-receipt') },
+      { type: 'button', variant: 0, text: 'CONFIRM APPOINTMENT', go: { [BTN]: 'success' } },
+      { type: 'paragraph', text: 'Free cancellation up to 24 hours before.', after: centered },
+    ],
+
+    // ── Events ──
+    eventsHome: [
+      { type: 'navbar', variant: 0, text: { '.nav-brand-text': 'Events' } },
+      { type: 'adjustableSpace' },
+      { type: 'searchBar', variant: 1, placeholder: { '.search-minimal-input': 'Search events near you' } },
+      { type: 'chipGroup', text: { '[contenteditable="true"]': ['This weekend', 'Tech', 'Music'] } },
+      { type: 'card', variant: 7, text: { '.card-title': 'Design Systems Summit 2026', '.card-text': 'Thu, Mar 12 · The Foundry, Austin · From $49' }, go: { [ROOT]: 'eventRegistration' } },
+      { type: 'heading', level: 'h3', text: 'Coming up' },
+      { type: 'card', variant: 0, text: { '.card-title': 'Sunset Jazz in the Park', '.card-text': 'Sat, Mar 14 · 6:00 PM · Free' }, go: { [ROOT]: 'eventRegistration' } },
+      { type: 'card', variant: 0, text: { '.card-title': 'Intro to Pottery Workshop', '.card-text': 'Sun, Mar 15 · 10:00 AM · $35' }, go: { [ROOT]: 'eventRegistration' } },
+      EVENT_TABS,
+    ],
+
+    eventRegistration: [
+      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Register' } },
+      { type: 'image', variant: 1 }, // event banner
+      { type: 'heading', level: 'h2', text: 'Design Systems Summit 2026' },
+      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Thu, Mar 12 · 9:00 AM – 5:00 PM', '.li-subtitle': 'Add to calendar' }, after: el => setIcon(el, '.li-icon i', 'fas fa-calendar') },
+      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'The Foundry, Austin TX', '.li-subtitle': '1.2 mi away · Get directions' }, after: el => setIcon(el, '.li-icon i', 'fas fa-location-dot') },
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Tickets' } },
+      { type: 'radio', ...radioOn, text: { [RADIO_LABEL]: 'General admission · $149' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'VIP · Front rows + lunch · $299' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'Student · ID required · $49' } },
+      qty(1, 1, { '.stepper-title': 'Number of tickets', '.stepper-desc': 'Up to 4 per order' }),
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Your details' } },
+      { type: 'input', variant: 1, text: { '.ui-input-label': 'Full name' }, placeholder: { '.ui-input-base': 'Jane Doe' } },
+      { type: 'input', variant: 1, text: { '.ui-input-label': 'Email' }, placeholder: { '.ui-input-base': 'you@example.com' } },
+      { type: 'input', variant: 1, text: { '.ui-input-label': 'Company (optional)' }, placeholder: { '.ui-input-base': 'Where you work' } },
+      { type: 'checkbox', text: { 'span': 'Email me updates about this event' } },
+      { type: 'listItem', variant: 4, text: { '.usa': ['Total', '$149'] }, after: el => setIcon(el, '.icon-container i', 'fas fa-receipt') },
+      { type: 'button', variant: 0, text: 'REGISTER', go: { [BTN]: 'eventTicket|success' } },
+    ],
+
+    eventTicket: [
+      { type: 'navbar', variant: 0, text: { '.nav-brand-text': 'Your Ticket' } },
+      { type: 'adjustableSpace' },
+      { type: 'alert', variant: 0, text: "You're registered! We sent a confirmation to your email." },
+      { type: 'card2', variant: 1, text: { '.card-title': 'Design Systems Summit 2026', '.card-text': 'Thu, Mar 12 · 9:00 AM · The Foundry, Austin' }, after: el => setIcon(el, '.card-icon-large i', 'fas fa-ticket') },
+      { type: 'columns' },
+      { type: 'listItem', variant: 4, column: 0, text: { '.usa': ['Ticket', 'General'] }, after: el => setIcon(el, '.icon-container i', 'fas fa-ticket') },
+      { type: 'listItem', variant: 4, column: 1, text: { '.usa': ['Admits', '1'] }, after: el => setIcon(el, '.icon-container i', 'fas fa-user') },
+      bigIcon('fas fa-qrcode', 140),
+      { type: 'paragraph', text: 'Show this code at the door to check in.', after: centered },
+      { type: 'button', variant: 4, text: { [BTN]: ['SHARE', 'ADD TO CALENDAR'] } },
+      EVENT_TABS,
+    ],
+
     // ── Media ──
     streamingHome: [
       { type: 'navbar', variant: 0, text: { '.nav-brand-text': 'FLIX' } },
@@ -1894,6 +2127,46 @@
       { type: 'footer', variant: 1, text: { '.footer-heading': 'Autopilot', '.footer-copyright-text': '© 2025 Autopilot Inc.' } },
     ],
 
+    paywall: [
+      { type: 'adjustableSpace' },
+      bigIcon('fas fa-crown', 56),
+      { type: 'heading', level: 'h2', text: 'Unlock Premium', after: both(center, column()) },
+      { type: 'paragraph', text: 'Everything you need to reach your goals faster.', after: both(center, column()) },
+      { type: 'bulletedList', after: both(column(), el => {
+          for (let i = 0; i < 2; i++) el.querySelector('.add-bullet-text')?.closest('div, button')?.click();
+          setTexts(el, { '.bullet-list-item-text': ['Unlimited access to every feature', 'No ads, ever', 'Sync across all your devices', 'Cancel anytime in Settings'] }, 'bulletedList');
+          setIcons(el, '.bullet-icon i', Array(4).fill('fas fa-circle-check'));
+        }) },
+      { type: 'radio', ...radioOn, text: { [RADIO_LABEL]: 'Yearly · $59.99/yr · Save 50%' }, after: both(radioOn.after, column()) },
+      { type: 'radio', text: { [RADIO_LABEL]: 'Monthly · $9.99/mo' }, after: column() },
+      { type: 'adjustableSpace' },
+      { type: 'button', variant: 0, text: 'START 7-DAY FREE TRIAL', go: { [BTN]: 'success' }, after: column(320) },
+      { type: 'paragraph', text: 'Then $59.99/yr. Cancel anytime before your trial ends.', after: both(centered, column()) },
+      { type: 'paragraph', text: 'Not now', after: both(centered, column()), go: { [ROOT]: 'back' } },
+    ],
+
+    // Retention flow: what you'd lose, an offer to stay, then the reason and confirm
+    cancelSubscription: [
+      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Cancel Subscription' } },
+      { type: 'adjustableSpace' },
+      { type: 'card2', variant: 1, text: { '.card-title': 'Premium · Yearly', '.card-text': 'Renews Mar 12, 2027 · $59.99' }, after: el => setIcon(el, '.card-icon-large i', 'fas fa-crown') },
+      { type: 'heading', level: 'h3', text: 'You’ll lose access to' },
+      { type: 'bulletedList', after: el => {
+          el.querySelector('.add-bullet-text')?.closest('div, button')?.click();
+          setTexts(el, { '.bullet-list-item-text': ['Unlimited projects', 'Offline mode', 'Priority support'] }, 'bulletedList');
+          setIcons(el, '.bullet-icon i', Array(3).fill('fas fa-xmark'));
+        } },
+      { type: 'card2', variant: 3, text: { '.card-title': 'Stay for 50% off', '.card-text': 'Get your next 3 months for $4.99/mo instead of leaving.' } },
+      { type: 'button', variant: 0, text: 'CLAIM 50% OFF', go: { [BTN]: 'success' } },
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Why are you canceling?' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'Too expensive' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'Not using it enough' } },
+      { type: 'radio', text: { [RADIO_LABEL]: 'Missing a feature I need' } },
+      { type: 'textarea', variant: 3, text: { '.ui-input-label': 'Anything else?' }, placeholder: { '.ui-input-base': 'What would have made you stay?' } },
+      { type: 'button', variant: 3, text: 'CANCEL SUBSCRIPTION', go: { [BTN]: 'success' } },
+      { type: 'paragraph', text: 'You’ll keep Premium until Mar 12, 2027.', after: centered },
+    ],
+
     propertyList: [
       { type: 'navbar', variant: 4 }, // search bar navbar
       { type: 'adjustableSpace' },
@@ -2057,6 +2330,8 @@
       window.projectManager?.markAllCanvasesChanged?.('Template screen inserted');
     }
     const canvas = wrapper.querySelector('.canvas');
+    // The screen's own color / gradient, before the components (their contrast follows it)
+    if (TEMPLATE_BG[templateName]) window.screenBackground?.set(canvas, TEMPLATE_BG[templateName]);
     // Name the screen after its template ("Login"); saved by markScreenChanged below
     const title = editor.cleanScreenName(TEMPLATE_CARDS.find(c => c.key === templateName)?.title);
     if (title) {
@@ -2112,8 +2387,10 @@
           }
           if (entry.go) {
             collectLinks(el, entry, label).forEach(link => {
-              // Overlays are on this screen: link now, pack or not
+              // Overlays are on this screen and Back needs no screen: link now, pack or not
               if (link.to.startsWith('overlay:')) linkElement(link.el, { action: 'overlay', overlay: link.to.slice(8) });
+              else if (link.to === 'back') linkElement(link.el, { action: 'back' });
+              else if (link.to === 'finish') linkElement(link.el, { action: 'finish' });
               else links.push(link);
             });
           }
@@ -2146,7 +2423,8 @@
   // An entry's `go` spec → link requests on the elements it names. Keys are selectors
   // (ROOT = the component's own root element, the one Connect mode links when you click
   // a plain component); values are a screen key, 'back', or 'overlay:<modal|bottomSheet|
-  // sidebar>' (opens that overlay on the same screen — applied even outside a pack), or an
+  // sidebar>' (opens that overlay on the same screen — applied even outside a pack, as are
+  // 'back' and 'finish'), START / NEXT (resolveScreenLinks), or an
   // array for successive matches (null skips one); 'a|b' links to the first of those
   // screens the pack has.
   function collectLinks(el, entry, label) {
@@ -2165,8 +2443,63 @@
     if (!entries) return console.error(`Unknown template type: ${templateName}`);
 
     if (!(await templateFitsComponentLimit(entries))) return;
-    await buildTemplateScreen(templateName, entries, { after });
-    // A single screen has no pack to link to: its `go` links are dropped
+    const result = await buildTemplateScreen(templateName, entries, { after });
+    // A single screen has no pack to link to: its `go` links to screens are dropped (Back,
+    // Finish and overlay links were made as it was built), except START / NEXT ones
+    if (result) resolveScreenLinks(templateName, result);
+  }
+
+  // Templates that become the prototype's start screen when added (their START links lead
+  // on to the screen that was the start before)
+  const BECOMES_START = new Set(['protoIntro']);
+  // Templates whose screen moves on by itself in Play (prototype.js auto-advance): `to` is a
+  // go value (a screen key, START, NEXT, 'a|b'), `delay` in ms
+  const TEMPLATE_AUTO = { splash: { to: `${NEXT}|${START}`, delay: 2000 } };
+
+  // Set a screen's auto-advance (keeps the rest of the project's map)
+  function setScreenAuto(wrapper, target, delay) {
+    const proto = window.prototypeMode;
+    const id = wrapper.getAttribute('data-canvas-id');
+    const targetId = target?.getAttribute('data-canvas-id');
+    if (!id || !targetId || !proto?.setAutoAdvance) return false;
+    proto.setAutoAdvance({ ...proto.getAutoAdvance(), [id]: { target: targetId, delay } });
+    return true;
+  }
+
+  function resolveScreenLinks(templateName, { wrapper, links }) {
+    const isScreen = w => w?.matches?.('.canvas-wrapper[data-canvas-id]') && w !== wrapper;
+    const ours = links.filter(l => l.el.isConnected && l.to.split('|').some(k => k === START || k === NEXT));
+    const becomesStart = BECOMES_START.has(templateName);
+    const auto = TEMPLATE_AUTO[templateName];
+    if (!ours.length && !becomesStart && !auto) return;
+    const proto = window.prototypeMode;
+    const ownId = wrapper.getAttribute('data-canvas-id');
+    const screens = Array.from(document.querySelectorAll('#mockZone .canvas-wrapper[data-canvas-id]')).filter(isScreen);
+    const next = isScreen(wrapper.nextElementSibling) ? wrapper.nextElementSibling : null;
+    const startId = proto?.getStartScreen?.();
+    const start = screens.find(w => w.getAttribute('data-canvas-id') === startId) || next || screens[0] || null;
+    const resolve = to => to.split('|').map(k => k === START ? start : k === NEXT ? next : null).find(Boolean);
+    let startTarget = null;
+    ours.forEach(({ el, to, transition }) => {
+      const target = resolve(to);
+      if (!target) return;
+      if (to.includes(START)) startTarget ??= target;
+      linkElement(el, { action: 'navigate', target: target.getAttribute('data-canvas-id'), transition });
+    });
+    if (becomesStart && ownId && proto?.setStartScreen) proto.setStartScreen(ownId);
+    const autoTarget = auto ? resolve(auto.to) : null;
+    if (auto && !(autoTarget && setScreenAuto(wrapper, autoTarget, auto.delay))) {
+      window.projectManager?.showNotification?.('Add the screen it should lead to, then set it to move on by itself in Connect mode (click the screen).', 'info');
+    } else if (auto) {
+      window.projectManager?.showNotification?.(`In Play, this screen moves on to "${editor.getScreenName(autoTarget)}" after ${auto.delay / 1000} s.`, 'success');
+    }
+    proto?.refresh?.();
+    markScreenChanged(wrapper, `Linked template: ${templateName}`);
+    if (becomesStart) {
+      window.projectManager?.showNotification?.(startTarget
+        ? `This is now the start screen. Its button goes to "${editor.getScreenName(startTarget)}".`
+        : 'This is now the start screen. Add your screens, then link its button in Connect mode.', 'success');
+    }
   }
 
   // App packs are Pro: they add several screens at once, past the free screen limit.
@@ -2207,11 +2540,18 @@
 
     const screenIds = {};
     built.forEach(({ key, wrapper }) => { screenIds[key] ??= wrapper.getAttribute('data-canvas-id'); });
-    built.forEach(({ wrapper, links }) => {
+    // A go value → a pack screen key ('a|b' = the first of these the pack has: one template,
+    // several packs), or 'back'
+    const packKeyFor = (to, i) => to.split('|')
+      .map(k => k === START ? built[0].key : k === NEXT ? built[i + 1]?.key : k)
+      .find(k => k === 'back' || (k && screenIds[k]));
+    built.forEach(({ key: own, wrapper, links }, i) => {
+      const auto = TEMPLATE_AUTO[own];
+      const autoKey = auto && packKeyFor(auto.to, i);
+      if (autoKey && autoKey !== 'back') setScreenAuto(wrapper, built.find(b => b.key === autoKey).wrapper, auto.delay);
       links.forEach(({ el, to, transition }) => {
         if (!el.isConnected) return;
-        // 'a|b' = the first of these screens the pack has (one template, several packs)
-        const key = to.split('|').find(k => k === 'back' || screenIds[k]);
+        const key = packKeyFor(to, i);
         if (key === 'back') linkElement(el, { action: 'back' });
         else if (key) linkElement(el, { action: 'navigate', target: screenIds[key], transition });
       });
@@ -2246,7 +2586,7 @@
   // Exposed for debugging / tests, and for the read-only template gallery (templates.html),
   // which renders its tiles with the picker's own preview code
   window.screenTemplates = {
-    TEMPLATES, TEMPLATE_CARDS, TEMPLATE_PACKS, TEMPLATE_CATEGORIES, applyTemplate, applyPack, mountTemplatePreview,
+    TEMPLATES, TEMPLATE_CARDS, TEMPLATE_PACKS, TEMPLATE_CATEGORIES, TEMPLATE_BG, applyTemplate, applyPack, mountTemplatePreview,
     // Open the picker ({ after: wrapper } builds the pick right after that screen)
     openPicker: (opts) => openPickerFn?.(opts),
   };
