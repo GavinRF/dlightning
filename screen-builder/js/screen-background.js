@@ -360,13 +360,21 @@
 
     // ---- popover -----------------------------------------------------------------------------
 
-    let pop = null, popCanvas = null;
+    let pop = null, popCanvas = null, popAnchor = null;
+    // The custom color's iro wheel (same look as the Theme tab's): built once per popover and
+    // moved back in on every fill(), so a redraw doesn't rebuild it mid-use
+    let pickerOpen = false, pickerEl = null, iroPicker = null;
+    const hasIro = () => typeof iro !== 'undefined' && !!iro.ColorPicker;
 
     function close() {
         if (!pop) return;
         pop.remove();
         pop = null;
         popCanvas = null;
+        popAnchor = null;
+        pickerOpen = false;
+        pickerEl = null;
+        iroPicker = null;
     }
 
     // anchor: the element to open under (the screen's ⋯ button)
@@ -374,6 +382,7 @@
         close();
         if (!canvas) return;
         popCanvas = canvas;
+        popAnchor = anchor;
         pop = document.createElement('div');
         pop.id = 'bg-pop';
         pop.className = 'sb-pop bg-pop';
@@ -381,7 +390,13 @@
         pop.setAttribute('aria-label', 'Screen background');
         document.body.appendChild(pop);
         fill();
-        const r = (anchor || canvas).getBoundingClientRect();
+        place();
+    }
+
+    // Under the anchor, kept inside the window (again when the picker opens / closes)
+    function place() {
+        if (!pop) return;
+        const r = (popAnchor?.isConnected ? popAnchor : popCanvas).getBoundingClientRect();
         const w = pop.offsetWidth, h = pop.offsetHeight;
         const left = Math.min(Math.max(8, r.right - w), window.innerWidth - w - 8);
         let top = r.bottom + 6;
@@ -407,10 +422,13 @@
                 <div class="bg-pop-swatches">
                     <button type="button" class="bg-pop-swatch bg-pop-none${none ? ' active' : ''}" data-none title="None (the normal screen color)" aria-label="None" aria-pressed="${none}"><i class="fa-solid fa-ban"></i></button>
                     ${COLORS.map(([v, label]) => swatch(`data-color="${v}"`, label, cssColor(v), bg.color === v)).join('')}
-                    <label class="bg-pop-swatch bg-pop-custom${custom ? ' active' : ''}" title="Pick any color" style="--sw: ${custom ? bg.color : 'conic-gradient(#f44, #fd4, #4d6, #4bf, #a5f, #f44)'}">
+                    ${hasIro() ? /*html*/`
+                    <button type="button" class="bg-pop-swatch bg-pop-custom${custom ? ' active' : ''}${pickerOpen ? ' open' : ''}" data-custom title="Pick any color" aria-label="Pick any color" aria-expanded="${pickerOpen}" style="--sw: ${custom ? bg.color : RAINBOW}"></button>` : /*html*/`
+                    <label class="bg-pop-swatch bg-pop-custom${custom ? ' active' : ''}" title="Pick any color" style="--sw: ${custom ? bg.color : RAINBOW}">
                         <input type="color" value="${custom ? bg.color : '#3a6df0'}" aria-label="Pick any color">
-                    </label>
+                    </label>`}
                 </div>
+                ${pickerOpen ? '<div class="bg-pop-picker-slot"></div>' : ''}
             </div>
             <div class="sb-pop-row sb-pop-col">
                 <span class="sb-pop-label">Gradient</span>
@@ -446,10 +464,19 @@
             update(canvas, { color: b.dataset.color, tone: read(canvas).tone }, `${name()}: background color`);
             fill();
         }));
+        const pickColor = hex => update(canvas, { color: hex.toLowerCase(), tone: read(canvas).tone }, `${name()}: background color`);
         const input = pop.querySelector('input[type="color"]');
-        // Live while dragging in the picker; the popover is redrawn when it's done
-        input.addEventListener('input', () => update(canvas, { color: input.value, tone: read(canvas).tone }, `${name()}: background color`));
-        input.addEventListener('change', () => { if (pop) fill(); });
+        if (input) {
+            // No iro (CDN didn't load): the browser's own picker. Live while dragging; redrawn when done
+            input.addEventListener('input', () => pickColor(input.value));
+            input.addEventListener('change', () => { if (pop) fill(); });
+        }
+        pop.querySelector('[data-custom]')?.addEventListener('click', () => {
+            pickerOpen = !pickerOpen;
+            fill();
+            place();
+        });
+        if (pickerOpen) mountPicker(canvas, bg, custom, pickColor);
         pop.querySelectorAll('[data-gradient]').forEach(b => b.addEventListener('click', () => {
             const cur = read(canvas);
             update(canvas, { gradient: b.dataset.gradient, angle: cur.angle, tone: cur.tone }, `${name()}: background gradient`);
@@ -477,6 +504,54 @@
             btn.innerHTML = '<i class="fa-solid fa-check"></i> Applied';
             setTimeout(() => { if (btn.isConnected) btn.innerHTML = '<i class="fa-solid fa-clone"></i> Apply to all screens'; }, 1400);
         });
+    }
+
+    const toHex = ({ r, g, b }) => '#' + [r, g, b].map(n => Math.round(n).toString(16).padStart(2, '0')).join('');
+    const RAINBOW = 'conic-gradient(#f44, #fd4, #4d6, #4bf, #a5f, #f44)';
+
+    function mountPicker(canvas, bg, custom, pickColor) {
+        const slot = pop.querySelector('.bg-pop-picker-slot');
+        // Starts on the screen's color (a theme color resolved to its hex), else a blue
+        const start = custom ? bg.color : (bg.color ? toHex(rgbOf(bg.color)) : null) || '#3a6df0';
+        if (!pickerEl) {
+            pickerEl = document.createElement('div');
+            pickerEl.className = 'bg-pop-picker';
+            pickerEl.innerHTML = '<div class="bg-pop-wheel"></div><input type="text" class="bg-pop-hex" maxlength="7" spellcheck="false" aria-label="Hex color">';
+            slot.replaceWith(pickerEl);
+            // Same settings as the Theme tab's picker (index.html #theme-color-picker)
+            iroPicker = new iro.ColorPicker(pickerEl.querySelector('.bg-pop-wheel'), {
+                width: 190, color: start, handleRadius: 7, borderWidth: 1, activeHandleRadius: 11,
+                borderColor: '#fff', wheelAngle: 90, sliderSize: 22,
+            });
+            const hex = pickerEl.querySelector('.bg-pop-hex');
+            hex.value = start;
+            // input:* = the user's own drags (not setting it from code): live on the screen,
+            // the swatch follows, the rest of the popover is redrawn when the drag ends
+            iroPicker.on('input:change', c => {
+                pickColor(c.hexString);
+                hex.value = c.hexString;
+                const sw = pop?.querySelector('[data-custom]');
+                if (sw) sw.style.setProperty('--sw', c.hexString);
+            });
+            iroPicker.on('input:end', () => { if (pop) fill(); });
+            hex.addEventListener('change', () => {
+                let v = hex.value.trim();
+                if (!v.startsWith('#')) v = '#' + v;
+                if (/^#[0-9a-f]{3}$/i.test(v)) v = '#' + v.slice(1).split('').map(ch => ch + ch).join('');
+                if (!HEX.test(v)) { hex.value = iroPicker.color.hexString; return; }
+                iroPicker.color.hexString = v;
+                pickColor(v);
+                fill();
+            });
+            hex.addEventListener('keydown', e => { if (e.key === 'Enter') hex.blur(); });
+        } else {
+            slot.replaceWith(pickerEl);
+            // A swatch picked meanwhile: the wheel shows it
+            if (bg.color && start.toLowerCase() !== iroPicker.color.hexString.toLowerCase()) {
+                iroPicker.color.hexString = start;
+                pickerEl.querySelector('.bg-pop-hex').value = start;
+            }
+        }
     }
 
     document.addEventListener('pointerdown', e => {

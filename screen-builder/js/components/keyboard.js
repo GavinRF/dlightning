@@ -16,7 +16,7 @@
 // is tapped. Every screen with a text field (input, search bar, textarea, chat input, video
 // comments) gets a keyboard: inserting a field adds a minimized one (ensure), and a
 // "Keyboard" button under the screen (.kb-reveal-btn, on the wrapper, outside the design)
-// opens a minimized one.
+// opens and closes (minimizes) it — or adds one to a screen with a field and no keyboard.
 //
 // Deleting it (its ×, or the sidebar's Keyboard button) is the designer saying no: the screen
 // gets data-no-keyboard (saved as the screen doc's noKeyboard, carried by undo + live sync),
@@ -99,8 +99,8 @@ window.Components.keyboard = (() => {
         }
     };
 
-    // The "Keyboard" button under each screen: there while the screen's keyboard is
-    // minimized, or it has a text field and no keyboard. Not part of the design (it's on the
+    // The "Keyboard" button under each screen: there while the screen has a keyboard (it
+    // opens / minimizes it), or a text field and no keyboard (it adds one). Not part of the design (it's on the
     // wrapper, outside .canvas), so history / save never see it.
     const COMPACT_BELOW = 260; // px of the screen's on-page width (prototype.js COUNT_COMPACT_BELOW)
     let revealQueued = false;
@@ -110,7 +110,7 @@ window.Components.keyboard = (() => {
             const canvas = wrapper.querySelector(':scope > .canvas');
             if (!canvas) return;
             const kb = keyboardOf(canvas);
-            const show = kb ? kb.hasAttribute(MIN_ATTR)
+            const show = kb ? true
                 : !canvas.hasAttribute(DECLINED_ATTR) && !!canvas.querySelector(FIELD_SEL);
             let btn = wrapper.querySelector(':scope > .kb-reveal-btn');
             if (!show) { btn?.remove(); return; }
@@ -123,11 +123,16 @@ window.Components.keyboard = (() => {
                 wrapper.appendChild(btn);
             }
             // Zoomed out far enough that the label would crowd the row under the screen (in
-            // Connect mode: after the count + Solo chips, which drop their words at the same width)
+            // Connect mode: after the in / out chip, which drops its words at the same width)
             btn.classList.toggle('kb-reveal-compact', canvas.getBoundingClientRect().width < COMPACT_BELOW);
-            btn.title = kb
-                ? 'Show the keyboard (to edit it, or to have it in PNG exports)'
-                : 'Add a keyboard: it slides up in play when a text field is tapped';
+            const open = !!kb && !kb.hasAttribute(MIN_ATTR);
+            btn.classList.toggle('reveal-open', open);
+            btn.setAttribute('aria-pressed', String(open));
+            btn.title = !kb
+                ? 'Add a keyboard: it slides up in play when a text field is tapped'
+                : open
+                    ? 'Hide the keyboard (it still opens in play when a text field is tapped)'
+                    : 'Show the keyboard (to edit it, or to have it in PNG exports)';
         });
     };
     const scheduleReveal = () => {
@@ -150,7 +155,7 @@ window.Components.keyboard = (() => {
             e.stopPropagation();
             const canvas = btn.parentElement.querySelector(':scope > .canvas');
             const kb = keyboardOf(canvas);
-            if (kb) api.setMinimized(kb, false);
+            if (kb) api.setMinimized(kb, !kb.hasAttribute(MIN_ATTR));
             else if (canvas && typeof editor !== 'undefined') {
                 editor.insertComponent(canvas, 'keyboard', { scroll: false });
                 markChanged(canvas, 'Keyboard added');

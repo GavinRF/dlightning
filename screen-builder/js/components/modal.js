@@ -12,7 +12,7 @@
 // the wrapper (saved html — undo, live sync and save carry it). A minimized modal is hidden
 // in the editor and PNG exports, so the screen behind it can be edited; the player still
 // shows it (and its × closes it there). A "Modal" button under the screen (.modal-reveal-btn,
-// on the wrapper, outside the design) or the sidebar's Modal button brings it back. The red
+// on the wrapper, outside the design) shows and hides it; the sidebar's Modal button brings it back too. The red
 // .delete-btn, as on every other component, is what removes it.
 window.Components = window.Components || {};
 
@@ -24,7 +24,7 @@ window.Components.modal = (() => {
         if (id) window.projectManager?.addCanvasToChanged?.(id, why);
     };
 
-    // The "Modal" button under each screen whose modal is minimized. Not part of the design
+    // The "Modal" button under each screen with a modal: shows / minimizes it. Not part of the design
     // (it's on the wrapper, outside .canvas), so history / save never see it.
     const COMPACT_BELOW = 260; // px of the screen's on-page width (same as the Keyboard button)
     let revealQueued = false;
@@ -34,22 +34,29 @@ window.Components.modal = (() => {
             const canvas = wrapper.querySelector(':scope > .canvas');
             const modal = canvas?.querySelector(':scope > .modal-wrapper');
             let btn = wrapper.querySelector(':scope > .modal-reveal-btn');
-            if (!modal || !modal.hasAttribute(MIN_ATTR)) { btn?.remove(); return; }
+            if (!modal) { btn?.remove(); return; }
             if (!btn) {
                 btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'modal-reveal-btn';
-                btn.setAttribute('aria-label', 'Show modal');
-                btn.title = 'Show the modal (to edit it, or to have it in PNG exports)';
+                btn.setAttribute('aria-label', 'Modal');
                 btn.innerHTML = '<i class="fa-regular fa-window-restore"></i><span>Modal</span>';
                 wrapper.appendChild(btn);
-                // Just minimized: a pop draws the eye to where the modal went
-                if (wrapper._modalRevealPop) {
-                    btn.classList.add('reveal-pop');
-                    btn.addEventListener('animationend', () => btn.classList.remove('reveal-pop'), { once: true });
-                }
+            }
+            // Just minimized: a pop draws the eye to where the modal went
+            if (wrapper._modalRevealPop) {
+                btn.classList.remove('reveal-pop');
+                void btn.offsetWidth;   // restart the animation
+                btn.classList.add('reveal-pop');
+                btn.addEventListener('animationend', () => btn.classList.remove('reveal-pop'), { once: true });
             }
             wrapper._modalRevealPop = false;
+            const open = !modal.hasAttribute(MIN_ATTR);
+            btn.classList.toggle('reveal-open', open);
+            btn.setAttribute('aria-pressed', String(open));
+            btn.title = open
+                ? 'Hide the modal (to edit the screen behind it; it still shows in play)'
+                : 'Show the modal (to edit it, or to have it in PNG exports)';
             btn.classList.toggle('reveal-compact', canvas.getBoundingClientRect().width < COMPACT_BELOW);
         });
     };
@@ -72,7 +79,7 @@ window.Components.modal = (() => {
             if (!btn) return;
             e.stopPropagation();
             const modal = btn.parentElement.querySelector(':scope > .canvas > .modal-wrapper');
-            if (modal) api.setMinimized(modal, false);
+            if (modal) api.setMinimized(modal, !modal.hasAttribute(MIN_ATTR));
             scheduleReveal();
         });
         document.addEventListener('editorzoomchange', scheduleReveal);

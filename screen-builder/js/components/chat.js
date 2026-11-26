@@ -27,21 +27,8 @@ window.Components.chat = {
             const img = newImageContainer.querySelector('.chat-image');
             const placeholder = newImageContainer.querySelector('.chat-image-placeholder');
 
-            // Find the bubble element (works for both left and right chat)
-            const bubble = newImageContainer.closest('.leftChat, .rightChat');
-            if (bubble) {
-                // Add hover behavior
-                bubble.addEventListener('mouseenter', () => {
-                    newImageContainer.style.display = 'block';
-                });
-
-                bubble.addEventListener('mouseleave', () => {
-                    // Only hide if no image is displayed
-                    if (!img || img.style.display === 'none') {
-                        newImageContainer.style.display = 'none';
-                    }
-                });
-            }
+            // Hovering the bubble shows the image area: CSS (ux-mock-bldr.css "CHAT IMAGE"), not an
+            // inline display, which was saved and made an undo step on every hover
 
             // Add click handler for image upload
             newImageContainer.addEventListener('click', () => {

@@ -59,6 +59,7 @@
     { key: 'chatInbox',      cat: 'social', title: 'Chats',        blurb: 'Conversation list with stories', tags: 'inbox messages dm conversations' },
     { key: 'messaging',      cat: 'social', title: 'Messaging',    blurb: 'Chat with photos, reactions, and voice notes', tags: 'chat dm conversation inbox text' },
     { key: 'template1',      cat: 'social', title: 'Profile',      blurb: 'Cover photo, bio, follow buttons, and a photo grid', tags: 'user account bio avatar social portfolio' },
+    { key: 'userProfile',    cat: 'social', title: 'User Profile', blurb: 'Someone else’s profile: message, follow, and posts', tags: 'user person member friend social follow' },
     // Shopping
     { key: 'ecommerce',      cat: 'shopping', title: 'Shop',           blurb: 'Promo, categories, and product cards', tags: 'store ecommerce products retail catalog' },
     { key: 'productDetail',  cat: 'shopping', title: 'Product',        blurb: 'Gallery, sizes, reviews, and add to bag', tags: 'item detail pdp sizes reviews ecommerce' },
@@ -149,7 +150,7 @@
     { key: 'pack:auth',      cat: 'essentials', title: 'Sign-up Flow',     blurb: 'Splash, welcome, sign in, verify, and permissions', tags: 'auth onboarding login register splash',
       screens: ['splash', 'onboarding', 'login', 'verifyCode', 'permissions', 'success', 'forgotPassword'] },
     { key: 'pack:social',    cat: 'social', title: 'Social App',          blurb: 'Feed, explore, posting, chats, and profile', tags: 'instagram twitter community',
-      screens: ['social', 'postDetail', 'explore', 'createPost', 'chatInbox', 'messaging', 'template1'] },
+      screens: ['social', 'postDetail', 'explore', 'createPost', 'chatInbox', 'messaging', 'template1', 'userProfile'] },
     { key: 'pack:shop',      cat: 'shopping', title: 'Shopping App',      blurb: 'Browse, product, bag, checkout, tracking, and review', tags: 'ecommerce store retail',
       screens: ['ecommerce', 'productDetail', 'cart', 'checkout', 'orderPlaced', 'orderTracking', 'writeReview'] },
     { key: 'pack:food',      cat: 'food', title: 'Food Delivery App',     blurb: 'Restaurants, menu, order, live tracking, and rating', tags: 'delivery takeout doordash ubereats',
@@ -623,8 +624,10 @@
         templateModal.style.display = 'none';
         const after = placeAfter?.isConnected ? placeAfter : null;
         placeAfter = null;
-        if (PACKS_BY_KEY[templateType]) applyPack(templateType, { after });
-        else applyTemplate(templateType, { after });
+        const use = () => PACKS_BY_KEY[templateType] ? applyPack(templateType, { after }) : applyTemplate(templateType, { after });
+        // The screen(s) it builds, their links and the start screen it sets: one undo step (history.js)
+        if (window.historyManager?.screens) historyManager.screens(use, { label: PACKS_BY_KEY[templateType] ? 'Add app pack' : 'Add template' });
+        else use();
       });
     });
   }
@@ -1127,6 +1130,7 @@
     nowPlaying: [
       { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Now Playing' } },
       { type: 'adjustableSpace' },
+      { type: 'paragraph', text: 'Playing from Late Night Drive', after: centered }, // the Library's first playlist (a tap on another names it)
       { type: 'musicPlayer', variant: 1, text: { '[contenteditable="true"]': ['Midnight Drive', 'The Night Owls', '2:14', '4:05'] } },
       { type: 'slider', variant: 2 }, // volume
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Up next' } },
@@ -1139,7 +1143,8 @@
     restaurant: [
       { type: 'navbar', variant: 1 }, // logo + menu
       { type: 'hero', variant: 0, text: { '.hx-title': 'Osteria Bella', '.hx-text': 'Fresh, seasonal Italian made from scratch every day.' } },
-      rated(4.7, { '.rating-score': '4.7', '.rating-count': '(2,318 reviews)' }),
+      { type: 'paragraph', text: 'Italian · ⭐ 4.8 · 20–30 min · $1.99 delivery' }, // as its card on Food Delivery shows it
+      rated(4.8, { '.rating-score': '4.8', '.rating-count': '(2,318 reviews)' }),
       { type: 'chipGroup', text: { '[contenteditable="true"]': ['Starters', 'Mains', 'Desserts'] } },
       { type: 'heading', level: 'h2', text: 'Popular dishes' },
       { type: 'card', variant: 3, text: { '.card-title': 'Pasta Carbonara', '.card-text': 'Guanciale, pecorino, egg yolk, black pepper • $18' } },
@@ -1181,6 +1186,7 @@
       { type: 'listItem', variant: 3, text: 'Lesson 1: Introduction to JavaScript', go: { [ROOT]: 'lesson' } },
       { type: 'listItem', variant: 3, text: 'Lesson 2: Variables and Data Types', go: { [ROOT]: 'lesson' } },
       { type: 'accordion', style: 'card', text: 'Week 2: Functions & Objects' },
+      { type: 'listItem', variant: 3, text: 'Lesson 3: Working with Arrays', go: { [ROOT]: 'lesson' } },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Up next' } },
       { type: 'video', variant: 3, text: { '.video-queue-title': 'Lesson 3: Working with Arrays', '.video-queue-duration': '14:20', '.video-queue-metadata .usa': ['Module 1', '15 min'] },
         after: el => setIcon(el, '.video-queue-metadata .icon-container i', 'fas fa-book-open'), go: { [ROOT]: 'lesson' } },
@@ -1442,19 +1448,22 @@
       shelf(3, ['For You', 'Travel', 'Food', 'Art', 'Fitness']),
       { type: 'imgGallery', variant: 2, go: { '.img-gallery-grid-item': ['postDetail', 'postDetail', 'postDetail', 'postDetail', 'postDetail', 'postDetail'] } },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Suggested for you' } },
-      { type: 'listItem', variant: 6, text: { '.usa': ['Lena Ortiz', 'Followed by Sam'], '.li-action span': 'Follow' }, go: { [ROOT]: 'template1' } },
-      { type: 'listItem', variant: 6, text: { '.usa': ['Kai Nakamura', 'New to the app'], '.li-action span': 'Follow' }, go: { [ROOT]: 'template1' } },
+      // (the profile is built from the first: a tap on another shows that person — prototype.js CARRIED CONTENT)
+      { type: 'listItem', variant: 6, text: { '.usa': ['Alex Rivera', 'Followed by Sam'], '.li-action span': 'Follow' }, go: { [ROOT]: 'userProfile|template1' } },
+      { type: 'listItem', variant: 6, text: { '.usa': ['Lena Ortiz', 'Followed by Priya'], '.li-action span': 'Follow' }, go: { [ROOT]: 'userProfile|template1' } },
+      { type: 'listItem', variant: 6, text: { '.usa': ['Kai Nakamura', 'New to the app'], '.li-action span': 'Follow' }, go: { [ROOT]: 'userProfile|template1' } },
       SOCIAL_TABS,
     ],
 
     postDetail: [
       { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Post' } },
       { type: 'adjustableSpace' },
-      { type: 'card', variant: 4, text: { '.card-social-name': 'Alex Rivera', '.card-social-time': '12 min ago', '.card-text': 'Golden hour at the pier never gets old 🌅' }, go: { '.card-avatar': 'template1' } },
+      { type: 'card', variant: 4, text: { '.card-social-name': 'Alex Rivera', '.card-social-time': '12 min ago', '.card-text': 'Golden hour at the pier never gets old 🌅' }, go: { '.card-avatar': 'userProfile|template1' } },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': '24 comments' } },
-      { type: 'listItem', variant: 5, text: { [LI_TITLE]: 'Sam Chen', '.li-subtitle': 'This is unreal. Where exactly is this?' } },
+      // (commenters aren't the feed's other authors: the post's author reply follows the tapped post)
+      { type: 'listItem', variant: 5, text: { [LI_TITLE]: 'Jordan Lee', '.li-subtitle': 'This is unreal. Where exactly is this?' } },
       { type: 'listItem', variant: 5, text: { [LI_TITLE]: 'Priya Shah', '.li-subtitle': 'Adding this to my weekend list 😍' } },
-      { type: 'listItem', variant: 5, text: { [LI_TITLE]: 'Alex Rivera', '.li-subtitle': '@Sam Santa Monica, right before sunset!' } },
+      { type: 'listItem', variant: 5, text: { [LI_TITLE]: 'Alex Rivera', '.li-subtitle': '@Jordan Santa Monica, right before sunset!' } },
       { type: 'chatInput', variant: 4 }, // pinned to the bottom
     ],
 
@@ -1489,7 +1498,8 @@
       { type: 'heading', level: 'h2', text: 'Canvas Sneakers' },
       rated(4.8, { '.rating-score': '4.8', '.rating-count': '(1,204 reviews)' }),
       { type: 'heading', level: 'h3', text: '$64' },
-      { type: 'paragraph', text: 'Lightweight everyday sneakers in organic cotton canvas with a cushioned recycled-rubber sole.' },
+      { type: 'paragraph', text: 'Lightweight everyday sneakers in organic cotton.' }, // as its Shop card shows it
+      { type: 'paragraph', text: 'Cushioned recycled-rubber sole. Runs true to size.' },
       { type: 'slider', variant: 3 }, // size steps
       { type: 'chipGroup', text: { '[contenteditable="true"]': ['Chalk', 'Black', 'Sage'] } },
       { type: 'button', variant: 0, text: 'ADD TO BAG', go: { [BTN]: 'cart' } },
@@ -1551,7 +1561,7 @@
       { type: 'heading', level: 'h3', text: 'Near you' },
       { type: 'card', variant: 0, text: { '.card-title': 'Osteria Bella', '.card-text': 'Italian · ⭐ 4.8 · 20–30 min · $1.99 delivery' }, go: { [ROOT]: 'restaurant' } },
       { type: 'card', variant: 0, text: { '.card-title': 'Sakura Sushi Bar', '.card-text': 'Japanese · ⭐ 4.6 · 25–35 min · Free delivery' }, go: { [ROOT]: 'restaurant' } },
-      { type: 'card', variant: 2, text: { '.card-title': 'Green Bowl Co.', '.card-text': 'Salads & bowls · 15–25 min' }, go: { [ROOT]: 'restaurant' } },
+      { type: 'card', variant: 0, text: { '.card-title': 'Green Bowl Co.', '.card-text': 'Salads & bowls · ⭐ 4.7 · 15–25 min · $0.99 delivery' }, go: { [ROOT]: 'restaurant' } },
       FOOD_TABS,
     ],
 
@@ -1771,13 +1781,13 @@
     ],
 
     hotelDetail: [
-      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Casa Azul' } },
+      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Stay' } },
       { type: 'imgGallery', variant: 4 },
       { type: 'heading', level: 'h2', text: 'Casa Azul, Lisbon' },
-      rated(4.9, { '.rating-score': '4.9', '.rating-count': '(312 reviews) · Alfama' }),
+      { type: 'paragraph', text: '⭐ 4.9 · Entire apartment · $142 / night' }, // as its card on Travel shows it
       { type: 'chipGroup', text: { '[contenteditable="true"]': ['Wi-Fi', 'Kitchen', 'Balcony'] } },
       { type: 'paragraph', text: 'A sunny two-bedroom flat with river views, tiled floors, and a balcony made for slow breakfasts.' },
-      { type: 'map', variant: 3, text: { '.map-location-name': 'Casa Azul', '.map-location-address': 'Rua dos Remédios 42, Lisbon' }, go: { [ROOT]: 'mapLocation' } },
+      { type: 'map', variant: 3, text: { '.map-location-name': 'Casa Azul, Lisbon', '.map-location-address': 'Rua dos Remédios 42, Lisbon' }, go: { [ROOT]: 'mapLocation' } },
       { type: 'blockquote', variant: 2, text: { '.blockquote-element': 'The view from the balcony at sunset was worth the trip alone.', '.bq-name': 'Hannah K.', '.bq-role': 'Stayed in May' } },
       { type: 'listItem', variant: 4, text: { '.usa': ['$142 / night', 'Jun 14 – 18'] }, after: el => setIcon(el, '.icon-container i', 'fas fa-calendar') },
       qty(2, 1, { '.stepper-title': 'Guests', '.stepper-desc': 'Up to 4 · Children welcome' }),
@@ -1851,15 +1861,30 @@
     ],
 
     // ── Events ──
+    // Someone else's profile: built from Explore's first person and the feed's first author, so
+    // a tap on any other person (or post) shows theirs
+    userProfile: [
+      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Alex Rivera' } },
+      { type: 'image', variant: 1 }, // cover photo
+      { type: 'avatar', variant: 6, text: { '.avatar-text': 'Alex Rivera', '.avatar-sub-txt': '@alexrivera' } },
+      { type: 'paragraph', text: 'Photographer chasing golden hour up and down the coast.' },
+      { type: 'paragraph', text: 'Followed by Sam' },
+      { type: 'button', variant: 4, text: { [BTN]: ['MESSAGE', 'FOLLOW'] }, go: { [BTN]: ['messaging'] } },
+      { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Posts' } },
+      { type: 'imgGallery', variant: 2, go: { '.img-gallery-grid-item': ['postDetail', 'postDetail', 'postDetail'] } },
+      SOCIAL_TABS,
+    ],
+
     eventsHome: [
       { type: 'navbar', variant: 0, text: { '.nav-brand-text': 'Events' } },
       { type: 'adjustableSpace' },
       { type: 'searchBar', variant: 1, placeholder: { '.search-minimal-input': 'Search events near you' } },
       { type: 'chipGroup', text: { '[contenteditable="true"]': ['This weekend', 'Tech', 'Music'] } },
-      { type: 'card', variant: 7, text: { '.card-title': 'Design Systems Summit 2026', '.card-text': 'Thu, Mar 12 · The Foundry, Austin · From $49' }, go: { [ROOT]: 'eventRegistration' } },
+      // (one card style: registration is built from the first, a tap on another shows that one)
+      { type: 'card', variant: 7, text: { '.card-title': 'Design Systems Summit 2026', '.card-text': 'Thu, Mar 12 · 9:00 AM' }, go: { [ROOT]: 'eventRegistration' } },
       { type: 'heading', level: 'h3', text: 'Coming up' },
-      { type: 'card', variant: 0, text: { '.card-title': 'Sunset Jazz in the Park', '.card-text': 'Sat, Mar 14 · 6:00 PM · Free' }, go: { [ROOT]: 'eventRegistration' } },
-      { type: 'card', variant: 0, text: { '.card-title': 'Intro to Pottery Workshop', '.card-text': 'Sun, Mar 15 · 10:00 AM · $35' }, go: { [ROOT]: 'eventRegistration' } },
+      { type: 'card', variant: 7, text: { '.card-title': 'Sunset Jazz in the Park', '.card-text': 'Sat, Mar 14 · 6:00 PM' }, go: { [ROOT]: 'eventRegistration' } },
+      { type: 'card', variant: 7, text: { '.card-title': 'Intro to Pottery Workshop', '.card-text': 'Sun, Mar 15 · 10:00 AM' }, go: { [ROOT]: 'eventRegistration' } },
       EVENT_TABS,
     ],
 
@@ -1867,7 +1892,7 @@
       { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Register' } },
       { type: 'image', variant: 1 }, // event banner
       { type: 'heading', level: 'h2', text: 'Design Systems Summit 2026' },
-      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Thu, Mar 12 · 9:00 AM – 5:00 PM', '.li-subtitle': 'Add to calendar' }, after: el => setIcon(el, '.li-icon i', 'fas fa-calendar') },
+      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Thu, Mar 12 · 9:00 AM', '.li-subtitle': 'Add to calendar' }, after: el => setIcon(el, '.li-icon i', 'fas fa-calendar') },
       { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'The Foundry, Austin TX', '.li-subtitle': '1.2 mi away · Get directions' }, after: el => setIcon(el, '.li-icon i', 'fas fa-location-dot') },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Tickets' } },
       { type: 'radio', ...radioOn, text: { [RADIO_LABEL]: 'General admission · $149' } },
@@ -1972,9 +1997,9 @@
       { type: 'checkbox', text: { 'span': 'Review launch checklist' }, tab: 0 },
       { type: 'checkbox', text: { 'span': 'Reply to Sam about pricing' }, tab: 0 },
       { type: 'checkbox', text: { 'span': 'Draft Q3 roadmap' }, tab: 0 },
-      { type: 'listItem', variant: 3, text: 'Design review prep · 2 PM', after: el => setIcon(el, '.li-icon i', 'fas fa-flag'), go: { [ROOT]: 'taskDetail' }, tab: 0 },
-      { type: 'listItem', variant: 3, text: 'Send invoices · Thu', after: el => setIcon(el, '.li-icon i', 'fas fa-calendar'), go: { [ROOT]: 'taskDetail' }, tab: 1 },
-      { type: 'listItem', variant: 3, text: 'Team offsite planning · Fri', after: el => setIcon(el, '.li-icon i', 'fas fa-calendar'), go: { [ROOT]: 'taskDetail' }, tab: 1 },
+      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Design review prep', '.li-subtitle': 'Today · 2 PM' }, after: el => setIcon(el, '.li-icon i', 'fas fa-flag'), go: { [ROOT]: 'taskDetail' }, tab: 0 },
+      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Send invoices', '.li-subtitle': 'Thursday' }, after: el => setIcon(el, '.li-icon i', 'fas fa-calendar'), go: { [ROOT]: 'taskDetail' }, tab: 1 },
+      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Team offsite planning', '.li-subtitle': 'Friday' }, after: el => setIcon(el, '.li-icon i', 'fas fa-calendar'), go: { [ROOT]: 'taskDetail' }, tab: 1 },
       WORK_TABS,
     ],
 
@@ -1982,7 +2007,7 @@
       { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Task' } },
       { type: 'adjustableSpace' },
       { type: 'heading', level: 'h2', text: 'Design review prep' },
-      { type: 'chipGroup', text: { '[contenteditable="true"]': ['High priority', 'Today 2 PM', 'Launch'] } },
+      { type: 'chipGroup', text: { '[contenteditable="true"]': ['High priority', 'Today · 2 PM', 'Launch'] } },
       { type: 'avatar', variant: 6, text: { '.avatar-text': 'Assigned to Mia Wong', '.avatar-sub-txt': 'Product Design' } },
       { type: 'textarea', variant: 3, text: { '.ui-input-label': 'Description' }, placeholder: { '.ui-input-base': 'Collect the final mockups and open questions for the 2 PM review.' } },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Subtasks · 1 of 3' } },
@@ -2014,7 +2039,7 @@
       { type: 'adjustableSpace' },
       { type: 'searchBar', variant: 1, placeholder: { '.search-minimal-input': 'Search notes' } },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Pinned' } },
-      { type: 'card2', variant: 3, text: { '.card-title': '📌 Launch plan', '.card-text': 'Beta invites go out Monday. Press kit, landing page copy, and app store screenshots…' }, go: { [ROOT]: 'noteEditor' } },
+      { type: 'card2', variant: 3, text: { '.card-title': 'Launch plan', '.card-text': 'Beta invites go out Monday. Press kit, landing page copy, and app store screenshots.' }, go: { [ROOT]: 'noteEditor' } },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Recent' } },
       { type: 'card2', variant: 3, text: { '.card-title': 'Meeting notes · Jun 9', '.card-text': 'Decided to ship dark mode first. Jordan owns the settings screen.' }, go: { [ROOT]: 'noteEditor' } },
       { type: 'card2', variant: 5, text: { '.card-title': 'Groceries', '.card-list li': ['Oat milk', 'Lemons', 'Pasta'] }, go: { [ROOT]: 'noteEditor' } },
@@ -2027,6 +2052,7 @@
       { type: 'adjustableSpace' },
       { type: 'heading', text: 'Launch plan' },
       { type: 'paragraph', text: 'Edited just now · Shared with Design Team' },
+      { type: 'paragraph', text: 'Beta invites go out Monday. Press kit, landing page copy, and app store screenshots.' },
       { type: 'textarea', variant: 8 }, // rich text editor
       { type: 'bulletedList', after: el => {
           el.querySelector('.add-bullet-text')?.closest('div, button')?.click();
@@ -2042,15 +2068,15 @@
       { type: 'searchBar', variant: 1, placeholder: { '.search-minimal-input': 'What do you want to learn?' } },
       shelf(0, ['Code', 'Design', 'Business', 'Language', 'Music'], ['fa-code', 'fa-pen-nib', 'fa-briefcase', 'fa-language', 'fa-music']),
       { type: 'card', variant: 1, text: { '.card-featured-tag': 'Bestseller', '.card-title': 'JavaScript Fundamentals', '.card-text': '24 lessons · Beginner · ⭐ 4.9', '.card-button': 'Continue' }, go: { '.card-button': 'education', [ROOT]: 'education' } },
-      { type: 'card', variant: 2, text: { '.card-title': 'UI Design Basics', '.card-text': '18 lessons · Beginner · ⭐ 4.8' }, go: { [ROOT]: 'education' } },
-      { type: 'card', variant: 2, text: { '.card-title': 'Spanish in 30 Days', '.card-text': '30 lessons · All levels · ⭐ 4.7' }, go: { [ROOT]: 'education' } },
+      { type: 'card', variant: 1, text: { '.card-featured-tag': 'New', '.card-title': 'UI Design Basics', '.card-text': '18 lessons · Beginner · ⭐ 4.8', '.card-button': 'Start' }, go: { '.card-button': 'education', [ROOT]: 'education' } },
+      { type: 'card', variant: 1, text: { '.card-featured-tag': 'Popular', '.card-title': 'Spanish in 30 Days', '.card-text': '30 lessons · All levels · ⭐ 4.7', '.card-button': 'Start' }, go: { '.card-button': 'education', [ROOT]: 'education' } },
       LEARN_TABS,
     ],
 
     lesson: [
-      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Lesson 3' } },
+      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Lesson' } },
       { type: 'video', variant: 1, text: { '.video-time': '4:32 / 14:20' } },
-      { type: 'heading', level: 'h2', text: 'Working with Arrays' },
+      { type: 'heading', level: 'h2', text: 'Lesson 3: Working with Arrays' }, // as the course lists it
       progress(32),
       { type: 'tabs', style: 'underline', text: { '.ui-tab': ['Overview', 'Notes'] } },
       { type: 'paragraph', text: 'Learn how to create arrays, add and remove items, and loop over them with map, filter, and forEach.', tab: 0 },
@@ -2094,9 +2120,9 @@
       { type: 'searchBar', variant: 1, placeholder: { '.search-minimal-input': 'Search chats' } },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Today' } },
       { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Onboarding ideas', '.li-subtitle': 'How can I make my app’s onboarding feel faster?' }, after: el => setIcon(el, '.li-icon i', 'fas fa-message'), go: { [ROOT]: 'aiChat' } },
-      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Launch tweet drafts', '.li-subtitle': 'Write 5 short posts announcing…' }, after: el => setIcon(el, '.li-icon i', 'fas fa-message'), go: { [ROOT]: 'aiChat' } },
+      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Launch tweet drafts', '.li-subtitle': 'Write 5 short posts announcing our launch' }, after: el => setIcon(el, '.li-icon i', 'fas fa-message'), go: { [ROOT]: 'aiChat' } },
       { type: 'hzDivider', variant: 2, text: { '.hzRule-text': 'Previous 7 days' } },
-      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Trip to Lisbon', '.li-subtitle': 'Plan a 4-day itinerary for…' }, after: el => setIcon(el, '.li-icon i', 'fas fa-message'), go: { [ROOT]: 'aiChat' } },
+      { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Trip to Lisbon', '.li-subtitle': 'Plan a 4-day itinerary for Lisbon' }, after: el => setIcon(el, '.li-icon i', 'fas fa-message'), go: { [ROOT]: 'aiChat' } },
       { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'Logo concepts', '.li-subtitle': 'Image · 4 results' }, after: el => setIcon(el, '.li-icon i', 'fas fa-image'), go: { [ROOT]: 'imageGen' } },
       { type: 'listItem', variant: 2, text: { [LI_TITLE]: 'SQL help', '.li-subtitle': 'Why is this query slow?' }, after: el => setIcon(el, '.li-icon i', 'fas fa-message'), go: { [ROOT]: 'aiChat' } },
       AI_SIDEBAR,
@@ -2175,14 +2201,15 @@
       { type: 'paragraph', text: '48 homes in Portland, OR' },
       { type: 'card', variant: 0, text: { '.card-title': '$720,000', '.card-text': '3 bd · 2 ba · 1,840 sq ft · 2210 SE Ash St' }, go: { [ROOT]: 'propertyDetail' } },
       { type: 'card', variant: 0, text: { '.card-title': '$865,000', '.card-text': '4 bd · 3 ba · 2,410 sq ft · 418 NE Going St' }, go: { [ROOT]: 'propertyDetail' } },
-      { type: 'card', variant: 2, text: { '.card-title': '$549,000', '.card-text': '2 bd · 1 ba · Condo · Pearl District' }, go: { [ROOT]: 'propertyDetail' } },
+      { type: 'card', variant: 0, text: { '.card-title': '$549,000', '.card-text': '2 bd · 1 ba · 980 sq ft · 1120 NW Kearney St' }, go: { [ROOT]: 'propertyDetail' } },
     ],
 
     propertyDetail: [
-      { type: 'navbar', variant: 2, text: { '.nav-title-text': '2210 SE Ash St' } },
+      { type: 'navbar', variant: 2, text: { '.nav-title-text': 'Home details' } },
       { type: 'imgGallery', variant: 5 },
       { type: 'heading', level: 'h2', text: '$720,000' },
-      { type: 'paragraph', text: '2210 SE Ash St, Portland, OR · Listed 3 days ago' },
+      { type: 'paragraph', text: '3 bd · 2 ba · 1,840 sq ft · 2210 SE Ash St' }, // as its listing card shows it
+      { type: 'paragraph', text: 'Portland, OR · Listed 3 days ago' },
       { type: 'columns' },
       { type: 'listItem', variant: 4, column: 0, text: { '.usa': ['Beds', '3'] }, after: el => setIcon(el, '.icon-container i', 'fas fa-bed') },
       { type: 'listItem', variant: 4, column: 1, text: { '.usa': ['Baths', '2'] }, after: el => setIcon(el, '.icon-container i', 'fas fa-bath') },

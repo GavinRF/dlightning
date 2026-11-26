@@ -58,6 +58,10 @@ window.Components.bottomNav = {
         window.Components.bottomNav.setupActiveToggle(bottomNavContainer);
         window.Components.bottomNav.setupBadgeToggle(bottomNavContainer);
         window.Components.bottomNav.setupStyleControls(bottomNavContainer);
+        // Center action style: readable icon on the raised button, whatever the primary color
+        const navEl = bottomNavContainer.querySelector('.bottomNav');
+        window.accentContrast?.update(navEl);
+        requestAnimationFrame(() => window.accentContrast?.update(navEl));   // once a fresh insert is in the page
         window.Components.bottomNav.setupAutoLink(bottomNavContainer);
         // Loaded / synced bottom navs come back with their × but no click handler
         editor.setupDeleteHandler(bottomNavContainer);
@@ -330,6 +334,7 @@ window.Components.bottomNav = {
                 !bottomNav.querySelector('.nav-item-container.active')) {
                 bottomNav.querySelector('.nav-item-container')?.classList.add('active');
             }
+            if (style.id === 'center') window.accentContrast?.update(bottomNav);
             render();
 
             // Save change detection ignores data-attribute changes — flag the screen

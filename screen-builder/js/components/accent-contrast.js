@@ -6,7 +6,7 @@
 // (theme color changes) and the galleries' contrast pass. Lives in js/components/ so the
 // galleries (which load the raw modules, not the editor) get it too.
 window.accentContrast = {
-    SELECTOR: '.shelf, .breadcrumb.bc-pills',
+    SELECTOR: '.shelf, .breadcrumb.bc-pills, .bottomNav[data-nav-style="center"]',
 
     update(el) {
         if (!el?.isConnected) return;

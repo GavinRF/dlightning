@@ -3187,7 +3187,7 @@ case 'blankCard':
                 `<div class="fw">
                     <div class="search-container">
                         <i class="fas fa-search search-icon"></i>
-                        <div contenteditable="true" spellcheck="false" class="search-input empty" data-placeholder="Search..."></div>
+                        <div contenteditable="true" spellcheck="false" class="search-input empty" data-placeholder="Search..."></div><i class="fas fa-xmark search-clear non-editable" role="button" aria-label="Clear search" title="Clear search"></i>
                     </div>
                 </div>`,
             // Minimal underline
@@ -3195,7 +3195,7 @@ case 'blankCard':
             `<div class="fw">
                 <div class="search-minimal">
                     <i class="fas fa-search search-minimal-icon"></i>
-                    <div contenteditable="true" spellcheck="false" class="search-minimal-input empty" data-placeholder="Search for items..."></div>
+                    <div contenteditable="true" spellcheck="false" class="search-minimal-input empty" data-placeholder="Search for items..."></div><i class="fas fa-xmark search-clear non-editable" role="button" aria-label="Clear search" title="Clear search"></i>
                 </div>
             </div>`,
             // Squared Style with Filled Background
@@ -3203,14 +3203,14 @@ case 'blankCard':
             `<div class="fw">
                 <div class="search-squared">
                     <i class="fas fa-search search-squared-icon"></i>
-                    <div contenteditable="true" spellcheck="false" class="search-squared-input empty" data-placeholder="What are you looking for?"></div>
+                    <div contenteditable="true" spellcheck="false" class="search-squared-input empty" data-placeholder="What are you looking for?"></div><i class="fas fa-xmark search-clear non-editable" role="button" aria-label="Clear search" title="Clear search"></i>
                 </div>
             </div>`,
             // Compact Style
             /*html*/
             `<div class="search-compact">
                 <i class="fas fa-search search-compact-icon"></i>
-                <div contenteditable="true" spellcheck="false" class="search-compact-input empty" data-placeholder="Quick search..."></div>
+                <div contenteditable="true" spellcheck="false" class="search-compact-input empty" data-placeholder="Quick search..."></div><i class="fas fa-xmark search-clear non-editable" role="button" aria-label="Clear search" title="Clear search"></i>
             </div>`,
             ];
 
