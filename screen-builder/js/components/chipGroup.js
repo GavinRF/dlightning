@@ -4,26 +4,53 @@
 // (in extra-func.js); callers invoke that alongside setup() where a swatch is wanted.
 window.Components = window.Components || {};
 
-// Select/deselect a chip; a reselected chip takes the group's current selected color.
+// The group's selected color (a --color-* name), kept on the group as data-chip-color (the
+// swatch sets it, createGroupColorSwatch in extra-func.js), so it outlasts every chip being
+// deselected. Groups saved before it: the color of a selected chip, else primary.
+function chipGroupColor(chipContainer) {
+    if (chipContainer.dataset.chipColor) return chipContainer.dataset.chipColor;
+    const lit = Array.from(chipContainer.querySelectorAll('.chip[data-selected="true"]'))
+        .map(c => c.style.backgroundColor.match(/var\((--color-[\w-]+)\)/)?.[1]).find(Boolean);
+    return lit || '--color-primary';
+}
+
+// Select/deselect a chip; a selected chip takes the group's color.
 function chipToggle(chip, chipContainer) {
+    // Remembered before the last colored chip goes gray
+    chipContainer.dataset.chipColor = chipGroupColor(chipContainer);
     if (chip.getAttribute('data-selected') === 'true') {
         chip.style.backgroundColor = 'var(--neutral-gray)';
         chip.setAttribute('data-selected', 'false');
-    } else {
-        let groupColor = 'var(--color-primary)';
-        const selectedChips = chipContainer.querySelectorAll('.chip[data-selected="true"]');
-        if (selectedChips.length > 0) groupColor = window.getComputedStyle(selectedChips[0]).backgroundColor;
-        chip.style.backgroundColor = groupColor;
-        chip.setAttribute('data-selected', 'true');
+        // The CSS's own text color for the gray (follows dark mode): drop the selected color's
+        chip.style.removeProperty('color');
+        chip.style.removeProperty('--basic-txt-color');
+        return;
     }
+    chip.style.backgroundColor = `var(${chipContainer.dataset.chipColor})`;
+    chip.setAttribute('data-selected', 'true');
     requestAnimationFrame(() => window.TextContrastAdjuster?.updateElementContrast(chip));
+}
+
+// Locked: the pills are a display of data (tags, stats…), not controls — in Play a tap does
+// nothing and Connect mode can't link or filter with them (prototype.js reads the same
+// attribute). Saved as data-chip-locked on the group; the editor still selects them, so the
+// designer picks which ones show highlighted.
+const chipLocked = (chipContainer) => chipContainer.hasAttribute('data-chip-locked');
+
+function renderChipLock(btn, chipContainer) {
+    const on = chipLocked(chipContainer);
+    btn.classList.toggle('is-on', on);
+    btn.setAttribute('aria-pressed', String(on));
+    btn.innerHTML = `<i class="fas fa-${on ? 'lock' : 'lock-open'}"></i>`;
+    btn.title = on ? 'Locked: these pills only display data, a tap does nothing in Play. Click to unlock.'
+        : 'Lock: make these pills display-only, so a tap does nothing in Play';
 }
 
 window.Components.chipGroup = {
     // Prototype player (js/prototype.js): select/deselect chips; add/remove/reorder stay editor-only.
     play(root) {
         const chipContainer = root.querySelector('.chip-group-container');
-        if (!chipContainer || chipContainer._playBound) return;
+        if (!chipContainer || chipContainer._playBound || chipLocked(chipContainer)) return;
         chipContainer._playBound = true;
         chipContainer.addEventListener('click', (e) => {
             const chip = e.target.closest('.chip');
@@ -42,6 +69,21 @@ window.Components.chipGroup = {
         // Clean up existing event listeners
         addButton.replaceWith(addButton.cloneNode(true));
         const freshAddButton = container.querySelector('.add-chip-btn');
+
+        // Lock toggle (editor chrome, rebuilt here: never saved), right after "add pill"
+        container.querySelectorAll('.chip-lock-btn').forEach(b => b.remove());
+        const lockButton = document.createElement('button');
+        lockButton.type = 'button';
+        lockButton.className = 'chip-lock-btn';
+        renderChipLock(lockButton, chipContainer);
+        freshAddButton.after(lockButton);
+        lockButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            chipContainer.toggleAttribute('data-chip-locked');
+            renderChipLock(lockButton, chipContainer);
+            const canvasId = container.closest('.canvas-wrapper')?.getAttribute('data-canvas-id');
+            if (canvasId) window.projectManager?.addCanvasToChanged?.(canvasId, 'pill group lock');
+        });
 
         new Sortable(chipContainer, {
             animation: 150,

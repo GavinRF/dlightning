@@ -89,7 +89,9 @@
         <div id="titleBlock">
                 <a href="index.html"><img src="img/transparent white D.png" height="32px"></a> 
                 <h1 id="mainH1">Screen Builder</h1>
-            <div>
+            <div class="title-block-btns">
+                <!-- Mobile only (≤768px): hides the sidebar / rail completely; #sidebar-show-btn brings it back (js/extra-func.js) -->
+                <button id="sidebar-hide-btn" type="button" title="Hide the sidebar" aria-label="Hide the sidebar"><i class="fa-solid fa-eye-slash"></i></button>
                 <button id="sidebar-toggle-btn" title="toggle the sidebar" class="toggle-btn"><i class="fa-solid fa-square-caret-left"></i> </button>
             </div>
         </div>
@@ -1563,6 +1565,7 @@
 
         </div>
         <!-- END SIDEBAR ////////////////// -->
+    <button id="sidebar-show-btn" type="button" title="Show the sidebar" aria-label="Show the sidebar"><i class="fa-solid fa-bars"></i></button>
 
     <!-- Project Title  -->
         <div id="project-title">
